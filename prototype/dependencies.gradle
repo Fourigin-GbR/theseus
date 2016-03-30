@@ -1,0 +1,149 @@
+//REPOSITORIES
+def repositoryConfiguration = {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+/* setting up a map to register the dependencies --> key = groupid:artifactid, value = version */
+project.buildscript {
+    repositories repositoryConfiguration
+}
+
+allprojects {
+    repositories repositoryConfiguration
+}
+
+//PLUGIN DEPENDENCIES
+
+def thugs = [
+	"org.codehaus.groovy:groovy-all",
+	"cglib:cglib",
+	"commons-httpclient:commons-httpclient",
+	'org.codehaus.jackson:jackson-core-asl',
+	'org.codehaus.jackson:jackson-mapper-asl',
+	'org.codehaus.jackson:jackson-core-lgpl',
+	'org.codehaus.jackson:jackson-mapper-lgpl'
+]
+
+//VERSION MANAGEMENT & TASKS
+def versions = [:]
+def versionKey = { group, name -> ['group': group, 'name': name] }
+
+
+project.ext.registerVersion = { key, version ->
+    if (key instanceof String) {
+        def split = key.split(':')
+        key = versionKey(split[0], split[1])
+    }
+    if (versions[key]) logger.warn("""Override version for ${key}
+old:  ${versions[key]}
+new:  ${version}
+""")
+    versions[key] = version // same as --> version.put(key, version)
+}
+
+/* dependencies END */
+
+
+
+project.ext.managedDependency = { String dep ->
+
+    if (thugs.contains(dep)) {
+        logger.warn("You are using a thug dependency!\n${dep}")
+    }
+
+    def resolved = [:]
+    def ext = null
+
+    if (dep.contains('@')) {
+        def split = dep.split('@')
+        dep = split[0]
+        ext = split[1]
+    }
+
+    if (dep.contains(':')) {
+        def split = dep.split(':')
+        resolved = [group: split[0], name: split[1]]
+    } else {
+        resolved = [group: dep]
+    }
+
+    resolved.version = versions[resolved]
+    if (ext) {
+        resolved.ext = ext
+    }
+
+    if (!resolved.version) {
+        throw new IllegalArgumentException("""
+     Could not find version for ${dep}.
+     Add Following to dependencies.gradle and replace XXX withwith the version you want to use.
+
+        registerVersion('${resolved.group}:${resolved.name}',XXX)
+
+
+     """ as String)
+    }
+
+    return resolved
+}
+
+//task findVersion << {
+task(group: 'Reporting', description: 'Displays all registered versions containing -Pquery. (all if query is not provided)', 'findVersion') << {
+
+    versions.each { key, value ->
+        def dep = "${key.group}:${key.name}"
+        def printDep = { println("managedDependency('${dep}')  -  ${value}") }
+        if (project.hasProperty('query')) {
+            if (dep.contains(query)) {
+                printDep()
+            }
+        } else {
+            printDep()
+        }
+    }
+}
+
+task(group: 'Reporting', description: 'Displays registered versions which are not used', 'unusedVersions') << {
+
+    Set versionKeys = versions.keySet();
+    allprojects.each { project ->
+        project.configurations.all { configuration ->
+            configuration.dependencies.each {
+                versionKeys.remove versionKey(it.group, it.name)
+            }
+        }
+    }
+    if (!versionKeys.empty) {
+        logger.lifecycle "\nFound ${versionKeys.size()} unused versions\n"
+        versionKeys.each { logger.lifecycle "${it.group}:${it.name}" }
+    } else {
+        logger.info "No unused version found"
+    }
+
+}
+
+// e.g. gradle artifactUsage -Pquery=groovy
+
+task(group: 'Reporting', description: 'Displays all projects where a artifact contains -Pquery', 'artifactUsage') << {
+    if (project.hasProperty('query')) {
+        allprojects.each { project ->
+
+            def found = []
+
+            project.configurations.all { configuration ->
+                configuration.dependencies.each {
+                    def depString = "${it.group}:${it.name}:${it.version}"
+                    if (depString.toLowerCase().contains(query.toLowerCase())) {
+                        found.add "${depString} (${configuration.name})"
+                    }
+                }
+            }
+
+            if (!found.empty) {
+                logger.lifecycle "\n${project.path}"
+                found.each { logger.lifecycle it }
+            }
+        }
+    }
+}

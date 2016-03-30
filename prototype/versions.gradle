@@ -1,0 +1,203 @@
+/*
+ *    SHARED DEPENDENCIES
+ */
+
+def versionMap = [
+	'aspectj': '1.8.6',
+	'cargo': '1.4.4',
+	'cas': '3.5.2',
+	'derby': '10.7.1.1',
+	'ektorp': '1.4.2',
+	'geb': '0.9.3',
+	'groovy': '2.4.3',
+	/*
+	'hibernate':'4.3.1.Final',
+	makes mdb go BOOM!
+	VariantGroup.items is not properly initialized.
+	Also reverting in phobos until problem is understood.
+	*/
+	'hibernate':'4.2.7.Final',
+	'hibernateValidator': '5.0.3.Final',
+	'httpClient': '4.3.6',
+	// https://github.com/helun/Ektorp/issues/222
+	// 'httpClient': '4.4.1',
+	'jackson': '2.5.3',
+	'jacksonAfterburner': '2.5.3',
+	'lilith': '0.9.44',
+	'logback': '1.1.3',
+	'selenium': '2.35.0',
+	'slf4j': '1.7.12',
+	'spock': '1.0-groovy-2.4',
+	'spring': '4.1.6.RELEASE',
+	'springboot': '1.2.2.RELEASE',
+	'springsecurity': '3.2.7.RELEASE',
+	// TODO: check 'springsecurity': '4.0.0.RELEASE',
+	'springws': '2.2.1.RELEASE',
+	'sulky': '0.9.17',
+	'taglibsStandard': '1.2.1',
+	'thymeleaf': '2.1.4.RELEASE',
+	'tomcat':'7.0.42',
+	'twelvemonkeys': '3.1.0',
+	'xstream': '1.2.2',
+	'tika': '1.8',
+]
+
+
+registerVersion('axis:axis-saaj', '1.3')
+registerVersion('axis:axis-wsdl4j', '1.5.1')
+registerVersion('cglib:cglib-nodep', '2.2.2')
+registerVersion('ch.qos.logback:logback-classic', versionMap.logback)
+registerVersion('ch.qos.logback:logback-core', versionMap.logback)
+registerVersion('com.beust:jcommander', '1.48')
+
+registerVersion('com.fasterxml.jackson.core:jackson-annotations', versionMap.jackson)
+registerVersion('com.fasterxml.jackson.core:jackson-core', versionMap.jackson)
+registerVersion('com.fasterxml.jackson.core:jackson-databind', versionMap.jackson)
+registerVersion('com.fasterxml.jackson.module:jackson-module-afterburner', versionMap.jacksonAfterburner)
+registerVersion('com.google.guava:guava','17.0')
+registerVersion('com.mortennobel:java-image-scaling', '0.8.5')
+registerVersion('com.sun.xml.messaging.saaj:saaj-impl', '1.3')
+registerVersion('com.twelvemonkeys.imageio:imageio-jpeg', versionMap.twelvemonkeys)
+registerVersion('com.twelvemonkeys.imageio:imageio-tiff', versionMap.twelvemonkeys)
+registerVersion('com.twelvemonkeys.servlet:servlet', versionMap.twelvemonkeys)
+registerVersion('commons-cli:commons-cli', '1.2')
+registerVersion('commons-codec:commons-codec', '1.10')
+registerVersion('commons-dbcp:commons-dbcp', '1.4')
+registerVersion('commons-discovery:commons-discovery', '0.5')
+registerVersion('commons-fileupload:commons-fileupload', '1.2.2')
+registerVersion('commons-io:commons-io', '2.4')
+registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic', versionMap.lilith)
+registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.logback.servlet', versionMap.lilith)
+registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.logback.tools', versionMap.lilith)
+registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.tracing', versionMap.lilith)
+registerVersion('de.huxhorn.sulky:de.huxhorn.sulky.blobs', versionMap.sulky)
+registerVersion('de.huxhorn.sulky:de.huxhorn.sulky.conditions', versionMap.sulky)
+registerVersion('de.huxhorn.sulky:de.huxhorn.sulky.formatting', versionMap.sulky)
+registerVersion('de.huxhorn.sulky:de.huxhorn.sulky.groovy', versionMap.sulky)
+registerVersion('de.huxhorn.sulky:de.huxhorn.sulky.junit', versionMap.sulky)
+registerVersion('de.huxhorn.sulky:de.huxhorn.sulky.tasks', versionMap.sulky)
+registerVersion('hsqldb:hsqldb', '1.8.0.7')
+registerVersion('javax.activation:activation', '1.1.1')
+registerVersion('javax.annotation:jsr250-api', '1.0')
+registerVersion('javax.el:javax.el-api', '2.2.4')
+registerVersion('javax.mail:mail', '1.4.1')
+registerVersion('javax.servlet.jsp:javax.servlet.jsp-api', '2.2.1')
+registerVersion('javax.servlet:javax.servlet-api', '3.1.0')
+registerVersion('javax.servlet:jstl', '1.2')
+registerVersion('javax.servlet:servlet-api', '2.5')
+registerVersion('javax.validation:validation-api', '1.1.0.Final')
+registerVersion('javax.websocket:javax.websocket-api', '1.0')
+registerVersion('javax.websocket:javax.websocket-client-api', '1.0')
+registerVersion('javax.xml.bind:jaxb-api', '2.2.11')
+registerVersion('joda-time:joda-time', '2.7')
+registerVersion('junit:junit', '4.12')
+registerVersion('mysql:mysql-connector-java', '5.1.31')
+registerVersion('net.sf.ehcache:ehcache-core', '2.6.9')
+registerVersion('net.sf.opencsv:opencsv', '2.3')
+registerVersion('net.sf.saxon:Saxon-HE', '9.6.0-5')
+registerVersion('net.sf.supercsv:super-csv', '2.1.0')
+registerVersion('net.sourceforge.nekohtml:nekohtml', '1.9.18')
+registerVersion('net.ttddyy:datasource-proxy', '1.1')
+registerVersion('org.apache.avalon.framework:avalon-framework-impl', '4.3.1')
+registerVersion('org.apache.axis:axis', '1.4')
+registerVersion('org.apache.axis:axis-jaxrpc', '1.4')
+registerVersion('org.apache.commons:commons-collections4', '4.0')
+registerVersion('org.apache.commons:commons-email', '1.4')
+registerVersion('org.apache.commons:commons-lang3', '3.4')
+registerVersion('org.apache.derby:derby', versionMap.derby)
+registerVersion('org.apache.directory.studio:org.apache.commons.io', '2.4')
+registerVersion('org.apache.httpcomponents:httpclient', versionMap.httpClient)
+registerVersion('org.apache.httpcomponents:httpclient-cache', versionMap.httpClient)
+registerVersion('org.apache.poi:poi', '3.9')
+registerVersion('org.apache.poi:poi-ooxml', '3.9')
+registerVersion('org.apache.taglibs:taglibs-standard-compat', versionMap.taglibsStandard)
+registerVersion('org.apache.taglibs:taglibs-standard-impl', versionMap.taglibsStandard)
+registerVersion('org.apache.taglibs:taglibs-standard-jstlel', versionMap.taglibsStandard)
+registerVersion('org.apache.taglibs:taglibs-standard-spec', versionMap.taglibsStandard)
+registerVersion('org.apache.tomcat.embed:tomcat-embed-core', versionMap.tomcat)
+registerVersion('org.apache.tomcat.embed:tomcat-embed-jasper', versionMap.tomcat)
+registerVersion('org.apache.tomcat.embed:tomcat-embed-logging-log4j', versionMap.tomcat)
+registerVersion('org.apache.xmlgraphics:fop', '1.1')
+registerVersion('org.aspectj:aspectjweaver', versionMap.aspectj)
+registerVersion('org.codehaus.cargo:cargo-ant', versionMap.cargo)
+registerVersion('org.codehaus.cargo:cargo-core-uberjar', versionMap.cargo)
+registerVersion('org.codehaus.gpars:gpars', '1.1.0')
+registerVersion('org.codehaus.groovy.modules.http-builder:http-builder', '0.6')
+registerVersion('org.codehaus.groovy:groovy', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-console', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-groovysh', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-json', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-sql', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-templates', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-test', versionMap.groovy)
+registerVersion('org.codehaus.groovy:groovy-xml', versionMap.groovy)
+registerVersion('org.codehaus.woodstox:woodstox-core-asl','4.4.1')
+registerVersion('org.easymock:easymock', '3.2')
+registerVersion('org.ektorp:org.ektorp', versionMap.ektorp)
+registerVersion('org.ektorp:org.ektorp.spring', versionMap.ektorp)
+registerVersion('org.freemarker:freemarker', '2.3.21')
+registerVersion('org.gebish:geb-spock', versionMap.geb)
+registerVersion('org.glassfish.web:javax.el', '2.2.4')
+registerVersion('org.hibernate.javax.persistence:hibernate-jpa-2.1-api', '1.0.0.Final')
+registerVersion('org.hibernate:ejb3-persistence', '1.0.2.GA')
+registerVersion('org.hibernate:hibernate-core', versionMap.hibernate)
+registerVersion('org.hibernate:hibernate-ehcache', versionMap.hibernate)
+registerVersion('org.hibernate:hibernate-entitymanager', versionMap.hibernate)
+registerVersion('org.hibernate:hibernate-validator', versionMap.hibernateValidator)
+registerVersion('org.imgscalr:imgscalr-lib', '4.2')
+registerVersion('org.jasig.cas:cas-server-core', versionMap.cas)
+registerVersion('org.jasig.cas:cas-server-support-jdbc', versionMap.cas)
+registerVersion('org.jasig.cas:cas-server-webapp', versionMap.cas)
+registerVersion('org.javassist:javassist', '3.18.1-GA')
+registerVersion('org.mockito:mockito-core', '1.10.19')
+registerVersion('org.quartz-scheduler:quartz', '2.2.1')
+registerVersion('org.seleniumhq.selenium:selenium-chrome-driver', versionMap.selenium)
+registerVersion('org.seleniumhq.selenium:selenium-firefox-driver', versionMap.selenium)
+registerVersion('org.seleniumhq.selenium:selenium-htmlunit-driver', versionMap.selenium)
+registerVersion('org.seleniumhq.selenium:selenium-support', versionMap.selenium)
+registerVersion('org.slf4j:jul-to-slf4j', versionMap.slf4j)
+registerVersion('org.slf4j:jcl-over-slf4j', versionMap.slf4j)
+registerVersion('org.slf4j:log4j-over-slf4j', versionMap.slf4j)
+registerVersion('org.slf4j:slf4j-api', versionMap.slf4j)
+registerVersion('org.slf4j:slf4j-log4j12', versionMap.slf4j)
+registerVersion('org.spockframework:spock-core', versionMap.spock)
+registerVersion('org.spockframework:spock-spring', versionMap.spock)
+registerVersion('org.springframework.boot:spring-boot-starter-web', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter-thymeleaf', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter-tomcat', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter-actuator', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter-websocket', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter-test', versionMap.springboot)
+registerVersion('org.springframework.security:spring-security-acl', versionMap.springsecurity)
+registerVersion('org.springframework.security:spring-security-cas', versionMap.springsecurity)
+registerVersion('org.springframework.security:spring-security-config', versionMap.springsecurity)
+registerVersion('org.springframework.security:spring-security-core', versionMap.springsecurity)
+registerVersion('org.springframework.security:spring-security-taglibs', versionMap.springsecurity)
+registerVersion('org.springframework.security:spring-security-web', versionMap.springsecurity)
+registerVersion('org.springframework.shell:spring-shell', '1.0.0.RELEASE')
+registerVersion('org.springframework.ws:spring-ws-core', versionMap.springws)
+registerVersion('org.springframework.ws:spring-xml', versionMap.springws)
+registerVersion('org.springframework:spring-aop', versionMap.spring)
+registerVersion('org.springframework:spring-beans', versionMap.spring)
+registerVersion('org.springframework:spring-context', versionMap.spring)
+registerVersion('org.springframework:spring-context-support', versionMap.spring)
+registerVersion('org.springframework:spring-core', versionMap.spring)
+registerVersion('org.springframework:spring-jdbc', versionMap.spring)
+registerVersion('org.springframework:spring-orm', versionMap.spring)
+registerVersion('org.springframework:spring-test', versionMap.spring)
+registerVersion('org.springframework:spring-tx', versionMap.spring)
+registerVersion('org.springframework:spring-web', versionMap.spring)
+registerVersion('org.springframework:spring-webmvc', versionMap.spring)
+registerVersion('org.thymeleaf.extras:thymeleaf-extras-springsecurity3', '2.1.1.RELEASE')
+registerVersion('org.thymeleaf:thymeleaf', versionMap.thymeleaf)
+registerVersion('org.thymeleaf:thymeleaf-spring4', versionMap.thymeleaf)
+registerVersion('xerces:xercesImpl', '2.11.0')
+registerVersion('xml-apis:xml-apis', '1.4.01')
+registerVersion('xmlunit:xmlunit', '1.4')
+registerVersion('xstream:xstream', versionMap.xstream)
+registerVersion('org.jsoup:jsoup', '1.7.2')
+registerVersion('com.itextpdf:itextpdf','5.5.6')
+
+registerVersion('org.apache.tika:tika-core', versionMap.tika)
+registerVersion('org.apache.tika:tika-parsers', versionMap.tika)
+registerVersion('org.apache.tika:tika', versionMap.tika)

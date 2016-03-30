@@ -1,0 +1,44 @@
+def theseusModels = project(':theseus:com.fourigin.theseus.models')
+
+project(':apps') {
+    def appsVersion = '1.0-SNAPSHOT'
+
+    project('com.fourigin.apps.example') {
+        apply plugin: 'spring-boot'
+
+        group = 'com.fourigin.apps'
+        version = appsVersion
+
+        bootRepackage {
+            mainClass = 'com.fourigin.theseus.apps.Example1'
+        }
+
+        jar {
+            baseName = "example"
+        }
+
+        dependencies {
+            compile('org.springframework.boot:spring-boot-starter-web')
+            compile('org.springframework.boot:spring-boot-starter-tomcat')
+            compile('org.springframework.boot:spring-boot-starter-actuator')
+
+            compile('org.springframework:spring-context-support')
+            compile('org.springframework:spring-webmvc')
+
+            compile theseusModels
+        }
+    }
+
+}
+
+project(':theseus') {
+    def theseusVersion = "1.0-SNAPSHOT"
+
+    project('com.fourigin.theseus.models') {
+        group = 'com.fourigin.theseus'
+        version = theseusVersion
+
+        dependencies {
+        }
+    }
+}
