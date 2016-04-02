@@ -1,5 +1,5 @@
 #!/bin/bash
-APPName="example-1.0-SNAPSHOT"
+APPName="prototype-1.0-SNAPSHOT"
 JARFile="$APPName.jar"
 #PIDFile="application.pid"
 PIDFile="$APPName.pid"

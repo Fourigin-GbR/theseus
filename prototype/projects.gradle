@@ -3,18 +3,18 @@ def theseusModels = project(':theseus:com.fourigin.theseus.models')
 project(':apps') {
     def appsVersion = '1.0-SNAPSHOT'
 
-    project('com.fourigin.apps.example') {
+    project('com.fourigin.apps.theseus.prototype') {
         apply plugin: 'spring-boot'
 
         group = 'com.fourigin.apps'
         version = appsVersion
 
         bootRepackage {
-            mainClass = 'com.fourigin.theseus.apps.Example1'
+            mainClass = 'com.fourigin.apps.theseus.prototype.Prototype'
         }
 
         jar {
-            baseName = "example"
+            baseName = "prototype"
         }
 
         dependencies {

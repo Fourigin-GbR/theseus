@@ -1,4 +1,4 @@
-package com.fourigin.apps.example;
+package com.fourigin.apps.theseus.prototype;
 
 public class ModelResponse {
     private String code;

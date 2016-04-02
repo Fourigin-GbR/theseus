@@ -1,5 +1,5 @@
 include ':apps'
-include ':apps:com.fourigin.apps.example'
+include ':apps:com.fourigin.apps.theseus.prototype'
 
 include ':theseus'
 include ':theseus:com.fourigin.theseus.models'

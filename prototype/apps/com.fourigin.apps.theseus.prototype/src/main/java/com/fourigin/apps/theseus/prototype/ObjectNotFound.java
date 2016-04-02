@@ -1,4 +1,4 @@
-package com.fourigin.apps.example;
+package com.fourigin.apps.theseus.prototype;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

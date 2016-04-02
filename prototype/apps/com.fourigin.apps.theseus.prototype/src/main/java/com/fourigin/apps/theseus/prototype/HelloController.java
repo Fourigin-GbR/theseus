@@ -1,4 +1,4 @@
-package com.fourigin.apps.example;
+package com.fourigin.apps.theseus.prototype;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
