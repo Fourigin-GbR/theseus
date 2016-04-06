@@ -30,7 +30,7 @@ public class ModelRequest {
     @Override
     public String toString() {
         return "ModelRequest{" +
-          "code='" + code + '\'' +
+          "id='" + code + '\'' +
           '}';
     }
 }

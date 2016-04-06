@@ -72,7 +72,7 @@ public class ModelResponse {
     @Override
     public String toString() {
         return "TestModel{" +
-          "code='" + code + '\'' +
+          "id='" + code + '\'' +
           ", revision='" + revision + '\'' +
           ", length=" + length +
           ", description='" + description + '\'' +

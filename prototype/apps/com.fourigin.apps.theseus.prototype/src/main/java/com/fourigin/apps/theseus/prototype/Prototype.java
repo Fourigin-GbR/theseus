@@ -2,6 +2,7 @@ package com.fourigin.apps.theseus.prototype;
 
 import java.util.Locale;
 
+import com.fourigin.theseus.models.ClassificationModel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,16 +14,11 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
-import org.springframework.web.servlet.i18n.FixedLocaleResolver;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 @Configuration
 @EnableAutoConfiguration
@@ -60,22 +56,7 @@ public class Prototype extends WebMvcConfigurerAdapter {
             }
         };
 
-//        SessionLocaleResolver slr = new SessionLocaleResolver();
-//        slr.setDefaultLocale(Locale.US);
-//        return slr;
     }
-
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-//        lci.setParamName("lang");
-//        return lci;
-//    }
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(localeChangeInterceptor());
-//    }
 
     @Bean
     public ReloadableResourceBundleMessageSource messageSource(){
@@ -84,6 +65,22 @@ public class Prototype extends WebMvcConfigurerAdapter {
         result.setBasename("classpath:messages");
         result.setCacheSeconds(60);
         result.setDefaultEncoding("UTF-8");
+
+        return result;
+    }
+
+    @Bean
+    public ModelObjectRepositoryStub modelObjectRepositoryStub(){
+        ModelObjectRepositoryStub result = new ModelObjectRepositoryStub();
+
+        ClassificationModel.Builder builder = new ClassificationModel.Builder();
+
+        result.create(builder.id("c140").typeCode("model").description("Captiva (C140)").build());
+        result.create(builder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());
+        result.create(builder.id("1yz").typeCode("model").description("Corvette Z06 (1YZ)").build());
+        result.create(builder.id("ls").typeCode("trim").description("LS").build());
+        result.create(builder.id("lt").typeCode("trim").description("LT").build());
+        result.create(builder.id("1.8").typeCode("version").description("1.8").build());
 
         return result;
     }

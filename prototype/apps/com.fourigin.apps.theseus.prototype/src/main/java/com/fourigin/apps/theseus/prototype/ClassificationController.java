@@ -1,7 +1,9 @@
 package com.fourigin.apps.theseus.prototype;
 
+import com.fourigin.theseus.filters.ClassificationModelFilter;
 import com.fourigin.theseus.models.ClassificationModel;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.fourigin.theseus.repository.ModelObjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,36 +11,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/classification")
 public class ClassificationController {
 
-    private Map<String, ClassificationModel> classifications = new HashMap<>();
+    private ModelObjectRepository modelObjectRepository;
 
-    @PostConstruct
-    public void init(){
-        ClassificationModel.Builder builder = new ClassificationModel.Builder();
-
-        classifications.put("c140", builder.code("c140").typeCode("model").revision("123").description("Captiva (C140)").build());
-        classifications.put("1yy", builder.code("1yy").typeCode("model").revision("312").description("Corvette Stingray (1YY)").build());
-        classifications.put("1yz", builder.code("1yz").typeCode("model").revision("231").description("Corvette Z06 (1YZ)").build());
-        classifications.put("ls", builder.code("ls").typeCode("trim").revision("213").description("LS").build());
-        classifications.put("lt", builder.code("lt").typeCode("trim").revision("321").description("LT").build());
-        classifications.put("1.8", builder.code("1.8").typeCode("version").revision("132").description("1.8").build());
-    }
-
+    /**
+     * /classification/_all
+     * @param sort optional parameter to sort result list
+     * @return the list of all available codes.
+     */
     @RequestMapping(value = "_all", method = RequestMethod.GET)
     @ResponseBody
     public List<String> retrieveAllCodes(@RequestParam(required = false) boolean sort){
-        List<String> result = new ArrayList<>(classifications.keySet());
+        Set<String> classifications = modelObjectRepository.getAllIds(ClassificationModel.class);
+        if(classifications == null){
+            return null;
+        }
+
+        List<String> result = new ArrayList<>(classifications);
 
         if(sort) {
             Collections.sort(result);
@@ -47,12 +44,17 @@ public class ClassificationController {
         return result;
     }
 
+    /**
+     * /classification?id={id}
+     * @param code classification id
+     * @return the classification model object.
+     */
     @RequestMapping(value = "{code}", method = RequestMethod.GET)
     @ResponseBody
-    public ClassificationModel retrieve(@PathVariable String code){
-        ClassificationModel result = classifications.get(code);
+    public ClassificationModel retrieve(@RequestParam String code){
+        ClassificationModel result = modelObjectRepository.retrieve(ClassificationModel.class, code);
         if(result == null){
-            throw new ObjectNotFound("Error retrieving classification: no classification found for code '" + code + "'!");
+            throw new ObjectNotFound("Error retrieving classification: no classification found for id '" + code + "'!");
         }
 
         return result;
@@ -60,44 +62,46 @@ public class ClassificationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void update(@RequestBody ClassificationModel classificationModel){
-        String code = classificationModel.getCode();
-        if(!classifications.containsKey(code)){
-            throw new ObjectNotFound("Error updating classification: no classification found for code '" + code + "'!");
-        }
-
-        classifications.put(classificationModel.getCode(), classificationModel);
+        modelObjectRepository.update(classificationModel);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public void create(@RequestBody ClassificationModel classificationModel){
-        String code = classificationModel.getCode();
-        if(classifications.containsKey(code)){
-            throw new IllegalArgumentException("Error creating classification: a classification with code '" + code + "' already exists!");
-        }
-
-        classifications.put(code, classificationModel);
+        modelObjectRepository.create(classificationModel);
     }
 
+    /**
+     * /classification?id={id}
+     * @param code classification id
+     */
     @RequestMapping(value = "{code}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable String code){
-        if(!classifications.containsKey(code)){
-            throw new ObjectNotFound("Error deleting classification: no classification found for code '" + code + "'!");
-        }
-
-        classifications.remove(code);
+    public void delete(@RequestParam String code){
+        modelObjectRepository.delete(ClassificationModel.class, code);
     }
 
-    @RequestMapping(value = "_filter/byType/{typeCode}", method = RequestMethod.GET)
+    /**
+     * /classification/_filter?type={type}&sort
+     * @param type type of requested classifications
+     * @param sort optional parameter to sort result list
+     * @return the filtered list of classifications.
+     */
+    @RequestMapping(value = "_filter", method = RequestMethod.GET)
     @ResponseBody
-    public List<String> retrieveByTypeCode(@PathVariable String typeCode, @RequestParam(required = false) boolean sort){
-        List<String> result = classifications.values().stream()
-          .filter(model -> typeCode.equals(model.getTypeCode()))
-          .map(ClassificationModel::getCode)
-          .collect(Collectors.toList());
+    public List<String> retrieveFiltered(
+      @RequestParam String type,
+      @RequestParam(required = false) boolean sort
+    ){
 
-        if(result.isEmpty()){
-            throw new ObjectNotFound("No classifications found by type '" + typeCode + "'!");
+        Set<String> ids = modelObjectRepository.findIds(ClassificationModel.class, new ClassificationModelFilter.Builder()
+          .forType(type)
+          .build()
+        );
+
+        if(ids.isEmpty()){
+            throw new ObjectNotFound("No classifications found by type '" + type + "'!");
         }
+
+        List<String> result = new ArrayList<>(ids);
 
         if(sort){
             Collections.sort(result);
@@ -106,4 +110,8 @@ public class ClassificationController {
         return result;
     }
 
+    @Autowired
+    public void setModelObjectRepository(ModelObjectRepository modelObjectRepository) {
+        this.modelObjectRepository = modelObjectRepository;
+    }
 }

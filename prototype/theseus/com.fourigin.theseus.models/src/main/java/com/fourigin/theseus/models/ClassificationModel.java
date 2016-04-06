@@ -1,23 +1,27 @@
 package com.fourigin.theseus.models;
 
-public class ClassificationModel {
-    private String code;
+public class ClassificationModel implements ModelObject {
+    private String id;
     private String revision;
     private String typeCode;
     private String description;
 
-    public String getCode() {
-        return code;
+    @Override
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
+    @Override
     public String getRevision() {
         return revision;
     }
 
+    @Override
     public void setRevision(String revision) {
         this.revision = revision;
     }
@@ -45,7 +49,7 @@ public class ClassificationModel {
 
         ClassificationModel that = (ClassificationModel) o;
 
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (revision != null ? !revision.equals(that.revision) : that.revision != null) return false;
         //noinspection SimplifiableIfStatement
         if (typeCode != null ? !typeCode.equals(that.typeCode) : that.typeCode != null) return false;
@@ -55,7 +59,7 @@ public class ClassificationModel {
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (revision != null ? revision.hashCode() : 0);
         result = 31 * result + (typeCode != null ? typeCode.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
@@ -65,7 +69,7 @@ public class ClassificationModel {
     @Override
     public String toString() {
         return "ClassificationModel{" +
-          "code='" + code + '\'' +
+          "id='" + id + '\'' +
           ", revision='" + revision + '\'' +
           ", typeCode='" + typeCode + '\'' +
           ", description='" + description + '\'' +
@@ -73,13 +77,13 @@ public class ClassificationModel {
     }
 
     public static class Builder {
-        private String code;
+        private String id;
         private String revision;
         private String typeCode;
         private String description;
 
-        public Builder code(String code){
-            this.code = code;
+        public Builder id(String code){
+            this.id = code;
             return this;
         }
 
@@ -100,7 +104,7 @@ public class ClassificationModel {
 
         public ClassificationModel build(){
             ClassificationModel model = new ClassificationModel();
-            model.setCode(code);
+            model.setId(id);
             model.setRevision(revision);
             model.setTypeCode(typeCode);
             model.setDescription(description);
@@ -111,7 +115,7 @@ public class ClassificationModel {
         }
 
         public void reset(){
-            this.code = null;
+            this.id = null;
             this.revision = null;
             this.typeCode = null;
             this.description = null;

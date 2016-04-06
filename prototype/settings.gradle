@@ -3,3 +3,4 @@ include ':apps:com.fourigin.apps.theseus.prototype'
 
 include ':theseus'
 include ':theseus:com.fourigin.theseus.models'
+include ':theseus:com.fourigin.theseus.repository'
