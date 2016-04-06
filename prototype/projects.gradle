@@ -1,4 +1,5 @@
 def theseusModels = project(':theseus:com.fourigin.theseus.models')
+def theseusRepository = project(':theseus:com.fourigin.theseus.repository')
 
 project(':apps') {
     def appsVersion = '1.0-SNAPSHOT'
@@ -26,6 +27,7 @@ project(':apps') {
             compile('org.springframework:spring-webmvc')
 
             compile theseusModels
+            compile theseusRepository
         }
     }
 
@@ -39,6 +41,15 @@ project(':theseus') {
         version = theseusVersion
 
         dependencies {
+        }
+    }
+
+    project('com.fourigin.theseus.repository') {
+        group = 'com.fourigin.theseus'
+        version = theseusVersion
+
+        dependencies {
+            compile theseusModels
         }
     }
 }
