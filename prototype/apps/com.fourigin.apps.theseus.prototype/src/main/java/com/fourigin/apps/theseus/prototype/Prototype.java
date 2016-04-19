@@ -2,8 +2,9 @@ package com.fourigin.apps.theseus.prototype;
 
 import java.util.Locale;
 
-import com.fourigin.theseus.models.ClassificationModel;
+import com.fourigin.theseus.models.Classification;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -73,7 +74,7 @@ public class Prototype extends WebMvcConfigurerAdapter {
     public ModelObjectRepositoryStub modelObjectRepositoryStub(){
         ModelObjectRepositoryStub result = new ModelObjectRepositoryStub();
 
-        ClassificationModel.Builder builder = new ClassificationModel.Builder();
+        Classification.Builder builder = new Classification.Builder();
 
         result.create(builder.id("c140").typeCode("model").description("Captiva (C140)").build());
         result.create(builder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());

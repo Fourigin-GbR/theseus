@@ -1,8 +1,6 @@
 package com.fourigin.theseus.repository;
 
-import com.fourigin.theseus.filters.ClassificationFilter;
 import com.fourigin.theseus.filters.ModelObjectFilter;
-import com.fourigin.theseus.models.ClassificationModel;
 import com.fourigin.theseus.models.ModelObject;
 
 import java.util.Collection;

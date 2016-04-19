@@ -2,7 +2,7 @@ package com.fourigin.apps.theseus.prototype;
 
 import com.fourigin.theseus.filters.ModelObjectFilter;
 import com.fourigin.theseus.filters.ModelObjectFilterEntity;
-import com.fourigin.theseus.models.ClassificationModel;
+import com.fourigin.theseus.models.Classification;
 import com.fourigin.theseus.models.ModelObject;
 import com.fourigin.theseus.repository.ModelObjectRepository;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ModelObjectRepositoryStub implements ModelObjectRepository {
-    private Map<String, ClassificationModel> classifications;
+    private Map<String, Classification> classifications;
 
     private final Logger logger = LoggerFactory.getLogger(ModelObjectRepositoryStub.class);
 
@@ -113,6 +113,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
             Field field;
             try {
                 field = modelClass.getDeclaredField(fieldName);
+                field.setAccessible(true);
             } catch (NoSuchFieldException ex) {
                 if (logger.isErrorEnabled()) logger.error("No field '{}' found in class '{}'!", fieldName, modelClass);
                 continue;
@@ -326,7 +327,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
     }
 
     private <T extends ModelObject> Map<String, T> getInternalMap(Class<T> modelClass){
-        if(ClassificationModel.class.isAssignableFrom(modelClass)){
+        if(Classification.class.isAssignableFrom(modelClass)){
             //noinspection unchecked
             return (Map<String, T>) classifications;
         }
@@ -335,7 +336,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
     }
 
     private <T extends ModelObject> Map<String, T> getInternalMap(T modelObject){
-        if(ClassificationModel.class.isAssignableFrom(modelObject.getClass())){
+        if(Classification.class.isAssignableFrom(modelObject.getClass())){
             //noinspection unchecked
             return (Map<String, T>) classifications;
         }
@@ -344,9 +345,9 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
     }
 
     private <T extends ModelObject> void setInternalMap(T modelObject, Map<String, T> map){
-        if(ClassificationModel.class.isAssignableFrom(modelObject.getClass())){
+        if(Classification.class.isAssignableFrom(modelObject.getClass())){
             //noinspection unchecked
-            classifications = (Map<String, ClassificationModel>) map;
+            classifications = (Map<String, Classification>) map;
         }
 
     }

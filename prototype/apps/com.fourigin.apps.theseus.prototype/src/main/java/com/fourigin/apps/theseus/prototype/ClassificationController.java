@@ -1,7 +1,7 @@
 package com.fourigin.apps.theseus.prototype;
 
-import com.fourigin.theseus.filters.ClassificationModelFilter;
-import com.fourigin.theseus.models.ClassificationModel;
+import com.fourigin.theseus.filters.ClassificationFilter;
+import com.fourigin.theseus.models.Classification;
 import com.fourigin.theseus.repository.ModelObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -30,7 +31,7 @@ public class ClassificationController {
     @RequestMapping(value = "_all", method = RequestMethod.GET)
     @ResponseBody
     public List<String> retrieveAllCodes(@RequestParam(required = false) boolean sort){
-        Set<String> classifications = modelObjectRepository.getAllIds(ClassificationModel.class);
+        Set<String> classifications = modelObjectRepository.getAllIds(Classification.class);
         if(classifications == null){
             return null;
         }
@@ -45,28 +46,37 @@ public class ClassificationController {
     }
 
     /**
-     * /classification?id={id}
-     * @param code classification id
+     * /classification?code={code}
+     * @param code classification code
      * @return the classification model object.
      */
-    @RequestMapping(value = "{code}", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ClassificationModel retrieve(@RequestParam String code){
-        ClassificationModel result = modelObjectRepository.retrieve(ClassificationModel.class, code);
-        if(result == null){
-            throw new ObjectNotFound("Error retrieving classification: no classification found for id '" + code + "'!");
+    public List<Classification> retrieve(@RequestParam List<String> code){
+
+        Map<String, Classification> entries = modelObjectRepository.retrieve(Classification.class, code);
+        if(entries == null){
+            throw new ObjectNotFound("Error retrieving classification(s): no classification found for id(s) '" + code + "'!");
+        }
+
+        List<Classification> result = new ArrayList<>(entries.size());
+        for (String c : code) {
+            Classification entry = entries.get(c);
+            if(entry != null) {
+                result.add(entry);
+            }
         }
 
         return result;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void update(@RequestBody ClassificationModel classificationModel){
+    public void update(@RequestBody Classification classificationModel){
         modelObjectRepository.update(classificationModel);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void create(@RequestBody ClassificationModel classificationModel){
+    public void create(@RequestBody Classification classificationModel){
         modelObjectRepository.create(classificationModel);
     }
 
@@ -74,9 +84,9 @@ public class ClassificationController {
      * /classification?id={id}
      * @param code classification id
      */
-    @RequestMapping(value = "{code}", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public void delete(@RequestParam String code){
-        modelObjectRepository.delete(ClassificationModel.class, code);
+        modelObjectRepository.delete(Classification.class, code);
     }
 
     /**
@@ -92,7 +102,7 @@ public class ClassificationController {
       @RequestParam(required = false) boolean sort
     ){
 
-        Set<String> ids = modelObjectRepository.findIds(ClassificationModel.class, new ClassificationModelFilter.Builder()
+        Set<String> ids = modelObjectRepository.findIds(Classification.class, new ClassificationFilter.Builder()
           .forType(type)
           .build()
         );

@@ -1,6 +1,6 @@
 package com.fourigin.theseus.models;
 
-public class ClassificationModel implements ModelObject {
+public class Classification implements ModelObject {
     private String id;
     private String revision;
     private String typeCode;
@@ -45,9 +45,9 @@ public class ClassificationModel implements ModelObject {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ClassificationModel)) return false;
+        if (!(o instanceof Classification)) return false;
 
-        ClassificationModel that = (ClassificationModel) o;
+        Classification that = (Classification) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (revision != null ? !revision.equals(that.revision) : that.revision != null) return false;
@@ -102,8 +102,8 @@ public class ClassificationModel implements ModelObject {
             return this;
         }
 
-        public ClassificationModel build(){
-            ClassificationModel model = new ClassificationModel();
+        public Classification build(){
+            Classification model = new Classification();
             model.setId(id);
             model.setRevision(revision);
             model.setTypeCode(typeCode);

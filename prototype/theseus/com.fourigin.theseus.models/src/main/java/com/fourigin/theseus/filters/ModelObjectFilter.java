@@ -16,6 +16,10 @@ public class ModelObjectFilter<T extends ModelObject> {
         entities.add(entity);
     }
 
+    public void setEntities(List<ModelObjectFilterEntity> entities) {
+        this.entities = entities;
+    }
+
     public List<ModelObjectFilterEntity> getEntities() {
         return new ArrayList<>(entities);
     }
