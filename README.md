@@ -4,8 +4,9 @@
 
 ### classification
 
-| [GET]    | /classification/_all                  | liefert alle IDs                                                        |
+| Method   | URL                                   | Description                                                             |
 |----------|---------------------------------------|-------------------------------------------------------------------------|
+| [GET]    | /classification/_all                  | liefert alle IDs                                                        |
 | [GET]    | /classification?code={c1}&code={c2}&… | liefert Classification-Objekte für angegebene IDs                       |
 | [POST]   | /classification {requestBody}         | schreibt das geänderte Objekt, return value: Status?                    |
 | [PUT]    | /classification {requestBody}         | erstellt ein neues Objekt, return value: ID des neu erstellten Objektes |
