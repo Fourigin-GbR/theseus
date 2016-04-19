@@ -15,8 +15,10 @@
 
 ### classificationType
 
-[GET]       /classificationType/_all 					        : liefert alle IDs
-[GET]       /classificationType?code={c1}&code={c2}&… : liefert ClassificationType-Objekte für angegebene IDs
-[POST]      /classificationType {requestBody} 			  : schreibt das geänderte Objekt, return value: Status?
-[PUT]       /classificationType {requestBody} 			  : erstellt ein neues Objekt, return value: ID des neu erstellten Objektes
-[DELETE]    /classificationType?code={c}				      : löscht ein Objekt, return value: Status?
+| Method   | URL                                       | Description                                                             |
+|----------|-------------------------------------------|-------------------------------------------------------------------------|
+| [GET]    | /classificationType/_all                  | liefert alle IDs                                                        |
+| [GET]    | /classificationType?code={c1}&code={c2}&… | liefert ClassificationType-Objekte für angegebene IDs                   |
+| [POST]   | /classificationType {requestBody}         | schreibt das geänderte Objekt, return value: Status?                    |
+| [PUT]    | /classificationType {requestBody}         | erstellt ein neues Objekt, return value: ID des neu erstellten Objektes |
+| [DELETE] | /classificationType?code={c}              | löscht ein Objekt, return value: Status?                                |
