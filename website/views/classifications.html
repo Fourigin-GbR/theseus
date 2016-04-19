@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Theseus - classifications</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="assets/css/theseus.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/libs/font-awesome-4.6.1/css/font-awesome.min.css"/>
+    <!---->
+    <script type="text/javascript" src="assets/libs/jquery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="assets/scripts/develop.js"></script>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li class="title">
+                Theseus
+            </li>
+            <li class="selected">
+                <a href="#">
+                    <i class="fa fa-bookmark-o"></i>
+                    Classifications</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-cubes"></i>
+                    Products</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-pie-chart"></i>
+                    Properties</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-th"></i>
+                    Views</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<!---->
+<!---->
+<section id="mainSection">
+
+    <!---->
+    <section id="tabs">
+        <nav class="tabs">
+            <ul>
+                <li class="selected">
+                    <a href="#">
+                        <i class="fa fa-bookmark-o"></i>
+                        Classifications</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-map-o" aria-hidden="true"></i>
+                        Types</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <!---->
+
+
+    <h1>Classifications</h1>
+
+    <section class="listView">
+        <nav class="context">
+            <ul>
+                <li class="button action">
+                    <a href="#addClassification">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Add
+                    </a>
+                </li>
+            </ul>
+            <!---->
+            <ul class="toggleNavigation">
+                <li class="selected">
+                    Definition
+                </li>
+                <li>
+                    Translations
+                </li>
+            </ul>
+            <!---->
+            <div class="search">
+                <form>
+                    <input id="listSearch" placeholder="Search..." value="" type="search"/>
+                    <span class="serachIcon">
+                       <i class="fa fa-search"></i>
+                    </span>
+                </form>
+            </div>
+        </nav>
+
+        <div class="contextMenu">
+            <span>
+                <i class="fa fa-bars"></i>
+            </span>
+        </div>
+
+        <div class="listWrapper">
+            <table id="listView">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>b123</td>
+                    <td>tee</td>
+                    <td>Tee party something</td>
+                </tr>
+                <tr>
+                    <td>b12322</td>
+                    <td>coffee</td>
+                    <td>Coffee party something</td>
+                </tr>
+                <tr>
+                    <td>x12322</td>
+                    <td>computers</td>
+                    <td>Fancy stuff for lazy people</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</section>
+<!---->
+<!---->
+<!---->
+<!---->
+<div class="contextMenuOverlay" id="listItemContextMenu">
+    <ul>
+        <li>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </li>
+        <li>
+            <i class="fa fa-times" aria-hidden="true"></i>
+            Delete
+        </li>
+    </ul>
+</div>
+<!---->
+<div class="overlayWindow" id="addClassification">
+    <header>
+        <h3>Add Classicifaction</h3>
+        <div class="close button">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+    </header>
+    <section>
+        <form>
+            <div class="tableList">
+                <div class="row">
+                    <div class="rowHeader">
+                        Code
+                    </div>
+                    <div class="rowData">
+                        <input type="text" name="code"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="rowHeader">
+                        Type
+                    </div>
+                    <div class="rowData">
+                        <input type="text" name="type"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="rowHeader">
+                        Description
+                    </div>
+                    <div class="rowData">
+                        <textarea name="description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <footer>
+        <ul>
+            <li>
+                <i class="fa fa-reply" aria-hidden="true"></i>
+                Cancel
+            </li>
+            <li class="primeAction">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                Save
+            </li>
+        </ul>
+    </footer>
+</div>
+<!---->
+</body>
+</html>

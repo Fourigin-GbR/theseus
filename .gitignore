@@ -1,4 +1,6 @@
 .DS_Store
+.idea
+.sass-cache
 build/
 out/
 *.ipr

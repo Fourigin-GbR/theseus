@@ -1,0 +1,415 @@
+$color_1: #e1e8f0;
+$color_2: #9068be;
+$color_3: #6ed3cf;
+$color_4: #e62739;
+
+$color_5: #444;
+$color_6: #aaa;
+$color_7: #eee;
+/* Navigations basic */
+
+nav {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    li {
+      float: left;
+      padding: 1rem;
+      margin-left: 0.2rem;
+      cursor: pointer;
+      background-color: $color_5;
+      color: $color_6;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &.action {
+        background-color: $color_4;
+        border-radius: 10px;
+        text-align: center;
+        color: #fff;
+
+        a {
+          color: #fff;
+        }
+      }
+
+      &.button {
+        padding: 0;
+
+        a {
+          padding: 1rem;
+          display: inline-block;
+        }
+      }
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  ul.toggleNavigation {
+    li {
+       margin: 0;
+      background-color: $color_7;
+      color: $color_6;
+
+
+      &.selected {
+         background-color: $color_5;
+        color: $color_6;
+      }
+    }
+  }
+
+}
+
+
+/* Table List */
+.tableList {
+  display: table;
+  width: 100%;
+
+  .row {
+    display: table-row;
+
+    .rowHeader, .rowData {
+      display: table-cell;
+      padding: 0.5em;
+    }
+
+    .rowHeader {
+      width: 6em;
+      vertical-align: top;
+    }
+
+    input, textarea {
+      margin: 0;
+      padding: 0.5em;
+      border: 0;
+      background-color: $color_1;
+      color: $color_5;
+      box-sizing: border-box;
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+}
+
+
+/* Resets */
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body, input, textarea {
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+}
+
+a {
+  color: gray;
+}
+
+/* Header */
+
+header {
+  background-color: $color_5;
+  color: $color_6;
+
+  .title {
+    color: $color_7;
+    font-weight: bold;
+  }
+
+  nav {
+    ul {
+
+      li {
+        margin-left: 0;
+        background-color: transparent;
+
+        &.selected {
+          background-color: $color_3;
+          color: $color_5;
+
+          a {
+            color: $color_5;
+          }
+        }
+
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+/* Sections */
+
+section#tabs {
+  border-bottom: 1px solid $color_6;
+  margin-top: 2em;
+
+  ul li {
+    background-color: #fff;
+    border-bottom: 4px solid #fff;
+    padding: 0.5rem;
+
+    &.selected,
+    &:hover {
+      border-color: $color_2;
+      text-decoration: none;
+
+      a {
+        color: $color_5;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      border: none;
+      color: $color_6;
+
+      &:hover, &:active {
+        border-bottom: none;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+section#mainSection {
+  padding: 1rem;
+}
+
+.contextMenu {
+  padding-top: 2rem;
+  overflow: hidden;
+
+  span {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+section.listView {
+  .listWrapper {
+    background-color: $color_1;
+    margin-top: 2rem;
+
+    table {
+      table-layout: fixed;
+      width: 100%;
+      border-collapse: collapse;
+
+      thead tr {
+        background-color: $color_3;
+
+        th {
+          height: 2rem;
+          padding: 0.25rem 0.5rem;
+          text-align: left;
+        }
+      }
+
+      tbody {
+        tr {
+          cursor: pointer;
+
+          &:hover {
+            background-color: $color_5;
+            color: #fff;
+          }
+
+          &.active {
+            background-color: $color_2;
+            color: #fff;
+          }
+
+          td {
+            height: 2rem;
+            padding: 0 1rem;
+            border-bottom: 1px solid #fff;
+          }
+
+          &:last-of-type {
+
+            td {
+              border-bottom: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Contexts */
+
+nav.context {
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  ul {
+
+    display: inline-block;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .search {
+    float: right;
+    background-color: $color_2;
+    overflow: hidden;
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: #fff;
+
+    input {
+      border: 0;
+      background-color: transparent;
+      color: #fff;
+      display: inline-block;
+      min-width: 20rem;
+      font-size: 1.25rem;
+    }
+  }
+}
+
+
+/* Context Menu Overlays */
+
+.contextMenuOverlay {
+  position: absolute;
+  margin-top: 4px;
+  background-color: $color_6;
+  box-shadow: 2px 2px 4px $color_5;
+  display: none;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      padding: 0.25rem 2rem;
+      margin: 0;
+      cursor: pointer;
+      border-bottom: 1px solid #fff;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: $color_7;
+      }
+    }
+  }
+}
+
+/* Overlay window */
+.overlayWindow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 80%;
+  left: 50%;
+  background-color: #fff;
+  box-shadow: 2px 2px 4px $color_5;
+  display: none;
+
+  .button {
+    cursor: pointer;
+  }
+
+  header {
+    background-color: $color_3;
+    color: $color_5;
+    position: relative;
+
+    h3 {
+      float: left;
+      width: 80%;
+      margin: 0.5rem;
+      padding: 0;
+    }
+
+    .close.button {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      height: 2em;
+      width: 2em;
+      background-color: $color_4;
+      color: #fff;
+      text-align: center;
+      border-radius: 50%;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  section {
+    padding: 1rem;
+  }
+
+  footer {
+    padding: 1rem;
+    overflow: hidden;
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+          float: left;
+          margin-left: 0.5rem;
+          padding: 0.5rem;
+          background-color: $color_5;
+          color: $color_6;
+          cursor: pointer;
+
+          &:first-of-type {
+            margin-left: 0;
+          }
+
+          &.primeAction {
+            background-color: $color_4;
+            color: #fff
+          }
+        }
+      }
+  }
+}
