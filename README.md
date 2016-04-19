@@ -3,9 +3,11 @@
 ## URLs
 
 http://fourigin.de/spring/prototype/classification/_all
+
 http://fourigin.de/spring/prototype/classification/?code=1yy&code=1yz
 
 http://fourigin.de/spring/prototype/classificationType/_all
+
 http://fourigin.de/spring/prototype/classificationType/?code=model&code=trim
 
 
