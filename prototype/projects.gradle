@@ -15,7 +15,7 @@ project(':apps') {
         }
 
         jar {
-            baseName = "prototype"
+            baseName = "theseus"
         }
 
         dependencies {

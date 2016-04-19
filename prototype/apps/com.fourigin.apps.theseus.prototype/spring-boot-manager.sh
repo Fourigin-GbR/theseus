@@ -1,7 +1,6 @@
 #!/bin/bash
-APPName="prototype-1.0-SNAPSHOT"
-JARFile="$APPName.jar"
-#PIDFile="application.pid"
+APPName="theseus"
+JARFile="$APPName-1.0-SNAPSHOT.jar"
 PIDFile="$APPName.pid"
 SPRING_OPTS="-DLOG_FILE=$APPName.log"
 

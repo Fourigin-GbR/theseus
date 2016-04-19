@@ -27,8 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 @SpringBootApplication
 public class Prototype extends WebMvcConfigurerAdapter {
 
+    private static final String APP_NAME = "theseus";
+
     public static void main(String[] args) {
-        SpringApplication.run(Prototype.class, args);
+        SpringApplication app = new SpringApplication(Prototype.class);
+        app.addListeners(
+          new ApplicationPidFileWriter(APP_NAME+".pid")
+        );
+        app.run(args);
     }
 
     @Bean
