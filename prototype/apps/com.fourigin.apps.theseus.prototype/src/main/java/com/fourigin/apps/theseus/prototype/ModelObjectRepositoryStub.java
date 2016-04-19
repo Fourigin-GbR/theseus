@@ -3,6 +3,7 @@ package com.fourigin.apps.theseus.prototype;
 import com.fourigin.theseus.filters.ModelObjectFilter;
 import com.fourigin.theseus.filters.ModelObjectFilterEntity;
 import com.fourigin.theseus.models.Classification;
+import com.fourigin.theseus.models.ClassificationType;
 import com.fourigin.theseus.models.ModelObject;
 import com.fourigin.theseus.repository.ModelObjectRepository;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class ModelObjectRepositoryStub implements ModelObjectRepository {
     private Map<String, Classification> classifications;
+    private Map<String, ClassificationType> classificationTypes;
 
     private final Logger logger = LoggerFactory.getLogger(ModelObjectRepositoryStub.class);
 
@@ -332,6 +334,11 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
             return (Map<String, T>) classifications;
         }
 
+        if(ClassificationType.class.isAssignableFrom(modelClass)){
+            //noinspection unchecked
+            return (Map<String, T>) classificationTypes;
+        }
+
         return null;
     }
 
@@ -339,6 +346,11 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
         if(Classification.class.isAssignableFrom(modelObject.getClass())){
             //noinspection unchecked
             return (Map<String, T>) classifications;
+        }
+
+        if(ClassificationType.class.isAssignableFrom(modelObject.getClass())){
+            //noinspection unchecked
+            return (Map<String, T>) classificationTypes;
         }
 
         return null;
@@ -350,5 +362,9 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
             classifications = (Map<String, Classification>) map;
         }
 
+        if(ClassificationType.class.isAssignableFrom(modelObject.getClass())){
+            //noinspection unchecked
+            classificationTypes = (Map<String, ClassificationType>) map;
+        }
     }
 }

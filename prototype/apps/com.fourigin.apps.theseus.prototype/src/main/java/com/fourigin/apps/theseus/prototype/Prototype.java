@@ -3,6 +3,7 @@ package com.fourigin.apps.theseus.prototype;
 import java.util.Locale;
 
 import com.fourigin.theseus.models.Classification;
+import com.fourigin.theseus.models.ClassificationType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -32,7 +33,7 @@ public class Prototype extends WebMvcConfigurerAdapter {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Prototype.class);
         app.addListeners(
-          new ApplicationPidFileWriter(APP_NAME+".pid")
+          new ApplicationPidFileWriter(APP_NAME + ".pid")
         );
         app.run(args);
     }
@@ -80,14 +81,20 @@ public class Prototype extends WebMvcConfigurerAdapter {
     public ModelObjectRepositoryStub modelObjectRepositoryStub(){
         ModelObjectRepositoryStub result = new ModelObjectRepositoryStub();
 
-        Classification.Builder builder = new Classification.Builder();
+        Classification.Builder classificationBuilder = new Classification.Builder();
 
-        result.create(builder.id("c140").typeCode("model").description("Captiva (C140)").build());
-        result.create(builder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());
-        result.create(builder.id("1yz").typeCode("model").description("Corvette Z06 (1YZ)").build());
-        result.create(builder.id("ls").typeCode("trim").description("LS").build());
-        result.create(builder.id("lt").typeCode("trim").description("LT").build());
-        result.create(builder.id("1.8").typeCode("version").description("1.8").build());
+        result.create(classificationBuilder.id("c140").typeCode("model").description("Captiva (C140)").build());
+        result.create(classificationBuilder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());
+        result.create(classificationBuilder.id("1yz").typeCode("model").description("Corvette Z06 (1YZ)").build());
+        result.create(classificationBuilder.id("ls").typeCode("trim").description("LS").build());
+        result.create(classificationBuilder.id("lt").typeCode("trim").description("LT").build());
+        result.create(classificationBuilder.id("1.8").typeCode("version").description("1.8").build());
+
+        ClassificationType.Builder classificationTypeBuilder = new ClassificationType.Builder();
+
+        result.create(classificationTypeBuilder.id("model").description("Carline").build());
+        result.create(classificationTypeBuilder.id("trim").description("Trim level").build());
+        result.create(classificationTypeBuilder.id("version").description("Version").build());
 
         return result;
     }

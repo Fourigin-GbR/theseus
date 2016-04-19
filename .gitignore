@@ -8,3 +8,4 @@ out/
 *.iws
 .gradle
 prototype/application.pid
+prototype/theseus.pid
