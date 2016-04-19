@@ -348,6 +348,16 @@ nav.context {
     cursor: pointer;
   }
 
+  form {
+    label {
+      cursor: pointer;
+
+      input[type=submit] {
+        display: none;
+      }
+    }
+  }
+
   header {
     background-color: $color_3;
     color: $color_5;

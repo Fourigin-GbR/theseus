@@ -323,20 +323,28 @@ nav.context .search input {
 .overlayWindow .button {
   cursor: pointer;
 }
-/* line 351, ../../resources/sass/theseus.scss */
+/* line 352, ../../resources/sass/theseus.scss */
+.overlayWindow form label {
+  cursor: pointer;
+}
+/* line 355, ../../resources/sass/theseus.scss */
+.overlayWindow form label input[type=submit] {
+  display: none;
+}
+/* line 361, ../../resources/sass/theseus.scss */
 .overlayWindow header {
   background-color: #6ed3cf;
   color: #444;
   position: relative;
 }
-/* line 356, ../../resources/sass/theseus.scss */
+/* line 366, ../../resources/sass/theseus.scss */
 .overlayWindow header h3 {
   float: left;
   width: 80%;
   margin: 0.5rem;
   padding: 0;
 }
-/* line 363, ../../resources/sass/theseus.scss */
+/* line 373, ../../resources/sass/theseus.scss */
 .overlayWindow header .close.button {
   position: absolute;
   top: 0;
@@ -349,28 +357,28 @@ nav.context .search input {
   text-align: center;
   border-radius: 50%;
 }
-/* line 376, ../../resources/sass/theseus.scss */
+/* line 386, ../../resources/sass/theseus.scss */
 .overlayWindow header:after {
   content: "";
   display: block;
   clear: both;
 }
-/* line 383, ../../resources/sass/theseus.scss */
+/* line 393, ../../resources/sass/theseus.scss */
 .overlayWindow section {
   padding: 1rem;
 }
-/* line 387, ../../resources/sass/theseus.scss */
+/* line 397, ../../resources/sass/theseus.scss */
 .overlayWindow footer {
   padding: 1rem;
   overflow: hidden;
 }
-/* line 391, ../../resources/sass/theseus.scss */
+/* line 401, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-/* line 396, ../../resources/sass/theseus.scss */
+/* line 406, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul li {
   float: left;
   margin-left: 0.5rem;
@@ -379,11 +387,11 @@ nav.context .search input {
   color: #aaa;
   cursor: pointer;
 }
-/* line 404, ../../resources/sass/theseus.scss */
+/* line 414, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul li:first-of-type {
   margin-left: 0;
 }
-/* line 408, ../../resources/sass/theseus.scss */
+/* line 418, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul li.primeAction {
   background-color: #e62739;
   color: #fff;

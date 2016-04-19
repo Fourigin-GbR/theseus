@@ -62,4 +62,54 @@ jQuery(document).ready(function(){
             }
         });
     });
+
+    // FORMS
+    jQuery.fn.helperSerializeObject = function()
+    {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    jQuery("form").on("submit", function(e) {
+        var jForm = jQuery(this),
+            oForm = jForm.helperSerializeObject();
+        console.log("oForm:", oForm);
+        //
+        //
+        e.preventDefault();
+        //
+        jQuery.ajax({
+                method: jForm.attr("method"),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "http://fourigin.com/spring/prototype" + jForm.attr("action"),
+                data: JSON.stringify({
+                    "id": oForm["id"],
+                    "typeCode": oForm["type"],
+                    "description": oForm["description"]
+                })
+            })
+            .done(function( msg ) {
+                alert( "Data Saved: " + msg );
+            })
+            .fail(function (msg) {
+                alert("Something wrong: " + msg);
+                console.error("Can not add. Reason: ", msg);
+            });
+    });
 });
