@@ -1,4 +1,5 @@
- /* General basics */
+/* General basics */
+
 /* line 11, ../../resources/sass/theseus.scss */
 .prototype {
   display: none;
@@ -88,7 +89,7 @@ nav ul.toggleNavigation li.selected {
   vertical-align: top;
 }
 /* line 104, ../../resources/sass/theseus.scss */
-.tableList .row input, .tableList .row textarea {
+.tableList .row input, .tableList .row select, .tableList .row textarea {
   margin: 0;
   padding: 0.5em;
   border: 0;

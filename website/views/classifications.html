@@ -111,9 +111,12 @@
                 </thead>
                 <tbody>
                     <tr class="prototype">
-                        <td data-value="code"></td>
-                        <td data-value="type"></td>
-                        <td data-value="description"></td>
+                        <td data-field="code" data-value="">
+                        </td>
+                        <td data-field="typeCode" data-value="">
+                        </td>
+                        <td data-field="description" data-value="">
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -128,11 +131,11 @@
     <ul>
         <li>
             <i class="fa fa-pencil" aria-hidden="true"></i>
-            Edit
+            <a href="#editClassification">Edit</a>
         </li>
         <li>
             <i class="fa fa-times" aria-hidden="true"></i>
-            Delete
+            <a href="#deleteClassification">Delete</a>
         </li>
     </ul>
 </div>
@@ -161,7 +164,9 @@
                         Type
                     </div>
                     <div class="rowData">
-                        <input type="text" name="typeCode"/>
+                        <select name="typeCode">
+                            <option class="prototype" value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -216,7 +221,9 @@
                         Type
                     </div>
                     <div class="rowData">
-                        <input type="text" name="type"/>
+                        <select name="typeCode">
+                            <option class="prototype" value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
