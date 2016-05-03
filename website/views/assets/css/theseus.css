@@ -1,12 +1,18 @@
+ /* General basics */
+/* line 11, ../../resources/sass/theseus.scss */
+.prototype {
+  display: none;
+}
+
 /* Navigations basic */
-/* line 12, ../../resources/sass/theseus.scss */
+/* line 19, ../../resources/sass/theseus.scss */
 nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
-/* line 18, ../../resources/sass/theseus.scss */
+/* line 25, ../../resources/sass/theseus.scss */
 nav ul li {
   float: left;
   padding: 1rem;
@@ -15,73 +21,73 @@ nav ul li {
   background-color: #444;
   color: #aaa;
 }
-/* line 26, ../../resources/sass/theseus.scss */
+/* line 33, ../../resources/sass/theseus.scss */
 nav ul li:hover {
   text-decoration: underline;
 }
-/* line 30, ../../resources/sass/theseus.scss */
+/* line 37, ../../resources/sass/theseus.scss */
 nav ul li:first-of-type {
   margin-left: 0;
 }
-/* line 34, ../../resources/sass/theseus.scss */
+/* line 41, ../../resources/sass/theseus.scss */
 nav ul li.action {
   background-color: #e62739;
   border-radius: 10px;
   text-align: center;
   color: #fff;
 }
-/* line 40, ../../resources/sass/theseus.scss */
+/* line 47, ../../resources/sass/theseus.scss */
 nav ul li.action a {
   color: #fff;
 }
-/* line 45, ../../resources/sass/theseus.scss */
+/* line 52, ../../resources/sass/theseus.scss */
 nav ul li.button {
   padding: 0;
 }
-/* line 48, ../../resources/sass/theseus.scss */
+/* line 55, ../../resources/sass/theseus.scss */
 nav ul li.button a {
   padding: 1rem;
   display: inline-block;
 }
-/* line 55, ../../resources/sass/theseus.scss */
+/* line 62, ../../resources/sass/theseus.scss */
 nav ul:after {
   content: "";
   display: block;
   clear: both;
 }
-/* line 63, ../../resources/sass/theseus.scss */
+/* line 70, ../../resources/sass/theseus.scss */
 nav ul.toggleNavigation li {
   margin: 0;
   background-color: #eee;
   color: #aaa;
 }
-/* line 69, ../../resources/sass/theseus.scss */
+/* line 76, ../../resources/sass/theseus.scss */
 nav ul.toggleNavigation li.selected {
   background-color: #444;
   color: #aaa;
 }
 
 /* Table List */
-/* line 80, ../../resources/sass/theseus.scss */
+/* line 87, ../../resources/sass/theseus.scss */
 .tableList {
   display: table;
   width: 100%;
 }
-/* line 84, ../../resources/sass/theseus.scss */
+/* line 91, ../../resources/sass/theseus.scss */
 .tableList .row {
   display: table-row;
 }
-/* line 87, ../../resources/sass/theseus.scss */
+/* line 94, ../../resources/sass/theseus.scss */
 .tableList .row .rowHeader, .tableList .row .rowData {
   display: table-cell;
   padding: 0.5em;
 }
-/* line 92, ../../resources/sass/theseus.scss */
+/* line 99, ../../resources/sass/theseus.scss */
 .tableList .row .rowHeader {
   width: 6em;
   vertical-align: top;
 }
-/* line 97, ../../resources/sass/theseus.scss */
+/* line 104, ../../resources/sass/theseus.scss */
 .tableList .row input, .tableList .row textarea {
   margin: 0;
   padding: 0.5em;
@@ -94,170 +100,170 @@ nav ul.toggleNavigation li.selected {
 }
 
 /* Resets */
-/* line 112, ../../resources/sass/theseus.scss */
+/* line 119, ../../resources/sass/theseus.scss */
 html {
   height: 100%;
 }
 
-/* line 116, ../../resources/sass/theseus.scss */
+/* line 123, ../../resources/sass/theseus.scss */
 body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-/* line 122, ../../resources/sass/theseus.scss */
+/* line 129, ../../resources/sass/theseus.scss */
 body, input, textarea {
   font-family: 'Roboto Condensed', Arial, sans-serif;
 }
 
-/* line 126, ../../resources/sass/theseus.scss */
+/* line 133, ../../resources/sass/theseus.scss */
 a {
   color: gray;
 }
 
 /* Header */
-/* line 132, ../../resources/sass/theseus.scss */
+/* line 139, ../../resources/sass/theseus.scss */
 header {
   background-color: #444;
   color: #aaa;
 }
-/* line 136, ../../resources/sass/theseus.scss */
+/* line 143, ../../resources/sass/theseus.scss */
 header .title {
   color: #eee;
   font-weight: bold;
 }
-/* line 144, ../../resources/sass/theseus.scss */
+/* line 151, ../../resources/sass/theseus.scss */
 header nav ul li {
   margin-left: 0;
   background-color: transparent;
 }
-/* line 148, ../../resources/sass/theseus.scss */
+/* line 155, ../../resources/sass/theseus.scss */
 header nav ul li.selected {
   background-color: #6ed3cf;
   color: #444;
 }
-/* line 152, ../../resources/sass/theseus.scss */
+/* line 159, ../../resources/sass/theseus.scss */
 header nav ul li.selected a {
   color: #444;
 }
-/* line 157, ../../resources/sass/theseus.scss */
+/* line 164, ../../resources/sass/theseus.scss */
 header nav ul li a {
   text-decoration: none;
 }
 
 /* Sections */
-/* line 167, ../../resources/sass/theseus.scss */
+/* line 174, ../../resources/sass/theseus.scss */
 section#tabs {
   border-bottom: 1px solid #aaa;
   margin-top: 2em;
 }
-/* line 171, ../../resources/sass/theseus.scss */
+/* line 178, ../../resources/sass/theseus.scss */
 section#tabs ul li {
   background-color: #fff;
   border-bottom: 4px solid #fff;
   padding: 0.5rem;
 }
-/* line 176, ../../resources/sass/theseus.scss */
+/* line 183, ../../resources/sass/theseus.scss */
 section#tabs ul li.selected, section#tabs ul li:hover {
   border-color: #9068be;
   text-decoration: none;
 }
-/* line 181, ../../resources/sass/theseus.scss */
+/* line 188, ../../resources/sass/theseus.scss */
 section#tabs ul li.selected a, section#tabs ul li:hover a {
   color: #444;
 }
-/* line 186, ../../resources/sass/theseus.scss */
+/* line 193, ../../resources/sass/theseus.scss */
 section#tabs ul li a {
   text-decoration: none;
   border: none;
   color: #aaa;
 }
-/* line 191, ../../resources/sass/theseus.scss */
+/* line 198, ../../resources/sass/theseus.scss */
 section#tabs ul li a:hover, section#tabs ul li a:active {
   border-bottom: none;
   text-decoration: none;
 }
 
-/* line 199, ../../resources/sass/theseus.scss */
+/* line 206, ../../resources/sass/theseus.scss */
 section#mainSection {
   padding: 1rem;
 }
 
-/* line 203, ../../resources/sass/theseus.scss */
+/* line 210, ../../resources/sass/theseus.scss */
 .contextMenu {
   padding-top: 2rem;
   overflow: hidden;
 }
-/* line 207, ../../resources/sass/theseus.scss */
+/* line 214, ../../resources/sass/theseus.scss */
 .contextMenu span {
   float: right;
   font-size: 1.5rem;
   cursor: pointer;
 }
 
-/* line 215, ../../resources/sass/theseus.scss */
+/* line 222, ../../resources/sass/theseus.scss */
 section.listView .listWrapper {
   background-color: #e1e8f0;
   margin-top: 2rem;
 }
-/* line 219, ../../resources/sass/theseus.scss */
+/* line 226, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
 }
-/* line 224, ../../resources/sass/theseus.scss */
+/* line 231, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table thead tr {
   background-color: #6ed3cf;
 }
-/* line 227, ../../resources/sass/theseus.scss */
+/* line 234, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table thead tr th {
   height: 2rem;
   padding: 0.25rem 0.5rem;
   text-align: left;
 }
-/* line 235, ../../resources/sass/theseus.scss */
+/* line 242, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table tbody tr {
   cursor: pointer;
 }
-/* line 238, ../../resources/sass/theseus.scss */
+/* line 245, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table tbody tr:hover {
   background-color: #444;
   color: #fff;
 }
-/* line 243, ../../resources/sass/theseus.scss */
+/* line 250, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table tbody tr.active {
   background-color: #9068be;
   color: #fff;
 }
-/* line 248, ../../resources/sass/theseus.scss */
+/* line 255, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table tbody tr td {
   height: 2rem;
   padding: 0 1rem;
   border-bottom: 1px solid #fff;
 }
-/* line 256, ../../resources/sass/theseus.scss */
+/* line 263, ../../resources/sass/theseus.scss */
 section.listView .listWrapper table tbody tr:last-of-type td {
   border-bottom: none;
 }
 
 /* Contexts */
-/* line 270, ../../resources/sass/theseus.scss */
+/* line 277, ../../resources/sass/theseus.scss */
 nav.context:after {
   content: "";
   display: block;
   clear: both;
 }
-/* line 276, ../../resources/sass/theseus.scss */
+/* line 283, ../../resources/sass/theseus.scss */
 nav.context ul {
   display: inline-block;
 }
-/* line 280, ../../resources/sass/theseus.scss */
+/* line 287, ../../resources/sass/theseus.scss */
 nav.context ul:after {
   display: none;
 }
-/* line 285, ../../resources/sass/theseus.scss */
+/* line 292, ../../resources/sass/theseus.scss */
 nav.context .search {
   float: right;
   background-color: #9068be;
@@ -266,7 +272,7 @@ nav.context .search {
   border-radius: 8px;
   color: #fff;
 }
-/* line 293, ../../resources/sass/theseus.scss */
+/* line 300, ../../resources/sass/theseus.scss */
 nav.context .search input {
   border: 0;
   background-color: transparent;
@@ -277,7 +283,7 @@ nav.context .search input {
 }
 
 /* Context Menu Overlays */
-/* line 307, ../../resources/sass/theseus.scss */
+/* line 314, ../../resources/sass/theseus.scss */
 .contextMenuOverlay {
   position: absolute;
   margin-top: 4px;
@@ -285,30 +291,30 @@ nav.context .search input {
   box-shadow: 2px 2px 4px #444;
   display: none;
 }
-/* line 314, ../../resources/sass/theseus.scss */
+/* line 321, ../../resources/sass/theseus.scss */
 .contextMenuOverlay ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-/* line 319, ../../resources/sass/theseus.scss */
+/* line 326, ../../resources/sass/theseus.scss */
 .contextMenuOverlay ul li {
   padding: 0.25rem 2rem;
   margin: 0;
   cursor: pointer;
   border-bottom: 1px solid #fff;
 }
-/* line 325, ../../resources/sass/theseus.scss */
+/* line 332, ../../resources/sass/theseus.scss */
 .contextMenuOverlay ul li:last-of-type {
   border-bottom: none;
 }
-/* line 329, ../../resources/sass/theseus.scss */
+/* line 336, ../../resources/sass/theseus.scss */
 .contextMenuOverlay ul li:hover {
   background-color: #eee;
 }
 
 /* Overlay window */
-/* line 337, ../../resources/sass/theseus.scss */
+/* line 344, ../../resources/sass/theseus.scss */
 .overlayWindow {
   position: fixed;
   top: 50%;
@@ -319,32 +325,32 @@ nav.context .search input {
   box-shadow: 2px 2px 4px #444;
   display: none;
 }
-/* line 347, ../../resources/sass/theseus.scss */
+/* line 354, ../../resources/sass/theseus.scss */
 .overlayWindow .button {
   cursor: pointer;
 }
-/* line 352, ../../resources/sass/theseus.scss */
+/* line 359, ../../resources/sass/theseus.scss */
 .overlayWindow form label {
   cursor: pointer;
 }
-/* line 355, ../../resources/sass/theseus.scss */
+/* line 362, ../../resources/sass/theseus.scss */
 .overlayWindow form label input[type=submit] {
   display: none;
 }
-/* line 361, ../../resources/sass/theseus.scss */
+/* line 368, ../../resources/sass/theseus.scss */
 .overlayWindow header {
   background-color: #6ed3cf;
   color: #444;
   position: relative;
 }
-/* line 366, ../../resources/sass/theseus.scss */
+/* line 373, ../../resources/sass/theseus.scss */
 .overlayWindow header h3 {
   float: left;
   width: 80%;
   margin: 0.5rem;
   padding: 0;
 }
-/* line 373, ../../resources/sass/theseus.scss */
+/* line 380, ../../resources/sass/theseus.scss */
 .overlayWindow header .close.button {
   position: absolute;
   top: 0;
@@ -357,28 +363,28 @@ nav.context .search input {
   text-align: center;
   border-radius: 50%;
 }
-/* line 386, ../../resources/sass/theseus.scss */
+/* line 393, ../../resources/sass/theseus.scss */
 .overlayWindow header:after {
   content: "";
   display: block;
   clear: both;
 }
-/* line 393, ../../resources/sass/theseus.scss */
+/* line 400, ../../resources/sass/theseus.scss */
 .overlayWindow section {
   padding: 1rem;
 }
-/* line 397, ../../resources/sass/theseus.scss */
+/* line 404, ../../resources/sass/theseus.scss */
 .overlayWindow footer {
   padding: 1rem;
   overflow: hidden;
 }
-/* line 401, ../../resources/sass/theseus.scss */
+/* line 408, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-/* line 406, ../../resources/sass/theseus.scss */
+/* line 413, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul li {
   float: left;
   margin-left: 0.5rem;
@@ -387,11 +393,11 @@ nav.context .search input {
   color: #aaa;
   cursor: pointer;
 }
-/* line 414, ../../resources/sass/theseus.scss */
+/* line 421, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul li:first-of-type {
   margin-left: 0;
 }
-/* line 418, ../../resources/sass/theseus.scss */
+/* line 425, ../../resources/sass/theseus.scss */
 .overlayWindow footer ul li.primeAction {
   background-color: #e62739;
   color: #fff;

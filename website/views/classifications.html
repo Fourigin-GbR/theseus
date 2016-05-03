@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Theseus - classifications</title>
+    <title>Theseus - Classifications</title>
 
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="assets/css/theseus.css"/>
@@ -103,28 +103,18 @@
         <div class="listWrapper">
             <table id="listView">
                 <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
+                    <tr>
+                        <th>Code</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>b123</td>
-                    <td>tee</td>
-                    <td>Tee party something</td>
-                </tr>
-                <tr>
-                    <td>b12322</td>
-                    <td>coffee</td>
-                    <td>Coffee party something</td>
-                </tr>
-                <tr>
-                    <td>x12322</td>
-                    <td>computers</td>
-                    <td>Fancy stuff for lazy people</td>
-                </tr>
+                    <tr class="prototype">
+                        <td data-value="code"></td>
+                        <td data-value="type"></td>
+                        <td data-value="description"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -149,7 +139,7 @@
 <!---->
 <!---->
 <div class="overlayWindow" id="addClassification">
-    <form action="/classification" method="post">
+    <form action="/classification" method="put">
         <header>
             <h3>Add Classicifaction</h3>
             <div class="close button">

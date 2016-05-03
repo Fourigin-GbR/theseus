@@ -2,11 +2,11 @@
  * Created by Karsten Schäfer on 18.04.16.
  */
 
-jQuery(document).ready(function(){
+jQuery(document).ready(function() {
     // LIST ITEM CONTEXT MENU
     var jListItemContextMenu = jQuery("#listItemContextMenu");
     // Open List Item Context Menu:
-    jQuery(".listWrapper table tbody tr td").on("click", function(e){
+    jQuery(".listWrapper table tbody tr td").on("click", function (e) {
         var jCurrentTd = jQuery(this),
             oOffset = {};
         //
@@ -19,10 +19,10 @@ jQuery(document).ready(function(){
             "top": oOffset['top'] + "px",
             "left": e.pageX + "px"
         }).fadeIn();
-    } );
+    });
 
     // Close List Item Context Menu on body-click:
-    jQuery("body").on("click", function() {
+    jQuery("body").on("click", function () {
         jQuery(".listWrapper table tbody tr").removeClass("active");
         jListItemContextMenu.fadeOut();
     });
@@ -31,30 +31,30 @@ jQuery(document).ready(function(){
     var jOverlayWindow = jQuery(".overlayWindow");
 
     // Close on close-button-click:
-    jOverlayWindow.find(".close.button").on("click", function() {
+    jOverlayWindow.find(".close.button").on("click", function () {
         jQuery(this).closest(".overlayWindow").fadeOut();
     });
 
     // CATCH <A> LINKS
-    jQuery("a[href^='#']").on("click", function(e){
+    jQuery("a[href^='#']").on("click", function (e) {
         var jThis = jQuery(this),
             sInternalLinkId = jThis.attr("href");
         //
         //
         e.preventDefault();
-        if("#addClassification" === sInternalLinkId) {
+        if ("#addClassification" === sInternalLinkId) {
             jQuery(".overlayWindow#addClassification").fadeIn();
         }
     });
 
     // LIST SEARCH / FILTER
-    jQuery("input#listSearch").on("keyup", function() {
+    jQuery("input#listSearch").on("keyup", function () {
         var sNewFilter = jQuery(this).val();
         //
-        jQuery("table#listView tbody tr").each(function() {
+        jQuery("table#listView tbody tr").each(function () {
             var jThis = jQuery(this);
             //                           string.indexOf(substring) > -1
-            if(jThis.find("td").text().indexOf(sNewFilter) > -1 ){
+            if (jThis.find("td").text().indexOf(sNewFilter) > -1) {
                 jThis.show();
             }
             else {
@@ -62,6 +62,72 @@ jQuery(document).ready(function(){
             }
         });
     });
+
+    // LOAD CLASSIFICATIONS AND SHOW TABLE
+    var loadClassificationIds = function() {
+        jQuery.ajax({
+                method: "get",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "http://fourigin.com/spring/prototype/classification/_all"
+            })
+            .done(function (aIds) {
+                loadClassificationsByIds(aIds);
+            })
+            .fail(function (msg) {
+                alert("Something wrong: " + msg);
+                console.error("Can not load classification ids. Reason: ", msg);
+            });
+    };
+    //
+    var loadClassificationsByIds = function (aIds) {
+        var sParams = "";
+        for(var i= 0, il=aIds.length; i<il; i++) {
+            if(0 !== sParams.length) {
+                sParams = sParams + "&";
+            }
+            sParams = sParams + "code=" + aIds[i];
+        }
+        console.log(sParams);
+        //
+        jQuery.ajax({
+                method: "get",
+                data: sParams, //aIds, //{code: aIds},
+                headers: {
+                    'Accept': 'application/json'
+                    //'Content-Type': 'application/json'
+                },
+                contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                processData: false,
+                url: "http://fourigin.com/spring/prototype/classification/"
+            })
+            .done(function (aClassifications) {
+                var jListTable = jQuery("#listView"),
+                    jRowPrototype = jListTable.find("tr.prototype"),
+                    jTarget = jRowPrototype.closest("tbody");
+                //
+                for (var i = 0, il = aClassifications.length; i < il; i++) {
+                    var jCurrentRow = jRowPrototype.clone().removeClass("prototype");
+                    //
+                    jCurrentRow.find("td[data-value=code]").html(aClassifications[i]["id"]);
+                    jCurrentRow.find("td[data-value=type]").html(aClassifications[i]["typeCode"]);
+                    jCurrentRow.find("td[data-value=description]").html(aClassifications[i]["description"]);
+                    jTarget.append(jCurrentRow);
+                }
+            })
+            .fail(function (msg) {
+                alert("Something wrong: " + msg);
+                console.error("Can not load classification. Reason: ", msg);
+            });
+    };
+    //
+    //
+    loadClassificationIds();
 
     // FORMS
     jQuery.fn.helperSerializeObject = function()
