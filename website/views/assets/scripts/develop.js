@@ -24,6 +24,12 @@ jQuery(document).ready(function() {
                 e.stopPropagation();
                 openEditClassificationOverlay(oeD);
             });
+            jListItemContextMenu.find("a[href='#deleteClassification']").on("click", function(e){
+                var oeD = oD;
+                e.preventDefault();
+                e.stopPropagation();
+                openDeleteClassificationOverlay(oeD);
+            });
             jListItemContextMenu.css({
                 "top": oOffset['top'] + "px",
                 "left": e.pageX + "px"
@@ -68,10 +74,19 @@ jQuery(document).ready(function() {
             jTypeSelect.append(jNewOption);
         }
         // Fill:
-        jOverlayWindowEditClassification.find("input[name=code]").val(oData["code"]);
+        jOverlayWindowEditClassification.find("input[name=id]").val(oData["code"]);
         jOverlayWindowEditClassification.find("textarea[name=description]").val(oData["description"]);
         // Show overlay:
         jOverlayWindowEditClassification.fadeIn();
+    };
+
+    var openDeleteClassificationOverlay = function(oData) {
+        var jOverlayWindowDeleteClassification = jQuery(".overlayWindow#deleteClassification");
+        //
+        // Fill:
+        jOverlayWindowDeleteClassification.find("input[name=id]").val(oData["code"]);
+        // Show overlay:
+        jOverlayWindowDeleteClassification.fadeIn();
     };
 
     // CATCH <A> LINKS

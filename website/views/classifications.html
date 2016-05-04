@@ -188,9 +188,9 @@
                 </li>
                 <li class="primeAction">
                     <label>
-                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                    Save
-                    <input type="submit"/>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Save
+                        <input type="submit"/>
                     </label>
                 </li>
             </ul>
@@ -199,82 +199,99 @@
 </div>
 <!---->
 <div class="overlayWindow" id="editClassification">
-    <header>
-        <h3>Edit Classicifaction</h3>
-        <div class="close button">
-            <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-    </header>
-    <section>
-        <form>
-            <div class="tableList">
-                <div class="row">
-                    <div class="rowHeader">
-                        Code
-                    </div>
-                    <div class="rowData">
-                        <input type="text" name="code"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="rowHeader">
-                        Type
-                    </div>
-                    <div class="rowData">
-                        <select name="typeCode">
-                            <option class="prototype" value=""></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="rowHeader">
-                        Description
-                    </div>
-                    <div class="rowData">
-                        <textarea name="description"></textarea>
-                    </div>
-                </div>
+    <form action="/classification" method="post">
+        <header>
+            <h3>Edit Classicifaction</h3>
+            <div class="close button">
+                <i class="fa fa-times" aria-hidden="true"></i>
             </div>
-        </form>
-    </section>
-    <footer>
-        <ul>
-            <li>
-                <i class="fa fa-reply" aria-hidden="true"></i>
-                Cancel
-            </li>
-            <li class="primeAction">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                Save
-            </li>
-        </ul>
-    </footer>
+        </header>
+        <section>
+            <div class="tableList">
+                    <div class="row">
+                        <div class="rowHeader">
+                            Code (ID)
+                        </div>
+                        <div class="rowData">
+                            <input type="text" name="id" value=""/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="rowHeader">
+                            Type
+                        </div>
+                        <div class="rowData">
+                            <select name="typeCode">
+                                <option class="prototype" value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="rowHeader">
+                            Description
+                        </div>
+                        <div class="rowData">
+                            <textarea name="description"></textarea>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <footer>
+            <ul>
+                <li>
+                    <i class="fa fa-reply" aria-hidden="true"></i>
+                    Cancel
+                </li>
+                <li class="primeAction">
+                    <label>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Save
+                        <input type="submit"/>
+                    </label>
+                </li>
+            </ul>
+        </footer>
+    </form>
 </div>
 <!---->
 <div class="overlayWindow" id="deleteClassification">
-    <header>
-        <h3>Delete Classicifaction</h3>
-        <div class="close button">
-            <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-    </header>
-    <section>
-        <form>
+    <form action="/classification" method="delete">
+        <header>
+            <h3>Delete Classicifaction</h3>
+            <div class="close button">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+        </header>
+        <section>
             Do you really want to delete this classification?
-        </form>
-    </section>
-    <footer>
-        <ul>
-            <li>
-                <i class="fa fa-reply" aria-hidden="true"></i>
-                Cancel
-            </li>
-            <li class="primeAction">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                Delete
-            </li>
-        </ul>
-    </footer>
+
+            <div class="tableList">
+                <div class="row">
+                    <div class="rowHeader">
+                        Code (ID)
+                    </div>
+                    <div class="rowData">
+                        <input type="text" name="id" value=""/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <ul>
+                <li>
+                    <i class="fa fa-reply" aria-hidden="true"></i>
+                    Cancel
+                </li>
+                <li class="primeAction">
+                    <label>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Delete
+                        <input type="submit"/>
+                    </label>
+                </li>
+            </ul>
+        </footer>
+    </form>
 </div>
 <!---->
 </body>
