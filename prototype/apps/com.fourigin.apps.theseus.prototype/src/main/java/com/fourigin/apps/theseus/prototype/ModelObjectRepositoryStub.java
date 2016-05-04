@@ -197,6 +197,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
             throw new IllegalArgumentException("Unable to create a new model object '" + modelObject + "': the object with id '" + id + "' already available: " + previousObject);
         }
 
+        modelObject.setRevision("1");
         map.put(id, modelObject);
     }
 
@@ -225,6 +226,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
                 throw new IllegalArgumentException("Unable to create a new model object '" + object + "': the object with id '" + id + "' already available: " + previousObject);
             }
 
+            object.setRevision("1");
             map.put(id, object);
         }
     }
@@ -242,7 +244,8 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
             return;
         }
 
-        if(modelObject.getRevision() == null){
+        String revision = modelObject.getRevision();
+        if(revision == null){
             throw new IllegalArgumentException("Unable to update a model object '" + modelObject + "': revision must not be null!");
         }
 
@@ -252,6 +255,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
             throw new IllegalArgumentException("Unable to update a model object '" + modelObject + "': the object with id '" + id + "' not found!");
         }
 
+        modelObject.setRevision(String.valueOf(Long.parseLong(revision) + 1));
         map.put(id, modelObject);
     }
 
@@ -270,7 +274,8 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
         }
 
         for (T object : modelObjects) {
-            if(object.getRevision() == null){
+            String revision = object.getRevision();
+            if(revision == null){
                 throw new IllegalArgumentException("Unable to update a model object '" + object + "': revision must not be null!");
             }
 
@@ -280,6 +285,7 @@ public class ModelObjectRepositoryStub implements ModelObjectRepository {
                 throw new IllegalArgumentException("Unable to update a model object '" + object + "': the object with id '" + id + "' not found!");
             }
 
+            object.setRevision(String.valueOf(Long.parseLong(revision) + 1));
             map.put(id, object);
         }
     }
