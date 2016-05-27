@@ -1,5 +1,6 @@
 package com.fourigin.apps.theseus.prototype;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import com.fourigin.theseus.models.Classification;
@@ -72,7 +73,7 @@ public class Prototype extends WebMvcConfigurerAdapter {
 
         result.setBasename("classpath:messages");
         result.setCacheSeconds(60);
-        result.setDefaultEncoding("UTF-8");
+        result.setDefaultEncoding(StandardCharsets.UTF_8.name());
 
         return result;
     }

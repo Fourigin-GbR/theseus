@@ -4,6 +4,8 @@ import com.fourigin.theseus.filters.ClassificationFilter;
 import com.fourigin.theseus.models.Classification;
 import com.fourigin.theseus.repository.ModelObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,11 +19,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/classification")
 public class ClassificationController {
 
     private ModelObjectRepository modelObjectRepository;
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String overview(Model model){
+        List<String> codes = retrieveAllCodes(true);
+
+        model.addAttribute("all", codes);
+
+        return "classifications";
+    }
 
     /**
      * /classification/_all
