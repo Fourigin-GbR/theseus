@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan({"com.fourigin.apps.theseus.prototype", "com.fourigin.logger"})
 @SpringBootApplication
 public class Prototype extends WebMvcConfigurerAdapter {
 
