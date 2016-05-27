@@ -1,6 +1,9 @@
 def theseusModels = project(':theseus:com.fourigin.theseus.models')
 def theseusRepository = project(':theseus:com.fourigin.theseus.repository')
 
+def heraCore = project(':hera:com.fourigin.hera.core')
+def heraSpringBootStarter = project(':hera:com.fourigin.hera.spring-boot-starter')
+
 project(':apps') {
     def appsVersion = '1.0-SNAPSHOT'
 
@@ -19,15 +22,73 @@ project(':apps') {
         }
 
         dependencies {
-            compile('org.springframework.boot:spring-boot-starter-web')
-            compile('org.springframework.boot:spring-boot-starter-tomcat')
-            compile('org.springframework.boot:spring-boot-starter-actuator')
+            compile 'org.springframework.boot:spring-boot-starter-web'
+            compile 'org.springframework.boot:spring-boot-starter-tomcat'
+            compile 'org.springframework.boot:spring-boot-starter-actuator'
+            compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-            compile('org.springframework:spring-context-support')
-            compile('org.springframework:spring-webmvc')
+            compile 'org.springframework:spring-context-support'
+            compile 'org.springframework:spring-webmvc'
+
+            compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
 
             compile theseusModels
             compile theseusRepository
+        }
+    }
+
+}
+
+project(':hera') {
+    def heraVersion = '1.0-SNAPSHOT'
+
+    project('com.fourigin.hera.core') {
+        group = 'com.fourigin.hera'
+        version = heraVersion
+
+        dependencies {
+            compile managedDependency('org.springframework:spring-web')
+        }
+    }
+
+    project('com.fourigin.hera.spring-boot-starter') {
+        group = 'com.fourigin.hera'
+        version = heraVersion
+
+        dependencies {
+            compile heraCore
+
+            compile managedDependency('org.springframework.boot:spring-boot')
+        }
+    }
+
+    project('com.fourigin.hera.web') {
+        apply plugin: 'spring-boot'
+
+        group = 'com.fourigin.hera'
+        version = heraVersion
+
+        bootRepackage {
+            mainClass = 'com.fourigin.hera.web.Application'
+        }
+
+        jar {
+            baseName = "hera"
+        }
+
+        dependencies {
+            compile heraCore
+
+            compile managedDependency('org.springframework.boot:spring-boot-starter-web')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
+            compile heraSpringBootStarter
+
+            compile managedDependency('org.springframework:spring-context-support')
+            compile managedDependency('org.springframework:spring-webmvc')
+
+            compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
         }
     }
 

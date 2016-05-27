@@ -1,6 +1,11 @@
 include ':apps'
 include ':apps:com.fourigin.apps.theseus.prototype'
 
+include ':hera'
+include ':hera:com.fourigin.hera.core'
+include ':hera:com.fourigin.hera.spring-boot-starter'
+include ':hera:com.fourigin.hera.web'
+
 include ':theseus'
 include ':theseus:com.fourigin.theseus.models'
 include ':theseus:com.fourigin.theseus.repository'
