@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
-@EnableConfigurationProperties(HeraProperties.class)
+//@Configuration
+//@EnableConfigurationProperties(HeraProperties.class)
 public class HeraAutoConfiguration {
 
     private HeraProperties heraProperties;
