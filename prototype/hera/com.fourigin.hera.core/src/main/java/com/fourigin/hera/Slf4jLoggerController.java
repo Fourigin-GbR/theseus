@@ -1,29 +1,74 @@
 package com.fourigin.hera;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-@RestController
-//@RequestMapping("#{environment.getProperty('hera.context-path')?:'/log'}")
-@RequestMapping("/hera")
-public class Slf4jLoggerController {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+
+@Controller("heraController")
+public class Slf4jLoggerController extends AbstractController {
 
     private final Logger logger = LoggerFactory.getLogger(Slf4jLoggerController.class);
 
     @Value("${hera.application.name}")
     private String applicationName;
 
-    @RequestMapping("config")
-    @ResponseBody
-    public LoggerConfiguration config(
-      @RequestParam("logger") String loggerName
-    ){
+    @Value("${hera.console.logging.enabled}")
+    private boolean enableConsoleLogging;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        System.out.println("Request...");
+
+        String servletPath = request.getServletPath();
+//        String queryString = request.getQueryString();
+//        String contextPath = request.getContextPath();
+//        String requestUri = request.getRequestURI();
+//        String pathInfo = request.getPathInfo();
+//        System.out.println(" servletPath: '" + servletPath + "'\n queryString: '" + queryString + "'");
+
+        ModelAndView result = new ModelAndView();
+        result.setView(new MappingJackson2JsonView());
+
+        if(servletPath.endsWith("/config")){
+            String loggerName = request.getParameter("logger");
+            result.addObject(config(loggerName));
+            return result;
+        }
+
+        BufferedReader reader = request.getReader();
+        LogRequest logRequest = objectMapper.readValue(reader, LogRequest.class);
+
+        if(servletPath.endsWith("/debug")){
+            logDebug(logRequest);
+        }
+        else if(servletPath.endsWith("/info")){
+            logInfo(logRequest);
+        }
+        else if(servletPath.endsWith("/warn")){
+            logWarn(logRequest);
+        }
+        else if(servletPath.endsWith("/error")){
+            logError(logRequest);
+        }
+        else {
+            System.out.println("Unknown request...");
+        }
+
+        return result;
+    }
+
+    private LoggerConfiguration config(String loggerName){
         if (logger.isInfoEnabled()) logger.info("Retrieving logger configuration for '{}'.", loggerName);
 
         String name = buildLoggerName(loggerName);
@@ -38,85 +83,62 @@ public class Slf4jLoggerController {
         result.setWarnEnabled(log.isWarnEnabled());
         result.setErrorEnabled(log.isErrorEnabled());
 
+        result.setConsoleLoggingEnabled(enableConsoleLogging);
+
         if (logger.isDebugEnabled()) logger.debug("Returning {}.", result);
 
         return result;
     }
 
-    @RequestMapping("debug")
-    @ResponseBody
-    public boolean logDebug(@RequestBody LogRequest logRequest){
-        String loggerName = buildLoggerName(logRequest.getLogger());
+    private void logDebug(LogRequest logRequest){
+        String loggerName = logRequest.getLogger();
 
         Logger log = LoggerFactory.getLogger(loggerName);
         if(log.isDebugEnabled()){
             String message = logRequest.getMessage();
             Object[] args = logRequest.getArgs();
-
             if (logger.isDebugEnabled()) logger.debug("Logging (debug): {}: {}, {}", loggerName, message, args);
             log.debug(message, args);
-            return true;
         }
-
-        return false;
     }
 
-    @RequestMapping("info")
-    @ResponseBody
-    public boolean logInfo(@RequestBody LogRequest logRequest){
-        String loggerName = buildLoggerName(logRequest.getLogger());
+    private void logInfo(LogRequest logRequest){
+        String loggerName = logRequest.getLogger();
 
         Logger log = LoggerFactory.getLogger(loggerName);
         if(log.isInfoEnabled()){
             String message = logRequest.getMessage();
             Object[] args = logRequest.getArgs();
-
             if (logger.isDebugEnabled()) logger.debug("Logging (info): {}: {}, {}", loggerName, message, args);
             log.info(message, (Object[]) args);
-            return true;
         }
-
-        return false;
     }
 
-    @RequestMapping("warn")
-    @ResponseBody
-    public boolean logWarn(@RequestBody LogRequest logRequest){
-        String loggerName = buildLoggerName(logRequest.getLogger());
+    private void logWarn(LogRequest logRequest){
+        String loggerName = logRequest.getLogger();
 
         Logger log = LoggerFactory.getLogger(loggerName);
         if(log.isWarnEnabled()){
             String message = logRequest.getMessage();
             Object[] args = logRequest.getArgs();
-
             if (logger.isDebugEnabled()) logger.debug("Logging (warn): {}: {}, {}", loggerName, message, args);
             log.warn(message, (Object[]) args);
-            return true;
         }
-
-        return false;
     }
 
-    @RequestMapping("error")
-    @ResponseBody
-    public boolean logError(@RequestBody LogRequest logRequest){
-        String loggerName = buildLoggerName(logRequest.getLogger());
+    private void logError(LogRequest logRequest){
+        String loggerName = logRequest.getLogger();
 
         Logger log = LoggerFactory.getLogger(loggerName);
         if(log.isErrorEnabled()){
             String message = logRequest.getMessage();
             Object[] args = logRequest.getArgs();
-
             if (logger.isDebugEnabled()) logger.debug("Logging (error): {}: {}, {}", loggerName, message, args);
             log.error(message, (Object[]) args);
-            return true;
         }
-
-        return false;
     }
 
     private String buildLoggerName(String baseName){
         return applicationName + '.' + baseName;
     }
-
 }
