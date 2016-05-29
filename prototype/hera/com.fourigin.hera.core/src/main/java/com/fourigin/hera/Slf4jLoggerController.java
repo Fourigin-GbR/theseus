@@ -71,7 +71,7 @@ public class Slf4jLoggerController extends AbstractController {
     private LoggerConfiguration config(String loggerName){
         if (logger.isInfoEnabled()) logger.info("Retrieving logger configuration for '{}'.", loggerName);
 
-        String name = buildLoggerName(loggerName);
+        String name = loggerName;
 
         Logger log = LoggerFactory.getLogger(name);
         LoggerConfiguration result = new LoggerConfiguration();
@@ -136,9 +136,5 @@ public class Slf4jLoggerController extends AbstractController {
             if (logger.isDebugEnabled()) logger.debug("Logging (error): {}: {}, {}", loggerName, message, args);
             log.error(message, (Object[]) args);
         }
-    }
-
-    private String buildLoggerName(String baseName){
-        return applicationName + '.' + baseName;
     }
 }
