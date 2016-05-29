@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import com.fourigin.theseus.models.Classification;
 import com.fourigin.theseus.models.ClassificationType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,13 +20,16 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({"com.fourigin.apps.theseus.prototype", "com.fourigin.logger"})
+//@ComponentScan({"com.fourigin.apps.theseus.prototype", "com.fourigin.logger"})
+@ComponentScan({"com.fourigin.apps.theseus.prototype"})
 @SpringBootApplication
 public class Prototype extends WebMvcConfigurerAdapter {
 
@@ -76,6 +80,20 @@ public class Prototype extends WebMvcConfigurerAdapter {
         result.setDefaultEncoding(StandardCharsets.UTF_8.name());
 
         return result;
+    }
+
+
+    @Bean
+    public TemplateResolver defaultTemplateResolver(@Value("${theseus.templates.path}") String templatePath){
+//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+//        templateResolver.setCacheable(false);
+
+        FileTemplateResolver templateResolver = new FileTemplateResolver();
+        templateResolver.setPrefix(templatePath);
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("XHTML");
+        templateResolver.setCacheable(false);
+        return templateResolver;
     }
 
     @Bean
