@@ -1,3 +1,3 @@
 #org.springframework.context.ApplicationListener=org.springframework.boot.actuate.system.ApplicationPidFileWriter
 
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.fourigin.hera.HeraAutoConfiguration
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.fourigin.hera.HeraAutoConfiguration
