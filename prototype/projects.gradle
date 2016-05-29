@@ -2,7 +2,7 @@ def theseusModels = project(':theseus:com.fourigin.theseus.models')
 def theseusRepository = project(':theseus:com.fourigin.theseus.repository')
 
 def heraCore = project(':hera:com.fourigin.hera.core')
-def heraSpringBootStarter = project(':hera:com.fourigin.hera.spring-boot-starter')
+//def heraSpringBootStarter = project(':hera:com.fourigin.hera.spring-boot-starter')
 
 project(':apps') {
     def appsVersion = '1.0-SNAPSHOT'
@@ -48,6 +48,10 @@ project(':hera') {
 
         dependencies {
             compile managedDependency('org.springframework:spring-web')
+            compile managedDependency('org.springframework:spring-webmvc')
+            compile managedDependency('javax.servlet:javax.servlet-api')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
         }
     }
 
@@ -83,7 +87,7 @@ project(':hera') {
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
             compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
             compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
-            compile heraSpringBootStarter
+//            compile heraSpringBootStarter
 
             compile managedDependency('org.springframework:spring-context-support')
             compile managedDependency('org.springframework:spring-webmvc')

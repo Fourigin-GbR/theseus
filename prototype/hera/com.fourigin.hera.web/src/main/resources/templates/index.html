@@ -1,203 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Classifications</title>
+    <title>Index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <script>
-        var Logger = (function(){
-            var loggerConfig;
+    <script type="text/javascript" th:src="@{/js/lib/hera.js}" src="com/fourigin/hera/core/js/lib/hera.js"></script>
 
-            var Logger = function(){
-                var page = this.resolveLoggerName();
-
-                $.ajax({
-                    url: '/logger/config',
-                    type: 'GET',
-                    contentType: 'application/json; charset=utf-8',
-                    data: "logger=" + page,
-                    dataType: 'json',
-                    async: true,
-                    success: function ( data ) {
-                        console.log("Logger configuration: " + JSON.stringify(data));
-                        loggerConfig = data;
-                    }
-                });
-
-                return this;
-            };
-
-            Logger.prototype.resolveLoggerName = function(){
-                var page = window.location.pathname;
-
-                if(page.indexOf('/') == 0){
-                    page = page.substring(1);
-                }
-                if(page.lastIndexOf('/') == page.length-1){
-                    page = page.substring(0, page.length-1);
-                }
-
-                var result = page.split('/').join('.');
-
-                return result;
-            };
-
-            Logger.prototype.debug = function(message, args){
-                if(!loggerConfig){
-                    console.log("Uninitialized logger config!");
-                    return;
-                }
-
-                if(loggerConfig.debugEnabled){
-                    console.log("Sending debug log...");
-                    var page = this.resolveLoggerName();
-                    var data = {
-                        logger: page,
-                        message: message,
-                        args: args
-                    };
-
-                    $.ajax({
-                        url: '/logger/debug',
-                        type: 'POST',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        dataType: 'json',
-                        async: true,
-                        success: function (msg) {
-                        }
-                    });
-                }
-                else {
-                    console.log("Skipping debug log ...");
-                }
-            };
-
-            Logger.prototype.info = function(message, args){
-                if(!loggerConfig){
-                    console.log("Uninitialized logger config!");
-                    return;
-                }
-
-                if(loggerConfig.infoEnabled){
-                    console.log("Sending info log...");
-                    var page = this.resolveLoggerName();
-                    var data = {
-                        logger: page,
-                        message: message,
-                        args: args
-                    };
-
-                    $.ajax({
-                        url: '/logger/info',
-                        type: 'POST',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        dataType: 'json',
-                        async: true,
-                        success: function (msg) {
-                        }
-                    });
-                }
-                else {
-                    console.log("Skipping info log ...");
-                }
-            };
-
-            Logger.prototype.warn = function(message, args){
-                if(!loggerConfig){
-                    console.log("Uninitialized logger config!");
-                    return;
-                }
-
-                if(loggerConfig.warnEnabled){
-                    console.log("Sending warn log...");
-                    var page = this.resolveLoggerName();
-                    var data = {
-                        logger: page,
-                        message: message,
-                        args: args
-                    };
-
-                    $.ajax({
-                        url: '/logger/warn',
-                        type: 'POST',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        dataType: 'json',
-                        async: true,
-                        success: function (msg) {
-                        }
-                    });
-                }
-                else {
-                    console.log("Skipping warn log ...");
-                }
-            };
-
-            Logger.prototype.error = function(message, args){
-                if(!loggerConfig){
-                    console.log("Uninitialized logger config!");
-                    return;
-                }
-
-                if(loggerConfig.errorEnabled){
-                    console.log("Sending error log...");
-                    var page = this.resolveLoggerName();
-                    var data = {
-                        logger: page,
-                        message: message,
-                        args: args
-                    };
-
-                    $.ajax({
-                        url: '/logger/error',
-                        type: 'POST',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        dataType: 'json',
-                        async: true,
-                        success: function (msg) {
-                        }
-                    });
-                }
-                else {
-                    console.log("Skipping error log ...");
-                }
-            };
-
-            return Logger;
-        })();
-
-    var logger = new Logger();
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var loggerFactory = new LoggerFactory([[${heraContextPath}]]);
+        var logger = loggerFactory.getLogger('myLogger');
 
         $(function(){
             $("#logDebug").click(function( event ){
+                var oldValue = $(this).text();
+                $(this).text(oldValue + '.');
                 logger.debug("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
 
             $("#logInfo").click(function( event ){
+                var oldValue = $(this).text();
+                $(this).text(oldValue + '.');
                 logger.info("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
 
             $("#logWarn").click(function( event ){
+                var oldValue = $(this).text();
+                $(this).text(oldValue + '.');
                 logger.warn("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
 
             $("#logError").click(function( event ){
+                var oldValue = $(this).text();
+                $(this).text(oldValue + '.');
                 logger.error("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
         });
+        /*]]>*/
     </script>
 </head>
 <body>
-<!--<h1>Classifications (from classpath!)</h1>-->
-
-<!--<ul th:each="code : ${all}">-->
-    <!--<li th:text="${code}">Classification 1</li>-->
-<!--</ul>-->
 
 <h2>Logging test</h2>
 <ul>
