@@ -7,6 +7,7 @@ public class LoggerConfiguration {
     private boolean infoEnabled;
     private boolean warnEnabled;
     private boolean errorEnabled;
+    private boolean consoleLoggingEnabled;
 
     public String getApplicationName() {
         return applicationName;
@@ -56,6 +57,14 @@ public class LoggerConfiguration {
         this.errorEnabled = errorEnabled;
     }
 
+    public boolean isConsoleLoggingEnabled() {
+        return consoleLoggingEnabled;
+    }
+
+    public void setConsoleLoggingEnabled(boolean consoleLoggingEnabled) {
+        this.consoleLoggingEnabled = consoleLoggingEnabled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,6 +76,7 @@ public class LoggerConfiguration {
         if (infoEnabled != that.infoEnabled) return false;
         if (warnEnabled != that.warnEnabled) return false;
         if (errorEnabled != that.errorEnabled) return false;
+        if (consoleLoggingEnabled != that.consoleLoggingEnabled) return false;
         //noinspection SimplifiableIfStatement
         if (applicationName != null ? !applicationName.equals(that.applicationName) : that.applicationName != null)
             return false;
@@ -82,6 +92,7 @@ public class LoggerConfiguration {
         result = 31 * result + (infoEnabled ? 1 : 0);
         result = 31 * result + (warnEnabled ? 1 : 0);
         result = 31 * result + (errorEnabled ? 1 : 0);
+        result = 31 * result + (consoleLoggingEnabled ? 1 : 0);
         return result;
     }
 
@@ -94,6 +105,7 @@ public class LoggerConfiguration {
           ", infoEnabled=" + infoEnabled +
           ", warnEnabled=" + warnEnabled +
           ", errorEnabled=" + errorEnabled +
+          ", consoleLoggingEnabled=" + consoleLoggingEnabled +
           '}';
     }
 
