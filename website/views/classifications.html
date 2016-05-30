@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Theseus - Classifications</title>
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="assets/css/theseus.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" type="text/css" href="assets/css/theseus.css" th:href="@{/assets/css/theseus.css}"/>
     <link rel="stylesheet" type="text/css" href="assets/libs/font-awesome-4.6.1/css/font-awesome.min.css"/>
     <!---->
     <script type="text/javascript" src="assets/libs/jquery/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="assets/scripts/develop-classifications.js"></script>
 </head>
 <body>
-<header>
+<header th:replace="sub-templates/header :: header('classifications')">
     <nav>
         <ul>
             <li class="title">

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Theseus</title>
+
+</head>
+<body>
+<header th:fragment="header(activePage)">
+    <nav>
+        <ul>
+            <li class="title">
+                Theseus
+            </li>
+            <li class="(${activePage} == 'classifications') ? 'selected' : '' )">
+                <a href="#">
+                    <i class="fa fa-bookmark-o"></i>
+                    Classifications</a>
+            </li>
+            <li class="(${activePage} == 'products') ? 'selected' : '' )">
+                <a href="#"><i class="fa fa-cubes"></i>
+                    Products</a>
+            </li>
+            <li class="(${activePage} == 'properties') ? 'selected' : '' )">
+                <a href="#"><i class="fa fa-pie-chart"></i>
+                    Properties</a>
+            </li>
+            <li class="(${activePage} == 'views') ? 'selected' : '' )">
+                <a href="#"><i class="fa fa-th"></i>
+                    Views</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<!---->
+</body>
+</html>
