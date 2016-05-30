@@ -24,6 +24,9 @@ public class Slf4jLoggerController extends AbstractController {
     @Value("${hera.console.logging.enabled}")
     private boolean enableConsoleLogging;
 
+    @Value("${hera.server.logging.enabled}")
+    private boolean enableServerLogging;
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -49,7 +52,10 @@ public class Slf4jLoggerController extends AbstractController {
         BufferedReader reader = request.getReader();
         LogRequest logRequest = objectMapper.readValue(reader, LogRequest.class);
 
-        if(servletPath.endsWith("/debug")){
+        if(servletPath.endsWith("/trace")){
+            logTrace(logRequest);
+        }
+        else if(servletPath.endsWith("/debug")){
             logDebug(logRequest);
         }
         else if(servletPath.endsWith("/info")){
@@ -71,23 +77,35 @@ public class Slf4jLoggerController extends AbstractController {
     private LoggerConfiguration config(String loggerName){
         if (logger.isInfoEnabled()) logger.info("Retrieving logger configuration for '{}'.", loggerName);
 
-        String name = loggerName;
-
-        Logger log = LoggerFactory.getLogger(name);
+        Logger log = LoggerFactory.getLogger(loggerName);
         LoggerConfiguration result = new LoggerConfiguration();
 
         result.setApplicationName(applicationName);
         result.setLoggerName(loggerName);
+        result.setTraceEnabled(log.isTraceEnabled());
         result.setDebugEnabled(log.isDebugEnabled());
         result.setInfoEnabled(log.isInfoEnabled());
         result.setWarnEnabled(log.isWarnEnabled());
         result.setErrorEnabled(log.isErrorEnabled());
 
         result.setConsoleLoggingEnabled(enableConsoleLogging);
+        result.setServerLoggingEnabled(enableServerLogging);
 
         if (logger.isDebugEnabled()) logger.debug("Returning {}.", result);
 
         return result;
+    }
+
+    private void logTrace(LogRequest logRequest){
+        String loggerName = logRequest.getLogger();
+
+        Logger log = LoggerFactory.getLogger(loggerName);
+        if(log.isTraceEnabled()){
+            String message = logRequest.getMessage();
+            Object[] args = logRequest.getArgs();
+            if (logger.isDebugEnabled()) logger.debug("Logging (trace): {}: {}, {}", loggerName, message, args);
+            log.trace(message, args);
+        }
     }
 
     private void logDebug(LogRequest logRequest){

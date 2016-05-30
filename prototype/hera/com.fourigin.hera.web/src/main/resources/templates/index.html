@@ -6,7 +6,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <script type="text/javascript" th:src="@{/js/lib/hera.js}" src="com/fourigin/hera/core/js/lib/hera.js"></script>
+    <script type="text/javascript" th:src="@{/js/lib/hera.js}" src="js/lib/hera.js"></script>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -14,25 +14,31 @@
         var logger = loggerFactory.getLogger('myLogger');
 
         $(function(){
-            $("#logDebug").click(function( event ){
+            $("#logTrace").click(function(){
+                var oldValue = $(this).text();
+                $(this).text(oldValue + '.');
+                logger.trace("Test message for {}, {}, {}", ["a", "b", "c"]);
+            });
+
+            $("#logDebug").click(function(){
                 var oldValue = $(this).text();
                 $(this).text(oldValue + '.');
                 logger.debug("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
 
-            $("#logInfo").click(function( event ){
+            $("#logInfo").click(function(){
                 var oldValue = $(this).text();
                 $(this).text(oldValue + '.');
                 logger.info("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
 
-            $("#logWarn").click(function( event ){
+            $("#logWarn").click(function(){
                 var oldValue = $(this).text();
                 $(this).text(oldValue + '.');
                 logger.warn("Test message for {}, {}, {}", ["a", "b", "c"]);
             });
 
-            $("#logError").click(function( event ){
+            $("#logError").click(function(){
                 var oldValue = $(this).text();
                 $(this).text(oldValue + '.');
                 logger.error("Test message for {}, {}, {}", ["a", "b", "c"]);
@@ -45,6 +51,7 @@
 
 <h2>Logging test</h2>
 <ul>
+    <li id="logTrace">Log trace</li>
     <li id="logDebug">Log debug</li>
     <li id="logInfo">Log info</li>
     <li id="logWarn">Log warn</li>

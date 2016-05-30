@@ -48,6 +48,27 @@ var Logger = (function(){
         return this;
     };
 
+    Logger.prototype.trace = function(message, args){
+        if(!loggerConfig){
+            console.log("Uninitialized logger config!");
+            return;
+        }
+
+        if(loggerConfig.traceEnabled){
+            if(loggerConfig.consoleLoggingEnabled){
+                this.logToConsole('trace', message, args);
+            }
+            if(loggerConfig.serverLoggingEnabled) {
+                this.sendToServer(urlTrace, message, args);
+            }
+        }
+        else {
+            if(loggerConfig.consoleLoggingEnabled) {
+                console.log("Skipping trace log ...");
+            }
+        }
+    };
+
     Logger.prototype.debug = function(message, args){
         if(!loggerConfig){
             console.log("Uninitialized logger config!");
@@ -58,7 +79,9 @@ var Logger = (function(){
             if(loggerConfig.consoleLoggingEnabled){
                 this.logToConsole('debug', message, args);
             }
-            this.sendToServer(urlDebug, message, args);
+            if(loggerConfig.serverLoggingEnabled) {
+                this.sendToServer(urlDebug, message, args);
+            }
         }
         else {
             if(loggerConfig.consoleLoggingEnabled) {
@@ -66,7 +89,7 @@ var Logger = (function(){
             }
         }
     };
-
+    
     Logger.prototype.info = function(message, args){
         if(!loggerConfig){
             console.log("Uninitialized logger config!");
@@ -77,7 +100,9 @@ var Logger = (function(){
             if(loggerConfig.consoleLoggingEnabled){
                 this.logToConsole('info', message, args);
             }
-            this.sendToServer(urlInfo, message, args);
+            if(loggerConfig.serverLoggingEnabled) {
+                this.sendToServer(urlInfo, message, args);
+            }
         }
         else {
             if(loggerConfig.consoleLoggingEnabled) {
@@ -96,7 +121,9 @@ var Logger = (function(){
             if(loggerConfig.consoleLoggingEnabled){
                 this.logToConsole('warn', message, args);
             }
-            this.sendToServer(urlWarn, message, args);
+            if(loggerConfig.serverLoggingEnabled) {
+                this.sendToServer(urlWarn, message, args);
+            }
         }
         else {
             if(loggerConfig.consoleLoggingEnabled) {
@@ -115,7 +142,9 @@ var Logger = (function(){
             if(loggerConfig.consoleLoggingEnabled){
                 this.logToConsole('error', message, args);
             }
-            this.sendToServer(urlError, message, args);
+            if(loggerConfig.serverLoggingEnabled) {
+                this.sendToServer(urlError, message, args);
+            }
         }
         else {
             if(loggerConfig.consoleLoggingEnabled) {
@@ -144,7 +173,10 @@ var Logger = (function(){
     };
 
     Logger.prototype.logToConsole = function(level, message, args){
-        if(level === 'debug'){
+        if(level === 'trace'){
+            console.log(message + ' - ' + args);
+        }
+        else if(level === 'debug'){
             console.log(message + ' - ' + args);
         }
         else if(level === 'info'){
