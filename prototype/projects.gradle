@@ -1,6 +1,9 @@
 def theseusModels = project(':theseus:com.fourigin.theseus.models')
 def theseusRepository = project(':theseus:com.fourigin.theseus.repository')
 
+def cmsModels = project(':cms:com.fourigin.cms.models')
+def cmsRepository = project(':cms:com.fourigin.cms.repository')
+
 def heraCore = project(':hera:com.fourigin.hera.core')
 //def heraSpringBootStarter = project(':hera:com.fourigin.hera.spring-boot-starter')
 
@@ -115,6 +118,27 @@ project(':theseus') {
 
         dependencies {
             compile theseusModels
+        }
+    }
+}
+
+project(':cms') {
+    def cmsVersion = "1.0-SNAPSHOT"
+
+    project('com.fourigin.cms.models') {
+        group = 'com.fourigin.cms'
+        version = cmsVersion
+
+        dependencies {
+        }
+    }
+
+    project('com.fourigin.cms.repository') {
+        group = 'com.fourigin.cms'
+        version = cmsVersion
+
+        dependencies {
+            compile cmsModels
         }
     }
 }
