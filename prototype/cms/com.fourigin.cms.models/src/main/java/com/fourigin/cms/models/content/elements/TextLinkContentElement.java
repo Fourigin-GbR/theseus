@@ -1,4 +1,4 @@
-package com.fourigin.cms.models.elements;
+package com.fourigin.cms.models.content.elements;
 
 public class TextLinkContentElement extends AbstractContentElement implements ContentElement {
     private String content;

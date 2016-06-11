@@ -1,4 +1,4 @@
-package com.fourigin.cms.models.elements;
+package com.fourigin.cms.models.content.elements;
 
 import java.util.List;
 

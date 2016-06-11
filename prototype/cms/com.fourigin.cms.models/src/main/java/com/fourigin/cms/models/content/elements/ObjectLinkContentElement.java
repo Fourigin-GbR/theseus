@@ -1,10 +1,13 @@
-package com.fourigin.cms.models.elements;
+package com.fourigin.cms.models.content.elements;
 
-public class ObjectContentElement extends AbstractContentElement implements ContentElement {
+public class ObjectLinkContentElement extends AbstractContentElement implements ContentElement {
     private String referenceId;
     private String source;
     private String alternateText;
     private String mimeType;
+    private String url;
+    private String anchorName;
+    private String target;
 
     public String getReferenceId() {
         return referenceId;
@@ -36,5 +39,29 @@ public class ObjectContentElement extends AbstractContentElement implements Cont
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAnchorName() {
+        return anchorName;
+    }
+
+    public void setAnchorName(String anchorName) {
+        this.anchorName = anchorName;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 }

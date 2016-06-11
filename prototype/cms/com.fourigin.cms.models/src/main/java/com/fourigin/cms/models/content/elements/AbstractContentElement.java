@@ -1,4 +1,4 @@
-package com.fourigin.cms.models.elements;
+package com.fourigin.cms.models.content.elements;
 
 abstract public class AbstractContentElement implements ContentElement {
     private String name;

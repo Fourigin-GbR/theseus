@@ -1,25 +1,25 @@
-package com.fourigin.cms.models;
+package com.fourigin.cms.models.content;
 
-import com.fourigin.cms.models.elements.ContentElement;
+import com.fourigin.cms.models.content.elements.ContentElement;
 
 import java.util.Collection;
 import java.util.List;
 
 public class ContentPage {
-    private String name;
+    private String id;
     private String revision;
     private boolean staged;
     private CompileState compileState;
     private ContentPageMetaData metaData;
     private List<ContentElement> content;
-    private Collection<ContentDataSource> dataSources;
+    private Collection<DataSourceContent> dataSourceContents;
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRevision() {
@@ -62,11 +62,11 @@ public class ContentPage {
         this.content = content;
     }
 
-    public Collection<ContentDataSource> getDataSources() {
-        return dataSources;
+    public Collection<DataSourceContent> getDataSourceContents() {
+        return dataSourceContents;
     }
 
-    public void setDataSources(Collection<ContentDataSource> dataSources) {
-        this.dataSources = dataSources;
+    public void setDataSourceContents(Collection<DataSourceContent> dataSourceContents) {
+        this.dataSourceContents = dataSourceContents;
     }
 }
