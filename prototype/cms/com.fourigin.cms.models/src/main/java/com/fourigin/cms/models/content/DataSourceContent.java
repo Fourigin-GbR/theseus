@@ -12,5 +12,7 @@ public interface DataSourceContent {
 
     String getChecksum();
 
-    List<ContentElement> getContent();
+    ContentElement getContent();
+
+    void setContent(ContentElement content);
 }
