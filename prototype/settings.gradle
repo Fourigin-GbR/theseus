@@ -13,4 +13,6 @@ include ':theseus:com.fourigin.theseus.repository'
 include ':cms'
 include ':cms:com.fourigin.cms.models'
 include ':cms:com.fourigin.cms.repository'
+include ':cms:com.fourigin.cms.repository.json'
+
 include ':cms:com.fourigin.cms.compiler'

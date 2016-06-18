@@ -1,0 +1,6 @@
+{
+  "name": "headline",
+  "type": "text",
+  "markupAllowed": "false",
+  "content": "Hello World!"
+}

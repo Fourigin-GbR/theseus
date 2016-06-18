@@ -1,0 +1,9 @@
+{
+  "name": "image-link",
+  "type": "object-link",
+  "referenceId": "1234567",
+  "mimeType": "png",
+  "alternateText": "Image one",
+  "source": "/images/image1.png",
+  "url": "http://yahoo.de"
+}

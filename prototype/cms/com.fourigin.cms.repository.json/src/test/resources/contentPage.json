@@ -1,0 +1,74 @@
+{
+  "id": "homepage",
+  "revision": null,
+  "metaData": {
+    "title": "My first ContentPage for testing...",
+    "attributes": {
+      "key-1": "value-1",
+      "key-2": "value-2",
+      "key-3": "value-3"
+    }
+  },
+  "content": [
+    {
+      "name": "header",
+      "type": "group",
+      "elements": []
+    },
+    {
+      "name": "main-content",
+      "type": "group",
+      "elements": [
+        {
+          "name": "headline",
+          "type": "text",
+          "markupAllowed": "false",
+          "content": "Hello World!"
+        },
+        {
+          "name": "link",
+          "type": "text-link",
+          "markupAllowed": "true",
+          "content": "This is text with <b>markup</b>",
+          "url": "http://google.de"
+        },
+        {
+          "name": "image",
+          "type": "object",
+          "referenceId": "1234567",
+          "mimeType": "png",
+          "alternateText": "Image one",
+          "source": "/images/image1.png"
+        },
+        {
+          "name": "image-link",
+          "type": "object-link",
+          "referenceId": "1234567",
+          "mimeType": "png",
+          "alternateText": "Image one",
+          "source": "/images/image1.png",
+          "url": "http://yahoo.de"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "type": "group",
+      "elements": []
+    }
+  ],
+  "dataSourceContents": [
+    {
+      "type": "file",
+      "query": {
+        "path": "/work/resource/global.json",
+        "converter": {
+          "type": "FileToContentGroupConverter",
+          "encoding": "UTF-8"
+        }
+      },
+      "checksum": "1234567890",
+      "content": []
+    }
+  ]
+}

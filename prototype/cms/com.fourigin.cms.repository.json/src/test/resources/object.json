@@ -1,0 +1,8 @@
+{
+  "name": "image",
+  "type": "object",
+  "referenceId": "1234567",
+  "mimeType": "png",
+  "alternateText": "Image one",
+  "source": "/images/image1.png"
+}

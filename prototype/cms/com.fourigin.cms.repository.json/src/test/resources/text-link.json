@@ -1,0 +1,7 @@
+{
+  "name": "link",
+  "type": "text-link",
+  "markupAllowed": "true",
+  "content": "This is text with <b>markup</b>",
+  "url": "http://google.de"
+}
