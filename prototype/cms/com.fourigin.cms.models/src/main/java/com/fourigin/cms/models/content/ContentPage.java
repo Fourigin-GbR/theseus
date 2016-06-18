@@ -30,22 +30,6 @@ public class ContentPage {
         this.revision = revision;
     }
 
-//    public boolean isStaged() {
-//        return staged;
-//    }
-//
-//    public void setStaged(boolean staged) {
-//        this.staged = staged;
-//    }
-//
-//    public CompileState getCompileState() {
-//        return compileState;
-//    }
-//
-//    public void setCompileState(CompileState compileState) {
-//        this.compileState = compileState;
-//    }
-
     public ContentPageMetaData getMetaData() {
         return metaData;
     }
