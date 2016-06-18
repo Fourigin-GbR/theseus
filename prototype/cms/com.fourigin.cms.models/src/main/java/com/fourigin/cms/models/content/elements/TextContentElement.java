@@ -2,7 +2,17 @@ package com.fourigin.cms.models.content.elements;
 
 public class TextContentElement extends AbstractContentElement implements ContentElement {
     private String content;
-    private boolean containingMarkup;
+    private boolean markupAllowed;
+
+    private static final boolean DEFAULT_MARKUP_ALLOWED = false;
+
+    public TextContentElement(){
+        this(DEFAULT_MARKUP_ALLOWED);
+    }
+
+    public TextContentElement(boolean markupAllowed){
+        this.setMarkupAllowed(markupAllowed);
+    }
 
     public String getContent() {
         return content;
@@ -12,11 +22,78 @@ public class TextContentElement extends AbstractContentElement implements Conten
         this.content = content;
     }
 
-    public boolean isContainingMarkup() {
-        return containingMarkup;
+    public boolean isMarkupAllowed() {
+        return markupAllowed;
     }
 
-    public void setContainingMarkup(boolean containingMarkup) {
-        this.containingMarkup = containingMarkup;
+    public void setMarkupAllowed(boolean markupAllowed) {
+        this.markupAllowed = markupAllowed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TextContentElement)) return false;
+        if (!super.equals(o)) return false;
+
+        TextContentElement that = (TextContentElement) o;
+
+        //noinspection SimplifiableIfStatement
+        if (markupAllowed != that.markupAllowed) return false;
+        return content != null ? content.equals(that.content) : that.content == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (markupAllowed ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TextContentElement{" +
+          "name='" + getName() + '\'' +
+          ", title='" + getTitle() + '\'' +
+          ", content='" + content + '\'' +
+          ", markupAllowed=" + markupAllowed +
+          '}';
+    }
+
+    public static class Builder {
+        private String name;
+        private String title;
+        private String content;
+        private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
+
+        public Builder name(String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder title(String title){
+            this.title = title;
+            return this;
+        }
+
+        public Builder content(String content){
+            this.content = content;
+            return this;
+        }
+
+        public Builder markupAllowed(boolean markupAllowed){
+            this.markupAllowed = markupAllowed;
+            return this;
+        }
+
+        public TextContentElement build(){
+            TextContentElement element = new TextContentElement();
+            element.setName(name);
+            element.setTitle(title);
+            element.setContent(content);
+            element.setMarkupAllowed(markupAllowed);
+            return element;
+        }
     }
 }
