@@ -1,6 +1,8 @@
 package com.fourigin.cms.models.content.elements;
 
 public class TextContentElement extends AbstractContentElement implements ContentElement {
+    private static final long serialVersionUID = 5066464546311137699L;
+
     private String content;
     private boolean markupAllowed;
 

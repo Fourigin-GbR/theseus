@@ -1,6 +1,8 @@
 package com.fourigin.cms.models.content.elements;
 
-public interface ContentElement {
+import java.io.Serializable;
+
+public interface ContentElement extends Serializable {
     String getName();
 
     String getTitle();

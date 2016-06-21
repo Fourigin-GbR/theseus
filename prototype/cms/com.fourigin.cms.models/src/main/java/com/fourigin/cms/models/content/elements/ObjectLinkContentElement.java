@@ -1,6 +1,8 @@
 package com.fourigin.cms.models.content.elements;
 
 public class ObjectLinkContentElement extends AbstractContentElement implements ContentElement {
+    private static final long serialVersionUID = -400773903221846863L;
+
     private String referenceId;
     private String source;
     private String alternateText;

@@ -1,9 +1,12 @@
 package com.fourigin.cms.models.content;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContentPageMetaData {
+public class ContentPageMetaData implements Serializable {
+    private static final long serialVersionUID = 6682484501791045240L;
+
     private String title;
     private Map<String, String> attributes;
 

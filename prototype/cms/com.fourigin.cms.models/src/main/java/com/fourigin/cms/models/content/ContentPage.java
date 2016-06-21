@@ -2,14 +2,14 @@ package com.fourigin.cms.models.content;
 
 import com.fourigin.cms.models.content.elements.ContentElement;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-public class ContentPage {
+public class ContentPage implements Serializable {
+    private static final long serialVersionUID = -6314470617724474054L;
+
     private String id;
-    private String revision;
-//    private boolean staged;
-//    private CompileState compileState;
     private ContentPageMetaData metaData;
     private List<ContentElement> content;
     private Collection<DataSourceContent> dataSourceContents;
@@ -20,14 +20,6 @@ public class ContentPage {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getRevision() {
-        return revision;
-    }
-
-    public void setRevision(String revision) {
-        this.revision = revision;
     }
 
     public ContentPageMetaData getMetaData() {

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ContentGroup extends AbstractContentElement implements ContentElement {
+    private static final long serialVersionUID = -6891589536053329842L;
+
     private List<ContentElement> elements;
 
     public List<ContentElement> getElements() {
