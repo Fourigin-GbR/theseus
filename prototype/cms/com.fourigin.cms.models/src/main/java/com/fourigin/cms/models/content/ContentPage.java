@@ -50,7 +50,6 @@ public class ContentPage implements Serializable {
     public String toString() {
         return "ContentPage{" +
           "id='" + id + '\'' +
-          ", revision='" + revision + '\'' +
           ", metaData=" + metaData +
           ", content=" + content +
           ", dataSourceContents=" + dataSourceContents +
@@ -59,18 +58,12 @@ public class ContentPage implements Serializable {
 
     public static class Builder {
         private String id;
-        private String revision;
         private ContentPageMetaData metaData;
         private List<ContentElement> content;
         private Collection<DataSourceContent> dataSourceContents;
 
         public Builder id(String id){
             this.id = id;
-            return this;
-        }
-
-        public Builder revision(String revision){
-            this.revision = revision;
             return this;
         }
 
@@ -92,7 +85,6 @@ public class ContentPage implements Serializable {
         public ContentPage build(){
             ContentPage page = new ContentPage();
             page.setId(id);
-            page.setRevision(revision);
             page.setMetaData(metaData);
             page.setContent(content);
             page.setDataSourceContents(dataSourceContents);

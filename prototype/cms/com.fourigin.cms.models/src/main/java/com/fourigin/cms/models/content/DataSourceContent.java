@@ -1,38 +1,24 @@
 package com.fourigin.cms.models.content;
 
 import com.fourigin.cms.models.content.elements.ContentElement;
+import com.fourigin.cms.models.datasource.DataSourceIdentifier;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class DataSourceContent {
-    private String type;
-    private Map<String, Object> query;
-    private String checksum;
+public class DataSourceContent implements Serializable {
+    private static final long serialVersionUID = 5480644248235587413L;
+
+    private DataSourceIdentifier identifier;
     private List<ContentElement> content;
 
-    public String getType() {
-        return type;
+    public DataSourceIdentifier getIdentifier() {
+        return identifier;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Map<String, Object> getQuery() {
-        return query;
-    }
-
-    public void setQuery(Map<String, Object> query) {
-        this.query = query;
-    }
-
-    public String getChecksum() {
-        return checksum;
-    }
-
-    public void setChecksum(String checksum) {
-        this.checksum = checksum;
+    public void setIdentifier(DataSourceIdentifier identifier) {
+        this.identifier = identifier;
     }
 
     public List<ContentElement> getContent() {
@@ -46,9 +32,7 @@ public class DataSourceContent {
     @Override
     public String toString() {
         return "DataSourceContent{" +
-          "type='" + type + '\'' +
-          ", query=" + query +
-          ", checksum='" + checksum + '\'' +
+          "identifier=" + identifier +
           ", content=" + content +
           '}';
     }
