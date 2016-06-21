@@ -5,6 +5,7 @@ abstract public class AbstractSiteNode implements SiteNode {
     private String localizedName;
     private String displayName;
     private String description;
+    private SiteNodeContainer parent;
 
     @Override
     public String getName() {
@@ -44,5 +45,15 @@ abstract public class AbstractSiteNode implements SiteNode {
     @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public SiteNodeContainer getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(SiteNodeContainer parent) {
+        this.parent = parent;
     }
 }
