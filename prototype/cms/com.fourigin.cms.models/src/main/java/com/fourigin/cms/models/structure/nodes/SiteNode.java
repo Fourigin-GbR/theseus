@@ -1,6 +1,9 @@
 package com.fourigin.cms.models.structure.nodes;
 
 public interface SiteNode {
+    String getPath();
+    void setPath(String path);
+
     String getName();
     void setName(String name);
 

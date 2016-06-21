@@ -174,4 +174,31 @@ project(':cms') {
             compile cmsRepository
         }
     }
+
+    project('app') {
+        apply plugin: 'spring-boot'
+        group = 'com.fourigin.cms'
+        version = cmsVersion
+
+        bootRepackage {
+            mainClass = 'com.fourigin.cms.App'
+        }
+
+        dependencies {
+            compile managedDependency('org.springframework.boot:spring-boot-starter-web')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
+
+            compile managedDependency('org.springframework:spring-context-support')
+            compile managedDependency('org.springframework:spring-webmvc')
+
+            compile managedDependency('org.activiti:activiti-engine')
+            compile managedDependency('org.activiti:activiti-spring')
+            compile managedDependency('org.activiti:spring-boot-starter-basic')
+            compile managedDependency('org.activiti:activiti-spring-boot-starter-basic')
+
+            runtime managedDependency('mysql:mysql-connector-java')
+        }
+    }
 }

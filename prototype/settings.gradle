@@ -16,3 +16,4 @@ include ':cms:com.fourigin.cms.repository'
 include ':cms:com.fourigin.cms.repository.json'
 
 include ':cms:com.fourigin.cms.compiler'
+include ':cms:app'

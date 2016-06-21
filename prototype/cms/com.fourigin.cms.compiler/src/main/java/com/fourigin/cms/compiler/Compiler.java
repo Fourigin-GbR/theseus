@@ -1,12 +1,17 @@
 package com.fourigin.cms.compiler;
 
+import com.fourigin.cms.models.content.ContentPage;
 import com.fourigin.cms.models.structure.CompileState;
 import com.fourigin.cms.models.structure.nodes.SitePage;
+import com.fourigin.cms.repository.ContentPageResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO: define multiple compilers with different content page resolvers (draft / live)
 public class Compiler {
     private final Logger logger = LoggerFactory.getLogger(Compiler.class);
+
+    private ContentPageResolver contentPageResolver;
 
     public void compile(SitePage page){
         String pageName = page.getName();
@@ -32,8 +37,17 @@ public class Compiler {
         if (logger.isDebugEnabled()) logger.debug("Compile done, with state {}.", compileState);
     }
 
-    private CompileState compileInternal(SitePage page){
+    private CompileState compileInternal(SitePage sitePage){
+        SitePage.ContentPageReference contentRef = sitePage.getContentPageReference();
+
+        ContentPage contentPage = contentPageResolver.retrieve(contentRef.getParentPath(), contentRef.getContentId());
         // TODO: implement me!
-        return page.getCompileState();
+
+
+        return sitePage.getCompileState();
+    }
+
+    public void setContentPageResolver(ContentPageResolver contentPageResolver) {
+        this.contentPageResolver = contentPageResolver;
     }
 }

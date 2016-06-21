@@ -25,15 +25,15 @@ public class JsonFileContentPageRepository implements ContentPageRepository {
     private final Logger logger = LoggerFactory.getLogger(JsonFileContentPageRepository.class);
 
     @Override
-    public ContentPage retrieve(String id) {
+    public ContentPage retrieve(String parentPath, String id) {
         if (logger.isDebugEnabled())
-            logger.debug("Retrieving ContentPage for id = '{}')", id);
+            logger.debug("Retrieving ContentPage for parent '{}' & id '{}')", parentPath, id);
 
-        ReadWriteLock lock = getLock(id);
+        ReadWriteLock lock = getLock(parentPath + '/' + id);
         lock.readLock().lock();
 
         try {
-            File contentFile = getContentFile(id);
+            File contentFile = getContentFile(parentPath, id);
             if (!contentFile.exists()) {
                 if (logger.isInfoEnabled())
                     logger.info("Content file {} does not exist!", contentFile.getAbsolutePath());
@@ -77,21 +77,21 @@ public class JsonFileContentPageRepository implements ContentPageRepository {
     }
 
     @Override
-    public void create(ContentPage contentPage) {
+    public void create(String parentPath, ContentPage contentPage) {
 
     }
 
     @Override
-    public void update(ContentPage contentPage) {
+    public void update(String parentPath, ContentPage contentPage) {
 
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String parentPath, String id) {
 
     }
 
-    private File getContentFile(String contentId)
+    private File getContentFile(String parentPath, String contentId)
     {
         File contentRootFile = new File(contentRoot);
 
@@ -111,9 +111,11 @@ public class JsonFileContentPageRepository implements ContentPageRepository {
         // replace all '/' with '_'
         filename = filename.replace('/', '_');
 
-        File contentFile = new File(contentRootFile, filename);
+        File directory = new File(contentRootFile, parentPath);
 
-        if(logger.isTraceEnabled()) logger.trace("Resolved content file {}", contentFile);
+        File contentFile = new File(directory, filename);
+
+        if(logger.isTraceEnabled()) logger.trace("Resolved content file '{}'", contentFile.getAbsolutePath());
 
         return contentFile;
     }

@@ -10,6 +10,10 @@ public class SitePage extends AbstractSiteNode implements SiteNode {
     private boolean staged;
     private Checksum checksum;
 
+    public ContentPageReference getContentPageReference(){
+        return new ContentPageReference(getPath(), getName());
+    }
+
     public CompileState getCompileState() {
         return compileState;
     }
@@ -45,6 +49,24 @@ public class SitePage extends AbstractSiteNode implements SiteNode {
                 result.append(checksum);
             }
             return result.toString();
+        }
+    }
+
+    public class ContentPageReference {
+        private String parentPath;
+        private String contentId;
+
+        public ContentPageReference(String parentPath, String contentId) {
+            this.parentPath = parentPath;
+            this.contentId = contentId;
+        }
+
+        public String getParentPath() {
+            return parentPath;
+        }
+
+        public String getContentId() {
+            return contentId;
         }
     }
 }

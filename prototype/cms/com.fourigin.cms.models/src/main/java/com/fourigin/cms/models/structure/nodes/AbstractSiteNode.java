@@ -1,11 +1,22 @@
 package com.fourigin.cms.models.structure.nodes;
 
 abstract public class AbstractSiteNode implements SiteNode {
+    private String path;
     private String name;
     private String localizedName;
     private String displayName;
     private String description;
     private SiteNodeContainer parent;
+
+    @Override
+    public String getPath() {
+        return path;
+    }
+
+    @Override
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     @Override
     public String getName() {
