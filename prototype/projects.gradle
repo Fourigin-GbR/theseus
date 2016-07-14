@@ -185,6 +185,11 @@ project(':cms') {
         }
 
         dependencies {
+            compile cmsModels
+            compile cmsRepository
+            runtime cmsRepositoryJson
+            compile cmsCompiler
+
             compile managedDependency('org.springframework.boot:spring-boot-starter-web')
             compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
@@ -197,6 +202,7 @@ project(':cms') {
             compile managedDependency('org.activiti:activiti-spring')
             compile managedDependency('org.activiti:spring-boot-starter-basic')
             compile managedDependency('org.activiti:activiti-spring-boot-starter-basic')
+            compile managedDependency('org.activiti:activiti-spring-boot-starter-actuator')
 
             runtime managedDependency('mysql:mysql-connector-java')
         }

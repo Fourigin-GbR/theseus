@@ -34,7 +34,7 @@ public class Compiler {
         long timestamp = System.currentTimeMillis();
         compileState.setTimestamp(timestamp);
         compileState.setChecksum(pageContentChecksum);
-        if (logger.isDebugEnabled()) logger.debug("Compile done, with state {}.", compileState);
+        if (logger.isDebugEnabled()) logger.debug("Compile completed with state {}.", compileState);
     }
 
     private CompileState compileInternal(SitePage sitePage){

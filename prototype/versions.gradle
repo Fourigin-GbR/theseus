@@ -205,6 +205,7 @@ registerVersion('org.activiti:activiti-engine', versionMap.activiti)
 registerVersion('org.activiti:activiti-spring', versionMap.activiti)
 registerVersion('org.activiti:spring-boot-starter-basic', '5.17.0') // WTF?
 registerVersion('org.activiti:activiti-spring-boot-starter-basic', versionMap.activiti)
+registerVersion('org.activiti:activiti-spring-boot-starter-actuator', versionMap.activiti)
 
 registerVersion('org.apache.tika:tika-core', versionMap.tika)
 registerVersion('org.apache.tika:tika-parsers', versionMap.tika)

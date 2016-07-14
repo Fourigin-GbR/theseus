@@ -4,14 +4,12 @@ import com.fourigin.cms.models.content.elements.ContentElement;
 import com.fourigin.cms.models.datasource.DataSourceIdentifier;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 public class DataSourceContent implements Serializable {
     private static final long serialVersionUID = 5480644248235587413L;
 
     private DataSourceIdentifier identifier;
-    private List<ContentElement> content;
+    private ContentElement content;
 
     public DataSourceIdentifier getIdentifier() {
         return identifier;
@@ -21,12 +19,32 @@ public class DataSourceContent implements Serializable {
         this.identifier = identifier;
     }
 
-    public List<ContentElement> getContent() {
+    public ContentElement getContent() {
         return content;
     }
 
-    public void setContent(List<ContentElement> content) {
+    public void setContent(ContentElement content) {
         this.content = content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DataSourceContent)) return false;
+
+        DataSourceContent that = (DataSourceContent) o;
+
+        //noinspection SimplifiableIfStatement
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
+        return content != null ? content.equals(that.content) : that.content == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        return result;
     }
 
     @Override

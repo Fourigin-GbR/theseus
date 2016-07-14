@@ -31,7 +31,6 @@ class Spec extends Specification {
     def "test2"() {
         ContentPage page = new ContentPage.Builder()
             .id("1")
-            .revision("1")
             .content(Arrays.asList(
                 new TextContentElement.Builder()
                         .name("text-1")

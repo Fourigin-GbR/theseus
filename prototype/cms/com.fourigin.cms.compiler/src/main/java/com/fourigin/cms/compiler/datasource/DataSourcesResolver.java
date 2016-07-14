@@ -3,7 +3,7 @@ package com.fourigin.cms.compiler.datasource;
 import com.fourigin.cms.models.content.ContentPage;
 import com.fourigin.cms.models.content.DataSourceContent;
 import com.fourigin.cms.models.content.elements.ContentElement;
-import com.fourigin.cms.models.content.elements.ContentGroup;
+import com.fourigin.cms.models.datasource.DataSourceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,21 +29,22 @@ public class DataSourcesResolver {
         }
 
         for (DataSourceContent dataSourceGroup : dataSourceGroups) {
-            String type = dataSourceGroup.getType();
+            DataSourceIdentifier dataSourceId = dataSourceGroup.getIdentifier();
+            String type = dataSourceId.getType();
             DataSource dataSource = dataSourceMap.get(type);
             if(dataSource == null){
                 if (logger.isErrorEnabled()) logger.error("No dataSource found for type '{}'!", type);
                 continue;
             }
 
-            Map<String, Object> queryMap = dataSourceGroup.getQuery();
+            Map<String, Object> queryMap = dataSourceId.getQuery();
             DataSourceQuery query = DataSourceQueryFactory.buildFromMap(dataSource, queryMap);
             if(query == null){
                 if (logger.isErrorEnabled()) logger.error("Unable to create query of type '{}' from map {}!", type, queryMap);
                 continue;
             }
 
-            String previousChecksum = dataSourceGroup.getChecksum();
+            String previousChecksum = dataSourceId.getChecksum();
             DataSourceResponse response = dataSource.apply(query);
             String newChecksum = response.getChecksum();
             if(newChecksum.equals(previousChecksum)){

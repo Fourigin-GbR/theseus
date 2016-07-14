@@ -16,8 +16,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootApplication
 public class App {
 
-    @Autowired
-    private PlatformTransactionManager transactionManager;
+//    @Autowired
+//    private PlatformTransactionManager transactionManager;
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
@@ -34,15 +34,15 @@ public class App {
 </bean>
      */
 
-    @Bean
-    public ProcessEngine processEngine() throws Exception {
-        ProcessEngineFactoryBean factoryBean = new ProcessEngineFactoryBean();
-        factoryBean.setProcessEngineConfiguration(processEngineConfiguration());
-        return factoryBean.getObject();
-    }
-
-    private SpringProcessEngineConfiguration processEngineConfiguration() {
-        SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
-        return configuration;
-    }
+//    @Bean
+//    public ProcessEngine processEngine() throws Exception {
+//        ProcessEngineFactoryBean factoryBean = new ProcessEngineFactoryBean();
+//        factoryBean.setProcessEngineConfiguration(processEngineConfiguration());
+//        return factoryBean.getObject();
+//    }
+//
+//    private SpringProcessEngineConfiguration processEngineConfiguration() {
+//        SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
+//        return configuration;
+//    }
 }
