@@ -11,42 +11,84 @@ def versionMap = [
 	'ektorp': '1.4.2',
 	'geb': '0.9.3',
 	'groovy': '2.4.3',
+	'hibernate':'4.3.11.Final',
 	/*
-	'hibernate':'4.3.1.Final',
-	makes mdb go BOOM!
-	VariantGroup.items is not properly initialized.
-	Also reverting in phobos until problem is understood.
+	'hibernate':'5.0.0.Final',
+	Nope. Non-trivial.
+
+	TODO:
+	- Change all hibernate4. to hibernate5. in application contexts.
+	- Find out why some tests fail because of missing exceptions.
+	- Some tests, e.g. BodyTypeServiceSpecification, fail to clean up the database.
 	*/
-	'hibernate':'4.2.7.Final',
-	'hibernateValidator': '5.0.3.Final',
+	'hibernateValidator': '5.2.2.Final',
 	'httpClient': '4.3.6',
 	// https://github.com/helun/Ektorp/issues/222
 	// 'httpClient': '4.4.1',
-	'jackson': '2.5.3',
-	'jacksonAfterburner': '2.5.3',
-	'lilith': '0.9.44',
-	'logback': '1.1.3',
+
+	'jackson': '2.8.2',
+	'jacksonModule': '2.8.2',
+//	'jacksonAfterburner': '2.5.3',
+	'lilith': '8.0.0',
+	'logback': '1.1.7',
+	'netty': '4.0.32.Final',
+	'ratpack': '1.4.1',
 	'selenium': '2.35.0',
-	'slf4j': '1.7.12',
+	'slf4j': '1.7.21',
 	'spock': '1.0-groovy-2.4',
-	'spring': '4.2.5.RELEASE',
-	'springboot': '1.3.3.RELEASE',
-	'springsecurity': '3.2.7.RELEASE',
-	// TODO: check 'springsecurity': '4.0.0.RELEASE',
-	'springws': '2.2.1.RELEASE',
-	'sulky': '0.9.17',
+	'spring': '4.3.2.RELEASE',
+	'springboot': '1.4.0.RELEASE',
+	'springsecurity': '3.2.9.RELEASE',
+	// TODO: check 'springsecurity': '4.0.4.RELEASE',
+	'springshell': '1.2.0.RELEASE',
+	'springws': '2.3.0.RELEASE',
+	'sulky': '8.0.0',
 	'taglibsStandard': '1.2.1',
-	'thymeleaf': '2.1.4.RELEASE',
+	'thymeleaf': '2.1.5.RELEASE',
 	'tomcat':'7.0.42',
-	'twelvemonkeys': '3.1.0',
+	'twelvemonkeys': '3.2.1',
 	'xstream': '1.2.2',
 	'tika': '1.8',
 ]
 
+subprojects { Project subProject ->
+    subProject.plugins.withId('spring-boot', { Plugin plugin ->
+        subProject.extensions.configure(ExtraPropertiesExtension, { ExtraPropertiesExtension extension ->
+            def map = [:] as Map<String, Object>
+            map['aspectj.version'] 				= versionMap.aspectj
+            map['derby.version'] 				= versionMap.derby
+            map['groovy.version'] 				= versionMap.groovy
+            map['hibernate-validator.version'] 	= versionMap.hibernateValidator
+            map['hibernate.version'] 			= versionMap.hibernate
+            map['httpclient.version'] 			= versionMap.httpClient
+            //map['jackson.version'] 				= versionMap.jackson
+            map['logback.version'] 				= versionMap.logback
+            map['slf4j.version'] 				= versionMap.slf4j
+            map['spock.version'] 				= versionMap.spock
+            map['spring-boot.version'] 			= versionMap.springboot
+            map['spring-security.version'] 		= versionMap.springsecurity
+            map['spring-ws.version'] 			= versionMap.springws
+            map['spring.version'] 				= versionMap.spring
+            map['thymeleaf.version'] 			= versionMap.thymeleaf
+            map.each {
+/* Not applying settings to all projects du tu priceformatter-ws build failure
+Could not resolve all dependencies for configuration ':formatter:com.bpinteractive.price.formatter.ws:compileClasspath'.
+> Could not find com.fasterxml.jackson.datatype:jackson-datatype-jdk7:2.7.3.
+  Required by:
+      com.bpinteractive:com.bpinteractive.price.formatter.ws:2.0.0-SNAPSHOT > io.ratpack:ratpack-core:1.2.0
+ */
+                extension.set(it.key, it.value)
+            }
+        } as Action<ExtraPropertiesExtension>)
+    } as Action<Plugin>)
+} as Action<Project>
+
+ext['versionMap'] = versionMap
+
 
 registerVersion('axis:axis-saaj', '1.3')
 registerVersion('axis:axis-wsdl4j', '1.5.1')
-registerVersion('cglib:cglib-nodep', '2.2.2')
+registerVersion('cglib:cglib-nodep', '3.2.4')
 registerVersion('ch.qos.logback:logback-classic', versionMap.logback)
 registerVersion('ch.qos.logback:logback-core', versionMap.logback)
 registerVersion('com.beust:jcommander', '1.48')
@@ -66,7 +108,8 @@ registerVersion('commons-codec:commons-codec', '1.10')
 registerVersion('commons-dbcp:commons-dbcp', '1.4')
 registerVersion('commons-discovery:commons-discovery', '0.5')
 registerVersion('commons-fileupload:commons-fileupload', '1.2.2')
-registerVersion('commons-io:commons-io', '2.4')
+registerVersion('commons-io:commons-io', '2.5')
+registerVersion('commons-net:commons-net','3.4')
 registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic', versionMap.lilith)
 registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.logback.servlet', versionMap.lilith)
 registerVersion('de.huxhorn.lilith:de.huxhorn.lilith.logback.tools', versionMap.lilith)
@@ -90,7 +133,6 @@ registerVersion('javax.validation:validation-api', '1.1.0.Final')
 registerVersion('javax.websocket:javax.websocket-api', '1.0')
 registerVersion('javax.websocket:javax.websocket-client-api', '1.0')
 registerVersion('javax.xml.bind:jaxb-api', '2.2.11')
-registerVersion('joda-time:joda-time', '2.7')
 registerVersion('junit:junit', '4.12')
 registerVersion('mysql:mysql-connector-java', '5.1.31')
 registerVersion('net.sf.ehcache:ehcache-core', '2.6.9')

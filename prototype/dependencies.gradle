@@ -1,7 +1,7 @@
 //REPOSITORIES
 def repositoryConfiguration = {
     mavenLocal()
-    jcenter()
+//    jcenter()
     mavenCentral()
 }
 
