@@ -6,7 +6,7 @@ abstract public class AbstractSiteNode implements SiteNode {
     private String localizedName;
     private String displayName;
     private String description;
-    private SiteNodeContainer parent;
+//    private SiteNodeContainer parent;
 
     @Override
     public String getPath() {
@@ -58,13 +58,13 @@ abstract public class AbstractSiteNode implements SiteNode {
         this.description = description;
     }
 
-    @Override
-    public SiteNodeContainer getParent() {
-        return parent;
-    }
-
-    @Override
-    public void setParent(SiteNodeContainer parent) {
-        this.parent = parent;
-    }
+//    @Override
+//    public SiteNodeContainer getParent() {
+//        return parent;
+//    }
+//
+//    @Override
+//    public void setParent(SiteNodeContainer parent) {
+//        this.parent = parent;
+//    }
 }

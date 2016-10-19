@@ -6,8 +6,8 @@ import com.fourigin.cms.models.structure.CompileState;
 import java.util.SortedMap;
 
 public class SitePage extends AbstractSiteNode implements SiteNode {
-    private CompileState compileState;
     private boolean staged;
+    private CompileState compileState;
     private Checksum checksum;
 
     public ContentPageReference getContentPageReference(){
@@ -34,13 +34,18 @@ public class SitePage extends AbstractSiteNode implements SiteNode {
         return checksum;
     }
 
-    public void setChecksum(Checksum checksum) {
-        this.checksum = checksum;
+    public void setChecksum(String contentChecksum, SortedMap<DataSourceIdentifier, String> dataSourceChecksum) {
+        this.checksum = new Checksum(contentChecksum, dataSourceChecksum);
     }
 
     public class Checksum {
         private String contentChecksum;
         private SortedMap<DataSourceIdentifier, String> dataSourceChecksum;
+
+        public Checksum(String contentChecksum, SortedMap<DataSourceIdentifier, String> dataSourceChecksum) {
+            this.contentChecksum = contentChecksum;
+            this.dataSourceChecksum = dataSourceChecksum;
+        }
 
         public String getCombinedChecksum(){
             StringBuilder result = new StringBuilder(contentChecksum);

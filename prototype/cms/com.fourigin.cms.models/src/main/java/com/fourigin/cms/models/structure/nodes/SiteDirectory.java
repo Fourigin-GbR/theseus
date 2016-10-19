@@ -2,9 +2,8 @@ package com.fourigin.cms.models.structure.nodes;
 
 import java.util.List;
 
-public class SiteDirectory extends AbstractSiteNode implements SiteNodeContainer, SiteNode {
+public class SiteDirectory extends AbstractSiteNode implements SiteNode , SiteNodeContainer {
     private List<SiteNode> nodes;
-    private boolean lazy = true;
 
     public List<SiteNode> getNodes() {
         return nodes;
