@@ -5,7 +5,7 @@ import com.fourigin.cms.models.structure.nodes.SiteDirectory;
 import com.fourigin.cms.models.structure.nodes.SiteNode;
 import com.fourigin.cms.models.structure.nodes.SiteNodeContainer;
 import com.fourigin.cms.models.structure.nodes.SitePage;
-import com.fourigin.cms.repository.strategies.IterationStrategy;
+import com.fourigin.cms.repository.strategies.TraversingStrategy;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +40,7 @@ public class JsonHiddenFilesSiteStructureRepository implements SiteStructureRepo
 
     private ObjectMapper objectMapper;
 
-    private IterationStrategy<SitePage, SiteNode> defaultIterationStrategy;
+    private TraversingStrategy<SitePage, SiteNode> defaultIterationStrategy;
 
     private ConcurrentHashMap<String, ReadWriteLock> locks = new ConcurrentHashMap<>();
 
@@ -235,40 +236,40 @@ public class JsonHiddenFilesSiteStructureRepository implements SiteStructureRepo
     }
 
     @Override
-    public Iterator<SitePage> resolveIterator(String path) {
+    public Collection<SitePage> resolveNodes(String path) {
         if(defaultIterationStrategy == null){
             throw new IllegalStateException("Unable to resolve iterator! No default iteration strategy is defined!");
         }
 
-        return resolveIterator(root, path, defaultIterationStrategy);
+        return resolveNodes(root, path, defaultIterationStrategy);
     }
 
     @Override
-    public Iterator<SitePage> resolveIterator(String path, IterationStrategy<SitePage, SiteNode> iterationStrategy) {
+    public Collection<SitePage> resolveNodes(String path, TraversingStrategy<SitePage, SiteNode> iterationStrategy) {
         Objects.requireNonNull(path, "Path must not be null!");
 
-        return resolveIterator(root, path, iterationStrategy);
+        return resolveNodes(root, path, iterationStrategy);
     }
 
     @Override
-    public Iterator<SitePage> resolveIterator(SiteNodeContainer parent, String path) {
+    public Collection<SitePage> resolveNodes(SiteNodeContainer parent, String path) {
         Objects.requireNonNull(path, "Path must not be null!");
 
         if(defaultIterationStrategy == null){
             throw new IllegalStateException("Unable to resolve iterator! No default iteration strategy is defined!");
         }
 
-        return resolveIterator(parent, path, defaultIterationStrategy);
+        return resolveNodes(parent, path, defaultIterationStrategy);
     }
 
     @Override
-    public Iterator<SitePage> resolveIterator(SiteNodeContainer parent, String path, IterationStrategy<SitePage, SiteNode> iterationStrategy) {
+    public Collection<SitePage> resolveNodes(SiteNodeContainer parent, String path, TraversingStrategy<SitePage, SiteNode> iterationStrategy) {
         Objects.requireNonNull(path, "Path must not be null!");
         Objects.requireNonNull(iterationStrategy, "Iteration strategy must not be null!");
 
         SiteNode base = select(parent, path);
 
-        return iterationStrategy.createIteratorOver(base);
+        return iterationStrategy.collect(base);
     }
 
     private ReadWriteLock getLock(String id) {
@@ -442,7 +443,7 @@ public class JsonHiddenFilesSiteStructureRepository implements SiteStructureRepo
         this.objectMapper = objectMapper;
     }
 
-    public void setDefaultIterationStrategy(IterationStrategy<SitePage, SiteNode> defaultIterationStrategy) {
+    public void setDefaultIterationStrategy(TraversingStrategy<SitePage, SiteNode> defaultIterationStrategy) {
         this.defaultIterationStrategy = defaultIterationStrategy;
     }
 }

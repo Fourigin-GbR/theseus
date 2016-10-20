@@ -6,21 +6,20 @@ import com.fourigin.cms.models.structure.nodes.SitePage;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-public class DefaultSiteNodeContainerIterationStrategy implements IterationStrategy<SitePage, SiteNodeContainer> {
+public class DefaultSiteNodeContainerIterationStrategy implements TraversingStrategy<SitePage, SiteNodeContainer> {
 
     @Override
-    public Iterator<SitePage> createIteratorOver(SiteNodeContainer container) {
+    public Collection<SitePage> collect(SiteNodeContainer container) {
         Collection<SitePage> result = new ArrayList<>();
 
         if(container == null){
-            return result.iterator();
+            return result;
         }
 
         processContainer(container, result);
 
-        return result.iterator();
+        return result;
     }
 
     private void processContainer(SiteNodeContainer container, Collection<SitePage> result){
