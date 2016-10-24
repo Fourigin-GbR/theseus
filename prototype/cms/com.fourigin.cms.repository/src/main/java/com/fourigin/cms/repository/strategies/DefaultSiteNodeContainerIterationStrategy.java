@@ -1,17 +1,17 @@
 package com.fourigin.cms.repository.strategies;
 
-import com.fourigin.cms.models.structure.nodes.SiteNode;
-import com.fourigin.cms.models.structure.nodes.SiteNodeContainer;
-import com.fourigin.cms.models.structure.nodes.SitePage;
+import com.fourigin.cms.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.cms.models.structure.nodes.SiteNodeInfoContainer;
+import com.fourigin.cms.models.structure.nodes.PageInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DefaultSiteNodeContainerIterationStrategy implements TraversingStrategy<SitePage, SiteNodeContainer> {
+public class DefaultSiteNodeContainerIterationStrategy implements TraversingStrategy<PageInfo, SiteNodeInfoContainer> {
 
     @Override
-    public Collection<SitePage> collect(SiteNodeContainer container) {
-        Collection<SitePage> result = new ArrayList<>();
+    public Collection<PageInfo> collect(SiteNodeInfoContainer container) {
+        Collection<PageInfo> result = new ArrayList<>();
 
         if(container == null){
             return result;
@@ -22,17 +22,17 @@ public class DefaultSiteNodeContainerIterationStrategy implements TraversingStra
         return result;
     }
 
-    private void processContainer(SiteNodeContainer container, Collection<SitePage> result){
+    private void processContainer(SiteNodeInfoContainer container, Collection<PageInfo> result){
         if(container == null || container.getNodes() == null || container.getNodes().isEmpty()){
             return;
         }
 
-        for (SiteNode node : container.getNodes()) {
-            if(node instanceof SiteNodeContainer){
-                processContainer((SiteNodeContainer) node, result);
+        for (SiteNodeInfo node : container.getNodes()) {
+            if(node instanceof SiteNodeInfoContainer){
+                processContainer((SiteNodeInfoContainer) node, result);
             }
-            else if(node instanceof SitePage){
-                result.add((SitePage) node);
+            else if(node instanceof PageInfo){
+                result.add((PageInfo) node);
             }
             else {
                 throw new IllegalArgumentException("Unsupported SiteNode type '" + node.getClass().getName() + "'!");

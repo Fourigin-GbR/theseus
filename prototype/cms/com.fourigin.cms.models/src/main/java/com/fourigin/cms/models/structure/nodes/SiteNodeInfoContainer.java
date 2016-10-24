@@ -2,11 +2,11 @@ package com.fourigin.cms.models.structure.nodes;
 
 import java.util.List;
 
-public interface SiteNodeContainer {
+public interface SiteNodeInfoContainer {
     String getPath();
     void setPath(String path);
 
-    List<SiteNode> getNodes();
+    List<SiteNodeInfo> getNodes();
 
-    void setNodes(List<SiteNode> nodes);
+    void setNodes(List<SiteNodeInfo> nodes);
 }

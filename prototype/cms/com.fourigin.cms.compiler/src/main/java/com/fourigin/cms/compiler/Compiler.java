@@ -2,7 +2,7 @@ package com.fourigin.cms.compiler;
 
 import com.fourigin.cms.models.content.ContentPage;
 import com.fourigin.cms.models.structure.CompileState;
-import com.fourigin.cms.models.structure.nodes.SitePage;
+import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.repository.ContentPageResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ public class Compiler {
 
     private ContentPageResolver contentPageResolver;
 
-    public void compile(SitePage page){
+    public void compile(PageInfo page){
         String pageName = page.getName();
 
         String pageContentChecksum = page.getChecksum().getCombinedChecksum();
@@ -37,8 +37,8 @@ public class Compiler {
         if (logger.isDebugEnabled()) logger.debug("Compile completed with state {}.", compileState);
     }
 
-    private CompileState compileInternal(SitePage sitePage){
-        SitePage.ContentPageReference contentRef = sitePage.getContentPageReference();
+    private CompileState compileInternal(PageInfo sitePage){
+        PageInfo.ContentPageReference contentRef = sitePage.getContentPageReference();
 
         ContentPage contentPage = contentPageResolver.retrieve(contentRef.getParentPath(), contentRef.getContentId());
         // TODO: implement me!

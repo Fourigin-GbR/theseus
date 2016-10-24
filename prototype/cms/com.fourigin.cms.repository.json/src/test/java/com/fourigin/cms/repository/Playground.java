@@ -1,36 +1,41 @@
 package com.fourigin.cms.repository;
 
-import com.fourigin.cms.models.structure.nodes.SiteDirectory;
-import com.fourigin.cms.models.structure.nodes.SiteNode;
-import com.fourigin.cms.models.structure.nodes.SitePage;
+import com.fourigin.cms.models.content.ContentPage;
+import com.fourigin.cms.models.structure.nodes.DirectoryInfo;
+import com.fourigin.cms.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.cms.models.structure.nodes.PageInfo;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class Playground {
     public static void main(String[] args) {
         SiteStructureResolver xResolver = null; //factory.getInstance("de_DE");
+        ContentPageRepository cRepository = null;
 
         Map<String, String> siteAttributes = xResolver.resolveSiteAttributes();
-        List<SiteNode> rootNodes = xResolver.resolveNode(SiteDirectory.class, "/").getNodes();
-        List<SiteNode> articles2016Absolute = xResolver.resolveNode(SiteDirectory.class, "/articles/2016").getNodes();
+        List<SiteNodeInfo> rootNodes = xResolver.resolveNode(DirectoryInfo.class, "/").getNodes();
+        List<SiteNodeInfo> articles2016Absolute = xResolver.resolveNode(DirectoryInfo.class, "/articles/2016").getNodes();
 
-        SiteDirectory articlesDirectory = xResolver.resolveNode(SiteDirectory.class, "/articles");
-        List<SiteNode> articles2016Relative = xResolver.resolveNode(SiteDirectory.class, articlesDirectory, "2016").getNodes();
+        DirectoryInfo articlesDirectory = xResolver.resolveNode(DirectoryInfo.class, "/articles");
+        List<SiteNodeInfo> articles2016Relative = xResolver.resolveNode(DirectoryInfo.class, articlesDirectory, "2016").getNodes();
 
-        Collection<SitePage> allNodes = xResolver.resolveNodes("/");
-        Collection<SitePage> allArticleNodes = xResolver.resolveNodes("/articles");
-        Collection<SitePage> allArticle2016Nodes = xResolver.resolveNodes(articlesDirectory, "/articles");
+        Collection<PageInfo> allNodes = xResolver.resolveNodes("/");
+        Collection<PageInfo> allArticleNodes = xResolver.resolveNodes("/articles");
+        Collection<PageInfo> allArticle2016Nodes = xResolver.resolveNodes(articlesDirectory, "/articles");
 
-        SitePage page = xResolver.resolveNode(SitePage.class, articlesDirectory, "2016/index");
+        PageInfo page = xResolver.resolveNode(PageInfo.class, articlesDirectory, "2016/index");
         page.setDescription("new description");
 
         SiteStructureRepository xRepository = null; //
         xRepository.updateNode(articlesDirectory, page);
 
-        SitePage newPage = new SitePage();
+        PageInfo newPage = new PageInfo();
         xRepository.createNode(articlesDirectory, newPage);
+
+        ContentPage contentPage = cRepository.retrieve(page.getPath(), page.getName());
+
+        cRepository.update(page.getPath(), contentPage);
     }
 }

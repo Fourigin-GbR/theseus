@@ -1,6 +1,6 @@
 package com.fourigin.cms.models.structure.nodes;
 
-public interface SiteNode {
+public interface SiteNodeInfo {
     String getPath();
     void setPath(String path);
 
@@ -16,6 +16,6 @@ public interface SiteNode {
     String getDescription();
     void setDescription(String description);
 
-//    SiteNodeContainer getParent();
-//    void setParent(SiteNodeContainer siteNode);
+    SiteNodeInfoContainer getParent();
+    void setParent(SiteNodeInfoContainer siteNode);
 }

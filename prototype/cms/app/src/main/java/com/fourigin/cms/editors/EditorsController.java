@@ -4,7 +4,7 @@ import com.fourigin.cms.models.ChecksumGenerator;
 import com.fourigin.cms.models.content.ContentPageManager;
 import com.fourigin.cms.models.content.ContentPage;
 import com.fourigin.cms.models.content.elements.ContentElement;
-import com.fourigin.cms.models.structure.nodes.SitePage;
+import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.repository.ContentPageRepository;
 import com.fourigin.cms.repository.SiteStructureResolver;
 import org.slf4j.Logger;
@@ -86,12 +86,12 @@ public class EditorsController {
         validate(pointer);
 
         String pagePath = pointer.getSiteStructurePath();
-        SitePage page = siteStructureResolver.resolveNode(SitePage.class, pagePath);
+        PageInfo page = siteStructureResolver.resolveNode(PageInfo.class, pagePath);
         if(page == null){
             throw new IllegalArgumentException("No sitePage found for '" + pagePath + "'!");
         }
 
-        SitePage.ContentPageReference pageReference = page.getContentPageReference();
+        PageInfo.ContentPageReference pageReference = page.getContentPageReference();
         String parentPath = pageReference.getParentPath();
         String contentId = pageReference.getContentId();
         ContentPage contentPage = contentPageRepository.retrieve(parentPath, contentId);
@@ -108,12 +108,12 @@ public class EditorsController {
         validate(pointer);
 
         String pagePath = pointer.getSiteStructurePath();
-        SitePage page = siteStructureResolver.resolveNode(SitePage.class, pagePath);
+        PageInfo page = siteStructureResolver.resolveNode(PageInfo.class, pagePath);
         if(page == null){
             throw new IllegalArgumentException("No sitePage found for '" + pagePath + "'!");
         }
 
-        SitePage.ContentPageReference pageReference = page.getContentPageReference();
+        PageInfo.ContentPageReference pageReference = page.getContentPageReference();
         String parentPath = pageReference.getParentPath();
         String contentId = pageReference.getContentId();
         ContentPage contentPage = contentPageRepository.retrieve(parentPath, contentId);

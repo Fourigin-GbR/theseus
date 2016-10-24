@@ -1,12 +1,12 @@
 package com.fourigin.cms.models.structure.nodes;
 
-abstract public class AbstractSiteNode implements SiteNode {
+abstract public class AbstractSiteNodeInfo implements SiteNodeInfo {
     private String path;
     private String name;
     private String localizedName;
     private String displayName;
     private String description;
-//    private SiteNodeContainer parent;
+    private SiteNodeInfoContainer parent;
 
     @Override
     public String getPath() {
@@ -58,13 +58,13 @@ abstract public class AbstractSiteNode implements SiteNode {
         this.description = description;
     }
 
-//    @Override
-//    public SiteNodeContainer getParent() {
-//        return parent;
-//    }
-//
-//    @Override
-//    public void setParent(SiteNodeContainer parent) {
-//        this.parent = parent;
-//    }
+    @Override
+    public SiteNodeInfoContainer getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(SiteNodeInfoContainer parent) {
+        this.parent = parent;
+    }
 }

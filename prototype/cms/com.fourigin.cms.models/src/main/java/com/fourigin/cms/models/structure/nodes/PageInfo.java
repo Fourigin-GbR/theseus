@@ -5,10 +5,14 @@ import com.fourigin.cms.models.structure.CompileState;
 
 import java.util.SortedMap;
 
-public class SitePage extends AbstractSiteNode implements SiteNode {
+public class PageInfo extends AbstractSiteNodeInfo implements SiteNodeInfo {
     private boolean staged;
     private CompileState compileState;
     private Checksum checksum;
+
+    public String getReference(){
+        return getPath() + '/' + getName();
+    }
 
     public ContentPageReference getContentPageReference(){
         return new ContentPageReference(getPath(), getName());
