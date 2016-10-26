@@ -9,6 +9,8 @@ def cmsCompiler = project(':cms:com.fourigin.cms.compiler')
 def heraCore = project(':hera:com.fourigin.hera.core')
 //def heraSpringBootStarter = project(':hera:com.fourigin.hera.spring-boot-starter')
 
+def utilitiesCore = project(':utilities:com.fourigin.utilities.core')
+
 project(':apps') {
     def appsVersion = '1.0-SNAPSHOT'
 
@@ -151,6 +153,7 @@ project(':cms') {
         dependencies {
             compile cmsModels
             compile cmsRepository
+            compile utilitiesCore
 
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
@@ -205,6 +208,18 @@ project(':cms') {
             compile managedDependency('org.activiti:activiti-spring-boot-starter-actuator')
 
             runtime managedDependency('mysql:mysql-connector-java')
+        }
+    }
+}
+
+project(':utilities') {
+    def utilitiesVersion = '1.0-SNAPSHOT'
+
+    project('com.fourigin.utilities.core') {
+        group = 'com.fourigin.utilities'
+        version = utilitiesVersion
+
+        dependencies {
         }
     }
 }
