@@ -4,13 +4,10 @@ import com.fourigin.theseus.filters.ClassificationFilter;
 import com.fourigin.theseus.models.Classification;
 import com.fourigin.theseus.repository.ModelObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,30 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-//@RestController
-@Controller
+@RestController
 @RequestMapping("/classification")
 public class ClassificationController {
 
     private ModelObjectRepository modelObjectRepository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String overview(Model model){
-        List<String> codes = retrieveAllCodes(true);
-
-        model.addAttribute("all", codes);
-
-        return "classifications";
-    }
-
-    /**
-     * /classification/_all
-     * @param sort optional parameter to sort result list
-     * @return the list of all available codes.
-     */
-    @RequestMapping(value = "_all", method = RequestMethod.GET)
-    @ResponseBody
-    public List<String> retrieveAllCodes(@RequestParam(required = false) boolean sort){
+    public static List<String> retrieveClassificationCodes(ModelObjectRepository modelObjectRepository, boolean sort){
         Set<String> classifications = modelObjectRepository.getAllIds(Classification.class);
         if(classifications == null){
             return null;
@@ -58,12 +38,24 @@ public class ClassificationController {
     }
 
     /**
+     * /classification/_all
+     * @param sort optional parameter to sort result list
+     * @return the list of all available codes.
+     */
+    @RequestMapping(value = "_all", method = RequestMethod.GET)
+//    @ResponseBody
+    public List<String> retrieveAllCodes(@RequestParam(required = false) boolean sort){
+        return retrieveClassificationCodes(modelObjectRepository, sort);
+    }
+
+
+    /**
      * /classification?code={code}
      * @param code classification code
      * @return the classification model object.
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
+//    @ResponseBody
     public List<Classification> retrieve(@RequestParam List<String> code){
 
         Map<String, Classification> entries = modelObjectRepository.retrieve(Classification.class, code);
@@ -93,7 +85,7 @@ public class ClassificationController {
     }
 
     /**
-     * /classification?id={id}
+     * /classification?code={id}
      * @param code classification id
      */
     @RequestMapping(method = RequestMethod.DELETE)
@@ -108,7 +100,7 @@ public class ClassificationController {
      * @return the filtered list of classifications.
      */
     @RequestMapping(value = "_filter", method = RequestMethod.GET)
-    @ResponseBody
+//    @ResponseBody
     public List<String> retrieveFiltered(
       @RequestParam String type,
       @RequestParam(required = false) boolean sort
