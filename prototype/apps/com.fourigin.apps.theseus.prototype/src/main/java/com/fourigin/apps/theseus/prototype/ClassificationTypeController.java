@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -23,12 +22,11 @@ public class ClassificationTypeController {
     private ModelObjectRepository modelObjectRepository;
 
     /**
-     * /classificationType/_all
+     * /classificationType/_codes
      * @param sort optional parameter to sort result list
      * @return the list of all available codes.
      */
-    @RequestMapping(value = "_all", method = RequestMethod.GET)
-    @ResponseBody
+    @RequestMapping(value = "_codes", method = RequestMethod.GET)
     public List<String> retrieveAllCodes(@RequestParam(required = false) boolean sort){
         Set<String> classificationTypes = modelObjectRepository.getAllIds(ClassificationType.class);
         if(classificationTypes == null){
@@ -45,21 +43,20 @@ public class ClassificationTypeController {
     }
 
     /**
-     * /classificationType?code={code}
-     * @param code classificationType code
+     * /classificationType?codes={code}
+     * @param codes classificationType code
      * @return the classificationType model object.
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public List<ClassificationType> retrieve(@RequestParam List<String> code){
+    public List<ClassificationType> retrieve(@RequestParam List<String> codes){
 
-        Map<String, ClassificationType> entries = modelObjectRepository.retrieve(ClassificationType.class, code);
+        Map<String, ClassificationType> entries = modelObjectRepository.retrieve(ClassificationType.class, codes);
         if(entries == null){
-            throw new ObjectNotFound("Error retrieving classification type(s): no classification type found for id(s) '" + code + "'!");
+            throw new ObjectNotFound("Error retrieving classification type(s): no classification type found for id(s) '" + codes + "'!");
         }
 
         List<ClassificationType> result = new ArrayList<>(entries.size());
-        for (String c : code) {
+        for (String c : codes) {
             ClassificationType entry = entries.get(c);
             if(entry != null) {
                 result.add(entry);
@@ -80,8 +77,8 @@ public class ClassificationTypeController {
     }
 
     /**
-     * /classificationType?id={id}
-     * @param code classificationType id
+     * /classificationType?code={code}
+     * @param code classificationType code
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public void delete(@RequestParam String code){
@@ -95,7 +92,6 @@ public class ClassificationTypeController {
      * @return the filtered list of classifications.
      */
     @RequestMapping(value = "_filter", method = RequestMethod.GET)
-    @ResponseBody
     public List<String> retrieveFiltered(
       @RequestParam String type,
       @RequestParam(required = false) boolean sort

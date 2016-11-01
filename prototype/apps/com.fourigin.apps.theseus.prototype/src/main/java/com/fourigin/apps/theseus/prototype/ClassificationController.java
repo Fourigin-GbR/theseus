@@ -49,7 +49,7 @@ public class ClassificationController {
 
 
     /**
-     * /classification?code={code}
+     * /classification?codes={code}
      * @param codes classification code
      * @return the classification model object.
      */
