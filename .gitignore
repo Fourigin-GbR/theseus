@@ -9,3 +9,4 @@ out/
 .gradle
 prototype/application.pid
 prototype/theseus.pid
+/prototype/apps/com.fourigin.apps.theseus.prototype/theseus.pid
