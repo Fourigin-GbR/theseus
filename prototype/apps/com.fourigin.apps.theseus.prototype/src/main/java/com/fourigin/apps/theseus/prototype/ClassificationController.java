@@ -38,12 +38,11 @@ public class ClassificationController {
     }
 
     /**
-     * /classification/_all
+     * /classification/_codes
      * @param sort optional parameter to sort result list
      * @return the list of all available codes.
      */
-    @RequestMapping(value = "_all", method = RequestMethod.GET)
-//    @ResponseBody
+    @RequestMapping(value = "_codes", method = RequestMethod.GET)
     public List<String> retrieveAllCodes(@RequestParam(required = false) boolean sort){
         return retrieveClassificationCodes(modelObjectRepository, sort);
     }
@@ -51,21 +50,19 @@ public class ClassificationController {
 
     /**
      * /classification?code={code}
-     * @param code classification code
+     * @param codes classification code
      * @return the classification model object.
      */
     @RequestMapping(method = RequestMethod.GET)
-//    @ResponseBody
-    public List<Classification> retrieve(@RequestParam List<String> code){
-
-        Map<String, Classification> entries = modelObjectRepository.retrieve(Classification.class, code);
+    public List<Classification> retrieve(@RequestParam List<String> codes){
+        Map<String, Classification> entries = modelObjectRepository.retrieve(Classification.class, codes);
         if(entries == null){
-            throw new ObjectNotFound("Error retrieving classification(s): no classification found for id(s) '" + code + "'!");
+            throw new ObjectNotFound("Error retrieving classification(s): no classification found for code(s) '" + codes + "'!");
         }
 
         List<Classification> result = new ArrayList<>(entries.size());
-        for (String c : code) {
-            Classification entry = entries.get(c);
+        for (String code : codes) {
+            Classification entry = entries.get(code);
             if(entry != null) {
                 result.add(entry);
             }
@@ -100,7 +97,6 @@ public class ClassificationController {
      * @return the filtered list of classifications.
      */
     @RequestMapping(value = "_filter", method = RequestMethod.GET)
-//    @ResponseBody
     public List<String> retrieveFiltered(
       @RequestParam String type,
       @RequestParam(required = false) boolean sort

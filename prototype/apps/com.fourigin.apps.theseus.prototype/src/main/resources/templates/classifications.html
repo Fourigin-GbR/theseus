@@ -14,10 +14,11 @@
 <div>
     User: <span sec:authentication = "name">Bob</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;roles: <span sec:authentication="principal.authorities"/>
 </div>
-<h1>Classifications (from classpath!)</h1>
+<h1>Classifications</h1>
 
-<ul th:each="code : ${all}">
-    <li th:text="${code}">Classification 1</li>
+<!--/*@thymesVar id="classificationCodes" type="java.util.List<java.lang.String>"*/-->
+<ul th:each="code : ${classificationCodes}">
+    <li><a th:text="${code}" th:href="@{/view/classification/(codes=${code})}">Classification 1</a></li>
 </ul>
 
 </body>

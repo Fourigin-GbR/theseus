@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:th="http://www.thymeleaf.org"
+         xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title>Classification details</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    User: <span sec:authentication = "name">Bob</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;roles: <span sec:authentication="principal.authorities"/>
+</div>
+<h1>Classifications</h1>
+
+<div>
+    <a th:href="@{/view/classification/_codes}">back to overview</a>
+</div>
+
+<!--/*@thymesVar id="classifications" type="java.util.List<com.fourigin.theseus.models.Classification>"*/-->
+<fieldset th:each="classification : ${classifications}">
+    <label th:text="${classification.id}">code</label>
+    <ul>
+        <li><span class="key">revision:</span> <span class="value" th:text="${classification.revision}">1</span></li>
+        <li><span class="key">type:</span> <span class="value" th:text="${classification.typeCode}">type</span></li>
+        <li><span class="key">description:</span> <span class="value" th:text="${classification.description}">description</span></li>
+    </ul>
+</fieldset>
+
+</body>
+</html>
