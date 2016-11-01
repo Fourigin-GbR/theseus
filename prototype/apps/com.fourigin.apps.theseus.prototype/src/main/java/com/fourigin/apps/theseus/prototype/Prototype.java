@@ -7,9 +7,9 @@ import com.fourigin.theseus.models.Classification;
 import com.fourigin.theseus.models.ClassificationType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.system.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +18,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
@@ -31,9 +32,15 @@ import javax.servlet.http.HttpServletResponse;
 //@ComponentScan({"com.fourigin.apps.theseus.prototype", "com.fourigin.logger"})
 @ComponentScan({"com.fourigin.apps.theseus.prototype"})
 @SpringBootApplication
+//@EnableWebMvc
 public class Prototype extends WebMvcConfigurerAdapter {
 
     private static final String APP_NAME = "theseus";
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+    }
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Prototype.class);
@@ -82,12 +89,8 @@ public class Prototype extends WebMvcConfigurerAdapter {
         return result;
     }
 
-
     @Bean
     public TemplateResolver defaultTemplateResolver(@Value("${theseus.templates.path}") String templatePath){
-//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-//        templateResolver.setCacheable(false);
-
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         templateResolver.setPrefix(templatePath);
         templateResolver.setSuffix(".html");
@@ -117,4 +120,5 @@ public class Prototype extends WebMvcConfigurerAdapter {
 
         return result;
     }
+
 }

@@ -33,9 +33,12 @@ project(':apps') {
             compile 'org.springframework.boot:spring-boot-starter-tomcat'
             compile 'org.springframework.boot:spring-boot-starter-actuator'
             compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+            compile 'org.springframework.boot:spring-boot-starter-security'
 
             compile 'org.springframework:spring-context-support'
             compile 'org.springframework:spring-webmvc'
+//            compile 'org.springframework.security:spring-security-web'
+//            compile 'org.springframework.security:spring-security-config'
 
             compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
 
