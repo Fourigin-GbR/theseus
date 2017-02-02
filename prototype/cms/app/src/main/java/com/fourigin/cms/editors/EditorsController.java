@@ -28,22 +28,39 @@ public class EditorsController {
     @Autowired
     private ContentPageRepository contentPageRepository;
 
+    @RequestMapping(name = "/retrieve", method = RequestMethod.GET)
+    @ResponseBody
+    public ContentElementResponse retrieve(@RequestBody RetrieveContentRequest request){
+        if (logger.isDebugEnabled()) logger.debug("Processing retrieve request {}.", request);
+
+        ContentElementResponse response = new ContentElementResponse();
+        response.copyFrom(request);
+
+        ContentElement contentElement = resolveContentElement(request);
+        String currentChecksum = buildChecksum(contentElement);
+        response.setStatus(true);
+        response.setCurrentContentElement(contentElement);
+        response.setCurrentChecksum(currentChecksum);
+        
+        return response;
+    }
+
     @RequestMapping(name = "/uptodate", method = RequestMethod.GET)
     @ResponseBody
-    public UpToDateResponse isUpToDate(@RequestBody UpToDateRequest request){
+    public ContentElementResponse isUpToDate(@RequestBody UpToDateRequest request){
         if (logger.isDebugEnabled()) logger.debug("Processing up-to-date request {}.", request);
 
-        UpToDateResponse response = new UpToDateResponse();
+        ContentElementResponse response = new ContentElementResponse();
         response.copyFrom(request);
 
         ContentElement contentElement = resolveContentElement(request);
         String currentChecksum = buildChecksum(contentElement);
         if(currentChecksum.equals(request.getChecksum())){
-            response.setUpToDate(true);
+            response.setStatus(true);
             if (logger.isDebugEnabled()) logger.debug("Referenced content element is up-to-date.");
         }
         else {
-            response.setUpToDate(false);
+            response.setStatus(false);
             response.setCurrentContentElement(contentElement);
             response.setCurrentChecksum(currentChecksum);
             if (logger.isDebugEnabled()) logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
@@ -54,10 +71,10 @@ public class EditorsController {
 
     @RequestMapping(name = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public SaveChangesResponse save(@RequestBody SaveChangesRequest request){
+    public ContentElementResponse save(@RequestBody SaveChangesRequest request){
         if (logger.isDebugEnabled()) logger.debug("Processing save request {}.", request);
 
-        SaveChangesResponse response = new SaveChangesResponse();
+        ContentElementResponse response = new ContentElementResponse();
         response.copyFrom(request);
 
         ContentElement currentContentElement = resolveContentElement(request);
@@ -66,11 +83,11 @@ public class EditorsController {
         if(currentChecksum.equals(request.getOriginalChecksum())){
             ContentElement modifiedContentElement = request.getModifiedContentElement();
             updateContentElement(request, modifiedContentElement);
-            response.setSaved(true);
+            response.setStatus(true);
             if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
         }
         else {
-            response.setSaved(false);
+            response.setStatus(false);
             response.setCurrentContentElement(currentContentElement);
             if (logger.isDebugEnabled()) logger.debug("Modified content element is not updated. Current checksum is '{}'.", currentChecksum);
         }
