@@ -43,7 +43,13 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
     }
 
     public static class Builder {
+        private String name;
         private List<ContentElement> elements = new ArrayList<>();
+
+        public Builder name(String name){
+            this.name = name;
+            return this;
+        }
 
         public Builder element(ContentElement element){
             if(element != null) {
@@ -71,6 +77,7 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
 
         public ContentGroup build(){
             ContentGroup group = new ContentGroup();
+            group.setName(name);
             group.setElements(elements);
             return group;
         }

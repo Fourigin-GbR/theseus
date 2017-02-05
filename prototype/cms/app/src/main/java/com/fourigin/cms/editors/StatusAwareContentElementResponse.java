@@ -4,27 +4,43 @@ import com.fourigin.cms.models.content.elements.ContentElement;
 
 import java.io.Serializable;
 
-public class UpToDateResponse extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
-    private static final long serialVersionUID = 3131763107177661718L;
+public class StatusAwareContentElementResponse extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
 
+    private static final long serialVersionUID = -6840096148919100384L;
+    
+    private String base;
     private String siteStructurePath;
     private String contentPath;
-    private boolean upToDate;
+    private boolean status;
     private String currentChecksum;
     private ContentElement currentContentElement;
 
+    @Override
+    public String getBase() {
+        return base;
+    }
+
+    @Override
+    public void setBase(String base) {
+        this.base = base;
+    }
+
+    @Override
     public String getSiteStructurePath() {
         return siteStructurePath;
     }
 
+    @Override
     public void setSiteStructurePath(String siteStructurePath) {
         this.siteStructurePath = siteStructurePath;
     }
 
+    @Override
     public String getContentPath() {
         return contentPath;
     }
 
+    @Override
     public void setContentPath(String contentPath) {
         this.contentPath = contentPath;
     }
@@ -37,12 +53,12 @@ public class UpToDateResponse extends AbstractContentElementPointer implements S
         this.currentChecksum = currentChecksum;
     }
 
-    public boolean isUpToDate() {
-        return upToDate;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setUpToDate(boolean upToDate) {
-        this.upToDate = upToDate;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public ContentElement getCurrentContentElement() {
@@ -56,38 +72,42 @@ public class UpToDateResponse extends AbstractContentElementPointer implements S
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UpToDateResponse)) return false;
+        if (!(o instanceof StatusAwareContentElementResponse)) return false;
 
-        UpToDateResponse that = (UpToDateResponse) o;
+        StatusAwareContentElementResponse that = (StatusAwareContentElementResponse) o;
 
-        if (upToDate != that.upToDate) return false;
+        if (status != that.status) return false;
+        if (base != null ? !base.equals(that.base) : that.base != null) return false;
         if (siteStructurePath != null ? !siteStructurePath.equals(that.siteStructurePath) : that.siteStructurePath != null)
             return false;
         if (contentPath != null ? !contentPath.equals(that.contentPath) : that.contentPath != null) return false;
         //noinspection SimplifiableIfStatement
-        if (currentChecksum != null ? !currentChecksum.equals(that.currentChecksum) : that.currentChecksum != null) return false;
+        if (currentChecksum != null ? !currentChecksum.equals(that.currentChecksum) : that.currentChecksum != null)
+            return false;
         return currentContentElement != null ? currentContentElement.equals(that.currentContentElement) : that.currentContentElement == null;
-
     }
 
     @Override
     public int hashCode() {
-        int result = siteStructurePath != null ? siteStructurePath.hashCode() : 0;
+        int result = base != null ? base.hashCode() : 0;
+        result = 31 * result + (siteStructurePath != null ? siteStructurePath.hashCode() : 0);
         result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
+        result = 31 * result + (status ? 1 : 0);
         result = 31 * result + (currentChecksum != null ? currentChecksum.hashCode() : 0);
-        result = 31 * result + (upToDate ? 1 : 0);
         result = 31 * result + (currentContentElement != null ? currentContentElement.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "UpToDateResponse{" +
-          "siteStructurePath='" + siteStructurePath + '\'' +
-          ", contentPath='" + contentPath + '\'' +
-          ", currentChecksum='" + currentChecksum + '\'' +
-          ", upToDate=" + upToDate +
-          ", currentContentElement=" + currentContentElement +
-          '}';
+        return "ContentElementResponse{" +
+            "base='" + base + '\'' +
+            ", siteStructurePath='" + siteStructurePath + '\'' +
+            ", contentPath='" + contentPath + '\'' +
+            ", status=" + status +
+            ", currentChecksum='" + currentChecksum + '\'' +
+            ", currentContentElement=" + currentContentElement +
+            '}';
     }
+
 }

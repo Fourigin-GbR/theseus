@@ -1,16 +1,16 @@
 package com.fourigin.cms.repository.strategies;
 
 import com.fourigin.cms.models.structure.nodes.SiteNodeInfo;
-import com.fourigin.cms.models.structure.nodes.SiteNodeInfoContainer;
+import com.fourigin.cms.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.cms.models.structure.nodes.PageInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class DefaultSiteNodeContainerIterationStrategy implements TraversingStrategy<PageInfo, SiteNodeInfoContainer> {
+public class DefaultPageInfoTraversingStrategy implements PageInfoTraversingStrategy {
 
     @Override
-    public Collection<PageInfo> collect(SiteNodeInfoContainer container) {
+    public Collection<PageInfo> collect(SiteNodeContainerInfo container) {
         Collection<PageInfo> result = new ArrayList<>();
 
         if(container == null){
@@ -22,14 +22,14 @@ public class DefaultSiteNodeContainerIterationStrategy implements TraversingStra
         return result;
     }
 
-    private void processContainer(SiteNodeInfoContainer container, Collection<PageInfo> result){
+    private void processContainer(SiteNodeContainerInfo container, Collection<PageInfo> result){
         if(container == null || container.getNodes() == null || container.getNodes().isEmpty()){
             return;
         }
 
         for (SiteNodeInfo node : container.getNodes()) {
-            if(node instanceof SiteNodeInfoContainer){
-                processContainer((SiteNodeInfoContainer) node, result);
+            if(node instanceof SiteNodeContainerInfo){
+                processContainer((SiteNodeContainerInfo) node, result);
             }
             else if(node instanceof PageInfo){
                 result.add((PageInfo) node);

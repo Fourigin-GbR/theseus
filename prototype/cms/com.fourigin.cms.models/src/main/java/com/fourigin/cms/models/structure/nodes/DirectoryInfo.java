@@ -2,7 +2,7 @@ package com.fourigin.cms.models.structure.nodes;
 
 import java.util.List;
 
-public class DirectoryInfo extends AbstractSiteNodeInfo implements SiteNodeInfo, SiteNodeInfoContainer {
+public class DirectoryInfo extends AbstractSiteNodeInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     private List<SiteNodeInfo> nodes;
 
     public List<SiteNodeInfo> getNodes() {

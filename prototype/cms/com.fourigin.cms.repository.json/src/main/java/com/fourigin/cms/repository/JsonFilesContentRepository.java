@@ -5,8 +5,8 @@ import com.fourigin.cms.models.content.ContentPage;
 import com.fourigin.cms.models.structure.nodes.DirectoryInfo;
 import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.models.structure.nodes.SiteNodeInfo;
-import com.fourigin.cms.models.structure.nodes.SiteNodeInfoContainer;
-import com.fourigin.cms.repository.strategies.TraversingStrategy;
+import com.fourigin.cms.models.structure.nodes.SiteNodeContainerInfo;
+import com.fourigin.cms.repository.strategies.PageInfoTraversingStrategy;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class JsonFilesContentRepository implements ContentRepository {
 
     private String directoryInfoFileName;
 
-    private TraversingStrategy<PageInfo, SiteNodeInfo> defaultTraversingStrategy;
+    private PageInfoTraversingStrategy defaultTraversingStrategy;
 
     private ObjectMapper objectMapper;
 
@@ -59,7 +60,7 @@ public class JsonFilesContentRepository implements ContentRepository {
         private String infoFilename;
         private String siteStructureFilename;
         private ObjectMapper objectMapper;
-        private TraversingStrategy<PageInfo, SiteNodeInfo> traversingStrategy;
+        private PageInfoTraversingStrategy traversingStrategy;
 
         public Builder contentRoot(String path){
             this.contentRoot = path;
@@ -81,18 +82,20 @@ public class JsonFilesContentRepository implements ContentRepository {
             return this;
         }
 
-        public Builder traversingStrategy(TraversingStrategy<PageInfo, SiteNodeInfo> traversingStrategy) {
+        public Builder traversingStrategy(PageInfoTraversingStrategy traversingStrategy) {
             this.traversingStrategy = traversingStrategy;
             return this;
         }
 
         public JsonFilesContentRepository build(){
             JsonFilesContentRepository instance = new JsonFilesContentRepository();
+
             instance.setObjectMapper(objectMapper);
             instance.setContentRoot(contentRoot);
             instance.setDirectoryInfoFileName(infoFilename);
             instance.setSiteStructureFileName(siteStructureFilename);
             instance.setDefaultTraversingStrategy(traversingStrategy);
+
             return instance;
         }
     }
@@ -134,7 +137,7 @@ public class JsonFilesContentRepository implements ContentRepository {
     }
 
     @Override
-    public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeInfoContainer parent, String path) {
+    public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
         SiteNodeInfo node = selectInfo(parent, path);
         if(type.isAssignableFrom(node.getClass())){
             return type.cast(node);
@@ -153,14 +156,14 @@ public class JsonFilesContentRepository implements ContentRepository {
     }
 
     @Override
-    public Collection<PageInfo> resolveInfos(String path, TraversingStrategy<PageInfo, SiteNodeInfo> iterationStrategy) {
+    public Collection<PageInfo> resolveInfos(String path, PageInfoTraversingStrategy traversingStrategy) {
         Objects.requireNonNull(path, "Path must not be null!");
 
-        return resolveInfos(root, path, iterationStrategy);
+        return resolveInfos(root, path, traversingStrategy);
     }
 
     @Override
-    public Collection<PageInfo> resolveInfos(SiteNodeInfoContainer parent, String path) {
+    public Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path) {
         Objects.requireNonNull(path, "Path must not be null!");
 
         if(defaultTraversingStrategy == null){
@@ -171,13 +174,17 @@ public class JsonFilesContentRepository implements ContentRepository {
     }
 
     @Override
-    public Collection<PageInfo> resolveInfos(SiteNodeInfoContainer parent, String path, TraversingStrategy<PageInfo, SiteNodeInfo> iterationStrategy) {
+    public Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path, PageInfoTraversingStrategy traversingStrategy) {
         Objects.requireNonNull(path, "Path must not be null!");
-        Objects.requireNonNull(iterationStrategy, "Iteration strategy must not be null!");
+        Objects.requireNonNull(traversingStrategy, "Iteration strategy must not be null!");
 
-        SiteNodeInfo base = selectInfo(parent, path);
+        SiteNodeInfo nodeInfo = selectInfo(parent, path);
+        if(SiteNodeContainerInfo.class.isAssignableFrom(nodeInfo.getClass())){
+            SiteNodeContainerInfo containerInfo = SiteNodeContainerInfo.class.cast(nodeInfo);
+            return traversingStrategy.collect(containerInfo);
+        }
 
-        return iterationStrategy.collect(base);
+        return Collections.singletonList(PageInfo.class.cast(nodeInfo));
     }
 
     @Override
@@ -192,7 +199,7 @@ public class JsonFilesContentRepository implements ContentRepository {
     }
 
     @Override
-    public void createInfo(SiteNodeInfoContainer parent, SiteNodeInfo info) {
+    public void createInfo(SiteNodeContainerInfo parent, SiteNodeInfo info) {
         List<SiteNodeInfo> children = parent.getNodes();
         if(children == null){
             children = new ArrayList<>();
@@ -221,7 +228,7 @@ public class JsonFilesContentRepository implements ContentRepository {
     }
 
     @Override
-    public void updateInfo(SiteNodeInfoContainer parent, SiteNodeInfo info) {
+    public void updateInfo(SiteNodeContainerInfo parent, SiteNodeInfo info) {
         List<SiteNodeInfo> children = parent.getNodes();
         if(children == null || children.isEmpty()){
             throw new SiteNodeNotFoundException(info.getName(), info.getPath());
@@ -255,7 +262,7 @@ public class JsonFilesContentRepository implements ContentRepository {
     }
 
     @Override
-    public void deleteInfo(SiteNodeInfoContainer parent, String path) {
+    public void deleteInfo(SiteNodeContainerInfo parent, String path) {
         List<SiteNodeInfo> children = parent.getNodes();
         if(children == null || children.isEmpty()){
             throw new SiteNodeNotFoundException(path, parent.getPath());
@@ -398,7 +405,7 @@ public class JsonFilesContentRepository implements ContentRepository {
         // TODO: read the structure
     }
 
-    private SiteNodeInfo selectInfo(SiteNodeInfoContainer base, String path){
+    private SiteNodeInfo selectInfo(SiteNodeContainerInfo base, String path){
         if(root == null){
             initialize();
         }
@@ -411,11 +418,11 @@ public class JsonFilesContentRepository implements ContentRepository {
         while (tok.hasMoreTokens()) {
             String token = tok.nextToken().trim();
 
-            if(!(current instanceof SiteNodeInfoContainer)){
+            if(!(SiteNodeContainerInfo.class.isAssignableFrom(current.getClass()))){
                 throw new MissingSiteDirectoryException(token, current);
             }
 
-            List<SiteNodeInfo> children = ((SiteNodeInfoContainer) current).getNodes();
+            List<SiteNodeInfo> children = ((SiteNodeContainerInfo) current).getNodes();
             if(children == null || children.isEmpty()){
                 throw new UnresolvableSiteStructurePathException(token, path);
             }
@@ -659,7 +666,7 @@ public class JsonFilesContentRepository implements ContentRepository {
         this.contentRoot = contentRoot;
     }
 
-    public void setDefaultTraversingStrategy(TraversingStrategy<PageInfo, SiteNodeInfo> defaultTraversingStrategy) {
+    public void setDefaultTraversingStrategy(PageInfoTraversingStrategy defaultTraversingStrategy) {
         this.defaultTraversingStrategy = defaultTraversingStrategy;
     }
 

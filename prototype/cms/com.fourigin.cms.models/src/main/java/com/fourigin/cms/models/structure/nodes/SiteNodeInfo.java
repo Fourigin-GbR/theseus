@@ -16,6 +16,6 @@ public interface SiteNodeInfo {
     String getDescription();
     void setDescription(String description);
 
-    SiteNodeInfoContainer getParent();
-    void setParent(SiteNodeInfoContainer siteNode);
+    SiteNodeContainerInfo getParent();
+    void setParent(SiteNodeContainerInfo siteNode);
 }

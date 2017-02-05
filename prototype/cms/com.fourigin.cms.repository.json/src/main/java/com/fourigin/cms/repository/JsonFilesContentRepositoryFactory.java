@@ -1,9 +1,7 @@
 package com.fourigin.cms.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fourigin.cms.models.structure.nodes.PageInfo;
-import com.fourigin.cms.models.structure.nodes.SiteNodeInfo;
-import com.fourigin.cms.repository.strategies.TraversingStrategy;
+import com.fourigin.cms.repository.strategies.PageInfoTraversingStrategy;
 import com.fourigin.utilities.core.PropertiesReplacement;
 
 public class JsonFilesContentRepositoryFactory implements ContentRepositoryFactory {
@@ -16,7 +14,7 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
 
     private String directoryInfoFileName;
 
-    private TraversingStrategy<PageInfo, SiteNodeInfo> defaultTraversingStrategy;
+    private PageInfoTraversingStrategy defaultTraversingStrategy;
 
     private ObjectMapper objectMapper;
 
@@ -25,12 +23,15 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
     @Override
     public ContentRepository getInstance(String key) {
         String path = propertiesReplacement.process(basePath, keyName, key);
+
         JsonFilesContentRepository repository = new JsonFilesContentRepository();
+
         repository.setContentRoot(path);
         repository.setSiteStructureFileName(siteStructureFileName);
         repository.setDirectoryInfoFileName(directoryInfoFileName);
         repository.setDefaultTraversingStrategy(defaultTraversingStrategy);
         repository.setObjectMapper(objectMapper);
+
         return repository;
     }
 
@@ -50,7 +51,7 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
         this.directoryInfoFileName = directoryInfoFileName;
     }
 
-    public void setDefaultTraversingStrategy(TraversingStrategy<PageInfo, SiteNodeInfo> defaultTraversingStrategy) {
+    public void setDefaultTraversingStrategy(PageInfoTraversingStrategy defaultTraversingStrategy) {
         this.defaultTraversingStrategy = defaultTraversingStrategy;
     }
 
