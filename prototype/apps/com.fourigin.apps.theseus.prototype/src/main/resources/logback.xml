@@ -26,7 +26,7 @@
 	</appender>
 
 	<!--<logger name="org.springframework" level="DEBUG"/>-->
-	<logger name="org.springframework.security" level="DEBUG"/>
+	<!--<logger name="org.springframework.security" level="DEBUG"/>-->
 
 	<root level="WARN">
 		<appender-ref ref="STDOUT"/>
