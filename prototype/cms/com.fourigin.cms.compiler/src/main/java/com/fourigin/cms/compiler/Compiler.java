@@ -3,7 +3,8 @@ package com.fourigin.cms.compiler;
 import com.fourigin.cms.models.content.ContentPage;
 import com.fourigin.cms.models.structure.CompileState;
 import com.fourigin.cms.models.structure.nodes.PageInfo;
-import com.fourigin.cms.repository.ContentPageResolver;
+import com.fourigin.cms.repository.ContentRepository;
+import com.fourigin.cms.repository.ContentResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class Compiler {
     private final Logger logger = LoggerFactory.getLogger(Compiler.class);
 
-    private ContentPageResolver contentPageResolver;
+    private ContentRepository contentRepository;
 
     public void compile(PageInfo page){
         String pageName = page.getName();
@@ -37,17 +38,15 @@ public class Compiler {
         if (logger.isDebugEnabled()) logger.debug("Compile completed with state {}.", compileState);
     }
 
-    private CompileState compileInternal(PageInfo sitePage){
-        PageInfo.ContentPageReference contentRef = sitePage.getContentPageReference();
-
-        ContentPage contentPage = contentPageResolver.retrieve(contentRef.getParentPath(), contentRef.getContentId());
+    private CompileState compileInternal(PageInfo info){
+        ContentPage contentPage = contentRepository.retrieve(info);
         // TODO: implement me!
 
 
-        return sitePage.getCompileState();
+        return info.getCompileState();
     }
 
-    public void setContentPageResolver(ContentPageResolver contentPageResolver) {
-        this.contentPageResolver = contentPageResolver;
+    public void setContentRepository(ContentRepository contentRepository) {
+        this.contentRepository = contentRepository;
     }
 }

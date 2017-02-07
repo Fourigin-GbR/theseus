@@ -8,6 +8,7 @@ abstract public class AbstractContentElementPointer implements ContentElementPoi
             throw new IllegalArgumentException("Source pointer must not be null!");
         }
 
+        this.setBase(otherPointer.getBase());
         this.setSiteStructurePath(otherPointer.getSiteStructurePath());
         this.setContentPath(otherPointer.getContentPath());
     }

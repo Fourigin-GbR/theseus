@@ -39,13 +39,22 @@ public class ContentRepositoryStub implements ContentRepository {
 
     @Override
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, String path) {
-        return type.cast(infos.get(path));
+        SiteNodeInfo info = infos.get(path);
+        if(info == null){
+            return null;
+        }
+
+        if(type.isAssignableFrom(info.getClass())) {
+            return type.cast(infos.get(path));
+        }
+
+        throw new IllegalArgumentException("Unable to cast " + info.getClass().getName() + " to " + type.getName() + "!");
     }
 
     @Override
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
         String fullPath = parent.getPath() + path;
-        return type.cast(infos.get(fullPath));
+        return resolveInfo(type, fullPath);
     }
 
     @Override

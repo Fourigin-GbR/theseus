@@ -1,4 +1,4 @@
-package com.fourigin.cms.repository;
+package com.fourigin.cms.models.content.elements.mapping;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;

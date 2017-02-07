@@ -15,6 +15,9 @@ include ':cms:com.fourigin.cms.models'
 include ':cms:com.fourigin.cms.repository'
 include ':cms:com.fourigin.cms.repository.json'
 
+include ':cms:com.fourigin.cms.template.engine'
+include ':cms:com.fourigin.cms.template.engine.thymeleaf'
+
 include ':cms:com.fourigin.cms.compiler'
 include ':cms:app'
 

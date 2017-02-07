@@ -3,7 +3,7 @@ package com.fourigin.cms.config;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-import com.fourigin.cms.repository.ContentPageModule;
+import com.fourigin.cms.models.content.elements.mapping.ContentPageModule;
 import com.fourigin.cms.repository.ContentPageRepository;
 import com.fourigin.cms.repository.JsonFileContentPageRepository;
 import com.fourigin.cms.repository.JsonFilesContentRepositoryFactory;
@@ -12,7 +12,6 @@ import com.fourigin.cms.repository.strategies.PageInfoTraversingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 //@Configuration
 public class ContentPageRepositoryConfiguration {

@@ -24,6 +24,15 @@ public class ContentPageManager {
 
         String path = contentPath.replace("//", "/").trim();
 
+        if("/".equals(path)){
+            // special case, return all root level elements, packed in a new pseudo group
+            ContentGroup group = new ContentGroup();
+            group.setName("");
+            group.setTitle("");
+            group.setElements(contentPage.getContent());
+            return group;
+        }
+
         ContentElement current = null;
         List<ContentElement> elements = contentPage.getContent();
 
@@ -42,13 +51,13 @@ public class ContentPageManager {
 
             if(current == null){
                 if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! No element found for part '{}'!", contentPath, token);
-                return null;
+                throw new UnresolvableContentPathException("No element found for part '" + token  + "'!", contentPath);
             }
 
             if(!ContentGroup.class.isAssignableFrom(current.getClass())){
                 if(tok.hasMoreTokens()){
                     if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! Reached the end of the element hierarchy at '{}'!", contentPath, token);
-                    return null;
+                    throw new UnresolvableContentPathException("Reached the end of the element hierarchy at '" + token  + "'!", contentPath);
                 }
 
                 return current;

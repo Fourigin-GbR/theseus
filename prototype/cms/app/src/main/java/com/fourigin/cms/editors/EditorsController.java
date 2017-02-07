@@ -1,8 +1,11 @@
 package com.fourigin.cms.editors;
 
+import com.fourigin.cms.InvalidParameterException;
+import com.fourigin.cms.ServiceErrorResponse;
 import com.fourigin.cms.models.ChecksumGenerator;
 import com.fourigin.cms.models.content.ContentPageManager;
 import com.fourigin.cms.models.content.ContentPage;
+import com.fourigin.cms.models.content.UnresolvableContentPathException;
 import com.fourigin.cms.models.content.elements.ContentElement;
 import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.repository.ContentRepository;
@@ -10,10 +13,13 @@ import com.fourigin.cms.repository.ContentRepositoryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -101,6 +107,22 @@ public class EditorsController {
         return response;
     }
 
+    @ExceptionHandler(UnresolvableContentPathException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ServiceErrorResponse unresolvableContentPath(UnresolvableContentPathException ex) {
+        if (logger.isErrorEnabled()) logger.error("Unable to resolve the content path!", ex);
+
+        return new ServiceErrorResponse(404, "Unable to resolve the content path!", ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidParameterException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ServiceErrorResponse invalidParameter(InvalidParameterException ex) {
+        if (logger.isErrorEnabled()) logger.error("Invalid parameter!", ex);
+
+        return new ServiceErrorResponse(500, "Unable to process request!", ex.getMessage());
+    }
+
     private String buildChecksum(ContentElement contentElement){
         return ChecksumGenerator.getChecksum(contentElement);
     }
@@ -111,13 +133,13 @@ public class EditorsController {
         String base = pointer.getBase();
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
         if(contentRepository == null){
-            throw new IllegalArgumentException("No ContentRepository available for '" + base + "'!");
+            throw new InvalidParameterException("No content repository available for '" + base + "'!");
         }
 
         String pagePath = pointer.getSiteStructurePath();
         PageInfo page = contentRepository.resolveInfo(PageInfo.class, pagePath);
         if(page == null){
-            throw new IllegalArgumentException("No sitePage found for '" + pagePath + "'!");
+            throw new InvalidParameterException("No page found for '" + pagePath + "'!");
         }
 
         PageInfo.ContentPageReference pageReference = page.getContentPageReference();
@@ -125,7 +147,7 @@ public class EditorsController {
         String contentId = pageReference.getContentId();
         ContentPage contentPage = contentRepository.retrieve(page);
         if(contentPage == null){
-            throw new IllegalArgumentException("No contentPage found for path '" + parentPath + "' and id '" + contentId + "'!");
+            throw new InvalidParameterException("No content found for path '" + parentPath + "' and id '" + contentId + "'!");
         }
 
         String contentPath = pointer.getContentPath();
@@ -139,13 +161,13 @@ public class EditorsController {
         String base = pointer.getBase();
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
         if(contentRepository == null){
-            throw new IllegalArgumentException("No ContentRepository available for '" + base + "'!");
+            throw new InvalidParameterException("No content repository available for '" + base + "'!");
         }
 
         String pagePath = pointer.getSiteStructurePath();
         PageInfo page = contentRepository.resolveInfo(PageInfo.class, pagePath);
         if(page == null){
-            throw new IllegalArgumentException("No sitePage found for '" + pagePath + "'!");
+            throw new InvalidParameterException("No page found for '" + pagePath + "'!");
         }
 
         PageInfo.ContentPageReference pageReference = page.getContentPageReference();
@@ -153,7 +175,7 @@ public class EditorsController {
         String contentId = pageReference.getContentId();
         ContentPage contentPage = contentRepository.retrieve(page);
         if(contentPage == null){
-            throw new IllegalArgumentException("No contentPage found for path '" + parentPath + "' and id '" + contentId + "'!");
+            throw new InvalidParameterException("No content found for path '" + parentPath + "' and id '" + contentId + "'!");
         }
 
         String contentPath = pointer.getContentPath();
