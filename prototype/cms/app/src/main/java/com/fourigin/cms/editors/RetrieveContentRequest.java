@@ -8,6 +8,7 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
     private String base;
     private String siteStructurePath;
     private String contentPath;
+    private boolean flushCaches = false;
 
     @Override
     public String getBase() {
@@ -39,18 +40,27 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
         this.contentPath = contentPath;
     }
 
+    public boolean isFlushCaches() {
+        return flushCaches;
+    }
+
+    public void setFlushCaches(boolean flushCaches) {
+        this.flushCaches = flushCaches;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RetrieveContentRequest)) return false;
 
-        RetrieveContentRequest that = (RetrieveContentRequest) o;
+        RetrieveContentRequest request = (RetrieveContentRequest) o;
 
-        if (base != null ? !base.equals(that.base) : that.base != null) return false;
+        if (flushCaches != request.flushCaches) return false;
+        if (base != null ? !base.equals(request.base) : request.base != null) return false;
         //noinspection SimplifiableIfStatement
-        if (siteStructurePath != null ? !siteStructurePath.equals(that.siteStructurePath) : that.siteStructurePath != null)
+        if (siteStructurePath != null ? !siteStructurePath.equals(request.siteStructurePath) : request.siteStructurePath != null)
             return false;
-        return contentPath != null ? contentPath.equals(that.contentPath) : that.contentPath == null;
+        return contentPath != null ? contentPath.equals(request.contentPath) : request.contentPath == null;
     }
 
     @Override
@@ -58,6 +68,7 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
         int result = base != null ? base.hashCode() : 0;
         result = 31 * result + (siteStructurePath != null ? siteStructurePath.hashCode() : 0);
         result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
+        result = 31 * result + (flushCaches ? 1 : 0);
         return result;
     }
 
@@ -67,6 +78,7 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
             "base='" + base + '\'' +
             ", siteStructurePath='" + siteStructurePath + '\'' +
             ", contentPath='" + contentPath + '\'' +
+            ", flushCaches=" + flushCaches +
             '}';
     }
 

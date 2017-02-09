@@ -10,6 +10,7 @@ import com.fourigin.cms.models.content.elements.ContentElement;
 import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.repository.ContentRepository;
 import com.fourigin.cms.repository.ContentRepositoryFactory;
+import com.fourigin.cms.repository.UnresolvableSiteStructurePathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class EditorsController {
         ContentElementResponse response = new ContentElementResponse();
         response.copyFrom(request);
 
-        ContentElement contentElement = resolveContentElement(request);
+        ContentElement contentElement = resolveContentElement(request, request.isFlushCaches());
         String currentChecksum = buildChecksum(contentElement);
         response.setCurrentContentElement(contentElement);
         response.setCurrentChecksum(currentChecksum);
@@ -49,12 +50,14 @@ public class EditorsController {
     public ContentElementResponse r(
         @RequestParam("base") String base,
         @RequestParam("sitePath") String siteStructurePath,
-        @RequestParam("contentPath") String contentPath
+        @RequestParam("contentPath") String contentPath,
+        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
     ){
         RetrieveContentRequest request = new RetrieveContentRequest();
         request.setBase(base);
         request.setSiteStructurePath(siteStructurePath);
         request.setContentPath(contentPath);
+        request.setFlushCaches(flushCaches);
 
         return retrieve(request);
     }
@@ -66,7 +69,7 @@ public class EditorsController {
         StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
         response.copyFrom(request);
 
-        ContentElement contentElement = resolveContentElement(request);
+        ContentElement contentElement = resolveContentElement(request, false);
         String currentChecksum = buildChecksum(contentElement);
         if(currentChecksum.equals(request.getChecksum())){
             response.setStatus(true);
@@ -89,7 +92,7 @@ public class EditorsController {
         StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
         response.copyFrom(request);
 
-        ContentElement currentContentElement = resolveContentElement(request);
+        ContentElement currentContentElement = resolveContentElement(request, false);
         String currentChecksum = buildChecksum(currentContentElement);
         response.setCurrentChecksum(currentChecksum);
         if(currentChecksum.equals(request.getOriginalChecksum())){
@@ -107,9 +110,12 @@ public class EditorsController {
         return response;
     }
 
-    @ExceptionHandler(UnresolvableContentPathException.class)
+    @ExceptionHandler({
+        UnresolvableContentPathException.class,
+        UnresolvableSiteStructurePathException.class
+    })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ServiceErrorResponse unresolvableContentPath(UnresolvableContentPathException ex) {
+    public ServiceErrorResponse unresolvableContentPath(Exception ex) {
         if (logger.isErrorEnabled()) logger.error("Unable to resolve the content path!", ex);
 
         return new ServiceErrorResponse(404, "Unable to resolve the content path!", ex.getMessage());
@@ -127,13 +133,18 @@ public class EditorsController {
         return ChecksumGenerator.getChecksum(contentElement);
     }
 
-    private ContentElement resolveContentElement(ContentElementPointer pointer){
+    private ContentElement resolveContentElement(ContentElementPointer pointer, boolean flushCaches){
         validate(pointer);
 
         String base = pointer.getBase();
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
         if(contentRepository == null){
             throw new InvalidParameterException("No content repository available for '" + base + "'!");
+        }
+
+        if(flushCaches){
+            if (logger.isDebugEnabled()) logger.debug("Flushing repository for '{}'.", base);
+            contentRepository.flush();
         }
 
         String pagePath = pointer.getSiteStructurePath();

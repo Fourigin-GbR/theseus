@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.cms.repository.strategies.PageInfoTraversingStrategy;
 import com.fourigin.utilities.core.PropertiesReplacement;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public class JsonFilesContentRepositoryFactory implements ContentRepositoryFactory {
 
     private String basePath;
@@ -20,17 +22,26 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
 
     private PropertiesReplacement propertiesReplacement = new PropertiesReplacement();
 
+    private ConcurrentHashMap<String, JsonFilesContentRepository> cache = new ConcurrentHashMap<>();
+
     @Override
     public ContentRepository getInstance(String key) {
+        JsonFilesContentRepository repository = cache.get(key);
+        if(repository != null){
+            return repository;
+        }
+
         String path = propertiesReplacement.process(basePath, keyName, key);
 
-        JsonFilesContentRepository repository = new JsonFilesContentRepository();
+        repository = new JsonFilesContentRepository();
 
         repository.setContentRoot(path);
         repository.setSiteStructureFileName(siteStructureFileName);
         repository.setDirectoryInfoFileName(directoryInfoFileName);
         repository.setDefaultTraversingStrategy(defaultTraversingStrategy);
         repository.setObjectMapper(objectMapper);
+
+        cache.putIfAbsent(key, repository);
 
         return repository;
     }

@@ -21,6 +21,10 @@ public class ContentRepositoryStub implements ContentRepository {
 
     private PageInfoTraversingStrategy defaultTraversingStrategy = new DefaultPageInfoTraversingStrategy();
 
+    public void flush(){
+        // nothing to do!
+    }
+
     public ContentRepositoryStub(Map<String, String> siteAttributes, Map<String, SiteNodeInfo> infos, Map<PageInfo, ContentPage> pages) {
         this.siteAttributes = siteAttributes;
         this.infos = infos;

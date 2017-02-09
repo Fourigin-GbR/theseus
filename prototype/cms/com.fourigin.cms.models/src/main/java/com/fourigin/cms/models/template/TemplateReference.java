@@ -1,9 +1,16 @@
 package com.fourigin.cms.models.template;
 
-public class TemplateReference {
+import java.io.Serializable;
+
+public class TemplateReference implements Serializable {
+    private static final long serialVersionUID = 398167510478917719L;
+
     private String templateId;
     private String variationId;
     private String revision;
+
+    public TemplateReference() {
+    }
 
     public String getTemplateId() {
         return templateId;
@@ -37,6 +44,7 @@ public class TemplateReference {
         TemplateReference that = (TemplateReference) o;
 
         if (templateId != null ? !templateId.equals(that.templateId) : that.templateId != null) return false;
+        //noinspection SimplifiableIfStatement
         if (variationId != null ? !variationId.equals(that.variationId) : that.variationId != null) return false;
         return revision != null ? revision.equals(that.revision) : that.revision == null;
     }

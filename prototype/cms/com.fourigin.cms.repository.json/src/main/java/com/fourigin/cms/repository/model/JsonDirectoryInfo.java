@@ -1,16 +1,39 @@
-package com.fourigin.cms.models.structure.nodes;
+package com.fourigin.cms.repository.model;
 
-import java.util.List;
+import com.fourigin.cms.models.structure.nodes.DirectoryInfo;
 
-public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
+public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
     private String path;
     private String name;
     private String localizedName;
     private String displayName;
     private String description;
-    private SiteNodeContainerInfo parent;
 
-    private List<SiteNodeInfo> nodes;
+    public JsonDirectoryInfo() {
+    }
+
+    public JsonDirectoryInfo(DirectoryInfo nodeInfo){
+        if(nodeInfo != null) {
+            this.path = nodeInfo.getPath();
+            this.name = nodeInfo.getName();
+            this.localizedName = nodeInfo.getLocalizedName();
+            this.displayName = nodeInfo.getDisplayName();
+            this.description = nodeInfo.getDescription();
+        }
+    }
+
+    @Override
+    public DirectoryInfo buildNodeInfo() {
+        DirectoryInfo info = new DirectoryInfo();
+
+        info.setPath(path);
+        info.setName(name);
+        info.setName(localizedName);
+        info.setDisplayName(displayName);
+        info.setDescription(description);
+
+        return info;
+    }
 
     @Override
     public String getPath() {
@@ -63,34 +86,17 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     }
 
     @Override
-    public SiteNodeContainerInfo getParent() {
-        return parent;
-    }
-
-    @Override
-    public void setParent(SiteNodeContainerInfo parent) {
-        this.parent = parent;
-    }
-
-    public List<SiteNodeInfo> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<SiteNodeInfo> nodes) {
-        this.nodes = nodes;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DirectoryInfo)) return false;
+        if (!(o instanceof JsonDirectoryInfo)) return false;
 
-        DirectoryInfo that = (DirectoryInfo) o;
+        JsonDirectoryInfo that = (JsonDirectoryInfo) o;
 
         if (path != null ? !path.equals(that.path) : that.path != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (localizedName != null ? !localizedName.equals(that.localizedName) : that.localizedName != null)
             return false;
+        //noinspection SimplifiableIfStatement
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
         return description != null ? description.equals(that.description) : that.description == null;
     }
@@ -107,7 +113,7 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
 
     @Override
     public String toString() {
-        return "DirectoryInfo{" +
+        return "JsonDirectoryInfo{" +
             "path='" + path + '\'' +
             ", name='" + name + '\'' +
             ", localizedName='" + localizedName + '\'' +
