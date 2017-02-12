@@ -1,0 +1,37 @@
+@import "../../settings/colors";
+
+.cms {
+  background-color: $flingh_color_palette_gray_dark;
+  color: $flingh_color_palette_medium-gray_light;
+
+  header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    .logo {
+      .brand {
+        display: inline-block;
+      }
+      .product {
+        display: inline-block;
+        font-style: italic;
+      }
+    }
+
+    .navigation {
+      ul {
+        padding: 0;
+        margin: 0 1em;
+
+        li {
+          display: inline-block;
+        }
+      }
+
+      i {
+        margin: 0 5px 0 20px;
+      }
+    }
+  }
+}

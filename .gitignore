@@ -10,3 +10,5 @@ out/
 prototype/application.pid
 prototype/theseus.pid
 /prototype/apps/com.fourigin.apps.theseus.prototype/theseus.pid
+node_modules
+prototype/cms/web/production/assets/styles
