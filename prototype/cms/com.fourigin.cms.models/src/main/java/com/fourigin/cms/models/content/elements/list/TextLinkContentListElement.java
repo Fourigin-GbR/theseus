@@ -1,8 +1,13 @@
-package com.fourigin.cms.models.content.elements;
+package com.fourigin.cms.models.content.elements.list;
 
-public class TextLinkContentElement extends AbstractContentElement implements TextAwareContentElement, LinkAwareContentElement, ContentElement {
-    private static final long serialVersionUID = 8683724707926036886L;
+import com.fourigin.cms.models.content.elements.LinkAwareContentElement;
+import com.fourigin.cms.models.content.elements.TextAwareContentElement;
 
+public class TextLinkContentListElement implements TextAwareContentElement, LinkAwareContentElement, ContentListElement {
+
+    private static final long serialVersionUID = 7840513319480880010L;
+
+    private String title;
     private String content;
     private boolean markupAllowed;
     private String url;
@@ -11,12 +16,20 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
 
     private static final boolean DEFAULT_MARKUP_ALLOWED = false;
 
-    public TextLinkContentElement(){
+    public TextLinkContentListElement(){
         this(DEFAULT_MARKUP_ALLOWED);
     }
 
-    public TextLinkContentElement(boolean markupAllowed){
+    public TextLinkContentListElement(boolean markupAllowed){
         this.markupAllowed = markupAllowed;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -62,12 +75,12 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TextLinkContentElement)) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof TextLinkContentListElement)) return false;
 
-        TextLinkContentElement that = (TextLinkContentElement) o;
+        TextLinkContentListElement that = (TextLinkContentListElement) o;
 
         if (markupAllowed != that.markupAllowed) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (url != null ? !url.equals(that.url) : that.url != null) return false;
         //noinspection SimplifiableIfStatement
@@ -77,7 +90,7 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
+        int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (markupAllowed ? 1 : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
@@ -88,30 +101,23 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
 
     @Override
     public String toString() {
-        return "TextLinkContentElement{" +
-          "name='" + getName() + '\'' +
-          ", title='" + getTitle() + '\'' +
-          ", content='" + content + '\'' +
-          ", markupAllowed=" + markupAllowed +
-          ", url='" + url + '\'' +
-          ", anchorName='" + anchorName + '\'' +
-          ", target='" + target + '\'' +
-          '}';
+        return "TextLinkContentListElement{" +
+            "title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", markupAllowed=" + markupAllowed +
+            ", url='" + url + '\'' +
+            ", anchorName='" + anchorName + '\'' +
+            ", target='" + target + '\'' +
+            '}';
     }
 
     public static class Builder {
-        private String name;
         private String title;
         private String content;
         private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
         private String url;
         private String anchorName;
         private String target;
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
 
         public Builder title(String title){
             this.title = title;
@@ -143,9 +149,8 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
             return this;
         }
 
-        public TextLinkContentElement build(){
-            TextLinkContentElement element = new TextLinkContentElement();
-            element.setName(name);
+        public TextLinkContentListElement build(){
+            TextLinkContentListElement element = new TextLinkContentListElement();
             element.setTitle(title);
             element.setContent(content);
             element.setMarkupAllowed(markupAllowed);

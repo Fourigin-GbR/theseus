@@ -58,10 +58,6 @@ public class JsonFilesContentRepository implements ContentRepository {
     private static final String DEFAULT_SITE_DESCRIPTION_NAME = ".site";
     private static final String DEFAULT_DIRECTORY_INFO_NAME = ".info";
 
-    class SiteStructureAttributes extends HashMap<String, String> {
-        private static final long serialVersionUID = 3400161906589835280L;
-    }
-
     public static class Builder {
         private String contentRoot;
         private String infoFilename;
@@ -511,7 +507,22 @@ public class JsonFilesContentRepository implements ContentRepository {
         }
 
         if (logger.isDebugEnabled()) logger.debug("Parsing directory '{}' ...", dir.getAbsolutePath());
-        File[] files = dir.listFiles();
+        File[] files = dir.listFiles(file -> {
+            String name = file.getName();
+            if(name.startsWith(".")) {
+                // ignore hidden files & directories
+                return false;
+            }
+
+            if(file.isDirectory()) {
+                // accept any not hidden directory
+                return true;
+            }
+
+            // accept only .json files
+            return name.endsWith(".json");
+        });
+
         if(files == null || files.length == 0){
             if (logger.isDebugEnabled()) logger.debug("No such files found in directory '{}'.", dir.getAbsolutePath());
             return null;
@@ -528,10 +539,10 @@ public class JsonFilesContentRepository implements ContentRepository {
         for (File file : files) {
             String name = file.getName();
 
-            if(name.startsWith(".")){
-                if (logger.isDebugEnabled()) logger.debug("Skipping hidden file '{}'.", name);
-                continue;
-            }
+//            if(name.startsWith(".")){
+//                if (logger.isDebugEnabled()) logger.debug("Skipping hidden file '{}'.", name);
+//                continue;
+//            }
 
             name = normalizeFileName(name);
 
@@ -721,30 +732,33 @@ public class JsonFilesContentRepository implements ContentRepository {
     private Map<String, String> readSiteStructureAttributes() {
         File structureFile = getSiteDescriptionFile();
 
-        InputStream os = null;
-        try {
-            os = new BufferedInputStream(new FileInputStream(structureFile));
-            return objectMapper.readValue(os, SiteStructureAttributes.class);
+        SiteStructureAttributes result;
+
+        try(InputStream is = new BufferedInputStream(new FileInputStream(structureFile))) {
+            result = objectMapper.readValue(is, SiteStructureAttributes.class);
         } catch (IOException ex) {
-            // TODO: create proper exception handling
-            throw new IllegalArgumentException("Error reading site-structure attributes (" + structureFile.getAbsolutePath() + ")!", ex);
-        } finally {
-            IOUtils.closeQuietly(os);
+            if (logger.isErrorEnabled()) logger.error("Error reading site-structure attributes ({})!", structureFile.getAbsolutePath(), ex);
+            result = null;
         }
+
+        if(result == null){
+            result = new SiteStructureAttributes();
+
+            if (logger.isDebugEnabled()) logger.debug("Creating empty site attributes.");
+            writeSiteStructureAttributes(result);
+        }
+
+        return result;
     }
 
     private void writeSiteStructureAttributes(Map<String, String> structure) {
         File structureFile = getSiteDescriptionFile();
 
-        OutputStream os = null;
-        try {
-            os = new BufferedOutputStream(new FileOutputStream(structureFile));
+        try(OutputStream os = new BufferedOutputStream(new FileOutputStream(structureFile))) {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, structure);
         } catch (IOException ex) {
             // TODO: create proper exception handling
             throw new IllegalArgumentException("Error writing site-structure attributes (" + structureFile.getAbsolutePath() + ")!", ex);
-        } finally {
-            IOUtils.closeQuietly(os);
         }
     }
 

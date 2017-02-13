@@ -1,8 +1,13 @@
-package com.fourigin.cms.models.content.elements;
+package com.fourigin.cms.models.content.elements.list;
 
-public class ObjectLinkContentElement extends AbstractContentElement implements ObjectAwareContentElement, LinkAwareContentElement, ContentElement {
-    private static final long serialVersionUID = -400773903221846863L;
+import com.fourigin.cms.models.content.elements.LinkAwareContentElement;
+import com.fourigin.cms.models.content.elements.ObjectAwareContentElement;
 
+public class ObjectLinkContentListElement implements ObjectAwareContentElement, LinkAwareContentElement, ContentListElement {
+
+    private static final long serialVersionUID = 2070119504424563643L;
+
+    private String title;
     private String referenceId;
     private String source;
     private String alternateText;
@@ -10,6 +15,14 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
     private String url;
     private String anchorName;
     private String target;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getReferenceId() {
         return referenceId;
@@ -70,11 +83,11 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ObjectLinkContentElement)) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof ObjectLinkContentListElement)) return false;
 
-        ObjectLinkContentElement that = (ObjectLinkContentElement) o;
+        ObjectLinkContentListElement that = (ObjectLinkContentListElement) o;
 
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (referenceId != null ? !referenceId.equals(that.referenceId) : that.referenceId != null) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
         if (alternateText != null ? !alternateText.equals(that.alternateText) : that.alternateText != null)
@@ -88,7 +101,7 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
+        int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (referenceId != null ? referenceId.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (alternateText != null ? alternateText.hashCode() : 0);
@@ -101,21 +114,19 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
 
     @Override
     public String toString() {
-        return "ObjectLinkContentElement{" +
-          "name='" + getName() + '\'' +
-          ", title='" + getTitle() + '\'' +
-          ", referenceId='" + referenceId + '\'' +
-          ", source='" + source + '\'' +
-          ", alternateText='" + alternateText + '\'' +
-          ", mimeType='" + mimeType + '\'' +
-          ", url='" + url + '\'' +
-          ", anchorName='" + anchorName + '\'' +
-          ", target='" + target + '\'' +
-          '}';
+        return "ObjectLinkContentListElement{" +
+            "title='" + title + '\'' +
+            ", referenceId='" + referenceId + '\'' +
+            ", source='" + source + '\'' +
+            ", alternateText='" + alternateText + '\'' +
+            ", mimeType='" + mimeType + '\'' +
+            ", url='" + url + '\'' +
+            ", anchorName='" + anchorName + '\'' +
+            ", target='" + target + '\'' +
+            '}';
     }
 
     public static class Builder {
-        private String name;
         private String title;
         private String referenceId;
         private String source;
@@ -124,11 +135,6 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
         private String url;
         private String anchorName;
         private String target;
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
 
         public Builder title(String title){
             this.title = title;
@@ -170,9 +176,8 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
             return this;
         }
 
-        public ObjectLinkContentElement build(){
-            ObjectLinkContentElement element = new ObjectLinkContentElement();
-            element.setName(name);
+        public ObjectLinkContentListElement build(){
+            ObjectLinkContentListElement element = new ObjectLinkContentListElement();
             element.setTitle(title);
             element.setReferenceId(referenceId);
             element.setSource(source);

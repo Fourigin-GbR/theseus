@@ -1,10 +1,14 @@
 package com.fourigin.cms;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ServiceErrorResponse {
     private int statusCode;
     private String title;
     private String message;
-    private String cause;
+    private List<String> cause;
 
     private static final int DEFAULT_STATUS_CODE = 500;
 
@@ -14,20 +18,13 @@ public class ServiceErrorResponse {
         this.message = message;
 
         if(cause != null) {
-            StringBuilder builder = new StringBuilder();
+            this.cause = new ArrayList<>();
 
             Throwable c = cause;
             while(c != null) {
-                if (builder.length() > 0) {
-                    builder.append(" --- ");
-                }
-
-                builder.append(c.getMessage());
-
+                this.cause.add(c.getMessage());
                 c = c.getCause();
             }
-
-            this.cause = builder.toString();
         }
     }
 
@@ -35,7 +32,7 @@ public class ServiceErrorResponse {
         this.statusCode = statusCode;
         this.title = title;
         this.message = message;
-        this.cause = cause;
+        this.cause = Collections.singletonList(cause);
     }
 
     public ServiceErrorResponse(int statusCode, String title, String message){
@@ -62,7 +59,7 @@ public class ServiceErrorResponse {
         return message;
     }
 
-    public String getCause() {
+    public List<String> getCause() {
         return cause;
     }
 }

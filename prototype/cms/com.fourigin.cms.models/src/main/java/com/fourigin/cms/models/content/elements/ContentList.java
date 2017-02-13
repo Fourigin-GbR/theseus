@@ -1,29 +1,32 @@
 package com.fourigin.cms.models.content.elements;
 
+import com.fourigin.cms.models.content.elements.list.ContentListElement;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer {
-    private static final long serialVersionUID = -6891589536053329842L;
+public class ContentList extends AbstractContentElement implements ContentElement {
 
-    private List<ContentElement> elements;
+    private static final long serialVersionUID = 1256571424877498311L;
 
-    public List<ContentElement> getElements() {
+    private List<ContentListElement> elements;
+
+    public List<ContentListElement> getElements() {
         return elements;
     }
 
-    public void setElements(List<ContentElement> elements) {
+    public void setElements(List<ContentListElement> elements) {
         this.elements = elements;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ContentGroup)) return false;
+        if (!(o instanceof ContentList)) return false;
         if (!super.equals(o)) return false;
 
-        ContentGroup that = (ContentGroup) o;
+        ContentList that = (ContentList) o;
 
         return elements != null ? elements.equals(that.elements) : that.elements == null;
     }
@@ -37,21 +40,21 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
 
     @Override
     public String toString() {
-        return "ContentGroup{" +
+        return "ContentList{" +
           "elements=" + elements +
           '}';
     }
 
     public static class Builder {
         private String name;
-        private List<ContentElement> elements = new ArrayList<>();
+        private List<ContentListElement> elements = new ArrayList<>();
 
         public Builder name(String name){
             this.name = name;
             return this;
         }
 
-        public Builder element(ContentElement element){
+        public Builder element(ContentListElement element){
             if(element != null) {
                 elements.add(element);
             }
@@ -59,7 +62,7 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
-        public Builder elements(ContentElement... elements){
+        public Builder elements(ContentListElement... elements){
             if(elements != null){
                 this.elements.addAll(Arrays.asList(elements));
             }
@@ -67,7 +70,7 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
-        public Builder elements(List<ContentElement> elements){
+        public Builder elements(List<ContentListElement> elements){
             if(elements != null){
                 this.elements.addAll(elements);
             }
@@ -75,8 +78,8 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
-        public ContentGroup build(){
-            ContentGroup group = new ContentGroup();
+        public ContentList build(){
+            ContentList group = new ContentList();
             group.setName(name);
             group.setElements(elements);
             return group;

@@ -1,6 +1,7 @@
 package com.fourigin.cms.models.content;
 
 import com.fourigin.cms.models.content.elements.ContentElement;
+import com.fourigin.cms.models.content.elements.ContentElementsContainer;
 import com.fourigin.cms.models.content.elements.ContentGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +34,29 @@ public class ContentPageManager {
             return group;
         }
 
-        ContentElement current = null;
         List<ContentElement> elements = contentPage.getContent();
+        return resolve(path, elements);
+    }
+
+    public static ContentElement resolve(ContentElementsContainer container, String contentPath){
+        if(container == null){
+            if (logger.isInfoEnabled()) logger.info("Unable to resolve ContentElement based on null-container!");
+            return null;
+        }
+
+        if(contentPath == null){
+            if (logger.isInfoEnabled()) logger.info("Unable to resolve ContentElement based on null-path!");
+            return null;
+        }
+
+        String path = contentPath.replace("//", "/").trim();
+
+        List<ContentElement> elements = container.getElements();
+        return resolve(path, elements);
+    }
+
+    private static ContentElement resolve(String path, List<ContentElement> elements){
+        ContentElement current = null;
 
         StringTokenizer tok = new StringTokenizer(path, "/");
         while (tok.hasMoreTokens()) {
@@ -50,14 +72,14 @@ public class ContentPageManager {
             }
 
             if(current == null){
-                if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! No element found for part '{}'!", contentPath, token);
-                throw new UnresolvableContentPathException("No element found for part '" + token  + "'!", contentPath);
+                if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! No element found for part '{}'!", path, token);
+                throw new UnresolvableContentPathException("No element found for part '" + token  + "'!", path);
             }
 
             if(!ContentGroup.class.isAssignableFrom(current.getClass())){
                 if(tok.hasMoreTokens()){
-                    if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! Reached the end of the element hierarchy at '{}'!", contentPath, token);
-                    throw new UnresolvableContentPathException("Reached the end of the element hierarchy at '" + token  + "'!", contentPath);
+                    if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! Reached the end of the element hierarchy at '{}'!", path, token);
+                    throw new UnresolvableContentPathException("Reached the end of the element hierarchy at '" + token  + "'!", path);
                 }
 
                 return current;

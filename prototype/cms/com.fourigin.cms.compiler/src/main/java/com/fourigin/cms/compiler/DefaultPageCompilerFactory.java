@@ -5,10 +5,6 @@ import java.util.Map;
 public class DefaultPageCompilerFactory implements PageCompilerFactory {
     private Map<String, PageCompiler> compilers;
 
-    public void setCompilers(Map<String, PageCompiler> compilers) {
-        this.compilers = compilers;
-    }
-
     @Override
     public PageCompiler getInstance(String base) {
         if(compilers == null || compilers.isEmpty()){
@@ -21,5 +17,9 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
         }
 
         return compiler;
+    }
+
+    public void setCompilers(Map<String, PageCompiler> compilers) {
+        this.compilers = compilers;
     }
 }

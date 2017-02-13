@@ -208,6 +208,7 @@ public class App {
     ){
         DefaultPageCompiler compiler = new DefaultPageCompiler();
 
+        compiler.setBase(base);
         compiler.setContentRepository(contentRepositoryFactory.getInstance(base));
         compiler.setTemplateEngineFactory(templateEngineFactory);
         compiler.setTemplateResolver(templateResolver);

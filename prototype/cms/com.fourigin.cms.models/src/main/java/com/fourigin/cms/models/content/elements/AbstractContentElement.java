@@ -1,6 +1,8 @@
 package com.fourigin.cms.models.content.elements;
 
 abstract public class AbstractContentElement implements ContentElement {
+    private static final long serialVersionUID = 2481851091542511335L;
+
     private String name;
     private String title;
 

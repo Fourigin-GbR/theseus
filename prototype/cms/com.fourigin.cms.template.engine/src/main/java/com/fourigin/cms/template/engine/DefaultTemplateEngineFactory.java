@@ -19,7 +19,13 @@ public class DefaultTemplateEngineFactory implements TemplateEngineFactory {
         }
 
         if (logger.isInfoEnabled()) logger.info("Searching for template engine for type '{}'.", type);
-        return engines.get(type);
+        TemplateEngine result = engines.get(type);
+        if(result == null){
+            if (logger.isErrorEnabled()) logger.error("No template engine found for type '{}'!", type);
+            return null;
+        }
+
+        return result.duplicate();
     }
 
     public void setEngines(Map<Type, TemplateEngine> engines) {

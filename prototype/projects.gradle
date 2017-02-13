@@ -198,6 +198,7 @@ project(':cms') {
         dependencies {
             compile cmsModels
             compile cmsTemplateEngine
+            compile utilitiesCore
 
             compile thymeleaf
             compile thymeleafSpring

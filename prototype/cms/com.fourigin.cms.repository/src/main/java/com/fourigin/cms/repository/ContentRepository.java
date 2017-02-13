@@ -22,6 +22,4 @@ public interface ContentRepository extends ContentResolver {
     void create(PageInfo info, ContentPage contentPage);
     void update(PageInfo info, ContentPage contentPage);
     void delete(PageInfo info);
-
-    void flush();
 }

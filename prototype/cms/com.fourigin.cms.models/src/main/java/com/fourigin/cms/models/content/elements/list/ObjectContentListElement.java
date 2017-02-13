@@ -1,12 +1,24 @@
-package com.fourigin.cms.models.content.elements;
+package com.fourigin.cms.models.content.elements.list;
 
-public class ObjectContentElement extends AbstractContentElement implements ObjectAwareContentElement, ContentElement {
-    private static final long serialVersionUID = -8071563579520012186L;
+import com.fourigin.cms.models.content.elements.ObjectAwareContentElement;
 
+public class ObjectContentListElement implements ObjectAwareContentElement, ContentListElement {
+
+    private static final long serialVersionUID = 3964141627291956922L;
+
+    private String title;
     private String referenceId;
     private String source;
     private String alternateText;
     private String mimeType;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getReferenceId() {
         return referenceId;
@@ -43,11 +55,11 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ObjectContentElement)) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof ObjectContentListElement)) return false;
 
-        ObjectContentElement that = (ObjectContentElement) o;
+        ObjectContentListElement that = (ObjectContentListElement) o;
 
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (referenceId != null ? !referenceId.equals(that.referenceId) : that.referenceId != null) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
         //noinspection SimplifiableIfStatement
@@ -58,7 +70,7 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
+        int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (referenceId != null ? referenceId.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (alternateText != null ? alternateText.hashCode() : 0);
@@ -68,28 +80,21 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
 
     @Override
     public String toString() {
-        return "ObjectContentElement{" +
-          "name='" + getName() + '\'' +
-          ", title='" + getTitle() + '\'' +
-          ", referenceId='" + referenceId + '\'' +
-          ", source='" + source + '\'' +
-          ", alternateText='" + alternateText + '\'' +
-          ", mimeType='" + mimeType + '\'' +
-          '}';
+        return "ObjectContentListElement{" +
+            "title='" + title + '\'' +
+            ", referenceId='" + referenceId + '\'' +
+            ", source='" + source + '\'' +
+            ", alternateText='" + alternateText + '\'' +
+            ", mimeType='" + mimeType + '\'' +
+            '}';
     }
 
     public static class Builder {
-        private String name;
         private String title;
         private String referenceId;
         private String source;
         private String alternateText;
         private String mimeType;
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
 
         public Builder title(String title){
             this.title = title;
@@ -116,9 +121,8 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
             return this;
         }
 
-        public ObjectContentElement build(){
-            ObjectContentElement element = new ObjectContentElement();
-            element.setName(name);
+        public ObjectContentListElement build(){
+            ObjectContentListElement element = new ObjectContentListElement();
             element.setTitle(title);
             element.setReferenceId(referenceId);
             element.setSource(source);

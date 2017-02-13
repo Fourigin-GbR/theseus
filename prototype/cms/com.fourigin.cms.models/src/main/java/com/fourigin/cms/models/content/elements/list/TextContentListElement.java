@@ -1,19 +1,31 @@
-package com.fourigin.cms.models.content.elements;
+package com.fourigin.cms.models.content.elements.list;
 
-public class TextContentElement extends AbstractContentElement implements TextAwareContentElement, ContentElement {
-    private static final long serialVersionUID = 5066464546311137699L;
+import com.fourigin.cms.models.content.elements.TextAwareContentElement;
 
+public class TextContentListElement implements TextAwareContentElement, ContentListElement {
+
+    private static final long serialVersionUID = 4912756036611660964L;
+
+    private String title;
     private String content;
     private boolean markupAllowed;
 
     private static final boolean DEFAULT_MARKUP_ALLOWED = false;
 
-    public TextContentElement(){
+    public TextContentListElement(){
         this(DEFAULT_MARKUP_ALLOWED);
     }
 
-    public TextContentElement(boolean markupAllowed){
+    public TextContentListElement(boolean markupAllowed){
         this.setMarkupAllowed(markupAllowed);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -35,19 +47,19 @@ public class TextContentElement extends AbstractContentElement implements TextAw
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TextContentElement)) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof TextContentListElement)) return false;
 
-        TextContentElement that = (TextContentElement) o;
+        TextContentListElement that = (TextContentListElement) o;
 
-        //noinspection SimplifiableIfStatement
         if (markupAllowed != that.markupAllowed) return false;
+        //noinspection SimplifiableIfStatement
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
         return content != null ? content.equals(that.content) : that.content == null;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
+        int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (markupAllowed ? 1 : 0);
         return result;
@@ -55,24 +67,17 @@ public class TextContentElement extends AbstractContentElement implements TextAw
 
     @Override
     public String toString() {
-        return "TextContentElement{" +
-          "name='" + getName() + '\'' +
-          ", title='" + getTitle() + '\'' +
-          ", content='" + content + '\'' +
-          ", markupAllowed=" + markupAllowed +
-          '}';
+        return "TextContentListElement{" +
+            "title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", markupAllowed=" + markupAllowed +
+            '}';
     }
 
     public static class Builder {
-        private String name;
         private String title;
         private String content;
         private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
 
         public Builder title(String title){
             this.title = title;
@@ -89,9 +94,8 @@ public class TextContentElement extends AbstractContentElement implements TextAw
             return this;
         }
 
-        public TextContentElement build(){
-            TextContentElement element = new TextContentElement();
-            element.setName(name);
+        public TextContentListElement build(){
+            TextContentListElement element = new TextContentListElement();
             element.setTitle(title);
             element.setContent(content);
             element.setMarkupAllowed(markupAllowed);

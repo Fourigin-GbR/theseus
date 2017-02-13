@@ -6,6 +6,7 @@ import com.fourigin.cms.compiler.PageCompilerFactory;
 import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.repository.ContentRepositoryFactory;
 import com.fourigin.cms.repository.ContentResolver;
+import com.fourigin.cms.template.engine.ContentPageCompilerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import static com.fourigin.cms.template.engine.ProcessingMode.CMS;
+
 @Controller
 @RequestMapping("/compile")
 public class CompileController {
@@ -37,11 +40,16 @@ public class CompileController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
         @RequestParam("base") String base,
-        @RequestParam("path") String path
+        @RequestParam("path") String path,
+        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base {} & path {}.", base, path);
 
         ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+        if(flushCaches) {
+            contentResolver.flush();
+        }
+
         PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
@@ -49,7 +57,7 @@ public class CompileController {
         String outputContentType;
         byte[] bytes;
         try(ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            outputContentType = pageCompiler.compile(pageInfo, out);
+            outputContentType = pageCompiler.compile(pageInfo, CMS, out);
             bytes = out.toByteArray();
         } catch (IOException ex) {
             if (logger.isErrorEnabled()) logger.error("Error occurred while compiling page!", ex);
@@ -83,6 +91,15 @@ public class CompileController {
         if (logger.isErrorEnabled()) logger.error("Error processing request!", ex);
 
         return new ServiceErrorResponse(500, "Error processing request!", ex.getMessage(), ex.getCause());
+    }
+
+    @ExceptionHandler(ContentPageCompilerException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ServiceErrorResponse errorState(ContentPageCompilerException ex) {
+        if (logger.isErrorEnabled()) logger.error("Error while compiling content page!", ex);
+
+        return new ServiceErrorResponse(500, "Error while compiling content page!", ex.getMessage(), ex.getCause());
     }
 
     @Autowired

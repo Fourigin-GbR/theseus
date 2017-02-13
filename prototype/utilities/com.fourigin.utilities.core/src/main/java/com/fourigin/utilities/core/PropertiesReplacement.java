@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 public class PropertiesReplacement {
 
-
     private Pattern pattern;
 
     private boolean keepUnresolved = true;
