@@ -71,6 +71,13 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return list.getElements();
     }
 
+    public List<ContentListElement> listElements(ContentElementsContainer container, String path){
+        ContentList list = getContentListElement(container, path);
+        return list.getElements();
+    }
+
+    // *** private methods ***
+
     private TextAwareContentElement getTextAwareElement(String path){
         ContentElement element = getElement(path);
 
@@ -101,8 +108,28 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return LinkAwareContentElement.class.cast(element);
     }
 
+    private LinkAwareContentElement getLinkAwareElement(ContentElementsContainer container, String path){
+        ContentElement element = getElement(container, path);
+
+        if(!LinkAwareContentElement.class.isAssignableFrom(element.getClass())){
+            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a link-aware element!");
+        }
+
+        return LinkAwareContentElement.class.cast(element);
+    }
+
     private ObjectAwareContentElement getObjectAwareElement(String path){
         ContentElement element = getElement(path);
+
+        if(!ObjectAwareContentElement.class.isAssignableFrom(element.getClass())){
+            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a object-aware element!");
+        }
+
+        return ObjectAwareContentElement.class.cast(element);
+    }
+
+    private ObjectAwareContentElement getObjectAwareElement(ContentElementsContainer container, String path){
+        ContentElement element = getElement(container, path);
 
         if(!ObjectAwareContentElement.class.isAssignableFrom(element.getClass())){
             throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a object-aware element!");
@@ -120,6 +147,18 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
         return ContentList.class.cast(element);
     }
+
+    private ContentList getContentListElement(ContentElementsContainer container, String path){
+        ContentElement element = getElement(container, path);
+
+        if(!ContentList.class.isAssignableFrom(element.getClass())){
+            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a content-list element!");
+        }
+
+        return ContentList.class.cast(element);
+    }
+
+    // *** getters / setters ***
 
     @Override
     public void setContentPage(ContentPage contentPage) {

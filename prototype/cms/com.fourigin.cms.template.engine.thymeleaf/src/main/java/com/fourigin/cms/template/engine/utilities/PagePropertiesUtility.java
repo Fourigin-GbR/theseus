@@ -31,6 +31,8 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         return propertiesReplacement.process(baseUrl + path, "base", base);
     }
 
+    // *** getters / setters ***
+
     @Override
     public void setBase(String base) {
         this.base = base;
