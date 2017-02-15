@@ -13,5 +13,7 @@ ul {
 }
 
 iframe#pageContent {
-  overflow: hidden;
+  overflow: scroll;
+  position: fixed;
+  height: calc(100% - 100px);
 }
