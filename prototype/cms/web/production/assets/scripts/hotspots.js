@@ -178,7 +178,41 @@ fourigin.cms.Hotspot.prototype.setHotspotButtonEvents = function (oHotspotItem) 
         self = this;
     //
     jHotspotButton.on("click", function () {
-        console.info("click on marker", jQuery(this).html());
-        self.oEditor.show(jQuery(this), oHotspotDefinitionData);
+        console.info("click on marker", jQuery(this).html(), oHotspotItem);
+        //self.oEditor.show(jQuery(this), oHotspotDefinitionData);
+        showOverlay(oHotspotItem);
     });
+};
+
+
+
+jQuery(document).ready(function() {
+    jQuery(".overlay .controls .close").on("click", function() {
+        closeOverlay();
+    });
+});
+
+var closeOverlay = function() {
+    var jLayer = jQuery(".overlayBackgroundLayer"),
+        jOverlay = jQuery(".overlay");
+    jOverlay.fadeOut();
+    jLayer.hide();
+};
+var showOverlay = function(oHotspotItem) {
+    var jLayer = jQuery(".overlayBackgroundLayer"),
+        jOverlay = jQuery(".overlay");
+    jOverlay.fadeIn();
+    jLayer.show();
+    // Hole daten:
+    sUrl = "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/dir-1/page-1&contentPath=/";
+    jQuery.ajax({
+        url: sUrl,
+        dataType: "json"
+    }).done(function(oData) {
+        fillOverlay(oData);
+    });
+};
+var fillOverlay = function(oData) {
+    var jOverlay = jQuery(".overlay");
+
 };

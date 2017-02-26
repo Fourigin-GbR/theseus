@@ -19,6 +19,20 @@ iframe#pageContent {
 
 .overlay {
   color: #111; /* Flingh property, adjust in lib */
+
+  section {
+    > div {
+      margin: 40px;
+    }
+
+    input {
+      border: 0;
+      background-color: #e0e0e0;
+      padding: 10px 20px;
+      width: calc(100% - 80px);
+      font-size: 1.2em;
+    }
+  }
 }
 .overlayBackgroundLayer {
   position: fixed;
