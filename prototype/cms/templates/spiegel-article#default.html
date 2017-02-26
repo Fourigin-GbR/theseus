@@ -1510,8 +1510,10 @@
                             <span class="headline-intro" th:text="${content.getText('/headline/intro')}">headline-intro</span>
                             <span class="headline" th:text="${content.getText('/headline/body')}">headline-body</span>
                         </h2>
-                        <i id="marker1" class="hotspotMarker"></i>
-
+                        <i id="marker1" class="hotspotMarker"><span class="name">name?</span></i>
+                        <script type="text/javascript">
+                            var marker1 = {"contentEditorName": "Einleitung" };
+                        </script>
 
                         <p class="article-intro"><strong th:text="${content.getText('/article/intro')}">article-intro</strong></p>
                         <div class="js-author-details-wrapper"></div>
@@ -1682,9 +1684,9 @@
                         <a class="article-functions home-link" href="http://www.spiegel.de/#ref=article-body"
                            title="Zur Startseite">Zur Startseite</a>
                         <!-- hotspot -->
-                        <i id="marker2" class="hotspotMarker"></i>
+                        <i id="marker2" class="hotspotMarker"><span class="name">name?</span></i>
                         <script type="text/javascript">
-                            var marker2 = {"copy": "Zur Startseite" };
+                            var marker2 = {"contentEditorName": "Zur Startseite" };
                         </script>
                         <!-- hotspot end -->
                     </div>

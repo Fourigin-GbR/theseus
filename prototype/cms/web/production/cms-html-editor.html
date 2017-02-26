@@ -3,9 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>CMS Html Editor</title>
+    <link rel="stylesheet" type="text/css" href="libs/frontend/flingh/styles/moses/flingh.css">
     <link rel="stylesheet" type="text/css" href="assets/styles/cms.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans|Lobster|Raleway" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!---->
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/scripts/hotspots.js"></script>
+    <script type="text/javascript" src="assets/scripts/cms-editor.js"></script>
+    <!---->
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            var jIframe = jQuery("iframe#pageContent");
+            var jHotspotAmountsIndicator = jQuery("li.flingh_toggleEdit").find(".hotspotAmountsIndicator");
+
+            var oEditor = new fourigin.cms.hotspot.Editor(jIframe);
+
+
+            // Create the html-master for the editor-units:
+            oEditor.initializeMarkupMasters("text", "<h1>lala1</h1>");
+            oEditor.initializeMarkupMasters("html", "<h1>lala2</h1>");
+            oEditor.initializeMarkupMasters("image", "<h1>lala3</h1>");
+            oEditor.initializeMarkupMasters("set", "<h1>lala4</h1>");
+            // Create the html-master for the items inside the set-editor-unit:
+            oEditor.initializeItemMarkupMasters("text", "<h1>lala5</h1>");
+            oEditor.initializeItemMarkupMasters("html", "<h1>lala6</h1>");
+            oEditor.initializeItemMarkupMasters("image", "<h1>lala7</h1>");
+            oEditor.initializeItemMarkupMasters("set", "<h1>lala8</h1>");
+
+
+
+            jIframe.on("load", function () {
+                var oHotspot = new fourigin.cms.Hotspot(oEditor, jIframe, jHotspotAmountsIndicator);
+
+                oHotspot.initializeMarkupMasters("empty", "<div class='fouriginMarker empty'><span class='name'/></div>");
+                oHotspot.initializeMarkupMasters("full", "<div class='fouriginMarker'><span class='name'/></div>");
+                console.log("Init all:");
+                oHotspot.initializeAllHotspots();
+            });
+
+        });
+
+    </script>
 </head>
 <body class="cms">
 <header>
@@ -23,7 +66,47 @@
         </ul>
     </div>
 </header>
-<iframe id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?base=DE&path=/spiegel/article-1"></iframe>
+<!--<iframe id="pageContent" height="auto" frameborder="0" width="100%" src="../../templates/test.html"></iframe>-->
+<iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="../../templates/spiegel-article%23default.html"></iframe>
+<!---->
+<!---->
+<div class="overlayBackgroundLayer"></div>
+<div class="overlay editor editorItemText">
+    <header>
+        <h2>Text bearbeiten</h2>
+    </header>
+    <div class="controls">
+        <div class="button close">
+            <i class="close fa fa-times" aria-hidden="true"></i>
+        </div>
+    </div>
+    <section>
+        bla bla
+    </section>
+    <footer>
+        <div class="buttons">
+            <a class="button">Speichern</a>
+            <a class="button secondary">Abbrechen</a>
+        </div>
+    </footer>
+</div>
+<!---->
+<script type="text/javascript">
 
+    /* TODO: optimize!!!!! Move !!!! */
+
+    var jPageIframe = jQuery("#pageContent");
+
+    jPageIframe.on("load", function () {
+        jPageIframe.height(jPageIframe.contents().find("body").outerHeight(true));
+    });
+    jPageIframe.contents().find("body").on("change", function () {
+        jPageIframe.height(jPageIframe.contents().find("body").outerHeight(true));
+    });
+    jQuery(window).on("resize", function () {
+        jPageIframe.height(jPageIframe.contents().find("body").outerHeight(true));
+    });
+</script>
+<!---->
 </body>
 </html>

@@ -4,7 +4,7 @@
   background-color: $flingh_color_palette_gray_dark;
   color: $flingh_color_palette_medium-gray_light;
 
-  header {
+  > header {
     display: flex;
     align-items: center;
     padding: 20px;

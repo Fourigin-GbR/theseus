@@ -1,4 +1,4 @@
-.marker {
+.fouriginMarker {
   background-color: #ccc;
   border: 4px solid #eee;
   box-shadow: 0 4px 4px #aaaaaa;
@@ -8,7 +8,7 @@
   overflow: hidden;
   padding: 0;
   position: absolute;
-  visibility: hidden;
+  visibility: visible;
   z-index: 1;
 
   .arrow_box {
