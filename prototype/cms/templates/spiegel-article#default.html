@@ -1510,9 +1510,14 @@
                             <span class="headline-intro" th:text="${content.getText('/headline/intro')}">headline-intro</span>
                             <span class="headline" th:text="${content.getText('/headline/body')}">headline-body</span>
                         </h2>
-                        <i id="marker1" class="hotspotMarker"><span class="name">name?</span></i>
+                        <i id="marker1" class="hotspotMarker"></i>
                         <script type="text/javascript">
-                            var marker1 = {"contentEditorName": "Einleitung" };
+                            /*<![CDATA[*/
+                            var marker1 = {
+                                "contentEditorName": "Einleitung",
+                                "contentPath": "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/spiegel/article-1&contentPath=/headline/body"
+                            };
+                            /*]]>*/
                         </script>
 
                         <p class="article-intro"><strong th:text="${content.getText('/article/intro')}">article-intro</strong></p>
@@ -1684,9 +1689,12 @@
                         <a class="article-functions home-link" href="http://www.spiegel.de/#ref=article-body"
                            title="Zur Startseite">Zur Startseite</a>
                         <!-- hotspot -->
-                        <i id="marker2" class="hotspotMarker"><span class="name">name?</span></i>
+                        <i id="marker2" class="hotspotMarker"></i>
                         <script type="text/javascript">
-                            var marker2 = {"contentEditorName": "Zur Startseite" };
+                            /*<![CDATA[*/
+                            var marker2 = {"contentEditorName": "Zur Startseite",
+                                "contentPath": "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/spiegel/article-1&contentPath=/headline/intro"};
+                            /*]]>*/
                         </script>
                         <!-- hotspot end -->
                     </div>

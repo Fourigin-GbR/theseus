@@ -18,6 +18,8 @@ iframe#pageContent {
 }
 
 .overlay {
+  z-index: 5;
+  display: none;
   color: #111; /* Flingh property, adjust in lib */
 
   section {
@@ -41,4 +43,5 @@ iframe#pageContent {
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.77);
+  display: none;
 }

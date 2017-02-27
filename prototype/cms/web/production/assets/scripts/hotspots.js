@@ -204,7 +204,8 @@ var showOverlay = function(oHotspotItem) {
     jOverlay.fadeIn();
     jLayer.show();
     // Hole daten:
-    sUrl = "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/dir-1/page-1&contentPath=/";
+    sUrl = oHotspotItem["oHotspotDefinitionData"]["contentPath"]; //"http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/dir-1/page-1&contentPath=/";
+
     jQuery.ajax({
         url: sUrl,
         dataType: "json"
@@ -214,5 +215,7 @@ var showOverlay = function(oHotspotItem) {
 };
 var fillOverlay = function(oData) {
     var jOverlay = jQuery(".overlay");
+    //
+    jOverlay.find("input").val(oData["currentContentElement"]["content"]);
 
 };
