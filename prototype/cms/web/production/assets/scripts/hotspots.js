@@ -214,8 +214,34 @@ var showOverlay = function(oHotspotItem) {
     });
 };
 var fillOverlay = function(oData) {
-    var jOverlay = jQuery(".overlay");
+    var jOverlay = jQuery(".overlay"),
+        jInput = jOverlay.find("input");
     //
-    jOverlay.find("input").val(oData["currentContentElement"]["content"]);
+    jInput.val(oData["currentContentElement"]["content"]);
+    jInput.data(oData);
 
+    jOverlay.find("a.button[data-action=save]").on("click", function() {
+        var sUrl = "http://fourigin.de/cms/editors/save",
+            oUpdatedData = {
+                "base": oData["base"],
+                "siteStructurePath": oData["siteStructurePath"],
+                "contentPath": oData["contentPath"],
+                "originalChecksum": oData["currentChecksum"],
+                "modifiedContentElement": oData["currentContentElement"]
+            };
+
+        oUpdatedData["modifiedContentElement"]["content"] = jInput.val();
+
+        console.log("#####send to save on server: ", oUpdatedData);
+
+        jQuery.ajax({
+            url: sUrl,
+            data: JSON.stringify(oUpdatedData),
+            method: "post",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function(oData) {
+            alert("hurray");
+        });
+    });
 };
