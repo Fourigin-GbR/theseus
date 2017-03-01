@@ -34,6 +34,16 @@ iframe#pageContent {
       width: calc(100% - 80px);
       font-size: 1.2em;
     }
+
+    .prototype {
+      display: none;
+    }
+
+    form {
+      > div {
+        margin-bottom: 20px;
+      }
+    }
   }
 }
 .overlayBackgroundLayer {

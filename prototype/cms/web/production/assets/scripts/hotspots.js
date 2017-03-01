@@ -187,7 +187,7 @@ fourigin.cms.Hotspot.prototype.setHotspotButtonEvents = function (oHotspotItem) 
 
 
 jQuery(document).ready(function() {
-    jQuery(".overlay .controls .close").on("click", function() {
+    jQuery(".overlay .controls .close, a.button[data-action=cancel]").on("click", function() {
         closeOverlay();
     });
 });
@@ -213,12 +213,56 @@ var showOverlay = function(oHotspotItem) {
         fillOverlay(oData);
     });
 };
+
+var writeContentObjectToFormItem = function(oContentObject, sParentNamePath) {
+    var jOverlay = jQuery(".overlay"),
+        jTarget = jOverlay.find("form"),
+        jMasterText = jOverlay.find("[data-prototype=text]"),
+        jMasterHtml = jOverlay.find("[data-prototype=html]"),
+        jCurrentDataTypeElement;
+    //
+    //
+    sParentNamePath = sParentNamePath || "";
+    console.log("lalala", oContentObject);
+    switch (oContentObject["type"]) {
+        case "text":
+            jCurrentDataTypeElement = jMasterText.clone().removeAttr("data-prototype").removeClass("prototype");
+            jCurrentDataTypeElement.find("input").val(oContentObject["content"]);
+            jCurrentDataTypeElement.find("input").attr("name", sParentNamePath + "/" + oContentObject["name"]);
+            jTarget.append(jCurrentDataTypeElement);
+            jCurrentDataTypeElement.find("label span").text(oContentObject["contentPath"]);
+            jCurrentDataTypeElement.find("input").data(oContentObject, "contentObject");
+            break;
+        case "group":
+            for(var i=0, il=oContentObject["elements"].length; i<il; i++) {
+                writeContentObjectToFormItem(oContentObject["elements"][i], sParentNamePath + "/" + oContentObject["name"]);
+            }
+            break;
+    }
+    //
+};
+
+var updateCurrentContentElementByFormData = function (oCurrentContentElement, oContentElementSnippet, sParentNamedPath, jForm) {
+    switch (oContentElementSnippet["type"]) {
+        case "group":
+            for(var i=0, il=oContentElementSnippet["elements"].length; i<il; i++) {
+                updateCurrentContentElementByFormData(oCurrentContentElement, oContentElementSnippet["elements"][i], sParentNamedPath + "/" + oContentElementSnippet["name"], jForm);
+            }
+            break;
+        default:
+            // find input with that name and update:
+            oContentElementSnippet["content"] = jForm.find("input[name='" + sParentNamedPath + "/" + oContentElementSnippet["name"] + "']").val();
+    }
+};
+
 var fillOverlay = function(oData) {
     var jOverlay = jQuery(".overlay"),
-        jInput = jOverlay.find("input");
+        jForm = jOverlay.find("form");
     //
-    jInput.val(oData["currentContentElement"]["content"]);
-    jInput.data(oData);
+    jForm.find(".contentElement:not(.prototype)").remove();
+    jOverlay.find("a.button[data-action=save]").unbind();
+    //
+    writeContentObjectToFormItem(oData["currentContentElement"]);
 
     jOverlay.find("a.button[data-action=save]").on("click", function() {
         var sUrl = "http://fourigin.de/cms/editors/save",
@@ -230,9 +274,11 @@ var fillOverlay = function(oData) {
                 "modifiedContentElement": oData["currentContentElement"]
             };
 
-        oUpdatedData["modifiedContentElement"]["content"] = jInput.val();
+        // collect all data:
+        updateCurrentContentElementByFormData(oData["currentContentElement"], oData["currentContentElement"], "", jForm);
 
-        console.log("#####send to save on server: ", oUpdatedData);
+
+        console.log("__________________________Aktualisiert: ", oData);
 
         jQuery.ajax({
             url: sUrl,
@@ -241,7 +287,8 @@ var fillOverlay = function(oData) {
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         }).done(function(oData) {
-            alert("hurray");
-        });
+            jQuery("iframe")[0].contentWindow.location.reload(true);
+            closeOverlay();
+        }).fail(function(){alert("Das hat nicht geklappt. Hier ist wohl noch ein Bug....");});
     });
 };

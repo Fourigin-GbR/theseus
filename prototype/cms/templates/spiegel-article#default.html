@@ -1515,12 +1515,30 @@
                             /*<![CDATA[*/
                             var marker1 = {
                                 "contentEditorName": "Einleitung",
+                                "contentPath": "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/spiegel/article-1&contentPath=/headline"
+                            };
+                            /*]]>*/
+                        </script>
+                        <i id="marker1b" class="hotspotMarker"></i>
+                        <script type="text/javascript">
+                            /*<![CDATA[*/
+                            var marker1b = {
+                                "contentEditorName": "Einleitung - nur die Überschrift",
                                 "contentPath": "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/spiegel/article-1&contentPath=/headline/body"
                             };
                             /*]]>*/
                         </script>
 
                         <p class="article-intro"><strong th:text="${content.getText('/article/intro')}">article-intro</strong></p>
+                        <!-- hotspot -->
+                        <i id="marker2" class="hotspotMarker"></i>
+                        <script type="text/javascript">
+                            /*<![CDATA[*/
+                            var marker2 = {"contentEditorName": "Artikel Einleitung",
+                                "contentPath": "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/spiegel/article-1&contentPath=/article/intro"};
+                            /*]]>*/
+                        </script>
+                        <!-- hotspot end -->
                         <div class="js-author-details-wrapper"></div>
                         <div id="js-article-top-wide-asset" class="clearfix">
 
@@ -1688,15 +1706,6 @@
                     <div class="module-box home-link-box">
                         <a class="article-functions home-link" href="http://www.spiegel.de/#ref=article-body"
                            title="Zur Startseite">Zur Startseite</a>
-                        <!-- hotspot -->
-                        <i id="marker2" class="hotspotMarker"></i>
-                        <script type="text/javascript">
-                            /*<![CDATA[*/
-                            var marker2 = {"contentEditorName": "Zur Startseite",
-                                "contentPath": "http://fourigin.de/cms/editors/retrieveP?base=DE&sitePath=/spiegel/article-1&contentPath=/headline/intro"};
-                            /*]]>*/
-                        </script>
-                        <!-- hotspot end -->
                     </div>
                     <div class="function-box">
                         <div class="article-function-box-wide clearfix">
