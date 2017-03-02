@@ -6,6 +6,7 @@ import com.fourigin.cms.models.content.elements.ContentGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -24,6 +25,9 @@ public class ContentPageManager {
         }
 
         String path = contentPath.replace("//", "/").trim();
+
+        // compress path (e.g. "..")
+        path = compressContentPath(path);
 
         if("/".equals(path)){
             // special case, return all root level elements, packed in a new pseudo group
@@ -53,6 +57,83 @@ public class ContentPageManager {
 
         List<ContentElement> elements = container.getElements();
         return resolve(path, elements);
+    }
+
+    public static void update(ContentPage contentPage, String contentPath, ContentElement element){
+        ContentElement parentElement = resolve(contentPage, contentPath + "/..");
+        if(parentElement == null){
+            throw new IllegalArgumentException("Unable to find parent element for path '" + contentPath + "'!");
+        }
+
+        if(!ContentElementsContainer.class.isAssignableFrom(parentElement.getClass())){
+            throw new IllegalArgumentException("Parent element is not a container for path '" + contentPath + "'!");
+        }
+
+        ContentElementsContainer parent = ContentElementsContainer.class.cast(parentElement);
+        List<ContentElement> elements = parent.getElements();
+        if(elements == null){
+            elements = new ArrayList<>();
+            elements.add(element);
+            return;
+        }
+
+        String name = element.getName();
+
+        ContentElement previousElement = null;
+        for (ContentElement contentElement : elements) {
+            if(name.equals(contentElement.getName())){
+                previousElement = contentElement;
+                break;
+            }
+        }
+
+        if(previousElement != null){
+            // replace the existing element
+            elements.remove(previousElement);
+        }
+
+        elements.add(element);
+    }
+
+    private static String compressContentPath(String path){
+        if(!path.contains("/..")){
+            return path;
+        }
+
+        String[] parts = path.split("/");
+        List<String> resultParts = new ArrayList<>();
+        int count = 0;
+        for (String part : parts) {
+            if(!"..".equals(part)){
+                resultParts.add(count, part);
+                count++;
+                continue;
+            }
+
+            if(count == 0){
+                // invalid! ".." shouldn't stay at the begin of the path!
+                continue;
+            }
+
+            // remove the last part
+            resultParts.remove(count-1);
+
+            // step back
+            count--;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (String resultPart : resultParts) {
+            if(resultPart != null && !resultPart.isEmpty()){
+                builder.append('/').append(resultPart);
+            }
+        }
+
+        if(builder.length() == 0){
+            return "/";
+        }
+        
+        return builder.toString();
     }
 
     private static ContentElement resolve(String path, List<ContentElement> elements){
@@ -92,8 +173,4 @@ public class ContentPageManager {
         return current;
     }
 
-    public static void update(ContentPage contentPage, String contentPath, ContentElement element){
-        // TODO: implement me!
-        throw new UnsupportedOperationException("Implement me!");
-    }
 }
