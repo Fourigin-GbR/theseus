@@ -191,6 +191,7 @@ public class EditorsController {
 
         String contentPath = pointer.getContentPath();
         ContentPageManager.update(contentPage, contentPath, contentElement);
+        contentRepository.update(page, contentPage);
     }
 
     private void validate(ContentElementPointer pointer){
