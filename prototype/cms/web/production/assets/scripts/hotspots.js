@@ -95,6 +95,7 @@ fourigin.cms.Hotspot.prototype.initializeAllHotspots = function () {
         this.setHotspotButton(aHotspotItems[i]);
     }
     this.fitHotspotButtonsPosition();
+    this.setEvents();
     this.updateHotspotsAmountIndicator();
 };
 
@@ -141,6 +142,19 @@ fourigin.cms.Hotspot.prototype.setHotspotButton = function (oHotspotItem) {
     jHotspotButton.css("left", (iIframeOffsetLeft + iContentElementOffsetLeft));
     jHotspotButton.css("top", (iIframeOffsetTop + iContentElementOffsetTop - jHotspotButton.outerHeight()));
     this.setHotspotButtonEvents(oHotspotItem);
+};
+
+fourigin.cms.Hotspot.prototype.setEvents = function() {
+    var aAllHotspots = this.aHotspots;
+    //
+    for(var i = 0, il = aAllHotspots.length; i<il; i++) {
+        var oHotspot = aAllHotspots[i];
+        //
+        console.warn("Hotspot-Object", oHotspot);
+        oHotspot["jMarker"].on("mouseenter", (function() {
+            oHotspot["jHotspotContentElement"].css("outline", "1px solid red");
+        })(oHotspot))
+    }
 };
 
 fourigin.cms.Hotspot.prototype.fitHotspotButtonsPosition = function () {

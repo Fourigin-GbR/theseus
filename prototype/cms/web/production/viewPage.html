@@ -82,8 +82,32 @@
 </header>
 <!--/*@thymesVar id="base" type="java.lang.String"*/-->
 <!--/*@thymesVar id="path" type="java.lang.String"*/-->
-<iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?base=DE&amp;path=/spiegel/article-1"
-        th:src="@{/compile/(base=${base},path=${path})}"></iframe>
+
+<div class="desktop">
+
+    <div class="sidePanel">
+        <header>
+            Hotspots
+        </header>
+        <div>
+            <ul>
+                <li>
+                    Überschrift
+                </li>
+                <li>
+                    Artikel 1
+                </li>
+                <li>
+                    Artikel 2
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?base=DE&amp;path=/spiegel/article-1"
+            th:src="@{/compile/(base=${base},path=${path})}"></iframe>
+
+</div>
 
 <div class="overlayBackgroundLayer"></div>
 <div class="overlay editor editorItemText">

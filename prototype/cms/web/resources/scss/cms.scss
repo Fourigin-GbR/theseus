@@ -13,8 +13,36 @@ ul {
   list-style-type: none;
 }
 
-iframe#pageContent {
-  overflow: hidden;
+.desktop {
+
+  .sidePanel {
+    width: 200px;
+    height: 100%;
+    position: fixed;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: block;
+        padding: 10px 5px;
+      }
+    }
+  }
+
+  iframe#pageContent {
+    overflow: hidden;
+    margin-left: 0;
+    transition: margin .8s ease-in;
+  }
+
+  &.sidePanelActive {
+    iframe#pageContent {
+      margin-left: 200px;
+    }
+  }
+
 }
 
 .overlay {
