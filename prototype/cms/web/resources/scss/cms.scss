@@ -19,6 +19,34 @@ ul {
     width: 200px;
     height: 100%;
     position: fixed;
+    background-color: #272626;
+
+    header {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        display: inline-block;
+        background-color: #4814d5;
+        height: 23px;
+        width: 23px;
+        border-radius: 5px 5px 0 5px;
+        position: relative;
+        margin: 5px;
+
+        i {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translateX(-50%) translateY(-50%);
+        }
+      }
+
+      .title {
+        font-size: 1.2rem;
+        padding: 2px 5px;
+      }
+    }
 
     ul {
       margin: 0;
@@ -26,20 +54,27 @@ ul {
 
       li {
         display: block;
-        padding: 10px 5px;
+        padding: 10px 15px;
+        border-bottom: 1px solid #333;
+        background-color: transparent;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #1b1b1b;
+        }
       }
     }
   }
 
   iframe#pageContent {
     overflow: hidden;
-    margin-left: 0;
+    margin-left: 200px;
     transition: margin .8s ease-in;
   }
 
-  &.sidePanelActive {
+  &.sidePanelClosed {
     iframe#pageContent {
-      margin-left: 200px;
+      margin-left: 0;
     }
   }
 
