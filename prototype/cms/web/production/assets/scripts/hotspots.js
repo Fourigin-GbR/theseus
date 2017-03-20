@@ -112,7 +112,7 @@ fourigin.cms.Hotspot.prototype.setSideBar = function() {
     //
     jHotspotItemTarget.find("li:not(.prototype)").remove();
     for(i=0, il=aHotspotItems.length; i<il; i++) {
-        var jNewHotspotItem = jHotspotItemPrototype.clone().removeClass(".prototype");
+        var jNewHotspotItem = jHotspotItemPrototype.clone().removeClass("prototype");
         jNewHotspotItem.find(".label").text(aHotspotItems[i]["oHotspotDefinitionData"]["contentEditorName"]);
         jHotspotItemTarget.append(jNewHotspotItem);
         self.setSidebarHotspotEvents(jNewHotspotItem, aHotspotItems[i]);

@@ -15,6 +15,10 @@ ul {
 
 .desktop {
 
+  .prototype {
+    display: none !important;
+  }
+
   .sidePanel {
     width: 200px;
     height: 100%;
@@ -53,14 +57,23 @@ ul {
       padding: 0;
 
       li {
-        display: block;
-        padding: 10px 15px;
+        display: flex;
+        align-items: center;
         border-bottom: 1px solid #333;
         background-color: transparent;
-        cursor: pointer;
 
-        &:hover {
-          background-color: #1b1b1b;
+        .label {
+          width: calc(100% - 20px);
+          cursor: pointer;
+          padding: 10px;
+
+          &:hover {
+            background-color: #1b1b1b;
+          }
+        }
+
+        i {
+          width: 20px;
         }
       }
     }
