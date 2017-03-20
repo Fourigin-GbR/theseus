@@ -86,9 +86,12 @@ console.log("Found these hotspots:", jHotspotsMarkers, jIframe, jIframe.contents
 
 fourigin.cms.Hotspot.prototype.initializeAllHotspots = function () {
     console.log("Initialie All Hotspots.");
-    var aHotspotItems;
+    //var aHotspotItems;
     //
     this.getAllHotspots();
+    this.setSideBar();
+
+/*  Old version with buttons:  //
     aHotspotItems = this.aHotspots;
     //
     for (var i = 0, l = aHotspotItems.length; i < l; i++) {
@@ -96,7 +99,24 @@ fourigin.cms.Hotspot.prototype.initializeAllHotspots = function () {
     }
     this.fitHotspotButtonsPosition();
     this.setEvents();
-    this.updateHotspotsAmountIndicator();
+    this.updateHotspotsAmountIndicator();*/
+};
+
+fourigin.cms.Hotspot.prototype.setSideBar = function() {
+    var aHotspotItems = this.aHotspots,
+        i, il,
+        self = this,
+        jSidePanel = jQuery(".desktop .sidePanel"),
+        jHotspotItemPrototype = jSidePanel.find("li.prototype.hotspotItem"),
+        jHotspotItemTarget = jSidePanel.find("ul");
+    //
+    jHotspotItemTarget.find("li:not(.prototype)").remove();
+    for(i=0, il=aHotspotItems.length; i<il; i++) {
+        var jNewHotspotItem = jHotspotItemPrototype.clone().removeClass(".prototype");
+        jNewHotspotItem.find(".label").text(aHotspotItems[i]["oHotspotDefinitionData"]["contentEditorName"]);
+        jHotspotItemTarget.append(jNewHotspotItem);
+        self.setSidebarHotspotEvents(jNewHotspotItem, aHotspotItems[i]);
+    }
 };
 
 fourigin.cms.Hotspot.prototype.updateHotspotsAmountIndicator = function()
@@ -198,7 +218,11 @@ fourigin.cms.Hotspot.prototype.setHotspotButtonEvents = function (oHotspotItem) 
     });
 };
 
-
+fourigin.cms.Hotspot.prototype.setSidebarHotspotEvents = function (jSidebarHotspotItem, oHotspotItem) {
+    jSidebarHotspotItem.on("click", function () {
+        showOverlay(oHotspotItem);
+    });
+};
 
 jQuery(document).ready(function() {
     jQuery(".overlay .controls .close, a.button[data-action=cancel]").on("click", function() {
