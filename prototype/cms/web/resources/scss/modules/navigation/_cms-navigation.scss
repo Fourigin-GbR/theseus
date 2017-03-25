@@ -34,7 +34,43 @@
           cursor: pointer;
 
           &:hover {
-            background-color: $flingh_color_palette_gray_34_dark;
+            /*background-color: $flingh_color_palette_gray_34_dark;*/
+            a {
+              border: none;
+            }
+          }
+
+          .path {
+            background-color: #181818;
+            padding: 5px;
+
+            ul {
+              li {
+                padding: 0;
+                margin: 0;
+
+                &::before {
+                  content: "/";
+                  display: inline-block;
+                  margin-left: 5px;
+                  color: #6e6e6e;
+                }
+
+                a {
+                  color: #ecf0f1;
+
+                  &:hover {
+                    border-bottom: 2px solid $flingh_color_palette_lila_dark;
+                  }
+                }
+
+                &:last-of-type {
+                  a {
+                    font-weight: bold;
+                  }
+                }
+              }
+            }
           }
         }
       }

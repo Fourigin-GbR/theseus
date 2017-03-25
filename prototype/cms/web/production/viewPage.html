@@ -63,8 +63,14 @@
     <div class="navigation">
         <ul>
             <li>
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                Edit page content</li>
+                <div class="path">
+                    <ul>
+                        <li th:each="pathToken : ${#strings.arraySplit(path, '/')}">
+                            <a href="#" th:href="@{/compile/(base=${base},path=${pathToken})}" th:text="${pathToken}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li>
                 <i class="fa fa-coffee" aria-hidden="true"></i>
                 Trink coffee</li>
