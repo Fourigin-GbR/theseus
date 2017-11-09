@@ -2,7 +2,8 @@ def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
 
 wrapper {
-    gradleVersion = '3.0'
+    gradleVersion = '4.3-rc-2'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 buildscript {
@@ -16,7 +17,7 @@ buildscript {
     }
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:0.6.0.BUILD-SNAPSHOT"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.4.RELEASE"
     }
 }
 
@@ -126,10 +127,8 @@ project.allprojects { project ->
         compileGroovy.options.encoding = sourceEncoding
         compileTestGroovy.options.encoding = sourceEncoding
         javadoc.options.encoding = sourceEncoding
-
     }
 }
-
 
 buildscript {
   apply from: 'dependencies.gradle'

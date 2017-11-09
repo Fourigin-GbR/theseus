@@ -1,0 +1,28 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+      classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.11'
+  }
+}
+
+apply plugin: 'org.asciidoctor.convert'
+asciidoctor {
+  backends = ['pdf', 'html']
+    attributes 'source-highlighter': 'coderay'
+}
+task copyImages(type: Copy) {
+      from 'src/docs/images'
+          into 'build/asciidoc/images'
+}
+
+asciidoctor.dependsOn copyImages
+
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.0'
+}
+defaultTasks = ['asciidoctor']

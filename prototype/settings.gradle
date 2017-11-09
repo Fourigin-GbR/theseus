@@ -9,6 +9,7 @@ include ':hera:com.fourigin.hera.web'
 include ':theseus'
 include ':theseus:com.fourigin.theseus.models'
 include ':theseus:com.fourigin.theseus.repository'
+include ':theseus:com.fourigin.theseus.service'
 
 include ':cms'
 include ':cms:com.fourigin.cms.models'

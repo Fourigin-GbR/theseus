@@ -1,0 +1,245 @@
+= Headline: Sub Headline
+Alexander Klein
+:toc:
+:icons: font
+:experimental:
+:imagesdir: ../../images/sample
+
+A pellentesque urna urna id turpis. Nam posuere lectus vitae nibh. Etiam tortor
+orci, sagittis malesuada, rhoncus quis, hendrerit eget, libero. Quisque commodo
+nulla at nunc. Mauris consequat, enim vitae venenatis sollicitudin, dolor orci
+bibendum enim, a sagittis nulla nunc quis elit. Phasellus augue. Nunc suscipit,
+magna tincidunt lacinia faucibus, lacus tellus ornare purus, a pulvinar lacus
+orci eget nibh. Maecenas sed nibh non lacus tempor faucibus. In hac habitasse
+platea dictumst. Vivamus a orci at nulla tristique condimentum. Donec arcu
+quam, dictum accumsan, convallis accumsan, cursus sit amet, ipsum. In pharetra
+sagittis nunc.
+
+Donec consequat mi. Quisque vitae dolor. Integer lobortis. 
+
+== Wrapped text and hard line breaks
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#wrapped-text-and-hard-line-breaks[http://asciidoctor.org/docs/asciidoc-writers-guide/#wrapped-text-and-hard-line-breaks^]
+
+=== No Line Break
+
+Varius dictum nisl. Vestibulum suscipit enim ac nulla. Proin tincidunt. Proin.
+Accumsan aliquam enim. Etiam hendrerit, metus eu semper rutrum.
+
+=== Line Breaks via `+`
+
+Varius dictum nisl. Vestibulum suscipit enim ac nulla. Proin tincidunt. Proin. +
+Accumsan aliquam enim. Etiam hendrerit, metus eu semper rutrum.
+
+=== Line Breaks via [%hardbreaks]
+
+[%hardbreaks]
+Varius dictum nisl. Vestibulum suscipit enim ac nulla. Proin tincidunt. Proin.
+Accumsan aliquam enim. Etiam hendrerit, metus eu semper rutrum.
+
+== Admonitions
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#admonitions[http://asciidoctor.org/docs/asciidoc-writers-guide/#admonitions^]
+
+NOTE: NOTE Nec libero. Cras magna ipsum, scelerisque et, tempor eget, gravida nec.
+
+TIP: TIP Parturient montes, nascetur ridiculus mus. Nulla facilisis massa ut massa.
+Sed.
+
+IMPORTANT: IMPORTANT In faucibus orci luctus et ultrices posuere cubilia Curae;
+Vestibulum hendrerit.
+
+CAUTION: CAUTION Amet mi cursus commodo. Morbi congue mauris ac sapien. Donec justo. 
+
+WARNING: WARNING Vestibulum eu, elementum et, gravida quis, sapien. Donec blandit.
+Donec sed.
+
+=== Admonition Block
+[TIP, caption='ProTip(TM)']
+.Orci eget nibh. Maecenas sed nibh non lacus tempor faucibus. In.
+====
+Nullam nibh libero, sagittis vel, hendrerit accumsan, pulvinar consequat,
+tellus. Donec varius dictum nisl. Vestibulum suscipit enim ac nulla. Proin
+tincidunt. Proin sagittis. Curabitur auctor metus non mauris. Nunc condimentum
+nisl.
+====
+
+== Mild punctuation, strong impact
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#mild-punctuation-strong-impact[http://asciidoctor.org/docs/asciidoc-writers-guide/#mild-punctuation-strong-impact^]
+
+_italic phrase_
+
+__i__talic le__tt__ers
+
+*bold phrase*
+
+**b**old le**tt**ers
+
+*_bold italic phrase_*
+
+**__b__**old italic le**__tt__**ers
+
+`monospace phrase` and le``tt``ers
+
+`_monospace italic phrase_` and le``__tt__``ers
+
+`*monospace bold phrase*` and le``**tt**``ers
+
+`*_monospace bold italic phrase_*` and le``**__tt__**``ers
+
+<<<
+
+== Lists, lists, lists
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#lists-lists-lists[http://asciidoctor.org/docs/asciidoc-writers-guide/#lists-lists-lists^]
+
+=== Unordered List
+
+* Edgar Allen Poe
+* Sheri S. Tepper
+* Bill Bryson
+
+=== List with title
+
+.Kizmet's Favorite Authors
+* Edgar Allen Poe
+* Sheri S. Tepper
+* Bill Bryson
+
+=== Nesting
+
+* level 1
+** level 2
+*** level 3
+**** level 4
+***** level 5
+* level 1
+
+=== Numbered list
+
+. Protons
+. Electrons
+. Neutrons
+. Quarks
+
+[start=4]
+. Step four
+. Step five
+. Step six
+
+=== Labeled lists
+
+CPU:: The brain of the computer.
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+Keyboard:: Used to enter text or control items on the screen.
+Mouse:: Used to point to and select items on your computer screen.
+Monitor:: Displays information in visual form using text and graphics.
+
+<<<
+
+== Links and images
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#links-and-images[http://asciidoctor.org/docs/asciidoc-writers-guide/#links-and-images^]
+
+NOTE: Interesting stuff about links but nothing special in terms of styling.
+
+=== Images
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#images[http://asciidoctor.org/docs/asciidoc-writers-guide/#images^]
+
+.Camaro Sports Car
+image::camaro.jpeg[]
+
+<<<
+
+== Blocks
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#building-blocks-in-asciidoc[http://asciidoctor.org/docs/asciidoc-writers-guide/#building-blocks-in-asciidoc^]
+
+=== Example
+
+====
+Urna, dignissim vitae, porttitor ut, iaculis sit amet, sem.
+Class aptent taciti.
+====
+
+=== Literal
+
+....
+Risus. Nulla sed lectus. Morbi sollicitudin, diam ac bibendum
+scelerisque, enim.
+....
+
+=== Listing
+
+[source, java]
+----
+public class HelloWorld{
+  public static void main(String[] args){ // <1>
+    Sysmtem.out.println("Hello World");
+  }
+}
+----
+<1> Main Method
+
+=== Open Block
+
+--
+Molestie a, magna. Vestibulum ante ipsum primis in faucibus orci luctus.
+--
+
+=== Quote
+
+____
+Sem. Phasellus sollicitudin. Proin orci erat, blandit ut, molestie sed,
+fringilla.
+____
+
+=== Sidebar
+
+****
+Ut arcu scelerisque aliquam. Nullam viverra magna vitae leo. Vestibulum in.
+****
+
+=== A new perspective on tables
+
+http://asciidoctor.org/docs/asciidoc-writers-guide/#a-new-perspective-on-tables[http://asciidoctor.org/docs/asciidoc-writers-guide/#a-new-perspective-on-tables^]
+
+|===
+|Head1|Head2|Head3
+
+|row1-column1
+|row1-column2
+|row1-column3
+
+|row2-column1
+|row2-column2
+|row2-column3
+
+|row3-column1
+|row3-column2
+|row3-column3
+
+|===
+
+==== Column spacings and alignements
+
+[cols="<1,^2,>2"]
+|===
+|Head1|Head2|Head3
+
+|row1-column1
+|row1-column2
+|row1-column3
+
+|row2-column1
+|row2-column2
+|row2-column3
+
+|row3-column1
+|row3-column2
+|row3-column3
+
+|===

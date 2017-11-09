@@ -2,9 +2,9 @@
 <configuration>
  	<include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-	<property name="IP_KARSTEN" value="172.16.1.40, 172.16.2.40, 172.16.3.40"/>
-	<property name="IP_VLAD" 	value="172.16.1.52, 172.16.2.52, 172.16.3.52"/>
-	<property name="IP_SIMON"	value="172.16.1.80, 172.16.2.80, 172.16.3.80"/>
+	<!--<property name="IP_KARSTEN" value="172.16.1.40, 172.16.2.40, 172.16.3.40"/>-->
+	<!--<property name="IP_VLAD" 	value="172.16.1.52, 172.16.2.52, 172.16.3.52"/>-->
+	<!--<property name="IP_SIMON"	value="172.16.1.80, 172.16.2.80, 172.16.3.80"/>-->
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -12,25 +12,25 @@
 		</encoder>
 	</appender>
 
-	<appender name="MULTIPLEX-SOCKET" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-		<Compressing>true</Compressing>
-		<ReconnectionDelay>30000</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<ApplicationIdentifier>theseus</ApplicationIdentifier>
-		<RemoteHosts>
-			${IP_SIMON},
-			${IP_VLAD},
-			${IP_KARSTEN},
-			localhost
-		</RemoteHosts>
-	</appender>
+	<!--<appender name="MULTIPLEX-SOCKET" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">-->
+		<!--<Compressing>true</Compressing>-->
+		<!--<ReconnectionDelay>30000</ReconnectionDelay>-->
+		<!--<IncludeCallerData>true</IncludeCallerData>-->
+		<!--<ApplicationIdentifier>theseus</ApplicationIdentifier>-->
+		<!--<RemoteHosts>-->
+			<!--${IP_SIMON},-->
+			<!--${IP_VLAD},-->
+			<!--${IP_KARSTEN},-->
+			<!--localhost-->
+		<!--</RemoteHosts>-->
+	<!--</appender>-->
 
 	<!--<logger name="org.springframework" level="DEBUG"/>-->
 	<!--<logger name="org.springframework.security" level="DEBUG"/>-->
 
-	<root level="WARN">
+	<root level="INFO">
 		<appender-ref ref="STDOUT"/>
-		<appender-ref ref="MULTIPLEX-SOCKET"/>
+		<!--<appender-ref ref="MULTIPLEX-SOCKET"/>-->
 	</root>
 
 </configuration>

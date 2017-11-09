@@ -1,0 +1,728 @@
+= CMS - Architecture
+fourigin
+:toc:
+:experimental:
+:icons: font
+:imagesdir: ../../images/content-generators
+
+
+
+== MinPrice
+Generates a content group with text elements (one per currency), containing the base price of the specified MDB entry.
+
+
+=== Definition
+
+[source, xml]
+----
+<context name="MIN_PRICE" base-name="min_price" source="ModelDB" base-path="">
+  <attributes>
+    <attribute name="content-generators">M3_MIN_PRICE</attribute> // <1>
+    <attribute name="group-reference">/local-content/.../mdb-content</attribute> // <2>
+
+    <!-- optional attributes, should be specified in SDT -->
+    <attribute name="model-body-type-code">A1XX-coupe-2017</attribute> // <3>
+    <attribute name="model-base-code">A1XX</attribute> // <4>
+    <attribute name="model-body-type-mdb-scope">current</attribute> // <5>
+  </attributes>
+</context>
+----
+<1> Content generator name
+<2> Content path where to find the group with a table to generate
+<3> [optional, will be retrieved from SDT if not specified] Body type code of MDB entry to process
+<4> [optional, will be retrieved from SDT if not specified] Model code of MDB entry to process
+<5> [optional, will be retrieved from SDT if not specified] MDB scope
+
+=== Generated content
+[source, xml]
+----
+<group name="min-price-group">
+  <children>
+    <text name="EUR">
+      <attributes>
+        <attribute name="value">39900.0</attribute> // <1>
+      </attributes>
+      <text-content>€ 39.900,-</text-content> // <2>
+    </text>
+  </children>
+</group>
+----
+<1> Price as number value
+<2> Formatted price
+
+== Colorizer
+
+Generates a content table from colors available in the MDB with corresponding images to be shown in different colors (e.g. on the model
+overview page).
+
+.Colorizer example on the model overview page
+image::colorizer.png[]
+
+=== Definition
+
+[source, xml]
+----
+<context name="colorizer" base-name="colorizer" source="ModelDB" base-path="">
+  <attributes>
+    <attribute name="content-generators">M3_COLORIZER</attribute> // <1>
+    <attribute name="group-reference">/local-content/.../exterior-colors</attribute> // <2>
+    <attribute name="table-reference">index</attribute> // <3>
+    <attribute name="color-group">exterior_colors</attribute> // <4>
+    <attribute name="bundleTypeId">revamp-movp-colorizer-exterior-2</attribute> // <5>
+    <attribute name="additional-tags"></attribute> // <6>
+    <attribute name="start-by-color-code">gd1_hyper_blue_met</attribute> // <7>
+
+    <!-- optional attributes, should be specified in SDT -->
+    <attribute name="model-body-type-code">A1XX-coupe-2017</attribute> // <8>
+    <attribute name="model-base-code">A1XX</attribute> // <9>
+    <attribute name="model-body-type-mdb-scope">current</attribute> // <10>
+    <attribute name="driver-side-tag">lhd</attribute> // <11>
+    <attribute name="region-tag">region_we</attribute> // <12>
+  </attributes>
+</context>
+----
+<1> Content generator name
+<2> Content path where to find the group with a table to generate
+<3> Name of the table to generate
+<4> MDB-Tag to use for searching of features
+<5> Bundle-Type for selecting of images for the gallery
+<6> [optional] Additional tags, relevant for the image search (comma separated)
+<7> [optional] Code of the color to start with. If not defined, the first color from the MDB will be used
+<8> [optional, will be retrieved from SDT if not specified] Body type code of MDB entry to process
+<9> [optional, will be retrieved from SDT if not specified] Model code of MDB entry to process
+<10> [optional, will be retrieved from SDT if not specified] MDB scope
+<11> [optional, will be retrieved from SDT if not specified] Driver side tag
+<12> [optional, will be retrieved from SDT if not specified] Region tag
+
+=== Generated content
+[source, xml]
+----
+<group name="exterior-colors">
+  <children>
+    <table name="index">
+      <attributes>
+        <attribute name="start-by-color-code">gd1_hyper_blue_met</attribute> // <1>
+      </attributes>
+      <rows>
+        <row>
+          <attributes>
+            <attribute name="availability">1AX67#LT1_M5U,1AX67#LT1_MM6</attribute> // <2>
+            <attribute name="colorCode">gd1_hyper_blue_met</attribute> // <3>
+            <attribute name="colorName">Hyper Blue Metallic</attribute> // <4>
+            <attribute name="id">gd1_hyper_blue_met</attribute> // <5>
+          </attributes>
+          <cells>
+            <cell>
+              <content-reference>color-0</content-reference>
+            </cell>
+          </cells>
+        </row>
+        <row>
+          <attributes>
+            <attribute name="availability">1AX67#LT1_M5U,1AX67#LT1_MM6</attribute>
+            <attribute name="colorCode">gba_black</attribute>
+            <attribute name="colorName">Black</attribute>
+            <attribute name="id">gba_black</attribute>
+          </attributes>
+          <cells>
+            <cell>
+              <content-reference>color-1</content-reference>
+            </cell>
+          </cells>
+        </row>
+        <!-- other rows ... -->
+      </rows>
+    </table>
+    <group name="color-0">
+      <attributes>
+        <attribute name="bundleId">abeb8739494010e3f825213a3f017e3c</attribute> // <6>
+        <attribute name="bundleTypeId">revamp-movp-colorizer-exterior-2</attribute>
+      </attributes>
+    </group>
+    <group name="color-1">
+      <attributes>
+        <attribute name="bundleId">abeb8739494010e3f825213a3f01698f</attribute> // <6>
+        <attribute name="bundleTypeId">revamp-movp-colorizer-exterior-2</attribute>
+      </attributes>
+    </group>
+    <!-- other color definitions ... -->
+  </children>
+</group>
+----
+<1> Specified start color
+<2> Trimlevel/varian availability of each color, comma separated
+<3> Color code
+<4> Localized color name
+<5> Unique ID (same as color code)
+<6> Bundle-ID of found resource bundle, corresponding to the selected color
+
+== TrimlevelOverview
+
+Generates a content table with all available trimlevels & corresponding informations.
+
+.Trimlevel boxes example on the model overview page
+image::trimlevel_overview.png[]
+
+=== Definition
+
+[source, xml]
+----
+<context name="TRIM_LEVEL_OVERVIEW" base-name="trim_level_overview" source="ModelDB" base-path="">
+  <attributes>
+    <attribute name="content-generators">M3_TRIM</attribute> // <1>
+    <attribute name="group-reference">/local-content/.../mdb-content/</attribute> // <2>
+    <attribute name="table-reference">index</attribute> // <3>
+
+    <!-- optional attributes, should be specified in SDT -->
+    <attribute name="model-body-type-code">A1XX-coupe-2017</attribute> // <4>
+    <attribute name="model-base-code">A1XX</attribute> // <5>
+    <attribute name="model-body-type-mdb-scope">current</attribute> // <6>
+  </attributes>
+</context>
+----
+<1> Content generator name
+<2> Content path where to find the group with a table to generate
+<3> Name of the table to generate
+<4> [optional, will be retrieved from SDT if not specified] Body type code of MDB entry to process
+<5> [optional, will be retrieved from SDT if not specified] Model code of MDB entry to process
+<6> [optional, will be retrieved from SDT if not specified] MDB scope
+
+=== Generated content
+[source, xml]
+----
+<group name="mdb-content">
+  <children>
+    <table name="index">
+      <rows>
+        <row>
+          <attributes>
+            <attribute name="body-type-code">A1XX-coupe-2017</attribute> // <1>
+            <attribute name="trim-code">1AH37</attribute> // <2>
+            <attribute name="trimlevel-localized-name">Coupe Turbo</attribute> // <3>
+            <attribute name="code">A1XX-coupe-2017_1AH37</attribute> // <4>
+            <attribute name="description-reference">../persistent-content/description-A1XX-coupe-2017_1AH37</attribute> // <5>
+            <attribute name="image-reference">../persistent-content/image-A1XX-coupe-2017_1AH37</attribute> // <6>
+          </attributes>
+          <cells>
+            <cell>
+              <content-reference>reference-1</content-reference> // <7>
+            </cell>
+            <cell>
+              <content-reference>localized-name-1</content-reference> // <8>
+            </cell>
+            <cell>
+              <content-reference>min-price-1</content-reference> // <9>
+            </cell>
+          </cells>
+        </row>
+        <!-- other rows, one per variant ... -->
+      </rows>
+    </table>
+
+    <!--
+      Table content:
+    -->
+    <text name="reference-1"> // <10>
+      <text-content>A1XX-coupe-2017_1AH37</text-content>
+    </text>
+    <text name="localized-name-1"> // <11>
+      <text-content>Camaro Turbo</text-content>
+    </text>
+    <text name="min-price-1"> // <12>
+      <text-content>€ 39.900,-</text-content>
+    </text>
+    <!-- other content ... -->
+
+    <!--
+      Manually defined content:
+    -->
+    <group name="persistent-content">
+      <children>
+        <html name="description-A1XX-coupe-2017_1AH37"> // <13>
+          <html-content><![CDATA[
+            <ul>
+              <li>Driver Mode Selector (3 modes)</li>
+              <li>BOSE ® Premium Audio</li>
+              <li>OnStar 4G LTE and built-in Wi-FI hotspot</li>
+              <li>Leather Seating surface</li>
+              <li>All season, run-flat tire - Front &amp; Rear 245/40R20</li>
+              <li>Rearview camera</li>
+              <li>Chevrolet MyLink with 3D Navigation (optional)</li>
+              <li>Full colour head-up display (optional)</li>
+            </ul>]]></html-content>
+        </html>
+        <object name="image-A1XX-coupe-2017_1AH37"> // <14>
+          <asset-id>12f6485ade8793ddef7aaf</asset-id>
+        </object>
+        <!-- other descrioptions & images ... -->
+      </children>
+    </group>
+  </children>
+</group>
+----
+<1> Body type code of applied MDB trimlevel
+<2> Trimlevel code of applied MDB trimlevel
+<3> Localized trimlevel name
+<4> MDB entry code (concatenation of body type & trim code), unique for table rows
+<5> Reference to manually defined trimlevel specific description (13)
+<6> Reference to manually defined trimlevel specific image (14)
+<7> Table cell reference to the MDB entry code, same as (4)
+<8> Table cell reference to the localized trimlevel name, same as (3)
+<9> Table cell reference to the trimlevel's formatted base price
+<10> Same es (4)
+<11> Same as (3)
+<12> Trimlevel's formatted base price
+<13> Manually defined trimlevel specific description
+<14> Manually defined trimlevel specific image
+
+== ModelList
+
+Generates a group with model and body type specific properties & images, based on SDT & MDB.
+
+.Model list example on the cars dropdown page
+image::cars_dropdown.png[]
+
+=== Definition
+
+[source, xml]
+----
+<context name="MODEL_LIST" base-name="None" source="ModelDB">
+  <attributes>
+    <attribute name="content-generators">M3_MODEL_LIST</attribute> // <1>
+    <attribute name="group-reference">/mdb-content/models-specifications</attribute> // <2>
+    <attribute name="base">/models</attribute> // <3>
+    <attribute name="image-size">rwd-cars-dropdown-image</attribute> // <4>
+    <attribute name="additional-tags">regions_we</attribute> // <5>
+
+    <!-- optional attributes, should be specified in SDT -->
+    <attribute name="driver-side-tag">lhd</attribute> // <6>
+    <attribute name="region-tag">region_we</attribute> // <7>
+  </attributes>
+</context>
+----
+<1> Content generator name
+<2> Content path where to find the group to generate
+<3> Base sdt-path to search for model nodes
+<4> Size of images to search for
+<5> [optional] Additional tags, relevant for the image search (comma separated)
+<6> [optional, will be retrieved from SDT if not specified] Driver side tag
+<7> [optional, will be retrieved from SDT if not specified] Region tag
+
+=== Generated content
+[source, xml]
+----
+<group name="models-specifications">
+  <children>
+    <group name="camaro"> // <1>
+      <attributes> // <2>
+        <attribute name="display-name">Camaro</attribute>
+        <attribute name="model-base-code">A1XX</attribute>
+        <attribute name="model-base-reference">camaro</attribute>
+        <attribute name="model-body-type-mdb-scope">current</attribute>
+        <attribute name="model-body-type-reference">camaro</attribute>
+        <attribute name="model-body-type-year">2017</attribute>
+        <attribute name="model-english-base-name">Camaro</attribute>
+        <attribute name="model-english-body-type-name"></attribute>
+        <attribute name="model-localized-base-name">Camaro</attribute>
+        <attribute name="model-localized-body-type-name"></attribute>
+        <attribute name="source-sdt-path">/models/camaro</attribute>
+      </attributes>
+      <children>
+        <group name="min-prices"> // <3>
+          <children>
+            <text name="EUR">
+              <attributes>
+                <attribute name="value">39900.0</attribute>
+              </attributes>
+              <text-content>€ 39.900,-</text-content>
+            </text>
+          </children>
+        </group>
+        <object name="cars-dropdown-image"> // <4>
+          <asset-id>d01e436b74242d423385330378358bd1</asset-id>
+        </object>
+        <group name="body-types">
+          <children>
+            <group name="A1XX-coupe-2017"> // <5>
+              <attributes> // <6>
+                <attribute name="display-name">Coupe</attribute>
+                <attribute name="model-base-code">A1XX</attribute>
+                <attribute name="model-body-type-code">A1XX-coupe-2017</attribute>
+                <attribute name="model-body-type-year">2017</attribute>
+              </attributes>
+              <children>
+                <group name="min-prices"> // <7>
+                  <children>
+                    <text name="EUR">
+                      <attributes>
+                        <attribute name="value">39900.0</attribute>
+                      </attributes>
+                      <text-content>€ 39.900,-</text-content>
+                    </text>
+                  </children>
+                </group>
+                <object name="cars-dropdown-image"> // <8>
+                  <asset-id>d01e436b74242d423385330378358bd1</asset-id>
+                </object>
+              </children>
+            </group>
+
+            <!-- other body types ... -->
+
+          </children>
+        </group>
+      </children>
+    </group>
+
+    <!-- other models ... -->
+
+  </children>
+</group>
+----
+<1> Group for each model node
+<2> All model specific properties (from SDT)
+<3> Base price of the model
+<4> Image of the model for cars dropdown
+<5> Group for each body type of the model
+<6> All body type specific properties (from SDT)
+<7> Base price of the body type
+<8> Image of the body type for cars dropdown
+
+== TechnicalData
+
+Generates multiple tables with names & values of categories & features for all available variants in the MDB.
+
+.Technical data tables example on the equipment-technical-data page
+image::technical_data.png[]
+
+=== Definition
+
+[source, xml]
+----
+<context name="TECHNICAL_DATA" base-name="technicalData" source="ModelDB" base-path="">
+  <attributes>
+    <attribute name="content-generators">M3_TECHNICAL_DATA</attribute> // <1>
+    <attribute name="group-reference">/mdb-content/</attribute> // <2>
+  </attributes>
+</context>
+----
+<1> Content generator name
+<2> Content path where to find the group to generate
+
+
+=== Generated content
+[source, xml]
+----
+<group name="trimlevel">
+  <children>
+    <group name="A1XX-coupe-2017_1AH37">
+      <attributes>
+        <attribute name="body_type_code">A1XX-coupe-2017</attribute>
+        <attribute name="trim_code">1AH37</attribute>
+      </attributes>
+      <children>
+        <text name="name">
+          <text-content>Coupe Turbo</text-content>
+        </text>
+        <group name="engines">
+          <children>
+            <text name="LTG_M5T">
+              <text-content>2.0L 8AT</text-content>
+            </text>
+          </children>
+        </group>
+      </children>
+    </group>
+    <!-- other variants ... -->
+  </children>
+</group>
+
+<group name="technical-data">
+  <children>
+    <table name="fuel_consumption">
+      <rows>
+        <!--
+          header row:
+        -->
+        <row>
+          <attributes>
+            <attribute name="is-header">true</attribute>
+          </attributes>
+          <cells>
+            <cell>
+              <content-reference>fuel_consumption-r_0-c_0</content-reference> // <1>
+            </cell>
+            <cell>
+              <attributes>
+                <attribute name="body_type_code">A1XX-coupe-2017</attribute>
+                <attribute name="trim_code">1AH37</attribute>
+                <attribute name="engine_code">LTG_M5T</attribute>
+              </attributes>
+              <content-reference>fuel_consumption-r_0-c_1</content-reference> // <2>
+            </cell>
+            <cell>
+              <attributes>
+                <attribute name="body_type_code">A1XX-coupe-2017</attribute>
+                <attribute name="trim_code">1AX37</attribute>
+                <attribute name="engine_code">LT1_MM6</attribute>
+              </attributes>
+              <content-reference>fuel_consumption-r_0-c_2</content-reference> // <3>
+            </cell>
+            <!-- other variants ... -->
+          </cells>
+        </row>
+        <!--
+          first data row / category:
+        -->
+        <row>
+          <attributes>
+            <attribute name="code">energy_efficient_category</attribute>
+          </attributes>
+          <cells>
+            <cell>
+              <content-reference>fuel_consumption-r_1-c_0</content-reference> // <4>
+            </cell>
+            <cell>
+              <attributes>
+                <attribute name="body_type_code">A1XX-coupe-2017</attribute>
+                <attribute name="engine_code">LTG_M5T</attribute>
+                <attribute name="trim_code">1AH37</attribute>
+              </attributes>
+              <content-reference>fuel_consumption-r_1-c_1</content-reference> // <5>
+            </cell>
+            <cell>
+              <attributes>
+                <attribute name="body_type_code">A1XX-coupe-2017</attribute>
+                <attribute name="engine_code">LT1_MM6</attribute>
+                <attribute name="trim_code">1AX37</attribute>
+              </attributes>
+              <content-reference>fuel_consumption-r_1-c_2</content-reference> // <6>
+            </cell>
+            <!-- other variants ... -->
+          </cells>
+        </row>
+        <!--
+          other data rows / categories ...
+        -->
+      </rows>
+    </table>
+
+    <!--
+      header row content:
+    -->
+    <text name="fuel_consumption-r_0-c_0">
+      <text-content>Fuel consumption</text-content> // <1>
+    </text>
+    <text name="fuel_consumption-r_0-c_1">
+      <text-content>Turbo 2.0L 8AT</text-content> // <2>
+    </text>
+    <text name="fuel_consumption-r_0-c_2">
+      <text-content>V8 6.2L 6MT</text-content> // <3>
+    </text>
+
+    <!--
+      first data row content:
+    -->
+    <group name="fuel_consumption-r_1-c_0">
+      <children>
+        <text name="name">
+          <text-content>Energy efficiency category</text-content> // <4>
+        </text>
+      </children>
+    </group>
+    <text name="fuel_consumption-r_1-c_1">
+      <text-content>E</text-content> // <5>
+    </text>
+    <text name="fuel_consumption-r_1-c_2">
+      <text-content>G</text-content> // <6>
+    </text>
+
+    <!--
+      other categories content ...
+    -->
+  </children>
+</group>
+
+<group name="packages">
+  <children>
+    <table name="packages">
+      <!-- similar content structure as in technical data tables -->
+    </table>
+
+    <!-- packages table content ... -->
+  </children>
+</group>
+----
+<1> Category name
+<2> Name of the first variant (same in all categories)
+<3> Name of the second variant (same in all categories)
+<4> Name if the first feature of category
+<5> Feature value for the first variant
+<6> Feature value for the second variant
+
+== CarConfigurator
+
+Generates a content for the car configurator module.
+
+=== Definition
+
+[source, xml]
+----
+<context name="carConfigurator" base-name="carConf" source="ModelDB">
+  <attributes>
+    <attribute name="content-generators">M3_CAR_CONFIGURATOR_V3</attribute> // <1>
+    <attribute name="content-reference">/model</attribute> // <2>
+    <attribute name="omit-accessories">false</attribute> // <3>
+
+    <!-- optional attributes, can be specified in SDT -->
+    <attribute name="engine_key_features"></attribute> // <4>
+    <attribute name="features_blacklist"></attribute> // <5>
+
+    <!-- optional attributes, should be specified in SDT -->
+    <attribute name="model-body-type-code">A1XX-coupe-2017</attribute> // <6>
+    <attribute name="model-base-code">A1XX</attribute> // <7>
+    <attribute name="model-body-type-mdb-scope">current</attribute> // <8>
+  </attributes>
+</context>
+----
+<1> Content generator name
+<2> [optional, default '/model'] Content path where to find the group to generate
+<3> Flag to turn off processing for accessories
+<4> [optional, can be specified in SDT] (global) Feature list for important engine features for the header table section
+<5> [optional, can be specified in SDT] Comma separated list of features to be ignored
+<6> [optional, will be retrieved from SDT if not specified] Body type code of MDB entry to process
+<7> [optional, will be retrieved from SDT if not specified] Model code of MDB entry to process
+<8> [optional, will be retrieved from SDT if not specified] MDB scope
+
+=== Generated content
+[source, xml]
+----
+<group name="model">
+  <attributes>
+  <attribute name="engine_key_features">displacement#cubic_centimeter,...</attribute>
+  <attribute name="model-base-code">A1XX</attribute>
+  <attribute name="model-body-type-mdb-scope">current</attribute>
+  </attributes>
+  <children>
+  <group name="body_types">
+    <children>
+    <group name="A1XX-coupe-2017">
+      <attributes>
+      <attribute name="body-type-code">A1XX-coupe-2017</attribute>
+      </attributes>
+      <children>
+      <text name="local-bodytype-name">
+        <text-content>Coupe</text-content>
+      </text>
+      <object name="packshot">
+        <asset-id>98865d1bf75ebf7034bf58aa6a283d46</asset-id>
+      </object>
+      </children>
+    </group>
+    <!-- other body types ... -->
+    </children>
+  </group>
+  <group name="trim_level">
+    <children>
+    <group name="A1XX-coupe-2017#1AH37">
+      <attributes>
+      <attribute name="model-body-type-code">A1XX-coupe-2017</attribute>
+      <attribute name="model-trim-code">1AH37</attribute>
+      </attributes>
+      <children>
+      <text name="name">
+        <text-content>Turbo</text-content>
+      </text>
+      </children>
+    </group>
+    <!-- other trimlevels ... -->
+    </children>
+  </group>
+  <group name="engine">
+    <children>
+    <group name="A1XX-coupe-2017#LTG_M5T">
+      <attributes>
+      <attribute name="engine-code">LTG_M5T</attribute>
+      <attribute name="model-body-type-code">A1XX-coupe-2017</attribute>
+      </attributes>
+      <children>
+      <text name="name">
+        <text-content>2.0L 8AT</text-content>
+      </text>
+      </children>
+    </group>
+    <!-- other engines ... -->
+    </children>
+  </group>
+  <group name="variant">
+    <children>
+    <group name="A1XX-coupe-2017#1AH37#LTG_M5T">
+      <attributes>
+      <attribute name="engine-code">LTG_M5T</attribute>
+      <attribute name="model-body-type-code">A1XX-coupe-2017</attribute>
+      <attribute name="model-trim-code">1AH37</attribute>
+      <attribute name="variant-code">1AH37#LTG_M5T</attribute>
+      </attributes>
+      <children>
+      <group name="key_features">
+        <children>
+        <group name="displacement#cubic_centimeter">
+          <attributes>
+          <attribute name="bestValue">true</attribute>
+          </attributes>
+          <children>
+          <text name="value">
+            <attributes>
+            <attribute name="value">1998</attribute>
+            </attributes>
+            <text-content>1998 cc</text-content>
+          </text>
+          <text name="name">
+            <text-content>Displacement</text-content>
+          </text>
+          </children>
+        </group>
+        <!-- other key features ... -->
+        </children>
+      </group>
+      <group name="base_price">
+        <children>
+        <text name="EUR">
+          <attributes>
+          <attribute name="value">39900.00</attribute>
+          </attributes>
+          <text-content>€ 39.900,-</text-content>
+        </text>
+        </children>
+      </group>
+      <object name="energy_efficiency">
+        <asset-id>b7d68c4932f7b5f7d856573564581377</asset-id>
+      </object>
+      </children>
+    </group>
+    <!-- other variants ... -->
+    </children>
+  </group>
+  <group name="options">
+    <children>
+    <group name="exterior_colors">
+      <children>
+      <group name="gba_black#none">
+        <children>
+        <text name="name">
+          <text-content>Black</text-content>
+        </text>
+        <object name="thumbnail">
+          <asset-id>09f85f2385f613e3884365511e03a631</asset-id>
+        </object>
+        </children>
+      </group>
+      <!-- other feature groups ... -->
+      </children>
+    </group>
+    <!-- other option groups ... -->
+    </children>
+  </group>
+  </children>
+</group>
+----

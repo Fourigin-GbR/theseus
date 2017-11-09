@@ -53,7 +53,7 @@ project.ext.managedDependency = { String dep ->
         logger.warn("You are using a thug dependency!\n${dep}")
     }
 
-    def resolved = [:]
+    def resolved
     def ext = null
 
     if (dep.contains('@')) {
@@ -81,7 +81,6 @@ project.ext.managedDependency = { String dep ->
 
         registerVersion('${resolved.group}:${resolved.name}',XXX)
 
-
      """ as String)
     }
 
@@ -89,7 +88,7 @@ project.ext.managedDependency = { String dep ->
 }
 
 //task findVersion << {
-task(group: 'Reporting', description: 'Displays all registered versions containing -Pquery. (all if query is not provided)', 'findVersion') << {
+task(group: 'Reporting', description: 'Displays all registered versions containing -Pquery. (all if query is not provided)', 'findVersion').doLast({
 
     versions.each { key, value ->
         def dep = "${key.group}:${key.name}"
@@ -102,11 +101,11 @@ task(group: 'Reporting', description: 'Displays all registered versions containi
             printDep()
         }
     }
-}
+})
 
-task(group: 'Reporting', description: 'Displays registered versions which are not used', 'unusedVersions') << {
+task(group: 'Reporting', description: 'Displays registered versions which are not used', 'unusedVersions').doLast({
 
-    Set versionKeys = versions.keySet();
+    Set versionKeys = versions.keySet()
     allprojects.each { project ->
         project.configurations.all { configuration ->
             configuration.dependencies.each {
@@ -120,12 +119,11 @@ task(group: 'Reporting', description: 'Displays registered versions which are no
     } else {
         logger.info "No unused version found"
     }
-
-}
+})
 
 // e.g. gradle artifactUsage -Pquery=groovy
 
-task(group: 'Reporting', description: 'Displays all projects where a artifact contains -Pquery', 'artifactUsage') << {
+task(group: 'Reporting', description: 'Displays all projects where a artifact contains -Pquery', 'artifactUsage').doLast({
     if (project.hasProperty('query')) {
         allprojects.each { project ->
 
@@ -146,4 +144,4 @@ task(group: 'Reporting', description: 'Displays all projects where a artifact co
             }
         }
     }
-}
+})

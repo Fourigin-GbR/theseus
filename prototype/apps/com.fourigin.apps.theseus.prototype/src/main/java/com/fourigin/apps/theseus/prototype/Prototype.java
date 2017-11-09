@@ -1,10 +1,11 @@
 package com.fourigin.apps.theseus.prototype;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
-import com.fourigin.theseus.models.Classification;
-import com.fourigin.theseus.models.ClassificationType;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fourigin.apps.theseus.prototype.mapping.ProductModule;
+import com.fourigin.apps.theseus.prototype.mapping.TranslationModule;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,11 +27,15 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 @Configuration
 @EnableAutoConfiguration
 //@ComponentScan({"com.fourigin.apps.theseus.prototype", "com.fourigin.logger"})
-@ComponentScan({"com.fourigin.apps.theseus.prototype"})
+//@ComponentScan({"com.fourigin.apps.theseus.prototype"})
+@ComponentScan({"com.fourigin.theseus"})
+@ComponentScan({"com.fourigin.theseus.configuration"})
 @SpringBootApplication
 //@EnableWebMvc
 public class Prototype extends WebMvcConfigurerAdapter {
@@ -61,7 +66,6 @@ public class Prototype extends WebMvcConfigurerAdapter {
 
     @Bean
     public LocaleResolver localeResolver() {
-
         return new AbstractLocaleResolver() {
             @Override
             public Locale resolveLocale(HttpServletRequest request) {
@@ -75,7 +79,6 @@ public class Prototype extends WebMvcConfigurerAdapter {
                 // nada!
             }
         };
-
     }
 
     @Bean
@@ -100,25 +103,38 @@ public class Prototype extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ModelObjectRepositoryStub modelObjectRepositoryStub(){
-        ModelObjectRepositoryStub result = new ModelObjectRepositoryStub();
+    public ObjectMapper objectMapper(){
+        ObjectMapper mapper = new ObjectMapper();
 
-        Classification.Builder classificationBuilder = new Classification.Builder();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.setDateFormat(new ISO8601DateFormat());
+        mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
 
-        result.create(classificationBuilder.id("c140").typeCode("model").description("Captiva (C140)").build());
-        result.create(classificationBuilder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());
-        result.create(classificationBuilder.id("1yz").typeCode("model").description("Corvette Z06 (1YZ)").build());
-        result.create(classificationBuilder.id("ls").typeCode("trim").description("LS").build());
-        result.create(classificationBuilder.id("lt").typeCode("trim").description("LT").build());
-        result.create(classificationBuilder.id("1.8").typeCode("version").description("1.8").build());
+        mapper.registerModule(new ProductModule());
+        mapper.registerModule(new TranslationModule());
 
-        ClassificationType.Builder classificationTypeBuilder = new ClassificationType.Builder();
-
-        result.create(classificationTypeBuilder.id("model").description("Carline").build());
-        result.create(classificationTypeBuilder.id("trim").description("Trim level").build());
-        result.create(classificationTypeBuilder.id("version").description("Version").build());
-
-        return result;
+        return mapper;
     }
 
+//    @Bean
+//    public ModelObjectRepositoryStub modelObjectRepositoryStub(){
+//        ModelObjectRepositoryStub result = new ModelObjectRepositoryStub();
+//
+//        Classification.Builder classificationBuilder = new Classification.Builder();
+//
+//        result.create(classificationBuilder.id("c140").typeCode("model").description("Captiva (C140)").build());
+//        result.create(classificationBuilder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());
+//        result.create(classificationBuilder.id("1yz").typeCode("model").description("Corvette Z06 (1YZ)").build());
+//        result.create(classificationBuilder.id("ls").typeCode("trim").description("LS").build());
+//        result.create(classificationBuilder.id("lt").typeCode("trim").description("LT").build());
+//        result.create(classificationBuilder.id("1.8").typeCode("version").description("1.8").build());
+//
+//        ClassificationType.Builder classificationTypeBuilder = new ClassificationType.Builder();
+//
+//        result.create(classificationTypeBuilder.id("model").description("Carline").build());
+//        result.create(classificationTypeBuilder.id("trim").description("Trim level").build());
+//        result.create(classificationTypeBuilder.id("version").description("Version").build());
+//
+//        return result;
+//    }
 }

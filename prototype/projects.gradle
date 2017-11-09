@@ -1,5 +1,6 @@
 def theseusModels                           = project(':theseus:com.fourigin.theseus.models')
 def theseusRepository                       = project(':theseus:com.fourigin.theseus.repository')
+def theseusService                          = project(':theseus:com.fourigin.theseus.service')
 
 def cmsModels                               = project(':cms:com.fourigin.cms.models')
 def cmsRepository                           = project(':cms:com.fourigin.cms.repository')
@@ -21,7 +22,7 @@ project(':apps') {
     def appsVersion = '1.0-SNAPSHOT'
 
     project('com.fourigin.apps.theseus.prototype') {
-        apply plugin: 'spring-boot'
+        apply plugin: 'org.springframework.boot'
 
         group = 'com.fourigin.apps'
         version = appsVersion
@@ -39,18 +40,19 @@ project(':apps') {
             compile 'org.springframework.boot:spring-boot-starter-tomcat'
             compile 'org.springframework.boot:spring-boot-starter-actuator'
             compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-            compile 'org.springframework.boot:spring-boot-starter-security'
+//            compile 'org.springframework.boot:spring-boot-starter-security'
 
             compile 'org.springframework:spring-context-support'
             compile 'org.springframework:spring-webmvc'
 //            compile 'org.springframework.security:spring-security-web'
 //            compile 'org.springframework.security:spring-security-config'
-            compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
+//            compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
 
             compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
 
             compile theseusModels
             compile theseusRepository
+            compile theseusService
         }
     }
 
@@ -84,7 +86,7 @@ project(':hera') {
     }
 
     project('com.fourigin.hera.web') {
-        apply plugin: 'spring-boot'
+        apply plugin: 'org.springframework.boot'
 
         group = 'com.fourigin.hera'
         version = heraVersion
@@ -132,6 +134,16 @@ project(':theseus') {
 
         dependencies {
             compile theseusModels
+        }
+    }
+
+    project('com.fourigin.theseus.service') {
+        group = 'com.fourigin.theseus'
+        version = theseusVersion
+
+        dependencies {
+            compile theseusModels
+            compile theseusRepository
         }
     }
 }
@@ -217,7 +229,7 @@ project(':cms') {
     }
 
     project('app') {
-        apply plugin: 'spring-boot'
+        apply plugin: 'org.springframework.boot'
         group = 'com.fourigin.cms'
         version = cmsVersion
 
