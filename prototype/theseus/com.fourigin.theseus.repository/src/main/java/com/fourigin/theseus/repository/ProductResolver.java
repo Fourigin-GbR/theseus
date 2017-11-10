@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductResolver {
+    Map<String, Object> getInfo();
     List<String> findProductCodes(ProductSearchFilter filter);
 
     Product resolveProduct(String code);

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
+    Map<String, Object> getInfo();
     List<String> findProductCodes(ProductSearchFilter filter);
 
     Product resolveProduct(String code);

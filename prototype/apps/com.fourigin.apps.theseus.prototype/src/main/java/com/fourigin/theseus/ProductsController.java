@@ -31,6 +31,37 @@ public class ProductsController {
         return products.values();
     }
 
+    @RequestMapping(value = "/_range", method = RequestMethod.GET)
+    public Collection<Product> retrieveProductRange(
+        @RequestParam("limit") int limit,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") int offset
+    ){
+        if(limit <= 0){
+            throw new IllegalArgumentException("limit must be positive!");
+        }
+        if(offset < 0){
+            throw new IllegalArgumentException("offset must not be negative!");
+        }
+
+        List<String> allCodes = productService.findProductCodes(ProductSearchFilter.forSearchKey(null));
+        int size = allCodes.size();
+
+        if(offset > size){
+            throw new IllegalArgumentException("offset must not be greater then the total amount of products (" + size + ")!");
+        }
+
+        int endPos = offset + limit;
+        if(endPos > size){
+            endPos = size;
+        }
+
+        List<String> matchingCodes = allCodes.subList(offset, endPos);
+
+        Map<String, Product> products = productService.resolveProducts(matchingCodes);
+
+        return products.values();
+    }
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;

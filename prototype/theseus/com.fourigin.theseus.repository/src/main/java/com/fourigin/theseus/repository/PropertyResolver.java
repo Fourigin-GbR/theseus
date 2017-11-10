@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PropertyResolver {
+    Map<String, Object> getInfo();
     List<String> findPropertyCodes(PropertySearchFilter filter);
     List<String> findProductPropertyCodes(String productCode, PropertySearchFilter filter);
 

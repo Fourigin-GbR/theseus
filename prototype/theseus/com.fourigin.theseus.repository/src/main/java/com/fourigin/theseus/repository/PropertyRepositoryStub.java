@@ -7,6 +7,7 @@ import com.fourigin.theseus.repository.filter.PropertySearchFilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +24,27 @@ public class PropertyRepositoryStub implements PropertyRepository {
 
     private Map<String, Map<String, Property<? extends PropertyType>>> propertiesByProductCode;
 
+    private long initializationTimestamp;
+
     public PropertyRepositoryStub() {
+        initializationTimestamp = System.currentTimeMillis();
+    }
+
+    @Override
+    public Map<String, Object> getInfo() {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("properties-update-timestamp", String.valueOf(initializationTimestamp));
+
+        Date initDate = new Date(initializationTimestamp);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+//        String formattedInitDate = dateFormat.format(initDate);
+        result.put("properties-update-date", initDate);
+
+        int count = definitions != null ? definitions.size() : 0;
+        result.put("properties-count", count);
+
+        return result;
     }
 
     @Override

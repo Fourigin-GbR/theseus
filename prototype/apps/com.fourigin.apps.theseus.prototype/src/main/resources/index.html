@@ -19,11 +19,16 @@
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script type="application/javascript">
-        var wsStatus = "not running";
+        var wsRunning = false;
 
         function checkWebservice() {
             return $.getJSON('/api/health', function (data) {
-                wsStatus = (data.status === 'UP' ? 'running' : 'not running');
+                if(data.status === 'UP'){
+                    wsRunning = true;
+                }
+                else {
+                    wsStatus = false;
+                }
             });
         }
 
@@ -32,12 +37,20 @@
 
             $.when(call1)
                     .done(function(){
-                        console.log('Setting webservice status to ' + wsStatus);
-                        $("#app_status").text(wsStatus);
+                        console.log('Webservice is running: ' + wsRunning);
+                        if(wsRunning){
+                            $("#app_status").text("running");
+                            $("#examples").show();
+                        }
+                        else {
+                            $("#app_status").text("not running");
+                            $("#examples").hide();
+                        }
                     })
                     .fail(function(){
                         console.log('Setting webservice status to not running');
                         $("#app_status").text('not running');
+                        $("#examples").hide();
                     });
         });
     </script>
@@ -48,15 +61,35 @@
         The <a href="/api/health" target="_blank">webservice</a> is <span id="app_status">...</span>
     </div>
     <br/>
-    <div>
-        <div>Some examples:</div>
+    <div id="examples" style="display: none">
         <div>
-            <ul>
-                <li>product-codes: <br/> <a href="/api/product/_codes" target="_blank">/api/product/_codes</a></li>
-                <li>product-details of 'forte-mini' and 'aria': <br/> <a href="/api/product/?code=forte-mini&code=aria" target="_blank">/api/product/?code=forte-mini&code=aria</a></li>
-                <li>property-codes: <br/> <a href="/api/property/_codes" target="_blank">/api/property/_codes</a></li>
-                <li>property-details of 'hour-hand-length' and 'minute-hand-length': <br/> <a href="/api/property/?code=dimension/hour-hand-length&code=dimension/minute-hand-length" target="_blank">/api/property/?code=dimension/hour-hand-length&code=dimension/minute-hand-length</a></li>
-            </ul>
+            <h2>System requests</h2>
+            <div>
+                <ul>
+                    <li>system info: <br/> <a href="/api/system/info" target="_blank">/api/system/info</a></li>
+                    <li>system settings: <br/> <a href="/api/system/settings" target="_blank">/api/system/settings</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2>Product requests</h2>
+            <div>
+                <ul>
+                    <li>product-codes: <br/> <a href="/api/product/_codes" target="_blank">/api/product/_codes</a></li>
+                    <li>product-details of 'forte-mini' and 'aria': <br/> <a href="/api/product/?code=forte-mini,aria" target="_blank">/api/product/?code=forte-mini,aria</a></li>
+                    <li>product-details for the first 5 products: <br/> <a href="/api/product/_range?limit=5" target="_blank">/api/product/_range?limit=5</a></li>
+                    <li>product-details for the products 5 to 8: <br/> <a href="/api/product/_range?limit=3&offset=5" target="_blank">/api/product/_range?limit=3&offset=5</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2>Property requests</h2>
+            <div>
+                <ul>
+                    <li>property-codes: <br/> <a href="/api/property/_codes" target="_blank">/api/property/_codes</a></li>
+                    <li>property-details of 'hour-hand-length' and 'minute-hand-length': <br/> <a href="/api/property/?code=dimension/hour-hand-length,dimension/minute-hand-length" target="_blank">/api/property/?code=dimension/hour-hand-length,dimension/minute-hand-length</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>

@@ -10,6 +10,7 @@ import com.fourigin.theseus.repository.filter.ProductSearchFilter;
 import com.fourigin.theseus.repository.filter.PropertySearchFilter;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,6 +19,23 @@ public class DefaultProductService implements ProductService {
     private ProductRepository productRepository;
 
     private PropertyRepository propertyRepository;
+
+    @Override
+    public Map<String, Object> getInfo() {
+        Map<String, Object> result = new HashMap<>();
+
+        Map<String, Object> productsInfo = productRepository.getInfo();
+        if(productsInfo != null){
+            result.putAll(productsInfo);
+        }
+
+        Map<String, Object> propertiesInfo = propertyRepository.getInfo();
+        if(propertiesInfo != null){
+            result.putAll(propertiesInfo);
+        }
+        
+        return result;
+    }
 
     @Override
     public List<String> findProductCodes(ProductSearchFilter filter) {
