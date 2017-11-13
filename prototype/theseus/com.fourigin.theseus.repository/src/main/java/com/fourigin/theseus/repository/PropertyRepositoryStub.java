@@ -34,15 +34,15 @@ public class PropertyRepositoryStub implements PropertyRepository {
     public Map<String, Object> getInfo() {
         Map<String, Object> result = new HashMap<>();
 
-        result.put("properties-update-timestamp", String.valueOf(initializationTimestamp));
+        result.put("properties_update_timestamp", String.valueOf(initializationTimestamp));
 
         Date initDate = new Date(initializationTimestamp);
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 //        String formattedInitDate = dateFormat.format(initDate);
-        result.put("properties-update-date", initDate);
+        result.put("properties_update_date", initDate);
 
         int count = definitions != null ? definitions.size() : 0;
-        result.put("properties-count", count);
+        result.put("properties_count", count);
 
         return result;
     }

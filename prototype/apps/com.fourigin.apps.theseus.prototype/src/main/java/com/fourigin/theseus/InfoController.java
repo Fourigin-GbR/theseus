@@ -25,10 +25,10 @@ public class InfoController {
     public Map<String, Object> getSettings(){
         Map<String, Object> settings = new HashMap<>();
 
-        settings.put("product.views", "ALL");   // THUMBS, LIST, ALL
-        settings.put("product.master-enabled", true);
-        settings.put("product.changes-enabled", false);
-        settings.put("product.page-sizes", Arrays.asList(20, 60, 100));
+        settings.put("product_views", "ALL");   // THUMBS, LIST, ALL
+        settings.put("product_masterEnabled", true);
+        settings.put("product_changesEnabled", false);
+        settings.put("product_pageSizes", Arrays.asList(20, 60, 100));
         settings.put("currencies", Arrays.asList("EUR", "USD", "RUB", "UAH"));
         settings.put("languages", Arrays.asList("en", "de", "ru", "ua", "fr"));
 

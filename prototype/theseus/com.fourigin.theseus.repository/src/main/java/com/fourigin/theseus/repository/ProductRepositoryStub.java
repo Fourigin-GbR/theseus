@@ -23,15 +23,15 @@ public class ProductRepositoryStub implements ProductRepository {
     public Map<String, Object> getInfo() {
         Map<String, Object> result = new HashMap<>();
 
-        result.put("products-update-timestamp", String.valueOf(initializationTimestamp));
+        result.put("products_update_timestamp", String.valueOf(initializationTimestamp));
 
         Date initDate = new Date(initializationTimestamp);
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 //        String formattedInitDate = dateFormat.format(initDate);
-        result.put("products-update-date", initDate);
+        result.put("products_update_date", initDate);
 
         int count = products != null ? products.size() : 0;
-        result.put("products-count", count);
+        result.put("products_count", count);
 
         return result;
     }
