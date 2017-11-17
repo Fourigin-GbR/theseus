@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fourigin.apps.theseus.prototype.mapping.PriceModule;
 import com.fourigin.apps.theseus.prototype.mapping.ProductModule;
 import com.fourigin.apps.theseus.prototype.mapping.TranslationModule;
 import org.springframework.beans.factory.annotation.Value;
@@ -112,6 +113,7 @@ public class Prototype extends WebMvcConfigurerAdapter {
 
         mapper.registerModule(new ProductModule());
         mapper.registerModule(new TranslationModule());
+        mapper.registerModule(new PriceModule());
 
         return mapper;
     }

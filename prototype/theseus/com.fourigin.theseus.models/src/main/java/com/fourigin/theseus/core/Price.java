@@ -66,6 +66,14 @@ public class Price implements Comparable<Price>, Serializable {
         values.put(currency, value);
     }
 
+    public Map<String, Double> getValues() {
+        return values;
+    }
+
+    public String getMainCurrency() {
+        return mainCurrency;
+    }
+
     @Override
     public int compareTo(Price p) {
         Double mainValue = values.get(mainCurrency);

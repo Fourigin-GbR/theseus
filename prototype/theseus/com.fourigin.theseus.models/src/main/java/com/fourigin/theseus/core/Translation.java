@@ -8,12 +8,6 @@ import java.util.Objects;
 public class Translation extends HashMap<String, String> implements Serializable {
     private static final long serialVersionUID = 986154450235464014L;
 
-//    private Map<String, String> values;
-
-//    public Translation(){
-//        this.values = new HashMap<>();
-//    }
-
     public Translation(){}
 
     public Translation(Map<String, String> values){
@@ -34,13 +28,4 @@ public class Translation extends HashMap<String, String> implements Serializable
 
         put(language, value);
     }
-
-//    public Map<String, String> getValues() {
-//        return values;
-//    }
-//
-//    public void setValues(Map<String, String> values) {
-//        this.values = values;
-//    }
-
 }

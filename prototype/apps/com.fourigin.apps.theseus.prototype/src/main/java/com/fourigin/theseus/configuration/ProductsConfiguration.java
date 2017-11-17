@@ -28,12 +28,22 @@ public class ProductsConfiguration {
 
         stub.createProduct(builder
             .reset()
+            .code("standard-clock-template")
+            .name("en", "Standard clock template")
+            .name("ru", "Стандартный шаблон часов")
+            .productType(ProductType.MASTER)
+            .build()
+        );
+        stub.createProduct(builder
+            .reset()
             .code("forte-normal")
             .referenceCode("F30")
             .name("en", "Forte")
             .name("ru", "Форте")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 359.0d)
+            .priceValue("RUB", 12000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -43,6 +53,8 @@ public class ProductsConfiguration {
             .name("ru", "Мира")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 369.0d)
+            .priceValue("RUB", 13000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -52,6 +64,8 @@ public class ProductsConfiguration {
             .name("ru", "Тессоро")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 379.0d)
+            .priceValue("RUB", 14000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -61,6 +75,8 @@ public class ProductsConfiguration {
             .name("ru", "Ева")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 389.0d)
+            .priceValue("RUB", 15000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -70,6 +86,8 @@ public class ProductsConfiguration {
             .name("ru", "Ева Раунд")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 399.0d)
+            .priceValue("RUB", 16000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -79,6 +97,8 @@ public class ProductsConfiguration {
             .name("ru", "Ева Мини")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 409.0d)
+            .priceValue("RUB", 17000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -88,6 +108,8 @@ public class ProductsConfiguration {
             .name("ru", "Аврора")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 419.0d)
+            .priceValue("RUB", 18000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -99,6 +121,8 @@ public class ProductsConfiguration {
             .description("en", "We are often asked why we make clocks. We see it as our chance to make this world a little more beautiful by letting people surround themselves with beautiful things. Our Forte Mini M Steel & Wood in wenge, one of the signature models for our team, is a part of the answer.")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 429.0d)
+            .priceValue("RUB", 19000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -108,6 +132,8 @@ public class ProductsConfiguration {
             .name("ru", "Аура")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 439.0d)
+            .priceValue("RUB", 20000.0d)
             .build()
         );
         stub.createProduct(builder
@@ -118,6 +144,8 @@ public class ProductsConfiguration {
             .name("ru", "Ариа")
             .productType(ProductType.PRODUCT)
             .classification("premium")
+            .priceValue("EUR", 449.0d)
+            .priceValue("RUB", 21000.0d)
             .build()
         );
 

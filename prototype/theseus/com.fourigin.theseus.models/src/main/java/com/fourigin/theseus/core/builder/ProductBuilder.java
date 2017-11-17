@@ -59,6 +59,19 @@ public class ProductBuilder {
         return this;
     }
 
+    public ProductBuilder priceValue(String currency, double value){
+        Objects.requireNonNull(currency, "currency must not be null!");
+
+        if(price == null) {
+            price = new Price(currency, value);
+            return this;
+        }
+
+        price.setPrice(currency, value);
+
+        return this;
+    }
+
     public ProductBuilder price(Price price){
         Objects.requireNonNull(price, "price must not be null!");
 
