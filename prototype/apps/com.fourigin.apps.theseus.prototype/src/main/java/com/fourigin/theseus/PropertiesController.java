@@ -27,20 +27,43 @@ public class PropertiesController {
         return productService.findPropertyCodes(PropertySearchFilter.forSearchKey(null));
     }
 
-    @RequestMapping(value = "/_all", method = RequestMethod.GET)
-    public PropertyDefinitionsResponse retrieveAllPropertyDefinitions(){
-        List<String> codes = productService.findPropertyCodes(PropertySearchFilter.forSearchKey(null));
-        Map<String, PropertyDefinition<? extends PropertyType>> definitions = productService.resolvePropertyDefinitions(codes);
-
-        return convert(definitions);
-    }
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public PropertyDefinitionsResponse retrievePropertyDefinitions(@RequestParam("code") List<String> codes){
         Map<String, PropertyDefinition<? extends PropertyType>> definitions = productService.resolvePropertyDefinitions(codes);
         return convert(definitions);
     }
 
+    @RequestMapping(value = "/_range", method = RequestMethod.GET)
+    public PropertyDefinitionsResponse retrieveProductRange(
+        @RequestParam("limit") int limit,
+        @RequestParam(value = "offset", required = false, defaultValue = "0") int offset
+    ){
+        if(limit <= 0){
+            throw new IllegalArgumentException("limit must be positive!");
+        }
+        if(offset < 0){
+            throw new IllegalArgumentException("offset must not be negative!");
+        }
+
+        List<String> allCodes = productService.findPropertyCodes(PropertySearchFilter.forSearchKey(null));
+        int size = allCodes.size();
+
+        if(offset > size){
+            throw new IllegalArgumentException("offset must not be greater then the total amount of properties (" + size + ")!");
+        }
+
+        int endPos = offset + limit;
+        if(endPos > size){
+            endPos = size;
+        }
+
+        List<String> matchingCodes = allCodes.subList(offset, endPos);
+
+        Map<String, PropertyDefinition<? extends PropertyType>> propertyDefinitions = productService.resolvePropertyDefinitions(matchingCodes);
+
+        return convert(propertyDefinitions);
+    }
+    
     private PropertyDefinitionsResponse convert(Map<String, PropertyDefinition<? extends PropertyType>> definitions){
         List<Property> props = new ArrayList<>();
         Set<PropertyType> types = new HashSet<>();
