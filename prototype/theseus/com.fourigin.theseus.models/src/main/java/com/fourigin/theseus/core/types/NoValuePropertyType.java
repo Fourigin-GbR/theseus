@@ -31,6 +31,7 @@ public class NoValuePropertyType implements PropertyType {
 
         NoValuePropertyType that = (NoValuePropertyType) o;
 
+        //noinspection SimplifiableIfStatement
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return description != null ? description.equals(that.description) : that.description == null;
     }
@@ -44,7 +45,7 @@ public class NoValuePropertyType implements PropertyType {
 
     @Override
     public String toString() {
-        return "SimplePropertyType{" +
+        return "NoValuePropertyType{" +
             "name='" + name + '\'' +
             ", description='" + description + '\'' +
             '}';

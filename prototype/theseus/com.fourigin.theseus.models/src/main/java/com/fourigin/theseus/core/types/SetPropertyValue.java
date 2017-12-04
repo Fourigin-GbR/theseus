@@ -1,59 +1,36 @@
 package com.fourigin.theseus.core.types;
 
-import com.fourigin.theseus.core.PropertyAvailability;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class SetPropertyValue<T> implements PropertyValue<SetPropertyType>{
-    private SetPropertyType type;
-    private PropertyAvailability availability;
-    private Map<String, T> values;
+public class SetPropertyValue extends HashMap<String, SetPropertyValueEntry> implements PropertyValue {
 
-    public SetPropertyValue(SetPropertyType type, PropertyAvailability availability, Map<String, T> values) {
-        Objects.requireNonNull(values, "values must not be null!");
+    private static final long serialVersionUID = 3111692058610082544L;
 
-        this.type = type;
-        this.availability = availability;
-        this.values = new HashMap<>();
+    public SetPropertyValue(SetPropertyType type, Map<String, SetPropertyValueEntry> entries) {
+        Objects.requireNonNull(type, "type must not be null!");
 
         Set<String> predefinedKeys = type.getKeys();
+        Objects.requireNonNull(predefinedKeys, "predefinedLKeys of the type must not be null!");
 
         Set<String> unexpectedKeys = new HashSet<>();
-        for (Map.Entry<String, T> entry : values.entrySet()) {
-            String key = entry.getKey();
-            T value = entry.getValue();
-            if(!predefinedKeys.contains(key)){
-                unexpectedKeys.add(key);
+        for (Map.Entry<String, SetPropertyValueEntry> entry : entries.entrySet()) {
+            String propertyCode = entry.getKey();
+            SetPropertyValueEntry valueEntry = entry.getValue();
+
+            if(!predefinedKeys.contains(propertyCode)){
+                unexpectedKeys.add(propertyCode);
                 continue;
             }
 
-            values.put(key, value);
+            this.put(propertyCode, valueEntry);
         }
 
         if(!unexpectedKeys.isEmpty()){
-            throw new IllegalArgumentException("Found unexpected keys: " + unexpectedKeys + "!\nExpected are only following keys: " + predefinedKeys);
+            throw new IllegalArgumentException("Found unexpected keys " + unexpectedKeys + "! Expected are only " + predefinedKeys);
         }
-    }
-
-    @Override
-    public SetPropertyType getType() {
-        return type;
-    }
-
-    @Override
-    public PropertyAvailability getAvailability() {
-        return availability;
-    }
-
-    public Map<String, T> getValues() {
-        return values;
-    }
-
-    public void setValues(Map<String, T> values) {
-        this.values = values;
     }
 }
