@@ -1,6 +1,8 @@
 package com.fourigin.cms.compile;
 
-import com.fourigin.cms.compiler.PageCompilerFactory;
+import com.fourigin.cms.ContextKeys;
+import com.fourigin.cms.models.content.ContentPage;
+import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.repository.ContentRepositoryFactory;
 import com.fourigin.cms.repository.ContentResolver;
 import org.slf4j.Logger;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/view")
@@ -33,10 +37,22 @@ public class ViewController {
             contentResolver.flush();
         }
 
+        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
+
+        Map<String, String> siteAttributes = contentResolver.resolveSiteAttributes();
+
+        ContentPage contentPage = contentResolver.retrieve(pageInfo);
+        if(contentPage == null){
+            throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
+        }
+
         ModelAndView modelAndView = new ModelAndView("viewPage");
 
         modelAndView.addObject("base", base);
         modelAndView.addObject("path", path);
+        modelAndView.addObject(ContextKeys.CONTENT_PAGE, contentPage);
+        modelAndView.addObject(ContextKeys.PAGE_INFO, pageInfo);
+        modelAndView.addObject(ContextKeys.SITE_ATTRIBUTES, siteAttributes);
 
         return modelAndView;
     }
