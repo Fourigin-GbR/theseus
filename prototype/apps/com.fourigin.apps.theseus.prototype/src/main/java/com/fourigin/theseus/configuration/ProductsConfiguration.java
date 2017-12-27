@@ -254,69 +254,94 @@ public class ProductsConfiguration {
         stub.createPropertyDefinition(handsDefinition);
 
         // values
-        stub.createProductProperty("aria", new Property<>(
-            warrantyCode, warrantyDefinition, new AvailablePropertyValue(PropertyAvailability.STANDARD)
-        ));
-        stub.createProductProperty("aria", new Property<>(
-            boxMechanismDiameterCode, boxMechanismDiameterDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 180L)
-        ));
-        stub.createProductProperty("aria", new Property<>(
-            hourHandLengthCode, hourHandLengthDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 300L)
-        ));
-        stub.createProductProperty("aria", new Property<>(
-            minuteHandLengthCode, minuteHandLengthDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 420L)
-        ));
 
-        Map<String, SetPropertyValueEntry> boxMechanismValues = new HashMap<>();
-        boxMechanismValues.put("209", new SetPropertyValueEntry(PropertyAvailability.STANDARD));
-        boxMechanismValues.put("304", new SetPropertyValueEntry(PropertyAvailability.ON_REQUEST));
+        {
+            // -- aria
+            stub.createProductProperty("aria", new Property<>(
+                warrantyCode, warrantyDefinition, new AvailablePropertyValue(PropertyAvailability.STANDARD)
+            ));
+            stub.createProductProperty("aria", new Property<>(
+                boxMechanismDiameterCode, boxMechanismDiameterDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 180L)
+            ));
+            stub.createProductProperty("aria", new Property<>(
+                hourHandLengthCode, hourHandLengthDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 300L)
+            ));
+            stub.createProductProperty("aria", new Property<>(
+                minuteHandLengthCode, minuteHandLengthDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 420L)
+            ));
 
-        stub.createProductProperty("aria", new Property<>(
-            boxMechanismCode, boxMechanismDefinition, new SetPropertyValue(boxMechanism, boxMechanismValues)
-        ));
+            Map<String, SetPropertyValueEntry> boxMechanismValues = new HashMap<>();
+            boxMechanismValues.put("209", new SetPropertyValueEntry(PropertyAvailability.STANDARD));
+            boxMechanismValues.put("304", new SetPropertyValueEntry(PropertyAvailability.ON_REQUEST));
 
-        PriceMapBuilder priceMapBuilder = new PriceMapBuilder();
+            stub.createProductProperty("aria", new Property<>(
+                boxMechanismCode, boxMechanismDefinition, new SetPropertyValue(boxMechanism, boxMechanismValues)
+            ));
 
-        Map<String, SetPropertyValueEntry> handsValues = new HashMap<>();
-        handsValues.put("H317", new SetPropertyValueEntry(
-            PropertyAvailability.OPTIONAL,
-            new Price("EUR", priceMapBuilder
-                .clear()
-                .put("EUR", 120d)
-                .put("RUB", 20000d)
-                .build()
-        )));
-        handsValues.put("H421", new SetPropertyValueEntry(
-            PropertyAvailability.OPTIONAL,
-            new Price("EUR", priceMapBuilder
-                .clear()
-                .put("EUR", 120d)
-                .put("RUB", 20000d)
-                .build()
-            )));
-        handsValues.put("H527", new SetPropertyValueEntry(
-            PropertyAvailability.OPTIONAL,
-            new Price("EUR", priceMapBuilder
-                .clear()
-                .put("EUR", 160d)
-                .put("RUB", 22000d)
-                .build()
-            )));
-        handsValues.put("H619", new SetPropertyValueEntry(
-            PropertyAvailability.OPTIONAL,
-            new Price("EUR", priceMapBuilder
-                .clear()
-                .put("EUR", 160d)
-                .put("RUB", 22000d)
-                .build()
-            )));
-        handsValues.put("H703", new SetPropertyValueEntry(
-            PropertyAvailability.ON_REQUEST
-        ));
+            PriceMapBuilder priceMapBuilder = new PriceMapBuilder();
 
-        stub.createProductProperty("aria", new Property<>(
-            handsCode, handsDefinition, new SetPropertyValue(hands, handsValues)
-        ));
+            Map<String, SetPropertyValueEntry> handsValues = new HashMap<>();
+            handsValues.put("H317", new SetPropertyValueEntry(
+                PropertyAvailability.OPTIONAL,
+                new Price("EUR", priceMapBuilder
+                    .clear()
+                    .put("EUR", 120d)
+                    .put("RUB", 20000d)
+                    .build()
+                )
+            ));
+            handsValues.put("H421", new SetPropertyValueEntry(
+                PropertyAvailability.OPTIONAL,
+                new Price("EUR", priceMapBuilder
+                    .clear()
+                    .put("EUR", 120d)
+                    .put("RUB", 20000d)
+                    .build()
+                )
+            ));
+            handsValues.put("H527", new SetPropertyValueEntry(
+                PropertyAvailability.OPTIONAL,
+                new Price("EUR", priceMapBuilder
+                    .clear()
+                    .put("EUR", 160d)
+                    .put("RUB", 22000d)
+                    .build()
+                )
+            ));
+            handsValues.put("H619", new SetPropertyValueEntry(
+                PropertyAvailability.OPTIONAL,
+                new Price("EUR", priceMapBuilder
+                    .clear()
+                    .put("EUR", 160d)
+                    .put("RUB", 22000d)
+                    .build()
+                )
+            ));
+            handsValues.put("H703", new SetPropertyValueEntry(
+                PropertyAvailability.ON_REQUEST
+            ));
+
+            stub.createProductProperty("aria", new Property<>(
+                handsCode, handsDefinition, new SetPropertyValue(hands, handsValues)
+            ));
+        }
+
+        {
+            // -- aurora
+            stub.createProductProperty("aurora", new Property<>(
+                warrantyCode, warrantyDefinition, new AvailablePropertyValue(PropertyAvailability.STANDARD)
+            ));
+            stub.createProductProperty("aurora", new Property<>(
+                boxMechanismDiameterCode, boxMechanismDiameterDefinition, new EditablePropertyValue<>(PropertyAvailability.STANDARD, 300L)
+            ));
+
+            Map<String, SetPropertyValueEntry> boxMechanismValues = new HashMap<>();
+            boxMechanismValues.put("209", new SetPropertyValueEntry(PropertyAvailability.STANDARD));
+
+            stub.createProductProperty("aurora", new Property<>(
+                boxMechanismCode, boxMechanismDefinition, new SetPropertyValue(boxMechanism, boxMechanismValues)
+            ));
+        }
 
         return stub;
     }
