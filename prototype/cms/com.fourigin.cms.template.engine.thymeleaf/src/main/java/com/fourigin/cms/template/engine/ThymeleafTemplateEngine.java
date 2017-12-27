@@ -37,10 +37,6 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private static final String DEFAULT_UTILITIES_PREFIX = "util_";
 
-    private static final String CONTEXT_VARIABLE_CONTENT_PAGE = "data_content";
-    private static final String CONTEXT_VARIABLE_PAGE_INFO = "data_page";
-    private static final String CONTEXT_VARIABLE_SITE_ATTRIBUTES = "data_attributes";
-
     private static Map<String, ThymeleafTemplateUtilityFactory> standardTemplateUtilityFactories = new HashMap();
 
     static {
@@ -70,9 +66,9 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         if (logger.isDebugEnabled()) logger.debug("Template name: {}.", templateName);
 
         Context context = new Context();
-        context.setVariable(CONTEXT_VARIABLE_CONTENT_PAGE, contentPage);
-        context.setVariable(CONTEXT_VARIABLE_PAGE_INFO, pageInfo);
-        context.setVariable(CONTEXT_VARIABLE_SITE_ATTRIBUTES, siteAttributes);
+        context.setVariable(CONTENT_PAGE, contentPage);
+        context.setVariable(PAGE_INFO, pageInfo);
+        context.setVariable(SITE_ATTRIBUTES, siteAttributes);
 
         addUtilities(standardTemplateUtilityFactories, context, base, processingMode, false);
 
@@ -98,7 +94,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                 // initialize
                 ThymeleafTemplateUtility utility = factory.getInstance();
                 if(ContentPageAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
-                    ContentPage contentPage = (ContentPage) context.getVariables().get(CONTEXT_VARIABLE_CONTENT_PAGE);
+                    ContentPage contentPage = (ContentPage) context.getVariables().get(CONTENT_PAGE);
                     ContentPageAwareThymeleafTemplateUtility contentPageUtility = ContentPageAwareThymeleafTemplateUtility.class.cast(utility);
                     contentPageUtility.setContentPage(contentPage);
                 }

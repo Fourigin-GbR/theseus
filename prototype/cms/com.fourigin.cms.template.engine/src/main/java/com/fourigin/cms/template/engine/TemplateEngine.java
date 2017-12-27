@@ -1,14 +1,16 @@
 package com.fourigin.cms.template.engine;
 
 import com.fourigin.cms.models.content.ContentPage;
-import com.fourigin.cms.models.structure.nodes.PageInfo;
 import com.fourigin.cms.models.template.Template;
 import com.fourigin.cms.models.template.TemplateVariation;
 
 import java.io.OutputStream;
-import java.util.Map;
 
 public interface TemplateEngine {
+    String CONTENT_PAGE = "data_content";
+    String PAGE_INFO = "data_page";
+    String SITE_ATTRIBUTES = "data_attributes";
+
     TemplateEngine duplicate();
 
     void setBase(String base);
