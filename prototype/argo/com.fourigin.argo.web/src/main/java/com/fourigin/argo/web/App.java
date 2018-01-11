@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.system.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -32,6 +33,9 @@ import java.util.Set;
 
 @Configuration
 @EnableAutoConfiguration
+@ComponentScan({"com.fourigin.argo.compile"})
+@ComponentScan({"com.fourigin.argo.editors"})
+@ComponentScan({"com.fourigin.argo.config"})
 @SpringBootApplication(
     exclude = {
         ThymeleafAutoConfiguration.class
