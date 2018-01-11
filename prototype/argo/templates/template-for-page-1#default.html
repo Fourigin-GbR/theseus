@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Simple template</title>
+    <style>
+        div.item {
+            border-top: 1px solid black;
+            margin-top: 0px;
+        }
+
+        div#examples {
+            float: left;
+            width: 60%;
+        }
+
+        div#content {
+            float: right;
+            width: 35%;
+            background-color: beige;
+            overflow-y: auto;
+            height: 600px;
+            border: 1px solid black;
+            position: fixed;
+            top: 50px;
+            right: 10px;
+        }
+
+        .example {
+            font-style: normal;
+            font-weight: bold;
+            padding-left: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: aliceblue;
+        }
+        
+        div.value {
+            padding-left: 10px;
+            background-color: beige;
+            margin-bottom: 20px;
+        }
+
+    </style>
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            var data = /*[[${data_content}]]*/[];
+            var targetDiv = $("div#content");
+            $("<pre></pre>").text(JSON.stringify(data, null, '  ')).appendTo(targetDiv);
+        })
+    </script>
+</head>
+<body>
+<!--/*@thymesVar id="content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
+<!--/*@thymesVar id="page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
+<h1>Simple template</h1>
+<div id="headline">Here are some examples how to access the content page &amp; how to use the embedded selector
+    utility.
+</div>
+<div id="examples">
+    <!--<div class="item">-->
+    <!--<div class="example">${data_content}</div>-->
+    <!--<div class="value" th:text="${data_content}">My content!</div>-->
+    <!--</div>-->
+    <div class="item">
+        <div class="explanation">Full access to a content element:</div>
+        <pre class="example">&lt;span th:text="${content.getElement('/main-content/headline/')}"/&gt;</pre>
+        <div class="value" th:text="${content.getElement('/main-content/headline/')}">element</div>
+    </div>
+    <div class="item">
+        <div class="explanation">Name of the content element:</div>
+        <pre class="example">&lt;div th:with="el = ${content.getElement('/main-content/headline/')}"&gt;
+    &lt;span th:text="${el.name}"/&gt;
+&lt;/div&gt;</pre>
+            or
+        <pre class="example">&lt;div&gt;
+    &lt;span th:text="${content.getName('/main-content/headline/')}"/&gt;
+&lt;/div&gt;</pre>
+        <div class="value" th:text="${content.getName('/main-content/headline/')}">name</div>
+    </div>
+    <div class="item">
+        <div class="explanation">Title of the content element:</div>
+        <pre class="example">&lt;div th:with="el = ${content.getElement('/main-content/headline/')}"&gt;
+    &lt;span th:text="${el.title}"/&gt;
+&lt;/div&gt;</pre>
+        or
+        <pre class="example">&lt;div&gt;
+    &lt;span th:text="${content.getTitle('/main-content/headline/')}"/&gt;
+&lt;/div&gt;</pre>
+        <div class="value" th:text="${content.getTitle('/main-content/headline/')}">title</div>
+    </div>
+    <div class="item">
+        <div class="explanation">Text of the text aware content element:</div>
+        <pre class="example">&lt;div th:with="el = ${content.getElement('/main-content/headline/')}"&gt;
+    &lt;span th:text="${el.text}"/&gt;
+&lt;/div&gt;</pre>
+        or
+        <pre class="example">&lt;div&gt;
+    &lt;span th:text="${content.getText('/main-content/headline/')}"/&gt;
+&lt;/div&gt;</pre>
+        <div class="value" th:text="${content.getText('/main-content/headline/')}">text</div>
+    </div>
+    <div class="item">
+        <div class="explanation">List of text aware content elements:</div>
+        <pre class="example">&lt;ol&gt;
+    &lt;li th:each="el : ${content.listElements('/main-content/list/')}"&gt;
+        &lt;span th:text="${el.content}"/&gt;
+    &lt;/li&gt;
+&lt;/ol&gt;</pre>
+        <div class="value">
+            <ol>
+                <li th:each="el : ${content.listElements('/main-content/list/')}">
+                    <span th:text="${el.content}"></span>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div id="content"></div>
+</body>
+</html>

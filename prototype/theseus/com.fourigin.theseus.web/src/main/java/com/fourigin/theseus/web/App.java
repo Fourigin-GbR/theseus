@@ -33,7 +33,7 @@ import java.util.Locale;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({"com.fourigin.theseus"})
+@ComponentScan({"com.fourigin.theseus.web"})
 @ComponentScan({"com.fourigin.theseus.configuration"})
 @SpringBootApplication
 public class App extends WebMvcConfigurerAdapter {

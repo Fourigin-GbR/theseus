@@ -2,15 +2,15 @@ def theseusModels                           = project(':theseus:com.fourigin.the
 def theseusRepository                       = project(':theseus:com.fourigin.theseus.repository')
 def theseusService                          = project(':theseus:com.fourigin.theseus.service')
 
-def cmsModels                               = project(':cms:com.fourigin.cms.models')
-def cmsRepository                           = project(':cms:com.fourigin.cms.repository')
-def cmsRepositoryJson                       = project(':cms:com.fourigin.cms.repository.json')
-def cmsTemplateEngine                       = project(':cms:com.fourigin.cms.template.engine')
-def cmsTemplateEngineThymeleaf              = project(':cms:com.fourigin.cms.template.engine.thymeleaf')
-def cmsCompiler                             = project(':cms:com.fourigin.cms.compiler')
+def argoModels                              = project(':argo:com.fourigin.argo.models')
+def argoRepository                          = project(':argo:com.fourigin.argo.repository')
+def argoRepositoryJson                      = project(':argo:com.fourigin.argo.repository.json')
+def argoTemplateEngine                      = project(':argo:com.fourigin.argo.template.engine')
+def argoTemplateEngineThymeleaf             = project(':argo:com.fourigin.argo.template.engine.thymeleaf')
+def argoCompiler                            = project(':argo:com.fourigin.argo.compiler')
 
 def heraCore                                = project(':hera:com.fourigin.hera.core')
-//def heraSpringBootStarter                   = project(':hera:com.fourigin.hera.spring-boot-starter')
+//def heraSpringBootStarter                 = project(':hera:com.fourigin.hera.spring-boot-starter')
 
 def utilitiesCore                           = project(':utilities:com.fourigin.utilities.core')
 
@@ -83,12 +83,12 @@ project(':theseus') {
     }
 }
 
-project(':cms') {
-    def cmsVersion = "1.0-SNAPSHOT"
+project(':argo') {
+    def argoVersion = "1.0-SNAPSHOT"
 
-    project('com.fourigin.cms.models') {
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+    project('com.fourigin.argo.models') {
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         dependencies {
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
@@ -98,22 +98,22 @@ project(':cms') {
         }
     }
 
-    project('com.fourigin.cms.repository') {
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+    project('com.fourigin.argo.repository') {
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         dependencies {
-            compile cmsModels
+            compile argoModels
         }
     }
 
-    project('com.fourigin.cms.repository.json') {
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+    project('com.fourigin.argo.repository.json') {
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         dependencies {
-            compile cmsModels
-            compile cmsRepository
+            compile argoModels
+            compile argoRepository
             compile utilitiesCore
 
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
@@ -129,22 +129,22 @@ project(':cms') {
         }
     }
 
-    project('com.fourigin.cms.template.engine') {
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+    project('com.fourigin.argo.template.engine') {
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         dependencies {
-            compile cmsModels
+            compile argoModels
         }
     }
 
-    project('com.fourigin.cms.template.engine.thymeleaf') {
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+    project('com.fourigin.argo.template.engine.thymeleaf') {
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         dependencies {
-            compile cmsModels
-            compile cmsTemplateEngine
+            compile argoModels
+            compile argoTemplateEngine
             compile utilitiesCore
 
             compile thymeleaf
@@ -152,35 +152,39 @@ project(':cms') {
         }
     }
 
-    project('com.fourigin.cms.compiler') {
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+    project('com.fourigin.argo.compiler') {
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         dependencies {
-            compile cmsModels
-            compile cmsTemplateEngine
-            compile cmsRepository
+            compile argoModels
+            compile argoTemplateEngine
+            compile argoRepository
         }
     }
 
-    project('app') {
+    project('com.fourigin.argo.web') {
         apply plugin: 'org.springframework.boot'
-        group = 'com.fourigin.cms'
-        version = cmsVersion
+        group = 'com.fourigin.argo'
+        version = argoVersion
 
         bootRepackage {
-            mainClass = 'com.fourigin.cms.App'
+            mainClass = 'com.fourigin.argo.web.App'
+        }
+
+        jar {
+            baseName = "argo"
         }
 
         dependencies {
-            compile cmsModels
-            compile cmsTemplateEngine
-            runtime cmsTemplateEngineThymeleaf
-            compile cmsRepository
-            runtime cmsRepositoryJson
-            compile cmsTemplateEngine
-            compile cmsTemplateEngineThymeleaf
-            compile cmsCompiler
+            compile argoModels
+            compile argoTemplateEngine
+            runtime argoTemplateEngineThymeleaf
+            compile argoRepository
+            runtime argoRepositoryJson
+            compile argoTemplateEngine
+            compile argoTemplateEngineThymeleaf
+            compile argoCompiler
 
             compile thymeleaf
             compile thymeleafSpring
@@ -260,7 +264,6 @@ project(':hera') {
             compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
         }
     }
-
 }
 
 project(':utilities') {

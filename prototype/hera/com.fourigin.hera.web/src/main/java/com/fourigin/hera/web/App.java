@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.system.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,16 @@ import java.util.Properties;
 @SpringBootApplication
 public class App {
 
+    private static final String APP_NAME = "hera";
+
     @Value("${hera.context-path}")
     private String contextPath;
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
+        app.addListeners(
+            new ApplicationPidFileWriter(APP_NAME + ".pid")
+        );
         app.run(args);
     }
 
