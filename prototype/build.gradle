@@ -2,7 +2,8 @@ def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
 
 wrapper {
-    gradleVersion = '4.3-rc-2'
+//    gradleVersion = '4.3-rc-2'
+    gradleVersion = '4.4.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
