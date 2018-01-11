@@ -15,13 +15,13 @@ import java.util.Properties;
 @EnableAutoConfiguration
 @ComponentScan({"com.fourigin.hera", "com.fourigin.hera.web"})
 @SpringBootApplication
-public class Application {
+public class App {
 
     @Value("${hera.context-path}")
     private String contextPath;
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(Application.class);
+        SpringApplication app = new SpringApplication(App.class);
         app.run(args);
     }
 
