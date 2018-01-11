@@ -1,4 +1,4 @@
-package com.fourigin.apps.theseus.prototype.mapping;
+package com.fourigin.theseus.web.mapping;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;

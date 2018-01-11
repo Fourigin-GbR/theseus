@@ -1,4 +1,4 @@
-package com.fourigin.apps.theseus.prototype.mapping;
+package com.fourigin.theseus.web.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

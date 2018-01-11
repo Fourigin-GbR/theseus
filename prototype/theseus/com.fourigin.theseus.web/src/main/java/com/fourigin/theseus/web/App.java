@@ -1,12 +1,12 @@
-package com.fourigin.apps.theseus.prototype;
+package com.fourigin.theseus.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-import com.fourigin.apps.theseus.prototype.mapping.PriceModule;
-import com.fourigin.apps.theseus.prototype.mapping.ProductModule;
-import com.fourigin.apps.theseus.prototype.mapping.TranslationModule;
+import com.fourigin.theseus.web.mapping.PriceModule;
+import com.fourigin.theseus.web.mapping.ProductModule;
+import com.fourigin.theseus.web.mapping.TranslationModule;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -33,13 +33,10 @@ import java.util.Locale;
 
 @Configuration
 @EnableAutoConfiguration
-//@ComponentScan({"com.fourigin.apps.theseus.prototype", "com.fourigin.logger"})
-//@ComponentScan({"com.fourigin.apps.theseus.prototype"})
 @ComponentScan({"com.fourigin.theseus"})
 @ComponentScan({"com.fourigin.theseus.configuration"})
 @SpringBootApplication
-//@EnableWebMvc
-public class Prototype extends WebMvcConfigurerAdapter {
+public class App extends WebMvcConfigurerAdapter {
 
     private static final String APP_NAME = "theseus";
 
@@ -49,7 +46,7 @@ public class Prototype extends WebMvcConfigurerAdapter {
     }
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(Prototype.class);
+        SpringApplication app = new SpringApplication(App.class);
         app.addListeners(
           new ApplicationPidFileWriter(APP_NAME + ".pid")
         );
