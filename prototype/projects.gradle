@@ -53,9 +53,9 @@ project(':theseus') {
         group = 'com.fourigin.theseus'
         version = theseusVersion
 
-        bootRepackage {
-            mainClass = 'com.fourigin.theseus.web.App'
-        }
+//        bootJar {
+//            mainClass = 'com.fourigin.theseus.web.App'
+//        }
 
         jar {
             baseName = "theseus"
@@ -168,9 +168,9 @@ project(':argo') {
         group = 'com.fourigin.argo'
         version = argoVersion
 
-        bootRepackage {
-            mainClass = 'com.fourigin.argo.web.App'
-        }
+//        bootRepackage {
+//            mainClass = 'com.fourigin.argo.web.App'
+//        }
 
         jar {
             baseName = "argo"
@@ -241,9 +241,9 @@ project(':hera') {
         group = 'com.fourigin.hera'
         version = heraVersion
 
-        bootRepackage {
-            mainClass = 'com.fourigin.hera.web.App'
-        }
+//        bootRepackage {
+//            mainClass = 'com.fourigin.hera.web.App'
+//        }
 
         jar {
             baseName = "hera"

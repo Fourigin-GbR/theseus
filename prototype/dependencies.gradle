@@ -87,7 +87,6 @@ project.ext.managedDependency = { String dep ->
     return resolved
 }
 
-//task findVersion << {
 task(group: 'Reporting', description: 'Displays all registered versions containing -Pquery. (all if query is not provided)', 'findVersion').doLast({
 
     versions.each { key, value ->

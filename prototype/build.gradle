@@ -1,25 +1,46 @@
 def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
 
-wrapper {
-//    gradleVersion = '4.3-rc-2'
-    gradleVersion = '4.4.1'
-    distributionType = Wrapper.DistributionType.ALL
-}
-
 buildscript {
     repositories {
         maven {
             name 'nexus'
             url 'http://ci.ignitiongroupe.com/nexus/content/groups/public'
         }
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
         mavenLocal()
         mavenCentral()
     }
+
+    apply from: 'dependencies.gradle'
+    apply from: 'versions.gradle'
+
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.BUILD-SNAPSHOT"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.4.RELEASE"
+//        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+//        classpath 'de.thetaphi:forbiddenapis:2.4.1'
+//        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.4.2'
+//        classpath 'org.akhikhl.gretty:gretty:2.0.0'
+//        classpath 'org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3'
+//        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+//        classpath managedDependency('com.github.jengelman.gradle.plugins:shadow')
+//        classpath managedDependency('io.ratpack:ratpack-gradle')
+        classpath managedDependency('org.springframework.boot:spring-boot-gradle-plugin')
+
+
+        //my
+//        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.BUILD-SNAPSHOT"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
+//        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M7"
+//        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE"
     }
+}
+
+wrapper {
+//    gradleVersion = '4.3-rc-2'
+    gradleVersion = '4.4.1'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 apply plugin: 'idea'
@@ -34,7 +55,8 @@ idea {
 project.allprojects { project ->
     apply plugin: "idea"
     apply plugin: "groovy"
-
+    apply plugin: 'io.spring.dependency-management'
+    
     ext {
         isLeafProject = { childProjects.isEmpty() }
     }
@@ -131,10 +153,10 @@ project.allprojects { project ->
     }
 }
 
-buildscript {
-  apply from: 'dependencies.gradle'
-  apply from: 'versions.gradle'
-}
+//buildscript {
+//  apply from: 'dependencies.gradle'
+//  apply from: 'versions.gradle'
+//}
 
 repositories {
     mavenLocal()
