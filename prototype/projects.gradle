@@ -1,3 +1,4 @@
+
 def theseusModels                           = project(':theseus:com.fourigin.theseus.models')
 def theseusRepository                       = project(':theseus:com.fourigin.theseus.repository')
 def theseusService                          = project(':theseus:com.fourigin.theseus.service')
@@ -74,7 +75,7 @@ project(':theseus') {
 //            compile 'org.springframework.security:spring-security-config'
 //            compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
 
-            compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
+            runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
 
             compile theseusModels
             compile theseusRepository
@@ -189,6 +190,8 @@ project(':argo') {
             compile thymeleaf
             compile thymeleafSpring
 
+            runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
+
             compile managedDependency('org.springframework.boot:spring-boot-starter-web')
 //            compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
@@ -261,7 +264,7 @@ project(':hera') {
             compile managedDependency('org.springframework:spring-context-support')
             compile managedDependency('org.springframework:spring-webmvc')
 
-            compile managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
+            runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
         }
     }
 }
