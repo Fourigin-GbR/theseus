@@ -37,7 +37,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private static final String DEFAULT_UTILITIES_PREFIX = "util_";
 
-    private static Map<String, ThymeleafTemplateUtilityFactory> standardTemplateUtilityFactories = new HashMap();
+    private static Map<String, ThymeleafTemplateUtilityFactory> standardTemplateUtilityFactories = new HashMap<>();
 
     static {
         standardTemplateUtilityFactories.put("content", new ContentElementUtilityFactory());
@@ -94,7 +94,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                 // initialize
                 ThymeleafTemplateUtility utility = factory.getInstance();
                 if(ContentPageAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
-                    ContentPage contentPage = (ContentPage) context.getVariables().get(CONTENT_PAGE);
+                    ContentPage contentPage = (ContentPage) context.getVariable(CONTENT_PAGE);
                     ContentPageAwareThymeleafTemplateUtility contentPageUtility = ContentPageAwareThymeleafTemplateUtility.class.cast(utility);
                     contentPageUtility.setContentPage(contentPage);
                 }
@@ -103,10 +103,10 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     pageInfoUtility.setPageInfo(pageInfo);
                 }
                 if(SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
-                    SiteAttributesAwareThymeleafTemplateUtility siteAttrbitesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
-                    siteAttrbitesUtility.setBase(base);
-                    siteAttrbitesUtility.setSiteAttributes(siteAttributes);
-                    siteAttrbitesUtility.setProcessingMode(processingMode);
+                    SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
+                    siteAttributesUtility.setBase(base);
+                    siteAttributesUtility.setSiteAttributes(siteAttributes);
+                    siteAttributesUtility.setProcessingMode(processingMode);
                 }
 
                 // utility name

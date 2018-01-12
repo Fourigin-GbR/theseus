@@ -89,7 +89,7 @@
 <!--/*@thymesVar id="base" type="java.lang.String"*/-->
 <!--/*@thymesVar id="path" type="java.lang.String"*/-->
 
-<div class="data_content_1" th:text="'data_content: ' + ${data_content}">size</div>
+<!--<div class="data_content_1" th:text="'data_content: ' + ${data_content}">size</div>-->
 
 <!--
 <iframe th:src="@{/editors/retrieveP/(base=${base},sitePath=${path},contentPath=/)}"></iframe>
@@ -97,13 +97,13 @@
 <div id="lala"></div>
 
 <div class="desktop">
-    <script type="text/javascript" th:inline="javascript">
-        $(document).ready(function () {
-            var data = /*[[${data_content}]]*/[];
-            var targetDiv = $("div#lala");
-            $("<pre></pre>").text(JSON.stringify(data, null, '  ')).appendTo(targetDiv);
-        })
-    </script>
+    <!--<script type="text/javascript" th:inline="javascript">-->
+        <!--$(document).ready(function () {-->
+            <!--var data = /*[[${data_content}]]*/[];-->
+            <!--var targetDiv = $("div#lala");-->
+            <!--$("<pre></pre>").text(JSON.stringify(data, null, '  ')).appendTo(targetDiv);-->
+        <!--})-->
+    <!--</script>-->
     <div class="sidePanel">
         <header>
             <span class="icon">

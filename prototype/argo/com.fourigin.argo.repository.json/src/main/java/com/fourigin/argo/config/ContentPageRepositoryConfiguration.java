@@ -2,7 +2,6 @@ package com.fourigin.argo.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
 import com.fourigin.argo.repository.JsonFilesContentRepositoryFactory;
 import com.fourigin.argo.repository.model.mapping.JsonInfoModule;
@@ -45,7 +44,6 @@ public class ContentPageRepositoryConfiguration {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.setDateFormat(new ISO8601DateFormat());
         objectMapper.registerModule(new ContentPageModule());
         objectMapper.registerModule(new JsonInfoModule());
         return objectMapper;

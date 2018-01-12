@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+@Deprecated
 public class JsonFileContentPageRepository implements ContentPageRepository {
     private String contentRoot;
 
@@ -148,7 +149,7 @@ public class JsonFileContentPageRepository implements ContentPageRepository {
 
     private ContentPage readContentPage(String id, File contentFile){
         InputStream is = null;
-        ContentPage result = null;
+        ContentPage result;
         try
         {
             is = new BufferedInputStream(new FileInputStream(contentFile));
