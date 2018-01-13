@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.github.io/ruleset_2_0_0.xsd">
+
+	<!--
+	https://pmd.github.io/pmd-6.0.0/pmd_devdocs_making_rulesets.html
+	-->
+	<description>This ruleset checks my code for bad stuff</description>
+	
+	<exclude-pattern>.*/generated/.*</exclude-pattern>
+	<exclude-pattern>.*/src/main/java/com/bpinteractive/crm/mmit/service/endpoint/axis/MmitEndpointInterface.java</exclude-pattern>
+	<exclude-pattern>.*/src/main/java/com/siebel/customui/GMDOIProcess_Service.java</exclude-pattern>
+	<exclude-pattern>.*/src/main/java/webservices/gateway/mmit/MMITGateway.java</exclude-pattern>
+	<exclude-pattern>.*/src/main/java/com/siebel/customui/.*</exclude-pattern>
+	<exclude-pattern>.*/webforms/com.bpinteractive.forms.clients.carussel/src/main/java/.*</exclude-pattern>
+	<exclude-pattern>.*/com.bpinteractive.forms.clients.siebel.generated/.*</exclude-pattern>
+	<exclude-pattern>.*/com.bpinteractive.forms.clients.mmit2/.*</exclude-pattern>
+
+	<rule ref="category/java/bestpractices.xml">
+		<exclude name="AccessorMethodGeneration"/> <!-- false positives -->
+		<exclude name="ArrayIsStoredDirectly"/>
+		<exclude name="AvoidPrintStackTrace"/> <!-- FIX! -->
+		<exclude name="AvoidReassigningParameters"/>
+		<exclude name="ConstantsInInterface"/>
+		<exclude name="JUnitAssertionsShouldIncludeMessage"/>
+		<exclude name="JUnitTestContainsTooManyAsserts"/>
+		<exclude name="JUnitTestsShouldIncludeAssert"/>
+		<exclude name="JUnitUseExpected"/> <!-- FIX! -->
+		<exclude name="MethodReturnsInternalArray"/>
+		<exclude name="SystemPrintln"/>
+		<exclude name="UseVarargs"/>
+	</rule>
+	
+	<rule ref="category/java/design.xml">
+		<exclude name="AvoidCatchingGenericException"/>
+		<exclude name="AvoidDeeplyNestedIfStmts"/> <!-- wtf?? deeper than 7!! -->
+		<exclude name="CouplingBetweenObjects"/>
+		<exclude name="CyclomaticComplexity"/>
+		<exclude name="DataClass"/>
+		<exclude name="ExcessiveClassLength"/>
+		<exclude name="ExcessiveImports"/>
+		<exclude name="ExcessiveMethodLength"/>
+		<exclude name="ExcessiveParameterList"/>
+		<exclude name="ExcessivePublicCount"/>
+		<exclude name="GodClass"/>
+		<exclude name="ImmutableField"/>
+		<exclude name="LawOfDemeter"/>
+		<exclude name="LoosePackageCoupling"/>
+		<exclude name="NPathComplexity"/>
+		<exclude name="NcssCount"/>
+		<exclude name="SignatureDeclareThrowsException"/>
+		<exclude name="SimplifyBooleanReturns"/> <!-- FIX? -->
+		<exclude name="SingularField"/>
+		<exclude name="TooManyFields"/>
+		<exclude name="TooManyMethods"/>
+		<exclude name="UseObjectForClearerAPI"/>
+	</rule>
+	<!--
+	<rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts">
+		<properties>
+			<property name="problemDepth" value="7"/>
+		</properties>
+	</rule>
+	-->
+	
+	<rule ref="category/java/codestyle.xml">
+		<exclude name="AbstractNaming"/> <!-- FIX? -->
+		<exclude name="AtLeastOneConstructor"/>
+		<exclude name="AvoidFinalLocalVariable"/>
+		<exclude name="AvoidPrefixingMethodParameters"/>
+		<exclude name="CallSuperInConstructor"/>
+		<exclude name="CommentDefaultAccessModifier"/>
+		<exclude name="ConfusingTernary"/>
+		<exclude name="DefaultPackage"/>
+		<exclude name="IfStmtsMustUseBraces"/>
+		<exclude name="LocalVariableCouldBeFinal"/>
+		<exclude name="LongVariable"/>
+		<exclude name="MethodArgumentCouldBeFinal"/>
+		<exclude name="OnlyOneReturn"/>
+		<exclude name="PrematureDeclaration"/>
+		<exclude name="ShortClassName"/>
+		<exclude name="ShortMethodName"/>
+		<exclude name="ShortVariable"/>
+		<exclude name="TooManyStaticImports"/>
+		<exclude name="UselessParentheses"/>
+	</rule>
+
+
+	
+	<rule ref="category/java/errorprone.xml">
+		<exclude name="AssignmentInOperand"/> <!-- *sigh* -->
+		<exclude name="AvoidCatchingThrowable"/>
+		<exclude name="AvoidDuplicateLiterals"/>
+		<!-- <exclude name="AvoidFieldNameMatchingMethodName"/>  FIX! -->
+		<exclude name="AvoidFieldNameMatchingTypeName"/> <!-- FIX! -->
+		<exclude name="AvoidLiteralsInIfCondition"/>
+		<exclude name="BeanMembersShouldSerialize"/>
+		<exclude name="CloneThrowsCloneNotSupportedException"/> <!-- Effective Java, 3rd Edition, Item 13 -->
+		<exclude name="CompareObjectsWithEquals"/> <!-- FIX! -->
+		<exclude name="ConstructorCallsOverridableMethod"/> <!-- FIX! -->
+		<exclude name="DataflowAnomalyAnalysis"/>
+		<exclude name="DoNotCallSystemExit"/>
+		<exclude name="EmptyCatchBlock"/>
+		<exclude name="LoggerIsNotStaticFinal"/>
+		<exclude name="MissingStaticMethodInNonInstantiatableClass"/>
+		<exclude name="MoreThanOneLogger"/>
+		<exclude name="NullAssignment"/>
+		<exclude name="ProperLogger"/>
+		<exclude name="ReturnEmptyArrayRatherThanNull"/>
+		<exclude name="SingleMethodSingleton"/> <!-- please review -->
+		<exclude name="SingletonClassReturningNewInstance"/> <!-- FIX! m( -->
+		<exclude name="TestClassWithoutTestCases"/> <!-- false positive? -->
+		<exclude name="UseProperClassLoader"/> <!-- FIX! -->
+	</rule>
+
+</ruleset>

@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class ContentPageManager {
-    private static final Logger logger = LoggerFactory.getLogger(ContentPageManager.class);
+public final class ContentPageManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentPageManager.class);
+
+    private ContentPageManager(){
+    }
 
     public static ContentElement resolve(ContentPage contentPage, String contentPath){
         if(contentPage == null){
-            if (logger.isInfoEnabled()) logger.info("Unable to resolve ContentElement based on null-ContentPage!");
+            if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve ContentElement based on null-ContentPage!");
             return null;
         }
         
         if(contentPath == null){
-            if (logger.isInfoEnabled()) logger.info("Unable to resolve ContentElement based on null-path!");
+            if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve ContentElement based on null-path!");
             return null;
         }
 
@@ -44,12 +47,12 @@ public class ContentPageManager {
 
     public static ContentElement resolve(ContentElementsContainer container, String contentPath){
         if(container == null){
-            if (logger.isInfoEnabled()) logger.info("Unable to resolve ContentElement based on null-container!");
+            if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve ContentElement based on null-container!");
             return null;
         }
 
         if(contentPath == null){
-            if (logger.isInfoEnabled()) logger.info("Unable to resolve ContentElement based on null-path!");
+            if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve ContentElement based on null-path!");
             return null;
         }
 
@@ -153,13 +156,13 @@ public class ContentPageManager {
             }
 
             if(current == null){
-                if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! No element found for part '{}'!", path, token);
+                if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve content path '{}'! No element found for part '{}'!", path, token);
                 throw new UnresolvableContentPathException("No element found for part '" + token  + "'!", path);
             }
 
             if(!ContentGroup.class.isAssignableFrom(current.getClass())){
                 if(tok.hasMoreTokens()){
-                    if (logger.isInfoEnabled()) logger.info("Unable to resolve content path '{}'! Reached the end of the element hierarchy at '{}'!", path, token);
+                    if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve content path '{}'! Reached the end of the element hierarchy at '{}'!", path, token);
                     throw new UnresolvableContentPathException("Reached the end of the element hierarchy at '" + token  + "'!", path);
                 }
 
@@ -172,5 +175,4 @@ public class ContentPageManager {
 
         return current;
     }
-
 }

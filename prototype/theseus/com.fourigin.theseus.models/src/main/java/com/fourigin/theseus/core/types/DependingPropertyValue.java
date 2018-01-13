@@ -46,4 +46,8 @@ public class DependingPropertyValue<T> implements PropertyValue{
     public Map<String, T> getValues() {
         return values;
     }
+
+    public SetPropertyType getResponsibleType() {
+        return responsibleType;
+    }
 }

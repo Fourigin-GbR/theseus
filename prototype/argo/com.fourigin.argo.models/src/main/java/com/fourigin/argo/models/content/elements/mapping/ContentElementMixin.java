@@ -21,5 +21,9 @@ import com.fourigin.argo.models.content.elements.TextLinkContentElement;
     @JsonSubTypes.Type(value = ObjectLinkContentElement.class, name = "object-link"),
     @JsonSubTypes.Type(value = ContentList.class, name = "list")
 })
+@SuppressWarnings({
+    "PMD.AbstractClassWithoutAnyMethod",
+    "PMD.AbstractClassWithoutAbstractMethod"
+})
 abstract public class ContentElementMixin {
 }

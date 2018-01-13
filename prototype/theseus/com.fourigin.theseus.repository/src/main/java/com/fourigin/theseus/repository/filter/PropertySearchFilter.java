@@ -5,14 +5,18 @@ public class PropertySearchFilter {
 
     public static PropertySearchFilter forSearchKey(String key){
         return new Builder()
-            .searchKey(key)
+            .withSearchKey(key)
             .build();
+    }
+
+    public String getSearchKey() {
+        return searchKey;
     }
 
     static class Builder {
         private String searchKey;
 
-        public Builder searchKey(String searchKey){
+        public Builder withSearchKey(String searchKey){
             this.searchKey = searchKey;
 
             return this;

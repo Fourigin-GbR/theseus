@@ -9,17 +9,17 @@ public class SetPropertyDefinitionBuilder {
     private Translation propertyName;
     private SetPropertyType propertyType;
 
-    public SetPropertyDefinitionBuilder propertyCode(String code){
+    public SetPropertyDefinitionBuilder withPropertyCode(String code){
         this.propertyCode = code;
         return this;
     }
 
-    public SetPropertyDefinitionBuilder propertyName(String language, String name){
+    public SetPropertyDefinitionBuilder withPropertyName(String language, String name){
         this.propertyName.setTranslation(language, name);
         return this;
     }
 
-    public SetPropertyDefinitionBuilder type(SetPropertyType type){
+    public SetPropertyDefinitionBuilder withType(SetPropertyType type){
         this.propertyType = type;
         return this;
     }

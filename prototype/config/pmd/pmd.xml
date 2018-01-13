@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<ruleset name="Brochure Ruleset"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <!--
+    https://github.com/pmd/pmd/tree/master/pmd/src/main/resources/rulesets
+    -->
+
+    <description>
+        Brochure Ruleset
+    </description>
+
+    <rule ref="rulesets/java/basic.xml"/>
+
+    <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength"/>
+    <rule ref="rulesets/java/codesize.xml/ExcessiveClassLength"/>
+
+    <rule ref="rulesets/java/controversial.xml/DontImportSun"/>
+    <rule ref="rulesets/java/controversial.xml/BooleanInversion"/>
+    <rule ref="rulesets/java/controversial.xml/DoNotCallGarbageCollectionExplicitly"/>
+
+    <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects"/>
+    <rule ref="rulesets/java/coupling.xml/LooseCoupling"/>
+    <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration[ends-with(@Image,'Configuration')]"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/design.xml">
+        <exclude name="ConfusingTernary"/>
+        <exclude name="AvoidConstantsInterface"/>
+        <exclude name="AbstractClassWithoutAbstractMethod"/>
+    </rule>
+
+
+    <rule ref="rulesets/java/design.xml/ConfusingTernary">
+        <properties>
+            <property name="violationSuppressXPath" value="//MethodDeclarator[@Image = 'equals']"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/imports.xml"/>
+
+    <rule ref="rulesets/java/strictexception.xml">
+        <exclude name="AvoidCatchingGenericException"/>
+    </rule>
+
+    <rule ref="rulesets/java/strings.xml">
+        <exclude name="AvoidDuplicateLiterals"/>
+        <exclude name="InsufficientStringBufferDeclaration"/>
+        <exclude name="ConsecutiveAppendsShouldReuse"/>
+        <exclude name="ConsecutiveLiteralAppends"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+    </rule>
+
+    <!--
+    maybe re enable without suppress warning annotation
+    <rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals">
+        <properties>
+            <property name="violationSuppressXPath" value="//MarkerAnnotation/Name[@Image = 'Entity']"/>
+        </properties>
+    </rule>
+    -->
+    <rule ref="rulesets/java/strings.xml/InsufficientStringBufferDeclaration">
+        <properties>
+            <property name="violationSuppressXPath" value="//MethodDeclarator[@Image = 'toString']"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/strings.xml/ConsecutiveAppendsShouldReuse">
+        <properties>
+            <property name="violationSuppressXPath" value="//MethodDeclarator[@Image = 'toString']"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/strings.xml/ConsecutiveLiteralAppends">
+        <properties>
+            <property name="violationSuppressXPath" value="//MethodDeclarator[@Image = 'toString']"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/typeresolution.xml"/>
+
+
+
+    <rule ref="rulesets/java/unnecessary.xml"/>
+    <rule ref="rulesets/java/unusedcode.xml">
+        <exclude name="UnusedPrivateMethod"/> <!-- http://sourceforge.net/p/pmd/bugs/1223/ -->
+    </rule>
+
+
+</ruleset>

@@ -86,32 +86,32 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
         private String alternateText;
         private String mimeType;
 
-        public Builder name(String name){
+        public Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder title(String title){
+        public Builder withTitle(String title){
             this.title = title;
             return this;
         }
 
-        public Builder referenceId(String referenceId){
+        public Builder withReferenceId(String referenceId){
             this.referenceId = referenceId;
             return this;
         }
 
-        public Builder source(String source){
+        public Builder withSource(String source){
             this.source = source;
             return this;
         }
 
-        public Builder alternateText(String alternateText){
+        public Builder withAlternateText(String alternateText){
             this.alternateText = alternateText;
             return this;
         }
 
-        public Builder mimeType(String mimeType){
+        public Builder withMimeType(String mimeType){
             this.mimeType = mimeType;
             return this;
         }

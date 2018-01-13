@@ -23,19 +23,19 @@ public class ProductBuilder {
         reset();
     }
 
-    public ProductBuilder code(String code){
+    public ProductBuilder withCode(String code){
         this.code = code;
 
         return this;
     }
 
-    public ProductBuilder referenceCode(String referenceCode){
+    public ProductBuilder withReferenceCode(String referenceCode){
         this.referenceCode = referenceCode;
 
         return this;
     }
 
-    public ProductBuilder name(String language, String name){
+    public ProductBuilder withName(String language, String name){
         Objects.requireNonNull(language, "language must not be null!");
         Objects.requireNonNull(name, "name must not be null!");
 
@@ -44,7 +44,7 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder description(String language, String description){
+    public ProductBuilder withDescription(String language, String description){
         Objects.requireNonNull(language, "language must not be null!");
         Objects.requireNonNull(description, "description must not be null!");
 
@@ -53,13 +53,13 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder productType(ProductType productType){
+    public ProductBuilder withProductType(ProductType productType){
         this.productType = productType;
 
         return this;
     }
 
-    public ProductBuilder priceValue(String currency, double value){
+    public ProductBuilder withPriceValue(String currency, double value){
         Objects.requireNonNull(currency, "currency must not be null!");
 
         if(price == null) {
@@ -72,7 +72,7 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder price(Price price){
+    public ProductBuilder withPrice(Price price){
         Objects.requireNonNull(price, "price must not be null!");
 
         this.price = price;
@@ -80,7 +80,7 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder classification(String classification){
+    public ProductBuilder withClassification(String classification){
         Objects.requireNonNull(classification, "classification must not be null!");
 
         if(classifications == null){

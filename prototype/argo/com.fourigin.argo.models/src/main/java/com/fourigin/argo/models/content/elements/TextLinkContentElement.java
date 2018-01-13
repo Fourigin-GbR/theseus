@@ -108,37 +108,37 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
         private String anchorName;
         private String target;
 
-        public Builder name(String name){
+        public Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder title(String title){
+        public Builder withTitle(String title){
             this.title = title;
             return this;
         }
 
-        public Builder content(String content){
+        public Builder withContent(String content){
             this.content = content;
             return this;
         }
 
-        public Builder markupAllowed(boolean markupAllowed){
+        public Builder withMarkupAllowed(boolean markupAllowed){
             this.markupAllowed = markupAllowed;
             return this;
         }
 
-        public Builder url(String url){
+        public Builder withUrl(String url){
             this.url = url;
             return this;
         }
 
-        public Builder anchorName(String anchorName){
+        public Builder withAnchorName(String anchorName){
             this.anchorName = anchorName;
             return this;
         }
 
-        public Builder target(String target){
+        public Builder withTarget(String target){
             this.target = target;
             return this;
         }

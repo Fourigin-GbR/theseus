@@ -9,22 +9,38 @@ public class ProductSearchFilter {
     private String searchKey;
     private Set<String> productTypes;
 
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public Set<String> getProductTypes() {
+        return productTypes;
+    }
+
+    public void setProductTypes(Set<String> productTypes) {
+        this.productTypes = productTypes;
+    }
+
     public static ProductSearchFilter forSearchKey(String key){
         return new Builder()
-            .searchKey(key)
+            .withSearchKey(key)
             .build();
     }
 
     public static ProductSearchFilter forProductTypes(String... types){
         return new Builder()
-            .types(Arrays.asList(types))
+            .withTypes(Arrays.asList(types))
             .build();
     }
 
     public static ProductSearchFilter forSearchKeyAndProductTypes(String key, String... types){
         return new Builder()
-            .searchKey(key)
-            .types(Arrays.asList(types))
+            .withSearchKey(key)
+            .withTypes(Arrays.asList(types))
             .build();
     }
 
@@ -32,13 +48,13 @@ public class ProductSearchFilter {
         private String searchKey;
         private Set<String> productTypes;
 
-        public Builder searchKey(String searchKey){
+        public Builder withSearchKey(String searchKey){
             this.searchKey = searchKey;
 
             return this;
         }
 
-        public Builder type(String type){
+        public Builder withType(String type){
             if(productTypes == null){
                 productTypes = new HashSet<>();
             }
@@ -47,7 +63,7 @@ public class ProductSearchFilter {
             return this;
         }
 
-        public Builder types(Collection<String> types){
+        public Builder withTypes(Collection<String> types){
             this.productTypes = new HashSet<>(types);
 
             return this;

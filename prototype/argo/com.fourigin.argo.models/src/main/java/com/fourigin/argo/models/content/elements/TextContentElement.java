@@ -69,22 +69,22 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         private String content;
         private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
 
-        public Builder name(String name){
+        public Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder title(String title){
+        public Builder withTitle(String title){
             this.title = title;
             return this;
         }
 
-        public Builder content(String content){
+        public Builder withContent(String content){
             this.content = content;
             return this;
         }
 
-        public Builder markupAllowed(boolean markupAllowed){
+        public Builder withMarkupAllowed(boolean markupAllowed){
             this.markupAllowed = markupAllowed;
             return this;
         }

@@ -18,8 +18,8 @@ class Spec extends Specification {
 
     def "test1"() {
         JsonFileContentPageRepository contentPageRepository = new JsonFileContentPageRepository.Builder()
-                .objectMapper(objectMapper)
-                .contentRoot("/work/content/")
+                .withObjectMapper(objectMapper)
+                .withContentRoot("/work/content/")
                 .build()
 
         expect:
@@ -30,26 +30,26 @@ class Spec extends Specification {
 
     def "test2"() {
         ContentPage page = new ContentPage.Builder()
-            .id("1")
-            .content(Arrays.asList(
+            .withId("1")
+            .withContent(Arrays.asList(
                 new TextContentElement.Builder()
-                        .name("text-1")
-                        .content("I'm just a text content.")
+                        .withName("text-1")
+                        .withContent("I'm just a text content.")
                         .build(),
                 new TextContentElement.Builder()
-                        .name("text-2")
-                        .content("I'm just an another text content.")
+                        .withName("text-2")
+                        .withContent("I'm just an another text content.")
                         .build(),
                 new TextLinkContentElement.Builder()
-                        .name("textlink-1")
-                        .content("I'm a text content with a link.")
-                        .url("/link.html")
+                        .withName("textlink-1")
+                        .withContent("I'm a text content with a link.")
+                        .withUrl("/link.html")
                         .build(),
                 new ObjectContentElement.Builder()
-                        .name("image-1")
-                        .referenceId("asset17")
-                        .mimeType("jpg")
-                        .source("/images/asset17.jpg")
+                        .withName("image-1")
+                        .withReferenceId("asset17")
+                        .withMimeType("jpg")
+                        .withSource("/images/asset17.jpg")
                         .build(),
             ))
             .build()

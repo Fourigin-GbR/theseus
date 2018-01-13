@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+	"-//Puppy Crawl//DTD Suppressions 1.1//EN"
+	"http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+	<suppress checks="EqualsAvoidNull" files="TransformerExceptionString"/>
+	<suppress checks="LocalVariableName" files="crm/carussel/service"/>
+	<suppress checks="MemberName" files="crm/carussel/service"/>
+	<suppress checks="MethodName" files="crm/carussel/service"/>
+	<suppress checks="MethodName" files="mmit/service/endpoint"/>
+	<suppress checks="MethodName" files="com/siebel/customui"/>
+	<suppress checks="MethodName" files="webservices/gateway/mmit"/>
+	<suppress checks="ParameterName" files="crm/carussel/service"/>
+	<suppress checks="ParameterName" files="mmit/service/endpoint"/>
+	<suppress checks="StaticVariableName" files="crm/carussel/service"/>
+	<suppress checks="TypeName" files="com/siebel/customui"/>
+	<suppress checks="PackageName" files="com/multi_mit/schemas"/>
+	<suppress checks="IllegalTypeCheck" files="crm/carussel/service"/>
+</suppressions>

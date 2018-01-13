@@ -46,12 +46,12 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
         private String name;
         private List<ContentElement> elements = new ArrayList<>();
 
-        public Builder name(String name){
+        public Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder element(ContentElement element){
+        public Builder withElement(ContentElement element){
             if(element != null) {
                 elements.add(element);
             }
@@ -59,7 +59,7 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
-        public Builder elements(ContentElement... elements){
+        public Builder withElements(ContentElement... elements){
             if(elements != null){
                 this.elements.addAll(Arrays.asList(elements));
             }
@@ -67,7 +67,7 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
-        public Builder elements(List<ContentElement> elements){
+        public Builder withElements(List<ContentElement> elements){
             if(elements != null){
                 this.elements.addAll(elements);
             }

@@ -13,5 +13,9 @@ import com.fourigin.argo.repository.model.JsonFileInfo;
   @JsonSubTypes.Type(value = JsonFileInfo.class, name = "file"),
   @JsonSubTypes.Type(value = JsonDirectoryInfo.class, name = "dir")
 })
+@SuppressWarnings({
+    "PMD.AbstractClassWithoutAnyMethod",
+    "PMD.AbstractClassWithoutAbstractMethod"
+})
 abstract public class JsonInfoMixin {
 }

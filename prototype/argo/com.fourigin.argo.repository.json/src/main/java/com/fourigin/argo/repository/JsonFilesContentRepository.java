@@ -65,27 +65,27 @@ public class JsonFilesContentRepository implements ContentRepository {
         private ObjectMapper objectMapper;
         private PageInfoTraversingStrategy traversingStrategy;
 
-        public Builder contentRoot(String path){
+        public Builder withContentRoot(String path){
             this.contentRoot = path;
             return this;
         }
 
-        public Builder infoFilename(String infoFilename){
+        public Builder withInfoFilename(String infoFilename){
             this.infoFilename = infoFilename;
             return this;
         }
 
-        public Builder siteStructureFilename(String siteStructureFilename){
+        public Builder withSiteStructureFilename(String siteStructureFilename){
             this.siteStructureFilename = siteStructureFilename;
             return this;
         }
 
-        public Builder objectMapper(ObjectMapper objectMapper){
+        public Builder withObjectMapper(ObjectMapper objectMapper){
             this.objectMapper = objectMapper;
             return this;
         }
 
-        public Builder traversingStrategy(PageInfoTraversingStrategy traversingStrategy) {
+        public Builder withTraversingStrategy(PageInfoTraversingStrategy traversingStrategy) {
             this.traversingStrategy = traversingStrategy;
             return this;
         }

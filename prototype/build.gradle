@@ -56,12 +56,14 @@ project.allprojects { project ->
     apply plugin: "idea"
     apply plugin: "groovy"
     apply plugin: 'io.spring.dependency-management'
-    
+//    apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+
     ext {
         isLeafProject = { childProjects.isEmpty() }
     }
 
-     project.plugins.withType(org.gradle.api.plugins.WarPlugin).whenPluginAdded { plugin ->
+    project.plugins.withType(org.gradle.api.plugins.WarPlugin).whenPluginAdded { plugin ->
         idea.module {
             iml {
                 withXml {
@@ -150,6 +152,20 @@ project.allprojects { project ->
         compileGroovy.options.encoding = sourceEncoding
         compileTestGroovy.options.encoding = sourceEncoding
         javadoc.options.encoding = sourceEncoding
+    }
+
+    pmd {
+        ruleSetFiles = files(rootProject.file('config/pmd/ruleSet.xml'))
+        ruleSets = []
+        toolVersion = '6.0.0'
+        // This analysis could be faster, please consider using Incremental Analysis:
+        // https://pmd.github.io/pmd/pmd_userdocs_getting_started.html#incremental-analysis
+        //
+        // Nope, this is a lie. Gradle 4.4.1 does not support this PMD feature. "Yet".
+        // https://github.com/gradle/gradle/pull/3125#issuecomment-352442432
+        //incrementalAnalysis = true
+
+        //ignoreFailures = true
     }
 }
 

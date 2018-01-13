@@ -49,12 +49,12 @@ public class ContentList extends AbstractContentElement implements ContentElemen
         private String name;
         private List<ContentListElement> elements = new ArrayList<>();
 
-        public Builder name(String name){
+        public Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder element(ContentListElement element){
+        public Builder withElement(ContentListElement element){
             if(element != null) {
                 elements.add(element);
             }
@@ -62,7 +62,7 @@ public class ContentList extends AbstractContentElement implements ContentElemen
             return this;
         }
 
-        public Builder elements(ContentListElement... elements){
+        public Builder withElements(ContentListElement... elements){
             if(elements != null){
                 this.elements.addAll(Arrays.asList(elements));
             }
@@ -70,7 +70,7 @@ public class ContentList extends AbstractContentElement implements ContentElemen
             return this;
         }
 
-        public Builder elements(List<ContentListElement> elements){
+        public Builder withElements(List<ContentListElement> elements){
             if(elements != null){
                 this.elements.addAll(elements);
             }

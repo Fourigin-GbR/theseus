@@ -62,12 +62,12 @@ public class GroupContentListElement implements ContentListElement, ContentEleme
         private String title;
         private List<ContentElement> elements = new ArrayList<>();
 
-        public Builder title(String title){
+        public Builder withTitle(String title){
             this.title = title;
             return this;
         }
 
-        public Builder element(ContentElement element){
+        public Builder withElement(ContentElement element){
             if(element != null) {
                 elements.add(element);
             }
@@ -75,7 +75,7 @@ public class GroupContentListElement implements ContentListElement, ContentEleme
             return this;
         }
 
-        public Builder elements(ContentElement... elements){
+        public Builder withElements(ContentElement... elements){
             if(elements != null){
                 this.elements.addAll(Arrays.asList(elements));
             }
@@ -83,7 +83,7 @@ public class GroupContentListElement implements ContentListElement, ContentEleme
             return this;
         }
 
-        public Builder elements(List<ContentElement> elements){
+        public Builder withElements(List<ContentElement> elements){
             if(elements != null){
                 this.elements.addAll(elements);
             }
@@ -97,6 +97,5 @@ public class GroupContentListElement implements ContentListElement, ContentEleme
             group.setElements(elements);
             return group;
         }
-
     }
 }

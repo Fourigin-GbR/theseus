@@ -8,10 +8,7 @@ public class TemplateReference implements Serializable {
     private String templateId;
     private String variationId;
     private String revision;
-
-    public TemplateReference() {
-    }
-
+    
     public String getTemplateId() {
         return templateId;
     }

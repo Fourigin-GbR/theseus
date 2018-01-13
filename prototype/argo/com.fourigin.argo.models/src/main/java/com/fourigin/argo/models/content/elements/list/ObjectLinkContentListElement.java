@@ -136,42 +136,42 @@ public class ObjectLinkContentListElement implements ObjectAwareContentElement, 
         private String anchorName;
         private String target;
 
-        public Builder title(String title){
+        public Builder withTitle(String title){
             this.title = title;
             return this;
         }
 
-        public Builder referenceId(String referenceId){
+        public Builder withReferenceId(String referenceId){
             this.referenceId = referenceId;
             return this;
         }
 
-        public Builder source(String source){
+        public Builder withSource(String source){
             this.source = source;
             return this;
         }
 
-        public Builder alternateText(String alternateText){
+        public Builder withAlternateText(String alternateText){
             this.alternateText = alternateText;
             return this;
         }
 
-        public Builder mimeType(String mimeType){
+        public Builder withMimeType(String mimeType){
             this.mimeType = mimeType;
             return this;
         }
 
-        public Builder url(String url){
+        public Builder withUrl(String url){
             this.url = url;
             return this;
         }
 
-        public Builder anchorName(String anchorName){
+        public Builder withAnchorName(String anchorName){
             this.anchorName = anchorName;
             return this;
         }
 
-        public Builder target(String target){
+        public Builder withTarget(String target){
             this.target = target;
             return this;
         }

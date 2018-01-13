@@ -9,31 +9,48 @@ public class EditablePropertyDefinitionBuilder {
     private Translation propertyName;
     private EditablePropertyType propertyType;
 
-    private String typeName;
-    private String typeDescription;
-    private String typePattern;
+//    private String typeName;
+//    private String typeDescription;
+//    private String typePattern;
 
-    public EditablePropertyDefinitionBuilder propertyCode(String code){
+
+    
+    public EditablePropertyDefinitionBuilder withPropertyCode(String code){
         this.propertyCode = code;
         return this;
     }
 
-    public EditablePropertyDefinitionBuilder propertyName(String language, String name){
+    public EditablePropertyDefinitionBuilder withPropertyName(String language, String name){
         this.propertyName.setTranslation(language, name);
         return this;
     }
 
-    public EditablePropertyDefinitionBuilder type(EditablePropertyType type){
+    public EditablePropertyDefinitionBuilder withType(EditablePropertyType type){
         this.propertyType = type;
         return this;
     }
 
+//    public EditablePropertyDefinitionBuilder withTypeName(String typeName){
+//        this.typeName = typeName;
+//        return this;
+//    }
+//
+//    public EditablePropertyDefinitionBuilder withTypeDescription(String typeDescription){
+//        this.typeDescription = typeDescription;
+//        return this;
+//    }
+//
+//    public EditablePropertyDefinitionBuilder withTypePattern(String typePattern){
+//        this.typePattern = typePattern;
+//        return this;
+//    }
+
     public EditablePropertyDefinitionBuilder reset(){
         this.propertyCode = null;
         this.propertyName = new Translation();
-        this.typeName = null;
-        this.typeDescription = null;
-        this.typePattern = null;
+//        this.typeName = null;
+//        this.typeDescription = null;
+//        this.typePattern = null;
 
         return this;
     }

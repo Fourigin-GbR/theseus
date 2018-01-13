@@ -62,22 +62,22 @@ public class ContentPage implements Serializable {
         private List<ContentElement> content;
         private Collection<DataSourceContent> dataSourceContents;
 
-        public Builder id(String id){
+        public Builder withId(String id){
             this.id = id;
             return this;
         }
 
-        public Builder metaData(ContentPageMetaData metaData){
+        public Builder withMetaData(ContentPageMetaData metaData){
             this.metaData = metaData;
             return this;
         }
 
-        public Builder content(List<ContentElement> content){
+        public Builder withContent(List<ContentElement> content){
             this.content = content;
             return this;
         }
 
-        public Builder dataSourceContents(Collection<DataSourceContent> dataSourceContents){
+        public Builder withDataSourceContents(Collection<DataSourceContent> dataSourceContents){
             this.dataSourceContents = dataSourceContents;
             return this;
         }

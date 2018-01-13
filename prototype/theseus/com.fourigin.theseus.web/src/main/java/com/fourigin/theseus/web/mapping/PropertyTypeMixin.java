@@ -13,15 +13,18 @@ import java.util.Map;
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.NAME,
   include = JsonTypeInfo.As.PROPERTY,
-  property = "type")
+  property = "withType")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = NoValuePropertyType.class, name = "available"),
     @JsonSubTypes.Type(value = EditablePropertyType.class, name = "editable"),
     @JsonSubTypes.Type(value = SetPropertyType.class, name = "predefined")
 })
+@SuppressWarnings({
+    "PMD.AbstractClassWithoutAnyMethod",
+    "PMD.AbstractClassWithoutAbstractMethod"
+})
 abstract public class PropertyTypeMixin {
     @JsonProperty("name")
     @JsonDeserialize(contentAs = Map.class)
     abstract Map<String, String> getName();
-
 }

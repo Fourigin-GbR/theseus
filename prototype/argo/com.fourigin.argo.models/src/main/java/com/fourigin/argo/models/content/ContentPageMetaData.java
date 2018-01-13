@@ -38,17 +38,17 @@ public class ContentPageMetaData implements Serializable {
         private String title;
         private Map<String, String> attributes;
 
-        public Builder title(String title){
+        public Builder withTitle(String title){
             this.title = title;
             return this;
         }
 
-        public Builder attributes(Map<String, String> attributes){
+        public Builder withAttributes(Map<String, String> attributes){
             this.attributes = attributes;
             return this;
         }
 
-        public Builder attribute(String name, String value){
+        public Builder withAttribute(String name, String value){
             if(name == null){
                 throw new IllegalArgumentException("Attribute name must not be null!");
             }

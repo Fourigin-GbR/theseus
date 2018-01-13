@@ -41,6 +41,8 @@ public class Compiler {
         ContentPage contentPage = contentRepository.retrieve(info);
         // TODO: implement me!
 
+        if (logger.isDebugEnabled()) logger.debug("contentPage: {}", contentPage);
+
 
         return info.getCompileState();
     }

@@ -47,6 +47,14 @@ public class App {
     @Value("${template.engine.thymeleaf.base}")
     private String templateBasePath;
 
+    private ContentRepositoryFactory contentRepositoryFactory;
+
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
+    private TemplateEngineFactory templateEngineFactory;
+
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
+    private TemplateResolver templateResolver;
+
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
         app.addListeners(
@@ -113,7 +121,7 @@ public class App {
     }
 
     // *** COMPILER ***
-    private DefaultPageCompiler pageCompiler(
+    private DefaultPageCompiler createPageCompiler(
         String base,
         ContentRepositoryFactory contentRepositoryFactory,
         TemplateEngineFactory templateEngineFactory,
@@ -130,18 +138,29 @@ public class App {
     }
 
     @Bean
-    public DefaultPageCompilerFactory pageCompilerFactory(
-        @Autowired ContentRepositoryFactory contentRepositoryFactory,
-        @Autowired TemplateEngineFactory templateEngineFactory,
-        @Autowired TemplateResolver templateResolver
-    ){
+    public DefaultPageCompilerFactory pageCompilerFactory(){
         DefaultPageCompilerFactory factory = new DefaultPageCompilerFactory();
 
         Map<String, PageCompiler> compilers = new HashMap<>();
-        compilers.put("DE", pageCompiler("DE", contentRepositoryFactory, templateEngineFactory, templateResolver));
+        compilers.put("DE", createPageCompiler("DE", contentRepositoryFactory, templateEngineFactory, templateResolver));
         factory.setCompilers(compilers);
 
         return factory;
+    }
+
+    @Autowired
+    public void setContentRepositoryFactory(ContentRepositoryFactory contentRepositoryFactory) {
+        this.contentRepositoryFactory = contentRepositoryFactory;
+    }
+
+    @Autowired
+    public void setTemplateEngineFactory(TemplateEngineFactory templateEngineFactory) {
+        this.templateEngineFactory = templateEngineFactory;
+    }
+
+    @Autowired
+    public void setTemplateResolver(TemplateResolver templateResolver) {
+        this.templateResolver = templateResolver;
     }
 
     /*

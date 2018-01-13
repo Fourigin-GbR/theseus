@@ -260,12 +260,12 @@ public class JsonFileContentPageRepository implements ContentPageRepository {
         private String contentRoot;
         private ObjectMapper objectMapper;
 
-        public Builder contentRoot(String path){
+        public Builder withContentRoot(String path){
             this.contentRoot = path;
             return this;
         }
 
-        public Builder objectMapper(ObjectMapper objectMapper){
+        public Builder withObjectMapper(ObjectMapper objectMapper){
             this.objectMapper = objectMapper;
             return this;
         }

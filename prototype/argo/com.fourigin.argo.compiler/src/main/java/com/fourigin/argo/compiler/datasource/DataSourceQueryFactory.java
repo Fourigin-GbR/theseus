@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class DataSourceQueryFactory {
+public final class DataSourceQueryFactory {
     private static Map<String, DataSourceQueryBuilder> builders;
 
+    private DataSourceQueryFactory(){
+    }
+    
     static public DataSourceQuery buildFromMap(DataSource dataSource, Map<String, Object> values){
         if(builders == null || builders.isEmpty()){
             throw new IllegalStateException("DataSourceQuery builders are not defined!");

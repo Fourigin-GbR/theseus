@@ -16,19 +16,19 @@ class ContentPageManagerSpec extends Specification {
     'resolve "#path" works as expected'(){
         given:
         ContentPage page = new ContentPage.Builder()
-                .id("page-1")
-                .metaData(null)
-                .dataSourceContents(null)
-                .content(Arrays.asList(
-                new ContentGroup.Builder().name("group-1").elements(
-                        new TextContentElement.Builder().name("text-1-1").content("Text number 1").build(),
-                        new TextContentElement.Builder().name("text-1-2").content("Text number 2").build(),
-                        new TextContentElement.Builder().name("text-1-3").content("Text number 3").build()
+                .withId("page-1")
+                .withMetaData(null)
+                .withDataSourceContents(null)
+                .withContent(Arrays.asList(
+                new ContentGroup.Builder().withName("group-1").withElements(
+                        new TextContentElement.Builder().withName("text-1-1").withContent("Text number 1").build(),
+                        new TextContentElement.Builder().withName("text-1-2").withContent("Text number 2").build(),
+                        new TextContentElement.Builder().withName("text-1-3").withContent("Text number 3").build()
                 ).build(),
-                new ContentGroup.Builder().name("group-1").elements(
-                        new TextContentElement.Builder().name("text-2-1").content("Another text number 1").build(),
-                        new TextContentElement.Builder().name("text-2-2").content("Another text number 2").build(),
-                        new TextContentElement.Builder().name("text-2-3").content("Another text number 3").build()
+                new ContentGroup.Builder().withName("group-1").withElements(
+                        new TextContentElement.Builder().withName("text-2-1").withContent("Another text number 1").build(),
+                        new TextContentElement.Builder().withName("text-2-2").withContent("Another text number 2").build(),
+                        new TextContentElement.Builder().withName("text-2-3").withContent("Another text number 3").build()
                 ).build()
         )).build()
 
@@ -49,19 +49,19 @@ class ContentPageManagerSpec extends Specification {
     def 'resolve of not existing element throws UnresolvableContentPathException'(){
         given:
         ContentPage page = new ContentPage.Builder()
-                .id("page-1")
-                .metaData(null)
-                .dataSourceContents(null)
-                .content(Arrays.asList(
-                new ContentGroup.Builder().name("group-1").elements(
-                        new TextContentElement.Builder().name("text-1-1").content("Text number 1").build(),
-                        new TextContentElement.Builder().name("text-1-2").content("Text number 2").build(),
-                        new TextContentElement.Builder().name("text-1-3").content("Text number 3").build()
+                .withId("page-1")
+                .withMetaData(null)
+                .withDataSourceContents(null)
+                .withContent(Arrays.asList(
+                new ContentGroup.Builder().withName("group-1").withElements(
+                        new TextContentElement.Builder().withName("text-1-1").withContent("Text number 1").build(),
+                        new TextContentElement.Builder().withName("text-1-2").withContent("Text number 2").build(),
+                        new TextContentElement.Builder().withName("text-1-3").withContent("Text number 3").build()
                 ).build(),
-                new ContentGroup.Builder().name("group-1").elements(
-                        new TextContentElement.Builder().name("text-2-1").content("Another text number 1").build(),
-                        new TextContentElement.Builder().name("text-2-2").content("Another text number 2").build(),
-                        new TextContentElement.Builder().name("text-2-3").content("Another text number 3").build()
+                new ContentGroup.Builder().withName("group-1").withElements(
+                        new TextContentElement.Builder().withName("text-2-1").withContent("Another text number 1").build(),
+                        new TextContentElement.Builder().withName("text-2-2").withContent("Another text number 2").build(),
+                        new TextContentElement.Builder().withName("text-2-3").withContent("Another text number 3").build()
                 ).build()
         )).build()
 
@@ -77,19 +77,19 @@ class ContentPageManagerSpec extends Specification {
     def 'resolve of not existing group throws UnresolvableContentPathException'(){
         given:
         ContentPage page = new ContentPage.Builder()
-                .id("page-1")
-                .metaData(null)
-                .dataSourceContents(null)
-                .content(Arrays.asList(
-                new ContentGroup.Builder().name("group-1").elements(
-                        new TextContentElement.Builder().name("text-1-1").content("Text number 1").build(),
-                        new TextContentElement.Builder().name("text-1-2").content("Text number 2").build(),
-                        new TextContentElement.Builder().name("text-1-3").content("Text number 3").build()
+                .withId("page-1")
+                .withMetaData(null)
+                .withDataSourceContents(null)
+                .withContent(Arrays.asList(
+                new ContentGroup.Builder().withName("group-1").withElements(
+                        new TextContentElement.Builder().withName("text-1-1").withContent("Text number 1").build(),
+                        new TextContentElement.Builder().withName("text-1-2").withContent("Text number 2").build(),
+                        new TextContentElement.Builder().withName("text-1-3").withContent("Text number 3").build()
                 ).build(),
-                new ContentGroup.Builder().name("group-1").elements(
-                        new TextContentElement.Builder().name("text-2-1").content("Another text number 1").build(),
-                        new TextContentElement.Builder().name("text-2-2").content("Another text number 2").build(),
-                        new TextContentElement.Builder().name("text-2-3").content("Another text number 3").build()
+                new ContentGroup.Builder().withName("group-1").withElements(
+                        new TextContentElement.Builder().withName("text-2-1").withContent("Another text number 1").build(),
+                        new TextContentElement.Builder().withName("text-2-2").withContent("Another text number 2").build(),
+                        new TextContentElement.Builder().withName("text-2-3").withContent("Another text number 3").build()
                 ).build()
         )).build()
 

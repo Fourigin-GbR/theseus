@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.Map;
 
+@SuppressWarnings({
+    "PMD.AbstractClassWithoutAnyMethod",
+    "PMD.AbstractClassWithoutAbstractMethod"
+})
 abstract public class ProductMixin {
     @JsonProperty("name")
     @JsonDeserialize(contentAs = Map.class)

@@ -9,17 +9,17 @@ public class NoValuePropertyDefinitionBuilder {
     private Translation propertyName;
     private NoValuePropertyType propertyType;
 
-    public NoValuePropertyDefinitionBuilder propertyCode(String code){
+    public NoValuePropertyDefinitionBuilder withPropertyCode(String code){
         this.propertyCode = code;
         return this;
     }
 
-    public NoValuePropertyDefinitionBuilder propertyName(String language, String name){
+    public NoValuePropertyDefinitionBuilder withPropertyName(String language, String name){
         this.propertyName.setTranslation(language, name);
         return this;
     }
 
-    public NoValuePropertyDefinitionBuilder type(NoValuePropertyType propertyType){
+    public NoValuePropertyDefinitionBuilder withType(NoValuePropertyType propertyType){
         this.propertyType = propertyType;
         return this;
     }

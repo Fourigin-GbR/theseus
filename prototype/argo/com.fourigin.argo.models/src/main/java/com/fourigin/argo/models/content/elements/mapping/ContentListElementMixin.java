@@ -19,5 +19,9 @@ import com.fourigin.argo.models.content.elements.list.TextLinkContentListElement
     @JsonSubTypes.Type(value = ObjectLinkContentListElement.class, name = "list-object-link"),
     @JsonSubTypes.Type(value = GroupContentListElement.class, name = "list-group")
 })
+@SuppressWarnings({
+    "PMD.AbstractClassWithoutAnyMethod",
+    "PMD.AbstractClassWithoutAbstractMethod"
+})
 abstract public class ContentListElementMixin {
 }
