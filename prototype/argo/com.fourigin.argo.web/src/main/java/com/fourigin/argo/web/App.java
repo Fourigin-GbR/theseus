@@ -3,6 +3,12 @@ package com.fourigin.argo.web;
 import com.fourigin.argo.compiler.DefaultPageCompiler;
 import com.fourigin.argo.compiler.DefaultPageCompilerFactory;
 import com.fourigin.argo.compiler.PageCompiler;
+import com.fourigin.argo.compiler.datasource.DataSourceQuery;
+import com.fourigin.argo.compiler.datasource.DataSourceQueryBuilder;
+import com.fourigin.argo.compiler.datasource.DataSourceQueryFactory;
+import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
+import com.fourigin.argo.compiler.datasource.EmptyDataSourceQuery;
+import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
@@ -25,6 +31,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -79,6 +86,7 @@ public class App {
 //        templateResolver.setTemplateMode("HTML");
 
         templateResolver.setCacheable(false);
+        templateResolver.setCacheTTLMs(1L);
 
         templateEngine.setTemplateResolver(templateResolver);
 
@@ -127,12 +135,17 @@ public class App {
         TemplateEngineFactory templateEngineFactory,
         TemplateResolver templateResolver
     ){
+        Map<String, DataSourceQueryBuilder<? extends DataSourceQuery>> queryBuilders = new HashMap<>();
+        queryBuilders.put("TIMESTAMP", new DataSourceQueryBuilder<>(EmptyDataSourceQuery.class));
+        DataSourceQueryFactory.setBuilders(queryBuilders);
+
         DefaultPageCompiler compiler = new DefaultPageCompiler();
 
         compiler.setBase(base);
         compiler.setContentRepository(contentRepositoryFactory.getInstance(base));
         compiler.setTemplateEngineFactory(templateEngineFactory);
         compiler.setTemplateResolver(templateResolver);
+        compiler.setDataSourcesResolver(dataSourcesResolver());
 
         return compiler;
     }
@@ -146,6 +159,16 @@ public class App {
         factory.setCompilers(compilers);
 
         return factory;
+    }
+
+    private DataSourcesResolver dataSourcesResolver(){
+        DataSourcesResolver resolver = new DataSourcesResolver();
+
+        resolver.setDataSources(Arrays.asList(
+            new TimestampDataSource()
+        ));
+
+        return resolver;
     }
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.fourigin.argo.compiler;
 
+import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.Template;
@@ -7,12 +8,12 @@ import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepository;
+import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.template.engine.PageInfoAwareTemplateEngine;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.SiteAttributesAwareTemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
-import com.fourigin.argo.repository.TemplateResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,8 @@ public class DefaultPageCompiler implements PageCompiler {
     private TemplateResolver templateResolver;
 
     private TemplateEngineFactory templateEngineFactory;
+
+    private DataSourcesResolver dataSourcesResolver;
 
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
 
@@ -99,6 +102,14 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
 
+        // resolve all data sources
+        if(dataSourcesResolver != null){
+            if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
+            contentPage = dataSourcesResolver.resolve(contentPage);
+            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
+        }
+
+        // process content page
         templateEngine.process(contentPage, template, templateVariation, processingMode, out);
         if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
 
@@ -119,5 +130,9 @@ public class DefaultPageCompiler implements PageCompiler {
 
     public void setTemplateEngineFactory(TemplateEngineFactory templateEngineFactory) {
         this.templateEngineFactory = templateEngineFactory;
+    }
+
+    public void setDataSourcesResolver(DataSourcesResolver dataSourcesResolver) {
+        this.dataSourcesResolver = dataSourcesResolver;
     }
 }
