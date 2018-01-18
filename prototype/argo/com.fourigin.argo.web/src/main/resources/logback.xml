@@ -10,23 +10,23 @@
 	<include resource="org/springframework/boot/logging/logback/file-appender.xml" />
 
 
-	<appender name="MULTIPLEX-SOCKET" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-		<Compressing>true</Compressing>
-		<ReconnectionDelay>30000</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<ApplicationIdentifier>argo</ApplicationIdentifier>
-		<RemoteHosts>
-			localhost
-		</RemoteHosts>
-	</appender>
+	<!--<appender name="MULTIPLEX-SOCKET" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">-->
+		<!--<Compressing>true</Compressing>-->
+		<!--<ReconnectionDelay>30000</ReconnectionDelay>-->
+		<!--<IncludeCallerData>true</IncludeCallerData>-->
+		<!--<ApplicationIdentifier>argo</ApplicationIdentifier>-->
+		<!--<RemoteHosts>-->
+			<!--localhost-->
+		<!--</RemoteHosts>-->
+	<!--</appender>-->
 
 	<!--<logger name="org.springframework" level="DEBUG"/>-->
 	<!--<logger name="org.springframework.security" level="DEBUG"/>-->
 
 	<root level="INFO">
-		<!--<appender-ref ref="CONSOLE"/>-->
+		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="FILE"/>
-		<appender-ref ref="MULTIPLEX-SOCKET"/>
+		<!--<appender-ref ref="MULTIPLEX-SOCKET"/>-->
 	</root>
 
 </configuration>
