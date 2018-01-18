@@ -142,8 +142,32 @@ public class JsonFilesContentRepository implements ContentRepository {
         return resolveInfo(type, root, path);
     }
 
+    private String printInfoTree(SiteNodeContainerInfo container, String indent){
+        StringBuilder builder = new StringBuilder();
+
+        if(container.equals(root)){
+            builder.append("/\n");
+        }
+
+        List<SiteNodeInfo> nodes = container.getNodes();
+        if(nodes != null && !nodes.isEmpty()){
+            for (SiteNodeInfo node : nodes) {
+                builder.append(indent).append("|-- ").append(node.getName()).append('\n');
+                if(node instanceof DirectoryInfo){
+                    builder.append(printInfoTree((SiteNodeContainerInfo) node, indent + "  "));
+                    builder.append('\n');
+                }
+            }
+        }
+
+        return builder.toString();
+    }
+
     @Override
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
+        if(logger.isDebugEnabled())
+            logger.debug("info tree:\n{}", printInfoTree(root, ""));
+
         SiteNodeInfo node = selectInfo(parent, path);
         if(type.isAssignableFrom(node.getClass())){
             return type.cast(node);
