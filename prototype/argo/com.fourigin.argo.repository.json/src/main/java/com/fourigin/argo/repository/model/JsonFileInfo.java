@@ -40,8 +40,8 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
 
         info.setPath(path);
         info.setName(name);
-        info.setName(localizedName);
-        info.setName(displayName);
+        info.setLocalizedName(localizedName);
+        info.setDisplayName(displayName);
         info.setDescription(description);
 
         info.setTemplateReference(templateReference);

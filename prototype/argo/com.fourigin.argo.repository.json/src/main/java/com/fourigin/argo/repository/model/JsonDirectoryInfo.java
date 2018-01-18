@@ -28,7 +28,7 @@ public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
 
         info.setPath(path);
         info.setName(name);
-        info.setName(localizedName);
+        info.setLocalizedName(localizedName);
         info.setDisplayName(displayName);
         info.setDescription(description);
 

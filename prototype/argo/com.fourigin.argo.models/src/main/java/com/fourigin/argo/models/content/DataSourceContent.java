@@ -37,7 +37,6 @@ public class DataSourceContent implements Serializable {
         //noinspection SimplifiableIfStatement
         if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
         return content != null ? content.equals(that.content) : that.content == null;
-
     }
 
     @Override

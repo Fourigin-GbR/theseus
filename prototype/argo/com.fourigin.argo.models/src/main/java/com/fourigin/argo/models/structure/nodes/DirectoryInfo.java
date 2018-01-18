@@ -91,6 +91,7 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (localizedName != null ? !localizedName.equals(that.localizedName) : that.localizedName != null)
             return false;
+        //noinspection SimplifiableIfStatement
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
         return description != null ? description.equals(that.description) : that.description == null;
     }
