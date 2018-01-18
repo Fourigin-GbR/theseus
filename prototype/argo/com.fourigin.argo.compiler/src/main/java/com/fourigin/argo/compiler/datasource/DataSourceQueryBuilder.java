@@ -5,17 +5,21 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class DataSourceQueryBuilder {
-    private Class<DataSourceQuery> baseQuery;
+public class DataSourceQueryBuilder<T extends DataSourceQuery> {
+    private Class<T> baseQuery;
 
     private final Logger logger = LoggerFactory.getLogger(DataSourceQueryBuilder.class);
 
-    public DataSourceQuery build(Map<String, Object> context){
+    public DataSourceQueryBuilder(Class<T> baseQuery){
+        this.baseQuery = baseQuery;
+    }
+
+    public T build(Map<String, Object> context){
         String queryName = baseQuery.getName();
 
-        DataSourceQuery query;
+        T query;
         try {
-            query = (DataSourceQuery) Class.forName(queryName).newInstance();
+            query = baseQuery.cast(Class.forName(queryName).newInstance());
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
             if (logger.isErrorEnabled()) logger.error("Unable to instantiate DataSourceQuery for name '{}'!", queryName, ex);
             return null;

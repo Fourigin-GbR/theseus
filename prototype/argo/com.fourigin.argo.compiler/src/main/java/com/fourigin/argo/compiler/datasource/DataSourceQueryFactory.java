@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 public final class DataSourceQueryFactory {
-    private static Map<String, DataSourceQueryBuilder> builders;
+    private static Map<String, DataSourceQueryBuilder<? extends DataSourceQuery>> builders;
 
     private DataSourceQueryFactory(){
     }
@@ -23,7 +23,7 @@ public final class DataSourceQueryFactory {
         Logger logger = LoggerFactory.getLogger(DataSourceQueryFactory.class);
 
         String type = dataSource.getType();
-        DataSourceQueryBuilder builder = builders.get(type);
+        DataSourceQueryBuilder<? extends DataSourceQuery> builder = builders.get(type);
         if(builder == null){
             if (logger.isErrorEnabled()) logger.error("Unable to find DataSourceQueryBuilder for type '{}'!", type);
             return null;
@@ -32,7 +32,7 @@ public final class DataSourceQueryFactory {
         return builder.build(values);
     }
 
-    public static void setBuilders(Map<String, DataSourceQueryBuilder> builders) {
+    public static void setBuilders(Map<String, DataSourceQueryBuilder<? extends DataSourceQuery>> builders) {
         DataSourceQueryFactory.builders = builders;
     }
 }
