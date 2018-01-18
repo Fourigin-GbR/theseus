@@ -1,0 +1,20 @@
+[ {
+  "type" : "file",
+  "path" : "/dir-1",
+  "name" : "page-1",
+  "localizedName" : "page-1",
+  "displayName" : "page-1",
+  "description" : "Auto-created directory info. Don't forget to specify all properties!",
+  "templateReference" : {
+    "templateId" : "demo.template-for-page-1",
+    "variationId" : "default",
+    "revision" : ""
+  },
+  "staged" : false,
+  "compileState" : {
+    "checksum" : "",
+    "compiled" : false,
+    "timestamp" : 1486667849650,
+    "message" : ""
+  }
+} ]

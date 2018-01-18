@@ -1,0 +1,15 @@
+[ {
+  "type" : "dir",
+  "path" : "/",
+  "name" : "dir-1",
+  "localizedName" : "dir-1",
+  "displayName" : "dir-1",
+  "description" : "Auto-created directory info. Don't forget to specify all properties!"
+}, {
+  "type" : "dir",
+  "path" : "/",
+  "name" : "spiegel",
+  "localizedName" : "spiegel",
+  "displayName" : "spiegel",
+  "description" : "Auto-created directory info. Don't forget to specify all properties!"
+} ]
