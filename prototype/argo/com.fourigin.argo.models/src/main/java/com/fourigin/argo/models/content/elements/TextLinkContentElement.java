@@ -1,5 +1,8 @@
 package com.fourigin.argo.models.content.elements;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TextLinkContentElement extends AbstractContentElement implements TextAwareContentElement, LinkAwareContentElement, ContentElement {
     private static final long serialVersionUID = 8683724707926036886L;
 
@@ -107,6 +110,7 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
         private String url;
         private String anchorName;
         private String target;
+        private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name){
             this.name = name;
@@ -143,6 +147,18 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
             return this;
         }
 
+        public Builder withAttribute(String key, String value){
+            if(key != null) {
+                if (value == null) {
+                    this.attributes.remove(key);
+                } else {
+                    this.attributes.put(key, value);
+                }
+            }
+
+            return this;
+        }
+
         public TextLinkContentElement build(){
             TextLinkContentElement element = new TextLinkContentElement();
             element.setName(name);
@@ -152,6 +168,9 @@ public class TextLinkContentElement extends AbstractContentElement implements Te
             element.setUrl(url);
             element.setAnchorName(anchorName);
             element.setTarget(target);
+            if(!attributes.isEmpty()){
+                element.setAttributes(attributes);
+            }
             return element;
         }
     }

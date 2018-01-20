@@ -1,5 +1,8 @@
 package com.fourigin.argo.models.content.elements;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TextContentElement extends AbstractContentElement implements TextAwareContentElement, ContentElement {
     private static final long serialVersionUID = 5066464546311137699L;
 
@@ -68,6 +71,7 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         private String title;
         private String content;
         private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
+        private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name){
             this.name = name;
@@ -89,12 +93,28 @@ public class TextContentElement extends AbstractContentElement implements TextAw
             return this;
         }
 
+        public Builder withAttribute(String key, String value){
+            if(key != null) {
+                if (value == null) {
+                    this.attributes.remove(key);
+                } else {
+                    this.attributes.put(key, value);
+                }
+            }
+
+            return this;
+        }
+
         public TextContentElement build(){
             TextContentElement element = new TextContentElement();
             element.setName(name);
             element.setTitle(title);
             element.setContent(content);
             element.setMarkupAllowed(markupAllowed);
+            if(!attributes.isEmpty()){
+                element.setAttributes(attributes);
+            }
+
             return element;
         }
     }

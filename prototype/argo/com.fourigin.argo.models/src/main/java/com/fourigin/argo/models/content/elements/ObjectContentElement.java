@@ -1,5 +1,8 @@
 package com.fourigin.argo.models.content.elements;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ObjectContentElement extends AbstractContentElement implements ObjectAwareContentElement, ContentElement {
     private static final long serialVersionUID = -8071563579520012186L;
 
@@ -85,6 +88,7 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
         private String source;
         private String alternateText;
         private String mimeType;
+        private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name){
             this.name = name;
@@ -116,6 +120,19 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
             return this;
         }
 
+        public Builder withAttribute(String key, String value){
+            if(key != null) {
+                if (value == null) {
+                    this.attributes.remove(key);
+                } else {
+                    this.attributes.put(key, value);
+                }
+            }
+
+            return this;
+        }
+
+
         public ObjectContentElement build(){
             ObjectContentElement element = new ObjectContentElement();
             element.setName(name);
@@ -124,6 +141,9 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
             element.setSource(source);
             element.setAlternateText(alternateText);
             element.setMimeType(mimeType);
+            if(!attributes.isEmpty()){
+                element.setAttributes(attributes);
+            }
             return element;
         }
     }

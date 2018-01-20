@@ -2,7 +2,9 @@ package com.fourigin.argo.models.content.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer {
     private static final long serialVersionUID = -6891589536053329842L;
@@ -45,6 +47,7 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
     public static class Builder {
         private String name;
         private List<ContentElement> elements = new ArrayList<>();
+        private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name){
             this.name = name;
@@ -75,10 +78,25 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
+        public Builder withAttribute(String key, String value){
+            if(key != null) {
+                if (value == null) {
+                    this.attributes.remove(key);
+                } else {
+                    this.attributes.put(key, value);
+                }
+            }
+
+            return this;
+        }
+
         public ContentGroup build(){
             ContentGroup group = new ContentGroup();
             group.setName(name);
             group.setElements(elements);
+            if(!attributes.isEmpty()){
+                group.setAttributes(attributes);
+            }
             return group;
         }
 

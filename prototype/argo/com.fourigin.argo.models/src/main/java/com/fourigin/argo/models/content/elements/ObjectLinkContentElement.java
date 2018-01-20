@@ -1,5 +1,8 @@
 package com.fourigin.argo.models.content.elements;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ObjectLinkContentElement extends AbstractContentElement implements ObjectAwareContentElement, LinkAwareContentElement, ContentElement {
     private static final long serialVersionUID = -400773903221846863L;
 
@@ -124,6 +127,7 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
         private String url;
         private String anchorName;
         private String target;
+        private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name){
             this.name = name;
@@ -170,6 +174,18 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
             return this;
         }
 
+        public Builder withAttribute(String key, String value){
+            if(key != null) {
+                if (value == null) {
+                    this.attributes.remove(key);
+                } else {
+                    this.attributes.put(key, value);
+                }
+            }
+
+            return this;
+        }
+
         public ObjectLinkContentElement build(){
             ObjectLinkContentElement element = new ObjectLinkContentElement();
             element.setName(name);
@@ -181,6 +197,9 @@ public class ObjectLinkContentElement extends AbstractContentElement implements 
             element.setUrl(url);
             element.setAnchorName(anchorName);
             element.setTarget(target);
+            if(!attributes.isEmpty()){
+                element.setAttributes(attributes);
+            }
             return element;
         }
     }
