@@ -3,11 +3,12 @@ package com.fourigin.argo.web;
 import com.fourigin.argo.compiler.DefaultPageCompiler;
 import com.fourigin.argo.compiler.DefaultPageCompilerFactory;
 import com.fourigin.argo.compiler.PageCompiler;
-import com.fourigin.argo.compiler.datasource.DataSourceQuery;
 import com.fourigin.argo.compiler.datasource.DataSourceQueryBuilder;
 import com.fourigin.argo.compiler.datasource.DataSourceQueryFactory;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.EmptyDataSourceQuery;
+import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
+import com.fourigin.argo.compiler.datasource.SiteStructureDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
@@ -135,8 +136,9 @@ public class App {
         TemplateEngineFactory templateEngineFactory,
         TemplateResolver templateResolver
     ){
-        Map<String, DataSourceQueryBuilder<? extends DataSourceQuery>> queryBuilders = new HashMap<>();
-        queryBuilders.put("TIMESTAMP", new DataSourceQueryBuilder<>(EmptyDataSourceQuery.class));
+        Map<String, DataSourceQueryBuilder> queryBuilders = new HashMap<>();
+        queryBuilders.put(TimestampDataSource.TYPE, new DataSourceQueryBuilder(EmptyDataSourceQuery.class));
+        queryBuilders.put(SiteStructureDataSource.TYPE, new DataSourceQueryBuilder(SiteStructureDataSourceQuery.class));
         DataSourceQueryFactory.setBuilders(queryBuilders);
 
         DefaultPageCompiler compiler = new DefaultPageCompiler();
@@ -165,7 +167,8 @@ public class App {
         DataSourcesResolver resolver = new DataSourcesResolver();
 
         resolver.setDataSources(Arrays.asList(
-            new TimestampDataSource()
+            new TimestampDataSource(),
+            new SiteStructureDataSource()
         ));
 
         return resolver;
