@@ -599,7 +599,13 @@ public class JsonFilesContentRepository implements ContentRepository {
                     nodeInfo = jsonDirectoryInfo.buildNodeInfo();
                 }
 
-                String dirPath = localPath + name;
+                String dirPath;
+                if("/".equals(localPath)) {
+                    dirPath = localPath + name;
+                }
+                else {
+                    dirPath = localPath + '/' + name;
+                }
                 JsonInfoList dirJsonInfoList = readJsonInfoList(dirPath);
 
                 List<SiteNodeInfo> dirNodes = parseDirectory(file, dirPath, (SiteNodeContainerInfo) nodeInfo, dirJsonInfoList);

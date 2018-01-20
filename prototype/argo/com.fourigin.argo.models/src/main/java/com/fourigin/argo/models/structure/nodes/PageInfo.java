@@ -84,7 +84,12 @@ public class PageInfo implements SiteNodeInfo {
     }
 
     public String getReference(){
-        return getPath() + '/' + getName();
+        StringBuilder builder = new StringBuilder(path);
+        if(!path.endsWith("/")){
+            builder.append('/');
+        }
+        builder.append(name);
+        return builder.toString();
     }
 
     public ContentPageReference getContentPageReference(){
