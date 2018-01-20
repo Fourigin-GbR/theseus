@@ -1,66 +1,83 @@
 package com.fourigin.argo.compiler.datasource;
 
+import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.DataSourceContent;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
+import com.fourigin.argo.repository.ContentResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataSourcesResolver {
-    private Collection<DataSource> dataSources;
+    private Collection<DataSource<? extends DataSourceQuery>> dataSources;
 
     private final Logger logger = LoggerFactory.getLogger(DataSourcesResolver.class);
 
-    public ContentPage resolve(ContentPage contentPage){
+    public ContentPage resolve(ContentResolver contentResolver, ContentPage contentPage){
         Collection<DataSourceContent> dataSourceGroups = contentPage.getDataSourceContents();
         if(dataSourceGroups == null || dataSourceGroups.isEmpty()){
             if (logger.isDebugEnabled()) logger.debug("No dataSources defined, nothing to resolve.");
             return contentPage;
         }
 
-        Map<String, DataSource> dataSourceMap = new HashMap<>();
-        for (DataSource dataSource : dataSources) {
-            dataSourceMap.put(dataSource.getType(), dataSource);
+        Map<String, DataSource<DataSourceQuery>> dataSourceMap = new HashMap<>();
+        for (DataSource<? extends DataSourceQuery> dataSource : dataSources) {
+            // TODO: is there a better way without cast?
+            dataSourceMap.put(dataSource.getType(), (DataSource<DataSourceQuery>) dataSource);
         }
+
+        List<DataSourceResolvingException> errors = new ArrayList<>();
 
         for (DataSourceContent dataSourceGroup : dataSourceGroups) {
             DataSourceIdentifier dataSourceId = dataSourceGroup.getIdentifier();
             String type = dataSourceId.getType();
-            DataSource dataSource = dataSourceMap.get(type);
+            DataSource<DataSourceQuery> dataSource = dataSourceMap.get(type);
             if(dataSource == null){
                 if (logger.isErrorEnabled()) logger.error("No dataSource found for type '{}'!", type);
+                errors.add(new UnknownDataSourceTypeException(type));
                 continue;
             }
 
             Map<String, Object> queryMap = dataSourceId.getQuery();
-            DataSourceQuery query = DataSourceQueryFactory.buildFromMap(dataSource, queryMap);
-            if(query == null){
+
+            DataSourceQuery query;
+            try {
+                query = DataSourceQueryFactory.buildFromMap(dataSource, queryMap);
+            }
+            catch(DataSourceQueryCreationException ex){
                 if (logger.isErrorEnabled()) logger.error("Unable to create query of type '{}' from map {}!", type, queryMap);
+                errors.add(ex);
                 continue;
             }
 
             String previousChecksum = dataSourceId.getChecksum();
-            DataSourceResponse response = dataSource.apply(query);
-            String newChecksum = response.getChecksum();
+            ContentElement resolvedContent = dataSource.generateContent(contentResolver, query);
+            String newChecksum = ChecksumGenerator.getChecksum(resolvedContent);
             if(newChecksum.equals(previousChecksum)){
                 if (logger.isInfoEnabled()) logger.info("Resolved unchanged data with checksum '{}'.", newChecksum);
                 continue;
             }
 
             if (logger.isInfoEnabled()) logger.info("Resolved changed data with checksum '{}'.", newChecksum);
-            ContentElement resolvedContent = response.getContent();
+            dataSourceId.setChecksum(newChecksum);
             dataSourceGroup.setContent(resolvedContent);
+        }
+
+        if(!errors.isEmpty()){
+            throw new DataSourceResolvingExceptions(errors);
         }
 
         return contentPage;
     }
 
-    public void setDataSources(Collection<DataSource> dataSources) {
+    public void setDataSources(Collection<DataSource<? extends DataSourceQuery>> dataSources) {
         this.dataSources = dataSources;
     }
 }

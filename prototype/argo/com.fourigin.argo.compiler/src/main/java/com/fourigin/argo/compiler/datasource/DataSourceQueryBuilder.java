@@ -1,28 +1,22 @@
 package com.fourigin.argo.compiler.datasource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 
-public class DataSourceQueryBuilder<T extends DataSourceQuery> {
-    private Class<T> baseQuery;
+public class DataSourceQueryBuilder {
+    private Class<? extends DataSourceQuery> baseQuery;
 
-    private final Logger logger = LoggerFactory.getLogger(DataSourceQueryBuilder.class);
-
-    public DataSourceQueryBuilder(Class<T> baseQuery){
+    public DataSourceQueryBuilder(Class<? extends DataSourceQuery> baseQuery){
         this.baseQuery = baseQuery;
     }
 
-    public T build(Map<String, Object> context){
+    public DataSourceQuery build(Map<String, Object> context){
         String queryName = baseQuery.getName();
 
-        T query;
+        DataSourceQuery query;
         try {
             query = baseQuery.cast(Class.forName(queryName).newInstance());
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-            if (logger.isErrorEnabled()) logger.error("Unable to instantiate DataSourceQuery for name '{}'!", queryName, ex);
-            return null;
+            throw new DataSourceQueryCreationException("Unable to instantiate DataSourceQuery for name '" + queryName + "'", ex);
         }
 
         query.buildFromMap(context);

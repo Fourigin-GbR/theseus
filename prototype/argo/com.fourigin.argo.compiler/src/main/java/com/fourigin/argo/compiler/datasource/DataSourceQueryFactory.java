@@ -1,38 +1,31 @@
 package com.fourigin.argo.compiler.datasource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
+import java.util.Objects;
 
 public final class DataSourceQueryFactory {
-    private static Map<String, DataSourceQueryBuilder<? extends DataSourceQuery>> builders;
+    private static Map<String, DataSourceQueryBuilder> builders;
 
     private DataSourceQueryFactory(){
     }
     
-    static public DataSourceQuery buildFromMap(DataSource dataSource, Map<String, Object> values){
+    static public DataSourceQuery buildFromMap(DataSource<DataSourceQuery> dataSource, Map<String, Object> values){
         if(builders == null || builders.isEmpty()){
-            throw new IllegalStateException("DataSourceQuery builders are not defined!");
+            throw new DataSourceQueryCreationException("No query builders defined! Check configuration!", values);
         }
 
-        if(dataSource == null){
-            throw new IllegalArgumentException("dataSource must not be null!");
-        }
-
-        Logger logger = LoggerFactory.getLogger(DataSourceQueryFactory.class);
+        Objects.requireNonNull(dataSource, "dataSource must not be null!");
 
         String type = dataSource.getType();
-        DataSourceQueryBuilder<? extends DataSourceQuery> builder = builders.get(type);
+        DataSourceQueryBuilder builder = builders.get(type);
         if(builder == null){
-            if (logger.isErrorEnabled()) logger.error("Unable to find DataSourceQueryBuilder for type '{}'!", type);
-            return null;
+            throw new DataSourceQueryCreationException("No builder found for type '" + type + "'!", values);
         }
 
         return builder.build(values);
     }
 
-    public static void setBuilders(Map<String, DataSourceQueryBuilder<? extends DataSourceQuery>> builders) {
+    public static void setBuilders(Map<String, DataSourceQueryBuilder> builders) {
         DataSourceQueryFactory.builders = builders;
     }
 }

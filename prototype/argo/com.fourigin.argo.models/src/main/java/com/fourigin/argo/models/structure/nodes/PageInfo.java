@@ -158,6 +158,14 @@ public class PageInfo implements SiteNodeInfo {
         public String getContentId() {
             return contentId;
         }
+
+        @Override
+        public String toString() {
+            return "ContentPageReference{" +
+                "parentPath='" + parentPath + '\'' +
+                ", contentId='" + contentId + '\'' +
+                '}';
+        }
     }
 
     @Override

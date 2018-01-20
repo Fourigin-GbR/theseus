@@ -105,7 +105,7 @@ public class DefaultPageCompiler implements PageCompiler {
         // resolve all data sources
         if(dataSourcesResolver != null){
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
-            contentPage = dataSourcesResolver.resolve(contentPage);
+            contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
             if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
         }
 

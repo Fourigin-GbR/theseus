@@ -30,13 +30,15 @@ public class DefaultPageInfoTraversingStrategy implements PageInfoTraversingStra
         for (SiteNodeInfo node : container.getNodes()) {
             if(node instanceof SiteNodeContainerInfo){
                 processContainer((SiteNodeContainerInfo) node, result);
+                continue;
             }
-            else if(node instanceof PageInfo){
+
+            if(node instanceof PageInfo){
                 result.add((PageInfo) node);
+                continue;
             }
-            else {
-                throw new IllegalArgumentException("Unsupported SiteNode type '" + node.getClass().getName() + "'!");
-            }
+
+            throw new IllegalArgumentException("Unsupported SiteNode type '" + node.getClass().getName() + "'!");
         }
     }
 }
