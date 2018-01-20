@@ -1,6 +1,9 @@
 package com.fourigin.argo.compiler.datasource;
 
-public interface DataSource {
+import com.fourigin.argo.models.content.elements.ContentElement;
+import com.fourigin.argo.repository.ContentResolver;
+
+public interface DataSource<DataSourceQuery> {
     String getType();
-    DataSourceResponse apply(DataSourceQuery query);
+    ContentElement generateContent(ContentResolver contentResolver, DataSourceQuery query);
 }
