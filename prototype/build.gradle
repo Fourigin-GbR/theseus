@@ -1,5 +1,5 @@
-def globalSourceCompatibility = 1.8
-def globalTargetCompatibility = 1.8
+import de.thetaphi.forbiddenapis.gradle.ForbiddenApisPlugin
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
     repositories {
@@ -18,12 +18,12 @@ buildscript {
     apply from: 'versions.gradle'
 
     dependencies {
-//        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-//        classpath 'de.thetaphi:forbiddenapis:2.4.1'
-//        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.4.2'
-//        classpath 'org.akhikhl.gretty:gretty:2.0.0'
-//        classpath 'org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3'
-//        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'de.thetaphi:forbiddenapis:2.4.1'
+        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.4.2'
+        classpath 'org.akhikhl.gretty:gretty:2.0.0'
+        classpath 'org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3'
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
 //        classpath managedDependency('com.github.jengelman.gradle.plugins:shadow')
 //        classpath managedDependency('io.ratpack:ratpack-gradle')
         classpath managedDependency('org.springframework.boot:spring-boot-gradle-plugin')
@@ -33,16 +33,379 @@ buildscript {
 //        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.BUILD-SNAPSHOT"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
 //        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M7"
-//        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE"
     }
 }
 
 wrapper {
-//    gradleVersion = '4.3-rc-2'
-    gradleVersion = '4.4.1'
+    gradleVersion = '4.5-rc-1'
+//    gradleVersion = '4.4.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
+def sourceCompatibility = '1.8'
+/*
+if(JavaVersion.current().isJava9Compatible()) {
+	sourceCompatibility = '9'
+}
+*/
+
+def targetCompatibility = sourceCompatibility
+def checkstyleToolVersion = '8.7'
+def jacocoToolVersion = '0.8.0'
+
+//region repositories for allprojects
+allprojects {
+    repositories.addAll rootProject.buildscript.repositories
+}
+subprojects {
+    // using subprojects since rootProject.buildscript.repositories
+    // must not be added to itself.
+    buildscript.repositories.addAll rootProject.buildscript.repositories
+
+}
+//endregion
+
+//region Plugin Configuration
+allprojects {
+    plugins.whenPluginAdded { plugin ->
+        // -Xlint:-options disables the
+        // "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
+        // for now
+        def compilerArgs = ['-Xlint:unchecked', '-Xlint:-options', '-Xlint:deprecation', '-g', '-parameters']
+        def sourceEncoding = 'UTF-8'
+
+        if (plugin instanceof CheckstylePlugin) {
+            convention.getByType(CheckstyleExtension).with {
+                it.configFile = new File(rootDir, 'config/checkstyle/checkstyle.xml')
+                it.configProperties = [
+                        'configDir': new File(rootDir, 'config/checkstyle'),
+                        'baseDir'  : rootDir,
+                ]
+                it.toolVersion = checkstyleToolVersion
+//                it.ignoreFailures = true
+            }
+
+            tasks.create 'cs', {
+                it.doLast {
+                    println 'Checkstyle for '+it.project.name+' done!\n'
+                }
+                it.dependsOn = ['checkstyleMain', 'checkstyleTest']
+            }
+        }
+        else if (plugin instanceof ForbiddenApisPlugin) {
+            // convention.getByType(CheckForbiddenApisExtension).with {
+            forbiddenApis {
+                bundledSignatures = [
+                        'jdk-unsafe-1.8',
+                        'jdk-deprecated-1.8',
+                        'jdk-internal-1.8',
+                        'jdk-non-portable',
+                        //'jdk-system-out',
+                        //'jdk-reflection',
+                        //'commons-io-unsafe-2.5',
+                ]
+                ignoreFailures = false
+            }
+        }
+        else if (plugin instanceof JacocoPlugin) {
+            convention.getByType(JacocoPluginExtension).with {
+                it.toolVersion = jacocoToolVersion
+            }
+            tasks.withType JacocoReport, {
+                def javaPluginConvention = it.project.convention.getPlugin(JavaPluginConvention)
+                def mainSourceSet = javaPluginConvention.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME]
+                it.additionalSourceDirs = mainSourceSet.allSource
+                it.sourceDirectories = mainSourceSet.allSource
+                it.classDirectories = mainSourceSet.output
+                it.reports {
+                    it.html.enabled = true
+                    it.xml.enabled = true
+                    it.csv.enabled = false
+                }
+            }
+        }
+        else if (plugin instanceof JavaPlugin) {
+            artifacts.add Dependency.ARCHIVES_CONFIGURATION, tasks.create('sourcesJar', Jar, {
+                def javaPluginConvention = it.project.convention.getPlugin(JavaPluginConvention)
+                def mainSourceSet = javaPluginConvention.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME]
+                it.from mainSourceSet.allSource
+                it.classifier = 'sources'
+                it.group = LifecycleBasePlugin.BUILD_GROUP
+                it.description = 'Assembles a jar archive containing the main source code.'
+            })
+            artifacts.add Dependency.ARCHIVES_CONFIGURATION, tasks.create('javadocJar', Jar, {
+                it.from it.project.tasks.withType(Javadoc)
+                it.classifier = 'javadoc'
+                it.group = LifecycleBasePlugin.BUILD_GROUP
+                it.description = 'Assembles a jar archive containing the Javadoc API documentation for the main source code.'
+            })
+
+            tasks.withType Test, {
+                it.systemProperties 'java.awt.headless': 'true'
+            }
+
+            convention.getPlugin(JavaPluginConvention).with {
+                it.sourceCompatibility = sourceCompatibility
+                it.targetCompatibility = targetCompatibility
+            }
+
+            tasks.withType JavaCompile, {
+                it.options.compilerArgs = compilerArgs
+                it.options.encoding = sourceEncoding
+            }
+            tasks.withType Javadoc, {
+                it.options.encoding = sourceEncoding
+                /*
+                if(JavaVersion.current().isJava9Compatible()) {
+                    it.options.addStringOption('-add-modules', 'ALL-SYSTEM')
+                }
+                */
+            }
+        }
+        else if (plugin instanceof GroovyBasePlugin) {
+            tasks.withType GroovyCompile, {
+                it.options.compilerArgs = compilerArgs
+                it.options.encoding = sourceEncoding
+//                it.groovyOptions.optimizationOptions = [indy: true]
+//                it.groovyOptions.encoding = sourceEncoding
+            }
+        }
+//        else if (plugin instanceof MavenPlugin) {
+//            if(localNexusUserName != null && localNexusPassword != null) {
+//                uploadArchives {
+//                    repositories {
+//                        mavenDeployer {
+//                            repository(url: 'http://ci.ignitiongroupe.com/nexus/content/repositories/releases') {
+//                                authentication(userName: localNexusUserName, password: localNexusPassword)
+//                            }
+//                            snapshotRepository(url: 'http://ci.ignitiongroupe.com/nexus/content/repositories/snapshots') {
+//                                authentication(userName: localNexusUserName, password: localNexusPassword)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        else if (plugin instanceof SpringBootPlugin) {
+            def extraProperties = extensions.getByType(ExtraPropertiesExtension)
+            springBootVersionOverrides.each {
+                extraProperties.set it.key, it.value
+            }
+        }
+    }
+}
+//endregion
+
+//region Apply Plugins
+//apply plugin: 'com.github.ben-manes.versions'
+
+allprojects {
+    apply plugin: 'idea'
+//	apply plugin: 'duplicates'   //http://evgeny-goldin.com/wiki/Gradle-duplicates-plugin
+    apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+
+
+
+    if (childProjects.isEmpty()) {
+
+        apply plugin: 'groovy' // not for jacocoRootReport
+        apply plugin: 'de.thetaphi.forbiddenapis'
+        apply plugin: 'project-report'
+        apply plugin: 'jacoco'
+
+        //workaround
+        //https://github.com/johnrengelman/shadow/issues/347
+        /*
+         afterEvaluate {
+                if(!plugins.hasPlugin('org.springframework.boot')){
+                    apply plugin: 'maven'
+                }
+            }
+        */
+        def mavenBlacklist = [
+        ]
+
+        if(!mavenBlacklist.contains(project.name)){
+            apply plugin: 'maven'
+        }
+
+    }
+
+    pmd {
+        ruleSetFiles = files(rootProject.file('config/pmd/ruleSet.xml'))
+        ruleSets = []
+        toolVersion = '6.0.0'
+        // This analysis could be faster, please consider using Incremental Analysis:
+        // https://pmd.github.io/pmd/pmd_userdocs_getting_started.html#incremental-analysis
+        //
+        // Nope, this is a lie. Gradle 4.4.1 does not support this PMD feature. "Yet".
+        // https://github.com/gradle/gradle/pull/3125#issuecomment-352442432
+        //incrementalAnalysis = true
+
+        //ignoreFailures = true
+    }
+}
+//endregion
+
+def remappedArtifacts = [
+        'commons-logging:commons-logging'   : 'org.slf4j:jcl-over-slf4j',
+        'log4j:log4j'                       : 'org.slf4j:log4j-over-slf4j',
+        'org.codehaus.groovy:groovy-all'    : 'org.codehaus.groovy:groovy',
+        'org.thymeleaf:thymeleaf-spring3'   : 'org.thymeleaf:thymeleaf-spring5',
+        'org.thymeleaf:thymeleaf-spring4'   : 'org.thymeleaf:thymeleaf-spring5',
+        'taglibs:standard'                  : 'javax.servlet:jstl',
+        // starting with hibernate-validator 6.0:
+        // 'org.hibernate:hibernate-validator' : 'org.hibernate.validator:hibernate-validator',
+]
+
+allprojects {
+    if (childProjects.isEmpty()) {
+
+        configurations.each({ configuration ->
+            if (configuration.name == 'codenarc') {
+                return
+            }
+
+            excludedDependencies.each {
+                configuration.exclude it
+            }
+
+            //((org.gradle.api.internal.artifacts.configurations.DefaultConfiguration)(configuration)).excludeRules = excludedDependenciesInternal
+
+            configuration.resolutionStrategy.force(forcedDependencies)
+
+            // --refresh-dependencies workaround
+            // see http://forums.gradle.org/gradle/topics/_refresh_dependencies_should_use_cachechangingmodulesfor_0s
+            // check for updates every build
+            configuration.resolutionStrategy {
+                cacheChangingModulesFor 0, 'seconds'
+                cacheDynamicVersionsFor 10, 'hours' // instead of 24h
+                // cacheDynamicVersionsFor 0, 'seconds' // instead of 24h
+            }
+
+            configuration.resolutionStrategy.eachDependency { details ->
+                def req = details.requested
+                def requestedId = req.group + ':' + req.name
+                def mapped = remappedArtifacts[requestedId]
+                if(mapped) {
+                    //println requestedId + ' => ' + mapped
+                    details.useTarget managedDependency(mapped)
+                }
+                /*
+                http://issues.gradle.org/browse/GRADLE-2763
+                if(req.group == 'org.codehaus.groovy') {
+                    details.useTarget group: req.group, name: req.name, version: req.version, classifier: 'indy'
+                }
+                */
+            }
+        })
+
+        dependencies {
+            compile managedDependency('org.slf4j:slf4j-api')
+            testCompile managedDependency('junit:junit')
+            testCompile managedDependency('net.bytebuddy:byte-buddy')
+            testCompile managedDependency('org.codehaus.groovy:groovy')
+            testCompile managedDependency('org.spockframework:spock-core'), { exclude group: 'junit', module: 'junit-dep' }
+            testRuntime managedDependency('ch.qos.logback:logback-classic')
+            testRuntime managedDependency('ch.qos.logback:logback-core')
+            testRuntime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
+            testRuntime managedDependency('org.slf4j:jcl-over-slf4j')
+            testRuntime managedDependency('org.slf4j:log4j-over-slf4j')
+        }
+    }
+}
+
+defaultTasks 'build', 'forbiddenApis'
+
+apply from: 'projects.gradle'
+
+//region idea configuration
+idea {
+    project {
+        jdkName = sourceCompatibility
+        languageLevel = targetCompatibility
+
+        ipr {
+            withXml {
+                def node = it.asNode()
+                //def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
+                //vcsConfig.mapping[0].'@vcs' = 'Git'
+            }
+        }
+    }
+    module {
+        excludeDirs << new File(projectDir, '.idea')
+        excludeDirs << new File(projectDir, '.shelf')
+    }
+}
+
+subprojects {
+    //configure idea web facet
+    plugins.withType(WarPlugin).whenPluginAdded { plugin ->
+        // println("Webapp dir = ${war.webAppDir}")
+        idea.module {
+            iml {
+                withXml {
+                    it.asNode().append(NodeBuilder.newInstance().component(name: 'FacetManager') {
+                        facet(type: 'web', name: 'Web') {
+                            configuration {
+                                descriptors {
+                                    deploymentDescriptor(name: 'web.xml', url: 'file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml')
+                                }
+                                webroots {
+                                    root(url: 'file://$MODULE_DIR$/src/main/webapp', relative: '/')
+                                }
+                                sourceRoots {
+                                    root(url: 'file://$MODULE_DIR$/src/main/java')
+                                    root(url: 'file://$MODULE_DIR$/src/main/resources')
+                                    root(url: 'file://$MODULE_DIR$/src/main/groovy')
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    //idea use gradle compile output
+    idea.module {
+        //use gradle output path
+        iml.withXml {
+            def attributes = it.asNode().component.content.sourceFolder
+                    .find { it.@url == 'file://$MODULE_DIR$/src/test/resources' }?.attributes()
+            if (attributes) {
+                attributes.remove('isTestSource')
+                attributes.put('type', 'java-test-resource')
+            }
+        }
+
+        iml.withXml {
+            def attributes = it.asNode().component.content.sourceFolder
+                    .find { it.@url == 'file://$MODULE_DIR$/src/main/resources' }?.attributes()
+            if (attributes) {
+                attributes.remove('isTestSource')
+                attributes.put('type', 'java-resource')
+            }
+        }
+
+        inheritOutputDirs = false
+        outputDir = new File(buildDir, 'classes/main')
+        testOutputDir = new File(buildDir, 'classes/test')
+    }
+}
+//endregion
+
+
+
+
+
+
+
+// *******
+/*
 apply plugin: 'idea'
 
 idea {
@@ -56,7 +419,6 @@ project.allprojects { project ->
     apply plugin: "idea"
     apply plugin: "groovy"
     apply plugin: 'io.spring.dependency-management'
-//    apply plugin: 'checkstyle'
     apply plugin: 'pmd'
 
     ext {
@@ -169,11 +531,6 @@ project.allprojects { project ->
     }
 }
 
-//buildscript {
-//  apply from: 'dependencies.gradle'
-//  apply from: 'versions.gradle'
-//}
-
 repositories {
     mavenLocal()
     jcenter()
@@ -192,3 +549,4 @@ subprojects {
 }
 
 apply from: 'projects.gradle'
+*/

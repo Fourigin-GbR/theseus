@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class SiteStructureDataSourceQuery implements DataSourceQuery {
 
-    private final static String INFO_PATH = "INFO_PATH";
-    private final static String VERBOSE = "VERBOSE";
+    private static final String INFO_PATH = "INFO_PATH";
+    private static final String VERBOSE = "VERBOSE";
 
     private String path;
 

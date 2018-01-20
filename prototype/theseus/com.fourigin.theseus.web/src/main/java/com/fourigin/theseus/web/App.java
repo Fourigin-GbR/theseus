@@ -3,7 +3,6 @@ package com.fourigin.theseus.web;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fourigin.theseus.web.mapping.PriceModule;
 import com.fourigin.theseus.web.mapping.ProductModule;
 import com.fourigin.theseus.web.mapping.TranslationModule;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,7 +89,7 @@ public class App extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public TemplateResolver defaultTemplateResolver(@Value("${theseus.templates.path}") String templatePath){
+    public FileTemplateResolver defaultTemplateResolver(@Value("${theseus.templates.path}") String templatePath){
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         templateResolver.setPrefix(templatePath);
         templateResolver.setSuffix(".html");
@@ -105,7 +103,6 @@ public class App extends WebMvcConfigurerAdapter {
         ObjectMapper mapper = new ObjectMapper();
 
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.setDateFormat(new ISO8601DateFormat());
         mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
 
         mapper.registerModule(new ProductModule());

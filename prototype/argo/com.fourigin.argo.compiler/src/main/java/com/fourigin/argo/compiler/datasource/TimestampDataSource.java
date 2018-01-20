@@ -6,6 +6,7 @@ import com.fourigin.argo.repository.ContentResolver;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.SimpleTimeZone;
 
 public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
@@ -14,7 +15,7 @@ public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
     private static final SimpleDateFormat FORMAT;
 
     static {
-        FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss ZZZ");
+        FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss ZZZ", Locale.US);
         FORMAT.setTimeZone(new SimpleTimeZone(SimpleTimeZone.UTC_TIME, "UTC"));
     }
 

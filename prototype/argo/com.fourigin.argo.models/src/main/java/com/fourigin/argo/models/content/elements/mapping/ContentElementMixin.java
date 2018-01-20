@@ -25,5 +25,5 @@ import com.fourigin.argo.models.content.elements.TextLinkContentElement;
     "PMD.AbstractClassWithoutAnyMethod",
     "PMD.AbstractClassWithoutAbstractMethod"
 })
-abstract public class ContentElementMixin {
+public abstract class ContentElementMixin {
 }

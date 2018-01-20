@@ -58,39 +58,55 @@ def versionMap = [
         'javassist': '3.21.0-GA'
 ]
 
-subprojects { Project subProject ->
-    subProject.plugins.withId('spring-boot', { Plugin plugin ->
-        subProject.extensions.configure(ExtraPropertiesExtension, { ExtraPropertiesExtension extension ->
-            def map = [:] as Map<String, Object>
-            map['aspectj.version'] 				= versionMap.aspectj
-            map['derby.version'] 				= versionMap.derby
-            map['groovy.version'] 				= versionMap.groovy
-            map['hibernate-validator.version'] 	= versionMap.hibernateValidator
-            map['hibernate.version'] 			= versionMap.hibernate
-            map['httpclient.version'] 			= versionMap.httpClient
-            //map['jackson.version'] 				= versionMap.jackson
-            map['logback.version'] 				= versionMap.logback
-            map['slf4j.version'] 				= versionMap.slf4j
-            map['spock.version'] 				= versionMap.spock
-            map['spring-boot.version'] 			= versionMap.springboot
-            map['spring-security.version'] 		= versionMap.springsecurity
-            map['spring-ws.version'] 			= versionMap.springws
-            map['spring.version'] 				= versionMap.spring
-            map['thymeleaf.version'] 			= versionMap.thymeleaf
-            map.each {
-/* Not applying settings to all projects du tu priceformatter-ws build failure
-Could not resolve all dependencies for configuration ':formatter:com.bpinteractive.price.formatter.ws:compileClasspath'.
-> Could not find com.fasterxml.jackson.datatype:jackson-datatype-jdk7:2.7.3.
-  Required by:
-      com.bpinteractive:com.bpinteractive.price.formatter.ws:2.0.0-SNAPSHOT > io.ratpack:ratpack-core:1.2.0
- */
-                extension.set(it.key, it.value)
-            }
-        } as Action<ExtraPropertiesExtension>)
-    } as Action<Plugin>)
-} as Action<Project>
+//subprojects { Project subProject ->
+//    subProject.plugins.withId('spring-boot', { Plugin plugin ->
+//        subProject.extensions.configure(ExtraPropertiesExtension, { ExtraPropertiesExtension extension ->
+//            def map = [:] as Map<String, Object>
+//            map['aspectj.version'] 				= versionMap.aspectj
+//            map['derby.version'] 				= versionMap.derby
+//            map['groovy.version'] 				= versionMap.groovy
+//            map['hibernate-validator.version'] 	= versionMap.hibernateValidator
+//            map['hibernate.version'] 			= versionMap.hibernate
+//            map['httpclient.version'] 			= versionMap.httpClient
+//            //map['jackson.version'] 				= versionMap.jackson
+//            map['logback.version'] 				= versionMap.logback
+//            map['slf4j.version'] 				= versionMap.slf4j
+//            map['spock.version'] 				= versionMap.spock
+//            map['spring-boot.version'] 			= versionMap.springboot
+//            map['spring-security.version'] 		= versionMap.springsecurity
+//            map['spring-ws.version'] 			= versionMap.springws
+//            map['spring.version'] 				= versionMap.spring
+//            map['thymeleaf.version'] 			= versionMap.thymeleaf
+//            map.each {
+///* Not applying settings to all projects du tu priceformatter-ws build failure
+//Could not resolve all dependencies for configuration ':formatter:com.bpinteractive.price.formatter.ws:compileClasspath'.
+//> Could not find com.fasterxml.jackson.datatype:jackson-datatype-jdk7:2.7.3.
+//  Required by:
+//      com.bpinteractive:com.bpinteractive.price.formatter.ws:2.0.0-SNAPSHOT > io.ratpack:ratpack-core:1.2.0
+// */
+//                extension.set(it.key, it.value)
+//            }
+//        } as Action<ExtraPropertiesExtension>)
+//    } as Action<Plugin>)
+//} as Action<Project>
 
-ext['versionMap'] = versionMap
+def springBootVersionOverrides = [:] as Map<String, Object>
+springBootVersionOverrides['aspectj.version'] 				= versionMap.aspectj
+springBootVersionOverrides['derby.version'] 				= versionMap.derby
+springBootVersionOverrides['groovy.version'] 				= versionMap.groovy
+springBootVersionOverrides['hibernate-validator.version'] 	= versionMap.hibernateValidator
+springBootVersionOverrides['hibernate.version'] 			= versionMap.hibernate
+springBootVersionOverrides['httpclient.version'] 			= versionMap.httpClient
+springBootVersionOverrides['jackson.version'] 				= versionMap.jackson
+springBootVersionOverrides['logback.version'] 				= versionMap.logback
+springBootVersionOverrides['slf4j.version'] 				= versionMap.slf4j
+springBootVersionOverrides['spock.version'] 				= versionMap.spock
+springBootVersionOverrides['spring-boot.version'] 			= versionMap.springboot
+springBootVersionOverrides['spring-security.version'] 		= versionMap.springsecurity
+springBootVersionOverrides['spring-ws.version'] 			= versionMap.springws
+springBootVersionOverrides['spring.version'] 				= versionMap.spring
+springBootVersionOverrides['thymeleaf.version'] 			= versionMap.thymeleaf
+springBootVersionOverrides['reactor.version']			    = versionMap.reactor
 
 
 registerVersion('axis:axis-saaj', '1.3')
@@ -142,6 +158,7 @@ registerVersion('javax.websocket:javax.websocket-client-api', '1.0')
 registerVersion('javax.xml.bind:jaxb-api', '2.2.11')
 registerVersion('junit:junit', '4.12')
 registerVersion('mysql:mysql-connector-java', '5.1.31')
+registerVersion('net.bytebuddy:byte-buddy', '1.7.9')
 registerVersion('net.sf.ehcache:ehcache-core', '2.6.9')
 registerVersion('net.sf.opencsv:opencsv', '2.3')
 registerVersion('net.sf.saxon:Saxon-HE', '9.6.0-5')
@@ -243,7 +260,8 @@ registerVersion('org.springframework:spring-web', versionMap.spring)
 registerVersion('org.springframework:spring-webmvc', versionMap.spring)
 registerVersion('org.thymeleaf.extras:thymeleaf-extras-springsecurity3', '2.1.1.RELEASE')
 registerVersion('org.thymeleaf:thymeleaf', versionMap.thymeleaf)
-registerVersion('org.thymeleaf:thymeleaf-spring4', versionMap.thymeleaf)
+//registerVersion('org.thymeleaf:thymeleaf-spring4', versionMap.thymeleaf)
+registerVersion('org.thymeleaf:thymeleaf-spring5', versionMap.thymeleaf)
 registerVersion('xerces:xercesImpl', '2.11.0')
 registerVersion('xml-apis:xml-apis', '1.4.01')
 registerVersion('xmlunit:xmlunit', '1.4')
@@ -260,3 +278,46 @@ registerVersion('org.activiti:activiti-spring-boot-starter-actuator', versionMap
 registerVersion('org.apache.tika:tika-core', versionMap.tika)
 registerVersion('org.apache.tika:tika-parsers', versionMap.tika)
 registerVersion('org.apache.tika:tika', versionMap.tika)
+
+def forcedDependencies = [
+		managedDependency('org.apache.httpcomponents:httpclient'),
+		managedDependency('org.apache.httpcomponents:httpclient-cache'),
+		managedDependency('org.springframework:spring-aop'),
+		managedDependency('org.springframework:spring-beans'),
+		managedDependency('org.springframework:spring-context'),
+		managedDependency('org.springframework:spring-context-support'),
+		managedDependency('org.springframework:spring-core'),
+		managedDependency('org.springframework:spring-jdbc'),
+		managedDependency('org.springframework:spring-orm'),
+		managedDependency('org.springframework:spring-test'),
+		managedDependency('org.springframework:spring-tx'),
+		managedDependency('org.springframework:spring-web'),
+		managedDependency('org.springframework:spring-webmvc'),
+		managedDependency('org.springframework.security:spring-security-acl'),
+		managedDependency('org.springframework.security:spring-security-cas'),
+		managedDependency('org.springframework.security:spring-security-config'),
+		managedDependency('org.springframework.security:spring-security-core'),
+		managedDependency('org.springframework.security:spring-security-taglibs'),
+		managedDependency('org.springframework.security:spring-security-web'),
+		managedDependency('xerces:xercesImpl'),
+		managedDependency('xml-apis:xml-apis')
+]
+
+def excludedDependencies = [
+		[group: 'org.codehaus.jackson', module: 'jackson-core-asl'],
+		[group: 'org.codehaus.jackson', module: 'jackson-mapper-asl'],
+		[group: 'org.codehaus.jackson', module: 'jackson-core-lgpl'],
+		[group: 'org.codehaus.jackson', module: 'jackson-mapper-lgpl'],
+		[group: 'javax.xml.stream', module: 'stax-api'],
+		[group: 'stax', module: 'stax-api'],
+		[group: 'asm', module: 'asm'],
+		// bouncycastle => org.bouncycastle
+		// * bouncycastle:bcmail-jdk14
+		// * bouncycastle:bcprov-jdk14
+		[group: 'bouncycastle'],
+]
+
+ext['versionMap'] = versionMap
+ext['forcedDependencies'] = forcedDependencies as Object[]
+ext['springBootVersionOverrides'] = springBootVersionOverrides
+ext['excludedDependencies'] = excludedDependencies

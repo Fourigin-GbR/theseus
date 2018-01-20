@@ -4,5 +4,5 @@ package com.fourigin.theseus.web.mapping;
     "PMD.AbstractClassWithoutAnyMethod",
     "PMD.AbstractClassWithoutAbstractMethod"
 })
-abstract public class TranslationMixin {
+public abstract class TranslationMixin {
 }

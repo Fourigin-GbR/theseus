@@ -3,7 +3,7 @@ package com.fourigin.argo.models.content.elements;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class AbstractContentElement implements ContentElement {
+public abstract class AbstractContentElement implements ContentElement {
     private static final long serialVersionUID = 2481851091542511335L;
 
     private String name;

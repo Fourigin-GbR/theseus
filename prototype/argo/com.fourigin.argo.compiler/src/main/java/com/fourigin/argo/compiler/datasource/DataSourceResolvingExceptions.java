@@ -6,12 +6,12 @@ public class DataSourceResolvingExceptions extends IllegalStateException {
     private List<DataSourceResolvingException> exceptions;
 
     public DataSourceResolvingExceptions(List<DataSourceResolvingException> exceptions) {
-        super(BUILD_ERROR_MESSAGE(exceptions));
+        super(buildErrorMessage(exceptions));
 
         this.exceptions = exceptions;
     }
 
-    private static String BUILD_ERROR_MESSAGE(List<DataSourceResolvingException> exceptions){
+    private static String buildErrorMessage(List<DataSourceResolvingException> exceptions){
         StringBuilder builder = new StringBuilder();
 
         if(exceptions != null && !exceptions.isEmpty()){

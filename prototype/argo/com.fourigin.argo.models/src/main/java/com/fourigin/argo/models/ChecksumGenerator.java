@@ -8,11 +8,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public final class ChecksumGenerator {
-    final private static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
-    final private static String HASH_ALG = "MD5";
+    private static final String HASH_ALG = "MD5";
 
-    final private static MessageDigest MESSAGE_DIGEST;
+    private static final MessageDigest MESSAGE_DIGEST;
 
     static {
         try {

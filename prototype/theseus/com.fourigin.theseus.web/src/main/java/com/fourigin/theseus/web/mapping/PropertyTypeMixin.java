@@ -23,7 +23,7 @@ import java.util.Map;
     "PMD.AbstractClassWithoutAnyMethod",
     "PMD.AbstractClassWithoutAbstractMethod"
 })
-abstract public class PropertyTypeMixin {
+public abstract class PropertyTypeMixin {
     @JsonProperty("name")
     @JsonDeserialize(contentAs = Map.class)
     abstract Map<String, String> getName();

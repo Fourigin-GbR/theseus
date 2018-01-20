@@ -1,6 +1,6 @@
 package com.fourigin.argo.editors;
 
-abstract public class AbstractContentElementPointer implements ContentElementPointer {
+public abstract class AbstractContentElementPointer implements ContentElementPointer {
 
     @Override
     public void copyFrom(ContentElementPointer otherPointer) {

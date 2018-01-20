@@ -16,7 +16,8 @@ def heraCore                                = project(':hera:com.fourigin.hera.c
 def utilitiesCore                           = project(':utilities:com.fourigin.utilities.core')
 
 def thymeleaf                               = managedDependency('org.thymeleaf:thymeleaf')
-def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring4')
+//def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring4')
+def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring5')
 
 project(':theseus') {
     def theseusVersion = "1.0-SNAPSHOT"

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     "PMD.AbstractClassWithoutAnyMethod",
     "PMD.AbstractClassWithoutAbstractMethod"
 })
-abstract public class PriceMixin {
+public abstract class PriceMixin {
     @JsonIgnore
     abstract double getPrice();
 }

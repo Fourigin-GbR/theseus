@@ -133,6 +133,4 @@ public class LoggerConfiguration {
           ", serverLoggingEnabled=" + serverLoggingEnabled +
           '}';
     }
-
-
 }

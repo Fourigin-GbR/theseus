@@ -17,5 +17,5 @@ import com.fourigin.argo.repository.model.JsonFileInfo;
     "PMD.AbstractClassWithoutAnyMethod",
     "PMD.AbstractClassWithoutAbstractMethod"
 })
-abstract public class JsonInfoMixin {
+public abstract class JsonInfoMixin {
 }
