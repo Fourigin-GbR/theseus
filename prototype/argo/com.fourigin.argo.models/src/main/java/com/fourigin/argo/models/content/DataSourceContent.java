@@ -8,8 +8,17 @@ import java.io.Serializable;
 public class DataSourceContent implements Serializable {
     private static final long serialVersionUID = 5480644248235587413L;
 
+    private String name;
     private DataSourceIdentifier identifier;
     private ContentElement content;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public DataSourceIdentifier getIdentifier() {
         return identifier;
@@ -34,6 +43,7 @@ public class DataSourceContent implements Serializable {
 
         DataSourceContent that = (DataSourceContent) o;
 
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         //noinspection SimplifiableIfStatement
         if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
         return content != null ? content.equals(that.content) : that.content == null;
@@ -41,7 +51,8 @@ public class DataSourceContent implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = identifier != null ? identifier.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
     }
@@ -49,8 +60,9 @@ public class DataSourceContent implements Serializable {
     @Override
     public String toString() {
         return "DataSourceContent{" +
-          "identifier=" + identifier +
-          ", content=" + content +
-          '}';
+            "name='" + name + '\'' +
+            ", identifier=" + identifier +
+            ", content=" + content +
+            '}';
     }
 }

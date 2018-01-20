@@ -37,10 +37,11 @@ public class DataSourcesResolver {
 
         for (DataSourceContent dataSourceGroup : dataSourceGroups) {
             DataSourceIdentifier dataSourceId = dataSourceGroup.getIdentifier();
+            String name = dataSourceGroup.getName();
             String type = dataSourceId.getType();
             DataSource<DataSourceQuery> dataSource = dataSourceMap.get(type);
             if(dataSource == null){
-                if (logger.isErrorEnabled()) logger.error("No dataSource found for type '{}'!", type);
+                if (logger.isErrorEnabled()) logger.error("No dataSource found for type '{}' (name: '{}')!", type, name);
                 errors.add(new UnknownDataSourceTypeException(type));
                 continue;
             }
@@ -52,7 +53,7 @@ public class DataSourcesResolver {
                 query = DataSourceQueryFactory.buildFromMap(dataSource, queryMap);
             }
             catch(DataSourceQueryCreationException ex){
-                if (logger.isErrorEnabled()) logger.error("Unable to create query of type '{}' from map {}!", type, queryMap);
+                if (logger.isErrorEnabled()) logger.error("Unable to create query of type '{}' (name: '{}') from map {}!", type, name, queryMap);
                 errors.add(ex);
                 continue;
             }
@@ -61,11 +62,11 @@ public class DataSourcesResolver {
             ContentElement resolvedContent = dataSource.generateContent(contentResolver, query);
             String newChecksum = ChecksumGenerator.getChecksum(resolvedContent);
             if(newChecksum.equals(previousChecksum)){
-                if (logger.isInfoEnabled()) logger.info("Resolved unchanged data with checksum '{}'.", newChecksum);
+                if (logger.isInfoEnabled()) logger.info("Resolved unchanged data (name: '{}') with checksum '{}'.", name, newChecksum);
                 continue;
             }
 
-            if (logger.isInfoEnabled()) logger.info("Resolved changed data with checksum '{}'.", newChecksum);
+            if (logger.isInfoEnabled()) logger.info("Resolved changed data (name: '{}') with checksum '{}'.", name, newChecksum);
             dataSourceId.setChecksum(newChecksum);
             dataSourceGroup.setContent(resolvedContent);
         }
