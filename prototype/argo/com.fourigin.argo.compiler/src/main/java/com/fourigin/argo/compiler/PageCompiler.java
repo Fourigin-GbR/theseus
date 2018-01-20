@@ -1,11 +1,14 @@
 package com.fourigin.argo.compiler;
 
+import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.template.engine.ProcessingMode;
 
 import java.io.OutputStream;
 
 public interface PageCompiler {
+
+    ContentPage prepareContent(PageInfo pageInfo);
 
     /**
      *

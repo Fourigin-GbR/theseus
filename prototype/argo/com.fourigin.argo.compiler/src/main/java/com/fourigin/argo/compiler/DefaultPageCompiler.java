@@ -34,6 +34,26 @@ public class DefaultPageCompiler implements PageCompiler {
 
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
 
+    public ContentPage prepareContent(PageInfo pageInfo){
+        String pageName = pageInfo.getName();
+        if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
+
+        ContentPage contentPage = contentRepository.retrieve(pageInfo);
+        if(contentPage == null){
+            throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
+        }
+        if (logger.isDebugEnabled()) logger.debug("Content page: {}", contentPage.getId());
+
+        // resolve all data sources
+        if(dataSourcesResolver != null){
+            if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
+            contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
+            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
+        }
+
+        return contentPage;
+    }
+
     @Override
     public String compile(PageInfo pageInfo, ProcessingMode processingMode, OutputStream out) {
         String pageName = pageInfo.getName();
@@ -44,12 +64,6 @@ public class DefaultPageCompiler implements PageCompiler {
             throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
         }
         if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
-
-        ContentPage contentPage = contentRepository.retrieve(pageInfo);
-        if(contentPage == null){
-            throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
-        }
-        if (logger.isDebugEnabled()) logger.debug("Content page: {}", contentPage.getId());
 
         String templateId = templateReference.getTemplateId();
         Template template = templateResolver.retrieve(templateId);
@@ -102,12 +116,19 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
 
-        // resolve all data sources
-        if(dataSourcesResolver != null){
-            if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
-            contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
-            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
-        }
+        ContentPage contentPage = prepareContent(pageInfo);
+//        ContentPage contentPage = contentRepository.retrieve(pageInfo);
+//        if(contentPage == null){
+//            throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
+//        }
+//        if (logger.isDebugEnabled()) logger.debug("Content page: {}", contentPage.getId());
+//
+//        // resolve all data sources
+//        if(dataSourcesResolver != null){
+//            if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
+//            contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
+//            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
+//        }
 
         // process content page
         templateEngine.process(contentPage, template, templateVariation, processingMode, out);

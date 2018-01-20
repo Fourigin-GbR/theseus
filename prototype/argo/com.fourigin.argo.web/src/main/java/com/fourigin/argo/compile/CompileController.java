@@ -3,6 +3,7 @@ package com.fourigin.argo.compile;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
+import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.ContentResolver;
@@ -68,6 +69,27 @@ public class CompileController {
         headers.setContentType(MediaType.parseMediaType(outputContentType));
 
         return new HttpEntity<>(bytes, headers);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/prepare-content", method = RequestMethod.GET)
+    public ContentPage showPreparedContent(
+        @RequestParam("base") String base,
+        @RequestParam("path") String path,
+        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
+    ){
+        if (logger.isDebugEnabled()) logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
+
+        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+        if(flushCaches) {
+            contentResolver.flush();
+        }
+
+        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
+
+        PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
+
+        return pageCompiler.prepareContent(pageInfo);
     }
 
 //    @RequestMapping(value = "/persist", method = RequestMethod.GET)
