@@ -5,8 +5,11 @@ import java.util.Map;
 public class SiteStructureDataSourceQuery implements DataSourceQuery {
 
     private final static String INFO_PATH = "INFO_PATH";
+    private final static String VERBOSE = "VERBOSE";
 
     private String path;
+
+    private boolean verbose = true;
 
     @Override
     public void buildFromMap(Map<String, Object> values) {
@@ -20,9 +23,15 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
         }
 
         this.path = String.valueOf(pathValue);
+
+        this.verbose = Boolean.parseBoolean(String.valueOf(values.get(VERBOSE)));
     }
 
     public String getPath() {
         return path;
+    }
+
+    public boolean isVerbose() {
+        return verbose;
     }
 }

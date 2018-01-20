@@ -24,19 +24,24 @@ public class SiteStructureDataSource implements DataSource<SiteStructureDataSour
             .withName("siteStructureElements");
 
         Collection<PageInfo> infos = contentResolver.resolveInfos(path);
-        if(infos != null && !infos.isEmpty()){
+        if (infos != null && !infos.isEmpty()) {
             for (PageInfo info : infos) {
-                builder.withElement(new TextContentElement.Builder()
+                TextContentElement.Builder textBuilder = new TextContentElement.Builder()
                     .withName(info.getName())
-                    .withContent(info.getDisplayName())
-                    .withAttribute("path", info.getPath())
-                    .withAttribute("description", info.getDescription())
-                    .withAttribute("localizedName", info.getLocalizedName())
-                    .withAttribute("reference", info.getReference())
-                    .withAttribute("compileState", String.valueOf(info.getCompileState()))
-                    .withAttribute("contentPageReference", String.valueOf(info.getContentPageReference()))
-                    .withAttribute("templateReference", String.valueOf(info.getTemplateReference()))
-                    .build());
+                    .withContent(info.getDisplayName());
+
+                if (query.isVerbose()) {
+                    textBuilder.withAttribute("path", info.getPath())
+                        .withAttribute("description", info.getDescription())
+                        .withAttribute("localizedName", info.getLocalizedName())
+                        .withAttribute("reference", info.getReference())
+                        .withAttribute("compileState", String.valueOf(info.getCompileState()))
+                        .withAttribute("contentPageReference", String.valueOf(info.getContentPageReference()))
+                        .withAttribute("templateReference", String.valueOf(info.getTemplateReference()));
+
+                }
+
+                builder.withElement(textBuilder.build());
             }
         }
 
