@@ -16,8 +16,8 @@ def heraCore                                = project(':hera:com.fourigin.hera.c
 def utilitiesCore                           = project(':utilities:com.fourigin.utilities.core')
 
 def thymeleaf                               = managedDependency('org.thymeleaf:thymeleaf')
-//def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring4')
-def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring5')
+def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring4')
+//def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring5')
 
 project(':theseus') {
     def theseusVersion = "1.0-SNAPSHOT"
@@ -181,11 +181,9 @@ project(':argo') {
         dependencies {
             compile argoModels
             compile argoTemplateEngine
-            runtime argoTemplateEngineThymeleaf
+            compile argoTemplateEngineThymeleaf
             compile argoRepository
             runtime argoRepositoryJson
-            compile argoTemplateEngine
-            compile argoTemplateEngineThymeleaf
             compile argoCompiler
 
             compile thymeleaf
@@ -197,6 +195,7 @@ project(':argo') {
 //            compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
             compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
 
             compile managedDependency('org.springframework:spring-context-support')
             compile managedDependency('org.springframework:spring-webmvc')

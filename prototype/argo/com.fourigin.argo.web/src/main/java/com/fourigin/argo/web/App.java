@@ -16,6 +16,7 @@ import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.template.engine.DefaultTemplateEngineFactory;
+import com.fourigin.argo.template.engine.TemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
 import com.fourigin.argo.template.engine.ThymeleafTemplateEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ import org.springframework.boot.system.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
@@ -40,6 +40,7 @@ import java.util.Set;
 
 @Configuration
 @EnableAutoConfiguration
+@ComponentScan({"com.fourigin.argo.web"})
 @ComponentScan({"com.fourigin.argo.compile"})
 @ComponentScan({"com.fourigin.argo.editors"})
 @ComponentScan({"com.fourigin.argo.config"})
@@ -73,37 +74,45 @@ public class App {
 
     // *** TEMPLATE ***
 
-    private TemplateEngine springTemplateEngine(String templateBasePath){
+    @Bean
+    public SpringTemplateEngine springTemplateEngine(){
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 
-        FileTemplateResolver templateResolver = new FileTemplateResolver();
+        templateEngine.setTemplateResolver(fileTemplateResolver(templateBasePath));
 
-        String prefix = templateBasePath;
+        return templateEngine;
+    }
+
+    private FileTemplateResolver fileTemplateResolver(String basePath){
+        FileTemplateResolver templateResolver = new FileTemplateResolver();
+        String prefix = basePath;
         if(!prefix.endsWith("/")){
             prefix += "/";
         }
         templateResolver.setPrefix(prefix);
         templateResolver.setSuffix(".html");
-//        templateResolver.setTemplateMode("HTML");
-
+        templateResolver.setTemplateMode("HTML");
         templateResolver.setCacheable(false);
         templateResolver.setCacheTTLMs(1L);
 
-        templateEngine.setTemplateResolver(templateResolver);
-
-        return templateEngine;
+        return templateResolver;
     }
-    
+
+    @Bean
+    public ThymeleafTemplateEngine thymeleafTemplateEngine(){
+        ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
+        thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine());
+        return thymeleafEngine;
+    }
+
     @Bean
     public DefaultTemplateEngineFactory templateEngineFactory(){
         DefaultTemplateEngineFactory factory = new DefaultTemplateEngineFactory();
 
-        Map<Type, com.fourigin.argo.template.engine.TemplateEngine> engines = new HashMap<>();
+        Map<Type, TemplateEngine> engines = new HashMap<>();
 
-        ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
-        thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine(templateBasePath));
+        engines.put(Type.THYMELEAF, thymeleafTemplateEngine());
 
-        engines.put(Type.THYMELEAF, thymeleafEngine);
         factory.setEngines(engines);
 
         return factory;
@@ -129,7 +138,78 @@ public class App {
         };
     }
 
+//    @Bean
+//    public ThymeleafViewResolver thymeleafViewResolver(){
+//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+//        viewResolver.setTemplateEngine(internalSpringTemplateEngine());
+//        return viewResolver;
+//    }
+
+//    @Bean
+//    public ITemplateResolver springTemplateResolver(){
+//        FileTemplateResolver templateResolver = new FileTemplateResolver();
+//
+//        String prefix = templateBasePath;
+//        if(!prefix.endsWith("/")){
+//            prefix += "/";
+//        }
+//        templateResolver.setPrefix(prefix);
+//        templateResolver.setSuffix(".html");
+////        templateResolver.setTemplateMode("HTML");
+//
+//        templateResolver.setCacheable(false);
+//
+//        return templateResolver;
+//    }
+//
+//    private TemplateEngine springTemplateEngine(){
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//
+//        templateEngine.setTemplateResolver(springTemplateResolver());
+//
+//        return templateEngine;
+//    }
+//
+//    @Bean
+//    public TemplateResolver templateResolver(){
+//        return id -> {
+//            Set<TemplateVariation> variations = new HashSet<>();
+//
+//            TemplateVariation variation = new TemplateVariation();
+//            variation.setId("default");
+//            variation.setType(Type.THYMELEAF);
+//            variation.setOutputContentType("text/html");
+//            variations.add(variation);
+//
+//            Template template = new Template();
+//            template.setId(id);
+//            template.setRevision(null);
+//            template.setVariations(variations);
+//
+//            return template;
+//        };
+//    }
+//
+//    @Bean
+//    public ThymeleafTemplateEngine thymeleafTemplateEngine(){
+//        ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
+//        thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine());
+//        return thymeleafEngine;
+//    }
+//
+//    @Bean
+//    public DefaultTemplateEngineFactory templateEngineFactory(){
+//        DefaultTemplateEngineFactory factory = new DefaultTemplateEngineFactory();
+//
+//        Map<Type, com.fourigin.argo.template.engine.TemplateEngine> engines = new HashMap<>();
+//        engines.put(Type.THYMELEAF, thymeleafTemplateEngine());
+//        factory.setEngines(engines);
+//
+//        return factory;
+//    }
+
     // *** COMPILER ***
+
     private DefaultPageCompiler createPageCompiler(
         String base,
         ContentRepositoryFactory contentRepositoryFactory,

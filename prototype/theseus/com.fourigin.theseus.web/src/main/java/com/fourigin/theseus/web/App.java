@@ -111,26 +111,4 @@ public class App extends WebMvcConfigurerAdapter {
 
         return mapper;
     }
-
-//    @Bean
-//    public ModelObjectRepositoryStub modelObjectRepositoryStub(){
-//        ModelObjectRepositoryStub result = new ModelObjectRepositoryStub();
-//
-//        Classification.Builder classificationBuilder = new Classification.Builder();
-//
-//        result.create(classificationBuilder.id("c140").typeCode("model").description("Captiva (C140)").build());
-//        result.create(classificationBuilder.id("1yy").typeCode("model").description("Corvette Stingray (1YY)").build());
-//        result.create(classificationBuilder.id("1yz").typeCode("model").description("Corvette Z06 (1YZ)").build());
-//        result.create(classificationBuilder.id("ls").typeCode("trim").description("LS").build());
-//        result.create(classificationBuilder.id("lt").typeCode("trim").description("LT").build());
-//        result.create(classificationBuilder.id("1.8").typeCode("version").description("1.8").build());
-//
-//        ClassificationType.Builder classificationTypeBuilder = new ClassificationType.Builder();
-//
-//        result.create(classificationTypeBuilder.id("model").description("Carline").build());
-//        result.create(classificationTypeBuilder.id("trim").description("Trim level").build());
-//        result.create(classificationTypeBuilder.id("version").description("Version").build());
-//
-//        return result;
-//    }
 }
