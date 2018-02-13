@@ -29,7 +29,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
         templateResolver.setPrefix(prefix);
         templateResolver.setSuffix(".html");
-//        templateResolver.setTemplateMode("XHTML");
         templateResolver.setTemplateMode("HTML");
         templateResolver.setCacheable(false);
         templateResolver.setCacheTTLMs(1L);
