@@ -58,50 +58,50 @@ public class JsonFilesContentRepository implements ContentRepository {
     private static final String DEFAULT_SITE_DESCRIPTION_NAME = ".site";
     private static final String DEFAULT_DIRECTORY_INFO_NAME = ".info";
 
-    public static class Builder {
-        private String contentRoot;
-        private String infoFilename;
-        private String siteStructureFilename;
-        private ObjectMapper objectMapper;
-        private PageInfoTraversingStrategy traversingStrategy;
-
-        public Builder withContentRoot(String path){
-            this.contentRoot = path;
-            return this;
-        }
-
-        public Builder withInfoFilename(String infoFilename){
-            this.infoFilename = infoFilename;
-            return this;
-        }
-
-        public Builder withSiteStructureFilename(String siteStructureFilename){
-            this.siteStructureFilename = siteStructureFilename;
-            return this;
-        }
-
-        public Builder withObjectMapper(ObjectMapper objectMapper){
-            this.objectMapper = objectMapper;
-            return this;
-        }
-
-        public Builder withTraversingStrategy(PageInfoTraversingStrategy traversingStrategy) {
-            this.traversingStrategy = traversingStrategy;
-            return this;
-        }
-
-        public JsonFilesContentRepository build(){
-            JsonFilesContentRepository instance = new JsonFilesContentRepository();
-
-            instance.setObjectMapper(objectMapper);
-            instance.setContentRoot(contentRoot);
-            instance.setDirectoryInfoFileName(infoFilename);
-            instance.setSiteStructureFileName(siteStructureFilename);
-            instance.setDefaultTraversingStrategy(traversingStrategy);
-
-            return instance;
-        }
-    }
+//    public static class Builder {
+//        private String contentRoot;
+//        private String infoFilename;
+//        private String siteStructureFilename;
+//        private ObjectMapper objectMapper;
+//        private PageInfoTraversingStrategy traversingStrategy;
+//
+//        public Builder withContentRoot(String path){
+//            this.contentRoot = path;
+//            return this;
+//        }
+//
+//        public Builder withInfoFilename(String infoFilename){
+//            this.infoFilename = infoFilename;
+//            return this;
+//        }
+//
+//        public Builder withSiteStructureFilename(String siteStructureFilename){
+//            this.siteStructureFilename = siteStructureFilename;
+//            return this;
+//        }
+//
+//        public Builder withObjectMapper(ObjectMapper objectMapper){
+//            this.objectMapper = objectMapper;
+//            return this;
+//        }
+//
+//        public Builder withTraversingStrategy(PageInfoTraversingStrategy traversingStrategy) {
+//            this.traversingStrategy = traversingStrategy;
+//            return this;
+//        }
+//
+//        public JsonFilesContentRepository build(){
+//            JsonFilesContentRepository instance = new JsonFilesContentRepository();
+//
+//            instance.setObjectMapper(objectMapper);
+//            instance.setContentRoot(contentRoot);
+//            instance.setDirectoryInfoFileName(infoFilename);
+//            instance.setSiteStructureFileName(siteStructureFilename);
+//            instance.setDefaultTraversingStrategy(traversingStrategy);
+//
+//            return instance;
+//        }
+//    }
 
     public void flush(){
         root = null;
@@ -142,38 +142,17 @@ public class JsonFilesContentRepository implements ContentRepository {
         return resolveInfo(type, root, path);
     }
 
-    private String printInfoTree(SiteNodeContainerInfo container, String indent){
-        StringBuilder builder = new StringBuilder();
-
-        if(container.equals(root)){
-            builder.append("/\n");
-        }
-
-        List<SiteNodeInfo> nodes = container.getNodes();
-        if(nodes != null && !nodes.isEmpty()){
-            for (SiteNodeInfo node : nodes) {
-                builder.append(indent).append("|-- ").append(node.getName()).append('\n');
-                if(node instanceof DirectoryInfo){
-                    builder.append(printInfoTree((SiteNodeContainerInfo) node, indent + "  "));
-                    builder.append('\n');
-                }
-            }
-        }
-
-        return builder.toString();
-    }
-
     @Override
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
         if(logger.isDebugEnabled())
             logger.debug("info tree:\n{}", printInfoTree(root, ""));
 
         SiteNodeInfo node = selectInfo(parent, path);
-        if(type.isAssignableFrom(node.getClass())){
-            return type.cast(node);
+        if(!type.isAssignableFrom(node.getClass())){
+            return null;
         }
 
-        return null;
+        return type.cast(node);
     }
 
     @Override
@@ -440,18 +419,53 @@ public class JsonFilesContentRepository implements ContentRepository {
 
     //******* private methods *******//
 
+    private String printInfoTree(SiteNodeContainerInfo container, String indent){
+        StringBuilder builder = new StringBuilder();
+
+        if(container.equals(root)){
+            builder.append("/\n");
+        }
+
+        List<SiteNodeInfo> nodes = container.getNodes();
+        if(nodes != null && !nodes.isEmpty()){
+            for (SiteNodeInfo node : nodes) {
+                builder.append(indent).append("|-- ").append(node.getName()).append('\n');
+                if(node instanceof DirectoryInfo){
+                    builder.append(printInfoTree((SiteNodeContainerInfo) node, indent + "  "));
+                    builder.append('\n');
+                }
+            }
+        }
+
+        return builder.toString();
+    }
+
     private void initialize(){
+        if(root != null){
+            if (logger.isDebugEnabled()) logger.debug("Repository is already initialized");
+            return;
+        }
+
         File dir = new File(contentRoot);
 
         String rootPath = "/";
 
-        List<JsonInfo> rootList = readJsonInfoList(rootPath);
+        boolean changed = false;
+        JsonInfoList rootList = readJsonInfoList(rootPath);
+        if(rootList == null){
+            rootList = new JsonInfoList("/");
+            changed = true;
+        }
 
         root = createNewDirectoryInfo("", rootPath);
 
         List<SiteNodeInfo> nodes = parseDirectory(dir, rootPath, null, rootList);
 
         root.setNodes(nodes);
+
+        if(changed){
+            writeJsonInfoList(rootPath, rootList);
+        }
     }
 
     private String normalizeFileName(String name){
@@ -485,9 +499,10 @@ public class JsonFilesContentRepository implements ContentRepository {
     private PageInfo createNewPageInfo(String name, String localPath) {
         PageInfo info = new PageInfo();
 
-        if(name.endsWith(".json")){
-            name = name.substring(0, name.length() - ".json".length());
-        }
+        name = normalizeFileName(name);
+//        if(name.endsWith(".json")){
+//            name = name.substring(0, name.length() - ".json".length());
+//        }
 
         info.setName(name);
         info.setLocalizedName(name);
@@ -514,7 +529,7 @@ public class JsonFilesContentRepository implements ContentRepository {
         return info;
     }
 
-    private List<SiteNodeInfo> parseDirectory(File dir, String localPath, SiteNodeContainerInfo parent, List<JsonInfo> jsonInfos) {
+    private List<SiteNodeInfo> parseDirectory(File dir, String localPath, SiteNodeContainerInfo parent, JsonInfoList jsonInfos) {
         if(dir == null){
             if (logger.isErrorEnabled()) logger.error("Unable to parse null-directory!");
             return null;
@@ -552,52 +567,87 @@ public class JsonFilesContentRepository implements ContentRepository {
             return null;
         }
 
-        Map<String, JsonInfo> infoMap = new HashMap<>();
-        for (JsonInfo jsonInfo : jsonInfos) {
-            infoMap.put(jsonInfo.getName(), jsonInfo);
-        }
-
         List<SiteNodeInfo> nodes = new ArrayList<>(files.length);
 
-        boolean changed = false;
+        Map<String, File> filesMap = new HashMap<>();
         for (File file : files) {
-            String name = file.getName();
+            String name = normalizeFileName(file.getName());
+            filesMap.put(name, file);
+        }
 
-//            if(name.startsWith(".")){
-//                if (logger.isDebugEnabled()) logger.debug("Skipping hidden file '{}'.", name);
-//                continue;
-//            }
+        boolean changed = false;
 
-            name = normalizeFileName(name);
+        List<JsonInfo> children = jsonInfos.getChildren();
+        Map<String, JsonInfo> infoMap = new HashMap<>();
+        for (JsonInfo jsonInfo : children) {
+            String name = jsonInfo.getName();
+
+            // fast access
+            infoMap.put(name, jsonInfo);
+
+            // pre-sort
+            File file = filesMap.get(name);
+            if(file == null || !file.exists()){
+                if (logger.isInfoEnabled()) logger.info("No file '{}' found! Removing it from info index.", name);
+                continue;
+            }
+
+            // remove already existing file
+            filesMap.remove(name);
+
+            SiteNodeInfo nodeInfo;
+            if(file.isDirectory()){
+                JsonDirectoryInfo jsonDirectoryInfo = JsonDirectoryInfo.class.cast(jsonInfo);
+                nodeInfo = jsonDirectoryInfo.buildNodeInfo();
+                nodeInfo.setPath(localPath);
+
+                String dirPath;
+                if("/".equals(localPath)) {
+                    dirPath = localPath + name;
+                }
+                else {
+                    dirPath = localPath + '/' + name;
+                }
+
+                JsonInfoList dirJsonInfoList = readJsonInfoList(dirPath);
+                if(dirJsonInfoList == null){
+                    dirJsonInfoList = new JsonInfoList(dirPath);
+                    changed = true;
+                }
+
+                List<SiteNodeInfo> dirNodes = parseDirectory(file, dirPath, (SiteNodeContainerInfo) nodeInfo, dirJsonInfoList);
+                ((DirectoryInfo) nodeInfo).setNodes(dirNodes);
+            }
+            else {
+                JsonFileInfo jsonFileInfo = JsonFileInfo.class.cast(jsonInfo);
+                nodeInfo = jsonFileInfo.buildNodeInfo();
+                nodeInfo.setPath(localPath);
+            }
+
+            nodeInfo.setParent(parent);
+
+            nodes.add(nodeInfo);
+        }
+
+        for (File file : filesMap.values()) {
+            String name = normalizeFileName(file.getName());
 
             if (logger.isDebugEnabled()) logger.debug("Processing '{}'.", name);
 
-            JsonInfo jsonInfo = infoMap.get(name);
             SiteNodeInfo nodeInfo;
 
             if(file.isDirectory()){
                 if (logger.isDebugEnabled()) logger.debug(" - processing as sub-directory.");
 
-                if(jsonInfo != null && !JsonDirectoryInfo.class.isAssignableFrom(jsonInfo.getClass())){
-                    if (logger.isWarnEnabled()) logger.warn(" - found previous definition for {} as {}! It's now a (new) DirectoryInfo!", name, jsonInfo);
-                    jsonInfo = null;
-                }
+                if (logger.isDebugEnabled()) logger.debug(" - add a new directory info for {}", name);
 
-                if(jsonInfo == null){
-                    if (logger.isDebugEnabled()) logger.debug(" - add a new directory info for {}", name);
+                nodeInfo = createNewDirectoryInfo(name, localPath);
 
-                    nodeInfo = createNewDirectoryInfo(name, localPath);
+                JsonInfo jsonInfo = new JsonDirectoryInfo((DirectoryInfo) nodeInfo);
 
-                    jsonInfo = new JsonDirectoryInfo((DirectoryInfo) nodeInfo);
-
-                    infoMap.put(name, jsonInfo);
-                    jsonInfos.add(jsonInfo);
-                    changed = true;
-                }
-                else {
-                    JsonDirectoryInfo jsonDirectoryInfo = JsonDirectoryInfo.class.cast(jsonInfo);
-                    nodeInfo = jsonDirectoryInfo.buildNodeInfo();
-                }
+                infoMap.put(name, jsonInfo);
+                children.add(jsonInfo);
+                changed = true;
 
                 String dirPath;
                 if("/".equals(localPath)) {
@@ -607,6 +657,10 @@ public class JsonFilesContentRepository implements ContentRepository {
                     dirPath = localPath + '/' + name;
                 }
                 JsonInfoList dirJsonInfoList = readJsonInfoList(dirPath);
+                if(dirJsonInfoList == null){
+                    dirJsonInfoList = new JsonInfoList(dirPath);
+                    changed = true;
+                }
 
                 List<SiteNodeInfo> dirNodes = parseDirectory(file, dirPath, (SiteNodeContainerInfo) nodeInfo, dirJsonInfoList);
                 ((DirectoryInfo) nodeInfo).setNodes(dirNodes);
@@ -614,26 +668,15 @@ public class JsonFilesContentRepository implements ContentRepository {
             else {
                 if (logger.isDebugEnabled()) logger.debug(" - processing as file.");
 
-                if(jsonInfo != null && !JsonFileInfo.class.isAssignableFrom(jsonInfo.getClass())){
-                    if (logger.isWarnEnabled()) logger.warn(" - found previous definition for {} as {}! It's now a (new) PageInfo!", name, jsonInfo);
-                    jsonInfo = null;
-                }
+                if (logger.isDebugEnabled()) logger.debug(" - add a new page info for {}", name);
 
-                if(jsonInfo == null){
-                    if (logger.isDebugEnabled()) logger.debug(" - add a new page info for {}", name);
+                nodeInfo = createNewPageInfo(name, localPath);
 
-                    nodeInfo = createNewPageInfo(name, localPath);
+                JsonInfo jsonInfo  = new JsonFileInfo((PageInfo) nodeInfo);
 
-                    jsonInfo = new JsonFileInfo((PageInfo) nodeInfo);
-
-                    infoMap.put(name, jsonInfo);
-                    jsonInfos.add(jsonInfo);
-                    changed = true;
-                }
-                else {
-                    JsonFileInfo jsonFileInfo = JsonFileInfo.class.cast(jsonInfo);
-                    nodeInfo = jsonFileInfo.buildNodeInfo();
-                }
+                infoMap.put(name, jsonInfo);
+                children.add(jsonInfo);
+                changed = true;
             }
 
             nodeInfo.setParent(parent);
@@ -732,23 +775,15 @@ public class JsonFilesContentRepository implements ContentRepository {
     private JsonInfoList readJsonInfoList(String path) {
         File infoFile = getInfoFile(path);
 
-        JsonInfoList result;
-
         try (InputStream is = new BufferedInputStream(new FileInputStream(infoFile))) {
-            result = objectMapper.readValue(is, JsonInfoList.class);
+            return objectMapper.readValue(is, JsonInfoList.class);
         } catch (IOException ex) {
             if (logger.isErrorEnabled()) logger.error("Error reading info file ({})!", infoFile.getAbsolutePath(), ex);
-            result = null;
+            return null;
         }
-
-        if(result == null){
-            result = new JsonInfoList();
-        }
-
-        return result;
     }
 
-    private void writeJsonInfoList(String path, List<? extends JsonInfo> infoList) {
+    private void writeJsonInfoList(String path, JsonInfoList infoList) {
         File infoFile = getInfoFile(path);
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(infoFile))) {
@@ -934,5 +969,4 @@ public class JsonFilesContentRepository implements ContentRepository {
     public void setDirectoryInfoFileName(String directoryInfoFileName) {
         this.directoryInfoFileName = directoryInfoFileName;
     }
-
 }
