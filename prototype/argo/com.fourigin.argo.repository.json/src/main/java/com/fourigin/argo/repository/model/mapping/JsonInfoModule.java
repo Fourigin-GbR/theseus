@@ -12,6 +12,7 @@ public class JsonInfoModule extends SimpleModule {
 
     public JsonInfoModule() {
         super("JsonInfo", Version.unknownVersion());
+
         setMixInAnnotation(JsonInfo.class, JsonInfoMixin.class);
         setMixInAnnotation(JsonFileInfo.class, JsonInfoMixin.class);
         setMixInAnnotation(JsonDirectoryInfo.class, JsonInfoMixin.class);

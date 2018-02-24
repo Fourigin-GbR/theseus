@@ -10,6 +10,7 @@ public class ContentPageModule extends SimpleModule {
 
     public ContentPageModule() {
         super("ContentPage", Version.unknownVersion());
+
         setMixInAnnotation(ContentElement.class, ContentElementMixin.class);
         setMixInAnnotation(ContentListElement.class, ContentListElementMixin.class);
     }
