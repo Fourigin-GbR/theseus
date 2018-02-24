@@ -145,7 +145,7 @@ public class JsonFilesContentRepository implements ContentRepository {
     @Override
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
         if(logger.isDebugEnabled())
-            logger.debug("info tree:\n{}", printInfoTree(root, ""));
+            logger.debug("info tree:\n{}", buildInfoTree(root, 0, false));
 
         SiteNodeInfo node = selectInfo(parent, path);
         if(!type.isAssignableFrom(node.getClass())){
@@ -419,25 +419,46 @@ public class JsonFilesContentRepository implements ContentRepository {
 
     //******* private methods *******//
 
-    private String printInfoTree(SiteNodeContainerInfo container, String indent){
+    public static String buildInfoTree(SiteNodeContainerInfo container, int indent, boolean emptyIndent){
         StringBuilder builder = new StringBuilder();
 
-        if(container.equals(root)){
+        if(indent == 0){
             builder.append("/\n");
         }
 
+        String indentString = getIndentString(indent, emptyIndent);
+
         List<SiteNodeInfo> nodes = container.getNodes();
         if(nodes != null && !nodes.isEmpty()){
+            int count = 0;
             for (SiteNodeInfo node : nodes) {
-                builder.append(indent).append("|-- ").append(node.getName()).append('\n');
-                if(node instanceof DirectoryInfo){
-                    builder.append(printInfoTree((SiteNodeContainerInfo) node, indent + "  "));
-                    builder.append('\n');
+                count++;
+
+                builder.append(indentString);
+                builder.append("+--").append(node.getName()).append('\n');
+
+                if (node instanceof DirectoryInfo) {
+                    builder.append(buildInfoTree((SiteNodeContainerInfo) node, indent + 1, count == nodes.size()));
                 }
             }
+
+            builder.append(indentString).append('\n');
         }
 
         return builder.toString();
+    }
+
+    private static String getIndentString(int indent, boolean empty) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < indent; i++) {
+            if(i == indent-1 && empty){
+                sb.append("   ");
+            }
+            else {
+                sb.append("|  ");
+            }
+        }
+        return sb.toString();
     }
 
     private void initialize(){
@@ -468,7 +489,7 @@ public class JsonFilesContentRepository implements ContentRepository {
         }
     }
 
-    private String normalizeFileName(String name){
+    private static String normalizeFileName(String name){
         if(name == null){
             return null;
         }
@@ -578,12 +599,8 @@ public class JsonFilesContentRepository implements ContentRepository {
         boolean changed = false;
 
         List<JsonInfo> children = jsonInfos.getChildren();
-        Map<String, JsonInfo> infoMap = new HashMap<>();
         for (JsonInfo jsonInfo : children) {
             String name = jsonInfo.getName();
-
-            // fast access
-            infoMap.put(name, jsonInfo);
 
             // pre-sort
             File file = filesMap.get(name);
@@ -645,7 +662,6 @@ public class JsonFilesContentRepository implements ContentRepository {
 
                 JsonInfo jsonInfo = new JsonDirectoryInfo((DirectoryInfo) nodeInfo);
 
-                infoMap.put(name, jsonInfo);
                 children.add(jsonInfo);
                 changed = true;
 
@@ -674,7 +690,6 @@ public class JsonFilesContentRepository implements ContentRepository {
 
                 JsonInfo jsonInfo  = new JsonFileInfo((PageInfo) nodeInfo);
 
-                infoMap.put(name, jsonInfo);
                 children.add(jsonInfo);
                 changed = true;
             }
