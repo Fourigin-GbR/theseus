@@ -31,7 +31,7 @@ public class SiteStructureDataSource implements DataSource<SiteStructureDataSour
                     .withContent(info.getDisplayName());
 
                 if (query.isVerbose()) {
-                    textBuilder.withAttribute("path", info.getPath())
+                    textBuilder
                         .withAttribute("description", info.getDescription())
                         .withAttribute("localizedName", info.getLocalizedName())
                         .withAttribute("reference", info.getReference())

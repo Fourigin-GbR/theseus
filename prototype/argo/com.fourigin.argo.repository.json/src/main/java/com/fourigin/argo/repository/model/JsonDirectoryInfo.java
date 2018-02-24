@@ -2,8 +2,9 @@ package com.fourigin.argo.repository.model;
 
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 
+import java.util.Objects;
+
 public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
-    private String path;
     private String name;
     private String localizedName;
     private String displayName;
@@ -14,7 +15,6 @@ public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
 
     public JsonDirectoryInfo(DirectoryInfo nodeInfo){
         if(nodeInfo != null) {
-            this.path = nodeInfo.getPath();
             this.name = nodeInfo.getName();
             this.localizedName = nodeInfo.getLocalizedName();
             this.displayName = nodeInfo.getDisplayName();
@@ -26,23 +26,12 @@ public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
     public DirectoryInfo buildNodeInfo() {
         DirectoryInfo info = new DirectoryInfo();
 
-        info.setPath(path);
         info.setName(name);
         info.setLocalizedName(localizedName);
         info.setDisplayName(displayName);
         info.setDescription(description);
 
         return info;
-    }
-
-    @Override
-    public String getPath() {
-        return path;
-    }
-
-    @Override
-    public void setPath(String path) {
-        this.path = path;
     }
 
     @Override
@@ -89,37 +78,25 @@ public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof JsonDirectoryInfo)) return false;
-
         JsonDirectoryInfo that = (JsonDirectoryInfo) o;
-
-        if (path != null ? !path.equals(that.path) : that.path != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (localizedName != null ? !localizedName.equals(that.localizedName) : that.localizedName != null)
-            return false;
-        //noinspection SimplifiableIfStatement
-        if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
+        return Objects.equals(name, that.name) &&
+            Objects.equals(localizedName, that.localizedName) &&
+            Objects.equals(displayName, that.displayName) &&
+            Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        int result = path != null ? path.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (localizedName != null ? localizedName.hashCode() : 0);
-        result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return Objects.hash(name, localizedName, displayName, description);
     }
 
     @Override
     public String toString() {
         return "JsonDirectoryInfo{" +
-            "path='" + path + '\'' +
-            ", name='" + name + '\'' +
+            "name='" + name + '\'' +
             ", localizedName='" + localizedName + '\'' +
             ", displayName='" + displayName + '\'' +
             ", description='" + description + '\'' +
             '}';
     }
-
 }

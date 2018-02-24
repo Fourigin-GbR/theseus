@@ -4,8 +4,9 @@ import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.TemplateReference;
 
+import java.util.Objects;
+
 public class JsonFileInfo implements JsonInfo<PageInfo> {
-    private String path;
     private String name;
     private String localizedName;
     private String displayName;
@@ -21,7 +22,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
 
     public JsonFileInfo(PageInfo nodeInfo){
         if(nodeInfo != null) {
-            this.path = nodeInfo.getPath();
             this.name = nodeInfo.getName();
             this.localizedName = nodeInfo.getLocalizedName();
             this.displayName = nodeInfo.getDisplayName();
@@ -38,7 +38,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
     public PageInfo buildNodeInfo() {
         PageInfo info = new PageInfo();
 
-        info.setPath(path);
         info.setName(name);
         info.setLocalizedName(localizedName);
         info.setDisplayName(displayName);
@@ -50,16 +49,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
         info.setChecksum(checksum);
 
         return info;
-    }
-
-    @Override
-    public String getPath() {
-        return path;
-    }
-
-    @Override
-    public void setPath(String path) {
-        this.path = path;
     }
 
     @Override
@@ -142,7 +131,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
         JsonFileInfo that = (JsonFileInfo) o;
 
         if (staged != that.staged) return false;
-        if (path != null ? !path.equals(that.path) : that.path != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (localizedName != null ? !localizedName.equals(that.localizedName) : that.localizedName != null)
             return false;
@@ -157,23 +145,13 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
 
     @Override
     public int hashCode() {
-        int result = path != null ? path.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (localizedName != null ? localizedName.hashCode() : 0);
-        result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (templateReference != null ? templateReference.hashCode() : 0);
-        result = 31 * result + (staged ? 1 : 0);
-        result = 31 * result + (compileState != null ? compileState.hashCode() : 0);
-        result = 31 * result + (checksum != null ? checksum.hashCode() : 0);
-        return result;
+        return Objects.hash(name, localizedName, displayName, description, templateReference, staged, compileState, checksum);
     }
 
     @Override
     public String toString() {
         return "JsonFileInfo{" +
-            "path='" + path + '\'' +
-            ", name='" + name + '\'' +
+            "name='" + name + '\'' +
             ", localizedName='" + localizedName + '\'' +
             ", displayName='" + displayName + '\'' +
             ", description='" + description + '\'' +
@@ -183,5 +161,4 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
             ", checksum=" + checksum +
             '}';
     }
-
 }
