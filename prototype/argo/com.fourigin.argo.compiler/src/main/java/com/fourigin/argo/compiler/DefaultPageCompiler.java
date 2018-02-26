@@ -117,18 +117,6 @@ public class DefaultPageCompiler implements PageCompiler {
         if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
 
         ContentPage contentPage = prepareContent(pageInfo);
-//        ContentPage contentPage = contentRepository.retrieve(pageInfo);
-//        if(contentPage == null){
-//            throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
-//        }
-//        if (logger.isDebugEnabled()) logger.debug("Content page: {}", contentPage.getId());
-//
-//        // resolve all data sources
-//        if(dataSourcesResolver != null){
-//            if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
-//            contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
-//            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
-//        }
 
         // process content page
         templateEngine.process(contentPage, template, templateVariation, processingMode, out);

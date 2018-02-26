@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -94,6 +95,7 @@ public class App {
         templateResolver.setTemplateMode("HTML");
         templateResolver.setCacheable(false);
         templateResolver.setCacheTTLMs(1L);
+        templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         return templateResolver;
     }

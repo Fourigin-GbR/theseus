@@ -74,6 +74,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
         addUtilities(templateUtilityFactories, context, base, processingMode, true);
 
+        if (logger.isDebugEnabled()) logger.debug("Content before transforming: {}", contentPage);
+        
         try(Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)){
             thymeleafInternalTemplateEngine.process(templateName, context, writer);
         } catch (Exception ex) {
