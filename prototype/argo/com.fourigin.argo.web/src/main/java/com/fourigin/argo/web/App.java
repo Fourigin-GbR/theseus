@@ -15,6 +15,12 @@ import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.TemplateResolver;
+import com.fourigin.argo.strategies.CompilerOutputStrategy;
+import com.fourigin.argo.strategies.DefaultFilenameStrategy;
+import com.fourigin.argo.strategies.DocumentRootResolverStrategy;
+import com.fourigin.argo.strategies.FileCompilerOutputStrategy;
+import com.fourigin.argo.strategies.FilenameStrategy;
+import com.fourigin.argo.strategies.MappingDocumentRootResolverStrategy;
 import com.fourigin.argo.template.engine.DefaultTemplateEngineFactory;
 import com.fourigin.argo.template.engine.TemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
@@ -57,6 +63,9 @@ public class App {
     @Value("${template.engine.thymeleaf.base}")
     private String templateBasePath;
 
+    @Value("${document-root.base}")
+    private String documentRootBasePath;
+
     private ContentRepositoryFactory contentRepositoryFactory;
 
     @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
@@ -71,6 +80,35 @@ public class App {
             new ApplicationPidFileWriter(APP_NAME + ".pid")
         );
         app.run(args);
+    }
+
+    // *** STRATEGIES ***
+
+    @Bean
+    public FilenameStrategy filenameStrategy(){
+        return new DefaultFilenameStrategy();
+    }
+
+    @Bean
+    public DocumentRootResolverStrategy documentRootResolverStrategy() {
+//        return new PlaceholderDocumentRootResolverStrategy(documentRootBasePath);
+        
+        Map<String, String> mapping = new HashMap<>();
+        mapping.put("DE", documentRootBasePath + "greekestate.de");
+        mapping.put("EN", documentRootBasePath + "greekestate.en");
+        mapping.put("RU", documentRootBasePath + "greekestate.ru");
+
+        return new MappingDocumentRootResolverStrategy(mapping);
+    }
+
+    @Bean
+    public CompilerOutputStrategy fileCompilerOutputStrategy(){
+        FileCompilerOutputStrategy fileCompilerOutputStrategy = new FileCompilerOutputStrategy();
+
+        fileCompilerOutputStrategy.setDocumentRootResolverStrategy(documentRootResolverStrategy());
+        fileCompilerOutputStrategy.setFilenameStrategy(filenameStrategy());
+
+        return fileCompilerOutputStrategy;
     }
 
     // *** TEMPLATE ***
@@ -216,7 +254,8 @@ public class App {
         String base,
         ContentRepositoryFactory contentRepositoryFactory,
         TemplateEngineFactory templateEngineFactory,
-        TemplateResolver templateResolver
+        TemplateResolver templateResolver,
+        FilenameStrategy filenameStrategy
     ){
         Map<String, DataSourceQueryBuilder> queryBuilders = new HashMap<>();
         queryBuilders.put(TimestampDataSource.TYPE, new DataSourceQueryBuilder(EmptyDataSourceQuery.class));
@@ -229,28 +268,38 @@ public class App {
         compiler.setContentRepository(contentRepositoryFactory.getInstance(base));
         compiler.setTemplateEngineFactory(templateEngineFactory);
         compiler.setTemplateResolver(templateResolver);
-        compiler.setDataSourcesResolver(dataSourcesResolver());
+        compiler.setDataSourcesResolver(dataSourcesResolver(filenameStrategy));
 
         return compiler;
     }
 
     @Bean
-    public DefaultPageCompilerFactory pageCompilerFactory(){
+    public DefaultPageCompilerFactory pageCompilerFactory(
+        @Autowired FilenameStrategy filenameStrategy
+    ){
         DefaultPageCompilerFactory factory = new DefaultPageCompilerFactory();
 
         Map<String, PageCompiler> compilers = new HashMap<>();
-        compilers.put("DE", createPageCompiler("DE", contentRepositoryFactory, templateEngineFactory, templateResolver));
+        compilers.put("DE", createPageCompiler(
+            "DE",
+            contentRepositoryFactory,
+            templateEngineFactory,
+            templateResolver,
+            filenameStrategy)
+        );
         factory.setCompilers(compilers);
 
         return factory;
     }
 
-    private DataSourcesResolver dataSourcesResolver(){
+    private DataSourcesResolver dataSourcesResolver(
+        FilenameStrategy filenameStrategy
+    ){
         DataSourcesResolver resolver = new DataSourcesResolver();
 
         resolver.setDataSources(Arrays.asList(
             new TimestampDataSource(),
-            new SiteStructureDataSource()
+            new SiteStructureDataSource(filenameStrategy)
         ));
 
         return resolver;

@@ -162,6 +162,7 @@ project(':argo') {
             compile argoModels
             compile argoTemplateEngine
             compile argoRepository
+            compile utilitiesCore
         }
     }
 

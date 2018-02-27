@@ -1,5 +1,6 @@
 package com.fourigin.argo.models.structure.nodes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
@@ -11,6 +12,15 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     private SiteNodeContainerInfo parent;
 
     private List<SiteNodeInfo> nodes;
+
+    @Override
+    public SiteNodeInfo getDefaultTarget() {
+        if(nodes == null || nodes.isEmpty()){
+            return null;
+        }
+
+        return nodes.get(0);
+    }
 
     @Override
     public String getPath() {
@@ -117,4 +127,61 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
             '}';
     }
 
+    public static class Builder {
+        private String path;
+        private String name;
+        private String localizedName;
+        private String displayName;
+        private String description;
+        private SiteNodeContainerInfo parent;
+
+        private List<SiteNodeInfo> nodes;
+
+        public Builder withPath(String path){
+            this.path = path;
+            return this;
+        }
+
+        public Builder withName(String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder withLocalizedName(String localizedName){
+            this.localizedName = localizedName;
+            return this;
+        }
+
+        public Builder withDisplayName(String displayName){
+            this.displayName = displayName;
+            return this;
+        }
+
+        public Builder withDescription(String description){
+            this.description = description;
+            return this;
+        }
+
+        public Builder withParent(SiteNodeContainerInfo parent){
+            this.parent = parent;
+            return this;
+        }
+
+        public Builder withNodes(List<SiteNodeInfo> nodes){
+            this.nodes = new ArrayList<>(nodes);
+            return this;
+        }
+
+        public DirectoryInfo build(){
+            DirectoryInfo instance = new DirectoryInfo();
+            instance.setPath(path);
+            instance.setName(name);
+            instance.setLocalizedName(localizedName);
+            instance.setDisplayName(displayName);
+            instance.setDescription(description);
+            instance.setParent(parent);
+            instance.setNodes(nodes);
+            return instance;
+        }
+    }
 }

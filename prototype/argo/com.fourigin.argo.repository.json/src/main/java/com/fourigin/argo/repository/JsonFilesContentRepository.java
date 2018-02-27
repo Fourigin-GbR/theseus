@@ -423,7 +423,7 @@ public class JsonFilesContentRepository implements ContentRepository {
         StringBuilder builder = new StringBuilder();
 
         if(indent == 0){
-            builder.append("/\n");
+            builder.append("/ (").append(container).append(")\n");
         }
 
         String indentString = getIndentString(indent, emptyIndent);
@@ -480,7 +480,7 @@ public class JsonFilesContentRepository implements ContentRepository {
 
         root = createNewDirectoryInfo("", rootPath);
 
-        List<SiteNodeInfo> nodes = parseDirectory(dir, rootPath, null, rootList);
+        List<SiteNodeInfo> nodes = parseDirectory(dir, rootPath, root, rootList);
 
         root.setNodes(nodes);
 

@@ -7,6 +7,10 @@ public interface SiteNodeContainerInfo {
     void setPath(String path);
 
     List<SiteNodeInfo> getNodes();
-
     void setNodes(List<SiteNodeInfo> nodes);
+
+    SiteNodeContainerInfo getParent();
+    void setParent(SiteNodeContainerInfo siteNode);
+
+    SiteNodeInfo getDefaultTarget();
 }

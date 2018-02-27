@@ -226,4 +226,82 @@ public class PageInfo implements SiteNodeInfo {
             '}';
     }
 
+    public static class Builder {
+        private String path;
+        private String name;
+        private String localizedName;
+        private String displayName;
+        private String description;
+        private SiteNodeContainerInfo parent;
+
+        private TemplateReference templateReference;
+        private boolean staged;
+        private CompileState compileState;
+        private Checksum checksum;
+
+        public Builder withPath(String path){
+            this.path = path;
+            return this;
+        }
+
+        public Builder withName(String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder withLocalizedName(String localizedName){
+            this.localizedName = localizedName;
+            return this;
+        }
+
+        public Builder withDisplayName(String displayName){
+            this.displayName = displayName;
+            return this;
+        }
+
+        public Builder withDescription(String description){
+            this.description = description;
+            return this;
+        }
+
+        public Builder withParent(SiteNodeContainerInfo parent){
+            this.parent = parent;
+            return this;
+        }
+
+        public Builder withTemplateReference(TemplateReference templateReference){
+            this.templateReference = templateReference;
+            return this;
+        }
+
+        public Builder withStaged(boolean staged){
+            this.staged = staged;
+            return this;
+        }
+
+        public Builder withCompileState(CompileState compileState){
+            this.compileState = compileState;
+            return this;
+        }
+
+        public Builder withCheckum(Checksum checksum){
+            this.checksum = checksum;
+            return this;
+        }
+
+        public PageInfo build(){
+            PageInfo instance = new PageInfo();
+            instance.setPath(path);
+            instance.setName(name);
+            instance.setLocalizedName(localizedName);
+            instance.setDisplayName(displayName);
+            instance.setDescription(description);
+            instance.setParent(parent);
+            instance.setTemplateReference(templateReference);
+            instance.setStaged(staged);
+            instance.setCompileState(compileState);
+            instance.setChecksum(checksum);
+            return instance;
+        }
+    }
 }

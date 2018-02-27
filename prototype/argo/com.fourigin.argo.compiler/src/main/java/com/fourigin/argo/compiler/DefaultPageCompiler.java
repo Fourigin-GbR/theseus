@@ -9,6 +9,7 @@ import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.TemplateResolver;
+import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.PageInfoAwareTemplateEngine;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.SiteAttributesAwareTemplateEngine;
@@ -17,8 +18,10 @@ import com.fourigin.argo.template.engine.TemplateEngineFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultPageCompiler implements PageCompiler {
@@ -33,6 +36,11 @@ public class DefaultPageCompiler implements PageCompiler {
     private DataSourcesResolver dataSourcesResolver;
 
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
+
+    static final Map<String, String> CONTENT_TYPE_EXTENSION_MAPPING = new HashMap<>();
+    static {
+        CONTENT_TYPE_EXTENSION_MAPPING.put("text/html", ".html");
+    }
 
     public ContentPage prepareContent(PageInfo pageInfo){
         String pageName = pageInfo.getName();
@@ -55,7 +63,7 @@ public class DefaultPageCompiler implements PageCompiler {
     }
 
     @Override
-    public String compile(PageInfo pageInfo, ProcessingMode processingMode, OutputStream out) {
+    public String compile(PageInfo pageInfo, ProcessingMode processingMode, CompilerOutputStrategy outputStrategy) {
         String pageName = pageInfo.getName();
         if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
 
@@ -119,10 +127,24 @@ public class DefaultPageCompiler implements PageCompiler {
         ContentPage contentPage = prepareContent(pageInfo);
 
         // process content page
-        templateEngine.process(contentPage, template, templateVariation, processingMode, out);
-        if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
+        String fileExtension = resolveFileExtension(templateVariation.getOutputContentType());
+        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, base)) {
+            templateEngine.process(contentPage, template, templateVariation, processingMode, out);
+            if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
+        }
+        catch(IOException ex){
+            if (logger.isErrorEnabled()) logger.error("Error compiling content!", ex);
+        }
 
         return templateVariation.getOutputContentType();
+    }
+
+    private String resolveFileExtension(String outputContentType) {
+        if(CONTENT_TYPE_EXTENSION_MAPPING.containsKey(outputContentType)){
+            return CONTENT_TYPE_EXTENSION_MAPPING.get(outputContentType);
+        }
+
+        throw new IllegalArgumentException("Unsupported output content type '" + outputContentType + "'!");
     }
 
     public void setBase(String base) {

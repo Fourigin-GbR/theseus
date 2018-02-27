@@ -36,19 +36,16 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
 
     @Override
     public PageInfo buildNodeInfo() {
-        PageInfo info = new PageInfo();
-
-        info.setName(name);
-        info.setLocalizedName(localizedName);
-        info.setDisplayName(displayName);
-        info.setDescription(description);
-
-        info.setTemplateReference(templateReference);
-        info.setStaged(staged);
-        info.setCompileState(compileState);
-        info.setChecksum(checksum);
-
-        return info;
+        return new PageInfo.Builder()
+            .withName(name)
+            .withLocalizedName(localizedName)
+            .withDisplayName(displayName)
+            .withDescription(description)
+            .withTemplateReference(templateReference)
+            .withStaged(staged)
+            .withCompileState(compileState)
+            .withCheckum(checksum)
+            .build();
     }
 
     @Override

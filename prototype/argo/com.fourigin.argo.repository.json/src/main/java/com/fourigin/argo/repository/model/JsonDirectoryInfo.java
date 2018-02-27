@@ -24,14 +24,12 @@ public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
 
     @Override
     public DirectoryInfo buildNodeInfo() {
-        DirectoryInfo info = new DirectoryInfo();
-
-        info.setName(name);
-        info.setLocalizedName(localizedName);
-        info.setDisplayName(displayName);
-        info.setDescription(description);
-
-        return info;
+        return new DirectoryInfo.Builder()
+            .withName(name)
+            .withLocalizedName(localizedName)
+            .withDisplayName(displayName)
+            .withDescription(description)
+            .build();
     }
 
     @Override

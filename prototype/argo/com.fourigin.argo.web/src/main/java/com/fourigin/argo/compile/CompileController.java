@@ -7,6 +7,8 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.ContentResolver;
+import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
+import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.ContentPageCompilerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
+import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 
 @Controller
 @RequestMapping("/compile")
@@ -38,10 +38,13 @@ public class CompileController {
 
     private PageCompilerFactory pageCompilerFactory;
 
+    private CompilerOutputStrategy storageCompilerOutputStrategy;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
         @RequestParam("base") String base,
         @RequestParam("path") String path,
+        @RequestParam(value = "writeOutput", required = false, defaultValue = "false") boolean writeOutput,
         @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base {} & path {}.", base, path);
@@ -55,20 +58,32 @@ public class CompileController {
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        String outputContentType;
-        byte[] bytes;
-        try(ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            outputContentType = pageCompiler.compile(pageInfo, CMS, out);
-            bytes = out.toByteArray();
-        } catch (IOException ex) {
-            if (logger.isErrorEnabled()) logger.error("Error occurred while compiling page!", ex);
-            return null;
+        if(writeOutput){
+            try {
+                pageCompiler.compile(pageInfo, STAGE, storageCompilerOutputStrategy);
+                storageCompilerOutputStrategy.finish();
+            }
+            catch(Throwable ex){
+                storageCompilerOutputStrategy.reset();
+            }
         }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(outputContentType));
+        BufferedCompilerOutputStrategy bufferedCompilerOutputStrategy = new BufferedCompilerOutputStrategy();
+        try {
+            String outputContentType = pageCompiler.compile(pageInfo, CMS, bufferedCompilerOutputStrategy);
+            byte[] bytes = bufferedCompilerOutputStrategy.getBytes();
 
-        return new HttpEntity<>(bytes, headers);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType(outputContentType));
+
+            bufferedCompilerOutputStrategy.finish();
+
+            return new HttpEntity<>(bytes, headers);
+        } catch (Throwable ex) {
+            if (logger.isErrorEnabled()) logger.error("Error occurred while compiling page!", ex);
+            bufferedCompilerOutputStrategy.reset();
+            return null;
+        }
     }
 
     @ResponseBody
@@ -132,5 +147,10 @@ public class CompileController {
     @Autowired
     public void setPageCompilerFactory(PageCompilerFactory pageCompilerFactory) {
         this.pageCompilerFactory = pageCompilerFactory;
+    }
+
+    @Autowired
+    public void setStorageCompilerOutputStrategy(CompilerOutputStrategy storageCompilerOutputStrategy) {
+        this.storageCompilerOutputStrategy = storageCompilerOutputStrategy;
     }
 }
