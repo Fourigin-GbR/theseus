@@ -147,7 +147,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
 //        if (logger.isDebugEnabled())
 //            logger.debug("final folder path is '{}'.", result);
 
-        if (result != null && !result.equals("/") && result.endsWith("/")) {
+        if (result != null && !"/".equals(result) && result.endsWith("/")) {
             result = result.substring(0, result.length() - 1);
         }
 

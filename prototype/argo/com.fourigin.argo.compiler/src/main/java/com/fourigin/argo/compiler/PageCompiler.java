@@ -6,6 +6,7 @@ import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.ProcessingMode;
 
 public interface PageCompiler {
+    String getCompilerBase();
 
     ContentPage prepareContent(PageInfo pageInfo);
 

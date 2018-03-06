@@ -1,14 +1,8 @@
 package com.fourigin.argo.web;
 
-import com.fourigin.argo.compiler.DefaultPageCompiler;
 import com.fourigin.argo.compiler.DefaultPageCompilerFactory;
-import com.fourigin.argo.compiler.PageCompiler;
-import com.fourigin.argo.compiler.datasource.DataSourceQueryBuilder;
-import com.fourigin.argo.compiler.datasource.DataSourceQueryFactory;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
-import com.fourigin.argo.compiler.datasource.EmptyDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
-import com.fourigin.argo.compiler.datasource.SiteStructureDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
@@ -85,14 +79,14 @@ public class App {
     // *** STRATEGIES ***
 
     @Bean
-    public FilenameStrategy filenameStrategy(){
+    public FilenameStrategy filenameStrategy() {
         return new DefaultFilenameStrategy();
     }
 
     @Bean
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
 //        return new PlaceholderDocumentRootResolverStrategy(documentRootBasePath);
-        
+
         Map<String, String> mapping = new HashMap<>();
         mapping.put("DE", documentRootBasePath + "greekestate.de");
         mapping.put("EN", documentRootBasePath + "greekestate.en");
@@ -102,7 +96,7 @@ public class App {
     }
 
     @Bean
-    public CompilerOutputStrategy fileCompilerOutputStrategy(){
+    public CompilerOutputStrategy fileCompilerOutputStrategy() {
         FileCompilerOutputStrategy fileCompilerOutputStrategy = new FileCompilerOutputStrategy();
 
         fileCompilerOutputStrategy.setDocumentRootResolverStrategy(documentRootResolverStrategy());
@@ -114,7 +108,7 @@ public class App {
     // *** TEMPLATE ***
 
     @Bean
-    public SpringTemplateEngine springTemplateEngine(){
+    public SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 
         templateEngine.setTemplateResolver(fileTemplateResolver(templateBasePath));
@@ -122,10 +116,10 @@ public class App {
         return templateEngine;
     }
 
-    private FileTemplateResolver fileTemplateResolver(String basePath){
+    private FileTemplateResolver fileTemplateResolver(String basePath) {
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         String prefix = basePath;
-        if(!prefix.endsWith("/")){
+        if (!prefix.endsWith("/")) {
             prefix += "/";
         }
         templateResolver.setPrefix(prefix);
@@ -139,14 +133,14 @@ public class App {
     }
 
     @Bean
-    public ThymeleafTemplateEngine thymeleafTemplateEngine(){
+    public ThymeleafTemplateEngine thymeleafTemplateEngine() {
         ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
         thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine());
         return thymeleafEngine;
     }
 
     @Bean
-    public DefaultTemplateEngineFactory templateEngineFactory(){
+    public DefaultTemplateEngineFactory templateEngineFactory() {
         DefaultTemplateEngineFactory factory = new DefaultTemplateEngineFactory();
 
         Map<Type, TemplateEngine> engines = new HashMap<>();
@@ -159,7 +153,7 @@ public class App {
     }
 
     @Bean
-    public TemplateResolver templateResolver(){
+    public TemplateResolver templateResolver() {
         return id -> {
             Set<TemplateVariation> variations = new HashSet<>();
 
@@ -178,128 +172,18 @@ public class App {
         };
     }
 
-//    @Bean
-//    public ThymeleafViewResolver thymeleafViewResolver(){
-//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-//        viewResolver.setTemplateEngine(internalSpringTemplateEngine());
-//        return viewResolver;
-//    }
-
-//    @Bean
-//    public ITemplateResolver springTemplateResolver(){
-//        FileTemplateResolver templateResolver = new FileTemplateResolver();
-//
-//        String prefix = templateBasePath;
-//        if(!prefix.endsWith("/")){
-//            prefix += "/";
-//        }
-//        templateResolver.setPrefix(prefix);
-//        templateResolver.setSuffix(".html");
-////        templateResolver.setTemplateMode("HTML");
-//
-//        templateResolver.setCacheable(false);
-//
-//        return templateResolver;
-//    }
-//
-//    private TemplateEngine springTemplateEngine(){
-//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//
-//        templateEngine.setTemplateResolver(springTemplateResolver());
-//
-//        return templateEngine;
-//    }
-//
-//    @Bean
-//    public TemplateResolver templateResolver(){
-//        return id -> {
-//            Set<TemplateVariation> variations = new HashSet<>();
-//
-//            TemplateVariation variation = new TemplateVariation();
-//            variation.setId("default");
-//            variation.setType(Type.THYMELEAF);
-//            variation.setOutputContentType("text/html");
-//            variations.add(variation);
-//
-//            Template template = new Template();
-//            template.setId(id);
-//            template.setRevision(null);
-//            template.setVariations(variations);
-//
-//            return template;
-//        };
-//    }
-//
-//    @Bean
-//    public ThymeleafTemplateEngine thymeleafTemplateEngine(){
-//        ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
-//        thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine());
-//        return thymeleafEngine;
-//    }
-//
-//    @Bean
-//    public DefaultTemplateEngineFactory templateEngineFactory(){
-//        DefaultTemplateEngineFactory factory = new DefaultTemplateEngineFactory();
-//
-//        Map<Type, com.fourigin.argo.template.engine.TemplateEngine> engines = new HashMap<>();
-//        engines.put(Type.THYMELEAF, thymeleafTemplateEngine());
-//        factory.setEngines(engines);
-//
-//        return factory;
-//    }
-
     // *** COMPILER ***
-
-    private DefaultPageCompiler createPageCompiler(
-        String base,
-        ContentRepositoryFactory contentRepositoryFactory,
-        TemplateEngineFactory templateEngineFactory,
-        TemplateResolver templateResolver,
-        FilenameStrategy filenameStrategy
-    ){
-        Map<String, DataSourceQueryBuilder> queryBuilders = new HashMap<>();
-        queryBuilders.put(TimestampDataSource.TYPE, new DataSourceQueryBuilder(EmptyDataSourceQuery.class));
-        queryBuilders.put(SiteStructureDataSource.TYPE, new DataSourceQueryBuilder(SiteStructureDataSourceQuery.class));
-        DataSourceQueryFactory.setBuilders(queryBuilders);
-
-        DefaultPageCompiler compiler = new DefaultPageCompiler();
-
-        compiler.setBase(base);
-        compiler.setContentRepository(contentRepositoryFactory.getInstance(base));
-        compiler.setTemplateEngineFactory(templateEngineFactory);
-        compiler.setTemplateResolver(templateResolver);
-        compiler.setDataSourcesResolver(dataSourcesResolver(filenameStrategy));
-
-        return compiler;
-    }
-
     @Bean
-    public DefaultPageCompilerFactory pageCompilerFactory(
-        @Autowired FilenameStrategy filenameStrategy
-    ){
-        DefaultPageCompilerFactory factory = new DefaultPageCompilerFactory();
-
-        Map<String, PageCompiler> compilers = new HashMap<>();
-        compilers.put("DE", createPageCompiler(
-            "DE",
-            contentRepositoryFactory,
-            templateEngineFactory,
-            templateResolver,
-            filenameStrategy)
-        );
-        factory.setCompilers(compilers);
-
-        return factory;
+    public DefaultPageCompilerFactory pageCompilerFactory() {
+        return new DefaultPageCompilerFactory(contentRepositoryFactory, templateEngineFactory, templateResolver, dataSourcesResolver());
     }
 
-    private DataSourcesResolver dataSourcesResolver(
-        FilenameStrategy filenameStrategy
-    ){
+    private DataSourcesResolver dataSourcesResolver() {
         DataSourcesResolver resolver = new DataSourcesResolver();
 
         resolver.setDataSources(Arrays.asList(
             new TimestampDataSource(),
-            new SiteStructureDataSource(filenameStrategy)
+            new SiteStructureDataSource()
         ));
 
         return resolver;

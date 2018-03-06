@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultPageCompiler implements PageCompiler {
-    private String base;
+    private String compilerBase;
 
     private ContentRepository contentRepository;
 
@@ -40,6 +40,15 @@ public class DefaultPageCompiler implements PageCompiler {
     static final Map<String, String> CONTENT_TYPE_EXTENSION_MAPPING = new HashMap<>();
     static {
         CONTENT_TYPE_EXTENSION_MAPPING.put("text/html", ".html");
+    }
+
+    public DefaultPageCompiler(String base) {
+        this.compilerBase = base;
+    }
+
+    @Override
+    public String getCompilerBase() {
+        return compilerBase;
     }
 
     public ContentPage prepareContent(PageInfo pageInfo){
@@ -112,7 +121,7 @@ public class DefaultPageCompiler implements PageCompiler {
         }
 
         // initialize the template engine
-        templateEngine.setBase(base);
+        templateEngine.setBase(compilerBase);
 
         if(PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())){
             ((PageInfoAwareTemplateEngine) templateEngine).setPageInfo(pageInfo);
@@ -128,7 +137,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
         // process content page
         String fileExtension = resolveFileExtension(templateVariation.getOutputContentType());
-        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, base)) {
+        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, compilerBase)) {
             templateEngine.process(contentPage, template, templateVariation, processingMode, out);
             if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
         }
@@ -148,7 +157,7 @@ public class DefaultPageCompiler implements PageCompiler {
     }
 
     public void setBase(String base) {
-        this.base = base;
+        this.compilerBase = base;
     }
 
     public void setContentRepository(ContentRepository contentRepository) {

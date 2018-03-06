@@ -15,6 +15,8 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     private ContentPage contentPage;
 
+    private String compilerBase;
+
     public ContentElement getElement(String path){
         ContentElement element = ContentPageManager.resolve(contentPage, path);
         if(element == null){
@@ -43,6 +45,7 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return element.getName();
     }
 
+    // TODO: allow also context specific titles
     public String getTitle(String path){
         ContentElement element = getElement(path);
         return element.getTitle();
@@ -55,12 +58,12 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     public String getText(String path){
         TextAwareContentElement textElement = getTextAwareElement(path);
-        return textElement.getContent();
+        return textElement.getContextSpecificContent(compilerBase, true);
     }
 
     public String getText(ContentElementsContainer container, String path){
         TextAwareContentElement textElement = getTextAwareElement(container, path);
-        return textElement.getContent();
+        return textElement.getContextSpecificContent(compilerBase, true);
     }
 
     public List<ContentListElement> listElements(String path){
@@ -160,5 +163,10 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
     @Override
     public void setContentPage(ContentPage contentPage) {
         this.contentPage = contentPage;
+    }
+
+    @Override
+    public void setCompilerBase(String compilerBase) {
+        this.compilerBase = compilerBase;
     }
 }

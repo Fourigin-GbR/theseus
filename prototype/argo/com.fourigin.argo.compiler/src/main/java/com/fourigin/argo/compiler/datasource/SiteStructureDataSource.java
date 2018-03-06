@@ -38,7 +38,6 @@ public class SiteStructureDataSource implements DataSource<SiteStructureDataSour
                         .withAttribute("compileState", String.valueOf(info.getCompileState()))
                         .withAttribute("contentPageReference", String.valueOf(info.getContentPageReference()))
                         .withAttribute("templateReference", String.valueOf(info.getTemplateReference()));
-
                 }
 
                 builder.withElement(textBuilder.build());

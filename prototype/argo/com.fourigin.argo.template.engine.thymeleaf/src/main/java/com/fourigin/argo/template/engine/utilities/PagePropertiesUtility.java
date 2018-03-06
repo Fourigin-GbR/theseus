@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTemplateUtility {
 
-    private String base;
+    private String compilerBase;
 
     private Map<String, String> siteAttributes;
 
@@ -28,14 +28,14 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         String baseUrl = siteAttributes.get(baseUrlAttributeName);
         if (logger.isDebugEnabled()) logger.debug("Value of site-attribute '{}': '{}'.", baseUrlAttributeName, baseUrl);
 
-        return propertiesReplacement.process(baseUrl + path, "base", base);
+        return propertiesReplacement.process(baseUrl + path, "base", compilerBase);
     }
 
     // *** getters / setters ***
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setCompilerBase(String base) {
+        this.compilerBase = base;
     }
 
     @Override

@@ -99,6 +99,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     ContentPage contentPage = (ContentPage) context.getVariable(CONTENT_PAGE);
                     ContentPageAwareThymeleafTemplateUtility contentPageUtility = ContentPageAwareThymeleafTemplateUtility.class.cast(utility);
                     contentPageUtility.setContentPage(contentPage);
+                    contentPageUtility.setCompilerBase(base);
                 }
                 if(PageInfoAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
                     PageInfoAwareThymeleafTemplateUtility pageInfoUtility = PageInfoAwareThymeleafTemplateUtility.class.cast(utility);
@@ -106,7 +107,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                 }
                 if(SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
                     SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
-                    siteAttributesUtility.setBase(base);
+                    siteAttributesUtility.setCompilerBase(base);
                     siteAttributesUtility.setSiteAttributes(siteAttributes);
                     siteAttributesUtility.setProcessingMode(processingMode);
                 }

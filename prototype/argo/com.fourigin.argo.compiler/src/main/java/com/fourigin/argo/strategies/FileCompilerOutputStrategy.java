@@ -22,9 +22,7 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
                 return new OutputContainer();
             }
         };
-
-    public FileCompilerOutputStrategy() { }
-
+    
     public void setFilenameStrategy(FilenameStrategy filenameStrategy) {
         this.filenameStrategy = filenameStrategy;
     }
@@ -86,8 +84,7 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
         if (outputContainer.outputFile != null
             && outputContainer.outputFile.isFile()
             && !outputContainer.outputFile.delete()) {
-            if (logger.isErrorEnabled())
-                logger.error("Unable to delete the output file '{}' on reset()!", outputContainer.outputFile.getAbsolutePath()); // NOPMD
+            if (logger.isErrorEnabled()) logger.error("Unable to delete the output file '{}' on reset()!", outputContainer.outputFile.getAbsolutePath()); // NOPMD
         }
 
         OUTPUT_CONTAINER_THREAD_LOCAL.remove();
