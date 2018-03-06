@@ -97,6 +97,7 @@ project(':argo') {
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            testCompile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.junit')
         }
     }
 
