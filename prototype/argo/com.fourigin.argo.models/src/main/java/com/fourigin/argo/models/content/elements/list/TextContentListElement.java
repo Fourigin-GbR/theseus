@@ -2,82 +2,89 @@ package com.fourigin.argo.models.content.elements.list;
 
 import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 
-public class TextContentListElement implements TextAwareContentElement, ContentListElement {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+public class TextContentListElement extends AbstractContentListElement implements TextAwareContentElement, ContentListElement {
 
     private static final long serialVersionUID = 4912756036611660964L;
 
-    private String title;
     private String content;
-    private boolean markupAllowed;
+    private Map<String, String> contextSpecificContent;
 
-    private static final boolean DEFAULT_MARKUP_ALLOWED = false;
-
-    public TextContentListElement(){
-        this(DEFAULT_MARKUP_ALLOWED);
-    }
-
-    public TextContentListElement(boolean markupAllowed){
-        this.setMarkupAllowed(markupAllowed);
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    @Override
     public String getContent() {
         return content;
     }
 
+    @Override
     public void setContent(String content) {
         this.content = content;
     }
 
-    public boolean isMarkupAllowed() {
-        return markupAllowed;
+    @Override
+    public String getContextSpecificContent(String context, boolean fallback) {
+        if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
+            return fallback ? content : null;
+        }
+
+        if (!contextSpecificContent.containsKey(context)) {
+            return fallback ? content : null;
+        }
+
+        return contextSpecificContent.get(context);
     }
 
-    public void setMarkupAllowed(boolean markupAllowed) {
-        this.markupAllowed = markupAllowed;
+    @Override
+    public void setContextSpecificContent(String context, String content) {
+        Objects.requireNonNull(context, "context must not be null!");
+
+        if (content == null) {
+            if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
+                return;
+            }
+
+            contextSpecificContent.remove(context);
+            return;
+        }
+
+        if (contextSpecificContent == null) {
+            contextSpecificContent = new HashMap<>();
+        }
+        contextSpecificContent.put(context, content);
+    }
+
+    public void setContextSpecificContent(Map<String, String> content){
+        contextSpecificContent = content;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TextContentListElement)) return false;
-
+        if (!super.equals(o)) return false;
         TextContentListElement that = (TextContentListElement) o;
-
-        if (markupAllowed != that.markupAllowed) return false;
-        //noinspection SimplifiableIfStatement
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        return content != null ? content.equals(that.content) : that.content == null;
+        return Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (markupAllowed ? 1 : 0);
-        return result;
+        return Objects.hash(super.hashCode(), content);
     }
 
     @Override
     public String toString() {
         return "TextContentListElement{" +
-            "title='" + title + '\'' +
-            ", content='" + content + '\'' +
-            ", markupAllowed=" + markupAllowed +
+            "content='" + content + '\'' +
             '}';
     }
 
     public static class Builder {
         private String title;
         private String content;
-        private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
+        private Map<String, String> contextSpecificContent = new HashMap<>();
+        private Map<String, String> attributes = new HashMap<>();
 
         public Builder withTitle(String title){
             this.title = title;
@@ -89,8 +96,20 @@ public class TextContentListElement implements TextAwareContentElement, ContentL
             return this;
         }
 
-        public Builder withMarkupAllowed(boolean markupAllowed){
-            this.markupAllowed = markupAllowed;
+        public TextContentListElement.Builder withContextSpecificContent(String context, String content) {
+            contextSpecificContent.put(context, content);
+            return this;
+        }
+
+        public TextContentListElement.Builder withAttribute(String key, String value) {
+            if (key != null) {
+                if (value == null) {
+                    this.attributes.remove(key);
+                } else {
+                    this.attributes.put(key, value);
+                }
+            }
+
             return this;
         }
 
@@ -98,7 +117,12 @@ public class TextContentListElement implements TextAwareContentElement, ContentL
             TextContentListElement element = new TextContentListElement();
             element.setTitle(title);
             element.setContent(content);
-            element.setMarkupAllowed(markupAllowed);
+            if (!contextSpecificContent.isEmpty()) {
+                element.setContextSpecificContent(contextSpecificContent);
+            }
+            if (!attributes.isEmpty()) {
+                element.setAttributes(attributes);
+            }
             return element;
         }
     }

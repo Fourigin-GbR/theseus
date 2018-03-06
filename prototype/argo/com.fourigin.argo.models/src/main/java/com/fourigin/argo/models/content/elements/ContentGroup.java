@@ -39,9 +39,23 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
 
     @Override
     public String toString() {
-        return "ContentGroup{" +
-          "elements=" + elements +
-          '}';
+        StringBuilder builder = new StringBuilder("ContentGroup{");
+
+        builder.append("name='").append(getName()).append('\'');
+
+        String title = getTitle();
+        if(title != null){
+            builder.append(", title='").append(title).append('\'');
+        }
+
+        Map<String, String> attributes = getAttributes();
+        if (attributes != null) {
+            builder.append(", attributes='").append(attributes).append('\'');
+        }
+
+        builder.append(", elements='").append(elements).append('\'');
+
+        return builder.toString();
     }
 
     public static class Builder {
@@ -93,12 +107,13 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
         public ContentGroup build(){
             ContentGroup group = new ContentGroup();
             group.setName(name);
-            group.setElements(elements);
+            if(!elements.isEmpty()) {
+                group.setElements(elements);
+            }
             if(!attributes.isEmpty()){
                 group.setAttributes(attributes);
             }
             return group;
         }
-
     }
 }

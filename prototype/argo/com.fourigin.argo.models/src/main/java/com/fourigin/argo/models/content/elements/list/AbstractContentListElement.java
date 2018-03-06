@@ -1,24 +1,15 @@
-package com.fourigin.argo.models.content.elements;
+package com.fourigin.argo.models.content.elements.list;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-public abstract class AbstractContentElement implements ContentElement {
-    private static final long serialVersionUID = 2481851091542511335L;
+public abstract class AbstractContentListElement implements ContentListElement {
 
-    private String name;
+    private static final long serialVersionUID = 6898701711360826186L;
+
     private String title;
     private Map<String, String> attributes;
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public String getTitle() {
@@ -65,21 +56,14 @@ public abstract class AbstractContentElement implements ContentElement {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractContentElement)) return false;
-
-        AbstractContentElement that = (AbstractContentElement) o;
-
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        return attributes != null ? attributes.equals(that.attributes) : that.attributes == null;
+        if (!(o instanceof AbstractContentListElement)) return false;
+        AbstractContentListElement that = (AbstractContentListElement) o;
+        return Objects.equals(title, that.title) &&
+            Objects.equals(attributes, that.attributes);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
-        return result;
+        return Objects.hash(title, attributes);
     }
 }

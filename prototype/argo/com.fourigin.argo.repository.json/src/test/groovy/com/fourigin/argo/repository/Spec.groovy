@@ -3,9 +3,9 @@ package com.fourigin.argo.repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fourigin.argo.config.ContentPageRepositoryConfiguration
 import com.fourigin.argo.models.content.ContentPage
+import com.fourigin.argo.models.content.elements.LinkElement
 import com.fourigin.argo.models.content.elements.ObjectContentElement
 import com.fourigin.argo.models.content.elements.TextContentElement
-import com.fourigin.argo.models.content.elements.TextLinkContentElement
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
@@ -40,9 +40,13 @@ class Spec extends Specification {
                         .withName("text-2")
                         .withContent("I'm just an another text content.")
                         .build(),
-                new TextLinkContentElement.Builder()
+                new LinkElement.Builder()
                         .withName("textlink-1")
-                        .withContent("I'm a text content with a link.")
+                        .withElement(new TextContentElement.Builder()
+                            .withName("text-link-1-content")
+                            .withContent("I'm a text content with a link.")
+                            .build()
+                        )
                         .withUrl("/link.html")
                         .build(),
                 new ObjectContentElement.Builder()

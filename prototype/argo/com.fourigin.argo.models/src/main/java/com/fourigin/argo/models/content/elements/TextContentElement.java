@@ -2,22 +2,13 @@ package com.fourigin.argo.models.content.elements;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TextContentElement extends AbstractContentElement implements TextAwareContentElement, ContentElement {
     private static final long serialVersionUID = 5066464546311137699L;
 
     private String content;
-    private boolean markupAllowed;
-
-    private static final boolean DEFAULT_MARKUP_ALLOWED = false;
-
-    public TextContentElement(){
-        this(DEFAULT_MARKUP_ALLOWED);
-    }
-
-    public TextContentElement(boolean markupAllowed){
-        this.setMarkupAllowed(markupAllowed);
-    }
+    private Map<String, String> contextSpecificContent;
 
     public String getContent() {
         return content;
@@ -27,12 +18,38 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         this.content = content;
     }
 
-    public boolean isMarkupAllowed() {
-        return markupAllowed;
+    public String getContextSpecificContent(String context, boolean fallback) {
+        if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
+            return fallback ? content : null;
+        }
+
+        if (!contextSpecificContent.containsKey(context)) {
+            return fallback ? content : null;
+        }
+
+        return contextSpecificContent.get(context);
     }
 
-    public void setMarkupAllowed(boolean markupAllowed) {
-        this.markupAllowed = markupAllowed;
+    public void setContextSpecificContent(String context, String content) {
+        Objects.requireNonNull(context, "context must not be null!");
+
+        if (content == null) {
+            if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
+                return;
+            }
+
+            contextSpecificContent.remove(context);
+            return;
+        }
+
+        if (contextSpecificContent == null) {
+            contextSpecificContent = new HashMap<>();
+        }
+        contextSpecificContent.put(context, content);
+    }
+
+    public void setContextSpecificContent(Map<String, String> content){
+        contextSpecificContent = content;
     }
 
     @Override
@@ -40,61 +57,72 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         if (this == o) return true;
         if (!(o instanceof TextContentElement)) return false;
         if (!super.equals(o)) return false;
-
         TextContentElement that = (TextContentElement) o;
-
-        //noinspection SimplifiableIfStatement
-        if (markupAllowed != that.markupAllowed) return false;
-        return content != null ? content.equals(that.content) : that.content == null;
+        return Objects.equals(content, that.content) &&
+            Objects.equals(contextSpecificContent, that.contextSpecificContent);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (markupAllowed ? 1 : 0);
-        return result;
+        return Objects.hash(super.hashCode(), content, contextSpecificContent);
     }
 
     @Override
     public String toString() {
-        return "TextContentElement{" +
-          "name='" + getName() + '\'' +
-          ", title='" + getTitle() + '\'' +
-          ", content='" + content + '\'' +
-          ", markupAllowed=" + markupAllowed +
-          '}';
+        StringBuilder builder = new StringBuilder("TextContentElement{");
+
+        builder.append("name='").append(getName()).append('\'');
+
+        String title = getTitle();
+        if(title != null) {
+            builder.append(", title='").append(title).append('\'');
+        }
+
+        builder.append(", content='").append(content).append('\'');
+
+        if (contextSpecificContent != null) {
+            builder.append(", contextSpecificContent=").append(contextSpecificContent);
+        }
+
+        Map<String, String> attributes = getAttributes();
+        if (attributes != null) {
+            builder.append(", attributes='").append(attributes).append('\'');
+        }
+
+        builder.append('}');
+
+        return builder.toString();
     }
 
     public static class Builder {
         private String name;
         private String title;
         private String content;
-        private boolean markupAllowed = DEFAULT_MARKUP_ALLOWED;
+        private Map<String, String> contextSpecificContent = new HashMap<>();
         private Map<String, String> attributes = new HashMap<>();
 
-        public Builder withName(String name){
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withTitle(String title){
+        public Builder withTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder withContent(String content){
+        public Builder withContent(String content) {
             this.content = content;
             return this;
         }
 
-        public Builder withMarkupAllowed(boolean markupAllowed){
-            this.markupAllowed = markupAllowed;
+        public Builder withContextSpecificContent(String context, String content) {
+            contextSpecificContent.put(context, content);
             return this;
         }
 
-        public Builder withAttribute(String key, String value){
-            if(key != null) {
+        public Builder withAttribute(String key, String value) {
+            if (key != null) {
                 if (value == null) {
                     this.attributes.remove(key);
                 } else {
@@ -105,13 +133,15 @@ public class TextContentElement extends AbstractContentElement implements TextAw
             return this;
         }
 
-        public TextContentElement build(){
+        public TextContentElement build() {
             TextContentElement element = new TextContentElement();
             element.setName(name);
             element.setTitle(title);
             element.setContent(content);
-            element.setMarkupAllowed(markupAllowed);
-            if(!attributes.isEmpty()){
+            if (!contextSpecificContent.isEmpty()) {
+                element.setContextSpecificContent(contextSpecificContent);
+            }
+            if (!attributes.isEmpty()) {
                 element.setAttributes(attributes);
             }
 

@@ -71,14 +71,28 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
 
     @Override
     public String toString() {
-        return "ObjectContentElement{" +
-          "name='" + getName() + '\'' +
-          ", title='" + getTitle() + '\'' +
-          ", referenceId='" + referenceId + '\'' +
-          ", source='" + source + '\'' +
-          ", alternateText='" + alternateText + '\'' +
-          ", mimeType='" + mimeType + '\'' +
-          '}';
+        StringBuilder builder = new StringBuilder("ObjectContentElement{");
+
+        builder.append("name='").append(getName()).append('\'');
+
+        String title = getTitle();
+        if(title != null) {
+            builder.append(", title='").append(title).append('\'');
+        }
+
+        builder.append(", referenceId='").append(referenceId).append('\'');
+        builder.append(", source='").append(source).append('\'');
+        builder.append(", alternateText='").append(alternateText).append('\'');
+        builder.append(", mimeType='").append(mimeType).append('\'');
+
+        Map<String, String> attributes = getAttributes();
+        if (attributes != null) {
+            builder.append(", attributes='").append(attributes).append('\'');
+        }
+
+        builder.append('}');
+
+        return builder.toString();
     }
 
     public static class Builder {

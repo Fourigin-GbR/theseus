@@ -42,9 +42,23 @@ public class ContentList extends AbstractContentElement implements ContentElemen
 
     @Override
     public String toString() {
-        return "ContentList{" +
-          "elements=" + elements +
-          '}';
+        StringBuilder builder = new StringBuilder("ContentList{");
+
+        builder.append("name='").append(getName()).append('\'');
+
+        String title = getTitle();
+        if(title != null){
+            builder.append(", title='").append(title).append('\'');
+        }
+
+        Map<String, String> attributes = getAttributes();
+        if (attributes != null) {
+            builder.append(", attributes='").append(attributes).append('\'');
+        }
+
+        builder.append(", elements='").append(elements).append('\'');
+
+        return builder.toString();
     }
 
     public static class Builder {

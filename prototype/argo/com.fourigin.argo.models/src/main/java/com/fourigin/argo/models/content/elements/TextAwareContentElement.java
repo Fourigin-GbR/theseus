@@ -5,6 +5,6 @@ public interface TextAwareContentElement {
     String getContent();
     void setContent(String content);
 
-    boolean isMarkupAllowed();
-    void setMarkupAllowed(boolean markupAllowed);
+    String getContextSpecificContent(String context, boolean fallback);
+    void setContextSpecificContent(String context, String content);
 }
