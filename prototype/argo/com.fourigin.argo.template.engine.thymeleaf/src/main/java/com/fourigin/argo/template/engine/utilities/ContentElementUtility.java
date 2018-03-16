@@ -6,7 +6,7 @@ import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentElementsContainer;
 import com.fourigin.argo.models.content.elements.ContentList;
 import com.fourigin.argo.models.content.elements.TextAwareContentElement;
-import com.fourigin.argo.models.content.elements.list.ContentListElement;
+import com.fourigin.argo.models.content.elements.ContentListElement;
 import com.fourigin.argo.template.engine.IncompatibleContentElementException;
 
 import java.util.List;

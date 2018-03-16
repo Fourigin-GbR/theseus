@@ -1,6 +1,4 @@
-package com.fourigin.argo.models.content.elements.list;
-
-import com.fourigin.argo.models.content.elements.TextAwareContentElement;
+package com.fourigin.argo.models.content.elements;
 
 import java.util.HashMap;
 import java.util.Map;

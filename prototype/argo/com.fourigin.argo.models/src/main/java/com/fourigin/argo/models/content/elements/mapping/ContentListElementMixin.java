@@ -2,10 +2,10 @@ package com.fourigin.argo.models.content.elements.mapping;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fourigin.argo.models.content.elements.list.GroupContentListElement;
-import com.fourigin.argo.models.content.elements.list.LinkListElement;
-import com.fourigin.argo.models.content.elements.list.ObjectContentListElement;
-import com.fourigin.argo.models.content.elements.list.TextContentListElement;
+import com.fourigin.argo.models.content.elements.GroupContentListElement;
+import com.fourigin.argo.models.content.elements.LinkListElement;
+import com.fourigin.argo.models.content.elements.ObjectContentListElement;
+import com.fourigin.argo.models.content.elements.TextContentListElement;
 
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.NAME,

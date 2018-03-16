@@ -1,14 +1,12 @@
 package com.fourigin.argo.models.content.elements;
 
-import com.fourigin.argo.models.content.elements.list.ContentListElement;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ContentList extends AbstractContentElement implements ContentElement {
+public class ContentList extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentListElement> {
 
     private static final long serialVersionUID = 1256571424877498311L;
 

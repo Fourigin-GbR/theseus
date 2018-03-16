@@ -48,5 +48,4 @@ public class ContentPageRepositoryConfiguration {
         objectMapper.registerModule(new JsonInfoModule());
         return objectMapper;
     }
-
 }

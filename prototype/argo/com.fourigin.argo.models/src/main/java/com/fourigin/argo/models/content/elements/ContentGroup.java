@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer {
+public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentElement> {
     private static final long serialVersionUID = -6891589536053329842L;
 
     private List<ContentElement> elements;

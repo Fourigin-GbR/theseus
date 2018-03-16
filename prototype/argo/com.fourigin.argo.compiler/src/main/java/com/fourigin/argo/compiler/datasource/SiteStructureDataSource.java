@@ -2,6 +2,7 @@ package com.fourigin.argo.compiler.datasource;
 
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentGroup;
+import com.fourigin.argo.models.content.elements.LinkElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.ContentResolver;
@@ -27,20 +28,24 @@ public class SiteStructureDataSource implements DataSource<SiteStructureDataSour
         if (infos != null && !infos.isEmpty()) {
             for (PageInfo info : infos) {
                 TextContentElement.Builder textBuilder = new TextContentElement.Builder()
-                    .withName(info.getName())
+                    .withName("name")
                     .withContent(info.getDisplayName());
 
                 if (query.isVerbose()) {
                     textBuilder
                         .withAttribute("description", info.getDescription())
                         .withAttribute("localizedName", info.getLocalizedName())
-                        .withAttribute("reference", info.getReference())
                         .withAttribute("compileState", String.valueOf(info.getCompileState()))
                         .withAttribute("contentPageReference", String.valueOf(info.getContentPageReference()))
                         .withAttribute("templateReference", String.valueOf(info.getTemplateReference()));
                 }
 
-                builder.withElement(textBuilder.build());
+                LinkElement.Builder linkBuilder = new LinkElement.Builder()
+                    .withTarget(info.getReference())
+                    .withName(info.getName())
+                    .withElement(textBuilder.build());
+
+                builder.withElement(linkBuilder.build());
             }
         }
 

@@ -1,6 +1,4 @@
-package com.fourigin.argo.models.content.elements.list;
-
-import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;
+package com.fourigin.argo.models.content.elements;
 
 import java.util.Objects;
 

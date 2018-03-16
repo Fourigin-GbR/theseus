@@ -1,14 +1,13 @@
 package com.fourigin.argo.models.content.elements;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
-public abstract class AbstractContentElement implements ContentElement {
+public abstract class AbstractContentElement extends AbstractAttributesAwareContentElement implements ContentElement {
+
     private static final long serialVersionUID = 2481851091542511335L;
 
     private String name;
     private String title;
-    private Map<String, String> attributes;
 
     @Override
     public String getName() {
@@ -31,55 +30,17 @@ public abstract class AbstractContentElement implements ContentElement {
     }
 
     @Override
-    public Map<String, String> getAttributes() {
-        return attributes;
-    }
-
-    @Override
-    public void setAttributes(Map<String, String> attributes) {
-        this.attributes = attributes;
-    }
-
-    @Override
-    public void setAttribute(String key, String value){
-        if(key == null){
-            return;
-        }
-
-        if(attributes == null){
-            if(value == null){
-                return;
-            }
-
-            attributes = new HashMap<>();
-        }
-        else {
-            if(value == null){
-                attributes.remove(key);
-            }
-        }
-
-        attributes.put(key, value);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractContentElement)) return false;
-
+        if (!super.equals(o)) return false;
         AbstractContentElement that = (AbstractContentElement) o;
-
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        return attributes != null ? attributes.equals(that.attributes) : that.attributes == null;
+        return Objects.equals(name, that.name) &&
+            Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), name, title);
     }
 }

@@ -1,15 +1,11 @@
-package com.fourigin.argo.models.content.elements.list;
-
-import com.fourigin.argo.models.content.elements.ContentElement;
-import com.fourigin.argo.models.content.elements.ContentElementsContainer;
-import com.fourigin.argo.models.content.elements.LinkAwareContentElement;
+package com.fourigin.argo.models.content.elements;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class LinkListElement extends AbstractContentListElement implements ContentListElement, ContentElementsContainer, LinkAwareContentElement{
+public class LinkListElement extends AbstractContentListElement implements ContentListElement, ContentElementsContainer<ContentElement>, LinkAwareContentElement{
 
     private static final long serialVersionUID = -5241678038301475481L;
 
