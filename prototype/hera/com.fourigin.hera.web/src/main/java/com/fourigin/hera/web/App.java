@@ -14,7 +14,10 @@ import java.util.Properties;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({"com.fourigin.hera", "com.fourigin.hera.web"})
+@ComponentScan({
+    "com.fourigin.hera",
+    "com.fourigin.hera.web"
+})
 @SpringBootApplication
 public class App {
 
