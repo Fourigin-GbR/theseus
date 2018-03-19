@@ -64,17 +64,13 @@ project(':theseus') {
         }
 
         dependencies {
-            compile 'org.springframework.boot:spring-boot-starter-web'
-            compile 'org.springframework.boot:spring-boot-starter-tomcat'
-            compile 'org.springframework.boot:spring-boot-starter-actuator'
-            compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-//            compile 'org.springframework.boot:spring-boot-starter-security'
+            compile managedDependency('org.springframework.boot:spring-boot-starter-web')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
 
-            compile 'org.springframework:spring-context-support'
-            compile 'org.springframework:spring-webmvc'
-//            compile 'org.springframework.security:spring-security-web'
-//            compile 'org.springframework.security:spring-security-config'
-//            compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
+            compile managedDependency('org.springframework:spring-context')
+            compile managedDependency('org.springframework:spring-test')
 
             runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
 
@@ -194,10 +190,10 @@ project(':argo') {
 //            runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
 
             compile managedDependency('org.springframework.boot:spring-boot-starter-web')
-//            compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
             compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
             compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
+//            compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
 
             compile managedDependency('org.springframework:spring-context-support')
             compile managedDependency('org.springframework:spring-webmvc')

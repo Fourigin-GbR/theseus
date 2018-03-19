@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.system.ApplicationPidFileWriter;
+import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
@@ -31,10 +31,12 @@ import java.util.Locale;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({"com.fourigin.theseus.web"})
-@ComponentScan({"com.fourigin.theseus.configuration"})
+@ComponentScan({
+    "com.fourigin.theseus.web",
+    "com.fourigin.theseus.configuration"
+})
 @SpringBootApplication
-public class App extends WebMvcConfigurerAdapter {
+public class App implements WebMvcConfigurer {
 
     private static final String APP_NAME = "theseus";
 
