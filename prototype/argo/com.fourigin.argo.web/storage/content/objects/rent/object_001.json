@@ -1,0 +1,43 @@
+{
+  "id": "home",
+  "metaData": {
+    "title": "GreekEstate - Rent Object 001",
+    "attributes": {
+      "key-1": "value-1",
+      "key-2": "value-2",
+      "key-3": "value-3"
+    }
+  },
+  "content": [
+    {
+      "name": "headline",
+      "type": "text",
+      "content": "Mietobjekt #001",
+      "markupAllowed": false
+    },
+    {
+      "name": "body",
+      "type": "text",
+      "content": "Lorem ipsum ..."
+    },
+  ],
+  "dataSourceContents": [
+    {
+      "identifier": {
+        "type": "TIMESTAMP",
+        "checksum": ""
+      },
+      "content": null
+    },
+    {
+      "identifier": {
+        "type": "SITE",
+        "query": {
+        	"INFO_PATH": "/"
+        },
+        "checksum": ""
+      },
+      "content": null
+    }
+  ]
+}

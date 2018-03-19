@@ -1,0 +1,58 @@
+{
+  "path" : "/objects/sale",
+  "children" : [ {
+    "type" : "file",
+    "name" : "object_004",
+    "localizedName" : "object_004",
+    "displayName" : "object_004",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1519400567485,
+      "message" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_005",
+    "localizedName" : "object_005",
+    "displayName" : "object_005",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1519400567490,
+      "message" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_003",
+    "localizedName" : "object_003",
+    "displayName" : "object_003",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1519400567493,
+      "message" : ""
+    }
+  } ]
+}

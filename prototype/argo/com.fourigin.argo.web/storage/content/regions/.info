@@ -1,0 +1,58 @@
+{
+  "path" : "/regions",
+  "children" : [ {
+    "type" : "file",
+    "name" : "salamina",
+    "localizedName" : "salamina",
+    "displayName" : "salamina",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1519400567608,
+      "message" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "athen",
+    "localizedName" : "athen",
+    "displayName" : "athen",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1519400567614,
+      "message" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "loutraki",
+    "localizedName" : "loutraki",
+    "displayName" : "loutraki",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1519400567615,
+      "message" : ""
+    }
+  } ]
+}
