@@ -40,12 +40,23 @@ public class ContentPageRepositoryConfiguration {
         return new DefaultPageInfoTraversingStrategy();
     }
 
-    @Bean
-    public ObjectMapper objectMapper() {
+//    @Bean
+//    public ObjectMapper objectMapper() {
+    private ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.registerModule(new ContentPageModule());
         objectMapper.registerModule(new JsonInfoModule());
         return objectMapper;
+    }
+
+    @Bean
+    public ContentPageModule contentPageModule(){
+        return new ContentPageModule();
+    }
+
+    @Bean
+    public JsonInfoModule jsonInfoModule(){
+        return new JsonInfoModule();
     }
 }

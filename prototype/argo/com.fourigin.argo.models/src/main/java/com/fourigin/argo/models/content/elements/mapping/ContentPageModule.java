@@ -2,6 +2,7 @@ package com.fourigin.argo.models.content.elements.mapping;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentListElement;
 
@@ -11,6 +12,7 @@ public class ContentPageModule extends SimpleModule {
     public ContentPageModule() {
         super("ContentPage", Version.unknownVersion());
 
+        setMixInAnnotation(ContentPage.class, ContentPageMixin.class);
         setMixInAnnotation(ContentElement.class, ContentElementMixin.class);
         setMixInAnnotation(ContentListElement.class, ContentListElementMixin.class);
     }

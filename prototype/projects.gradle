@@ -21,9 +21,9 @@ def thymeleafSpring                         = managedDependency('org.thymeleaf:t
 
 project(':theseus') {
     def theseusVersion = "1.0-SNAPSHOT"
+    group = 'com.fourigin.theseus'
 
     project('com.fourigin.theseus.models') {
-        group = 'com.fourigin.theseus'
         version = theseusVersion
 
         dependencies {
@@ -31,7 +31,6 @@ project(':theseus') {
     }
 
     project('com.fourigin.theseus.repository') {
-        group = 'com.fourigin.theseus'
         version = theseusVersion
 
         dependencies {
@@ -40,7 +39,6 @@ project(':theseus') {
     }
 
     project('com.fourigin.theseus.service') {
-        group = 'com.fourigin.theseus'
         version = theseusVersion
 
         dependencies {
@@ -52,13 +50,13 @@ project(':theseus') {
     project('com.fourigin.theseus.web') {
         apply plugin: 'org.springframework.boot'
 
-        group = 'com.fourigin.theseus'
         version = theseusVersion
 
 //        bootJar {
 //            mainClass = 'com.fourigin.theseus.web.App'
 //        }
 
+        archivesBaseName = 'theseus'
         jar {
             baseName = "theseus"
         }
@@ -83,9 +81,9 @@ project(':theseus') {
 
 project(':argo') {
     def argoVersion = "1.0-SNAPSHOT"
+    group = 'com.fourigin.argo'
 
     project('com.fourigin.argo.models') {
-        group = 'com.fourigin.argo'
         version = argoVersion
 
         dependencies {
@@ -98,7 +96,6 @@ project(':argo') {
     }
 
     project('com.fourigin.argo.repository') {
-        group = 'com.fourigin.argo'
         version = argoVersion
 
         dependencies {
@@ -107,7 +104,6 @@ project(':argo') {
     }
 
     project('com.fourigin.argo.repository.json') {
-        group = 'com.fourigin.argo'
         version = argoVersion
 
         dependencies {
@@ -129,7 +125,6 @@ project(':argo') {
     }
 
     project('com.fourigin.argo.template.engine') {
-        group = 'com.fourigin.argo'
         version = argoVersion
 
         dependencies {
@@ -138,7 +133,6 @@ project(':argo') {
     }
 
     project('com.fourigin.argo.template.engine.thymeleaf') {
-        group = 'com.fourigin.argo'
         version = argoVersion
 
         dependencies {
@@ -152,7 +146,6 @@ project(':argo') {
     }
 
     project('com.fourigin.argo.compiler') {
-        group = 'com.fourigin.argo'
         version = argoVersion
 
         dependencies {
@@ -165,13 +158,14 @@ project(':argo') {
 
     project('com.fourigin.argo.web') {
         apply plugin: 'org.springframework.boot'
-        group = 'com.fourigin.argo'
+
         version = argoVersion
 
 //        bootRepackage {
 //            mainClass = 'com.fourigin.argo.web.App'
 //        }
 
+        archivesBaseName = 'argo'
         jar {
             baseName = "argo"
         }
@@ -211,9 +205,9 @@ project(':argo') {
 
 project(':hera') {
     def heraVersion = '1.0-SNAPSHOT'
+    group = 'com.fourigin.hera'
 
     project('com.fourigin.hera.core') {
-        group = 'com.fourigin.hera'
         version = heraVersion
 
         dependencies {
@@ -226,7 +220,6 @@ project(':hera') {
     }
 
     project('com.fourigin.hera.spring-boot-starter') {
-        group = 'com.fourigin.hera'
         version = heraVersion
 
         dependencies {
@@ -239,13 +232,13 @@ project(':hera') {
     project('com.fourigin.hera.web') {
         apply plugin: 'org.springframework.boot'
 
-        group = 'com.fourigin.hera'
         version = heraVersion
 
 //        bootRepackage {
 //            mainClass = 'com.fourigin.hera.web.App'
 //        }
 
+        archivesBaseName = 'hera'
         jar {
             baseName = "hera"
         }
@@ -269,9 +262,9 @@ project(':hera') {
 
 project(':utilities') {
     def utilitiesVersion = '1.0-SNAPSHOT'
+    group = 'com.fourigin.utilities'
 
     project('com.fourigin.utilities.core') {
-        group = 'com.fourigin.utilities'
         version = utilitiesVersion
 
         dependencies {

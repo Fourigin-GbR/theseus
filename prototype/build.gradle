@@ -39,7 +39,6 @@ buildscript {
 
 wrapper {
     gradleVersion = '4.5-rc-1'
-//    gradleVersion = '4.4.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -54,7 +53,7 @@ def targetCompatibility = sourceCompatibility
 def checkstyleToolVersion = '8.7'
 def jacocoToolVersion = '0.8.0'
 
-//region repositories for allprojects
+//region repositories for all projects
 allprojects {
     repositories.addAll rootProject.buildscript.repositories
 }
@@ -205,8 +204,7 @@ allprojects {
 //	apply plugin: 'duplicates'   //http://evgeny-goldin.com/wiki/Gradle-duplicates-plugin
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
-
-
+    apply plugin: 'io.spring.dependency-management'
 
     if (childProjects.isEmpty()) {
 

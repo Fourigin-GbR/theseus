@@ -1,5 +1,6 @@
 package com.fourigin.argo.compile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
@@ -25,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
 import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 
@@ -39,6 +44,8 @@ public class CompileController {
     private PageCompilerFactory pageCompilerFactory;
 
     private CompilerOutputStrategy storageCompilerOutputStrategy;
+
+    private ObjectMapper objectMapper;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
@@ -104,7 +111,19 @@ public class CompileController {
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        return pageCompiler.prepareContent(pageInfo);
+        ContentPage preparedContent = pageCompiler.prepareContent(pageInfo);
+
+        if (logger.isDebugEnabled()) {
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                objectMapper.writeValue(baos, preparedContent);
+                logger.debug("Prepared content:\n{}", new String(baos.toByteArray(), StandardCharsets.UTF_8));
+            }
+            catch(IOException ex){
+                // whatever!
+            }
+        }
+
+        return preparedContent;
     }
 
 //    @RequestMapping(value = "/persist", method = RequestMethod.GET)
@@ -152,5 +171,10 @@ public class CompileController {
     @Autowired
     public void setStorageCompilerOutputStrategy(CompilerOutputStrategy storageCompilerOutputStrategy) {
         this.storageCompilerOutputStrategy = storageCompilerOutputStrategy;
+    }
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 }

@@ -55,8 +55,8 @@
     "displayName" : "impressum",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
       "revision" : "unspecified"
     },
     "staged" : false,
@@ -73,8 +73,8 @@
     "displayName" : "home",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
+      "templateId" : "greekestate.index",
+      "variationId" : "default",
       "revision" : "unspecified"
     },
     "staged" : false,
