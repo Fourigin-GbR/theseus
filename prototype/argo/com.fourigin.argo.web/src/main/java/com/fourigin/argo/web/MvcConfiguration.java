@@ -39,7 +39,6 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
     @Bean
     public SpringTemplateEngine templateEngine() {
-
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(fileTemplateResolver());
 

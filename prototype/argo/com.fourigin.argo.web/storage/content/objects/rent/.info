@@ -2,24 +2,6 @@
   "path" : "/objects/rent",
   "children" : [ {
     "type" : "file",
-    "name" : "object_004",
-    "localizedName" : "object_004",
-    "displayName" : "object_004",
-    "description" : "Auto-created directory info. Don't forget to specify all properties!",
-    "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
-      "revision" : "unspecified"
-    },
-    "staged" : false,
-    "compileState" : {
-      "checksum" : "",
-      "compiled" : false,
-      "timestamp" : 1519400567583,
-      "message" : ""
-    }
-  }, {
-    "type" : "file",
     "name" : "object_002",
     "localizedName" : "object_002",
     "displayName" : "object_002",
@@ -33,7 +15,7 @@
     "compileState" : {
       "checksum" : "",
       "compiled" : false,
-      "timestamp" : 1519400567584,
+      "timestamp" : 1521562259934,
       "message" : ""
     }
   }, {
@@ -51,7 +33,25 @@
     "compileState" : {
       "checksum" : "",
       "compiled" : false,
-      "timestamp" : 1519400567586,
+      "timestamp" : 1521562259934,
+      "message" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_004",
+    "localizedName" : "object_004",
+    "displayName" : "object_004",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1521562259934,
       "message" : ""
     }
   } ]
