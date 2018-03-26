@@ -143,6 +143,7 @@ public class DefaultPageCompiler implements PageCompiler {
         }
         catch(IOException ex){
             if (logger.isErrorEnabled()) logger.error("Error compiling content!", ex);
+            throw new IllegalStateException("Error occurred while compiling the page.", ex);
         }
 
         return templateVariation.getOutputContentType();

@@ -89,7 +89,7 @@ public class CompileController {
         } catch (Throwable ex) {
             if (logger.isErrorEnabled()) logger.error("Error occurred while compiling page!", ex);
             bufferedCompilerOutputStrategy.reset();
-            return null;
+            throw ex;
         }
     }
 
