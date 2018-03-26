@@ -9,7 +9,6 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
     private String base;
     private String path;
     private String contentPath;
-    private boolean flushCaches = false;
 
     @Override
     public String getBase() {
@@ -40,28 +39,19 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
         this.contentPath = contentPath;
     }
 
-    public boolean isFlushCaches() {
-        return flushCaches;
-    }
-
-    public void setFlushCaches(boolean flushCaches) {
-        this.flushCaches = flushCaches;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RetrieveContentRequest)) return false;
         RetrieveContentRequest that = (RetrieveContentRequest) o;
-        return flushCaches == that.flushCaches &&
-            Objects.equals(base, that.base) &&
+        return Objects.equals(base, that.base) &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentPath, that.contentPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, path, contentPath, flushCaches);
+        return Objects.hash(base, path, contentPath);
     }
 
     @Override
@@ -70,7 +60,6 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
             "base='" + base + '\'' +
             ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
-            ", flushCaches=" + flushCaches +
             '}';
     }
 }

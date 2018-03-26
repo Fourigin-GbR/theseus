@@ -1,9 +1,12 @@
 package com.fourigin.argo.web;
 
+import com.fourigin.argo.interceptors.FlushRepositoriesInterceptor;
+import com.fourigin.argo.repository.ContentRepositoryFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
@@ -16,6 +19,17 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
     @Value("${template.engine.thymeleaf.internal.base}")
     private String internalTemplateBasePath;
+
+    private ContentRepositoryFactory contentRepositoryFactory;
+
+    public MvcConfiguration(ContentRepositoryFactory contentRepositoryFactory) {
+        this.contentRepositoryFactory = contentRepositoryFactory;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addWebRequestInterceptor(new FlushRepositoriesInterceptor(contentRepositoryFactory));
+    }
 
     @Bean
     public FileTemplateResolver fileTemplateResolver(){

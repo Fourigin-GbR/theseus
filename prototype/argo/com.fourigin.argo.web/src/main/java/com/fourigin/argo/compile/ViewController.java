@@ -34,16 +34,12 @@ public class ViewController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView view(
-        @RequestParam("base") String base,
-        @RequestParam("path") String path,
-        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches){
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam(RequestParameters.PATH) String path){
 
         if (logger.isDebugEnabled()) logger.debug("Processing view request for base {} & path {}.", base, path);
 
         ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-        if(flushCaches) {
-            contentResolver.flush();
-        }
 
         PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
 
@@ -80,8 +76,8 @@ public class ViewController {
 
         ModelAndView modelAndView = new ModelAndView("viewPage");
 
-        modelAndView.addObject("base", base);
-        modelAndView.addObject("path", path);
+        modelAndView.addObject(ContextKeys.BASE, base);
+        modelAndView.addObject(ContextKeys.PATH, path);
         modelAndView.addObject(ContextKeys.CONTENT_PAGE, contentPage);
         modelAndView.addObject(ContextKeys.PAGE_INFO, pageInfo);
         modelAndView.addObject(ContextKeys.SITE_ATTRIBUTES, siteAttributes);

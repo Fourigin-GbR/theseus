@@ -2,6 +2,7 @@ package com.fourigin.argo.editors;
 
 import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
+import com.fourigin.argo.compile.RequestParameters;
 import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
@@ -40,8 +41,8 @@ public class EditorsController {
 
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public ContentPagePrototype retrievePrototype(
-        @RequestParam("base") String base,
-        @RequestParam("path") String siteStructurePath
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam(RequestParameters.PATH) String siteStructurePath
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing retrieve prototype request for base {} and sitePath {}", base, siteStructurePath);
 
@@ -71,7 +72,7 @@ public class EditorsController {
         ContentElementResponse response = new ContentElementResponse();
         response.copyFrom(request);
 
-        ContentElement contentElement = resolveContentElement(request, request.isFlushCaches());
+        ContentElement contentElement = resolveContentElement(request);
         String currentChecksum = buildChecksum(contentElement);
         response.setCurrentContentElement(contentElement);
         response.setCurrentChecksum(currentChecksum);
@@ -81,16 +82,14 @@ public class EditorsController {
 
     @RequestMapping(value = "/retrieveP", method = RequestMethod.GET)
     public ContentElementResponse r(
-        @RequestParam("base") String base,
-        @RequestParam("path") String siteStructurePath,
-        @RequestParam("contentPath") String contentPath,
-        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam(RequestParameters.PATH) String siteStructurePath,
+        @RequestParam("contentPath") String contentPath
     ){
         RetrieveContentRequest request = new RetrieveContentRequest();
         request.setBase(base);
         request.setPath(siteStructurePath);
         request.setContentPath(contentPath);
-        request.setFlushCaches(flushCaches);
 
         return retrieve(request);
     }
@@ -102,7 +101,7 @@ public class EditorsController {
         StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
         response.copyFrom(request);
 
-        ContentElement contentElement = resolveContentElement(request, false);
+        ContentElement contentElement = resolveContentElement(request);
         String currentChecksum = buildChecksum(contentElement);
         if(currentChecksum.equals(request.getChecksum())){
             response.setStatus(true);
@@ -125,7 +124,7 @@ public class EditorsController {
         StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
         response.copyFrom(request);
 
-        ContentElement currentContentElement = resolveContentElement(request, false);
+        ContentElement currentContentElement = resolveContentElement(request);
         String currentChecksum = buildChecksum(currentContentElement);
         response.setCurrentChecksum(currentChecksum);
         if(currentChecksum.equals(request.getOriginalChecksum())){
@@ -166,18 +165,13 @@ public class EditorsController {
         return ChecksumGenerator.getChecksum(contentElement);
     }
 
-    private ContentElement resolveContentElement(ContentElementPointer pointer, boolean flushCaches){
+    private ContentElement resolveContentElement(ContentElementPointer pointer){
         validate(pointer);
 
         String base = pointer.getBase();
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
         if(contentRepository == null){
             throw new InvalidParameterException("No content repository available for '" + base + "'!");
-        }
-
-        if(flushCaches){
-            if (logger.isDebugEnabled()) logger.debug("Flushing repository for '{}'.", base);
-            contentRepository.flush();
         }
 
         String pagePath = pointer.getPath();

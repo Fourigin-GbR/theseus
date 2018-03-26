@@ -49,17 +49,13 @@ public class CompileController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
-        @RequestParam("base") String base,
-        @RequestParam("path") String path,
-        @RequestParam(value = "writeOutput", required = false, defaultValue = "false") boolean writeOutput,
-        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam(RequestParameters.PATH) String path,
+        @RequestParam(value = "writeOutput", required = false, defaultValue = "false") boolean writeOutput
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base {} & path {}.", base, path);
 
         ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-        if(flushCaches) {
-            contentResolver.flush();
-        }
 
         PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
 
@@ -96,16 +92,12 @@ public class CompileController {
     @ResponseBody
     @RequestMapping(value = "/prepare-content", method = RequestMethod.GET)
     public ContentPage showPreparedContent(
-        @RequestParam("base") String base,
-        @RequestParam("path") String path,
-        @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam(RequestParameters.PATH) String path
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
 
         ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-        if(flushCaches) {
-            contentResolver.flush();
-        }
 
         PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
 
