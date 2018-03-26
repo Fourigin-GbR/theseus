@@ -5,9 +5,9 @@ public interface ContentElementPointer {
 
     void setBase(String base);
 
-    String getSiteStructurePath();
+    String getPath();
 
-    void setSiteStructurePath(String siteStructurePath);
+    void setPath(String path);
 
     String getContentPath();
 

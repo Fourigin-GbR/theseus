@@ -3,13 +3,14 @@ package com.fourigin.argo.editors;
 import com.fourigin.argo.models.content.elements.ContentElement;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class StatusAwareContentElementResponse extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
 
     private static final long serialVersionUID = -6840096148919100384L;
     
     private String base;
-    private String siteStructurePath;
+    private String path;
     private String contentPath;
     private boolean status;
     private String currentChecksum;
@@ -26,13 +27,13 @@ public class StatusAwareContentElementResponse extends AbstractContentElementPoi
     }
 
     @Override
-    public String getSiteStructurePath() {
-        return siteStructurePath;
+    public String getPath() {
+        return path;
     }
 
     @Override
-    public void setSiteStructurePath(String siteStructurePath) {
-        this.siteStructurePath = siteStructurePath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
@@ -73,41 +74,29 @@ public class StatusAwareContentElementResponse extends AbstractContentElementPoi
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof StatusAwareContentElementResponse)) return false;
-
         StatusAwareContentElementResponse that = (StatusAwareContentElementResponse) o;
-
-        if (status != that.status) return false;
-        if (base != null ? !base.equals(that.base) : that.base != null) return false;
-        if (siteStructurePath != null ? !siteStructurePath.equals(that.siteStructurePath) : that.siteStructurePath != null)
-            return false;
-        if (contentPath != null ? !contentPath.equals(that.contentPath) : that.contentPath != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (currentChecksum != null ? !currentChecksum.equals(that.currentChecksum) : that.currentChecksum != null)
-            return false;
-        return currentContentElement != null ? currentContentElement.equals(that.currentContentElement) : that.currentContentElement == null;
+        return status == that.status &&
+            Objects.equals(base, that.base) &&
+            Objects.equals(path, that.path) &&
+            Objects.equals(contentPath, that.contentPath) &&
+            Objects.equals(currentChecksum, that.currentChecksum) &&
+            Objects.equals(currentContentElement, that.currentContentElement);
     }
 
     @Override
     public int hashCode() {
-        int result = base != null ? base.hashCode() : 0;
-        result = 31 * result + (siteStructurePath != null ? siteStructurePath.hashCode() : 0);
-        result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
-        result = 31 * result + (status ? 1 : 0);
-        result = 31 * result + (currentChecksum != null ? currentChecksum.hashCode() : 0);
-        result = 31 * result + (currentContentElement != null ? currentContentElement.hashCode() : 0);
-        return result;
+        return Objects.hash(base, path, contentPath, status, currentChecksum, currentContentElement);
     }
 
     @Override
     public String toString() {
-        return "ContentElementResponse{" +
+        return "StatusAwareContentElementResponse{" +
             "base='" + base + '\'' +
-            ", siteStructurePath='" + siteStructurePath + '\'' +
+            ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             ", status=" + status +
             ", currentChecksum='" + currentChecksum + '\'' +
             ", currentContentElement=" + currentContentElement +
             '}';
     }
-
 }

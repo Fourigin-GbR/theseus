@@ -1,12 +1,13 @@
 package com.fourigin.argo.editors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class RetrieveContentRequest extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
     private static final long serialVersionUID = -1532883135997976347L;
 
     private String base;
-    private String siteStructurePath;
+    private String path;
     private String contentPath;
     private boolean flushCaches = false;
 
@@ -20,14 +21,13 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
         this.base = base;
     }
 
-    @Override
-    public String getSiteStructurePath() {
-        return siteStructurePath;
+    public String getPath() {
+        return path;
     }
 
     @Override
-    public void setSiteStructurePath(String siteStructurePath) {
-        this.siteStructurePath = siteStructurePath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
@@ -52,34 +52,25 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RetrieveContentRequest)) return false;
-
-        RetrieveContentRequest request = (RetrieveContentRequest) o;
-
-        if (flushCaches != request.flushCaches) return false;
-        if (base != null ? !base.equals(request.base) : request.base != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (siteStructurePath != null ? !siteStructurePath.equals(request.siteStructurePath) : request.siteStructurePath != null)
-            return false;
-        return contentPath != null ? contentPath.equals(request.contentPath) : request.contentPath == null;
+        RetrieveContentRequest that = (RetrieveContentRequest) o;
+        return flushCaches == that.flushCaches &&
+            Objects.equals(base, that.base) &&
+            Objects.equals(path, that.path) &&
+            Objects.equals(contentPath, that.contentPath);
     }
 
     @Override
     public int hashCode() {
-        int result = base != null ? base.hashCode() : 0;
-        result = 31 * result + (siteStructurePath != null ? siteStructurePath.hashCode() : 0);
-        result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
-        result = 31 * result + (flushCaches ? 1 : 0);
-        return result;
+        return Objects.hash(base, path, contentPath, flushCaches);
     }
 
     @Override
     public String toString() {
         return "RetrieveContentRequest{" +
             "base='" + base + '\'' +
-            ", siteStructurePath='" + siteStructurePath + '\'' +
+            ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             ", flushCaches=" + flushCaches +
             '}';
     }
-
 }

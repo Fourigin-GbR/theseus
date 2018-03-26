@@ -9,7 +9,7 @@ public abstract class AbstractContentElementPointer implements ContentElementPoi
         }
 
         this.setBase(otherPointer.getBase());
-        this.setSiteStructurePath(otherPointer.getSiteStructurePath());
+        this.setPath(otherPointer.getPath());
         this.setContentPath(otherPointer.getContentPath());
     }
 }

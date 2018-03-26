@@ -75,20 +75,20 @@ public class EditorsController {
         String currentChecksum = buildChecksum(contentElement);
         response.setCurrentContentElement(contentElement);
         response.setCurrentChecksum(currentChecksum);
-        
+
         return response;
     }
 
     @RequestMapping(value = "/retrieveP", method = RequestMethod.GET)
     public ContentElementResponse r(
         @RequestParam("base") String base,
-        @RequestParam("sitePath") String siteStructurePath,
+        @RequestParam("path") String siteStructurePath,
         @RequestParam("contentPath") String contentPath,
         @RequestParam(value = "flush", required = false, defaultValue = "false") boolean flushCaches
     ){
         RetrieveContentRequest request = new RetrieveContentRequest();
         request.setBase(base);
-        request.setSiteStructurePath(siteStructurePath);
+        request.setPath(siteStructurePath);
         request.setContentPath(contentPath);
         request.setFlushCaches(flushCaches);
 
@@ -180,7 +180,7 @@ public class EditorsController {
             contentRepository.flush();
         }
 
-        String pagePath = pointer.getSiteStructurePath();
+        String pagePath = pointer.getPath();
         PageInfo page = contentRepository.resolveInfo(PageInfo.class, pagePath);
         if(page == null){
             throw new InvalidParameterException("No page found for '" + pagePath + "'!");
@@ -208,7 +208,7 @@ public class EditorsController {
             throw new InvalidParameterException("No content repository available for '" + base + "'!");
         }
 
-        String pagePath = pointer.getSiteStructurePath();
+        String pagePath = pointer.getPath();
         PageInfo page = contentRepository.resolveInfo(PageInfo.class, pagePath);
         if(page == null){
             throw new InvalidParameterException("No page found for '" + pagePath + "'!");
@@ -232,7 +232,7 @@ public class EditorsController {
             throw new IllegalArgumentException("Pointer must not be null!");
         }
 
-        String pagePath = pointer.getSiteStructurePath();
+        String pagePath = pointer.getPath();
         if(pagePath == null || pagePath.isEmpty()){
             throw new IllegalArgumentException("pointer's site structure path must not be null or empty!");
         }
