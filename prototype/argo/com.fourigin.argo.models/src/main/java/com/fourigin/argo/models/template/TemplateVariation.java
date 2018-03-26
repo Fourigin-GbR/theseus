@@ -1,6 +1,13 @@
 package com.fourigin.argo.models.template;
 
-public class TemplateVariation {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class TemplateVariation implements Serializable {
+    private static final long serialVersionUID = -1435730032590605299L;
+
+    public static final String DEFAULT_VARIATION_NAME = "default";
+
     private String id;
     private String description;
     private Type type;
@@ -42,23 +49,16 @@ public class TemplateVariation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TemplateVariation)) return false;
-
         TemplateVariation that = (TemplateVariation) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (type != that.type) return false;
-        return outputContentType != null ? outputContentType.equals(that.outputContentType) : that.outputContentType == null;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(description, that.description) &&
+            type == that.type &&
+            Objects.equals(outputContentType, that.outputContentType);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (outputContentType != null ? outputContentType.hashCode() : 0);
-        return result;
+        return Objects.hash(id, description, type, outputContentType);
     }
 
     @Override

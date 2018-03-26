@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="car_configurator.packages.name">Ausstattungspakete und Optionen</entry>
+    <entry key="car_configurator.packages.subname">Ausstattungspakete</entry>
+    <entry key="car_configurator.options.subname">Optionen</entry>
+    <entry key="car_configurator.color.exterior">Außenfarbe:</entry>
+    <entry key="car_configurator.color.interior">Innenfarbe:</entry>
+    <entry key="car_configurator.footer.price">Preis ab</entry>
+    <entry key="car_configurator.footer.url">www.chevrolet.de</entry>
+    <entry key="car_configurator.footer.copyright">Copyright © 2018, Cadillac Europe GmbH. Alle Rechte vorbehalten.</entry>
+    <entry key="car_configurator.footer.disclaimer"></entry>
+    <entry key="car_configurator.header.page">Seite</entry>
+    <entry key="car_configurator.header.pageSub">/</entry>
+    <entry key="car_configurator.header.title">Ihre {0} Konfiguration</entry>
+</properties>

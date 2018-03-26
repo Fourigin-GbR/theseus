@@ -3,7 +3,9 @@ package com.fourigin.argo.config;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
+import com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver;
 import com.fourigin.argo.repository.JsonFilesContentRepositoryFactory;
+import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.model.mapping.JsonInfoModule;
 import com.fourigin.argo.repository.strategies.DefaultPageInfoTraversingStrategy;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
@@ -40,9 +42,8 @@ public class ContentPageRepositoryConfiguration {
         return new DefaultPageInfoTraversingStrategy();
     }
 
-//    @Bean
-//    public ObjectMapper objectMapper() {
-    private ObjectMapper objectMapper() {
+    @Bean
+    public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.registerModule(new ContentPageModule());
@@ -58,5 +59,81 @@ public class ContentPageRepositoryConfiguration {
     @Bean
     public JsonInfoModule jsonInfoModule(){
         return new JsonInfoModule();
+    }
+
+    @Bean
+    public TemplateResolver templateResolver(
+        @Value("${template.engine.thymeleaf.base}") String templateBasePath
+    ) {
+        return new DirectoryContentBasedTemplateResolver(templateBasePath, objectMapper());
+//        return id -> {
+//            File baseDir = new File(templateBasePath);
+//            String templateReference = id;
+//            int pos = templateReference.indexOf('.');
+//            while(pos >= 0){
+//                String subDir = templateReference.substring(0, pos);
+//                templateReference = templateReference.substring(pos+1);
+//                baseDir = new File(baseDir, subDir);
+//            }
+//
+//            final String templateBaseName = templateReference;
+//            File[] matchingFiles = baseDir.listFiles((dir, name) -> name.startsWith(templateBaseName) && name.endsWith(".html"));
+//
+//            Map<String, String> checksums = new HashMap<>();
+//
+//            // read all available variation files
+//            Set<TemplateVariation> variations = new HashSet<>();
+//            if(matchingFiles != null && matchingFiles.length > 0){
+//                for (File matchingFile : matchingFiles) {
+//                    String fileName = matchingFile.getName();
+//                    String variationName = "default";
+//                    int dot = fileName.indexOf(".html");
+//                    int separator = fileName.indexOf('#');
+//                    if(separator >= 0){
+//                        variationName = fileName.substring(separator+1, dot);
+//                    }
+//
+//                    TemplateVariation variation = new TemplateVariation();
+//                    variation.setId(variationName);
+//                    variation.setType(Type.THYMELEAF);
+//                    variation.setOutputContentType("text/html");
+//                    variations.add(variation);
+//
+//                    checksums.put(fileName, ChecksumGenerator.getChecksum(variation));
+//                }
+//            }
+//
+//            // build the template's revision
+//            List<String> keys = new ArrayList<>(checksums.keySet());
+//            Collections.sort(keys);
+//            StringBuilder revision = new StringBuilder();
+//            for (String key : keys) {
+//                if(revision.length() > 0){
+//                    revision.append('-');
+//                }
+//                revision.append(key);
+//            }
+//
+//            Template template = new Template();
+//            template.setId(id);
+//            template.setRevision(revision.toString());
+//            template.setVariations(variations);
+//
+//            // read prototype, if available
+//            File prototypeFile = new File(baseDir, id + ".json");
+//            if(prototypeFile.exists()){
+//                try(InputStream is = new BufferedInputStream(new FileInputStream(prototypeFile))) {
+//                    ContentPagePrototype prototype = objectMapper.readValue(is, ContentPagePrototype.class);
+//                    template.setPrototype(prototype);
+//                }
+//                catch(IOException ex)
+//                {
+//                    // TODO: create proper exception handling
+//                    throw new IllegalArgumentException("Error loading content prototype for id '" + id + "' (" + prototypeFile.getAbsolutePath() + ")!", ex);
+//                }
+//            }
+//
+//            return template;
+//        };
     }
 }

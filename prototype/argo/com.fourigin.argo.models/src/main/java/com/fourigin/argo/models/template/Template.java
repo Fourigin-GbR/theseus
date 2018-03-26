@@ -1,14 +1,18 @@
 package com.fourigin.argo.models.template;
 
-import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.content.ContentPagePrototype;
 
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
-public class Template {
+public class Template implements Serializable {
+    private static final long serialVersionUID = 3693686668873051808L;
+
     private String id;
     private String revision;
     private String description;
-    private ContentPage prototype;
+    private ContentPagePrototype prototype;
     private Collection<TemplateVariation> variations;
 
     public String getId() {
@@ -35,11 +39,11 @@ public class Template {
         this.description = description;
     }
 
-    public ContentPage getPrototype() {
+    public ContentPagePrototype getPrototype() {
         return prototype;
     }
 
-    public void setPrototype(ContentPage prototype) {
+    public void setPrototype(ContentPagePrototype prototype) {
         this.prototype = prototype;
     }
 
@@ -55,26 +59,17 @@ public class Template {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Template)) return false;
-
         Template template = (Template) o;
-
-        if (id != null ? !id.equals(template.id) : template.id != null) return false;
-        if (revision != null ? !revision.equals(template.revision) : template.revision != null) return false;
-        if (description != null ? !description.equals(template.description) : template.description != null)
-            return false;
-        //noinspection SimplifiableIfStatement
-        if (prototype != null ? !prototype.equals(template.prototype) : template.prototype != null) return false;
-        return variations != null ? variations.equals(template.variations) : template.variations == null;
+        return Objects.equals(id, template.id) &&
+            Objects.equals(revision, template.revision) &&
+            Objects.equals(description, template.description) &&
+            Objects.equals(prototype, template.prototype) &&
+            Objects.equals(variations, template.variations);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (revision != null ? revision.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (prototype != null ? prototype.hashCode() : 0);
-        result = 31 * result + (variations != null ? variations.hashCode() : 0);
-        return result;
+        return Objects.hash(id, revision, description, prototype, variations);
     }
 
     @Override

@@ -62,7 +62,11 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
             throw new IllegalStateException("No thymeleaf internal template engine defined!");
         }
 
-        String templateName = (template.getId() + "#" + templateVariation.getId()).replace('.', '/');
+        String templateName = template.getId();
+        if(!TemplateVariation.DEFAULT_VARIATION_NAME.equals(templateVariation.getId())){
+            templateName += "#" + templateVariation.getId();
+        }
+        templateName = templateName.replace('.', '/');
         if (logger.isDebugEnabled()) logger.debug("Template name: {}.", templateName);
 
         Context context = new Context();

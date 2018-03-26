@@ -4,8 +4,6 @@ import com.fourigin.argo.compiler.DefaultPageCompilerFactory;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
-import com.fourigin.argo.models.template.Template;
-import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.TemplateResolver;
@@ -35,9 +33,7 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 @Configuration
 @EnableAutoConfiguration
@@ -152,26 +148,6 @@ public class App {
         factory.setEngines(engines);
 
         return factory;
-    }
-
-    @Bean
-    public TemplateResolver templateResolver() {
-        return id -> {
-            Set<TemplateVariation> variations = new HashSet<>();
-
-            TemplateVariation variation = new TemplateVariation();
-            variation.setId("default");
-            variation.setType(Type.THYMELEAF);
-            variation.setOutputContentType("text/html");
-            variations.add(variation);
-
-            Template template = new Template();
-            template.setId(id);
-            template.setRevision(null);
-            template.setVariations(variations);
-
-            return template;
-        };
     }
 
     // *** COMPILER ***

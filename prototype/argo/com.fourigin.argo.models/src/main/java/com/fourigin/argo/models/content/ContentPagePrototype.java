@@ -1,6 +1,6 @@
 package com.fourigin.argo.models.content;
 
-import com.fourigin.argo.models.content.hotspots.ElementEditorProperties;
+import com.fourigin.argo.models.content.hotspots.ElementsEditorProperties;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -11,7 +11,7 @@ public class ContentPagePrototype implements Serializable {
     private static final long serialVersionUID = -3029365377046552324L;
 
     private ContentPage contentPrototype;
-    private Map<String, ElementEditorProperties> hotspots;
+    private Map<String, ElementsEditorProperties> hotspots;
 
     public ContentPage getContentPrototype() {
         return contentPrototype;
@@ -21,11 +21,11 @@ public class ContentPagePrototype implements Serializable {
         this.contentPrototype = contentPrototype;
     }
 
-    public Map<String, ElementEditorProperties> getHotspots() {
+    public Map<String, ElementsEditorProperties> getHotspots() {
         return hotspots;
     }
 
-    public void setHotspots(Map<String, ElementEditorProperties> hotspots) {
+    public void setHotspots(Map<String, ElementsEditorProperties> hotspots) {
         this.hotspots = hotspots;
     }
 

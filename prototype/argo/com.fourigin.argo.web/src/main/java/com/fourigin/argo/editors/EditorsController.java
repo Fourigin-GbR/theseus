@@ -3,13 +3,18 @@ package com.fourigin.argo.editors;
 import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.models.ChecksumGenerator;
-import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.content.ContentPageManager;
+import com.fourigin.argo.models.content.ContentPagePrototype;
 import com.fourigin.argo.models.content.UnresolvableContentPathException;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.template.Template;
+import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
+import com.fourigin.argo.repository.ContentResolver;
+import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.UnresolvableSiteStructurePathException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +35,34 @@ public class EditorsController {
     private final Logger logger = LoggerFactory.getLogger(EditorsController.class);
 
     private ContentRepositoryFactory contentRepositoryFactory;
+
+    private TemplateResolver templateResolver;
+
+    @RequestMapping(value = "/prototype", method = RequestMethod.GET)
+    public ContentPagePrototype retrievePrototype(
+        @RequestParam("base") String base,
+        @RequestParam("path") String siteStructurePath
+    ){
+        if (logger.isDebugEnabled()) logger.debug("Processing retrieve prototype request for base {} and sitePath {}", base, siteStructurePath);
+
+        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+
+        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, siteStructurePath);
+        TemplateReference templateReference = pageInfo.getTemplateReference();
+        if(templateReference == null){
+            throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
+        }
+        if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
+
+        String templateId = templateReference.getTemplateId();
+        Template template = templateResolver.retrieve(templateId);
+        if(template == null){
+            throw new IllegalStateException("No template found for id '" + templateId + "'!");
+        }
+        if (logger.isDebugEnabled()) logger.debug("Template: {}", templateId);
+
+        return template.getPrototype();
+    }
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
     public ContentElementResponse retrieve(@RequestBody RetrieveContentRequest request){
@@ -213,5 +246,10 @@ public class EditorsController {
     @Autowired
     public void setContentRepositoryFactory(ContentRepositoryFactory contentRepositoryFactory) {
         this.contentRepositoryFactory = contentRepositoryFactory;
+    }
+
+    @Autowired
+    public void setTemplateResolver(TemplateResolver templateResolver) {
+        this.templateResolver = templateResolver;
     }
 }
