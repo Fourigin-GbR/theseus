@@ -6,8 +6,8 @@ import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
-import com.fourigin.argo.repository.ContentRepositoryFactory;
-import com.fourigin.argo.repository.ContentResolver;
+import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
+import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.ContentPageCompilerException;
@@ -39,11 +39,11 @@ public class CompileController {
 
     private final Logger logger = LoggerFactory.getLogger(CompileController.class);
 
-    private ContentRepositoryFactory contentRepositoryFactory;
-
     private PageCompilerFactory pageCompilerFactory;
 
     private CompilerOutputStrategy storageCompilerOutputStrategy;
+
+    private CmsRequestAggregationResolver cmsRequestAggregationResolver;
 
     private ObjectMapper objectMapper;
 
@@ -55,9 +55,12 @@ public class CompileController {
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base {} & path {}.", base, path);
 
-        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
 
-        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
+//        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+//
+//        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
+        PageInfo pageInfo = aggregation.getPageInfo();
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
@@ -97,9 +100,12 @@ public class CompileController {
     ){
         if (logger.isDebugEnabled()) logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
 
-        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
 
-        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
+//        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
+//
+//        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
+        PageInfo pageInfo = aggregation.getPageInfo();
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
@@ -150,10 +156,10 @@ public class CompileController {
         return new ServiceErrorResponse(500, "Error while compiling content page!", ex.getMessage(), ex.getCause());
     }
 
-    @Autowired
-    public void setContentRepositoryFactory(ContentRepositoryFactory contentRepositoryFactory) {
-        this.contentRepositoryFactory = contentRepositoryFactory;
-    }
+//    @Autowired
+//    public void setContentRepositoryFactory(ContentRepositoryFactory contentRepositoryFactory) {
+//        this.contentRepositoryFactory = contentRepositoryFactory;
+//    }
 
     @Autowired
     public void setPageCompilerFactory(PageCompilerFactory pageCompilerFactory) {
@@ -163,6 +169,11 @@ public class CompileController {
     @Autowired
     public void setStorageCompilerOutputStrategy(CompilerOutputStrategy storageCompilerOutputStrategy) {
         this.storageCompilerOutputStrategy = storageCompilerOutputStrategy;
+    }
+
+    @Autowired
+    public void setCmsRequestAggregationResolver(CmsRequestAggregationResolver cmsRequestAggregationResolver) {
+        this.cmsRequestAggregationResolver = cmsRequestAggregationResolver;
     }
 
     @Autowired

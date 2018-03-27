@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
@@ -24,7 +25,7 @@ public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
     }
 
     @Override
-    public void preHandle(WebRequest request) {
+    public void preHandle(WebRequest request) throws IOException {
         boolean flushCaches = Boolean.valueOf(request.getParameter(RequestParameters.FLUSH));
 
         if(flushCaches) {

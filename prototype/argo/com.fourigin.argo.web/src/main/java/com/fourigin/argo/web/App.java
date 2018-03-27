@@ -7,6 +7,7 @@ import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.TemplateResolver;
+import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.strategies.DefaultFilenameStrategy;
 import com.fourigin.argo.strategies.DocumentRootResolverStrategy;
@@ -165,6 +166,11 @@ public class App {
         ));
 
         return resolver;
+    }
+
+    @Bean
+    public CmsRequestAggregationResolver cmsRequestAggregationResolver(){
+        return new CmsRequestAggregationResolver(contentRepositoryFactory, templateResolver);
     }
 
     @Autowired

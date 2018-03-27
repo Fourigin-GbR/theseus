@@ -58,51 +58,6 @@ public class JsonFilesContentRepository implements ContentRepository {
     private static final String DEFAULT_SITE_DESCRIPTION_NAME = ".site";
     private static final String DEFAULT_DIRECTORY_INFO_NAME = ".info";
 
-//    public static class Builder {
-//        private String contentRoot;
-//        private String infoFilename;
-//        private String siteStructureFilename;
-//        private ObjectMapper objectMapper;
-//        private PageInfoTraversingStrategy traversingStrategy;
-//
-//        public Builder withContentRoot(String path){
-//            this.contentRoot = path;
-//            return this;
-//        }
-//
-//        public Builder withInfoFilename(String infoFilename){
-//            this.infoFilename = infoFilename;
-//            return this;
-//        }
-//
-//        public Builder withSiteStructureFilename(String siteStructureFilename){
-//            this.siteStructureFilename = siteStructureFilename;
-//            return this;
-//        }
-//
-//        public Builder withObjectMapper(ObjectMapper objectMapper){
-//            this.objectMapper = objectMapper;
-//            return this;
-//        }
-//
-//        public Builder withTraversingStrategy(PageInfoTraversingStrategy traversingStrategy) {
-//            this.traversingStrategy = traversingStrategy;
-//            return this;
-//        }
-//
-//        public JsonFilesContentRepository build(){
-//            JsonFilesContentRepository instance = new JsonFilesContentRepository();
-//
-//            instance.setObjectMapper(objectMapper);
-//            instance.setContentRoot(contentRoot);
-//            instance.setDirectoryInfoFileName(infoFilename);
-//            instance.setSiteStructureFileName(siteStructureFilename);
-//            instance.setDefaultTraversingStrategy(traversingStrategy);
-//
-//            return instance;
-//        }
-//    }
-
     public void flush(){
         root = null;
     }

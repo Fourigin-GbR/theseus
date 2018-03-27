@@ -37,7 +37,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
 
-    static final Map<String, String> CONTENT_TYPE_EXTENSION_MAPPING = new HashMap<>();
+    static private final Map<String, String> CONTENT_TYPE_EXTENSION_MAPPING = new HashMap<>();
     static {
         CONTENT_TYPE_EXTENSION_MAPPING.put("text/html", ".html");
     }
