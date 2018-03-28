@@ -11,6 +11,7 @@ import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 
 public  class CmsRequestAggregationResolver {
 
@@ -25,6 +26,7 @@ public  class CmsRequestAggregationResolver {
         this.templateResolver = templateResolver;
     }
 
+    @Cacheable("aggregations")
     public CmsRequestAggregation resolveAggregation(String base, String path){
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
 
