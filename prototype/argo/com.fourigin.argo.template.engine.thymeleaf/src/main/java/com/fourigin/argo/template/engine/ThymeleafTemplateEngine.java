@@ -40,8 +40,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
     private static Map<String, ThymeleafTemplateUtilityFactory> standardTemplateUtilityFactories = new HashMap<>();
 
     static {
-        standardTemplateUtilityFactories.put("content", new ContentElementUtilityFactory());
-        standardTemplateUtilityFactories.put("page", new PagePropertiesUtilityFactory());
+        standardTemplateUtilityFactories.put("__content", new ContentElementUtilityFactory());
+        standardTemplateUtilityFactories.put("__page", new PagePropertiesUtilityFactory());
     }
 
     private final Logger logger = LoggerFactory.getLogger(ThymeleafTemplateEngine.class);
