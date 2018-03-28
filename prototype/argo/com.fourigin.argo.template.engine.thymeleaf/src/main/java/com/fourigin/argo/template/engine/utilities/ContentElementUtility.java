@@ -17,41 +17,41 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     private String compilerBase;
 
-    public ContentElement getElement(String path){
+    public ContentElement getElement(String path) {
         ContentElement element = ContentPageManager.resolve(contentPage, path);
-        if(element == null){
+        if (element == null) {
             throw new IllegalArgumentException("No content element found for path '" + path + "'!");
         }
 
         return element;
     }
 
-    public ContentElement getElement(ContentElementsContainer container, String path){
+    public ContentElement getElement(ContentElementsContainer container, String path) {
         ContentElement element = ContentPageManager.resolve(container, path);
-        if(element == null){
+        if (element == null) {
             throw new IllegalArgumentException("No content element found for path '" + path + "'!");
         }
 
         return element;
     }
 
-    public String getName(String path){
+    public String getName(String path) {
         ContentElement element = getElement(path);
         return element.getName();
     }
 
-    public String getName(ContentElementsContainer container, String path){
+    public String getName(ContentElementsContainer container, String path) {
         ContentElement element = getElement(container, path);
         return element.getName();
     }
 
     // TODO: allow also context specific titles
-    public String getTitle(String path){
+    public String getTitle(String path) {
         ContentElement element = getElement(path);
         return element.getTitle();
     }
 
-    public String getTitle(ContentElementsContainer container, String path){
+    public String getTitle(ContentElementsContainer container, String path) {
         ContentElement element = getElement(container, path);
         return element.getTitle();
     }
@@ -66,32 +66,32 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return textElement.getContextSpecificContent(compilerBase, true);
     }
 
-    public List<ContentListElement> listElements(String path){
+    public List<ContentListElement> listElements(String path) {
         ContentList list = getContentListElement(path);
         return list.getElements();
     }
 
-    public List<ContentListElement> listElements(ContentElementsContainer container, String path){
+    public List<ContentListElement> listElements(ContentElementsContainer container, String path) {
         ContentList list = getContentListElement(container, path);
         return list.getElements();
     }
 
     // *** private methods ***
 
-    private TextAwareContentElement getTextAwareElement(String path){
+    private TextAwareContentElement getTextAwareElement(String path) {
         ContentElement element = getElement(path);
 
-        if(!TextAwareContentElement.class.isAssignableFrom(element.getClass())){
+        if (!TextAwareContentElement.class.isAssignableFrom(element.getClass())) {
             throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a text-aware element!");
         }
 
         return TextAwareContentElement.class.cast(element);
     }
 
-    private TextAwareContentElement getTextAwareElement(ContentElementsContainer container, String path){
+    private TextAwareContentElement getTextAwareElement(ContentElementsContainer container, String path) {
         ContentElement element = getElement(container, path);
 
-        if(!TextAwareContentElement.class.isAssignableFrom(element.getClass())){
+        if (!TextAwareContentElement.class.isAssignableFrom(element.getClass())) {
             throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a text-aware element!");
         }
 
@@ -138,20 +138,20 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 //        return ObjectAwareContentElement.class.cast(element);
 //    }
 
-    private ContentList getContentListElement(String path){
+    private ContentList getContentListElement(String path) {
         ContentElement element = getElement(path);
 
-        if(!ContentList.class.isAssignableFrom(element.getClass())){
+        if (!ContentList.class.isAssignableFrom(element.getClass())) {
             throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a content-list element!");
         }
 
         return ContentList.class.cast(element);
     }
 
-    private ContentList getContentListElement(ContentElementsContainer container, String path){
+    private ContentList getContentListElement(ContentElementsContainer container, String path) {
         ContentElement element = getElement(container, path);
 
-        if(!ContentList.class.isAssignableFrom(element.getClass())){
+        if (!ContentList.class.isAssignableFrom(element.getClass())) {
             throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a content-list element!");
         }
 

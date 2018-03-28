@@ -38,6 +38,7 @@ public class DefaultPageCompiler implements PageCompiler {
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
 
     static private final Map<String, String> CONTENT_TYPE_EXTENSION_MAPPING = new HashMap<>();
+
     static {
         CONTENT_TYPE_EXTENSION_MAPPING.put("text/html", ".html");
     }
@@ -51,18 +52,18 @@ public class DefaultPageCompiler implements PageCompiler {
         return compilerBase;
     }
 
-    public ContentPage prepareContent(PageInfo pageInfo){
+    public ContentPage prepareContent(PageInfo pageInfo) {
         String pageName = pageInfo.getName();
         if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
 
         ContentPage contentPage = contentRepository.retrieve(pageInfo);
-        if(contentPage == null){
+        if (contentPage == null) {
             throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
         }
         if (logger.isDebugEnabled()) logger.debug("Content page: {}", contentPage.getId());
 
         // resolve all data sources
-        if(dataSourcesResolver != null){
+        if (dataSourcesResolver != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
             contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
             if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
@@ -77,24 +78,25 @@ public class DefaultPageCompiler implements PageCompiler {
         if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
 
         TemplateReference templateReference = pageInfo.getTemplateReference();
-        if(templateReference == null){
+        if (templateReference == null) {
             throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
         }
         if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
 
         String templateId = templateReference.getTemplateId();
         Template template = templateResolver.retrieve(templateId);
-        if(template == null){
+        if (template == null) {
             throw new IllegalStateException("No template found for id '" + templateId + "'!");
         }
         if (logger.isDebugEnabled()) logger.debug("Template: {}", templateId);
 
         String currentTemplateRevision = template.getRevision();
         String lastTemplateRevision = templateReference.getRevision();
-        if (logger.isDebugEnabled()) logger.debug("Last revision: {},\ncurrent revision: {}", lastTemplateRevision, currentTemplateRevision);
+        if (logger.isDebugEnabled())
+            logger.debug("Last revision: {},\ncurrent revision: {}", lastTemplateRevision, currentTemplateRevision);
 
         Collection<TemplateVariation> variations = template.getVariations();
-        if(variations == null || variations.isEmpty()){
+        if (variations == null || variations.isEmpty()) {
             throw new IllegalStateException("No template variations defined in template '" + templateId + "'!");
         }
         String templateVariationId = templateReference.getVariationId();
@@ -102,12 +104,12 @@ public class DefaultPageCompiler implements PageCompiler {
 
         TemplateVariation templateVariation = null;
         for (TemplateVariation variation : variations) {
-            if(templateVariationId.equals(variation.getId())){
+            if (templateVariationId.equals(variation.getId())) {
                 templateVariation = variation;
                 break;
             }
         }
-        if(templateVariation == null){
+        if (templateVariation == null) {
             throw new IllegalStateException("No template variation found in template '" + templateId + "' for id '" + templateVariationId + "'!");
         }
         if (logger.isDebugEnabled()) logger.debug("Template variation: '{}'", templateVariation);
@@ -116,17 +118,17 @@ public class DefaultPageCompiler implements PageCompiler {
         if (logger.isDebugEnabled()) logger.debug("Template type: {}", templateType);
 
         TemplateEngine templateEngine = templateEngineFactory.getInstance(templateType);
-        if(templateEngine == null){
+        if (templateEngine == null) {
             throw new IllegalStateException("Unsupported template engine type '" + templateType + "'!");
         }
 
         // initialize the template engine
         templateEngine.setBase(compilerBase);
 
-        if(PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())){
+        if (PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
             ((PageInfoAwareTemplateEngine) templateEngine).setPageInfo(pageInfo);
         }
-        if(SiteAttributesAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())){
+        if (SiteAttributesAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
             Map<String, String> siteAttributes = contentRepository.resolveSiteAttributes();
             ((SiteAttributesAwareTemplateEngine) templateEngine).setSiteAttributes(siteAttributes);
         }
@@ -140,8 +142,7 @@ public class DefaultPageCompiler implements PageCompiler {
         try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, compilerBase)) {
             templateEngine.process(contentPage, template, templateVariation, processingMode, out);
             if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             if (logger.isErrorEnabled()) logger.error("Error compiling content!", ex);
             throw new IllegalStateException("Error occurred while compiling the page.", ex);
         }
@@ -150,7 +151,7 @@ public class DefaultPageCompiler implements PageCompiler {
     }
 
     private String resolveFileExtension(String outputContentType) {
-        if(CONTENT_TYPE_EXTENSION_MAPPING.containsKey(outputContentType)){
+        if (CONTENT_TYPE_EXTENSION_MAPPING.containsKey(outputContentType)) {
             return CONTENT_TYPE_EXTENSION_MAPPING.get(outputContentType);
         }
 

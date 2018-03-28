@@ -46,7 +46,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private final Logger logger = LoggerFactory.getLogger(ThymeleafTemplateEngine.class);
 
-    public ThymeleafTemplateEngine duplicate(){
+    public ThymeleafTemplateEngine duplicate() {
         ThymeleafTemplateEngine clone = new ThymeleafTemplateEngine();
 
         clone.setThymeleafInternalTemplateEngine(thymeleafInternalTemplateEngine);
@@ -58,12 +58,12 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     @Override
     public void process(ContentPage contentPage, Template template, TemplateVariation templateVariation, ProcessingMode processingMode, OutputStream out) {
-        if(thymeleafInternalTemplateEngine == null){
+        if (thymeleafInternalTemplateEngine == null) {
             throw new IllegalStateException("No thymeleaf internal template engine defined!");
         }
 
         String templateName = template.getId();
-        if(!TemplateVariation.DEFAULT_VARIATION_NAME.equals(templateVariation.getId())){
+        if (!TemplateVariation.DEFAULT_VARIATION_NAME.equals(templateVariation.getId())) {
             templateName += "#" + templateVariation.getId();
         }
         templateName = templateName.replace('.', '/');
@@ -79,8 +79,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         addUtilities(templateUtilityFactories, context, base, processingMode, true);
 
         if (logger.isDebugEnabled()) logger.debug("Content before transforming: {}", contentPage);
-        
-        try(Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)){
+
+        try (Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
             thymeleafInternalTemplateEngine.process(templateName, context, writer);
         } catch (Exception ex) {
             if (logger.isErrorEnabled()) logger.error("Error occurred while compiling content page!", ex);
@@ -88,8 +88,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         }
     }
 
-    private void addUtilities(Map<String, ThymeleafTemplateUtilityFactory> utilities, Context context, String base, ProcessingMode processingMode, boolean usingPrefix){
-        if(utilities != null && !utilities.isEmpty()){
+    private void addUtilities(Map<String, ThymeleafTemplateUtilityFactory> utilities, Context context, String base, ProcessingMode processingMode, boolean usingPrefix) {
+        if (utilities != null && !utilities.isEmpty()) {
             String prefix = utilitiesPrefix != null ? utilitiesPrefix : DEFAULT_UTILITIES_PREFIX;
 
             if (logger.isDebugEnabled()) logger.debug("Adding template utilities (using prefix '{}'):", prefix);
@@ -99,17 +99,17 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
                 // initialize
                 ThymeleafTemplateUtility utility = factory.getInstance();
-                if(ContentPageAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
+                if (ContentPageAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     ContentPage contentPage = (ContentPage) context.getVariable(CONTENT_PAGE);
                     ContentPageAwareThymeleafTemplateUtility contentPageUtility = ContentPageAwareThymeleafTemplateUtility.class.cast(utility);
                     contentPageUtility.setContentPage(contentPage);
                     contentPageUtility.setCompilerBase(base);
                 }
-                if(PageInfoAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
+                if (PageInfoAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     PageInfoAwareThymeleafTemplateUtility pageInfoUtility = PageInfoAwareThymeleafTemplateUtility.class.cast(utility);
                     pageInfoUtility.setPageInfo(pageInfo);
                 }
-                if(SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
+                if (SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
                     siteAttributesUtility.setCompilerBase(base);
                     siteAttributesUtility.setSiteAttributes(siteAttributes);
@@ -118,14 +118,14 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
                 // utility name
                 String finalUtilityName;
-                if(usingPrefix) {
+                if (usingPrefix) {
                     finalUtilityName = prefix + utilityName;
-                }
-                else {
+                } else {
                     finalUtilityName = utilityName;
                 }
 
-                if (logger.isDebugEnabled()) logger.debug(" - {}, class {}", finalUtilityName, utility.getClass().getName());
+                if (logger.isDebugEnabled())
+                    logger.debug(" - {}, class {}", finalUtilityName, utility.getClass().getName());
 
                 context.setVariable(finalUtilityName, utility);
             }

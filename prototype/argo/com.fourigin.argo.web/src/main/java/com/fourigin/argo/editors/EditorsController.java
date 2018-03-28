@@ -39,26 +39,11 @@ public class EditorsController {
     public ContentPagePrototype retrievePrototype(
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
-    ){
-        if (logger.isDebugEnabled()) logger.debug("Processing retrieve prototype request for base {} and sitePath {}", base, path);
+    ) {
+        if (logger.isDebugEnabled())
+            logger.debug("Processing retrieve prototype request for base {} and sitePath {}", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
-
-//        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-//
-//        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
-//        TemplateReference templateReference = pageInfo.getTemplateReference();
-//        if(templateReference == null){
-//            throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
-//        }
-//        if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
-//
-//        String templateId = templateReference.getTemplateId();
-//        Template template = templateResolver.retrieve(templateId);
-//        if(template == null){
-//            throw new IllegalStateException("No template found for id '" + templateId + "'!");
-//        }
-//        if (logger.isDebugEnabled()) logger.debug("Template: {}", templateId);
 
         Template template = aggregation.getTemplate();
 
@@ -66,7 +51,7 @@ public class EditorsController {
     }
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
-    public ContentElementResponse retrieve(@RequestBody RetrieveContentRequest request){
+    public ContentElementResponse retrieve(@RequestBody RetrieveContentRequest request) {
         if (logger.isDebugEnabled()) logger.debug("Processing retrieve request {}.", request);
 
         ContentElementResponse response = new ContentElementResponse();
@@ -87,7 +72,7 @@ public class EditorsController {
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path,
         @RequestParam("contentPath") String contentPath
-    ){
+    ) {
         RetrieveContentRequest request = new RetrieveContentRequest();
         request.setBase(base);
         request.setPath(path);
@@ -97,7 +82,7 @@ public class EditorsController {
     }
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
-    public StatusAwareContentElementResponse isUpToDate(@RequestBody UpToDateRequest request){
+    public StatusAwareContentElementResponse isUpToDate(@RequestBody UpToDateRequest request) {
         if (logger.isDebugEnabled()) logger.debug("Processing up-to-date request {}.", request);
 
         StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
@@ -107,22 +92,22 @@ public class EditorsController {
 
         ContentElement contentElement = resolveContentElement(request, aggregation);
         String currentChecksum = buildChecksum(contentElement);
-        if(currentChecksum.equals(request.getChecksum())){
+        if (currentChecksum.equals(request.getChecksum())) {
             response.setStatus(true);
             if (logger.isDebugEnabled()) logger.debug("Referenced content element is up-to-date.");
-        }
-        else {
+        } else {
             response.setStatus(false);
             response.setCurrentContentElement(contentElement);
             response.setCurrentChecksum(currentChecksum);
-            if (logger.isDebugEnabled()) logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
+            if (logger.isDebugEnabled())
+                logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
         }
 
         return response;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public StatusAwareContentElementResponse save(@RequestBody SaveChangesRequest request){
+    public StatusAwareContentElementResponse save(@RequestBody SaveChangesRequest request) {
         if (logger.isDebugEnabled()) logger.debug("Processing save request {}.", request);
 
         StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
@@ -133,16 +118,16 @@ public class EditorsController {
         ContentElement currentContentElement = resolveContentElement(request, aggregation);
         String currentChecksum = buildChecksum(currentContentElement);
         response.setCurrentChecksum(currentChecksum);
-        if(currentChecksum.equals(request.getOriginalChecksum())){
+        if (currentChecksum.equals(request.getOriginalChecksum())) {
             ContentElement modifiedContentElement = request.getModifiedContentElement();
             updateContentElement(request, modifiedContentElement, aggregation);
             response.setStatus(true);
             if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
-        }
-        else {
+        } else {
             response.setStatus(false);
             response.setCurrentContentElement(currentContentElement);
-            if (logger.isDebugEnabled()) logger.debug("Modified content element is not updated. Current checksum is '{}'.", currentChecksum);
+            if (logger.isDebugEnabled())
+                logger.debug("Modified content element is not updated. Current checksum is '{}'.", currentChecksum);
         }
 
         return response;
@@ -167,86 +152,44 @@ public class EditorsController {
         return new ServiceErrorResponse(500, "Unable to process request!", ex.getMessage());
     }
 
-    private String buildChecksum(ContentElement contentElement){
+    private String buildChecksum(ContentElement contentElement) {
         return ChecksumGenerator.getChecksum(contentElement);
     }
 
-    private ContentElement resolveContentElement(ContentElementPointer pointer, CmsRequestAggregation aggregation){
+    private ContentElement resolveContentElement(ContentElementPointer pointer, CmsRequestAggregation aggregation) {
         validate(pointer);
 
-//        String base = pointer.getBase();
-//
-//        ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
-//        if(contentRepository == null){
-//            throw new InvalidParameterException("No content repository available for '" + base + "'!");
-//        }
-//
-//        String pagePath = pointer.getPath();
-//        PageInfo page = contentRepository.resolveInfo(PageInfo.class, pagePath);
-//        if(page == null){
-//            throw new InvalidParameterException("No page found for '" + pagePath + "'!");
-//        }
-//
-//        PageInfo.ContentPageReference pageReference = page.getContentPageReference();
-//        String parentPath = pageReference.getParentPath();
-//        String contentId = pageReference.getContentId();
-//        ContentPage contentPage = contentRepository.retrieve(page);
-//        if(contentPage == null){
-//            throw new InvalidParameterException("No content found for path '" + parentPath + "' and id '" + contentId + "'!");
-//        }
-
-        ContentPage contentPage = aggregation.getContentPage();
         String contentPath = pointer.getContentPath();
+        ContentPage contentPage = aggregation.getContentPage();
 
         return ContentPageManager.resolve(contentPage, contentPath);
     }
 
-    private void updateContentElement(ContentElementPointer pointer, ContentElement contentElement, CmsRequestAggregation aggregation){
+    private void updateContentElement(ContentElementPointer pointer, ContentElement contentElement, CmsRequestAggregation aggregation) {
         validate(pointer);
-
-//        String base = pointer.getBase();
-//        ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
-//        if(contentRepository == null){
-//            throw new InvalidParameterException("No content repository available for '" + base + "'!");
-//        }
-//
-//        String pagePath = pointer.getPath();
-//        PageInfo page = contentRepository.resolveInfo(PageInfo.class, pagePath);
-//        if(page == null){
-//            throw new InvalidParameterException("No page found for '" + pagePath + "'!");
-//        }
-//
-//        PageInfo.ContentPageReference pageReference = page.getContentPageReference();
-//        String parentPath = pageReference.getParentPath();
-//        String contentId = pageReference.getContentId();
-//        ContentPage contentPage = contentRepository.retrieve(page);
-//        if(contentPage == null){
-//            throw new InvalidParameterException("No content found for path '" + parentPath + "' and id '" + contentId + "'!");
-//        }
-
-        PageInfo pageInfo = aggregation.getPageInfo();
-
-        ContentRepository contentRepository = aggregation.getContentRepository();
 
         String contentPath = pointer.getContentPath();
         ContentPage contentPage = aggregation.getContentPage();
-        
+
         ContentPageManager.update(contentPage, contentPath, contentElement);
+
+        PageInfo pageInfo = aggregation.getPageInfo();
+        ContentRepository contentRepository = aggregation.getContentRepository();
         contentRepository.update(pageInfo, contentPage);
     }
 
-    private void validate(ContentElementPointer pointer){
-        if(pointer == null){
+    private void validate(ContentElementPointer pointer) {
+        if (pointer == null) {
             throw new IllegalArgumentException("Pointer must not be null!");
         }
 
         String pagePath = pointer.getPath();
-        if(pagePath == null || pagePath.isEmpty()){
+        if (pagePath == null || pagePath.isEmpty()) {
             throw new IllegalArgumentException("pointer's site structure path must not be null or empty!");
         }
 
         String contentPath = pointer.getContentPath();
-        if(contentPath == null || contentPath.isEmpty()){
+        if (contentPath == null || contentPath.isEmpty()) {
             throw new IllegalArgumentException("pointer's content path must not be null or empty!");
         }
     }

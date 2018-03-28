@@ -1,6 +1,5 @@
 package com.fourigin.argo.compile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
@@ -26,10 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
 import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 
@@ -45,31 +40,25 @@ public class CompileController {
 
     private CmsRequestAggregationResolver cmsRequestAggregationResolver;
 
-    private ObjectMapper objectMapper;
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path,
         @RequestParam(value = "writeOutput", required = false, defaultValue = "false") boolean writeOutput
-    ){
+    ) {
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base {} & path {}.", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
 
-//        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-//
-//        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
         PageInfo pageInfo = aggregation.getPageInfo();
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        if(writeOutput){
+        if (writeOutput) {
             try {
                 pageCompiler.compile(pageInfo, STAGE, storageCompilerOutputStrategy);
                 storageCompilerOutputStrategy.finish();
-            }
-            catch(Throwable ex){
+            } catch (Throwable ex) {
                 storageCompilerOutputStrategy.reset();
             }
         }
@@ -97,31 +86,15 @@ public class CompileController {
     public ContentPage showPreparedContent(
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
-    ){
-        if (logger.isDebugEnabled()) logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
+    ) {
+        if (logger.isDebugEnabled())
+            logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
 
-//        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-//
-//        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
-        PageInfo pageInfo = aggregation.getPageInfo();
-
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        ContentPage preparedContent = pageCompiler.prepareContent(pageInfo);
-
-        if (logger.isDebugEnabled()) {
-            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                objectMapper.writeValue(baos, preparedContent);
-                logger.debug("Prepared content:\n{}", new String(baos.toByteArray(), StandardCharsets.UTF_8));
-            }
-            catch(IOException ex){
-                // whatever!
-            }
-        }
-
-        return preparedContent;
+        return pageCompiler.prepareContent(aggregation.getPageInfo());
     }
 
 //    @RequestMapping(value = "/persist", method = RequestMethod.GET)
@@ -156,11 +129,6 @@ public class CompileController {
         return new ServiceErrorResponse(500, "Error while compiling content page!", ex.getMessage(), ex.getCause());
     }
 
-//    @Autowired
-//    public void setContentRepositoryFactory(ContentRepositoryFactory contentRepositoryFactory) {
-//        this.contentRepositoryFactory = contentRepositoryFactory;
-//    }
-
     @Autowired
     public void setPageCompilerFactory(PageCompilerFactory pageCompilerFactory) {
         this.pageCompilerFactory = pageCompilerFactory;
@@ -174,10 +142,5 @@ public class CompileController {
     @Autowired
     public void setCmsRequestAggregationResolver(CmsRequestAggregationResolver cmsRequestAggregationResolver) {
         this.cmsRequestAggregationResolver = cmsRequestAggregationResolver;
-    }
-
-    @Autowired
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
     }
 }

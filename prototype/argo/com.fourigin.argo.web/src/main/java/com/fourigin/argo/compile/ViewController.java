@@ -7,6 +7,7 @@ import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
+import com.fourigin.argo.template.engine.utilities.ContentElementUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,38 +31,21 @@ public class ViewController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView view(
         @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam(RequestParameters.PATH) String path){
-
+        @RequestParam(RequestParameters.PATH) String path
+    ) {
         if (logger.isDebugEnabled()) logger.debug("Processing view request for base {} & path {}.", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
-
-//        ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
-//
-//        PageInfo pageInfo = contentResolver.resolveInfo(PageInfo.class, path);
-//
-//        TemplateReference templateReference = pageInfo.getTemplateReference();
-//        if(templateReference == null){
-//            throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
-//        }
-//        if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
-//
-//        String templateId = templateReference.getTemplateId();
-//        Template template = templateResolver.retrieve(templateId);
-//        if(template == null){
-//            throw new IllegalStateException("No template found for id '" + templateId + "'!");
-//        }
-//        if (logger.isDebugEnabled()) logger.debug("Template: {}", templateId);
 
         Template template = aggregation.getTemplate();
 
         Map<String, ElementsEditorProperties> hotspots;
         ContentPagePrototype prototype = template.getPrototype();
-        if(prototype == null){
-            if (logger.isDebugEnabled()) logger.debug("No content prototype available for template '{}'", template.getId());
+        if (prototype == null) {
+            if (logger.isDebugEnabled())
+                logger.debug("No content prototype available for template '{}'", template.getId());
             hotspots = Collections.emptyMap();
-        }
-        else {
+        } else {
             if (logger.isDebugEnabled()) logger.debug("Found content prototype for template '{}'", template.getId());
             hotspots = prototype.getHotspots();
         }
@@ -70,10 +54,6 @@ public class ViewController {
 
         Map<String, String> siteAttributes = contentResolver.resolveSiteAttributes();
 
-//        ContentPage contentPage = contentResolver.retrieve(pageInfo);
-//        if(contentPage == null){
-//            throw new IllegalStateException("No ContentPage assigned to PageInfo " + pageInfo);
-//        }
 
         ModelAndView modelAndView = new ModelAndView("viewPage");
 

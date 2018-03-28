@@ -31,11 +31,18 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addWebRequestInterceptor(new FlushRepositoriesInterceptor(contentRepositoryFactory));
     }
 
-    @Bean
-    public FileTemplateResolver fileTemplateResolver(){
+    private SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+
+        templateEngine.setTemplateResolver(fileTemplateResolver());
+
+        return templateEngine;
+    }
+
+    private FileTemplateResolver fileTemplateResolver() {
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         String prefix = internalTemplateBasePath;
-        if(!prefix.endsWith("/")){
+        if (!prefix.endsWith("/")) {
             prefix += "/";
         }
 
@@ -47,14 +54,6 @@ public class MvcConfiguration implements WebMvcConfigurer {
         templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         return templateResolver;
-    }
-
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(fileTemplateResolver());
-
-        return templateEngine;
     }
 
     @Bean

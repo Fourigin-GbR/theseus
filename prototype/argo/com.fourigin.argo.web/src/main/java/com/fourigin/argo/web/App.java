@@ -86,6 +86,7 @@ public class App {
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
 //        return new PlaceholderDocumentRootResolverStrategy(documentRootBasePath);
 
+        // TODO: make configurable!
         Map<String, String> mapping = new HashMap<>();
         mapping.put("DE", documentRootBasePath + "greekestate.de");
         mapping.put("EN", documentRootBasePath + "greekestate.en");
@@ -106,8 +107,7 @@ public class App {
 
     // *** TEMPLATE ***
 
-    @Bean
-    public SpringTemplateEngine springTemplateEngine() {
+    private SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 
         templateEngine.setTemplateResolver(fileTemplateResolver(templateBasePath));
@@ -169,7 +169,7 @@ public class App {
     }
 
     @Bean
-    public CmsRequestAggregationResolver cmsRequestAggregationResolver(){
+    public CmsRequestAggregationResolver cmsRequestAggregationResolver() {
         return new CmsRequestAggregationResolver(contentRepositoryFactory, templateResolver);
     }
 
