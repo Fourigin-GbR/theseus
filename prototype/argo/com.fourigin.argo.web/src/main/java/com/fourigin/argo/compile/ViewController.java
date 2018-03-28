@@ -54,7 +54,12 @@ public class ViewController {
 
         Map<String, String> siteAttributes = contentResolver.resolveSiteAttributes();
 
+        // prepare thymeleaf utilities
+        ContentElementUtility contentUtility = new ContentElementUtility();
+        contentUtility.setCompilerBase(base);
+        contentUtility.setContentPage(aggregation.getContentPage());
 
+        // create result
         ModelAndView modelAndView = new ModelAndView("viewPage");
 
         modelAndView.addObject(ContextKeys.BASE, base);
@@ -63,6 +68,8 @@ public class ViewController {
         modelAndView.addObject(ContextKeys.PAGE_INFO, aggregation.getPageInfo());
         modelAndView.addObject(ContextKeys.SITE_ATTRIBUTES, siteAttributes);
         modelAndView.addObject(ContextKeys.HOTSPOTS, hotspots);
+
+        modelAndView.addObject("__content", contentUtility);
 
         return modelAndView;
     }
