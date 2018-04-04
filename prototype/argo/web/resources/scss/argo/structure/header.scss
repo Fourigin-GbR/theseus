@@ -1,0 +1,28 @@
+@import "../_settings/_colors.scss";
+
+header {
+  padding: 20px 10px 0 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: flex-end;
+  color: $color_font_on_light_background;
+
+  a {
+    color: inherit;
+  }
+
+  nav {
+    ul {
+      display: flex;
+
+      li {
+        padding: 5px 10px;
+
+        &.selected {
+          background-color: $color_basic_dark_background;
+          color: $color_font_on_dark_background;
+        }
+      }
+    }
+  }
+}

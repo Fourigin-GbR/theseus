@@ -1,0 +1,15 @@
+@import "../_settings/_colors.scss";
+
+.toolbar {
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+
+  .tools {
+    display: flex;
+
+    .tools__item {
+      margin: 0 10px;
+    }
+  }
+}

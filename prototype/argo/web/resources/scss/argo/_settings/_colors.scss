@@ -1,0 +1,21 @@
+/* colors */
+$base_color_green: #44958e;
+$base_color_orange: #f4802a;
+
+$base_color_black: #000;
+$base_color_dark_gray: #232323;
+$base_color_dark_gray_tiny_lighter: #222326;
+
+$base_color_light_gray: #dcdcdc;
+
+/* usages */
+
+$color_action: $base_color_green;
+$color_status_active: $base_color_orange;
+
+$color_font_on_light_background: $base_color_dark_gray;
+$color_font_on_dark_background: $base_color_light_gray;
+
+$color_basic_dark_background: $base_color_dark_gray_tiny_lighter;
+
+$color_graphic_text_box_background: $base_color_black;
