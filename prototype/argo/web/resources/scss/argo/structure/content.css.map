@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,YAAY;AASZ,YAAY;ACPZ,QAAS;EACP,gBAAgB,EDcY,OAAkC",
+"sources": ["../_settings/_colors.scss","content.scss"],
+"names": [],
+"file": "content.css"
+}

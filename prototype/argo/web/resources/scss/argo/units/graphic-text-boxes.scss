@@ -1,0 +1,15 @@
+@import "../_settings/_colors.scss";
+
+.graphicTextBox {
+  padding: 5px 10px;
+  background-color: $color_graphic_text_box_background;
+  color: $color_font_on_dark_background;
+
+  .graphicTextBox__content {
+    display: inline-block;
+
+    &ul.graphicTextBox__content--path {
+
+    }
+  }
+}

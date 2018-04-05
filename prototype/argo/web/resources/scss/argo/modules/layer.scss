@@ -1,0 +1,9 @@
+@import "../_settings/_colors.scss";
+
+.layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: $color_layer_background;
+  padding: 40px 10px 10px 10px;
+}

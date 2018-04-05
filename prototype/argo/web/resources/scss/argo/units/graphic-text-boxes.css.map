@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,YAAY;AASZ,YAAY;ACPZ,eAAgB;EACd,OAAO,EAAE,QAAQ;EACjB,gBAAgB,EDaY,OAAkC;ECZ9D,KAAK,EDUyB,OAAsB",
+"sources": ["../_settings/_colors.scss","graphic-text-boxes.scss"],
+"names": [],
+"file": "graphic-text-boxes.css"
+}

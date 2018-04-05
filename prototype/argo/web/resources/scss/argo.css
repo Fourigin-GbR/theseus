@@ -2,7 +2,8 @@
 /* usages */
 @import url("https://fonts.googleapis.com/css?family=Slabo+27px");
 body {
-  font-family: 'Slabo 27px', serif; }
+  font-family: 'Slabo 27px', serif;
+  font-size: 14px; }
 
 /* colors */
 /* usages */
@@ -12,9 +13,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column; }
+  min-height: 100%; }
 
 a {
   text-decoration: none;
@@ -35,27 +34,54 @@ header {
   color: #232323; }
   header a {
     color: inherit; }
-  header nav ul {
-    display: flex; }
-    header nav ul li {
-      padding: 5px 10px; }
-      header nav ul li.selected {
-        background-color: #222326;
-        color: #dcdcdc; }
+  header nav {
+    font-size: 1.05rem; }
+    header nav ul {
+      display: flex; }
+      header nav ul li {
+        padding: 5px 10px; }
+        header nav ul li.selected {
+          background-color: #222326;
+          color: #dcdcdc; }
 
 /* colors */
 /* usages */
 .content {
   background-color: #222326;
-  color: #dcdcdc; }
+  color: #dcdcdc;
+  position: sticky;
+  top: 0;
+  z-index: 100; }
 
-iframe#pageContent {
-  background-color: #fff;
-  display: block;
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  overflow: scroll; }
+.iFrameContent {
+  position: relative;
+  display: flex; }
+  .iFrameContent aside {
+    position: sticky;
+    left: 0;
+    background-color: #262626;
+    color: #dcdcdc;
+    width: 25px;
+    top: 82px;
+    bottom: 0;
+    height: 100%;
+    display: block; }
+    .iFrameContent aside li span {
+      transform: rotate(180deg);
+      white-space: nowrap;
+      background-color: #262626;
+      padding: 5px;
+      writing-mode: vertical-rl;
+      box-sizing: border-box; }
+    .iFrameContent aside li .layer {
+      left: 25px; }
+  .iFrameContent iframe#pageContent {
+    background-color: #fff;
+    display: block;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    overflow: scroll; }
 
 /* colors */
 /* usages */
@@ -70,9 +96,20 @@ iframe#pageContent {
 
 /* colors */
 /* usages */
+.layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #eee;
+  padding: 40px 10px 10px 10px; }
+
+/* colors */
+/* usages */
 .graphicTextBox {
   padding: 5px 10px;
   background-color: #000;
   color: #dcdcdc; }
+  .graphicTextBox .graphicTextBox__content {
+    display: inline-block; }
 
 /*# sourceMappingURL=argo.css.map */
