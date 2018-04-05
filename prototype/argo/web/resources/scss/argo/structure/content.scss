@@ -13,29 +13,30 @@
   display: flex;
 
   aside {
-    position: sticky;
-    left: 0;
     background-color: $color_alternative_dark_background;
     color: $color_font_on_dark_background;
     width: 25px;
-    top: 82px;
     bottom: 0;
-    height: 100%;
     display: block;
 
-    li {
+    ul {
+      position: sticky;
+      top: 83px;
 
-      span {
-        transform: rotate(180deg);
-        white-space: nowrap;
-        background-color: #262626;
-        padding: 5px;
-        writing-mode: vertical-rl;
-        box-sizing: border-box;
-      }
+      li {
 
-      .layer {
-        left: 25px;
+        span {
+          transform: rotate(180deg);
+          white-space: nowrap;
+          background-color: #262626;
+          padding: 5px;
+          writing-mode: vertical-rl;
+          box-sizing: border-box;
+        }
+
+        .layer {
+          left: 25px;
+        }
       }
     }
   }

@@ -57,24 +57,23 @@ header {
   position: relative;
   display: flex; }
   .iFrameContent aside {
-    position: sticky;
-    left: 0;
     background-color: #262626;
     color: #dcdcdc;
     width: 25px;
-    top: 82px;
     bottom: 0;
-    height: 100%;
     display: block; }
-    .iFrameContent aside li span {
-      transform: rotate(180deg);
-      white-space: nowrap;
-      background-color: #262626;
-      padding: 5px;
-      writing-mode: vertical-rl;
-      box-sizing: border-box; }
-    .iFrameContent aside li .layer {
-      left: 25px; }
+    .iFrameContent aside ul {
+      position: sticky;
+      top: 83px; }
+      .iFrameContent aside ul li span {
+        transform: rotate(180deg);
+        white-space: nowrap;
+        background-color: #262626;
+        padding: 5px;
+        writing-mode: vertical-rl;
+        box-sizing: border-box; }
+      .iFrameContent aside ul li .layer {
+        left: 25px; }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
