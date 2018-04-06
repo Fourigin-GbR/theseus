@@ -1,6 +1,7 @@
 /* colors */
 /* usages */
 @import url("https://fonts.googleapis.com/css?family=Slabo+27px");
+@import url("https://fonts.googleapis.com/css?family=Slabo+27px");
 body {
   font-family: 'Slabo 27px', serif;
   font-size: 14px; }
@@ -61,19 +62,30 @@ header {
     color: #dcdcdc;
     width: 25px;
     bottom: 0;
-    display: block; }
-    .iFrameContent aside ul {
+    display: block;
+    z-index: 1; }
+    .iFrameContent aside > ul {
       position: sticky;
       top: 83px; }
-      .iFrameContent aside ul li span {
-        transform: rotate(180deg);
-        white-space: nowrap;
-        background-color: #262626;
-        padding: 5px;
-        writing-mode: vertical-rl;
-        box-sizing: border-box; }
-      .iFrameContent aside ul li .layer {
-        left: 25px; }
+      .iFrameContent aside > ul > li {
+        cursor: pointer; }
+        .iFrameContent aside > ul > li > span {
+          transform: rotate(180deg);
+          white-space: nowrap;
+          background-color: #262626;
+          padding: 6px;
+          writing-mode: vertical-rl;
+          box-sizing: border-box;
+          line-height: 1;
+          width: 25px; }
+          .iFrameContent aside > ul > li > span:hover, .iFrameContent aside > ul > li > span.active {
+            background-color: #f4802a; }
+        .iFrameContent aside > ul > li .layer {
+          left: 0; }
+  .iFrameContent .layerContainer {
+    position: absolute;
+    left: 25px;
+    top: 0; }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
@@ -99,8 +111,37 @@ header {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #eee;
-  padding: 40px 10px 10px 10px; }
+  background-color: #5C5C5C;
+  padding: 20px 0 10px 0;
+  width: 250px;
+  transition: all .8s ease;
+  opacity: 0; }
+  .layer.active {
+    opacity: 1; }
+  .layer .layer {
+    left: 250px; }
+  .layer h4 {
+    font-size: 1.05rem;
+    margin: 5px 10px 10px 10px; }
+
+/* colors */
+/* usages */
+body {
+  font-family: 'Slabo 27px', serif;
+  font-size: 14px; }
+
+ul.listItemsAsFlyoutTargets > li:hover {
+  background-color: #f4802a; }
+ul.listItemsAsFlyoutTargets > li > div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 0 5px 10px; }
+ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__title {
+  font-size: 0.9rem;
+  width: calc(100% - 20px); }
+ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
+  width: 20px; }
 
 /* colors */
 /* usages */

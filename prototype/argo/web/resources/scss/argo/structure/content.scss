@@ -18,27 +18,43 @@
     width: 25px;
     bottom: 0;
     display: block;
+    z-index: 1;
 
-    ul {
+    > ul {
       position: sticky;
       top: 83px;
 
-      li {
+      > li {
+        cursor: pointer;
 
-        span {
+        > span {
           transform: rotate(180deg);
           white-space: nowrap;
           background-color: #262626;
-          padding: 5px;
+          padding: 6px;
           writing-mode: vertical-rl;
           box-sizing: border-box;
+          line-height: 1;
+          width: 25px;
+
+          &:hover,
+          &.active {
+            background-color: $color_status_active;
+          }
         }
 
         .layer {
-          left: 25px;
+          left: 0;
         }
       }
     }
+  }
+
+
+  .layerContainer {
+    position: absolute;
+    left: 25px;
+    top: 0;
   }
 
   iframe#pageContent {

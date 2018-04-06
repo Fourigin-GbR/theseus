@@ -1,0 +1,26 @@
+@import "../_settings/_colors.scss";
+@import "../_settings/_fonts.scss";
+
+ul.listItemsAsFlyoutTargets {
+  > li {
+
+    &:hover {
+      background-color: $color_status_element_hover;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 5px 0 5px 10px;
+    }
+
+    .listItemsAsFlyoutTargets__title {
+      font-size: $font_base_size;
+      width: calc(100% - 20px)
+    }
+    .listItemsAsFlyoutTargets__arrow {
+      width: 20px;
+    }
+  }
+}
