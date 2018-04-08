@@ -5,9 +5,10 @@
   left: 0;
   top: 0;
   background-color: $color_layer_background;
+  color: $color_font_on_dark_background;
   padding: 20px 0 10px 0;
-  width: 250px;
-  transition: all .8s ease;
+  width: 249px;
+  transition: all .5s cubic-bezier(.55,.09,.68,.53);
   opacity: 0;
 
   &.active {

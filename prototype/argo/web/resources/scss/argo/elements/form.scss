@@ -1,0 +1,15 @@
+@import "../_settings/_colors.scss";
+
+form {
+
+  button {
+    border: 0;
+    box-shadow: none;
+    padding: 5px 10px;
+  }
+
+  button[type=submit] {
+    background-color: $color_action;
+    color: #fff;
+  }
+}

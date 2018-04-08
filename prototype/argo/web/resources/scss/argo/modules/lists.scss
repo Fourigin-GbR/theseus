@@ -8,7 +8,7 @@ ul.listItemsAsFlyoutTargets {
       background-color: $color_status_element_hover;
     }
 
-    > div {
+    .listItemsAsFlyoutTargets__wrapper {
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -17,7 +17,7 @@ ul.listItemsAsFlyoutTargets {
 
     .listItemsAsFlyoutTargets__title {
       font-size: $font_base_size;
-      width: calc(100% - 20px)
+      width: calc(100% - 20px);
     }
     .listItemsAsFlyoutTargets__arrow {
       width: 20px;

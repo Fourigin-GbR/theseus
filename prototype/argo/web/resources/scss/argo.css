@@ -112,9 +112,10 @@ header {
   left: 0;
   top: 0;
   background-color: #5C5C5C;
+  color: #dcdcdc;
   padding: 20px 0 10px 0;
-  width: 250px;
-  transition: all .8s ease;
+  width: 249px;
+  transition: all 0.5s cubic-bezier(0.55, 0.09, 0.68, 0.53);
   opacity: 0; }
   .layer.active {
     opacity: 1; }
@@ -132,7 +133,7 @@ body {
 
 ul.listItemsAsFlyoutTargets > li:hover {
   background-color: #f4802a; }
-ul.listItemsAsFlyoutTargets > li > div {
+ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__wrapper {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -151,5 +152,15 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
   color: #dcdcdc; }
   .graphicTextBox .graphicTextBox__content {
     display: inline-block; }
+
+/* colors */
+/* usages */
+form button {
+  border: 0;
+  box-shadow: none;
+  padding: 5px 10px; }
+form button[type=submit] {
+  background-color: #44958e;
+  color: #fff; }
 
 /*# sourceMappingURL=argo.css.map */
