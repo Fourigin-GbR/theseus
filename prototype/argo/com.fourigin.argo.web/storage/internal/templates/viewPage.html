@@ -120,9 +120,16 @@
                                             <label>
                                                 <span class="layer__form__field__label">List</span>
 
-                                                <div th:each="list_item : ${argo.contentElementUtility.listElements(path)}">
-                                                    <!--<span th:text="${argo.contentElementUtility.getElementType(list_item).name()}"></span>-->
-                                                    <span th:text="${list_item}"></span>
+                                                <div th:each="list_item : ${argo.contentElementUtility.listElements(path)}"
+                                                th:with = "list_item_type = ${argo.contentElementUtility.getElementType(list_item)}">
+                                                    <th:block th:switch="${list_item_type.name()}">
+                                                        <div  th:case="'TEXT'" class="layer__form__field">
+                                                            <label>
+                                                                <span class="layer__form__field__label">Text</span>
+                                                                <textarea th:text="${list_item.content}">#</textarea>
+                                                            </label>
+                                                        </div>
+                                                    </th:block>
                                                 </div>
                                             </label>
                                         </div>
