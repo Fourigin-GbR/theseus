@@ -15,5 +15,7 @@ public interface TemplateEngine {
 
     void setBase(String base);
 
+    void setPath(String path);
+
     void process(ContentPage contentPage, Template template, TemplateVariation templateVariation, ProcessingMode processingMode, OutputStream out);
 }

@@ -56,7 +56,7 @@ public class CompileController {
 
         if (writeOutput) {
             try {
-                pageCompiler.compile(pageInfo, STAGE, storageCompilerOutputStrategy);
+                pageCompiler.compile(path, pageInfo, STAGE, storageCompilerOutputStrategy);
                 storageCompilerOutputStrategy.finish();
             } catch (Throwable ex) {
                 storageCompilerOutputStrategy.reset();
@@ -65,7 +65,7 @@ public class CompileController {
 
         BufferedCompilerOutputStrategy bufferedCompilerOutputStrategy = new BufferedCompilerOutputStrategy();
         try {
-            String outputContentType = pageCompiler.compile(pageInfo, CMS, bufferedCompilerOutputStrategy);
+            String outputContentType = pageCompiler.compile(path, pageInfo, CMS, bufferedCompilerOutputStrategy);
             byte[] bytes = bufferedCompilerOutputStrategy.getBytes();
 
             HttpHeaders headers = new HttpHeaders();

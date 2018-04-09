@@ -112,14 +112,14 @@ public class App {
     private SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 
-        templateEngine.setTemplateResolver(fileTemplateResolver(templateBasePath));
+        templateEngine.setTemplateResolver(fileTemplateResolver());
 
         return templateEngine;
     }
 
-    private FileTemplateResolver fileTemplateResolver(String basePath) {
+    private FileTemplateResolver fileTemplateResolver() {
         FileTemplateResolver templateResolver = new FileTemplateResolver();
-        String prefix = basePath;
+        String prefix = templateBasePath;
         if (!prefix.endsWith("/")) {
             prefix += "/";
         }

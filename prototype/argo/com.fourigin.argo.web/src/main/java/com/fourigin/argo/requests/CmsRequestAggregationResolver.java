@@ -31,6 +31,9 @@ public  class CmsRequestAggregationResolver {
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
 
         PageInfo pageInfo = contentRepository.resolveInfo(PageInfo.class, path);
+        if(pageInfo == null){
+            throw new IllegalStateException("No PageInfo found for path '" + path + "'! Is this path valid?");
+        }
 
         TemplateReference templateReference = pageInfo.getTemplateReference();
         if(templateReference == null){

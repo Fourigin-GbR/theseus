@@ -7,7 +7,7 @@ import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
-import com.fourigin.argo.template.engine.utilities.ContentElementUtility;
+import com.fourigin.argo.template.engine.api.Argo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,22 +54,31 @@ public class ViewController {
 
         Map<String, String> siteAttributes = contentResolver.resolveSiteAttributes();
 
-        // prepare thymeleaf utilities
-        ContentElementUtility contentUtility = new ContentElementUtility();
-        contentUtility.setCompilerBase(base);
-        contentUtility.setContentPage(aggregation.getContentPage());
+//        // prepare thymeleaf utilities
+//        ContentElementUtility contentUtility = new ContentElementUtility();
+//        contentUtility.setCompilerBase(base);
+//        contentUtility.setContentPage(aggregation.getContentPage());
 
         // create result
         ModelAndView modelAndView = new ModelAndView("viewPage");
 
-        modelAndView.addObject(ContextKeys.BASE, base);
-        modelAndView.addObject(ContextKeys.PATH, path);
-        modelAndView.addObject(ContextKeys.CONTENT_PAGE, aggregation.getContentPage());
-        modelAndView.addObject(ContextKeys.PAGE_INFO, aggregation.getPageInfo());
-        modelAndView.addObject(ContextKeys.SITE_ATTRIBUTES, siteAttributes);
+//        modelAndView.addObject(ContextKeys.BASE, base);
+//        modelAndView.addObject(ContextKeys.PATH, path);
+//        modelAndView.addObject(ContextKeys.CONTENT_PAGE, aggregation.getContentPage());
+//        modelAndView.addObject(ContextKeys.PAGE_INFO, aggregation.getPageInfo());
+//        modelAndView.addObject(ContextKeys.SITE_ATTRIBUTES, siteAttributes);
         modelAndView.addObject(ContextKeys.HOTSPOTS, hotspots);
+//
+//        modelAndView.addObject("__content", contentUtility);
 
-        modelAndView.addObject("__content", contentUtility);
+        modelAndView.addObject("argo", new Argo.Builder()
+            .withBase(base)
+            .withPath(path)
+            .withContentPage(aggregation.getContentPage())
+            .withPageInfo(aggregation.getPageInfo())
+            .withSiteAttributes(siteAttributes)
+            .build()
+        );
 
         return modelAndView;
     }

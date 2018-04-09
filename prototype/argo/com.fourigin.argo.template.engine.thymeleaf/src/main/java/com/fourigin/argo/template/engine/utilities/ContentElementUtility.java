@@ -4,9 +4,13 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentElementsContainer;
+import com.fourigin.argo.models.content.elements.ContentGroup;
 import com.fourigin.argo.models.content.elements.ContentList;
-import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.models.content.elements.ContentListElement;
+import com.fourigin.argo.models.content.elements.GroupContentListElement;
+import com.fourigin.argo.models.content.elements.LinkAwareContentElement;
+import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;
+import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.template.engine.IncompatibleContentElementException;
 
 import java.util.List;
@@ -16,6 +20,46 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
     private ContentPage contentPage;
 
     private String compilerBase;
+
+    public ContentElementType getElementType(ContentElement element){
+        if(TextAwareContentElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.TEXT;
+        }
+        if(ObjectAwareContentElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.OBJECT;
+        }
+        if(LinkAwareContentElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.LINK;
+        }
+        if(ContentGroup.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.GROUP;
+        }
+        if(ContentList.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.LIST;
+        }
+
+        throw new UnsupportedOperationException("Unknown content element type '" + element.getClass() + "'!");
+    }
+
+    public ContentElementType getElementType(ContentListElement element){
+        if(TextAwareContentElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.TEXT;
+        }
+        if(ObjectAwareContentElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.OBJECT;
+        }
+        if(LinkAwareContentElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.LINK;
+        }
+        if(GroupContentListElement.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.GROUP;
+        }
+        if(ContentList.class.isAssignableFrom(element.getClass())){
+            return ContentElementType.LIST;
+        }
+
+        throw new UnsupportedOperationException("Unknown content element type '" + element.getClass() + "'!");
+    }
 
     public ContentElement getElement(String path) {
         ContentElement element = ContentPageManager.resolve(contentPage, path);

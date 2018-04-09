@@ -4,6 +4,7 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
+import com.fourigin.argo.template.engine.api.Argo;
 import com.fourigin.argo.template.engine.utilities.ContentElementUtilityFactory;
 import com.fourigin.argo.template.engine.utilities.ContentPageAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.PageInfoAwareThymeleafTemplateUtility;
@@ -30,6 +31,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
     private String utilitiesPrefix;
 
     private String base;
+
+    private String path;
 
     private PageInfo pageInfo;
 
@@ -70,13 +73,21 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         if (logger.isDebugEnabled()) logger.debug("Template name: {}.", templateName);
 
         Context context = new Context();
-        context.setVariable(CONTENT_PAGE, contentPage);
-        context.setVariable(PAGE_INFO, pageInfo);
-        context.setVariable(SITE_ATTRIBUTES, siteAttributes);
+        context.setVariable("argo", new Argo.Builder()
+            .withBase(base)
+            .withPath(path)
+            .withContentPage(contentPage)
+            .withPageInfo(pageInfo)
+            .withSiteAttributes(siteAttributes)
+            .build()
+        );
 
-        addUtilities(standardTemplateUtilityFactories, context, base, processingMode, false);
+//        context.setVariable(CONTENT_PAGE, contentPage);
+//        context.setVariable(PAGE_INFO, pageInfo);
+//        context.setVariable(SITE_ATTRIBUTES, siteAttributes);
+//        addUtilities(standardTemplateUtilityFactories, context, base, processingMode, false);
 
-        addUtilities(templateUtilityFactories, context, base, processingMode, true);
+        addUtilities(templateUtilityFactories, context, base, processingMode);
 
         if (logger.isDebugEnabled()) logger.debug("Content before transforming: {}", contentPage);
 
@@ -88,7 +99,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         }
     }
 
-    private void addUtilities(Map<String, ThymeleafTemplateUtilityFactory> utilities, Context context, String base, ProcessingMode processingMode, boolean usingPrefix) {
+    private void addUtilities(Map<String, ThymeleafTemplateUtilityFactory> utilities, Context context, String base, ProcessingMode processingMode) {
         if (utilities != null && !utilities.isEmpty()) {
             String prefix = utilitiesPrefix != null ? utilitiesPrefix : DEFAULT_UTILITIES_PREFIX;
 
@@ -116,18 +127,11 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     siteAttributesUtility.setProcessingMode(processingMode);
                 }
 
-                // utility name
-                String finalUtilityName;
-                if (usingPrefix) {
-                    finalUtilityName = prefix + utilityName;
-                } else {
-                    finalUtilityName = utilityName;
-                }
-
                 if (logger.isDebugEnabled())
-                    logger.debug(" - {}, class {}", finalUtilityName, utility.getClass().getName());
+                    logger.debug(" - {}, class {}", utilityName, utility.getClass().getName());
 
-                context.setVariable(finalUtilityName, utility);
+                Argo argo = (Argo) context.getVariable("argo");
+                argo.addCustomUtility(utilityName, utility);
             }
         }
     }
@@ -147,6 +151,11 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
     @Override
     public void setBase(String base) {
         this.base = base;
+    }
+
+    @Override
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

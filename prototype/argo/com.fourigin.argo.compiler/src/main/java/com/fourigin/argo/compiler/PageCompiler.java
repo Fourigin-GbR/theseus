@@ -17,5 +17,5 @@ public interface PageCompiler {
      * @param outputStrategy {@link CompilerOutputStrategy} where the result should be written.
      * @return Returns the content type of the compiled result.
      */
-    String compile(PageInfo pageInfo, ProcessingMode processingMode, CompilerOutputStrategy outputStrategy);
+    String compile(String path, PageInfo pageInfo, ProcessingMode processingMode, CompilerOutputStrategy outputStrategy);
 }

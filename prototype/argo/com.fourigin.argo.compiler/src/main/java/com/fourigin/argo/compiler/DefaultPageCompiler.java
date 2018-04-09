@@ -73,7 +73,7 @@ public class DefaultPageCompiler implements PageCompiler {
     }
 
     @Override
-    public String compile(PageInfo pageInfo, ProcessingMode processingMode, CompilerOutputStrategy outputStrategy) {
+    public String compile(String path, PageInfo pageInfo, ProcessingMode processingMode, CompilerOutputStrategy outputStrategy) {
         String pageName = pageInfo.getName();
         if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
 
@@ -124,6 +124,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
         // initialize the template engine
         templateEngine.setBase(compilerBase);
+        templateEngine.setPath(path);
 
         if (PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
             ((PageInfoAwareTemplateEngine) templateEngine).setPageInfo(pageInfo);
