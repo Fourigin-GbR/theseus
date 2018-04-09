@@ -20,8 +20,8 @@
 
 </header>
 <div class="body">
-    <!--<article th:replace="greekestate/base :: articleBlockWithH1andCopy(${content.getText('/headline')}, ${content.getText('/body')})"></article>-->
-    <article th:replace="greekestate/base :: article-headline-body(${content.getText('/headline')}, ${content.getText('/body')})">
+    <!--<article th:replace="greekestate/base :: articleBlockWithH1andCopy(${content.getContent('/headline')}, ${content.getContent('/body')})"></article>-->
+    <article th:replace="greekestate/base :: article-headline-body(${argo.contentElementUtility.getContent('/headline')}, ${argo.contentElementUtility.getContent('/body')})">
 
     </article>
 </div>

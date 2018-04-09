@@ -339,11 +339,63 @@
 	"hotspots": {
 		"/headline": {
 			"title": "Headline",
-			"description": "Article headline"
+			"description": "Headline"
 		},
 		"/body": {
 			"title": "Body",
-			"description": "Article body text"
+			"description": "Article body"
+		},
+		"/stage": {
+			"title": "Stage",
+			"description": "Main stage gallery",
+			"elements": {
+				"[first]": {
+					"elements": {
+						"tag": {
+							"title": "Title row tag",
+							"description": ""
+						}
+					}
+				},
+				"[last]": {
+					"elements": {
+						"tag": {
+							"title": "Footer row tag",
+							"description": ""
+						}
+					}
+				},
+				"[]": {
+					"elements": {
+						"image": {
+							"title": "Hauptbild, wichtig!",
+							"description": ""
+						},
+						"tag": {
+							"title": "Tag",
+							"description": ""
+						},
+						"headline": {
+							"title": "Headline",
+							"description": "",
+							"elements": {
+								"copy": {
+									"title": "Headline",
+									"description": ""
+								}
+							}
+						},
+						"description": {
+							"title": "Description",
+							"description": ""
+						},
+						"price": {
+							"title": "Price",
+							"description": ""
+						}
+					}
+				}
+			}
 		}
 	}
 }

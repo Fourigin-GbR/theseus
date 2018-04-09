@@ -3,188 +3,213 @@
 <head>
     <meta charset="UTF-8"/>
     <title>CMS Html Editor</title>
-    <link rel="stylesheet" type="text/css" href="/libs/frontend/flingh/styles/moses/flingh.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/styles/cms.css"/>
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Lobster|Raleway" rel="stylesheet"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/argo.css"/>
     <!---->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
     <script
-            src="https://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/assets/scripts/hotspots.js"></script>
-    <script type="text/javascript" src="/assets/scripts/cms-editor.js"></script>
     <!---->
-    <script type="text/javascript">
+</head>
+<body>
+    <!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
 
-        /*<![CDATA[*/
+    <header>
+        <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        Übersicht
+                    </a>
+                </li>
+                <li class="selected">
+                    <a href="#">
+                        Inhalte
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Seitenstruktur
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Bilder
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Abmelden
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="toolbar">
+            <img src="/assets/greekestate/assets/images/greekestate-logo.png" class="siteLogo" />
+            <div class="tools">
+                <div class="tools__item">
+                    <span>Aktuelle Seite:</span>
+                    <span class="graphicTextBox">#Seitentitel</span>
+                </div>
+                <div class="tools__item">
+                    <span><i class="far fa-folder-open"></i></span>
+                    <span class="graphicTextBox">
+                        <ul class="graphicTextBox__content graphicTextBox__content--path">
+                            <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                                <a href="#" th:href="@{/compile/(base=${argo.base},path=${pathToken})}" th:text="${pathToken}"></a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="iFrameContent">
+        <!---->
+        <aside>
+            <ul class="asideTabBar">
+                <li>
+                    <span class="asideTabBar__tab" data-target-layer-id="1">Seiten-Inhalte</span>
+                    <!---->
+<!--                    <div class="layer">
+                        <h4>Inhalts-Element bearbeiten</h4>
+                        <form>
+                            <input type="text" value="..." />
+                            <button class="submit">Speichern</button>
+                        </form>
+                    </div>-->
+                </li>
+            </ul>
+        </aside>
+        <!---->
+        <div class="layerContainer">
+            <div data-layer-id="1" class="layer">
+                <h4>Seiteninhalte</h4>
+                <ul class="listItemsAsFlyoutTargets" id="contentList">
+                    <li th:each="hotspot_item : ${data_hotspots}">
+                        <div class="listItemsAsFlyoutTargets__wrapper layoutTrigger">
+                            <div class="listItemsAsFlyoutTargets__title" th:text="${hotspot_item.value.title}">Inhalt</div>
+                            <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>
+                        </div>
+                        <!---->
+                        <div class="layer">
+                            <h4>Editieren</h4>
+                            <span th:utext="${hotspot_item}"></span>
+                            <h5 th:text="${hotspot_item.value.title}">#Hotspot name</h5>
+                            <div class="layer__form">
 
-        jQuery(document).ready(function () {
+                                <form action="#" method="POST" th:with="
+                                        path = ${hotspot_item.key},
+                                        el = ${argo.contentElementUtility.getElement(path)},
+                                        elType = ${argo.contentElementUtility.getElementType(el)}">
+                                    <!---->
+                                    <!--<span th:utext="${el}"></span>-->
+                                    <span th:utext="${elType}"></span>
+                                    <th:block th:switch="${elType.name()}">
+                                        <div  th:case="'TEXT'" class="layer__form__field">
+                                            <label>
+                                                <span class="layer__form__field__label">Text</span>
+                                                <textarea th:text="${el.content}">#</textarea>
+                                            </label>
+                                        </div>
+                                        <div  th:case="'LIST'" class="layer__form__field">
+                                            <label>
+                                                <span class="layer__form__field__label">List</span>
 
-            var jIframe = jQuery("iframe#pageContent");
-            var jHotspotAmountsIndicator = jQuery("li.flingh_toggleEdit").find(".hotspotAmountsIndicator");
+                                                <div th:each="list_item : ${argo.contentElementUtility.listElements(path)}">
+                                                    <!--<span th:text="${argo.contentElementUtility.getElementType(list_item).name()}"></span>-->
+                                                    <span th:text="${list_item}"></span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </th:block>
+                                    <!---->
+                                    <button type="submit">Speichern</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-            var oEditor = new fourigin.cms.hotspot.Editor(jIframe);
+        <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
+            th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
+    </div>
 
+    <script type='text/javascript'>
 
-            // Create the html-master for the editor-units:
-            oEditor.initializeMarkupMasters("text", "<h1>lala1</h1>");
-            oEditor.initializeMarkupMasters("html", "<h1>lala2</h1>");
-            oEditor.initializeMarkupMasters("image", "<h1>lala3</h1>");
-            oEditor.initializeMarkupMasters("set", "<h1>lala4</h1>");
-            // Create the html-master for the items inside the set-editor-unit:
-            oEditor.initializeItemMarkupMasters("text", "<h1>lala5</h1>");
-            oEditor.initializeItemMarkupMasters("html", "<h1>lala6</h1>");
-            oEditor.initializeItemMarkupMasters("image", "<h1>lala7</h1>");
-            oEditor.initializeItemMarkupMasters("set", "<h1>lala8</h1>");
+        jQuery(function(){
 
+            var iFrames = jQuery('iframe');
 
+            function iResize() {
 
-            jIframe.on("load", function () {
-                var oHotspot = new fourigin.cms.Hotspot(oEditor, jIframe, jHotspotAmountsIndicator);
+                for (var i = 0, j = iFrames.length; i < j; i++) {
+                    iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight + 'px';}
+            }
 
-                oHotspot.initializeMarkupMasters("empty", "<div class=\"fouriginMarker empty\"><span class=\"name\"/></div>");
-                oHotspot.initializeMarkupMasters("full", "<div class=\"fouriginMarker\"><span class=\"name\"/></div>");
-                console.log("Init all:");
-                oHotspot.initializeAllHotspots();
+            iFrames.on("load", function() {
+                this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
             });
 
         });
 
-        /*]]>*/
+
+
+
+        var openLayer = function(jLayer) {
+            jLayer.addClass("active");
+        };
+        var closeLayer = function(jLayer) {
+            jLayer.removeClass("active");
+            jLayer.find(".layer").removeClass("active");
+        };
+
+        var toggleNextLayer = function(jLayoutTrigger) {
+            var jNextChildLayer = jLayoutTrigger.siblings(".layer:first");
+            //
+            // Hide all other layer from this level first:
+            jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
+            jNextChildLayer.toggleClass("active");
+            // TODO: Close ALL others on the same level
+            if(!jNextChildLayer.hasClass("active")) {
+                /* Close ALL child layers */
+                jNextChildLayer.find(".layer").removeClass("active");
+            }
+        };
+
+        jQuery("[data-target-layer-id]").each(function(){
+            jQuery(this).on("click", function() {
+                var jThis = jQuery(this);
+                // get target layer:
+                var sId = jThis.attr("data-target-layer-id");
+                var jTargetLayer = jQuery("[data-layer-id='" + sId + "']");
+                //
+                if(jThis.hasClass("active")) {
+                    jThis.removeClass("active");
+                    closeLayer(jTargetLayer);
+                }
+                else {
+                    jThis.addClass("active");
+                    openLayer(jTargetLayer);
+                }
+            });
+        });
+
+        jQuery(".layoutTrigger").each(function () {
+            jQuery(this).on("click", function() {
+                toggleNextLayer(jQuery(this));
+            });
+        });
+
+
 
     </script>
-</head>
-<body class="cms">
-<header>
-    <div class="logo">
-        <span class="brand">fourigin</span><span class="product">CMS</span>
-    </div>
-    <div class="navigation">
-        <ul>
-            <li>
-                <div class="path">
-                    <ul>
-                        <li th:each="pathToken : ${#strings.arraySplit(path, '/')}">
-                            <a href="#" th:href="@{/compile/(base=${base},path=${pathToken})}" th:text="${pathToken}"></a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <i class="fa fa-coffee" aria-hidden="true"></i>
-                Trink coffee</li>
-        </ul>
-        <!--<div>-->
-            <!--*requestURI: <span th:text="${#httpServletRequest.requestURI}"></span><br/>-->
-            <!--*pathInfo: <span th:text="${#httpServletRequest.pathInfo}"></span><br/>-->
-            <!--*pathTranslated: <span th:text="${#httpServletRequest.pathTranslated}"></span><br/>-->
-            <!--*queryString: <span th:text="${#httpServletRequest.queryString}"></span><br/>-->
-            <!--*requestURL: <span th:text="${#httpServletRequest.requestURL}"></span><br/>-->
-            <!--*servletPath: <span th:text="${#httpServletRequest.servletPath}"></span><br/>-->
-            <!--*contextPath: <span th:text="${#httpServletRequest.contextPath}"></span><br/>-->
-        <!--</div>-->
-    </div>
-</header>
-<!--/*@thymesVar id="base" type="java.lang.String"*/-->
-<!--/*@thymesVar id="path" type="java.lang.String"*/-->
 
-<!--<div class="data_content_1" th:text="'data_content: ' + ${data_content}">size</div>-->
-
-<!--
-<iframe th:src="@{/editors/retrieveP/(base=${base},sitePath=${path},contentPath=/)}"></iframe>
--->
-<div id="lala"></div>
-
-<div class="desktop">
-    <!--<script type="text/javascript" th:inline="javascript">-->
-        <!--$(document).ready(function () {-->
-            <!--var data = /*[[${data_content}]]*/[];-->
-            <!--var targetDiv = $("div#lala");-->
-            <!--$("<pre></pre>").text(JSON.stringify(data, null, '  ')).appendTo(targetDiv);-->
-        <!--})-->
-    <!--</script>-->
-    <div class="sidePanel">
-        <header>
-            <span class="icon">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            </span>
-            <span class="title">Inhalte bearbeiten</span>
-        </header>
-        <div th:object="${data_content}">
-            <!--<span th:text="*{.}"></span>-->
-            <!--<span th:text="*{.}"></span>-->
-
-
-            <ul>
-                <li class="hotspotItem prototype" >
-                    <span class="label"></span>
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?base=DE&amp;path=/spiegel/article-1"
-            th:src="@{/compile/(base=${base},path=${path})}"></iframe>
-
-</div>
-
-<div class="overlayBackgroundLayer"></div>
-<div class="overlay editor editorItemText">
-    <header>
-        <h2>Text bearbeiten</h2>
-    </header>
-    <div class="controls">
-        <div class="button close">
-            <i class="close fa fa-times" aria-hidden="true"></i>
-        </div>
-    </div>
-    <section>
-        <div>
-            <h3>Hier können Sie den Text für dieses Datenfeld bearbeiten.</h3>
-        </div>
-        <div>
-            <form method="post" action="#">
-                <div class="contentElement text prototype" data-prototype="text">
-                    <label>
-                        <span>Text</span>
-                        <input name="" type="text" value=""/>
-                    </label>
-                </div>
-                <div class="contentElement html prototype" data-prototype="html">
-                    <label>
-                        <span>HTML</span>
-                        <textarea name=""></textarea>
-                    </label>
-                </div>
-            </form>
-        </div>
-    </section>
-    <footer>
-        <div class="buttons">
-            <a class="button" data-action="save">Speichern</a>
-            <a class="button secondary" data-action="cancel">Abbrechen</a>
-        </div>
-    </footer>
-</div>
-<!---->
-<script type="text/javascript">
-
-    /* TODO: optimize!!!!! Move !!!! */
-
-    var jPageIframe = jQuery("#pageContent");
-
-    jPageIframe.on("load", function () {
-        jPageIframe.height(jPageIframe.contents().find("body").outerHeight(true));
-    });
-    jPageIframe.contents().find("body").on("change", function () {
-        jPageIframe.height(jPageIframe.contents().find("body").outerHeight(true));
-    });
-    jQuery(window).on("resize", function () {
-        jPageIframe.height(jPageIframe.contents().find("body").outerHeight(true));
-    });
-</script>
-<!---->
 </body>
 </html>
