@@ -2,6 +2,8 @@ import de.thetaphi.forbiddenapis.gradle.ForbiddenApisPlugin
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
+    ext.kotlin_version = '1.2.31'
+    
     repositories {
         maven {
             name 'nexus'
@@ -12,6 +14,10 @@ buildscript {
         }
         mavenLocal()
         mavenCentral()
+
+        dependencies {
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        }
     }
 
     apply from: 'dependencies.gradle'
@@ -34,6 +40,7 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
 //        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M7"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -212,6 +219,7 @@ allprojects {
         apply plugin: 'de.thetaphi.forbiddenapis'
         apply plugin: 'project-report'
         apply plugin: 'jacoco'
+        apply plugin: 'kotlin'
 
         //workaround
         //https://github.com/johnrengelman/shadow/issues/347
@@ -394,157 +402,20 @@ subprojects {
         testOutputDir = new File(buildDir, 'classes/test')
     }
 }
-//endregion
-
-
-
-
-
-
-
-// *******
-/*
-apply plugin: 'idea'
-
-idea {
-    project {
-        jdkName = globalSourceCompatibility
-        languageLevel = globalSourceCompatibility
-    }
-}
-
-project.allprojects { project ->
-    apply plugin: "idea"
-    apply plugin: "groovy"
-    apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'pmd'
-
-    ext {
-        isLeafProject = { childProjects.isEmpty() }
-    }
-
-    project.plugins.withType(org.gradle.api.plugins.WarPlugin).whenPluginAdded { plugin ->
-        idea.module {
-            iml {
-                withXml {
-                    it.asNode().append(NodeBuilder.newInstance().component(name: 'FacetManager') {
-                        facet(type: 'web', name: 'Web') {
-                            configuration {
-                                descriptors {
-                                    deploymentDescriptor(name: 'web.xml', url: 'file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml')
-                                }
-                                webroots {
-                                    root(url: 'file://$MODULE_DIR$/src/main/webapp', relative: '/')
-                                }
-                                sourceRoots {
-                                    root(url: 'file://$MODULE_DIR$/src/main/java')
-                                    root(url: 'file://$MODULE_DIR$/src/main/resources')
-                                    root(url: 'file://$MODULE_DIR$/src/main/groovy')
-                                }
-                            }
-                        }
-                    })
-                }
-            }
-        }
-    }
-
-    if (project.isLeafProject()) {
-        apply plugin: 'maven'
-
-        configurations.all {
-            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-                def req = details.requested
-                if (req.group == 'log4j' && req.name == 'log4j') {
-                    details.useTarget managedDependency('org.slf4j:log4j-over-slf4j')
-                }
-                else if (req.group == 'commons-logging' && req.name == 'commons-logging') {
-                    details.useTarget managedDependency('org.slf4j:jcl-over-slf4j')
-                }
-                else if (req.group == 'taglibs' && req.name == 'standard') {
-                    details.useTarget managedDependency('javax.servlet:jstl')
-                }
-                else if (req.group == 'org.slf4j' && req.name == 'slf4j-log4j12') {
-                    details.useTarget managedDependency('ch.qos.logback:logback-classic')
-                }
-                else if (req.group == 'org.thymeleaf' && req.name == 'thymeleaf-spring3') {
-                    details.useTarget managedDependency('org.thymeleaf:thymeleaf-spring4')
-                }
-                else if (req.group == 'org.codehaus.groovy' && req.name == 'groovy-all') {
-                    details.useTarget managedDependency('org.codehaus.groovy:groovy')
-                }
-            }
-        }
-
-        dependencies {
-            testCompile managedDependency('org.codehaus.groovy:groovy')
-            compile managedDependency('org.slf4j:slf4j-api')
-            testRuntime managedDependency('org.slf4j:jcl-over-slf4j')
-            testRuntime managedDependency('org.slf4j:log4j-over-slf4j')
-            testRuntime managedDependency('ch.qos.logback:logback-core')
-            testRuntime managedDependency('ch.qos.logback:logback-classic')
-            testRuntime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
-            testCompile managedDependency('org.codehaus.groovy:groovy')
-            testCompile managedDependency('org.spockframework:spock-core'), { exclude group: 'junit', module: 'junit-dep' }
-            testCompile managedDependency('junit:junit')
-        }
-
-        repositories {
-            mavenLocal()
-            mavenCentral()
-        }
-
-        sourceCompatibility = globalSourceCompatibility
-        targetCompatibility = globalTargetCompatibility
-
-        // -Xlint:-options disables the
-        // "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
-        // for now
-        def compilerArgs = ['-Xlint:unchecked', '-Xlint:-options', '-Xlint:deprecation', '-g']
-        compileJava.options.compilerArgs = compilerArgs
-        compileTestJava.options.compilerArgs = compilerArgs
-        compileGroovy.options.compilerArgs = compilerArgs
-        compileTestGroovy.options.compilerArgs = compilerArgs
-
-        def sourceEncoding = 'UTF-8'
-        compileJava.options.encoding = sourceEncoding
-        compileTestJava.options.encoding = sourceEncoding
-        compileGroovy.options.encoding = sourceEncoding
-        compileTestGroovy.options.encoding = sourceEncoding
-        javadoc.options.encoding = sourceEncoding
-    }
-
-    pmd {
-        ruleSetFiles = files(rootProject.file('config/pmd/ruleSet.xml'))
-        ruleSets = []
-        toolVersion = '6.0.0'
-        // This analysis could be faster, please consider using Incremental Analysis:
-        // https://pmd.github.io/pmd/pmd_userdocs_getting_started.html#incremental-analysis
-        //
-        // Nope, this is a lie. Gradle 4.4.1 does not support this PMD feature. "Yet".
-        // https://github.com/gradle/gradle/pull/3125#issuecomment-352442432
-        //incrementalAnalysis = true
-
-        //ignoreFailures = true
-    }
-}
-
 repositories {
-    mavenLocal()
-    jcenter()
     mavenCentral()
 }
-
-subprojects {
-    apply plugin: 'java'
-
-    repositories {
-        mavenCentral()
-        mavenLocal()
-    }
-
-    version = "1.0"
-}
-
-apply from: 'projects.gradle'
-*/
+//dependencies {
+//    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+//}
+//compileKotlin {
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
+//}
+//compileTestKotlin {
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
+//}
+//endregion
