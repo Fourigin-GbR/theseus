@@ -124,6 +124,8 @@ header {
   .layer h4 {
     font-size: 1.05rem;
     margin: 5px 10px 10px 10px; }
+  .layer .layer__form {
+    padding: 0 10px; }
 
 /* colors */
 /* usages */
@@ -161,6 +163,13 @@ form button {
   padding: 5px 10px; }
 form button[type=submit] {
   background-color: #44958e;
-  color: #fff; }
+  color: #fff;
+  margin-top: 20px; }
+form textarea {
+  background-color: #222326;
+  padding: 10px;
+  border: 0;
+  box-shadow: unset;
+  color: #dcdcdc; }
 
 /*# sourceMappingURL=argo.css.map */

@@ -98,7 +98,7 @@
                         <!---->
                         <div class="layer">
                             <h4>Editieren</h4>
-                            <span th:utext="${hotspot_item}"></span>
+                            <!--<span th:utext="${hotspot_item}"></span>-->
                             <h5 th:text="${hotspot_item.value.title}">#Hotspot name</h5>
                             <div class="layer__form">
 
@@ -110,12 +110,10 @@
                                     <!--<span th:utext="${el}"></span>-->
                                     <span th:utext="${elType}"></span>
                                     <th:block th:switch="${elType.name()}">
-                                        <div  th:case="'TEXT'" class="layer__form__field">
-                                            <label>
-                                                <span class="layer__form__field__label">Text</span>
-                                                <textarea th:text="${el.content}">#</textarea>
-                                            </label>
-                                        </div>
+                                        <th:block th:case="'TEXT'">
+                                            <th:block th:replace="this :: editorFieldTypeText(${el})"/>
+                                        </th:block>
+
                                         <div  th:case="'LIST'" class="layer__form__field">
                                             <label>
                                                 <span class="layer__form__field__label">List</span>
@@ -125,7 +123,7 @@
                                                     <th:block th:switch="${list_item_type.name()}">
                                                         <div  th:case="'TEXT'" class="layer__form__field">
                                                             <label>
-                                                                <span class="layer__form__field__label">Text</span>
+                                                                <span class="layer__form__field__label">Text im LI</span>
                                                                 <textarea th:text="${list_item.content}">#</textarea>
                                                             </label>
                                                         </div>
@@ -136,6 +134,16 @@
                                     </th:block>
                                     <!---->
                                     <button type="submit">Speichern</button>
+                                    <!---->
+                                    <!---->
+                                    <label th:fragment="editorFieldTypeText(textEl)">
+                                        <div class="layer__form__field">
+                                            <span class="layer__form__field__label">Text</span>
+                                            <textarea th:text="${textEl}">#</textarea>
+                                        </div>
+                                    </label>
+                                    <!---->
+
                                 </form>
                             </div>
                         </div>
