@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <!---->
+    <label th:fragment="editorFieldTypeText(textEl)">
+        <div class="layer__form__field">
+            <span class="layer__form__field__label">Text</span>
+            <textarea data-content-type="text" name="content" th:text="${textEl.content}">#</textarea>
+        </div>
+    </label>
+    <!---->
+    <label th:fragment="editorFieldTypeObject(objectEl)">
+        <div class="layer__form__field">
+            <span class="layer__form__field__label">Object</span>
+            <!--<input type="text" data-content-type="object" name="content" th:val="${objectEl.content}">#</input>-->
+        </div>
+    </label>
+    <!---->
+    <label th:fragment="editorFieldTypeList(el, path)">
+        <div class="layer__form__field">
+
+            <div th:each="list_item : ${el.elements}"
+                 th:with = "list_item_type = ${argo.contentElementUtility.getElementType(list_item)}">
+
+                <th:block th:switch="${list_item_type.name()}">
+
+                    <th:block th:case="'TEXT'">
+                        <th:block th:replace="this :: editorFieldTypeText(${list_item})">
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:case="'OBJECT'">
+                        <th:block th:replace="this :: editorFieldTypeObject(${list_item})">
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:case="'LIST'">
+                        <th:block th:replace="this :: editorFieldTypeList(${list_item}, '')">
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:case="'GROUP'">
+                        <th:block th:replace="this :: editorFieldTypeGroup(${list_item}, '')">
+                        </th:block>
+                    </th:block>
+
+                </th:block>
+            </div>
+        </div>
+    </label>
+    <!---->
+    <label th:fragment="editorFieldTypeGroup(el, path)">
+        <div class="layer__form__field">
+
+            <textarea th:utext="${path}"></textarea>
+
+            <div th:each = "group_item :  ${el.elements}"
+                 th:with = "group_item_type = ${argo.contentElementUtility.getElementType(group_item)}">
+
+                <th:block th:switch="${group_item_type.name()}">
+
+                    <th:block th:case="'TEXT'">
+                        <th:block th:replace="this :: editorFieldTypeText(${group_item})">
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:case="'OBJECT'">
+                        <th:block th:replace="this :: editorFieldTypeObject(${group_item})">
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:case="'LIST'">
+                        <th:block th:replace="this :: editorFieldTypeList(${group_item}, '')">
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:case="'GROUP'">
+                        <th:block th:replace="this :: editorFieldTypeGroup(${group_item}, '')">
+                        </th:block>
+                    </th:block>
+
+                </th:block>
+            </div>
+        </div>
+    </label>
+</body>

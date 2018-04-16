@@ -107,41 +107,24 @@
                                         el = ${argo.contentElementUtility.getElement(path)},
                                         elType = ${argo.contentElementUtility.getElementType(el)}">
                                     <!---->
+                                    <input type="hidden" name="base" value="DE"/>
+                                    <input type="hidden" name="path" value="home"/>
+                                    <input type="hidden" name="contentPath" th:value="${path}" value="/"/>
+                                    <input type="hidden" name="originalChecksum" value="6B75FBEAF89DE0229E8EC7ECAA60234A"/>
                                     <!--<span th:utext="${el}"></span>-->
                                     <span th:utext="${elType}"></span>
                                     <th:block th:switch="${elType.name()}">
                                         <th:block th:case="'TEXT'">
-                                            <th:block th:replace="this :: editorFieldTypeText(${el})"/>
+                                            <th:block th:replace="templates/view-page-editors :: editorFieldTypeText(${el})"/>
                                         </th:block>
-
-                                        <div  th:case="'LIST'" class="layer__form__field">
-                                            <label>
-                                                <span class="layer__form__field__label">List</span>
-
-                                                <div th:each="list_item : ${argo.contentElementUtility.listElements(path)}"
-                                                th:with = "list_item_type = ${argo.contentElementUtility.getElementType(list_item)}">
-                                                    <th:block th:switch="${list_item_type.name()}">
-                                                        <div  th:case="'TEXT'" class="layer__form__field">
-                                                            <label>
-                                                                <span class="layer__form__field__label">Text im LI</span>
-                                                                <textarea th:text="${list_item.content}">#</textarea>
-                                                            </label>
-                                                        </div>
-                                                    </th:block>
-                                                </div>
-                                            </label>
-                                        </div>
+                                        <th:block th:case="'LIST'">
+                                            <th:block th:replace="templates/view-page-editors :: editorFieldTypeList(el = ${el}, path = ${path})"/>
+                                        </th:block>
                                     </th:block>
                                     <!---->
                                     <button type="submit">Speichern</button>
                                     <!---->
-                                    <!---->
-                                    <label th:fragment="editorFieldTypeText(textEl)">
-                                        <div class="layer__form__field">
-                                            <span class="layer__form__field__label">Text</span>
-                                            <textarea th:text="${textEl}">#</textarea>
-                                        </div>
-                                    </label>
+
                                     <!---->
 
                                 </form>
@@ -170,6 +153,52 @@
 
             iFrames.on("load", function() {
                 this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+            });
+
+            $.fn.serializeObject = function()
+            {
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function() {
+                    if (o[this.name]) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            };
+
+            jQuery("form").on("submit", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                //
+                var jData = $(this).serializeObject();
+                console.log("for mdata as json: ", jData);
+                jData.modifiedContentElement = {
+                    "type": "text",
+                    "name": "headline",
+                    "content": jData['content']
+                };
+                delete jData['content'];
+
+                var request = $.ajax({
+                    url: "http://argo.greekestate.fourigin.com/cms/editors/save",
+                    method: "POST",
+                    data: JSON.stringify(jData),
+                    contentType: "application/json"
+                });
+
+                request.done(function( msg ) {
+                    alert("Erfolg");
+                });
+
+                request.fail(function( jqXHR, textStatus ) {
+                    alert( "Request failed: " + textStatus );
+                });
             });
 
         });
