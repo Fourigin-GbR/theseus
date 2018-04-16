@@ -103,6 +103,7 @@ fourigin.cms.Hotspot.prototype.initializeAllHotspots = function () {
 };
 
 fourigin.cms.Hotspot.prototype.setSideBar = function() {
+    return;
     var aHotspotItems = this.aHotspots,
         i, il,
         self = this,
