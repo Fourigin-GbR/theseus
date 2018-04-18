@@ -1,9 +1,21 @@
 package com.fourigin.argo.models.structure.nodes;
 
-import com.fourigin.argo.models.datasource.DataSourceIdentifier;
+import com.fourigin.argo.models.ChecksumGenerator;
+import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.content.ContentPageMetaData;
+import com.fourigin.argo.models.content.DataSourceContent;
+import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.structure.CompileState;
+import com.fourigin.argo.models.structure.ContentPageChecksum;
 import com.fourigin.argo.models.template.TemplateReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 
 public class PageInfo implements SiteNodeInfo {
@@ -17,7 +29,9 @@ public class PageInfo implements SiteNodeInfo {
     private TemplateReference templateReference;
     private boolean staged;
     private CompileState compileState;
-    private Checksum checksum;
+    private ContentPageChecksum checksum;
+
+    private final Logger logger = LoggerFactory.getLogger(PageInfo.class);
 
     @Override
     public String getPath() {
@@ -79,20 +93,20 @@ public class PageInfo implements SiteNodeInfo {
         this.parent = parent;
     }
 
-    public void setChecksum(Checksum checksum) {
+    public void setChecksum(ContentPageChecksum checksum) {
         this.checksum = checksum;
     }
 
-    public String getReference(){
+    public String getReference() {
         StringBuilder builder = new StringBuilder(path);
-        if(!path.endsWith("/")){
+        if (!path.endsWith("/")) {
             builder.append('/');
         }
         builder.append(name);
         return builder.toString();
     }
 
-    public ContentPageReference getContentPageReference(){
+    public ContentPageReference getContentPageReference() {
         return new ContentPageReference(getPath(), getName());
     }
 
@@ -120,31 +134,34 @@ public class PageInfo implements SiteNodeInfo {
         this.staged = staged;
     }
 
-    public Checksum getChecksum() {
+    public ContentPageChecksum getChecksum() {
         return checksum;
     }
 
-    public void setChecksum(String contentChecksum, SortedMap<DataSourceIdentifier, String> dataSourceChecksum) {
-        this.checksum = new Checksum(contentChecksum, dataSourceChecksum);
+    public void buildChecksum(ContentPage contentPage) {
+        ContentPageMetaData metaData = contentPage.getMetaData();
+        List<ContentElement> content = contentPage.getContent();
+        Collection<DataSourceContent> dataSources = contentPage.getDataSourceContents();
+
+        String metaDataValue = ChecksumGenerator.getChecksum(metaData);
+        String contentValue = ChecksumGenerator.getChecksum(content);
+
+        Map<String, String> dataSourceValues = new HashMap<>();
+        if (dataSources != null) {
+            for (DataSourceContent dataSource : dataSources) {
+                String name = dataSource.getName();
+                String dataSourceChecksum = ChecksumGenerator.getChecksum(dataSource.getContent());
+                if (logger.isDebugEnabled())
+                    logger.debug("Put '{}': '{}' data source checksum value", name, dataSourceChecksum);
+                dataSourceValues.put(name, dataSourceChecksum);
+            }
+        }
+
+        this.checksum = new ContentPageChecksum(metaDataValue, contentValue, dataSourceValues);
     }
 
-    public class Checksum {
-        private String contentChecksum;
-        private SortedMap<DataSourceIdentifier, String> dataSourceChecksum;
-
-        public Checksum(String contentChecksum, SortedMap<DataSourceIdentifier, String> dataSourceChecksum) {
-            this.contentChecksum = contentChecksum;
-            this.dataSourceChecksum = dataSourceChecksum;
-        }
-
-        public String getCombinedChecksum(){
-            StringBuilder result = new StringBuilder(contentChecksum);
-            for (String checksum : dataSourceChecksum.values()) {
-                result.append('-');
-                result.append(checksum);
-            }
-            return result.toString();
-        }
+    public void setChecksum(String metaDataValue, String contentValue, SortedMap<String, String> dataSourceValues) {
+        this.checksum = new ContentPageChecksum(metaDataValue, contentValue, dataSourceValues);
     }
 
     public class ContentPageReference {
@@ -237,62 +254,71 @@ public class PageInfo implements SiteNodeInfo {
         private TemplateReference templateReference;
         private boolean staged;
         private CompileState compileState;
-        private Checksum checksum;
+        private ContentPageChecksum checksum;
 
-        public Builder withPath(String path){
+        public Builder withPath(String path) {
             this.path = path;
             return this;
         }
 
-        public Builder withName(String name){
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withLocalizedName(String localizedName){
+        public Builder withLocalizedName(String localizedName) {
             this.localizedName = localizedName;
             return this;
         }
 
-        public Builder withDisplayName(String displayName){
+        public Builder withDisplayName(String displayName) {
             this.displayName = displayName;
             return this;
         }
 
-        public Builder withDescription(String description){
+        public Builder withDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public Builder withParent(SiteNodeContainerInfo parent){
+        public Builder withParent(SiteNodeContainerInfo parent) {
             this.parent = parent;
             return this;
         }
 
-        public Builder withTemplateReference(TemplateReference templateReference){
+        public Builder withTemplateReference(TemplateReference templateReference) {
             this.templateReference = templateReference;
             return this;
         }
 
-        public Builder withStaged(boolean staged){
+        public Builder withStaged(boolean staged) {
             this.staged = staged;
             return this;
         }
 
-        public Builder withCompileState(CompileState compileState){
+        public Builder withCompileState(CompileState compileState) {
             this.compileState = compileState;
             return this;
         }
 
-        public Builder withCheckum(Checksum checksum){
+        public Builder withChecksum(ContentPageChecksum checksum) {
             this.checksum = checksum;
             return this;
         }
 
-        public PageInfo build(){
+        public PageInfo build() {
+            Objects.requireNonNull(name, "name must not be null!");
+            Objects.requireNonNull(templateReference, "templateReference must not be null!");
+            Objects.requireNonNull(compileState, "compileState must not be null!");
+
             PageInfo instance = new PageInfo();
-            instance.setPath(path);
             instance.setName(name);
+            if (path != null) {
+                instance.setPath(path);
+            }
+            if (checksum != null) {
+                instance.setChecksum(checksum);
+            }
             instance.setLocalizedName(localizedName);
             instance.setDisplayName(displayName);
             instance.setDescription(description);
@@ -300,7 +326,7 @@ public class PageInfo implements SiteNodeInfo {
             instance.setTemplateReference(templateReference);
             instance.setStaged(staged);
             instance.setCompileState(compileState);
-            instance.setChecksum(checksum);
+
             return instance;
         }
     }

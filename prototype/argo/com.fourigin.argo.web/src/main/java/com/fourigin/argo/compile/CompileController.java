@@ -4,7 +4,9 @@ import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
@@ -51,6 +53,22 @@ public class CompileController {
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
 
         PageInfo pageInfo = aggregation.getPageInfo();
+        String pageName = pageInfo.getName();
+
+        String pageContentChecksum = pageInfo.getChecksum().getCombinedValue();
+        CompileState compileState = pageInfo.getCompileState();
+        if(compileState != null){
+            if (logger.isDebugEnabled()) logger.debug("Verifying compile state of the page '{}'.", pageName);
+            String compileBaseChecksum = compileState.getChecksum();
+            if(compileBaseChecksum.equals(pageContentChecksum)){
+                if (logger.isInfoEnabled()) logger.info("Would skip compiling page, please implement me ..."); // NOPMD
+                //                if (logger.isInfoEnabled()) logger.info("Skipping page '{}', checksum unchanged.", pageName);
+                //                return;
+            }
+        }
+        else {
+            compileState = new CompileState();
+        }
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
@@ -73,11 +91,25 @@ public class CompileController {
 
             bufferedCompilerOutputStrategy.finish();
 
+            compileState.setCompiled(true);
+
             return new HttpEntity<>(bytes, headers);
         } catch (Throwable ex) {
             if (logger.isErrorEnabled()) logger.error("Error occurred while compiling page!", ex);
             bufferedCompilerOutputStrategy.reset();
+
+            compileState.setCompiled(false);
+
             throw ex;
+        }
+        finally {
+            long timestamp = System.currentTimeMillis();
+            compileState.setTimestamp(timestamp);
+            compileState.setChecksum(pageContentChecksum);
+
+            SiteNodeContainerInfo parent = pageInfo.getParent();
+            String parentPath = parent.getPath();
+            aggregation.getContentRepository().updateInfo(parentPath, pageInfo);
         }
     }
 

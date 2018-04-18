@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository.model;
 
 import com.fourigin.argo.models.structure.CompileState;
+import com.fourigin.argo.models.structure.ContentPageChecksum;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.TemplateReference;
 
@@ -15,7 +16,7 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
     private TemplateReference templateReference;
     private boolean staged;
     private CompileState compileState;
-    private PageInfo.Checksum checksum;
+    private ContentPageChecksum checksum;
 
     public JsonFileInfo() {
     }
@@ -44,7 +45,7 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
             .withTemplateReference(templateReference)
             .withStaged(staged)
             .withCompileState(compileState)
-            .withCheckum(checksum)
+            .withChecksum(checksum)
             .build();
     }
 
@@ -112,11 +113,11 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
         this.compileState = compileState;
     }
 
-    public PageInfo.Checksum getChecksum() {
+    public ContentPageChecksum getChecksum() {
         return checksum;
     }
 
-    public void setChecksum(PageInfo.Checksum checksum) {
+    public void setChecksum(ContentPageChecksum checksum) {
         this.checksum = checksum;
     }
 

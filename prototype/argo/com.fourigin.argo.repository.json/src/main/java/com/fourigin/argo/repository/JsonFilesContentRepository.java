@@ -5,8 +5,8 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
-import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.model.JsonDirectoryInfo;
 import com.fourigin.argo.repository.model.JsonFileInfo;
@@ -418,29 +418,37 @@ public class JsonFilesContentRepository implements ContentRepository {
 
     private void initialize(){
         if(root != null){
-            if (logger.isDebugEnabled()) logger.debug("Repository is already initialized");
+            if (logger.isDebugEnabled()) logger.debug("Repository is already initialized for '{}'.", contentRoot);
             return;
         }
 
-        File dir = new File(contentRoot);
+        if (logger.isDebugEnabled()) logger.debug("Initializing content repository for '{}'.", contentRoot);
+        try {
+            File dir = new File(contentRoot);
 
-        String rootPath = "/";
+            String rootPath = "/";
 
-        boolean changed = false;
-        JsonInfoList rootList = readJsonInfoList(rootPath);
-        if(rootList == null){
-            rootList = new JsonInfoList("/");
-            changed = true;
+            boolean changed = false;
+            JsonInfoList rootList = readJsonInfoList(rootPath);
+            if (rootList == null) {
+                rootList = new JsonInfoList("/");
+                changed = true;
+            }
+
+            root = createNewDirectoryInfo("", rootPath);
+
+            List<SiteNodeInfo> nodes = parseDirectory(dir, rootPath, root, rootList);
+
+            root.setNodes(nodes);
+
+            if (changed) {
+                writeJsonInfoList(rootPath, rootList);
+            }
         }
-
-        root = createNewDirectoryInfo("", rootPath);
-
-        List<SiteNodeInfo> nodes = parseDirectory(dir, rootPath, root, rootList);
-
-        root.setNodes(nodes);
-
-        if(changed){
-            writeJsonInfoList(rootPath, rootList);
+        catch(Throwable th){
+            if (logger.isErrorEnabled()) logger.error("Error occurred while loading content structure, resetting the repository.");
+            root = null;
+            throw th;
         }
     }
 
@@ -476,31 +484,31 @@ public class JsonFilesContentRepository implements ContentRepository {
         PageInfo info = new PageInfo();
 
         name = normalizeFileName(name);
-//        if(name.endsWith(".json")){
-//            name = name.substring(0, name.length() - ".json".length());
-//        }
 
         info.setName(name);
         info.setLocalizedName(name);
         info.setPath(localPath);
         info.setDescription("Auto-created directory info. Don't forget to specify all properties!");
         info.setDisplayName(name);
+        info.setStaged(false);
 
         TemplateReference templateReference = new TemplateReference();
         templateReference.setTemplateId("unspecified");
         templateReference.setVariationId("unspecified");
         templateReference.setRevision("unspecified");
+        info.setTemplateReference(templateReference);
 
         CompileState compileState = new CompileState();
         compileState.setChecksum("");
         compileState.setCompiled(false);
         compileState.setMessage("");
         compileState.setTimestamp(new Date().getTime());
-
-        info.setTemplateReference(templateReference);
-        info.setStaged(false);
-        info.setChecksum(null);
         info.setCompileState(compileState);
+
+        File contentFile = getContentFile(info);
+        ContentPage contentPage = readContentPage(info, contentFile);
+
+        info.buildChecksum(contentPage);
 
         return info;
     }

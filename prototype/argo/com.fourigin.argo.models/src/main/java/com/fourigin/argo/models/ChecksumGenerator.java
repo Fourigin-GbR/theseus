@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 
 public final class ChecksumGenerator {
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
@@ -32,6 +33,27 @@ public final class ChecksumGenerator {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(object);
+            serializedObject = baos.toByteArray();
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Error serializing object!", ex);
+        }
+
+        MESSAGE_DIGEST.update(serializedObject);
+        byte[] hash = MESSAGE_DIGEST.digest();
+
+        return bytesToHex(hash);
+    }
+
+    public static String getChecksum(Collection<? extends Serializable> collection){
+        byte[] serializedObject;
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            if(collection != null) {
+                for (Serializable item : collection) {
+                    oos.writeObject(item);
+                }
+            }
             serializedObject = baos.toByteArray();
         } catch (IOException ex) {
             throw new IllegalArgumentException("Error serializing object!", ex);

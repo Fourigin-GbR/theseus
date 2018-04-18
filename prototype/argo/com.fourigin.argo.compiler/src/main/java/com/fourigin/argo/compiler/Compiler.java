@@ -16,7 +16,7 @@ public class Compiler {
     public void compile(PageInfo page){
         String pageName = page.getName();
 
-        String pageContentChecksum = page.getChecksum().getCombinedChecksum();
+        String pageContentChecksum = page.getChecksum().getCombinedValue();
 
         CompileState compileState = page.getCompileState();
         if(compileState != null){

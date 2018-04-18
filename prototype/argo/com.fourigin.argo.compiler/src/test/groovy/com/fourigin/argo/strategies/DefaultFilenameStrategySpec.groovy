@@ -1,13 +1,28 @@
 package com.fourigin.argo.strategies
 
+import com.fourigin.argo.models.structure.CompileState
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo
 import com.fourigin.argo.models.structure.nodes.PageInfo
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo
+import com.fourigin.argo.models.template.TemplateReference
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class DefaultFilenameStrategySpec extends Specification {
+
+    static TemplateReference templateReference = new TemplateReference()
+    static CompileState compileState = new CompileState()
+    static {
+        templateReference.setTemplateId("unspecified")
+        templateReference.setVariationId("unspecified")
+        templateReference.setRevision("unspecified")
+
+        compileState.setChecksum("")
+        compileState.setCompiled(false)
+        compileState.setMessage("")
+        compileState.setTimestamp(-1)
+    }
 
     static SiteNodeContainerInfo root = new DirectoryInfo.Builder()
             .withName('/')
@@ -35,6 +50,8 @@ class DefaultFilenameStrategySpec extends Specification {
             .withPath('/a/')
             .withParent(a)
             .withLocalizedName('a_1')
+            .withTemplateReference(templateReference)
+            .withCompileState(compileState)
             .build()
 
     static SiteNodeInfo a2 = new PageInfo.Builder()
@@ -42,6 +59,8 @@ class DefaultFilenameStrategySpec extends Specification {
             .withPath('/a/')
             .withParent(a)
             .withLocalizedName('a_2')
+            .withTemplateReference(templateReference)
+            .withCompileState(compileState)
             .build()
 
     static SiteNodeInfo b1 = new PageInfo.Builder()
@@ -49,6 +68,8 @@ class DefaultFilenameStrategySpec extends Specification {
             .withPath('/b/')
             .withParent(b)
             .withLocalizedName('b_1')
+            .withTemplateReference(templateReference)
+            .withCompileState(compileState)
             .build()
 
     static SiteNodeContainerInfo b2 = new DirectoryInfo.Builder()
@@ -63,6 +84,8 @@ class DefaultFilenameStrategySpec extends Specification {
             .withPath('/b/b2/')
             .withParent(b2)
             .withLocalizedName('b_2_1')
+            .withTemplateReference(templateReference)
+            .withCompileState(compileState)
             .build()
 
     @Unroll

@@ -3,7 +3,7 @@ package com.fourigin.argo.models.datasource;
 import java.io.Serializable;
 import java.util.Map;
 
-public class DataSourceIdentifier implements Serializable {
+public class DataSourceIdentifier implements Serializable, Comparable<DataSourceIdentifier> {
 
     private static final long serialVersionUID = 4193612352125682106L;
 
@@ -33,6 +33,11 @@ public class DataSourceIdentifier implements Serializable {
 
     public void setChecksum(String checksum) {
         this.checksum = checksum;
+    }
+
+    @Override
+    public int compareTo(DataSourceIdentifier o) {
+        return checksum.compareTo(o.checksum);
     }
 
     @Override
