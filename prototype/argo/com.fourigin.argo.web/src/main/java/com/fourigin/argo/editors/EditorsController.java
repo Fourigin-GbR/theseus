@@ -119,15 +119,15 @@ public class EditorsController {
         String currentChecksum = buildChecksum(currentContentElement);
         response.setCurrentChecksum(currentChecksum);
         if (currentChecksum.equals(request.getOriginalChecksum())) {
-            ContentElement modifiedContentElement = request.getModifiedContentElement();
-            updateContentElement(request, modifiedContentElement, aggregation);
-            response.setStatus(true);
-            if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
-        } else {
             response.setStatus(false);
             response.setCurrentContentElement(currentContentElement);
             if (logger.isDebugEnabled())
                 logger.debug("Modified content element is not updated. Current checksum is '{}'.", currentChecksum);
+        } else {
+            response.setStatus(true);
+            ContentElement modifiedContentElement = request.getModifiedContentElement();
+            updateContentElement(request, modifiedContentElement, aggregation);
+            if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
         }
 
         return response;
