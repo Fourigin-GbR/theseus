@@ -110,7 +110,7 @@
                                     <input type="hidden" name="base" value="DE"/>
                                     <input type="hidden" name="path" value="home"/>
                                     <input type="hidden" name="contentPath" th:value="${path}" value="/"/>
-                                    <input type="hidden" name="originalChecksum" th:value="${argo.pageInfo.getChecksum()}" value="xxx"/>
+                                    <input type="hidden" name="originalChecksum" th:value="${argo.pageInfo.checksum.combinedValue}" value="xxx"/>
                                     <!--<span th:utext="${el}"></span>-->
                                     <span th:utext="${elType}"></span>
                                     <th:block th:switch="${elType.name()}">
