@@ -27,15 +27,19 @@
             {
               "name": "tag",
               "type": "text",
-              "content": "Exclusiv!",
-              "markupAllowed": false
+              "content": "Exclusiv!"
             },
             {
               "name": "headline",
-              "type": "text-link",
-              "content": "Villa am Meer",
-              "markupAllowed": false,
-              "url": "sales/123.html"
+              "type": "link",
+              "url": "sales/123.html",
+              "elements": [
+                {
+                  "name": "copy",
+                  "type": "text",
+                  "content": "Villa am Meer"
+                }
+              ]
             },
             {
               "name": "description",
@@ -76,15 +80,19 @@
             {
               "name": "tag",
               "type": "text",
-              "content": "Sehr günstig - TIPP!",
-              "markupAllowed": false
+              "content": "Sehr günstig - TIPP!"
             },
             {
               "name": "headline",
-              "type": "text-link",
-              "content": "Apartment mit Pool",
-              "markupAllowed": false,
-              "url": "rents/234.html"
+              "type": "link",
+              "url": "rents/234.html",
+              "elements": [
+                {
+                  "name": "copy",
+                  "type": "text",
+                  "content": "Apartment mit Pool"
+                }
+              ]
             },
             {
               "name": "description",
@@ -120,8 +128,7 @@
     {
       "name": "headline",
       "type": "text",
-      "content": "Unser Angebot und Service",
-      "markupAllowed": false
+      "content": "Unser Angebot und Service"
     },
     {
       "name": "body",
@@ -135,8 +142,7 @@
         {
           "name": "headline",
           "type": "text",
-          "content": "Besondere Angebote",
-          "markupAllowed": false
+          "content": "Besondere Angebote"
         },
         {
           "name": "objects",
@@ -156,8 +162,7 @@
                 {
                   "name": "headline",
                   "type": "text",
-                  "content": "Objekt ABC",
-                  "markupAllowed": false
+                  "content": "Objekt ABC"
                 },
                 {
                   "name": "description",
@@ -185,8 +190,7 @@
                 {
                   "name": "headline",
                   "type": "text",
-                  "content": "Apartment groß",
-                  "markupAllowed": false
+                  "content": "Apartment groß"
                 },
                 {
                   "name": "description",
@@ -214,8 +218,7 @@
                 {
                   "name": "headline",
                   "type": "text",
-                  "content": "Gewerbefläche",
-                  "markupAllowed": false
+                  "content": "Gewerbefläche"
                 },
                 {
                   "name": "description",
@@ -243,8 +246,7 @@
                 {
                   "name": "headline",
                   "type": "text",
-                  "content": "Seeplatz",
-                  "markupAllowed": false
+                  "content": "Seeplatz"
                 },
                 {
                   "name": "description",
@@ -272,8 +274,7 @@
                 {
                   "name": "headline",
                   "type": "text",
-                  "content": "Hütte",
-                  "markupAllowed": false
+                  "content": "Hütte"
                 },
                 {
                   "name": "description",
@@ -301,8 +302,7 @@
                 {
                   "name": "headline",
                   "type": "text",
-                  "content": "Hausboot",
-                  "markupAllowed": false
+                  "content": "Hausboot"
                 },
                 {
                   "name": "description",
@@ -323,6 +323,7 @@
   ],
   "dataSourceContents": [
     {
+      "name": "timestamp",
       "identifier": {
         "type": "TIMESTAMP",
         "checksum": ""
@@ -330,6 +331,7 @@
       "content": null
     },
     {
+      "name": "site-structure",
       "identifier": {
         "type": "SITE",
         "query": {
