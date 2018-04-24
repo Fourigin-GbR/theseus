@@ -6,6 +6,9 @@ header {
   display: flex;
   align-items: flex-end;
   color: $color_font_on_light_background;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 
   a {
     color: inherit;

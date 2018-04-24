@@ -3,9 +3,10 @@
 .content {
   background-color: $color_basic_dark_background;
   color: $color_font_on_dark_background;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  width: 100%;
   z-index: 100;
+  top: 75px;
 }
 
 .iFrameContent {
@@ -17,8 +18,9 @@
     color: $color_font_on_dark_background;
     width: 25px;
     bottom: 0;
-    display: block;
-    z-index: 1;
+    top: 158px;
+    position: fixed;
+    z-index: 95;
 
     > ul {
       position: sticky;
@@ -64,5 +66,7 @@
     margin: 0;
     min-height: 100%;
     overflow: scroll;
+    margin-left: 25px;
+    box-sizing: border-box;
   }
 }

@@ -32,7 +32,10 @@ header {
   background-color: #fff;
   display: flex;
   align-items: flex-end;
-  color: #232323; }
+  color: #232323;
+  position: fixed;
+  width: 100%;
+  z-index: 1; }
   header a {
     color: inherit; }
   header nav {
@@ -50,9 +53,10 @@ header {
 .content {
   background-color: #222326;
   color: #dcdcdc;
-  position: sticky;
-  top: 0;
-  z-index: 100; }
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top: 75px; }
 
 .iFrameContent {
   position: relative;
@@ -62,8 +66,9 @@ header {
     color: #dcdcdc;
     width: 25px;
     bottom: 0;
-    display: block;
-    z-index: 1; }
+    top: 158px;
+    position: fixed;
+    z-index: 95; }
     .iFrameContent aside > ul {
       position: sticky;
       top: 83px; }
@@ -92,7 +97,9 @@ header {
     padding: 0;
     margin: 0;
     min-height: 100%;
-    overflow: scroll; }
+    overflow: scroll;
+    margin-left: 25px;
+    box-sizing: border-box; }
 
 /* colors */
 /* usages */
