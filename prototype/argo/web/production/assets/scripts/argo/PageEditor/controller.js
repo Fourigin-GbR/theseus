@@ -57,29 +57,59 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
     };
 
     PageEditor.prototype.writeSpecificEditor = function(oContent, jTarget) {
+        console.log("Write specific editor", oContent, jTarget);
         switch(oContent.type) {
             case "text":
                 this.writeTextEditor(oContent, jTarget);
                 break;
+            case "object":
+                this.writeObjectEditor(oContent, jTarget);
+                break;
             case "list":
                 this.writeListEditor(oContent, jTarget);
+                break;
+            case "list-group":
+                this.writeListGroupEditor(oContent, jTarget);
                 break;
         }
     };
 
     PageEditor.prototype.writeTextEditor = function (oTextItem, jTarget) {
-        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=text]");
+        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=text]").clone();
         //
         // fill with data
-        jPrototype.find("input[name=content]").val(oTextItem.content);
+        jPrototype.find("textarea[name=content]").val(oTextItem.content);
+        // append to editor
+        jTarget.append(jPrototype);
+    };
+    PageEditor.prototype.writeObjectEditor = function (oObjectItem, jTarget) {
+        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=object]").clone();
+        //
+        // fill with data
+        jPrototype.find("input[name=source]").val(oObjectItem.source);
+        jPrototype.find("input[name=referenceId]").val(oObjectItem.referenceId);
+        jPrototype.find("input[name=alternativeText]").val(oObjectItem.alternateText);
+        jPrototype.find("input[name=mimeType]").val(oObjectItem.mimeType);
         // append to editor
         jTarget.append(jPrototype);
     };
     PageEditor.prototype.writeListEditor = function (oListItem, jTarget) {
-        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=list]");
+        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=list]").clone();
         //
-        // fill with data
-
+        // fill with data: write the elements
+        for(var i=0, il=oListItem.elements.length; i<il; i++) {
+            this.writeSpecificEditor(oListItem.elements[i], jPrototype.find("> fieldset"));
+        }
+        // append to editor
+        jTarget.append(jPrototype);
+    };
+    PageEditor.prototype.writeListGroupEditor = function (oListGroupItem, jTarget) {
+        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=listGroup]").clone();
+        //
+        // fill with data: write the elements
+        for(var i=0, il=oListGroupItem.elements.length; i<il; i++) {
+            this.writeSpecificEditor(oListGroupItem.elements[i], jPrototype.find("> fieldset"));
+        }
         // append to editor
         jTarget.append(jPrototype);
     };
