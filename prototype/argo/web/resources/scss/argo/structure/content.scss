@@ -12,6 +12,7 @@
 .iFrameContent {
   position: relative;
   display: flex;
+  top: 148px;
 
   aside {
     background-color: $color_alternative_dark_background;
@@ -54,9 +55,9 @@
 
 
   .layerContainer {
-    position: absolute;
+    position: fixed;
     left: 25px;
-    top: 0;
+    top: 148px;
   }
 
   iframe#pageContent {

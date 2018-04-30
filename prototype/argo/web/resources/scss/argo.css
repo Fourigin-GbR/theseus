@@ -61,7 +61,8 @@ header {
 
 .iFrameContent {
   position: relative;
-  display: flex; }
+  display: flex;
+  top: 148px; }
   .iFrameContent aside {
     background-color: #262626;
     color: #dcdcdc;
@@ -89,9 +90,9 @@ header {
         .iFrameContent aside > ul > li .layer {
           left: 0; }
   .iFrameContent .layerContainer {
-    position: absolute;
+    position: fixed;
     left: 25px;
-    top: 0; }
+    top: 148px; }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
