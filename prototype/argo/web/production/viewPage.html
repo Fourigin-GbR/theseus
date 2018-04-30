@@ -105,7 +105,7 @@
                         <h4>Editieren</h4>
                         <h5></h5>
                         <div class="layer__form">
-                            <form action="#" method="POST">
+                            <form data-content-path="/" action="#" method="POST">
                                 <!---->
                                 <div class="editorFields"></div>
                                 <!---->
@@ -218,35 +218,6 @@
             });
             return o;
         };
-
-        jQuery("form").on("submit", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            //
-            var jData = $(this).serializeObject();
-            console.log("for mdata as json: ", jData);
-            jData.modifiedContentElement = {
-                "type": "text",
-                "name": "headline",
-                "content": jData['content']
-            };
-            delete jData['content'];
-
-            var request = $.ajax({
-                url: "http://argo.greekestate.fourigin.com/cms/editors/save",
-                method: "POST",
-                data: JSON.stringify(jData),
-                contentType: "application/json"
-            });
-
-            request.done(function (msg) {
-                alert("Erfolg");
-            });
-
-            request.fail(function (jqXHR, textStatus) {
-                alert("Request failed: " + textStatus);
-            });
-        });
 
     });
 

@@ -45,6 +45,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                     oHotSpot = oHotSpots[property],
                     oContent = this.Model.getContentByPath(property);
                 //
+                jHotSpot.attr("data-content-path", property);
                 jHotSpot.find(".listItemsAsFlyoutTargets__title").text(oHotSpot.title);
                 jHotSpot.find("h5").text(oHotSpot.title);
                 //
@@ -78,6 +79,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=text]").clone();
         //
         // fill with data
+        jPrototype.find("input[name=name]").val(oTextItem.name);
         jPrototype.find("textarea[name=content]").val(oTextItem.content);
         // append to editor
         jTarget.append(jPrototype);
@@ -86,6 +88,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=object]").clone();
         //
         // fill with data
+        jPrototype.find("input[name=name]").val(oObjectItem.name);
         jPrototype.find("input[name=source]").val(oObjectItem.source);
         jPrototype.find("input[name=referenceId]").val(oObjectItem.referenceId);
         jPrototype.find("input[name=alternativeText]").val(oObjectItem.alternateText);
@@ -115,6 +118,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
     };
 
     PageEditor.prototype.setEvents = function() {
+        var self = this;
+
         var openLayer = function (jLayer) {
             jLayer.addClass("active");
         };
@@ -157,6 +162,40 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jQuery(".layoutTrigger").each(function () {
             jQuery(this).on("click", function () {
                 toggleNextLayer(jQuery(this));
+            });
+        });
+
+
+
+        jQuery("form").on("submit", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            //
+            var jData = $(this).serializeObject();
+            // TODO: das klappt so nicht. ich muss über die DOM-Elemente interieren, damit ich jedes <fieldset> umwandeln kann in ein Type-Element oder ein Elements.
+
+            var oNewDataObject = {
+                "base": self.Model.getBase(),
+                "path": self.Model.getPath(),
+                "contentPath": $(this).attr("data-content-path"),
+                "originalChecksum": "",
+                "modifiedContentElement": jData
+            };
+            console.log("for mdata as json: ", oNewDataObject);
+
+            var request = $.ajax({
+                url: "http://argo.greekestate.fourigin.com/cms/editors/save",
+                method: "POST",
+                data: JSON.stringify(oNewDataObject),
+                contentType: "application/json"
+            });
+
+            request.done(function (msg) {
+                jQuery("iframe#pageContent")[0].contentWindow.location.reload(true);
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
             });
         });
     };
