@@ -28,25 +28,26 @@ ul {
 /* colors */
 /* usages */
 header {
-  padding: 20px 10px 0 10px;
+  padding: 10px 0 0 0;
   background-color: #fff;
-  display: flex;
-  align-items: flex-end;
   color: #232323;
   position: fixed;
   width: 100%;
   z-index: 1; }
-  header a {
-    color: inherit; }
-  header nav {
-    font-size: 1.05rem; }
-    header nav ul {
-      display: flex; }
-      header nav ul li {
-        padding: 5px 10px; }
-        header nav ul li.selected {
-          background-color: #222326;
-          color: #dcdcdc; }
+  header .metaInformationBar {
+    display: flex;
+    align-items: flex-end; }
+    header .metaInformationBar a {
+      color: inherit; }
+    header .metaInformationBar nav {
+      font-size: 1.05rem; }
+      header .metaInformationBar nav ul {
+        display: flex; }
+        header .metaInformationBar nav ul li {
+          padding: 5px 10px; }
+          header .metaInformationBar nav ul li.selected {
+            background-color: #222326;
+            color: #dcdcdc; }
 
 /* colors */
 /* usages */
@@ -66,7 +67,7 @@ header {
     color: #dcdcdc;
     width: 25px;
     bottom: 0;
-    top: 158px;
+    top: 148px;
     position: fixed;
     z-index: 95; }
     .iFrameContent aside > ul {
@@ -106,7 +107,8 @@ header {
 .toolbar {
   padding: 20px 10px;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  background-color: #222326; }
   .toolbar .tools {
     display: flex; }
     .toolbar .tools .tools__item {
