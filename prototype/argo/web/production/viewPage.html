@@ -180,7 +180,6 @@
         }
     );
     argoPageEditor.loadContent();
-    argoPageEditor.writeHotspots();
 </script>
 
 <script type='text/javascript'>
@@ -246,53 +245,6 @@
         });
 
     });
-
-
-    var openLayer = function (jLayer) {
-        jLayer.addClass("active");
-    };
-    var closeLayer = function (jLayer) {
-        jLayer.removeClass("active");
-        jLayer.find(".layer").removeClass("active");
-    };
-
-    var toggleNextLayer = function (jLayoutTrigger) {
-        var jNextChildLayer = jLayoutTrigger.siblings(".layer:first");
-        //
-        // Hide all other layer from this level first:
-        jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
-        jNextChildLayer.toggleClass("active");
-        // TODO: Close ALL others on the same level
-        if (!jNextChildLayer.hasClass("active")) {
-            /* Close ALL child layers */
-            jNextChildLayer.find(".layer").removeClass("active");
-        }
-    };
-
-    jQuery("[data-target-layer-id]").each(function () {
-        jQuery(this).on("click", function () {
-            var jThis = jQuery(this);
-            // get target layer:
-            var sId = jThis.attr("data-target-layer-id");
-            var jTargetLayer = jQuery("[data-layer-id='" + sId + "']");
-            //
-            if (jThis.hasClass("active")) {
-                jThis.removeClass("active");
-                closeLayer(jTargetLayer);
-            }
-            else {
-                jThis.addClass("active");
-                openLayer(jTargetLayer);
-            }
-        });
-    });
-
-    jQuery(".layoutTrigger").each(function () {
-        jQuery(this).on("click", function () {
-            toggleNextLayer(jQuery(this));
-        });
-    });
-
 
 </script>
 

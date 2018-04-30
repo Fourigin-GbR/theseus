@@ -27,6 +27,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jRequest.done(function (data) {
                 console.log("loaded content.");
                 self.Model.setContent(data.content);
+                self.writeHotspots();
+                self.setEvents();
             }
         );
     };
@@ -59,6 +61,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             case "text":
                 this.writeTextEditor(oContent, jTarget);
                 break;
+            case "list":
+                this.writeListEditor(oContent, jTarget);
+                break;
         }
     };
 
@@ -69,6 +74,61 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jPrototype.find("input[name=content]").val(oTextItem.content);
         // append to editor
         jTarget.append(jPrototype);
+    };
+    PageEditor.prototype.writeListEditor = function (oListItem, jTarget) {
+        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=list]");
+        //
+        // fill with data
+
+        // append to editor
+        jTarget.append(jPrototype);
+    };
+
+    PageEditor.prototype.setEvents = function() {
+        var openLayer = function (jLayer) {
+            jLayer.addClass("active");
+        };
+        var closeLayer = function (jLayer) {
+            jLayer.removeClass("active");
+            jLayer.find(".layer").removeClass("active");
+        };
+
+        var toggleNextLayer = function (jLayoutTrigger) {
+            var jNextChildLayer = jLayoutTrigger.siblings(".layer:first");
+            //
+            // Hide all other layer from this level first:
+            jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
+            jNextChildLayer.toggleClass("active");
+            // TODO: Close ALL others on the same level
+            if (!jNextChildLayer.hasClass("active")) {
+                /* Close ALL child layers */
+                jNextChildLayer.find(".layer").removeClass("active");
+            }
+        };
+
+        jQuery("[data-target-layer-id]").each(function () {
+            jQuery(this).on("click", function () {
+                var jThis = jQuery(this);
+                // get target layer:
+                var sId = jThis.attr("data-target-layer-id");
+                var jTargetLayer = jQuery("[data-layer-id='" + sId + "']");
+                //
+                if (jThis.hasClass("active")) {
+                    jThis.removeClass("active");
+                    closeLayer(jTargetLayer);
+                }
+                else {
+                    jThis.addClass("active");
+                    openLayer(jTargetLayer);
+                }
+            });
+        });
+
+        jQuery(".layoutTrigger").each(function () {
+            jQuery(this).on("click", function () {
+                toggleNextLayer(jQuery(this));
+            });
+        });
     };
     //
     return PageEditor;
