@@ -1,280 +1,222 @@
 {
-  "id": "home",
-  "metaData": {
-    "title": "GreekEstate homepage",
-    "attributes": {
-      "key-1": "value-1",
-      "key-2": "value-2",
-      "key-3": "value-3"
+  "id" : "home",
+  "metaData" : {
+    "title" : "GreekEstate homepage",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
     }
   },
-  "content": [
-    {
-      "type": "group",
-      "name": "offers",
-      "elements": [
-        {
-          "type": "text",
-          "name": "headline",
-          "content": "Besondere Angebote"
-        },
-        {
-          "type": "list",
-          "name": "objects",
-          "elements": [
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "type": "object",
-                  "name": "image",
-                  "referenceId": "1234567",
-                  "source": "/images/image1.png",
-                  "alternateText": "Image one",
-                  "mimeType": "png"
-                },
-                {
-                  "type": "text",
-                  "name": "headline",
-                  "content": "Objekt ABC"
-                },
-                {
-                  "type": "text",
-                  "name": "description",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "175.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "type": "object",
-                  "name": "image",
-                  "referenceId": "1234567",
-                  "source": "/images/image1.png",
-                  "alternateText": "Image one",
-                  "mimeType": "png"
-                },
-                {
-                  "type": "text",
-                  "name": "headline",
-                  "content": "Apartment groß"
-                },
-                {
-                  "type": "text",
-                  "name": "description",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "15.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "type": "object",
-                  "name": "image",
-                  "referenceId": "1234567",
-                  "source": "/images/image1.png",
-                  "alternateText": "Image one",
-                  "mimeType": "png"
-                },
-                {
-                  "type": "text",
-                  "name": "headline",
-                  "content": "Gewerbefläche"
-                },
-                {
-                  "type": "text",
-                  "name": "description",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "50.750,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "type": "object",
-                  "name": "image",
-                  "referenceId": "1234567",
-                  "source": "/images/image1.png",
-                  "alternateText": "Image one",
-                  "mimeType": "png"
-                },
-                {
-                  "type": "text",
-                  "name": "headline",
-                  "content": "Seeplatz"
-                },
-                {
-                  "type": "text",
-                  "name": "description",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "175.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "type": "object",
-                  "name": "image",
-                  "referenceId": "1234567",
-                  "source": "/images/image1.png",
-                  "alternateText": "Image one",
-                  "mimeType": "png"
-                },
-                {
-                  "type": "text",
-                  "name": "headline",
-                  "content": "Hütte"
-                },
-                {
-                  "type": "text",
-                  "name": "description",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "15.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "type": "object",
-                  "name": "image",
-                  "referenceId": "1234567",
-                  "source": "/images/image1.png",
-                  "alternateText": "Image one",
-                  "mimeType": "png"
-                },
-                {
-                  "type": "text",
-                  "name": "headline",
-                  "content": "Hausboot"
-                },
-                {
-                  "type": "text",
-                  "name": "description",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "15.000,00 €"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "name": "headline",
-      "content": "Jetzt wieder da!"
-    },
-    {
-      "type": "text",
-      "name": "body",
-      "content": "Speichern und dynamisches Generieren der Inhalte.\n\nSorry Vlad!\nHat eine Weile gedauert. Speichern der Texte geht jetzt aber.\n\nMuss noch aufgeräumnt werden.\n\nDie Listen und Gruppen kommen gleich dran.\n\nDie Editoren werden jetzt via JS geschrieben.\n\nIch würde gerne direkt Unit-Tests mit einbauen, habe damit aber noch nicht viel gearbeitet, hast Du Präferezen oder Vorschläge zum Anlegen von Strukturen bzw. Konzept?"
-    },
-    {
-      "type": "list",
-      "name": "stage",
-      "elements": [
-        {
-          "type": "list-group",
-          "elements": [
-            {
-              "type": "object",
-              "name": "image",
-              "referenceId": "1234567",
-              "source": "/images/image1.png",
-              "alternateText": "Image one",
-              "mimeType": "png"
-            },
-            {
-              "type": "text",
-              "name": "teaser",
-              "content": "Wann ist das hier denn drin?"
-            }
-          ]
-        },
-        {
-          "type": "list-group",
-          "elements": [
-            {
-              "type": "object",
-              "name": "image",
-              "referenceId": "1234567",
-              "source": "/images/image1.png",
-              "alternateText": "Image one",
-              "mimeType": "png"
-            },
-            {
-              "type": "text",
-              "name": "teaser",
-              "content": "Sehr günstig - TIPP!"
-            }
-          ]
-        }
-      ]
+  "content" : [ {
+    "type" : "group",
+    "name" : "offers",
+    "elements" : [ {
+      "type" : "text",
+      "name" : "headline",
+      "content" : "Besondere Angebote"
+    }, {
+      "type" : "list",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Objekt ABC"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "175.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Apartment groß"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "15.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Gewerbefläche"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "50.750,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Seeplatz"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "175.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Hütte"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "15.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Hausboot"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "15.000,00 €"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "Speichern und dynamisches Generieren der Inhalte.\n\nSorry Vlad!\nHat eine Weile gedauert. Speichern der Texte geht jetzt aber.\n\nMuss noch aufgeräumnt werden.\n\nDie Listen und Gruppen kommen gleich dran.\n\nDie Editoren werden jetzt via JS geschrieben.\n\nIch würde gerne direkt Unit-Tests mit einbauen, habe damit aber noch nicht viel gearbeitet, hast Du Präferezen oder Vorschläge zum Anlegen von Strukturen bzw. Konzept?"
+  }, {
+    "type" : "list",
+    "name" : "stage",
+    "elements" : [ {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+        "alternateText" : "Image one",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "text",
+        "name" : "teaser",
+        "content" : "Tolle Stadt!"
+      } ]
+    }, {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki-2.JPG",
+        "alternateText" : "Image one",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "text",
+        "name" : "teaser",
+        "content" : "Nochmal toll!"
+      } ]
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "Wir helfen Ihnne, IHRE Immobilie zu finden!"
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : ""
     }
-  ],
-  "dataSourceContents": [
-    {
-      "name": "timestamp",
-      "identifier": {
-        "type": "TIMESTAMP",
-        "checksum": ""
-      }
-    },
-    {
-      "name": "allNodes",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-          "INFO_PATH": "/"
-        },
-        "checksum": ""
-      }
-    },
-    {
-      "name": "objectNodes",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-          "INFO_PATH": "/objects",
-          "VERBOSE": true
-        },
-        "checksum": ""
-      }
+  }, {
+    "name" : "allNodes",
+    "identifier" : {
+      "type" : "SITE",
+      "query" : {
+        "INFO_PATH" : "/"
+      },
+      "checksum" : ""
     }
-  ]
+  }, {
+    "name" : "objectNodes",
+    "identifier" : {
+      "type" : "SITE",
+      "query" : {
+        "INFO_PATH" : "/objects",
+        "VERBOSE" : true
+      },
+      "checksum" : ""
+    }
+  } ]
 }
