@@ -11,8 +11,10 @@
   width: 249px;
   transition: all .5s cubic-bezier(.55,.09,.68,.53);
   opacity: 0;
+  display: none;
 
   &.active {
+    display: block;
     opacity: 1;
     z-index: 50;
   }
