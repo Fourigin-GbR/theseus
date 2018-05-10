@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Argo Elements Json</title>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="../production/assets/scripts/argo/PageEditor/model.js"></script>
+</head>
+<body>
+<h1>Test: Generate Argo Elements Json</h1>
+
+
+<div id="argoEditorPrototypes">
+    <!-- text -->
+    <fieldset data-type="text">
+        <input type="hidden" name="type" value="text"/>
+        <input type="hidden" name="name" value="mytest"/>
+        <label>
+            <span>text</span>
+            <textarea name="content">mycontent</textarea>
+        </label>
+    </fieldset>
+
+    <!-- object -->
+    <fieldset data-type="object">
+        <input type="hidden" name="type" value="object"/>
+        <input type="hidden" name="name" value="mytest"/>
+        <label>
+            <span>source</span>
+            <input type="text" name="source" value="mysource"/>
+        </label>
+        <label>
+            <span>referenceId</span>
+            <input disabled="disabled" type="text" name="referenceId" value="myreference"/>
+        </label>
+        <label>
+            <span>alternativeText</span>
+            <input type="text" name="alternativeText" value="myalternativetext"/>
+        </label>
+        <label>
+            <span>mimeType</span>
+            <input type="text" name="mimeType" value="mymime"/>
+        </label>
+    </fieldset>
+
+    <!-- list -->
+    <fieldset data-type="list">
+        <input type="hidden" name="type" value="list"/>
+        <input type="hidden" name="name" value="mylist"/>
+        <fieldset>
+
+        </fieldset>
+    </fieldset>
+
+    <!-- list-group -->
+    <fieldset data-type="listGroup">
+        <input type="hidden" name="type" value="list-group"/>
+        <fieldset>
+
+        </fieldset>
+    </fieldset>
+
+    <!-- list -->
+    <fieldset data-type="list">
+        <input type="hidden" name="type" value="list"/>
+        <input type="hidden" name="name" value="mylist"/>
+        <fieldset>
+            <!-- list-group -->
+            <fieldset data-type="listGroup">
+                <input type="hidden" name="type" value="list-group"/>
+                <fieldset>
+                    <!-- text -->
+                    <fieldset data-type="text">
+                        <input type="hidden" name="type" value="text"/>
+                        <input type="hidden" name="name" value="mytest"/>
+                        <label>
+                            <span>text</span>
+                            <textarea name="content">mycontent</textarea>
+                        </label>
+                    </fieldset>
+                    <!-- text -->
+                    <fieldset data-type="text">
+                        <input type="hidden" name="type" value="text"/>
+                        <input type="hidden" name="name" value="myheadline"/>
+                        <label>
+                            <span>text</span>
+                            <textarea name="content">myheadline</textarea>
+                        </label>
+                    </fieldset>
+                </fieldset>
+            </fieldset>
+        </fieldset>
+    </fieldset>
+</div>
+
+
+<script type="text/javascript">
+
+    var Model = new com.fourigin.argo.pageEditor.Model();
+
+    jQuery("#argoEditorPrototypes > fieldset").each(
+        function(){
+            var jThis = jQuery(this);
+            console.log("\n\n", jThis.attr("data-type"), "\n", Model.generateArgoContentElementJsonByMarkup(jThis));
+        }
+    );
+
+
+
+</script>
+
+</body>
+</html>
