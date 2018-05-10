@@ -99,6 +99,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
     PageEditor.prototype.writeListEditor = function (oListItem, jTarget) {
         var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=list]").clone();
         //
+        // fill with data
+        jPrototype.find("input[name=name]").val(oListItem.name);
         // fill with data: write the elements
         for(var i=0, il=oListItem.elements.length; i<il; i++) {
             this.writeSpecificEditor(oListItem.elements[i], jPrototype.find("> fieldset"));

@@ -58,6 +58,7 @@
     position: fixed;
     left: 25px;
     top: 148px;
+    height: calc(100% - 148px);
   }
 
   iframe#pageContent {

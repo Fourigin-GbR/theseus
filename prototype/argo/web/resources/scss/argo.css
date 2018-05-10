@@ -30,25 +30,25 @@ ul {
 
 /* colors */
 /* usages */
-header {
+body > header {
   padding: 10px 0 0 0;
   background-color: #fff;
   color: #232323;
   position: fixed;
   width: 100%;
   z-index: 1; }
-  header .metaInformationBar {
+  body > header .metaInformationBar {
     display: flex;
     align-items: flex-end; }
-    header .metaInformationBar a {
+    body > header .metaInformationBar a {
       color: inherit; }
-    header .metaInformationBar nav {
+    body > header .metaInformationBar nav {
       font-size: 1.05rem; }
-      header .metaInformationBar nav ul {
+      body > header .metaInformationBar nav ul {
         display: flex; }
-        header .metaInformationBar nav ul li {
+        body > header .metaInformationBar nav ul li {
           padding: 5px 10px; }
-          header .metaInformationBar nav ul li.selected {
+          body > header .metaInformationBar nav ul li.selected {
             background-color: #222326;
             color: #dcdcdc; }
 
@@ -95,7 +95,8 @@ header {
   .iFrameContent .layerContainer {
     position: fixed;
     left: 25px;
-    top: 148px; }
+    top: 148px;
+    height: calc(100% - 148px); }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
@@ -124,6 +125,7 @@ header {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: 0;
   background-color: #5C5C5C;
   color: #dcdcdc;
   padding: 20px 0 10px 0;
@@ -135,11 +137,18 @@ header {
     z-index: 50; }
   .layer .layer {
     left: 250px; }
+  .layer form {
+    display: flex;
+    flex-direction: column;
+    height: 100%; }
   .layer h4 {
     font-size: 1.05rem;
     margin: 5px 10px 10px 10px; }
   .layer .layer__form {
-    padding: 0 10px; }
+    padding: 0 10px;
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden; }
 
 /* colors */
 /* usages */
