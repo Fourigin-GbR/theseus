@@ -25,6 +25,9 @@ ul {
   margin: 0;
   padding: 0; }
 
+[data-prototype] {
+  display: none; }
+
 /* colors */
 /* usages */
 header {
