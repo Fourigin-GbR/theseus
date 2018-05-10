@@ -1,0 +1,114 @@
+{
+  "path": "/",
+  "children": [
+    {
+      "type": "file",
+      "name": "home",
+      "localizedName": "home",
+      "displayName": "home",
+      "description": "Auto-created directory info. Don't forget to specify all properties!",
+      "templateReference": {
+        "templateId": "greekestate.index",
+        "variationId": "default",
+        "revision": "unspecified"
+      },
+      "staged": false,
+      "compileState": {
+        "checksum": "",
+        "compiled": false,
+        "timestamp": 1519400567203,
+        "message": ""
+      }
+    },
+    {
+      "type": "dir",
+      "name": "objects",
+      "localizedName": "objects",
+      "displayName": "objects",
+      "description": "Auto-created directory info. Don't forget to specify all properties!"
+    },
+    {
+      "type": "dir",
+      "name": "regions",
+      "localizedName": "regions",
+      "displayName": "regions",
+      "description": "Auto-created directory info. Don't forget to specify all properties!"
+    },
+    {
+      "type": "file",
+      "name": "search",
+      "localizedName": "search",
+      "displayName": "search",
+      "description": "Auto-created directory info. Don't forget to specify all properties!",
+      "templateReference": {
+        "templateId": "unspecified",
+        "variationId": "unspecified",
+        "revision": "unspecified"
+      },
+      "staged": false,
+      "compileState": {
+        "checksum": "",
+        "compiled": false,
+        "timestamp": 1519400567201,
+        "message": ""
+      }
+    },
+    {
+      "type": "file",
+      "name": "about",
+      "localizedName": "about",
+      "displayName": "about",
+      "description": "Auto-created directory info. Don't forget to specify all properties!",
+      "templateReference": {
+        "templateId": "greekestate.article-text",
+        "variationId": "default",
+        "revision": "unspecified"
+      },
+      "staged": false,
+      "compileState": {
+        "checksum": "",
+        "compiled": false,
+        "timestamp": 1519400567600,
+        "message": ""
+      }
+    },
+    {
+      "type": "file",
+      "name": "contact",
+      "localizedName": "contact",
+      "displayName": "Contact",
+      "description": "Auto-created directory info. Don't forget to specify all properties!",
+      "templateReference": {
+        "templateId": "greekestate.article-text",
+        "variationId": "default",
+        "revision": "unspecified"
+      },
+      "staged": false,
+      "compileState": {
+        "checksum": "",
+        "compiled": false,
+        "timestamp": 1519400567600,
+        "message": ""
+      }
+    },
+    {
+      "type": "file",
+      "name": "impressum",
+      "localizedName": "impressum",
+      "displayName": "impressum",
+      "description": "Auto-created directory info. Don't forget to specify all properties!",
+      "templateReference": {
+        "templateId": "greekestate.article-text",
+        "variationId": "default",
+        "revision": "unspecified"
+      },
+      "staged": false,
+      "compileState": {
+        "checksum": "",
+        "compiled": false,
+        "timestamp": 1519400567617,
+        "message": ""
+      }
+    }
+  ]
+}
