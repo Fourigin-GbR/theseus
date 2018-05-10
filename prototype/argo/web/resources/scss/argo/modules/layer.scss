@@ -44,4 +44,16 @@
   fieldset[data-type] {
     margin-top: 20px;
   }
+
+  label {
+    display: block;
+  }
+
+  .imagePreview {
+    width: 100%;
+
+    img {
+      max-width: 100%;
+    }
+  }
 }

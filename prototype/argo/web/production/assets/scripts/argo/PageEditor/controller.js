@@ -93,6 +93,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jPrototype.find("input[name=referenceId]").val(oObjectItem.referenceId);
         jPrototype.find("input[name=alternativeText]").val(oObjectItem.alternateText);
         jPrototype.find("input[name=mimeType]").val(oObjectItem.mimeType);
+        // image preview:
+        jPrototype.find(".imagePreview img").attr("src", oObjectItem.source);
         // append to editor
         jTarget.append(jPrototype);
     };

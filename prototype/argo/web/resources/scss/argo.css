@@ -153,6 +153,12 @@ body > header {
     overflow-x: hidden; }
   .layer fieldset[data-type] {
     margin-top: 20px; }
+  .layer label {
+    display: block; }
+  .layer .imagePreview {
+    width: 100%; }
+    .layer .imagePreview img {
+      max-width: 100%; }
 
 /* colors */
 /* usages */
