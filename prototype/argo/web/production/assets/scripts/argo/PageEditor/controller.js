@@ -171,7 +171,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             e.preventDefault();
             e.stopPropagation();
             //
-            var jData = $(this).serializeObject();
+            var jData = self.Model.generateArgoContentElementJsonByMarkup(jQuery(this).find("fieldset:first"));
             // TODO: das klappt so nicht. ich muss über die DOM-Elemente interieren, damit ich jedes <fieldset> umwandeln kann in ein Type-Element oder ein Elements.
 
             var oNewDataObject = {

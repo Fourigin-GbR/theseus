@@ -94,7 +94,7 @@ com.fourigin.argo.pageEditor.Model = com.fourigin.argo.pageEditor.Model || (func
                 "content": null
             },
             sName = jMarkupElement.find("input[name='name']").val(),
-            sContent = jMarkupElement.find("textarea[name='content']").text();
+            sContent = jMarkupElement.find("textarea[name='content']").val();
         //
         if (sName) {
             oText.name = sName;
