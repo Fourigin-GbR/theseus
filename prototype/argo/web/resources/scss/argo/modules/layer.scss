@@ -38,4 +38,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
   }
+
+  fieldset[data-type] {
+    margin-top: 20px;
+  }
 }
