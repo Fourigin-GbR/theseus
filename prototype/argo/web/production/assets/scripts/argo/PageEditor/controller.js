@@ -72,6 +72,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             case "list-group":
                 this.writeListGroupEditor(oContent, jTarget);
                 break;
+            case "group":
+                this.writeGroupEditor(oContent, jTarget);
+                break;
         }
     };
 
@@ -116,6 +119,18 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         // fill with data: write the elements
         for(var i=0, il=oListGroupItem.elements.length; i<il; i++) {
             this.writeSpecificEditor(oListGroupItem.elements[i], jPrototype.find("> fieldset"));
+        }
+        // append to editor
+        jTarget.append(jPrototype);
+    };
+    PageEditor.prototype.writeGroupEditor = function (oGroupItem, jTarget) {
+        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=group]").clone();
+        //
+        // fill with data
+        jPrototype.find("input[name=name]").val(oGroupItem.name);
+        // fill with data: write the elements
+        for(var i=0, il=oGroupItem.elements.length; i<il; i++) {
+            this.writeSpecificEditor(oGroupItem.elements[i], jPrototype.find("> fieldset"));
         }
         // append to editor
         jTarget.append(jPrototype);

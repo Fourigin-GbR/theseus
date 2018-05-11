@@ -80,6 +80,9 @@ com.fourigin.argo.pageEditor.Model = com.fourigin.argo.pageEditor.Model || (func
                 case "listGroup":
                     oGeneratedArgoContent = this.generateArgoContentElementJsonTypeListGroup(jMarkupElement);
                     break;
+                case "group":
+                    oGeneratedArgoContent = this.generateArgoContentElementJsonTypeGroup(jMarkupElement);
+                    break;
                 default:
                     oGeneratedArgoContent.error = "Type is not supported ('" + sType + "')";
                     break;
@@ -170,6 +173,25 @@ com.fourigin.argo.pageEditor.Model = com.fourigin.argo.pageEditor.Model || (func
         });
         //
         return oListGroup;
+    };
+    Model.prototype.generateArgoContentElementJsonTypeGroup = function (jMarkupElement) {
+        var oGroup = {
+                "type": "group",
+                "name": null,
+                "elements": []
+            },
+            sName = jMarkupElement.find("input[name='name']").val(),
+            jElements = jMarkupElement.find(" > fieldset > fieldset"),
+            self = this;
+        //
+        if (sName) {
+            oGroup.name = sName;
+        }
+        jElements.each(function(){
+            oGroup.elements.push(self.generateArgoContentElementJsonByMarkup(jQuery(this)));
+        });
+        //
+        return oGroup;
     };
     //
     return Model;
