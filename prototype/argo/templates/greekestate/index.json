@@ -36,7 +36,7 @@
 								"source": "/images/image1.png"
 							},
 							{
-								"name": "tag",
+								"name": "teaser",
 								"type": "text",
 								"typeProperties": {
 									"mandatory": false,
@@ -44,58 +44,6 @@
 									"text-length-max": 20
 								},
 								"content": "Exclusiv!"
-							},
-							{
-								"name": "headline",
-								"type": "link",
-								"typeProperties": {
-									"mandatory": false,
-									"link-type": "INTERNAL | EXTERNAL"
-								},
-								"url": "site://sales/123 | site:../123 | http(s)://google.de | //google.de",
-								"title": "blah",
-								"target": "?",
-								"elements": [
-									{
-										"name": "copy",
-										"type": "text",
-										"typeProperties": {
-											"mandatory": false,
-											"text-length-min": 5,
-											"text-length-max": 20
-										},
-										"content": "Villa am Meer"
-									}
-								]
-							},
-							{
-								"name": "description",
-								"type": "list",
-								"typeProperties": {
-									"mandatory": false,
-									"list-size-min": 2,
-									"list-reorder-enabled": true
-								},
-								"elements": [
-									{
-										"type": "list-text",
-										"typeProperties": {
-											"mandatory": false,
-											"text-length-min": 5,
-											"text-length-max": 20
-										},
-										"content": "Sofort bezugsfertig, auf Wunsch möbliert"
-									}
-								]
-							},
-							{
-								"type": "text",
-								"typeProperties": {
-									"mandatory": false,
-									"pattern": "[0-9]+"
-								},
-								"name": "price",
-								"content": "175.000,00 €"
 							}
 						]
 					}
@@ -351,7 +299,7 @@
 			"elements": {
 				"[first]": {
 					"elements": {
-						"tag": {
+						"teaser": {
 							"title": "Title row tag",
 							"description": ""
 						}
@@ -359,7 +307,7 @@
 				},
 				"[last]": {
 					"elements": {
-						"tag": {
+						"teaser": {
 							"title": "Footer row tag",
 							"description": ""
 						}
@@ -371,31 +319,17 @@
 							"title": "Hauptbild, wichtig!",
 							"description": ""
 						},
-						"tag": {
+						"teaser": {
 							"title": "Tag",
-							"description": ""
-						},
-						"headline": {
-							"title": "Headline",
-							"description": "",
-							"elements": {
-								"copy": {
-									"title": "Headline",
-									"description": ""
-								}
-							}
-						},
-						"description": {
-							"title": "Description",
-							"description": ""
-						},
-						"price": {
-							"title": "Price",
 							"description": ""
 						}
 					}
 				}
 			}
+		},
+		"/offers": {
+			"title": "Offers",
+			"description": "Special highlight offers"
 		}
 	}
 }
