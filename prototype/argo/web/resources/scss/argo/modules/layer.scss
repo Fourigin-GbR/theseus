@@ -20,18 +20,37 @@
   }
 
   .layer {
-    left: 250px;
+    left: 249px;
+    width: 400px;
+    border-left: 1px solid $base_color_medium_light_gray;
+    overflow: hidden;
   }
 
   form {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    textarea,
+    input {
+      width: 100%;
+      display: block;
+    }
+
+    footer {
+      position: sticky;
+      bottom: 0;
+      padding: 10px;
+      text-align: right;
+    }
   }
 
   h4 {
     font-size: 1.05rem;
-    margin: 5px 10px 10px 10px;
+    margin: 5px 10px 30px 10px;
+  }
+  h5 {
+    margin: 10px;
   }
 
   .layer__form {
@@ -39,6 +58,8 @@
     flex: 1;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-right: -30px;
+    padding-right: 40px;
   }
 
   fieldset[data-type] {
@@ -47,6 +68,7 @@
 
   label {
     display: block;
+    margin: 0 0 10px 0;
   }
 
   .imagePreview {

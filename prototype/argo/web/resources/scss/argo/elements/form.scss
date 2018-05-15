@@ -14,6 +14,11 @@ form {
     margin-top: 20px;
   }
 
+  input {
+    border: 0;
+    padding: 5px 10px;
+  }
+
   textarea {
     background-color: $color_basic_dark_background;
     padding: 10px;
@@ -26,5 +31,11 @@ form {
     border: 0;
     margin: 0;
     padding: 0;
+  }
+
+  label {
+    span {
+      display: block;
+    }
   }
 }

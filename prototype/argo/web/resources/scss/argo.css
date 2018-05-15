@@ -97,6 +97,17 @@ body > header {
     left: 25px;
     top: 148px;
     height: calc(100% - 148px); }
+    .iFrameContent .layerContainer > .layer {
+      background-color: #262626;
+      border-left: 1px solid #dcdcdc;
+      color: #dcdcdc; }
+      .iFrameContent .layerContainer > .layer .layer {
+        background-color: #eee;
+        color: #5C5C5C; }
+        .iFrameContent .layerContainer > .layer .layer input,
+        .iFrameContent .layerContainer > .layer .layer textarea {
+          background-color: #505050;
+          color: #dcdcdc; }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
@@ -138,23 +149,40 @@ body > header {
     opacity: 1;
     z-index: 50; }
   .layer .layer {
-    left: 250px; }
+    left: 249px;
+    width: 400px;
+    border-left: 1px solid #eee;
+    overflow: hidden; }
   .layer form {
     display: flex;
     flex-direction: column;
     height: 100%; }
+    .layer form textarea,
+    .layer form input {
+      width: 100%;
+      display: block; }
+    .layer form footer {
+      position: sticky;
+      bottom: 0;
+      padding: 10px;
+      text-align: right; }
   .layer h4 {
     font-size: 1.05rem;
-    margin: 5px 10px 10px 10px; }
+    margin: 5px 10px 30px 10px; }
+  .layer h5 {
+    margin: 10px; }
   .layer .layer__form {
     padding: 0 10px;
     flex: 1;
     overflow-y: scroll;
-    overflow-x: hidden; }
+    overflow-x: hidden;
+    margin-right: -30px;
+    padding-right: 40px; }
   .layer fieldset[data-type] {
     margin-top: 20px; }
   .layer label {
-    display: block; }
+    display: block;
+    margin: 0 0 10px 0; }
   .layer .imagePreview {
     width: 100%; }
     .layer .imagePreview img {
@@ -198,6 +226,9 @@ form button[type=submit] {
   background-color: #44958e;
   color: #fff;
   margin-top: 20px; }
+form input {
+  border: 0;
+  padding: 5px 10px; }
 form textarea {
   background-color: #222326;
   padding: 10px;
@@ -208,5 +239,7 @@ form fieldset {
   border: 0;
   margin: 0;
   padding: 0; }
+form label span {
+  display: block; }
 
 /*# sourceMappingURL=argo.css.map */

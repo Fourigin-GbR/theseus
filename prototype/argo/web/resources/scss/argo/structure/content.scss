@@ -59,6 +59,23 @@
     left: 25px;
     top: 148px;
     height: calc(100% - 148px);
+
+    > .layer {
+      background-color: $color_alternative_dark_background;
+      border-left: 1px solid $color_font_on_dark_background;
+      color: $color_font_on_dark_background;
+
+      .layer {
+        background-color: $color_layer_editor_background;
+        color: $base_color_medium_dark_gray;
+
+        input,
+        textarea {
+          background-color: $base_color_dark_light_gray;
+          color: $color_font_on_dark_background;
+        }
+      }
+    }
   }
 
   iframe#pageContent {
