@@ -25,6 +25,9 @@ ul {
   margin: 0;
   padding: 0; }
 
+#argoEditorPrototypes {
+  display: none; }
+
 [data-prototype] {
   display: none; }
 
@@ -106,8 +109,8 @@ body > header {
         color: #5C5C5C; }
         .iFrameContent .layerContainer > .layer .layer input,
         .iFrameContent .layerContainer > .layer .layer textarea {
-          background-color: #505050;
-          color: #dcdcdc; }
+          background-color: #9a9a9a;
+          color: #262626; }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
@@ -168,17 +171,18 @@ body > header {
       padding: 10px;
       text-align: right; }
   .layer h4 {
-    font-size: 1.05rem;
-    margin: 5px 10px 30px 10px; }
+    font-size: 1.08rem;
+    margin: 5px 20px 30px 20px; }
   .layer h5 {
-    margin: 10px; }
+    font-size: 1.01rem;
+    margin: 10px 20px; }
   .layer .layer__form {
-    padding: 0 10px;
+    padding: 0 20px;
     flex: 1;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-right: -30px;
-    padding-right: 40px; }
+    padding-right: 55px; }
   .layer fieldset[data-type] {
     margin-top: 20px; }
   .layer label {

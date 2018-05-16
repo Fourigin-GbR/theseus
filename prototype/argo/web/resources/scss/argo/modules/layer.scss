@@ -46,20 +46,21 @@
   }
 
   h4 {
-    font-size: 1.05rem;
-    margin: 5px 10px 30px 10px;
+    font-size: 1.08rem;
+    margin: 5px 20px 30px 20px;
   }
   h5 {
-    margin: 10px;
+    font-size: 1.01rem;
+    margin: 10px 20px;
   }
 
   .layer__form {
-    padding: 0 10px;
+    padding: 0 20px;
     flex: 1;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-right: -30px;
-    padding-right: 40px;
+    padding-right: 55px;
   }
 
   fieldset[data-type] {
