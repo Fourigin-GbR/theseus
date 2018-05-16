@@ -1,15 +1,45 @@
 @import "../_settings/_colors.scss";
 
 .graphicTextBox {
-  padding: 5px 10px;
   background-color: $color_graphic_text_box_background;
   color: $color_font_on_dark_background;
+  border-radius: 5px;
+  padding: 0;
+  display: flex;
 
-  .graphicTextBox__content {
-    display: inline-block;
+  .graphicTextBox__icon {
+    background-color: $base_color_orange;
+    align-content: center;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
 
-    &ul.graphicTextBox__content--path {
+    span {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block;
+    }
+  }
 
+  .graphicTextBox__contentWrapper {
+    margin: 4px 80px 4px 20px;
+    line-height: 1;
+
+    .graphicTextBox__label {
+      font-size: .7rem;
+      color: $base_color_medium_gray2;
+    }
+
+    .graphicTextBox__content {
+      display: inline-block;
+      font-size: 1rem;
+      line-height: 1.1;
+    }
+
+    ul.graphicTextBox__content--path li {
+      &::before {
+        content: "/";
+      }
     }
   }
 }

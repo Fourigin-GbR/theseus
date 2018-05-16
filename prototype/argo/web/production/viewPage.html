@@ -56,19 +56,22 @@
         <img src="/assets/greekestate/assets/images/greekestate-logo.png" class="siteLogo"/>
         <div class="tools">
             <div class="tools__item">
-                <span>Aktuelle Seite:</span>
-                <span class="graphicTextBox">#Seitentitel</span>
-            </div>
-            <div class="tools__item">
-                <span><i class="far fa-folder-open"></i></span>
-                <span class="graphicTextBox">
+                <div class="graphicTextBox">
+                    <div class="graphicTextBox__icon">
+                        <span><i class="far fa-folder-open"></i></span>
+                    </div>
+                    <div class="graphicTextBox__contentWrapper">
+                        <div class="graphicTextBox__label">
+                            Seiten-Pfad:
+                        </div>
                         <ul class="graphicTextBox__content graphicTextBox__content--path">
                             <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
-                                <a href="#" th:href="@{/compile/(base=${argo.base},path=${pathToken})}"
+                                <a href="#" target="_top" th:href="@{/compile/(base=${argo.base},path=${pathToken})}"
                                    th:text="${pathToken}"></a>
                             </li>
                         </ul>
-                    </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

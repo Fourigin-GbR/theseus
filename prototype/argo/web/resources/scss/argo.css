@@ -126,7 +126,8 @@ body > header {
   align-items: center;
   background-color: #222326; }
   .toolbar .tools {
-    display: flex; }
+    display: flex;
+    margin-left: 50px; }
     .toolbar .tools .tools__item {
       margin: 0 10px; }
 
@@ -210,11 +211,33 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
 /* colors */
 /* usages */
 .graphicTextBox {
-  padding: 5px 10px;
   background-color: #000;
-  color: #dcdcdc; }
-  .graphicTextBox .graphicTextBox__content {
-    display: inline-block; }
+  color: #dcdcdc;
+  border-radius: 5px;
+  padding: 0;
+  display: flex; }
+  .graphicTextBox .graphicTextBox__icon {
+    background-color: #f4802a;
+    align-content: center;
+    padding: 5px;
+    border-radius: 5px 0 0 5px; }
+    .graphicTextBox .graphicTextBox__icon span {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block; }
+  .graphicTextBox .graphicTextBox__contentWrapper {
+    margin: 4px 80px 4px 20px;
+    line-height: 1; }
+    .graphicTextBox .graphicTextBox__contentWrapper .graphicTextBox__label {
+      font-size: .7rem;
+      color: #b1b1b1; }
+    .graphicTextBox .graphicTextBox__contentWrapper .graphicTextBox__content {
+      display: inline-block;
+      font-size: 1rem;
+      line-height: 1.1; }
+    .graphicTextBox .graphicTextBox__contentWrapper ul.graphicTextBox__content--path li::before {
+      content: "/"; }
 
 /* colors */
 /* usages */
