@@ -6,6 +6,10 @@ body {
   font-family: 'Slabo 27px', serif;
   font-size: 14px; }
 
+textarea {
+  font-family: 'Slabo 27px', serif;
+  font-size: .9rem; }
+
 /* colors */
 /* usages */
 html {
@@ -198,6 +202,10 @@ body > header {
 body {
   font-family: 'Slabo 27px', serif;
   font-size: 14px; }
+
+textarea {
+  font-family: 'Slabo 27px', serif;
+  font-size: .9rem; }
 
 ul.listItemsAsFlyoutTargets > li:hover {
   background-color: #f4802a; }
