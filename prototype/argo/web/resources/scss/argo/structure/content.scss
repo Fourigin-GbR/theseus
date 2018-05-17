@@ -73,7 +73,9 @@
         textarea {
           background-color: $base_color_medium_gray3;
           color: $base_color_medium_gray;
-          padding: 0 10px 10px 10px;
+          padding: 0 5px 5px 5px;
+          line-height: 1.1;
+          font-size: .9rem;
         }
 
         label {
@@ -81,7 +83,7 @@
 
           span {
             color: $base_color_medium_light_gray;
-            padding: 5px 10px 0 10px;
+            padding: 5px 5px 0 5px;
           }
         }
       }

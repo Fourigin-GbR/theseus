@@ -72,8 +72,9 @@
   fieldset[data-type=list] {
     > fieldset > ul > li {
       border-top: 1px solid $base_color_medium_gray3;
-      padding: 5px 0;
+      padding: 20px 0 0 15px;
       position: relative;
+      transition: all .3s ease;
 
       &:last-of-type {
         border-bottom: 1px solid $base_color_medium_gray3;
@@ -96,6 +97,8 @@
     }
 
     li.compactView {
+      padding: 5px 0;
+
       &:after {
         transform: rotate(-90deg);
       }
@@ -140,11 +143,12 @@
 
   label {
     display: block;
-    margin: 0 0 10px 0;
+    margin: 0 0 15px 0;
   }
 
   .imagePreview {
     width: 100%;
+    margin-bottom: 15px;
 
     img {
       max-width: 100%;
