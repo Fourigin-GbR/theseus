@@ -168,21 +168,25 @@
     </fieldset>
 
     <!-- list -->
-    <fieldset class="compactView" data-type="list">
+    <fieldset data-type="list">
         <input type="hidden" name="type" value="list"/>
         <input type="hidden" name="name" value=""/>
         <fieldset>
+            <ul>
 
+            </ul>
         </fieldset>
     </fieldset>
 
     <!-- list-group -->
-    <fieldset data-type="listGroup">
-        <input type="hidden" name="type" value="list-group"/>
-        <fieldset>
+    <li data-prototype="listGroup" class="compactView">
+        <fieldset data-type="listGroup">
+            <input type="hidden" name="type" value="list-group"/>
+            <fieldset>
 
+            </fieldset>
         </fieldset>
-    </fieldset>
+    </li>
 
     <!-- group -->
     <fieldset data-type="group">

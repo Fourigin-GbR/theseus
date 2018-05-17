@@ -108,17 +108,17 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jPrototype.find("input[name=name]").val(oListItem.name);
         // fill with data: write the elements
         for(var i=0, il=oListItem.elements.length; i<il; i++) {
-            this.writeSpecificEditor(oListItem.elements[i], jPrototype.find("> fieldset"));
+            this.writeSpecificEditor(oListItem.elements[i], jPrototype.find("> fieldset > ul"));
         }
         // append to editor
         jTarget.append(jPrototype);
     };
     PageEditor.prototype.writeListGroupEditor = function (oListGroupItem, jTarget) {
-        var jPrototype = jQuery("#argoEditorPrototypes fieldset[data-type=listGroup]").clone();
+        var jPrototype = jQuery("#argoEditorPrototypes [data-prototype=listGroup]").clone().removeAttr("data-prototype");
         //
         // fill with data: write the elements
         for(var i=0, il=oListGroupItem.elements.length; i<il; i++) {
-            this.writeSpecificEditor(oListGroupItem.elements[i], jPrototype.find("> fieldset"));
+            this.writeSpecificEditor(oListGroupItem.elements[i], jPrototype.find("> fieldset > fieldset"));
         }
         // append to editor
         jTarget.append(jPrototype);
@@ -184,7 +184,15 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             });
         });
 
-
+        var openCloseListEditorItems = function() {
+            jQuery("fieldset[data-type=list] > fieldset > ul > li").on("click", function(e) {
+                console.log("node name", e.target.nodeName);
+                if("TEXTAREA" !== e.target.nodeName || "INPUT" !== e.target.nodeName) {
+                    jQuery(this).toggleClass("compactView");
+                }
+            })
+        };
+        openCloseListEditorItems();
 
         jQuery("form").on("submit", function (e) {
             e.preventDefault();

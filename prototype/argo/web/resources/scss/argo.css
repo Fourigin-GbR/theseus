@@ -114,7 +114,13 @@ body > header {
         .iFrameContent .layerContainer > .layer .layer input,
         .iFrameContent .layerContainer > .layer .layer textarea {
           background-color: #9a9a9a;
-          color: #262626; }
+          color: #262626;
+          padding: 0 10px 10px 10px; }
+        .iFrameContent .layerContainer > .layer .layer label {
+          background-color: #9a9a9a; }
+          .iFrameContent .layerContainer > .layer .layer label span {
+            color: #eee;
+            padding: 5px 10px 0 10px; }
   .iFrameContent iframe#pageContent {
     background-color: #fff;
     display: block;
@@ -168,7 +174,8 @@ body > header {
     .layer form textarea,
     .layer form input {
       width: 100%;
-      display: block; }
+      display: block;
+      box-sizing: border-box; }
     .layer form textarea {
       min-height: 90px;
       resize: vertical; }
@@ -190,22 +197,37 @@ body > header {
     overflow-x: hidden;
     margin-right: -30px;
     padding-right: 55px; }
-  .layer fieldset[data-type=list] > fieldset > fieldset {
+  .layer fieldset[data-type=list] > fieldset > ul > li {
     border-top: 1px solid #9a9a9a;
-    padding: 5px 0; }
-    .layer fieldset[data-type=list] > fieldset > fieldset:last-of-type {
+    padding: 5px 0;
+    position: relative; }
+    .layer fieldset[data-type=list] > fieldset > ul > li:last-of-type {
       border-bottom: 1px solid #9a9a9a; }
-  .layer fieldset[data-type=list].compactView fieldset[data-type=object] label,
-  .layer fieldset[data-type=list].compactView fieldset[data-type=object] .imagePreview span {
+    .layer fieldset[data-type=list] > fieldset > ul > li > fieldset {
+      width: calc(100% - 30px); }
+    .layer fieldset[data-type=list] > fieldset > ul > li:after {
+      content: "\f107";
+      font-family: FontAwesome, sans-serif;
+      font-size: 1.5rem;
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      transform: rotate(0deg);
+      transition: all .6s ease; }
+  .layer fieldset[data-type=list] li.compactView:after {
+    transform: rotate(-90deg); }
+  .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] label,
+  .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] .imagePreview span {
     display: none; }
-  .layer fieldset[data-type=list].compactView fieldset[data-type=object] .imagePreview,
-  .layer fieldset[data-type=list].compactView fieldset[data-type=object] .imagePreview img {
+  .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] .imagePreview,
+  .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] .imagePreview img {
     height: 40px; }
-  .layer fieldset[data-type=list].compactView fieldset[data-type=text] label {
-    margin: 0; }
-    .layer fieldset[data-type=list].compactView fieldset[data-type=text] label span {
+  .layer fieldset[data-type=list] li.compactView fieldset[data-type=text] label {
+    margin: 0;
+    background-color: transparent; }
+    .layer fieldset[data-type=list] li.compactView fieldset[data-type=text] label span {
       display: none; }
-    .layer fieldset[data-type=list].compactView fieldset[data-type=text] label textarea {
+    .layer fieldset[data-type=list] li.compactView fieldset[data-type=text] label textarea {
       height: 40px;
       background-color: transparent;
       resize: none;
@@ -213,7 +235,7 @@ body > header {
       margin: 0;
       padding: 2px 10px;
       overflow: hidden; }
-  .layer fieldset[data-type=list].compactView fieldset[data-type=listGroup] > fieldset {
+  .layer fieldset[data-type=list] li.compactView fieldset[data-type=listGroup] > fieldset {
     display: flex; }
   .layer label {
     display: block;

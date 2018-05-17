@@ -73,6 +73,16 @@
         textarea {
           background-color: $base_color_medium_gray3;
           color: $base_color_medium_gray;
+          padding: 0 10px 10px 10px;
+        }
+
+        label {
+          background-color: $base_color_medium_gray3;
+
+          span {
+            color: $base_color_medium_light_gray;
+            padding: 5px 10px 0 10px;
+          }
         }
       }
     }

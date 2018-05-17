@@ -148,14 +148,14 @@ com.fourigin.argo.pageEditor.Model = com.fourigin.argo.pageEditor.Model || (func
                 "elements": []
             },
             sName = jMarkupElement.find("input[name='name']").val(),
-            jElements = jMarkupElement.find(" > fieldset > fieldset"),
+            jElementsWrapper = jMarkupElement.find(" > fieldset > ul > li"),
             self = this;
         //
         if (sName) {
             oList.name = sName;
         }
-        jElements.each(function(){
-            oList.elements.push(self.generateArgoContentElementJsonByMarkup(jQuery(this)));
+        jElementsWrapper.each(function(){
+            oList.elements.push(self.generateArgoContentElementJsonByMarkup(jQuery(this).find(" > fieldset")));
         });
         //
         return oList;
