@@ -4,8 +4,11 @@
 ul.listItemsAsFlyoutTargets {
   > li {
 
-    &:hover {
-      background-color: $color_status_element_hover;
+    .layoutTrigger {
+      &.active,
+      &:hover {
+        background-color: $color_status_element_hover;
+      }
     }
 
     .listItemsAsFlyoutTargets__wrapper {

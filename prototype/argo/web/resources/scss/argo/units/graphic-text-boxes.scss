@@ -11,7 +11,7 @@
     background-color: $base_color_orange;
     align-content: center;
     padding: 5px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px;
 
     span {
       position: relative;
@@ -22,7 +22,7 @@
   }
 
   .graphicTextBox__contentWrapper {
-    margin: 4px 80px 4px 20px;
+    margin: 4px 80px 2px 20px;
     line-height: 1;
 
     .graphicTextBox__label {

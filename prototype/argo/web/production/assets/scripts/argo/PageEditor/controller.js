@@ -152,6 +152,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             //
             // Hide all other layer from this level first:
             jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
+            jLayoutTrigger.toggleClass("active");
             jNextChildLayer.toggleClass("active");
             // TODO: Close ALL others on the same level
             if (!jNextChildLayer.hasClass("active")) {
