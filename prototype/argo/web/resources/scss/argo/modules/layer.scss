@@ -84,15 +84,22 @@
         width: calc(100% - 30px);
       }
 
-      &:after {
-        content: "\f107";
-        font-family: FontAwesome, sans-serif;
+      .listStatusIcon {
         font-size: 1.5rem;
         position: absolute;
         right: 5px;
         top: 10px;
         transform: rotate(0deg);
         transition: all .6s ease;
+        cursor: pointer;
+      }
+      .listOpenTrigger {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
       }
     }
 
@@ -107,9 +114,13 @@
 
     li.compactView {
       padding: 5px 0 5px 15px;
+      cursor: pointer;
 
-      &:after {
+      .listStatusIcon {
         transform: rotate(-90deg);
+      }
+      .listOpenTrigger {
+        display: block;
       }
 
       .imagePreview {

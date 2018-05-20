@@ -185,10 +185,10 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         });
 
         var openCloseListEditorItems = function() {
-            jQuery("fieldset[data-type=list] > fieldset > ul > li").on("click", function(e) {
-                console.log("node name", e.target.nodeName);
+            var jTrigger = jQuery("fieldset[data-type=list] > fieldset > ul > li .listStatusIcon, fieldset[data-type=list] > fieldset > ul > li .listOpenTrigger");
+            jTrigger.on("click", function(e) {
                 if("TEXTAREA" !== e.target.nodeName || "INPUT" !== e.target.nodeName) {
-                    jQuery(this).toggleClass("compactView");
+                    jQuery(this).closest("li").toggleClass("compactView");
                 }
             })
         };

@@ -211,24 +211,33 @@ body > header {
       border-bottom: 1px solid #9a9a9a; }
     .layer fieldset[data-type=list] > fieldset > ul > li > fieldset {
       width: calc(100% - 30px); }
-    .layer fieldset[data-type=list] > fieldset > ul > li:after {
-      content: "\f107";
-      font-family: FontAwesome, sans-serif;
+    .layer fieldset[data-type=list] > fieldset > ul > li .listStatusIcon {
       font-size: 1.5rem;
       position: absolute;
       right: 5px;
       top: 10px;
       transform: rotate(0deg);
-      transition: all .6s ease; }
+      transition: all .6s ease;
+      cursor: pointer; }
+    .layer fieldset[data-type=list] > fieldset > ul > li .listOpenTrigger {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0; }
   .layer fieldset[data-type=list] .imagePreview {
     width: 100%;
     margin-bottom: 15px; }
     .layer fieldset[data-type=list] .imagePreview img {
       max-width: 100%; }
   .layer fieldset[data-type=list] li.compactView {
-    padding: 5px 0 5px 15px; }
-    .layer fieldset[data-type=list] li.compactView:after {
+    padding: 5px 0 5px 15px;
+    cursor: pointer; }
+    .layer fieldset[data-type=list] li.compactView .listStatusIcon {
       transform: rotate(-90deg); }
+    .layer fieldset[data-type=list] li.compactView .listOpenTrigger {
+      display: block; }
     .layer fieldset[data-type=list] li.compactView .imagePreview {
       margin-bottom: 0; }
     .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] label,
