@@ -73,13 +73,17 @@
         textarea {
           background-color: $base_color_medium_gray3;
           color: $base_color_medium_gray;
-          padding: 0 5px 5px 5px;
+          padding: 5px;
           line-height: 1.1;
           font-size: .9rem;
+
+          &[disabled] {
+            background-color: $base_color_light_gray;
+          }
         }
 
         label {
-          background-color: $base_color_medium_gray3;
+          background-color: $base_color_medium_gray4;
 
           span {
             color: $base_color_medium_light_gray;

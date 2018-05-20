@@ -115,11 +115,14 @@ body > header {
         .iFrameContent .layerContainer > .layer .layer textarea {
           background-color: #9a9a9a;
           color: #262626;
-          padding: 0 5px 5px 5px;
+          padding: 5px;
           line-height: 1.1;
           font-size: .9rem; }
+          .iFrameContent .layerContainer > .layer .layer input[disabled],
+          .iFrameContent .layerContainer > .layer .layer textarea[disabled] {
+            background-color: #dcdcdc; }
         .iFrameContent .layerContainer > .layer .layer label {
-          background-color: #9a9a9a; }
+          background-color: #686868; }
           .iFrameContent .layerContainer > .layer .layer label span {
             color: #eee;
             padding: 5px 5px 0 5px; }
@@ -198,7 +201,7 @@ body > header {
     overflow-y: scroll;
     overflow-x: hidden;
     margin-right: -30px;
-    padding-right: 55px; }
+    padding-right: 35px; }
   .layer fieldset[data-type=list] > fieldset > ul > li {
     border-top: 1px solid #9a9a9a;
     padding: 20px 0 0 15px;
@@ -217,10 +220,17 @@ body > header {
       top: 10px;
       transform: rotate(0deg);
       transition: all .6s ease; }
+  .layer fieldset[data-type=list] .imagePreview {
+    width: 100%;
+    margin-bottom: 15px; }
+    .layer fieldset[data-type=list] .imagePreview img {
+      max-width: 100%; }
   .layer fieldset[data-type=list] li.compactView {
-    padding: 5px 0; }
+    padding: 5px 0 5px 15px; }
     .layer fieldset[data-type=list] li.compactView:after {
       transform: rotate(-90deg); }
+    .layer fieldset[data-type=list] li.compactView .imagePreview {
+      margin-bottom: 0; }
     .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] label,
     .layer fieldset[data-type=list] li.compactView fieldset[data-type=object] .imagePreview span {
       display: none; }
@@ -245,11 +255,6 @@ body > header {
   .layer label {
     display: block;
     margin: 0 0 15px 0; }
-  .layer .imagePreview {
-    width: 100%;
-    margin-bottom: 15px; }
-    .layer .imagePreview img {
-      max-width: 100%; }
 
 /* colors */
 /* usages */

@@ -66,7 +66,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     margin-right: -30px;
-    padding-right: 55px;
+    padding-right: 35px;
   }
 
   fieldset[data-type=list] {
@@ -96,11 +96,24 @@
       }
     }
 
+    .imagePreview {
+      width: 100%;
+      margin-bottom: 15px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
     li.compactView {
-      padding: 5px 0;
+      padding: 5px 0 5px 15px;
 
       &:after {
         transform: rotate(-90deg);
+      }
+
+      .imagePreview {
+        margin-bottom: 0;
       }
 
       fieldset[data-type=object] {
@@ -144,14 +157,5 @@
   label {
     display: block;
     margin: 0 0 15px 0;
-  }
-
-  .imagePreview {
-    width: 100%;
-    margin-bottom: 15px;
-
-    img {
-      max-width: 100%;
-    }
   }
 }
