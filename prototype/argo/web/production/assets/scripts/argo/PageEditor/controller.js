@@ -43,11 +43,14 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             if(oHotSpots.hasOwnProperty(property)) {
                 var jHotSpot = jPrototype.clone().removeAttr("data-prototype"),
                     oHotSpot = oHotSpots[property],
+                    jItemTypeIcon = null,
                     oContent = this.Model.getContentByPath(property);
                 //
+                jItemTypeIcon = jQuery("#argoEditorPrototypes").find(".contentTypeIcon[data-content-type='" + oContent.type + "']").clone();
                 jHotSpot.attr("data-content-path", property);
                 jHotSpot.find(".listItemsAsFlyoutTargets__title").text(oHotSpot.title);
                 jHotSpot.find("h5").text(oHotSpot.title);
+                jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
                 //
                 this.writeSpecificEditor(oContent, jHotSpot.find("form .editorFields"));
                 //

@@ -119,7 +119,10 @@
             <ul class="listItemsAsFlyoutTargets" id="contentList">
                 <li data-prototype="hotspot">
                     <div class="listItemsAsFlyoutTargets__wrapper layoutTrigger">
-                        <div class="listItemsAsFlyoutTargets__title">Inhalt</div>
+                        <span class="listItemsAsFlyoutTargets_contentTypeIcon">
+
+                        </span>
+                        <div class="listItemsAsFlyoutTargets__title"></div>
                         <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>
                     </div>
                     <!---->
@@ -151,7 +154,20 @@
 </div>
 
 <!-- prototypes -->
+
 <div id="argoEditorPrototypes">
+
+    <!-- content types -->
+    <div class="contentTypeIcon contentTypeIcon--text" data-content-type="text">
+        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>text
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--list" data-content-type="list">
+        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>list
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--object" data-content-type="object">
+        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>object
+    </div>
+
     <!-- text -->
     <fieldset data-type="text">
         <input type="hidden" name="type" value="text"/>
