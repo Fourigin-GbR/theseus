@@ -46,6 +46,14 @@
           &.active {
             background-color: $color_status_active;
           }
+
+          i {
+            /* TODO: Hacked, define clear styles */
+            padding: 0 0 10px 0;
+            font-size: 12px;
+            left: 3px;
+            position: relative;
+          }
         }
 
         .layer {

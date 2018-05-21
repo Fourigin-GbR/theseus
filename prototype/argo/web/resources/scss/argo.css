@@ -99,6 +99,12 @@ body > header {
             background-color: #9a9a9a; }
           .iFrameContent aside > ul > li > span.active {
             background-color: #f4802a; }
+          .iFrameContent aside > ul > li > span i {
+            /* TODO: Hacked, define clear styles */
+            padding: 0 0 10px 0;
+            font-size: 12px;
+            left: 3px;
+            position: relative; }
         .iFrameContent aside > ul > li .layer {
           left: 0; }
   .iFrameContent .layerContainer {
