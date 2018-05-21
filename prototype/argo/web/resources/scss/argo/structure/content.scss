@@ -115,3 +115,14 @@
     box-sizing: border-box;
   }
 }
+
+.contentTypeIcon {
+  background-color: $base_color_medium_gray2;
+  color: $base_color_medium_gray;
+  padding: 2px 5px;
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  line-height: 1;
+  font-size: .7rem;
+}

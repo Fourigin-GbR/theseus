@@ -8,6 +8,22 @@ body > header {
   width: 100%;
   z-index: 1;
 
+  .siteBrand {
+    background-color: $color_graphic_text_box_background;
+    color: $color_font_on_dark_background;
+    font-size: .7rem;
+
+    .siteBrand__logo {
+      height: 28px;
+
+      img {
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
   .metaInformationBar {
     display: flex;
     align-items: flex-end;
