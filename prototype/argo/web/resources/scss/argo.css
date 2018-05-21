@@ -340,6 +340,15 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
 
 /* colors */
 /* usages */
+.informationElement {
+  display: flex;
+  justify-content: center;
+  color: #dcdcdc; }
+  .informationElement .informationElement__contentWrapper {
+    margin-left: 5px; }
+
+/* colors */
+/* usages */
 form button {
   border: 0;
   box-shadow: none;

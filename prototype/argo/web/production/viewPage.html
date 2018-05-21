@@ -73,6 +73,25 @@
                     </div>
                 </div>
             </div>
+
+            <div class="tools__item">
+                <div class="informationElement">
+                    <div class="informationElement__icon">
+                        <span><i class="far fa-folder-open"></i></span>
+                    </div>
+                    <div class="informationElement__contentWrapper">
+                        <div class="graphicTextBox__label">
+                            Template:
+                            <div class="graphicTextBox__content" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                                <span th:utext="${templateReference.templateId}"></span>
+                                //
+                                <span th:utext="${templateReference.variationId}"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </header>

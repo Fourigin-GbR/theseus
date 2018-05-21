@@ -1,0 +1,14 @@
+@import "../_settings/_colors.scss";
+
+.informationElement {
+  display: flex;
+  justify-content: center;
+  color: $base_color_light_gray;
+
+  .informationElement__icon {
+
+  }
+  .informationElement__contentWrapper {
+    margin-left: 5px;
+  }
+}
