@@ -5,8 +5,10 @@ ul.listItemsAsFlyoutTargets {
   > li {
 
     .layoutTrigger {
-      &.active,
       &:hover {
+        background-color: $base_color_medium_gray3;
+      }
+      &.active {
         background-color: $color_status_element_hover;
       }
     }

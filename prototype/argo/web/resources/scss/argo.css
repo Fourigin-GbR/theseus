@@ -95,7 +95,9 @@ body > header {
           box-sizing: border-box;
           line-height: 1;
           width: 25px; }
-          .iFrameContent aside > ul > li > span:hover, .iFrameContent aside > ul > li > span.active {
+          .iFrameContent aside > ul > li > span:hover {
+            background-color: #9a9a9a; }
+          .iFrameContent aside > ul > li > span.active {
             background-color: #f4802a; }
         .iFrameContent aside > ul > li .layer {
           left: 0; }
@@ -275,7 +277,9 @@ textarea {
   font-family: 'Slabo 27px', serif;
   font-size: .9rem; }
 
-ul.listItemsAsFlyoutTargets > li .layoutTrigger.active, ul.listItemsAsFlyoutTargets > li .layoutTrigger:hover {
+ul.listItemsAsFlyoutTargets > li .layoutTrigger:hover {
+  background-color: #9a9a9a; }
+ul.listItemsAsFlyoutTargets > li .layoutTrigger.active {
   background-color: #f4802a; }
 ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__wrapper {
   display: flex;

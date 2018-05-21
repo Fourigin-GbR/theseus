@@ -40,7 +40,9 @@
           line-height: 1;
           width: 25px;
 
-          &:hover,
+          &:hover {
+            background-color: $base_color_medium_gray3;
+          }
           &.active {
             background-color: $color_status_active;
           }
