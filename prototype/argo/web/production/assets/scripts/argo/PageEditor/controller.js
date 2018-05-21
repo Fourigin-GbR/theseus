@@ -196,6 +196,12 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         };
         openCloseListEditorItems();
 
+        jQuery(".layer button.close").on("click", function() {
+            var jLayout = jQuery(this).closest(".layer");
+            jLayout.removeClass("active");
+            jLayout.parent().find(".layoutTrigger").removeClass("active");
+        });
+
         jQuery("form").on("submit", function (e) {
             e.preventDefault();
             e.stopPropagation();
