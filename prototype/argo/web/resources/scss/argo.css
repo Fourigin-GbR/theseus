@@ -188,11 +188,11 @@ body > header {
   color: #dcdcdc;
   padding: 20px 0 10px 0;
   width: 249px;
-  transition: all 0.5s cubic-bezier(0.55, 0.09, 0.68, 0.53);
+  transition: all .3s ease-in-out;
   opacity: 0;
-  display: none; }
+  pointer-events: none; }
   .layer.active {
-    display: block;
+    pointer-events: auto;
     opacity: 1;
     z-index: 50; }
   .layer .contentTypeIcon {
