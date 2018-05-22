@@ -61,14 +61,10 @@
         </div>
         <div class="tools">
             <div class="tools__item">
-                <div class="graphicTextBox">
-                    <div class="graphicTextBox__icon">
-                        <span><i class="far fa-folder-open"></i></span>
-                    </div>
+                <div class="graphicTextBox graphicTextBox--primeStatus">
                     <div class="graphicTextBox__contentWrapper">
                         <div class="graphicTextBox__label">
                             Seiten-Pfad:
-                            <span th:utext="${argo.path}"></span>
                         </div>
                         <ul class="graphicTextBox__content graphicTextBox__content--path">
                             <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
@@ -81,20 +77,28 @@
             </div>
 
             <div class="tools__item">
-                <div class="informationElement">
-                    <div class="informationElement__icon">
-                        <span><i class="far fa-folder-open"></i></span>
+                <div class="selectElement" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                    <div class="selectElement__label">
+                        Template:
                     </div>
-                    <div class="informationElement__contentWrapper">
-                        <div class="graphicTextBox__label">
-                            Template:
-                            <div class="graphicTextBox__content" th:with="templateReference = ${argo.pageInfo.templateReference}">
-                                <span th:utext="${templateReference.templateId}"></span>
-                                //
-                                <span th:utext="${templateReference.variationId}"></span>
-                            </div>
-                        </div>
-
+                    <div class="selectElement__selectBox">
+                        <span th:utext="${templateReference.templateId}"></span>
+                    </div>
+                    <div class="selectElement__icon">
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="tools__item">
+                <div class="selectElement" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                    <div class="selectElement__label">
+                        Template-Variation:
+                    </div>
+                    <div class="selectElement__selectBox">
+                        <span th:utext="${templateReference.variationId}"></span>
+                    </div>
+                    <div class="selectElement__icon">
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-down"></i>
                     </div>
                 </div>
             </div>
@@ -172,6 +176,9 @@
     </div>
     <div class="contentTypeIcon contentTypeIcon--object" data-content-type="object">
         <i class="far fa-image"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--group" data-content-type="group">
+        <i class="fas fa-expand"></i>
     </div>
 
     <!-- text -->

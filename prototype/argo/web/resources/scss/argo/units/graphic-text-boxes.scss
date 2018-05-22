@@ -3,9 +3,12 @@
 .graphicTextBox {
   background-color: $color_graphic_text_box_background;
   color: $color_font_on_dark_background;
-  border-radius: 5px;
-  padding: 0;
-  display: flex;
+  padding: 4px 10px;
+  min-width: 180px;
+
+  &.graphicTextBox--primeStatus {
+    border-bottom: 2px solid $base_color_orange;
+  }
 
   .graphicTextBox__icon {
     background-color: $base_color_orange;
@@ -22,8 +25,6 @@
   }
 
   .graphicTextBox__contentWrapper {
-    margin: 4px 80px 2px 20px;
-    line-height: 1;
 
     .graphicTextBox__label {
       font-size: .7rem;
@@ -31,9 +32,10 @@
     }
 
     .graphicTextBox__content {
-      display: inline-block;
+      display: block;
       font-size: 1rem;
       line-height: 1.1;
+      margin-left: 15px;
     }
 
     ul.graphicTextBox__content--path li {

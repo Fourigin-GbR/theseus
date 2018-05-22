@@ -173,6 +173,7 @@ body > header {
   background-color: #222326; }
   .toolbar .tools {
     display: flex;
+    align-items: flex-end;
     margin-left: 50px; }
     .toolbar .tools .tools__item {
       margin: 0 10px; }
@@ -334,9 +335,10 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
 .graphicTextBox {
   background-color: #000;
   color: #dcdcdc;
-  border-radius: 5px;
-  padding: 0;
-  display: flex; }
+  padding: 4px 10px;
+  min-width: 180px; }
+  .graphicTextBox.graphicTextBox--primeStatus {
+    border-bottom: 2px solid #f4802a; }
   .graphicTextBox .graphicTextBox__icon {
     background-color: #f4802a;
     align-content: center;
@@ -347,18 +349,16 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
       top: 50%;
       transform: translateY(-50%);
       display: block; }
-  .graphicTextBox .graphicTextBox__contentWrapper {
-    margin: 4px 80px 2px 20px;
-    line-height: 1; }
-    .graphicTextBox .graphicTextBox__contentWrapper .graphicTextBox__label {
-      font-size: .7rem;
-      color: #b1b1b1; }
-    .graphicTextBox .graphicTextBox__contentWrapper .graphicTextBox__content {
-      display: inline-block;
-      font-size: 1rem;
-      line-height: 1.1; }
-    .graphicTextBox .graphicTextBox__contentWrapper ul.graphicTextBox__content--path li::before {
-      content: "/"; }
+  .graphicTextBox .graphicTextBox__contentWrapper .graphicTextBox__label {
+    font-size: .7rem;
+    color: #b1b1b1; }
+  .graphicTextBox .graphicTextBox__contentWrapper .graphicTextBox__content {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.1;
+    margin-left: 15px; }
+  .graphicTextBox .graphicTextBox__contentWrapper ul.graphicTextBox__content--path li::before {
+    content: "/"; }
 
 /* colors */
 /* usages */
@@ -368,6 +368,20 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
   color: #dcdcdc; }
   .informationElement .informationElement__contentWrapper {
     margin-left: 5px; }
+
+/* colors */
+/* usages */
+.selectElement {
+  display: flex;
+  align-items: center;
+  color: #dcdcdc; }
+  .selectElement .selectElement__selectBox {
+    background-color: #000;
+    color: #dcdcdc;
+    padding: 5px 10px;
+    margin-left: 10px; }
+  .selectElement .selectElement__icon {
+    background-color: #b1b1b1; }
 
 /* colors */
 /* usages */

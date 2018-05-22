@@ -1,0 +1,18 @@
+@import "../_settings/_colors.scss";
+
+.selectElement {
+  display: flex;
+  align-items: center;
+  color: $base_color_light_gray;
+
+  .selectElement__selectBox {
+    background-color: $color_graphic_text_box_background;
+    color: $color_font_on_dark_background;
+    padding: 5px 10px;
+    margin-left: 10px;
+  }
+
+  .selectElement__icon {
+    background-color: $base_color_medium_gray2;
+  }
+}
