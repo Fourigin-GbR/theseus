@@ -375,13 +375,17 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
   display: flex;
   align-items: center;
   color: #dcdcdc; }
+  .selectElement .selectElement__label {
+    color: #9a9a9a;
+    font-size: .9rem; }
   .selectElement .selectElement__selectBox {
     background-color: #000;
     color: #dcdcdc;
-    padding: 5px 10px;
+    padding: 10px 10px 5px 10px;
     margin-left: 10px; }
   .selectElement .selectElement__icon {
-    background-color: #b1b1b1; }
+    background-color: #b1b1b1;
+    display: none; }
 
 /* colors */
 /* usages */
