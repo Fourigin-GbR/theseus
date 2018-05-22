@@ -68,6 +68,7 @@
                     <div class="graphicTextBox__contentWrapper">
                         <div class="graphicTextBox__label">
                             Seiten-Pfad:
+                            <span th:utext="${argo.path}"></span>
                         </div>
                         <ul class="graphicTextBox__content graphicTextBox__content--path">
                             <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">

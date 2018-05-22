@@ -22,7 +22,7 @@
 </a>
 
 <header th:fragment="header">
-    <a class="logo" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
+    <a class="logo" th:href="'?base=DE&path=/home'" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
     <div class="meta">
         <div class="contacts">
             <div class="telephone">
@@ -40,10 +40,10 @@
     <nav>
         <ul>
             <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=about', 'Über uns')" href="#">Über uns</a>
+                <a th:replace="this :: simpleLink('?base=DE&path=/about', 'Über uns')" href="#">Über uns</a>
             </li>
             <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=contact', 'Kontakt')" href="#">Kontakt</a>
+                <a th:replace="this :: simpleLink('?base=DE&path=/contact', 'Kontakt')" href="#">Kontakt</a>
             </li>
 <!--            <li><a href="regionen.html">Griechische Regionen</a></li>
             <li><a href="text.html">Kontakt</a></li>-->
@@ -288,7 +288,7 @@
         </div>
         <div class="links">
             <div>
-                <h3><a th:replace="this :: simpleLink('?base=DE&path=home', 'Start')" href="index.html">Start</a></h3>
+                <h3><a th:replace="this :: simpleLink('?base=DE&path=/home', 'Start')" href="index.html">Start</a></h3>
             </div>
 <!--            <div>
                 <h3><a href="feriendomizil-suchen.html">Feriendomizil suchen</a></h3>
@@ -304,7 +304,7 @@
 <!--                <h3><a href="text.html">Über uns</a></h3>
                 <div><a href="text.html">Kontakt</a></div>-->
                 <div>
-                    <a th:replace="this :: simpleLink('?base=DE&path=impressum', 'Impressum')" href="index.html">Impressum</a>
+                    <a th:replace="this :: simpleLink('?base=DE&path=/impressum', 'Impressum')" href="index.html">Impressum</a>
                 </div>
             </div>
         </div>
