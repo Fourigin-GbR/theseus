@@ -11,6 +11,7 @@ import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 public  class CmsRequestAggregationResolver {
@@ -67,5 +68,10 @@ public  class CmsRequestAggregationResolver {
         result.setContentPage(contentPage);
 
         return result;
+    }
+
+    @CacheEvict(value = "aggregations", allEntries = true)
+    public void flush(){
+        // Nothing to do here!
     }
 }

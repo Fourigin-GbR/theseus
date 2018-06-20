@@ -2,6 +2,7 @@ package com.fourigin.argo.web;
 
 import com.fourigin.argo.interceptors.FlushRepositoriesInterceptor;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
+import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,13 +23,16 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
     private ContentRepositoryFactory contentRepositoryFactory;
 
-    public MvcConfiguration(ContentRepositoryFactory contentRepositoryFactory) {
+    private CmsRequestAggregationResolver cmsRequestAggregationResolver;
+
+    public MvcConfiguration(ContentRepositoryFactory contentRepositoryFactory, CmsRequestAggregationResolver cmsRequestAggregationResolver) {
         this.contentRepositoryFactory = contentRepositoryFactory;
+        this.cmsRequestAggregationResolver = cmsRequestAggregationResolver;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addWebRequestInterceptor(new FlushRepositoriesInterceptor(contentRepositoryFactory));
+        registry.addWebRequestInterceptor(new FlushRepositoriesInterceptor(contentRepositoryFactory, cmsRequestAggregationResolver));
     }
 
     private SpringTemplateEngine templateEngine() {

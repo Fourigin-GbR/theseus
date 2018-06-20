@@ -3,6 +3,7 @@ package com.fourigin.argo.interceptors;
 import com.fourigin.argo.compile.RequestParameters;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.ContentResolver;
+import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
@@ -16,12 +17,19 @@ public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
 
     private ContentRepositoryFactory contentRepositoryFactory;
 
+    private CmsRequestAggregationResolver cmsRequestAggregationResolver;
+
     private final Logger logger = LoggerFactory.getLogger(FlushRepositoriesInterceptor.class);
 
-    public FlushRepositoriesInterceptor(ContentRepositoryFactory contentRepositoryFactory) {
+    public FlushRepositoriesInterceptor(
+        ContentRepositoryFactory contentRepositoryFactory,
+        CmsRequestAggregationResolver cmsRequestAggregationResolver
+    ) {
         Objects.requireNonNull(contentRepositoryFactory, "contentRepositoryFactory must not bei null!");
-
         this.contentRepositoryFactory = contentRepositoryFactory;
+
+        Objects.requireNonNull(cmsRequestAggregationResolver, "cmsRequestAggregationResolver must not bei null!");
+        this.cmsRequestAggregationResolver = cmsRequestAggregationResolver;
     }
 
     @Override
@@ -34,6 +42,9 @@ public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
 
             if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", base);
             contentResolver.flush();
+
+            if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", base);
+            cmsRequestAggregationResolver.flush();
         }
     }
 
