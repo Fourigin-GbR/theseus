@@ -39,6 +39,9 @@
     }
 
     ul.graphicTextBox__content--path li {
+
+      display: inline-block;
+
       &::before {
         content: "/";
       }

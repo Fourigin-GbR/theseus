@@ -357,8 +357,10 @@ ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__arrow {
     font-size: 1rem;
     line-height: 1.1;
     margin-left: 15px; }
-  .graphicTextBox .graphicTextBox__contentWrapper ul.graphicTextBox__content--path li::before {
-    content: "/"; }
+  .graphicTextBox .graphicTextBox__contentWrapper ul.graphicTextBox__content--path li {
+    display: inline-block; }
+    .graphicTextBox .graphicTextBox__contentWrapper ul.graphicTextBox__content--path li::before {
+      content: "/"; }
 
 /* colors */
 /* usages */
