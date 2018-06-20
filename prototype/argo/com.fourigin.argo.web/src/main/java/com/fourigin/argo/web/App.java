@@ -15,9 +15,13 @@ import com.fourigin.argo.strategies.FileCompilerOutputStrategy;
 import com.fourigin.argo.strategies.FilenameStrategy;
 import com.fourigin.argo.strategies.MappingDocumentRootResolverStrategy;
 import com.fourigin.argo.template.engine.DefaultTemplateEngineFactory;
+import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.TemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
 import com.fourigin.argo.template.engine.ThymeleafTemplateEngine;
+import com.fourigin.argo.template.engine.strategies.CmsInternalLinkResolutionStrategy;
+import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
+import com.fourigin.argo.template.engine.strategies.StagingInternalLinkResolutionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -117,6 +121,7 @@ public class App {
         return templateEngine;
     }
 
+    @SuppressWarnings("Duplicates")
     private FileTemplateResolver fileTemplateResolver() {
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         String prefix = templateBasePath;
@@ -137,7 +142,18 @@ public class App {
     public ThymeleafTemplateEngine thymeleafTemplateEngine() {
         ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
         thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine());
+        thymeleafEngine.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies());
         return thymeleafEngine;
+    }
+
+    private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies() {
+        Map<ProcessingMode, InternalLinkResolutionStrategy> result = new HashMap<>();
+
+        result.put(ProcessingMode.CMS, new CmsInternalLinkResolutionStrategy());
+        result.put(ProcessingMode.STAGE, new StagingInternalLinkResolutionStrategy());
+        result.put(ProcessingMode.LIVE, new StagingInternalLinkResolutionStrategy()); // TODO: verify!
+
+        return result;
     }
 
     @Bean

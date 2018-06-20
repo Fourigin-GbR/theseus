@@ -1,6 +1,7 @@
 package com.fourigin.argo.template.engine.utilities;
 
 import com.fourigin.argo.template.engine.ProcessingMode;
+import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.utilities.core.PropertiesReplacement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
 
     private Map<String, String> siteAttributes;
 
-    private ProcessingMode processingMode;
+    private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
 
     private PropertiesReplacement propertiesReplacement = new PropertiesReplacement();
 
@@ -21,14 +22,16 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
 
     private final Logger logger = LoggerFactory.getLogger(PagePropertiesUtility.class);
 
-    public String getPath(String path){
+    public String getPath(String nodePath, ProcessingMode processingMode){
         String baseUrlAttributeName = BASE_URL_PREFIX + processingMode.name();
         if (logger.isDebugEnabled()) logger.debug("Searching for site-attribute '{}'.", baseUrlAttributeName);
 
         String baseUrl = siteAttributes.get(baseUrlAttributeName);
         if (logger.isDebugEnabled()) logger.debug("Value of site-attribute '{}': '{}'.", baseUrlAttributeName, baseUrl);
 
-        return propertiesReplacement.process(baseUrl + path, "base", compilerBase);
+        String linkPath = internalLinkResolutionStrategy.resolveLink(nodePath, compilerBase);
+
+        return propertiesReplacement.process(baseUrl + linkPath, "base", compilerBase);
     }
 
     // *** getters / setters ***
@@ -43,8 +46,7 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         this.siteAttributes = siteAttributes;
     }
 
-    @Override
-    public void setProcessingMode(ProcessingMode processingMode) {
-        this.processingMode = processingMode;
+    public void setInternalLinkResolutionStrategy(InternalLinkResolutionStrategy internalLinkResolutionStrategy) {
+        this.internalLinkResolutionStrategy = internalLinkResolutionStrategy;
     }
 }

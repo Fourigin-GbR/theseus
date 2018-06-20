@@ -5,10 +5,10 @@ import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.template.engine.api.Argo;
-import com.fourigin.argo.template.engine.utilities.ContentElementUtilityFactory;
+import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentPageAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.PageInfoAwareThymeleafTemplateUtility;
-import com.fourigin.argo.template.engine.utilities.PagePropertiesUtilityFactory;
+import com.fourigin.argo.template.engine.utilities.ProcessingModeAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.SiteAttributesAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtilityFactory;
@@ -20,7 +20,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTemplateEngine, SiteAttributesAwareTemplateEngine {
@@ -38,14 +37,16 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private Map<String, String> siteAttributes;
 
+    private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
+
     private static final String DEFAULT_UTILITIES_PREFIX = "util_";
 
-    private static Map<String, ThymeleafTemplateUtilityFactory> standardTemplateUtilityFactories = new HashMap<>();
-
-    static {
-        standardTemplateUtilityFactories.put("__content", new ContentElementUtilityFactory());
-        standardTemplateUtilityFactories.put("__page", new PagePropertiesUtilityFactory());
-    }
+//    private static Map<String, ThymeleafTemplateUtilityFactory> __standardTemplateUtilityFactories = new HashMap<>();
+//
+//    static {
+//        standardTemplateUtilityFactories.put("__content", con);
+//        standardTemplateUtilityFactories.put("__page", new PagePropertiesUtilityFactory(internalLinkResolutionStrategies));
+//    }
 
     private final Logger logger = LoggerFactory.getLogger(ThymeleafTemplateEngine.class);
 
@@ -55,6 +56,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         clone.setThymeleafInternalTemplateEngine(thymeleafInternalTemplateEngine);
         clone.setTemplateUtilityFactories(templateUtilityFactories);
         clone.setUtilitiesPrefix(utilitiesPrefix);
+        clone.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies);
 
         return clone;
     }
@@ -79,13 +81,9 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
             .withContentPage(contentPage)
             .withPageInfo(pageInfo)
             .withSiteAttributes(siteAttributes)
+            .withInternalLinkResolutionStrategy(internalLinkResolutionStrategies.get(processingMode))
             .build()
         );
-
-//        context.setVariable(CONTENT_PAGE, contentPage);
-//        context.setVariable(PAGE_INFO, pageInfo);
-//        context.setVariable(SITE_ATTRIBUTES, siteAttributes);
-//        addUtilities(standardTemplateUtilityFactories, context, base, processingMode, false);
 
         addUtilities(templateUtilityFactories, context, base, processingMode);
 
@@ -124,7 +122,10 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
                     siteAttributesUtility.setCompilerBase(base);
                     siteAttributesUtility.setSiteAttributes(siteAttributes);
-                    siteAttributesUtility.setProcessingMode(processingMode);
+                }
+                if(ProcessingModeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
+                    ProcessingModeAwareThymeleafTemplateUtility processingModeUtility = (ProcessingModeAwareThymeleafTemplateUtility) utility;
+                    processingModeUtility.setProcessingMode(processingMode);
                 }
 
                 if (logger.isDebugEnabled())
@@ -166,5 +167,9 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
     @Override
     public void setSiteAttributes(Map<String, String> siteAttributes) {
         this.siteAttributes = siteAttributes;
+    }
+
+    public void setInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies) {
+        this.internalLinkResolutionStrategies = internalLinkResolutionStrategies;
     }
 }

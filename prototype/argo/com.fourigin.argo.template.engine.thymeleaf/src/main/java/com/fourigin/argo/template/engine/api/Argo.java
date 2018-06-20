@@ -2,7 +2,9 @@ package com.fourigin.argo.template.engine.api;
 
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentElementUtility;
+import com.fourigin.argo.template.engine.utilities.PagePropertiesUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtility;
 
 import java.util.HashMap;
@@ -17,6 +19,8 @@ public class Argo {
     private Map<String, String> siteAttributes;
 
     private ContentElementUtility contentElementUtility;
+
+    private PagePropertiesUtility pagePropertiesUtility;
 
     private Map<String, ThymeleafTemplateUtility> customUtilities;
 
@@ -68,6 +72,14 @@ public class Argo {
         this.contentElementUtility = contentElementUtility;
     }
 
+    public PagePropertiesUtility getPagePropertiesUtility() {
+        return pagePropertiesUtility;
+    }
+
+    public void setPagePropertiesUtility(PagePropertiesUtility pagePropertiesUtility) {
+        this.pagePropertiesUtility = pagePropertiesUtility;
+    }
+
     public Map<String, ThymeleafTemplateUtility> getCustomUtilities() {
         return customUtilities;
     }
@@ -97,6 +109,7 @@ public class Argo {
         private PageInfo pageInfo;
         private Map<String, String> siteAttributes;
         private Map<String, ThymeleafTemplateUtility> customUtilities = new HashMap<>();
+        private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
 
         public Builder withBase(String base){
             this.base = base;
@@ -123,6 +136,11 @@ public class Argo {
             return this;
         }
 
+        public Builder withInternalLinkResolutionStrategy(InternalLinkResolutionStrategy strategy){
+            this.internalLinkResolutionStrategy = strategy;
+            return this;
+        }
+
         public Builder withCustomUtility(String name, ThymeleafTemplateUtility utility){
             this.customUtilities.put(name, utility);
             return this;
@@ -140,6 +158,12 @@ public class Argo {
             contentUtility.setCompilerBase(base);
             contentUtility.setContentPage(contentPage);
             argo.setContentElementUtility(contentUtility);
+
+            PagePropertiesUtility pagePropertiesUtility = new PagePropertiesUtility();
+            pagePropertiesUtility.setCompilerBase(base);
+            pagePropertiesUtility.setSiteAttributes(siteAttributes);
+            pagePropertiesUtility.setInternalLinkResolutionStrategy(internalLinkResolutionStrategy);
+            argo.setPagePropertiesUtility(pagePropertiesUtility);
 
             if(!customUtilities.isEmpty()){
                 argo.setCustomUtilities(customUtilities);

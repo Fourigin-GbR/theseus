@@ -22,6 +22,4 @@ public interface ContentResolver extends Flushable {
     Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path, PageInfoTraversingStrategy traversingStrategy);
 
     ContentPage retrieve(PageInfo info);
-
-//    void flush();
 }
