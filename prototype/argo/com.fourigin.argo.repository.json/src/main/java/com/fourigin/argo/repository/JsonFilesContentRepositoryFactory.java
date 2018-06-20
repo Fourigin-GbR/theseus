@@ -3,6 +3,8 @@ package com.fourigin.argo.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
 import com.fourigin.utilities.core.PropertiesReplacement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,15 +26,19 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
 
     private ConcurrentHashMap<String, JsonFilesContentRepository> cache = new ConcurrentHashMap<>();
 
+    private final Logger logger = LoggerFactory.getLogger(JsonFilesContentRepositoryFactory.class);
+
     @Override
     public ContentRepository getInstance(String key) {
         JsonFilesContentRepository repository = cache.get(key);
         if(repository != null){
+            if (logger.isDebugEnabled()) logger.debug("Using cached ContentRepository instance for key '{}'.", key);
             return repository;
         }
 
         String path = propertiesReplacement.process(basePath, keyName, key);
 
+        if (logger.isDebugEnabled()) logger.debug("Instantiating a new ContentRepository instance for key '{}' and path '{}'.", key, path);
         repository = new JsonFilesContentRepository();
 
         repository.setContentRoot(path);
