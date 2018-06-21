@@ -6,7 +6,6 @@ import com.fourigin.argo.compiler.PageCompilerFactory;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
-import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
@@ -107,8 +106,8 @@ public class CompileController {
             compileState.setTimestamp(timestamp);
             compileState.setChecksum(pageContentChecksum);
 
-            SiteNodeContainerInfo parent = pageInfo.getParent();
-            String parentPath = parent.getPath();
+//            SiteNodeContainerInfo parent = pageInfo.getParent();
+            String parentPath = pageInfo.getPath();
             aggregation.getContentRepository().updateInfo(parentPath, pageInfo);
         }
     }
