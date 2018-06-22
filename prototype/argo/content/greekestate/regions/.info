@@ -33,7 +33,7 @@
     "displayName" : "index",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "greekestate.index",
+      "templateId" : "greekestate.overview-article-gallery",
       "variationId" : "default",
       "revision" : "unspecified"
     },

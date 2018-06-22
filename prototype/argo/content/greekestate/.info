@@ -39,8 +39,8 @@
     "displayName" : "contact",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
       "revision" : "unspecified"
     },
     "staged" : false,

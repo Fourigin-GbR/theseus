@@ -44,11 +44,9 @@
             </form>
         </div>
     </article>
-    <article>
-        <h1 th:text="${argo.contentElementUtility.getContent('/headline')}">#headline</h1>
-        <p  th:text="${argo.contentElementUtility.getContent('/body')}">
-            #body
-        </p>
+
+    <article th:replace="greekestate/base :: article-h1-block()">
+
     </article>
 
     <article>

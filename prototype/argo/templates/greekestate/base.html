@@ -54,6 +54,47 @@
 
 <div class="body">
 
+    <nav th:fragment="breadcrumb" class="breadcrumb">
+        <div class="wrapper">
+            <div class="breadcrumbPath">
+                <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
+                <ul class="folderList">
+                    <li>
+                        <a href="index.html">Start</a>
+                    </li>
+                    <li>
+                        Regionen
+                    </li>
+                </ul>
+            </div>
+            <div class="contextHighlights">
+                <div class="links">
+                    <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+                    <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+                </div>
+                <div class="searchAndGo">
+                    <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
+                    <form action="#">
+                        <label>
+                            <span>Objekt-ID</span>
+                            <input name="objectId" type="text" />
+                        </label>
+                        <input class="cta" type="submit" value="Suchen"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <article th:fragment="article-h1-block()">
+        <h1 th:text="${argo.contentElementUtility.getElement('/headline').content}">#headline</h1>
+        <p  th:text="${argo.contentElementUtility.getElement('/body').content}">
+            #body
+        </p>
+    </article>
+
+
     <article th:fragment="article-product-slider(products)" class="productStageSlider">
 
         <div class="slider heroStageOffers">
@@ -275,7 +316,7 @@
 <footer>
     <div class="content">
         <div class="logo">
-            <img src="assets/images/greek-estate-logo.jpg" />
+            <img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" />
         </div>
         <div class="company">
             <div>

@@ -12,12 +12,12 @@
     {
       "name": "headline",
       "type": "text",
-      "content": "Athen"
+      "content": "Übersicht über die Regionen in Griechenland"
     },
     {
       "name": "body",
       "type": "text",
-      "content": "Lorem ipsum ..."
+      "content": "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten. Damit man möglichst viel von der Vielfalt."
     }
   ],
   "dataSourceContents": [

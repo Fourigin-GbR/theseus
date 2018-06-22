@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Greece</title>
     <link rel="stylesheet" href="/assets/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/greekestate/assets/styles/basic-layout.css"/>
     <link rel="stylesheet" href="/assets/greekestate/assets/styles/slider.css">
     <link rel="stylesheet" href="/assets/greekestate/assets/styles/greek.css"/>
     <style>
@@ -20,7 +21,11 @@
 
 </header>
 <div class="body">
-    <!--<article th:replace="greekestate/base :: articleBlockWithH1andCopy(${content.getContent('/headline')}, ${content.getContent('/body')})"></article>-->
+
+    <nav th:replace="greekestate/base :: breadcrumb">
+
+    </nav>
+
     <article th:replace="greekestate/base :: article-headline-body(${argo.contentElementUtility.getContent('/headline')}, ${argo.contentElementUtility.getContent('/body')})">
 
     </article>
