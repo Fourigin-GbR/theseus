@@ -18,6 +18,48 @@
       "name": "body",
       "type": "text",
       "content": "Lorem ipsum ..."
+    },
+    {
+      "type": "list",
+      "name": "stage",
+      "elements": [
+        {
+          "type": "list-group",
+          "elements": [
+            {
+              "type": "object",
+              "name": "image",
+              "referenceId": "1234567",
+              "source": "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+              "alternateText": "Image one",
+              "mimeType": "jpg"
+            },
+            {
+              "type": "text",
+              "name": "teaser",
+              "content": "Griechenland O lè!"
+            }
+          ]
+        },
+        {
+          "type": "list-group",
+          "elements": [
+            {
+              "type": "object",
+              "name": "image",
+              "referenceId": "1234567",
+              "source": "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki-2.JPG",
+              "alternateText": "Image one",
+              "mimeType": "jpg"
+            },
+            {
+              "type": "text",
+              "name": "teaser",
+              "content": "Nochmal toll!"
+            }
+          ]
+        }
+      ]
     }
   ],
   "dataSourceContents": [

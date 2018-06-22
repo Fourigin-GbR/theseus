@@ -7,7 +7,7 @@
     "displayName" : "athen",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "greekestate.article-text",
+      "templateId" : "greekestate.stage-article-text",
       "variationId" : "default",
       "revision" : "unspecified"
     },
@@ -59,8 +59,8 @@
     "displayName" : "salamina",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
+      "templateId" : "greekestate.stage-article-text",
+      "variationId" : "default",
       "revision" : "unspecified"
     },
     "staged" : false,
@@ -85,8 +85,8 @@
     "displayName" : "loutraki",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
+      "templateId" : "greekestate.stage-article-text",
+      "variationId" : "default",
       "revision" : "unspecified"
     },
     "staged" : false,

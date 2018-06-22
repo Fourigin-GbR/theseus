@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Greece</title>
+    <link rel="stylesheet" href="/assets/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/greekestate/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/greekestate/assets/scripts/slider.js"></script>
+</head>
+<body>
+<!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
+<!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
+
+<header th:replace="greekestate/base :: header">
+
+</header>
+
+<div class="body">
+
+    <nav th:replace="greekestate/base :: breadcrumb">
+
+    </nav>
+
+    <article th:replace="greekestate/base :: article-product-slider(${argo.contentElementUtility.getElement('/stage').elements})">
+
+    </article>
+
+    <article th:replace="greekestate/base :: article-h1-block()">
+
+    </article>
+
+</div>
+
+<footer th:replace="greekestate/base :: footer">
+
+</footer>
+</body>
+</html>
