@@ -171,7 +171,7 @@
       }, {
         "type" : "text",
         "name" : "teaser",
-        "content" : "Tolle Stadt!"
+        "content" : "Griechenland O lè!"
       } ]
     }, {
       "type" : "list-group",
@@ -191,7 +191,7 @@
   }, {
     "type" : "text",
     "name" : "headline",
-    "content" : "Wir helfen Ihnne, IHRE Immobilie zu finden!"
+    "content" : "Wir helfen Ihnen, IHRE Immobilie zu finden!!!\nSprechen Sie uns an :-)"
   } ],
   "dataSourceContents" : [ {
     "name" : "timestamp",

@@ -1,175 +1,149 @@
 {
-	"path": "/",
-	"children": [
-		{
-			"type": "file",
-			"name": "search",
-			"localizedName": "search",
-			"displayName": "search",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
-			"templateReference": {
-				"templateId": "unspecified",
-				"variationId": "unspecified",
-				"revision": "unspecified"
-			},
-			"staged": false,
-			"compileState": {
-				"checksum": "",
-				"compiled": false,
-				"timestamp": 1524056371672,
-				"message": ""
-			},
-			"checksum": {
-				"metaDataValue": "CA9FE847DD37ACD2C9B5C966AE2D76F9",
-				"contentValue": "FC8FA807F76700FB5FA6F5FB35B44A90",
-				"dataSourceValues": {
-					"site-structure": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"timestamp": "9DCF2A6F12095ECFF342E9FA0C5CA72F"
-				},
-				"combinedValue": "CA9FE847DD37ACD2C9B5C966AE2D76F9-FC8FA807F76700FB5FA6F5FB35B44A90-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F"
-			}
-		},
-		{
-			"type": "dir",
-			"name": "regions",
-			"localizedName": "regions",
-			"displayName": "regions",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
-			"children": [
-				{
-				"type": "index",
-				"name": "index",
-				"localizedName": "index",
-				"displayName": "index",
-				"description": "index",
-				"templateReference": {
-					"templateId": "greekestate.article-text",
-					"variationId": "default",
-					"revision": ""
-				}				}
-			]
-		},
-		{
-			"type": "file",
-			"name": "contact",
-			"localizedName": "contact",
-			"displayName": "contact",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
-			"templateReference": {
-				"templateId": "greekestate.article-text",
-				"variationId": "default",
-				"revision": ""
-			},
-			"staged": false,
-			"compileState": {
-				"checksum": "",
-				"compiled": false,
-				"timestamp": 1524056372234,
-				"message": ""
-			},
-			"checksum": {
-				"metaDataValue": "A18718BF2A1934A4D9A7EC01F43EBA46",
-				"contentValue": "9FC4D1098A4D4C11A5024F1BDD0FDE5E",
-				"dataSourceValues": {
-					"allNodes": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"timestamp": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"objectNodes": "9DCF2A6F12095ECFF342E9FA0C5CA72F"
-				},
-				"combinedValue": "A18718BF2A1934A4D9A7EC01F43EBA46-9FC4D1098A4D4C11A5024F1BDD0FDE5E-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F"
-			}
-		},
-		{
-			"type": "dir",
-			"name": "objects",
-			"localizedName": "objects",
-			"displayName": "objects",
-			"description": "Auto-created directory info. Don't forget to specify all properties!"
-		},
-		{
-			"type": "file",
-			"name": "about",
-			"localizedName": "about",
-			"displayName": "about",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
-			"templateReference": {
-				"templateId": "greekestate.article-text",
-				"variationId": "default",
-				"revision": ""
-			},
-			"staged": false,
-			"compileState": {
-				"checksum": "",
-				"compiled": false,
-				"timestamp": 1524056372371,
-				"message": ""
-			},
-			"checksum": {
-				"metaDataValue": "859EC687B86D96F7F35BC05DA1F5C926",
-				"contentValue": "B70C88B9062DD2E3D4684B07736E7F7C",
-				"dataSourceValues": {
-					"site-structure": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"timestamp": "9DCF2A6F12095ECFF342E9FA0C5CA72F"
-				},
-				"combinedValue": "859EC687B86D96F7F35BC05DA1F5C926-B70C88B9062DD2E3D4684B07736E7F7C-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F"
-			}
-		},
-		{
-			"type": "file",
-			"name": "impressum",
-			"localizedName": "impressum",
-			"displayName": "impressum",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
-			"templateReference": {
-				"templateId": "greekestate.article-text",
-				"variationId": "default",
-				"revision": ""
-			},
-			"staged": false,
-			"compileState": {
-				"checksum": "",
-				"compiled": false,
-				"timestamp": 1524056372383,
-				"message": ""
-			},
-			"checksum": {
-				"metaDataValue": "22F058DC11A91C664891E876C79281B2",
-				"contentValue": "DAC04475CD70B1B8C8A168CC3B29C584",
-				"dataSourceValues": {
-					"allNodes": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"timestamp": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"objectNodes": "9DCF2A6F12095ECFF342E9FA0C5CA72F"
-				},
-				"combinedValue": "22F058DC11A91C664891E876C79281B2-DAC04475CD70B1B8C8A168CC3B29C584-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F"
-			}
-		},
-		{
-			"type": "file",
-			"name": "home",
-			"localizedName": "home",
-			"displayName": "home",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
-			"templateReference": {
-				"templateId": "greekestate.index",
-				"variationId": "default",
-				"revision": ""
-			},
-			"staged": false,
-			"compileState": {
-				"checksum": "",
-				"compiled": false,
-				"timestamp": 1524056372392,
-				"message": ""
-			},
-			"checksum": {
-				"metaDataValue": "3C3CAD0549D70F4A879EBE1FD7A9D6BE",
-				"contentValue": "15E65747DB0C6179EF1F78D9CE2A335B",
-				"dataSourceValues": {
-					"allNodes": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"timestamp": "9DCF2A6F12095ECFF342E9FA0C5CA72F",
-					"objectNodes": "9DCF2A6F12095ECFF342E9FA0C5CA72F"
-				},
-				"combinedValue": "3C3CAD0549D70F4A879EBE1FD7A9D6BE-15E65747DB0C6179EF1F78D9CE2A335B-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F"
-			}
-		}
-	]
+  "path" : "/",
+  "children" : [ {
+    "type" : "file",
+    "name" : "search",
+    "localizedName" : "search",
+    "displayName" : "search",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637008,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "CA9FE847DD37ACD2C9B5C966AE2D76F9",
+      "contentValue" : "FC8FA807F76700FB5FA6F5FB35B44A90",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "dir",
+    "name" : "regions",
+    "localizedName" : "regions",
+    "displayName" : "regions",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!"
+  }, {
+    "type" : "file",
+    "name" : "contact",
+    "localizedName" : "contact",
+    "displayName" : "contact",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637021,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "A18718BF2A1934A4D9A7EC01F43EBA46",
+      "contentValue" : "9FC4D1098A4D4C11A5024F1BDD0FDE5E",
+      "dataSourceValues" : {
+        "allNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "objectNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "dir",
+    "name" : "objects",
+    "localizedName" : "objects",
+    "displayName" : "objects",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!"
+  }, {
+    "type" : "file",
+    "name" : "about",
+    "localizedName" : "about",
+    "displayName" : "about",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637039,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "859EC687B86D96F7F35BC05DA1F5C926",
+      "contentValue" : "7FA54A1FA62018CA446A2DE1152E17CE",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
+    "name" : "impressum",
+    "localizedName" : "impressum",
+    "displayName" : "impressum",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637047,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "22F058DC11A91C664891E876C79281B2",
+      "contentValue" : "EE4017C2E14F26E8792E38D85A85D380",
+      "dataSourceValues" : {
+        "allNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "objectNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
+    "name" : "home",
+    "localizedName" : "home",
+    "displayName" : "home",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "greekestate.index",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637054,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "3C3CAD0549D70F4A879EBE1FD7A9D6BE",
+      "contentValue" : "371FC3A59CFE7AD897AC5F4CB0B914B0",
+      "dataSourceValues" : {
+        "allNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "objectNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  } ]
 }

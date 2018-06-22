@@ -2,6 +2,58 @@
   "path" : "/regions",
   "children" : [ {
     "type" : "file",
+    "name" : "athen",
+    "localizedName" : "athen",
+    "displayName" : "athen",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637009,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "B2E234433175CDE117F5206026579AA0",
+      "contentValue" : "EED02A4EA9F5AA71D2A09BEC0701F63F",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
+    "name" : "index",
+    "localizedName" : "index",
+    "displayName" : "index",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "greekestate.index",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1529442637009,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "B2E234433175CDE117F5206026579AA0",
+      "contentValue" : "EED02A4EA9F5AA71D2A09BEC0701F63F",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
     "name" : "salamina",
     "localizedName" : "salamina",
     "displayName" : "salamina",
@@ -15,26 +67,16 @@
     "compileState" : {
       "checksum" : "",
       "compiled" : false,
-      "timestamp" : 1519400567608,
+      "timestamp" : 1529442637010,
       "message" : ""
-    }
-  }, {
-    "type" : "file",
-    "name" : "athen",
-    "localizedName" : "athen",
-    "displayName" : "athen",
-    "description" : "Auto-created directory info. Don't forget to specify all properties!",
-    "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
-      "revision" : "unspecified"
     },
-    "staged" : false,
-    "compileState" : {
-      "checksum" : "",
-      "compiled" : false,
-      "timestamp" : 1519400567614,
-      "message" : ""
+    "checksum" : {
+      "metaDataValue" : "9E97609A61F53FE4DC6EF9E86F7413B5",
+      "contentValue" : "B7F4109983FD1CFB40B6C06D63477EBC",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
     }
   }, {
     "type" : "file",
@@ -51,8 +93,16 @@
     "compileState" : {
       "checksum" : "",
       "compiled" : false,
-      "timestamp" : 1519400567615,
+      "timestamp" : 1529442637010,
       "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "3C3CAD0549D70F4A879EBE1FD7A9D6BE",
+      "contentValue" : "41E721AEA5CBFAD7164EC20DD084C1E8",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
     }
   } ]
 }
