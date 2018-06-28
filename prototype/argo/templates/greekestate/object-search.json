@@ -68,10 +68,6 @@
 		"/body": {
 			"title": "Body",
 			"description": "Article body"
-		},
-		"/hero-images": {
-			"title": "Images",
-			"description": "Hero images"
 		}
 	}
 }

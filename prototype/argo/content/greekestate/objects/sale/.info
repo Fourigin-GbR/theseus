@@ -1,0 +1,108 @@
+{
+  "path" : "/objects/sale",
+  "children" : [ {
+    "type" : "file",
+    "name" : "object_003",
+    "localizedName" : "object_003",
+    "displayName" : "object_003",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1524056372280,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "3F362C08D9EBD8889111BAFA8090F359",
+      "contentValue" : "A111EB1DDA8EDBBD5409C7AF80B2F11C",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_004",
+    "localizedName" : "object_004",
+    "displayName" : "object_004",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1524056372293,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "76735B38BC03F99F55B9232CEE71EBF5",
+      "contentValue" : "435D78E664726D3BC31050FFBE55C002",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_005",
+    "localizedName" : "object_005",
+    "displayName" : "object_005",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "unspecified",
+      "variationId" : "unspecified",
+      "revision" : "unspecified"
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1524056372298,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "328F1FED03726046760EC9DA08F2F31F",
+      "contentValue" : "11AA79ABEF3E3A3A30AFC01972CD18A5",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  }, {
+    "type" : "file",
+    "name" : "search",
+    "localizedName" : "search",
+    "displayName" : "search",
+    "description" : "Auto-created directory info. Don't forget to specify all properties!",
+    "templateReference" : {
+      "templateId" : "object-search",
+      "variationId" : "default",
+      "revision" : ""
+    },
+    "staged" : false,
+    "compileState" : {
+      "checksum" : "",
+      "compiled" : false,
+      "timestamp" : 1530164588418,
+      "message" : ""
+    },
+    "checksum" : {
+      "metaDataValue" : "E4A16879BF621C4A5CC8768663023CC3",
+      "contentValue" : "EA16AA846C55B13CE64384A9B1C3B00C",
+      "dataSourceValues" : {
+        "site-structure" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
+        "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
+      }
+    }
+  } ]
+}
