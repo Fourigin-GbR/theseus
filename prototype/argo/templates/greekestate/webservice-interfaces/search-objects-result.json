@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "amount": 73,
+    "sorting": "priceUp",
+    "filter": [
+      {
+        "apartment": true,
+        "priceMax": 22500
+      }
+    ],
+    "generated": "2018-07-19 21:22:20"
+  },
+  "objects": [
+    {
+      "images": [
+        "path.jpg",
+        "path.jpg"
+      ],
+      "title": "Wunderschönes Haus",
+      "category": "private",
+      "price": "650000.00",
+      "priceFormatted": "650.000,00 €",
+      "targetUrl": "/object1.html"
+    }
+  ]
+}

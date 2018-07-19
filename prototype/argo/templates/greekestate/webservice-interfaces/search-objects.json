@@ -1,0 +1,11 @@
+{
+  "region": ["loutraki"],
+  "filter": [
+    {
+      "apartment": false,
+      "house": true,
+      "priceMax": 22500
+    }
+  ],
+  "sorting": "priceUp"
+}
