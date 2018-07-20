@@ -53,10 +53,112 @@
         </nav>
     </div>
     <div class="toolbar">
+        <div class="siteBrand">
+            <div class="siteBrand__title">Webseiten von: <span class="siteBrand__name"></span></div>
+            <div class="siteBrand__logo">
+                <img src="/assets/greekestate/assets/images/greekestate-logo.png" class="siteLogo"/>
+            </div>
+        </div>
+        <div class="tools">
+            <div class="tools__item">
+                <div class="graphicTextBox graphicTextBox--primeStatus">
+                    <div class="graphicTextBox__contentWrapper">
+                        <div class="graphicTextBox__label">
+                            Seiten-Pfad:
+                        </div>
+                        <ul class="graphicTextBox__content graphicTextBox__content--path">
+                            <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                                <a href="#" target="_top" th:href="@{/compile/(base=${argo.base},path=${pathToken})}"
+                                   th:text="${pathToken}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
+            <div class="tools__item">
+                <div class="selectElement" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                    <div class="selectElement__label">
+                        Template:
+                    </div>
+                    <div class="selectElement__selectBox">
+                        <span th:utext="${templateReference.templateId}"></span>
+                    </div>
+                    <div class="selectElement__icon">
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="tools__item">
+                <div class="selectElement" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                    <div class="selectElement__label">
+                        Template-Variation:
+                    </div>
+                    <div class="selectElement__selectBox">
+                        <span th:utext="${templateReference.variationId}"></span>
+                    </div>
+                    <div class="selectElement__icon">
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 <div class="iFrameContent">
+    <!---->
+    <aside>
+        <ul class="asideTabBar">
+            <li>
+                <span class="asideTabBar__tab" data-target-layer-id="1"><i class="icon"><i class="far fa-edit"></i></i> Seite bearbeiten</span>
+                <!---->
+                <!--                    <div class="layer">
+                                        <h4>Inhalts-Element bearbeiten</h4>
+                                        <form>
+                                            <input type="text" value="..." />
+                                            <button class="submit">Speichern</button>
+                                        </form>
+                                    </div>-->
+            </li>
+        </ul>
+    </aside>
+    <!---->
+    <div class="layerContainer">
+        <div data-layer-id="1" class="layer">
+            <h4>Freigegebene Seiten-Inhalte zum bearbeiten</h4>
+            <ul class="listItemsAsFlyoutTargets" id="contentList">
+                <li data-prototype="hotspot">
+                    <div class="listItemsAsFlyoutTargets__wrapper layoutTrigger">
+                        <span class="listItemsAsFlyoutTargets_contentTypeIcon">
+
+                        </span>
+                        <div class="listItemsAsFlyoutTargets__title"></div>
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>
+                    </div>
+                    <!---->
+                    <div class="layer">
+                        <form data-content-path="/" action="#" method="POST">
+                            <header>
+                                <h4>Editieren</h4>
+                                <h5></h5>
+                            </header>
+                            <div class="layer__form">
+                                <!---->
+                                <div class="editorFields"></div>
+                                <!---->
+                            </div>
+                            <footer>
+                                <button type="submit">Speichern</button>
+                            </footer>
+                        </form>
+                        <!---->
+                        <button class="layer__button close"><i class="fas fa-angle-double-left"></i></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
             th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
 </div>
