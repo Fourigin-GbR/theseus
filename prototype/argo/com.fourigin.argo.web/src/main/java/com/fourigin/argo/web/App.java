@@ -65,6 +65,9 @@ public class App {
     @Value("${document-root.base}")
     private String documentRootBasePath;
 
+    @Value("${prepared-content.base}")
+    private String preparedContentRoot;
+
     private ContentRepositoryFactory contentRepositoryFactory;
 
     @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
@@ -172,7 +175,13 @@ public class App {
     // *** COMPILER ***
     @Bean
     public DefaultPageCompilerFactory pageCompilerFactory() {
-        return new DefaultPageCompilerFactory(contentRepositoryFactory, templateEngineFactory, templateResolver, dataSourcesResolver());
+        return new DefaultPageCompilerFactory(
+            contentRepositoryFactory,
+            templateEngineFactory,
+            templateResolver,
+            dataSourcesResolver(),
+            preparedContentRoot
+        );
     }
 
     private DataSourcesResolver dataSourcesResolver() {

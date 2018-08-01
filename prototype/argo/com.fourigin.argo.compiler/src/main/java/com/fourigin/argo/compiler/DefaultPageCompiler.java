@@ -35,6 +35,8 @@ public class DefaultPageCompiler implements PageCompiler {
 
     private DataSourcesResolver dataSourcesResolver;
 
+    private CompilerInterceptor compilerInterceptor;
+
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
 
     private static final Map<String, String> CONTENT_TYPE_EXTENSION_MAPPING = new HashMap<>();
@@ -138,6 +140,10 @@ public class DefaultPageCompiler implements PageCompiler {
 
         ContentPage contentPage = prepareContent(pageInfo);
 
+        if(compilerInterceptor != null){
+            compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, contentPage);
+        }
+
         // process content page
         String fileExtension = resolveFileExtension(templateVariation.getOutputContentType());
         try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, compilerBase)) {
@@ -177,5 +183,9 @@ public class DefaultPageCompiler implements PageCompiler {
 
     public void setDataSourcesResolver(DataSourcesResolver dataSourcesResolver) {
         this.dataSourcesResolver = dataSourcesResolver;
+    }
+
+    public void setCompilerInterceptor(CompilerInterceptor compilerInterceptor) {
+        this.compilerInterceptor = compilerInterceptor;
     }
 }
