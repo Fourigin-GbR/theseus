@@ -1,0 +1,33 @@
+@import "../_settings/_colors.scss";
+
+.tabsBar {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid $base_color_medium_gray4;
+  padding: 10px 10px 0 10px;
+  background-color: $color_basic_dark_background;
+  margin-top: 10px;
+  width: 100%;
+
+  .tabsBar_iconButton {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    color: $base_color_medium_light_gray;
+    cursor: pointer;
+
+    &:hover,
+    &.selected {
+      background-color: $base_color_medium_gray2;
+    }
+
+    .tabsBar_iconButton_icon {
+      border-radius: 5px;
+      padding: 2px 5px;
+      margin: 5px;
+      background-color: $color_cta;
+      color: $base_color_medium_light_gray;
+      font-size: .7rem;
+    }
+  }
+}

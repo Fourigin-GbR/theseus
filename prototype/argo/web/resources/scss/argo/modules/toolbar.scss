@@ -1,9 +1,6 @@
 @import "../_settings/_colors.scss";
 
-.toolbar {
-  padding: 20px 10px;
-  display: flex;
-  align-items: center;
+.toolBar {
   background-color: $color_basic_dark_background;
 
   .tools {
@@ -13,6 +10,124 @@
 
     .tools__item {
       margin: 0 10px;
+    }
+  }
+
+  .overlayWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .background {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.76);
+      z-index: -1;
+    }
+
+    .overlay {
+      margin: 30px;
+      padding: 30px;
+      height: calc(100% - 60px);
+      background-color: $base_color_medium_gray3;
+      box-sizing: border-box;
+      overflow: auto;
+
+      h2, h3, h4 {
+        margin: 0;
+        font-weight: normal;
+      }
+
+      h2 {
+        font-size: 1.46rem;
+        margin-top: 10px;
+        margin-bottom: 30px;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+      }
+
+      h4 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      article, footer {
+        margin-left: 20px;
+      }
+
+      footer {
+        text-align: end;
+      }
+
+      section {
+        border-bottom: 1px solid $base_color_medium_gray4;
+        margin: 20px 0 0 0;
+        padding: 20px;
+        max-width: 1000px;
+
+        &:first-of-type {
+          border-top: 1px solid $base_color_medium_gray4;
+        }
+
+        article.information {
+          background-color: $base_color_medium_gray2;
+          padding: 5px 10px;
+          border-radius: 5px;
+        }
+
+        fieldset {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          display: block;
+
+          label {
+            margin-top: 10px;
+            display: block;
+
+            span {
+              display: block;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+
+      .button {
+        display: flex;
+        align-items: center;
+        color: $base_color_dark_light_gray;
+        margin: 10px 0;
+        font-size: .8rem;
+
+        .button_icon {
+          background-color: $base_color_green;
+          border-radius: 5px;
+          padding: 2px 5px;
+          margin-right: 5px;
+          display: inline-block;
+          color: $base_color_medium_light_gray;
+          font-size: .8rem;
+        }
+      }
+
+      textarea, input[type=text] {
+        background-color: $color_basic_dark_background;
+        padding: 10px;
+        border: 0;
+        box-shadow: unset;
+        color: $color_font_on_dark_background;
+        width: 100%;
+        max-width: 600px;
+      }
     }
   }
 }

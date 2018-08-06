@@ -52,8 +52,101 @@
             </ul>
         </nav>
     </div>
-    <div class="toolbar">
+    <div class="toolBar">
+        <ul class="tabsBar">
+            <li>
+                <span class="tabsBar_iconButton">
+                    <span class="tabsBar_iconButton_icon"><i class="fas fa-edit"></i></span>
+                    Inhalte bearbeiten
+                </span>
+            </li>
+        </ul>
+        <!---->
+        <div class="overlayWrapper">
+            <div class="background"></div>
+            <div class="overlay">
+                <h2>Inhalte bearbeiten</h2>
+                <h3>Editierbare Inhalte</h3>
+                <section>
+                    <form>
+                        <h4>Überschrift</h4>
 
+                        <article class="information">
+                            Das ist eine Info!
+                        </article>
+
+                        <article class="editableFields">
+
+                            <fieldset data-type="text">
+                                <input type="hidden" name="type" value="text"/>
+                                <input type="hidden" name="name" value=""/>
+                                <label>
+                                    <span>content</span>
+                                    <textarea name="content"></textarea>
+                                </label>
+                            </fieldset>
+
+                        </article>
+
+                        <footer>
+                            <button type="submit">Speichern</button>
+                        </footer>
+                    </form>
+                </section>
+
+                <section>
+                    <form>
+                        <h4>Großes Präsentier-Bild</h4>
+
+                        <article class="information">
+                            Das ist eine Info!
+                        </article>
+
+                        <article class="editableFields">
+
+                            <fieldset data-type="object">
+                                <input type="hidden" name="type" value="object"/>
+                                <input type="hidden" name="name" value=""/>
+                                <div class="imagePreview">
+                                    <img src="#"/>
+                                </div>
+                                <label>
+                                    <span>source</span>
+                                    <input type="text" name="source"/>
+                                </label>
+
+                                <div>
+                                    <a class="button button_moreOptions" href="#">
+                                        <span class="button_icon"><i class="fas fa-plus"></i></span>
+                                        Weitere Optionen...
+                                    </a>
+                                </div>
+
+                                <div class="moreOptions">
+                                    <label>
+                                        <span>referenceId</span>
+                                        <input disabled="disabled" type="text" name="referenceId"/>
+                                    </label>
+                                    <label>
+                                        <span>alternativeText</span>
+                                        <input type="text" name="alternativeText"/>
+                                    </label>
+                                    <label>
+                                        <span>mimeType</span>
+                                        <input type="text" name="mimeType"/>
+                                    </label>
+                                </div>
+                            </fieldset>
+
+                        </article>
+
+                        <footer>
+                            <button type="submit">Speichern</button>
+                        </footer>
+                    </form>
+                </section>
+            </div>
+        </div>
     </div>
 </header>
 <div class="iFrameContent">
@@ -100,6 +193,14 @@
             <span>source</span>
             <input type="text" name="source"/>
         </label>
+
+        <div>
+            <a class="button button_moreOptions" href="#">
+                <span class="button_icon"><i class="fas fa-plus"></i></span>
+                Weitere Optionen...
+            </a>
+        </div>
+
         <label>
             <span>referenceId</span>
             <input disabled="disabled" type="text" name="referenceId"/>
