@@ -35,9 +35,13 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 
     PageEditor.prototype.writeHotspots = function() {
         var oHotSpots = this.Model.getHotspots(),
-            jEditorRoot = jQuery("#contentList"),
-            jPrototype = jEditorRoot.find("li[data-prototype=hotspot]");
+            jEditorRoot = jQuery(".overlay [data-type='editor-fields']"),
+            jPrototype = jQuery("[data-prototype=hotspot]");
         //
+        if(!jPrototype || 0 === jPrototype.length) {
+            console.error("Prototype is missing!");
+            return;
+        }
         console.log("write hotspots", oHotSpots);
         for(property in oHotSpots) {
             if(oHotSpots.hasOwnProperty(property)) {
@@ -46,13 +50,12 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                     jItemTypeIcon = null,
                     oContent = this.Model.getContentByPath(property);
                 //
-                jItemTypeIcon = jQuery("#argoEditorPrototypes").find(".contentTypeIcon[data-content-type='" + oContent.type + "']").clone();
+                //jItemTypeIcon = jQuery("#argoEditorPrototypes").find(".contentTypeIcon[data-content-type='" + oContent.type + "']").clone();
                 jHotSpot.attr("data-content-path", property);
-                jHotSpot.find(".listItemsAsFlyoutTargets__title").text(oHotSpot.title);
-                jHotSpot.find("h5").text(oHotSpot.title);
-                jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
+                jHotSpot.find("h4").text(oHotSpot.title);
+                //jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
                 //
-                this.writeSpecificEditor(oContent, jHotSpot.find("form .editorFields"));
+                this.writeSpecificEditor(oContent, jHotSpot.find("form .editableFields"));
                 //
                 jEditorRoot.append(jHotSpot);
             }
@@ -62,6 +65,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 
     PageEditor.prototype.writeSpecificEditor = function(oContent, jTarget) {
         console.log("Write specific editor", oContent, jTarget);
+        if(!jTarget || 0 === jTarget.length) {
+            console.error("Target-is missing!");
+        }
         switch(oContent.type) {
             case "text":
                 this.writeTextEditor(oContent, jTarget);

@@ -72,6 +72,10 @@
                 </header>
                 <div class="body">
                     <h3>Editierbare Inhalte</h3>
+
+                    <div data-type="editor-fields"></div>
+
+
                     <section>
                         <form>
                             <h4>Überschrift</h4>
@@ -177,6 +181,25 @@
     <div class="contentTypeIcon contentTypeIcon--group" data-content-type="group">
         <i class="fas fa-expand"></i>
     </div>
+
+    <!-- hotspot (section)  -->
+    <section data-prototype="hotspot">
+        <form>
+            <h4>#headline</h4>
+
+            <article class="information">
+                #information
+            </article>
+
+            <article data-type="editor-fields" class="editableFields">
+
+            </article>
+
+            <footer>
+                <button type="submit">Speichern</button>
+            </footer>
+        </form>
+    </section>
 
     <!-- text -->
     <fieldset data-type="text">
