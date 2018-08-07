@@ -51,11 +51,11 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                     oContent = this.Model.getContentByPath(property);
                 //
                 //jItemTypeIcon = jQuery("#argoEditorPrototypes").find(".contentTypeIcon[data-content-type='" + oContent.type + "']").clone();
-                jHotSpot.attr("data-content-path", property);
                 jHotSpot.find("h4").text(oHotSpot.title);
                 //jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
                 //
                 this.writeSpecificEditor(oContent, jHotSpot.find("form .editableFields"));
+                jHotSpot.find("form").attr("data-content-path", property);
                 //
                 jEditorRoot.append(jHotSpot);
             }
