@@ -5,7 +5,9 @@ form {
   button {
     border: 0;
     box-shadow: none;
-    padding: 5px 10px;
+    padding: 5px 20px;
+    font-size: .9rem;
+    font-weight: bold;
   }
 
   button[type=submit] {

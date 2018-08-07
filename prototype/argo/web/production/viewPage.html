@@ -65,86 +65,92 @@
         <div class="overlayWrapper">
             <div class="background"></div>
             <div class="overlay">
-                <h2>Inhalte bearbeiten</h2>
-                <h3>Editierbare Inhalte</h3>
-                <section>
-                    <form>
-                        <h4>Überschrift</h4>
+                <header>
+                    <h2>Inhalte bearbeiten</h2>
 
-                        <article class="information">
-                            Das ist eine Info!
-                        </article>
+                    <div class="interactionButton interactionButton__close"><i class="fas fa-times"></i></div>
+                </header>
+                <div class="body">
+                    <h3>Editierbare Inhalte</h3>
+                    <section>
+                        <form>
+                            <h4>Überschrift</h4>
 
-                        <article class="editableFields">
+                            <article class="information">
+                                Das ist eine Info!
+                            </article>
 
-                            <fieldset data-type="text">
-                                <input type="hidden" name="type" value="text"/>
-                                <input type="hidden" name="name" value=""/>
-                                <label>
-                                    <span>content</span>
-                                    <textarea name="content"></textarea>
-                                </label>
-                            </fieldset>
+                            <article class="editableFields">
 
-                        </article>
-
-                        <footer>
-                            <button type="submit">Speichern</button>
-                        </footer>
-                    </form>
-                </section>
-
-                <section>
-                    <form>
-                        <h4>Großes Präsentier-Bild</h4>
-
-                        <article class="information">
-                            Das ist eine Info!
-                        </article>
-
-                        <article class="editableFields">
-
-                            <fieldset data-type="object">
-                                <input type="hidden" name="type" value="object"/>
-                                <input type="hidden" name="name" value=""/>
-                                <div class="imagePreview">
-                                    <img src="#"/>
-                                </div>
-                                <label>
-                                    <span>source</span>
-                                    <input type="text" name="source"/>
-                                </label>
-
-                                <div>
-                                    <a class="button button_moreOptions" href="#">
-                                        <span class="button_icon"><i class="fas fa-plus"></i></span>
-                                        Weitere Optionen...
-                                    </a>
-                                </div>
-
-                                <div class="moreOptions">
+                                <fieldset data-type="text">
+                                    <input type="hidden" name="type" value="text"/>
+                                    <input type="hidden" name="name" value=""/>
                                     <label>
-                                        <span>referenceId</span>
-                                        <input disabled="disabled" type="text" name="referenceId"/>
+                                        <span>content</span>
+                                        <textarea name="content"></textarea>
                                     </label>
-                                    <label>
-                                        <span>alternativeText</span>
-                                        <input type="text" name="alternativeText"/>
-                                    </label>
-                                    <label>
-                                        <span>mimeType</span>
-                                        <input type="text" name="mimeType"/>
-                                    </label>
-                                </div>
-                            </fieldset>
+                                </fieldset>
 
-                        </article>
+                            </article>
 
-                        <footer>
-                            <button type="submit">Speichern</button>
-                        </footer>
-                    </form>
-                </section>
+                            <footer>
+                                <button type="submit">Speichern</button>
+                            </footer>
+                        </form>
+                    </section>
+
+                    <section>
+                        <form>
+                            <h4>Großes Präsentier-Bild</h4>
+
+                            <article class="information">
+                                Das ist eine Info!
+                            </article>
+
+                            <article class="editableFields">
+
+                                <fieldset data-type="object">
+                                    <input type="hidden" name="type" value="object"/>
+                                    <input type="hidden" name="name" value=""/>
+                                    <div class="imagePreview">
+                                        <img src="#"/>
+                                    </div>
+                                    <label>
+                                        <span>source</span>
+                                        <input type="text" name="source"/>
+                                    </label>
+
+                                    <div>
+                                        <a class="button button_moreOptions" href="#">
+                                            <span class="button_icon"><i class="fas fa-plus"></i></span>
+                                            Weitere Optionen...
+                                        </a>
+                                    </div>
+
+                                    <div class="moreOptions">
+                                        <label>
+                                            <span>referenceId</span>
+                                            <input disabled="disabled" type="text" name="referenceId"/>
+                                        </label>
+                                        <label>
+                                            <span>alternativeText</span>
+                                            <input type="text" name="alternativeText"/>
+                                        </label>
+                                        <label>
+                                            <span>mimeType</span>
+                                            <input type="text" name="mimeType"/>
+                                        </label>
+                                    </div>
+                                </fieldset>
+
+                            </article>
+
+                            <footer>
+                                <button type="submit">Speichern</button>
+                            </footer>
+                        </form>
+                    </section>
+                </div>
             </div>
         </div>
     </div>

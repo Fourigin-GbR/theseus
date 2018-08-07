@@ -32,26 +32,55 @@
 
     .overlay {
       margin: 30px;
-      padding: 30px;
+      padding: 0;
       height: calc(100% - 60px);
-      background-color: $base_color_medium_gray3;
+      background-color: #fff;
       box-sizing: border-box;
-      overflow: auto;
+      overflow: hidden;
+
+      header {
+        height: 100px;
+        position: relative;
+        border-bottom: 1px solid $base_color_light_gray;
+        padding: 1px 30px 10px 30px;
+        display: flex;
+        align-items: end;
+        box-sizing: border-box;
+
+          h2 {
+            font-size: 1.46rem;
+            margin: 0;
+          }
+
+          .interactionButton {
+            position: absolute;
+            background-color: orange;
+            padding: 10px;
+            color: #fff;
+            font-size: 1.3rem;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
+      }
+
+      .body {
+        overflow: auto;
+        height: calc(100% - 100px);
+        padding: 30px;
+      }
 
       h2, h3, h4 {
         margin: 0;
         font-weight: normal;
       }
 
-      h2 {
-        font-size: 1.46rem;
-        margin-top: 10px;
-        margin-bottom: 30px;
-      }
-
       h3 {
         font-size: 1.2rem;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+        margin-top: 30px;
       }
 
       h4 {
@@ -69,19 +98,19 @@
       }
 
       section {
-        border-bottom: 1px solid $base_color_medium_gray4;
+        border-bottom: 1px solid $base_color_light_gray;
         margin: 20px 0 0 0;
         padding: 20px;
         max-width: 1000px;
 
         &:first-of-type {
-          border-top: 1px solid $base_color_medium_gray4;
+          border-top: 1px solid $base_color_light_gray;
         }
 
         article.information {
-          background-color: $base_color_medium_gray2;
-          padding: 5px 10px;
-          border-radius: 5px;
+          background-color: $base_color_medium_light_gray;
+          padding: 10px;
+          border: 1px solid $base_color_light_gray;
         }
 
         fieldset {
@@ -121,12 +150,12 @@
 
       textarea, input[type=text] {
         background-color: $color_basic_dark_background;
-        padding: 10px;
+        padding: 15px;
         border: 0;
         box-shadow: unset;
         color: $color_font_on_dark_background;
         width: 100%;
-        max-width: 600px;
+        box-sizing: border-box;
       }
     }
   }
