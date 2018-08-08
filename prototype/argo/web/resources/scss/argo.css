@@ -1,13 +1,13 @@
 /* colors */
 /* usages */
-@import url("https://fonts.googleapis.com/css?family=Slabo+27px");
-@import url("https://fonts.googleapis.com/css?family=Slabo+27px");
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web");
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web");
 body {
-  font-family: 'Slabo 27px', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 14px; }
 
 textarea {
-  font-family: 'Slabo 27px', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: .9rem; }
 
 /* colors */
@@ -43,7 +43,10 @@ body > header {
   color: #232323;
   position: fixed;
   width: 100%;
-  z-index: 1; }
+  height: 148px;
+  box-sizing: border-box;
+  z-index: 1;
+  overflow: hidden; }
   body > header .siteBrand {
     background-color: #000;
     color: #dcdcdc;
@@ -56,7 +59,14 @@ body > header {
         max-width: 100%; }
   body > header .metaInformationBar {
     display: flex;
-    align-items: flex-end; }
+    align-items: flex-end;
+    height: 35px;
+    margin: 10px 0 0 0;
+    box-sizing: border-box; }
+    body > header .metaInformationBar img.logo {
+      display: block;
+      height: 100%;
+      width: auto; }
     body > header .metaInformationBar a {
       color: inherit; }
     body > header .metaInformationBar nav {
@@ -151,7 +161,6 @@ body > header {
     margin: 0;
     min-height: 100vh;
     overflow: scroll;
-    margin-left: 25px;
     box-sizing: border-box; }
 
 .contentTypeIcon {
@@ -169,23 +178,21 @@ body > header {
 .tabsBar {
   display: flex;
   align-items: center;
-  border-top: 1px solid #686868;
-  padding: 10px 10px 0 10px;
+  padding: 0;
+  margin: 0;
   background-color: #222326;
-  margin-top: 10px;
   width: 100%; }
   .tabsBar .tabsBar_iconButton {
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 5px 10px;
     color: #eee;
     cursor: pointer; }
-    .tabsBar .tabsBar_iconButton:hover, .tabsBar .tabsBar_iconButton.selected {
-      background-color: #b1b1b1; }
+    .tabsBar .tabsBar_iconButton:hover {
+      background-color: rgba(255, 255, 255, 0.08); }
     .tabsBar .tabsBar_iconButton .tabsBar_iconButton_icon {
-      border-radius: 5px;
-      padding: 2px 5px;
-      margin: 5px;
+      padding: 1px 10px;
+      margin: 0 10px 0 0;
       background-color: #e0512f;
       color: #eee;
       font-size: .7rem; }
@@ -193,7 +200,39 @@ body > header {
 /* colors */
 /* usages */
 .toolBar {
-  background-color: #222326; }
+  background-color: #222326;
+  height: 91px;
+  padding: 1px; }
+  .toolBar .mainElements {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    padding: 0 10px; }
+    .toolBar .mainElements .mainElements__currentPagePath {
+      border: 1px solid #dcdcdc;
+      width: 60%;
+      padding: 5px;
+      box-sizing: border-box;
+      display: flex; }
+      .toolBar .mainElements .mainElements__currentPagePath .mainElements__currentPagePath__icon {
+        display: block;
+        margin: 0 10px 0 5px;
+        color: #dcdcdc; }
+    .toolBar .mainElements .pathAsLinkElements {
+      display: flex;
+      align-items: center;
+      color: #dcdcdc; }
+      .toolBar .mainElements .pathAsLinkElements .pathAsLinkElements__element {
+        padding: 0 2px; }
+        .toolBar .mainElements .pathAsLinkElements .pathAsLinkElements__element:first-of-type:before {
+          content: "/";
+          display: inline-block;
+          padding: 0 2px; }
+        .toolBar .mainElements .pathAsLinkElements .pathAsLinkElements__element::after {
+          content: "/";
+          display: inline-block;
+          padding: 0 2px; }
   .toolBar .tools {
     display: flex;
     align-items: flex-end;
@@ -445,11 +484,11 @@ body > header {
 /* colors */
 /* usages */
 body {
-  font-family: 'Slabo 27px', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 14px; }
 
 textarea {
-  font-family: 'Slabo 27px', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: .9rem; }
 
 ul.listItemsAsFlyoutTargets > li .layoutTrigger:hover {

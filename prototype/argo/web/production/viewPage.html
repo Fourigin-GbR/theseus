@@ -42,7 +42,7 @@
                 </li>
                 <li>
                     <a href="#">
-                        Seitenstrukturz
+                        Seitenstruktur
                     </a>
                 </li>
                 <li>
@@ -59,11 +59,22 @@
         </nav>
     </div>
     <div class="toolBar">
+        <div class="mainElements">
+            <div class="mainElements__currentPagePath">
+                <span class="mainElements__currentPagePath__icon"><i class="far fa-folder-open"></i></span>
+                <ul class="pathAsLinkElements">
+                    <li class="pathAsLinkElements__element" th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                        <a href="#" target="_top" th:href="@{/compile/(base=${argo.base},path=${pathToken})}"
+                           th:text="${pathToken}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <ul class="tabsBar">
             <li>
                 <span class="tabsBar_iconButton" data-overlay-id="overlay_editPageContent">
                     <span class="tabsBar_iconButton_icon"><i class="fas fa-edit"></i></span>
-                    Inhalte bearbeiten
+                    Seiteninhalte bearbeiten
                 </span>
             </li>
         </ul>
@@ -221,7 +232,9 @@
     <fieldset data-type="object">
         <input type="hidden" name="type" value="object"/>
         <input type="hidden" name="name" value=""/>
+
         <div class="imagePreview">
+            <span>image</span>
             <img src="#"/>
         </div>
         <label>

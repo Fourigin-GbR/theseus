@@ -2,6 +2,52 @@
 
 .toolBar {
   background-color: $color_basic_dark_background;
+  height: 91px;
+  padding: 1px;
+
+  .mainElements {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    padding: 0 10px;
+
+    .mainElements__currentPagePath {
+      border: 1px solid $base_color_light_gray;
+      width: 60%;
+      padding: 5px;
+      box-sizing: border-box;
+      display: flex;
+
+      .mainElements__currentPagePath__icon {
+        display: block;
+        margin: 0 10px 0 5px;
+        color: $base_color_light_gray;
+      }
+    }
+
+    .pathAsLinkElements {
+      display: flex;
+      align-items: center;
+      color: $base_color_light_gray;
+
+      .pathAsLinkElements__element {
+        padding: 0 2px;
+
+        &:first-of-type:before {
+          content: "/";
+          display: inline-block;
+          padding: 0 2px;
+        }
+
+        &::after {
+          content: "/";
+          display: inline-block;
+          padding: 0 2px;
+        }
+      }
+    }
+  }
 
   .tools {
     display: flex;
