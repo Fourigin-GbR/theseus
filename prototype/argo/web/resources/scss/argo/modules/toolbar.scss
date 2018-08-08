@@ -19,6 +19,11 @@
     left: 0;
     right: 0;
     bottom: 0;
+    display: none;
+
+    &.active {
+      display: block;
+    }
 
     .background {
       position: absolute;
@@ -37,6 +42,12 @@
       background-color: #fff;
       box-sizing: border-box;
       overflow: hidden;
+      display: none;
+
+
+      &.active {
+        display: block;
+      }
 
       header {
         height: 100px;

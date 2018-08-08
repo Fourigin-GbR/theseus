@@ -205,7 +205,10 @@ body > header {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0; }
+    bottom: 0;
+    display: none; }
+    .toolBar .overlayWrapper.active {
+      display: block; }
     .toolBar .overlayWrapper .background {
       position: absolute;
       top: 0;
@@ -220,7 +223,10 @@ body > header {
       height: calc(100% - 60px);
       background-color: #fff;
       box-sizing: border-box;
-      overflow: hidden; }
+      overflow: hidden;
+      display: none; }
+      .toolBar .overlayWrapper .overlay.active {
+        display: block; }
       .toolBar .overlayWrapper .overlay header {
         height: 100px;
         position: relative;

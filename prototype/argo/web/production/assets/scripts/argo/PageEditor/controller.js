@@ -9,8 +9,18 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 {
     var PageEditor = function() {
         this.Model = new com.fourigin.argo.pageEditor.Model();
+        this.Overlays = new com.fourigin.argo.Overlays();
+        this.overlayPageEditor = null;
+        this.initOverlays();
         //
         return this;
+    };
+    //
+    PageEditor.prototype.initOverlays = function() {
+        var self = this;
+        jQuery(".overlay").each(function () {
+            self.overlayPageEditor = self.Overlays.createOverlay(jQuery(this));
+        });
     };
     //
     PageEditor.prototype.setData = function(oData) {
@@ -171,6 +181,10 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             }
         };
 
+        jQuery("[data-overlay-id='overlay_editPageContent']").on("click", function() {
+            self.overlayPageEditor.show();
+        });
+
         jQuery("[data-target-layer-id]").each(function () {
             jQuery(this).on("click", function () {
                 var jThis = jQuery(this);
@@ -205,11 +219,6 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         };
         openCloseListEditorItems();
 
-        jQuery(".layer button.close").on("click", function() {
-            var jLayout = jQuery(this).closest(".layer");
-            jLayout.removeClass("active");
-            jLayout.parent().find(".layoutTrigger").removeClass("active");
-        });
 
         jQuery("form").on("submit", function (e) {
             e.preventDefault();

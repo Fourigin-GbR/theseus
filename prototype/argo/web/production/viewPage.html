@@ -15,6 +15,12 @@
     <!---->
     <script type="text/javascript" src="/assets/scripts/argo/PageEditor/model.js"></script>
     <script type="text/javascript" src="/assets/scripts/argo/PageEditor/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/Overlay/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/Overlay/controller.js"></script>
 </head>
 <body>
 <!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
@@ -55,7 +61,7 @@
     <div class="toolBar">
         <ul class="tabsBar">
             <li>
-                <span class="tabsBar_iconButton">
+                <span class="tabsBar_iconButton" data-overlay-id="overlay_editPageContent">
                     <span class="tabsBar_iconButton_icon"><i class="fas fa-edit"></i></span>
                     Inhalte bearbeiten
                 </span>
@@ -64,7 +70,7 @@
         <!---->
         <div class="overlayWrapper">
             <div class="background"></div>
-            <div class="overlay">
+            <div id="overlay_editPageContent" class="overlay">
                 <header>
                     <h2>Inhalte bearbeiten</h2>
 
