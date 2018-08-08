@@ -289,6 +289,9 @@ body > header {
             .toolBar .overlayWrapper .overlay section fieldset label span {
               display: block;
               margin-bottom: 5px; }
+          .toolBar .overlayWrapper .overlay section fieldset textarea {
+            min-height: 15vh;
+            max-height: 60vh; }
       .toolBar .overlayWrapper .overlay .button {
         display: flex;
         align-items: center;

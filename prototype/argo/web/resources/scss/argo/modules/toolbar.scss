@@ -138,6 +138,11 @@
               margin-bottom: 5px;
             }
           }
+
+          textarea {
+            min-height: 15vh;
+            max-height: 60vh;
+          }
         }
       }
 

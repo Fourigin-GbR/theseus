@@ -185,28 +185,10 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             self.overlayPageEditor.show();
         });
 
-        jQuery("[data-target-layer-id]").each(function () {
-            jQuery(this).on("click", function () {
-                var jThis = jQuery(this);
-                // get target layer:
-                var sId = jThis.attr("data-target-layer-id");
-                var jTargetLayer = jQuery("[data-layer-id='" + sId + "']");
-                //
-                if (jThis.hasClass("active")) {
-                    jThis.removeClass("active");
-                    closeLayer(jTargetLayer);
-                }
-                else {
-                    jThis.addClass("active");
-                    openLayer(jTargetLayer);
-                }
-            });
-        });
 
-        jQuery(".layoutTrigger").each(function () {
-            jQuery(this).on("click", function () {
-                toggleNextLayer(jQuery(this));
-            });
+        jQuery(".button_moreOptions").on("click", function() {
+            //jQuery(this).siblings(".moreOptions").toggle();
+            jQuery(this).siblings(".moreOptions").toggle();
         });
 
         var openCloseListEditorItems = function() {
@@ -218,6 +200,22 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             })
         };
         openCloseListEditorItems();
+
+
+        var adjustHeightOfTextareaToContentSize = function(jTextarea) {
+            var scrollHeight = jTextarea.get(0).scrollHeight;
+            jTextarea.css('height', scrollHeight + 'px');
+        };
+
+        var jAllTextareas = jQuery(".overlay textarea");
+
+        jAllTextareas.on('input, focus', function() {
+            adjustHeightOfTextareaToContentSize(jQuery(this));
+        });
+        jAllTextareas.on('blur', function() {
+            jQuery(this).css("height", "auto");
+        });
+
 
 
         jQuery("form").on("submit", function (e) {
