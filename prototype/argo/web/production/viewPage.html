@@ -64,7 +64,7 @@
                 <span class="mainElements__currentPagePath__icon"><i class="far fa-folder-open"></i></span>
                 <ul class="pathAsLinkElements">
                     <li class="pathAsLinkElements__element" th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
-                        <a href="#" target="_top" th:href="@{/compile/(base=${argo.base},path=${pathToken})}"
+                        <a href="#" target="_top" th:href="@{/view/(base=${argo.base},path=${argo.path})}"
                            th:text="${pathToken}"></a>
                     </li>
                 </ul>
