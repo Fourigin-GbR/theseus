@@ -202,9 +202,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         openCloseListEditorItems();
 
 
+
         var adjustHeightOfTextareaToContentSize = function(jTextarea) {
-            var scrollHeight = jTextarea.get(0).scrollHeight;
-            jTextarea.css('height', scrollHeight + 'px');
+            jTextarea.addClass("enlarge");
         };
 
         var jAllTextareas = jQuery(".overlay textarea");
@@ -212,8 +212,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jAllTextareas.on('input, focus', function() {
             adjustHeightOfTextareaToContentSize(jQuery(this));
         });
-        jAllTextareas.on('blur', function() {
-            jQuery(this).css("height", "auto");
+        jAllTextareas.on('focusout', function() {
+            jQuery(this).removeClass("enlarge");
         });
 
 

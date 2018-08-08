@@ -330,7 +330,11 @@ body > header {
               margin-bottom: 5px; }
           .toolBar .overlayWrapper .overlay section fieldset textarea {
             min-height: 15vh;
-            max-height: 60vh; }
+            max-height: 60vh;
+            height: 15vh;
+            transition: height .4s ease-out; }
+            .toolBar .overlayWrapper .overlay section fieldset textarea.enlarge {
+              height: 60vh; }
       .toolBar .overlayWrapper .overlay .button {
         display: flex;
         align-items: center;

@@ -188,6 +188,12 @@
           textarea {
             min-height: 15vh;
             max-height: 60vh;
+            height: 15vh;
+            transition: height .4s ease-out;
+
+            &.enlarge {
+              height: 60vh;
+            }
           }
         }
       }
