@@ -188,7 +188,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 
         jQuery(".button_moreOptions").on("click", function() {
             //jQuery(this).siblings(".moreOptions").toggle();
-            jQuery(this).siblings(".moreOptions").toggle();
+            jQuery(this).siblings(".moreOptions").slideToggle();
         });
 
         var openCloseListEditorItems = function() {

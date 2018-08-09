@@ -81,7 +81,7 @@
         <!---->
         <div class="overlayWrapper">
             <div class="background"></div>
-            <div id="overlay_editPageContent" class="overlay">
+            <div id="overlay_editPageContent" class="overlay editor">
                 <header>
                     <h2>Inhalte bearbeiten</h2>
 
@@ -92,85 +92,6 @@
 
                     <div data-type="editor-fields"></div>
 
-
-                    <section>
-                        <form>
-                            <h4>Überschrift</h4>
-
-                            <article class="information">
-                                Das ist eine Info!
-                            </article>
-
-                            <article class="editableFields">
-
-                                <fieldset data-type="text">
-                                    <input type="hidden" name="type" value="text"/>
-                                    <input type="hidden" name="name" value=""/>
-                                    <label>
-                                        <span>content</span>
-                                        <textarea name="content"></textarea>
-                                    </label>
-                                </fieldset>
-
-                            </article>
-
-                            <footer>
-                                <button type="submit">Speichern</button>
-                            </footer>
-                        </form>
-                    </section>
-
-                    <section>
-                        <form>
-                            <h4>Großes Präsentier-Bild</h4>
-
-                            <article class="information">
-                                Das ist eine Info!
-                            </article>
-
-                            <article class="editableFields">
-
-                                <fieldset data-type="object">
-                                    <input type="hidden" name="type" value="object"/>
-                                    <input type="hidden" name="name" value=""/>
-                                    <div class="imagePreview">
-                                        <img src="#"/>
-                                    </div>
-                                    <label>
-                                        <span>source</span>
-                                        <input type="text" name="source"/>
-                                    </label>
-
-                                    <div>
-                                        <a class="button button_moreOptions" href="#">
-                                            <span class="button_icon"><i class="fas fa-plus"></i></span>
-                                            Weitere Optionen...
-                                        </a>
-                                    </div>
-
-                                    <div class="moreOptions">
-                                        <label>
-                                            <span>referenceId</span>
-                                            <input disabled="disabled" type="text" name="referenceId"/>
-                                        </label>
-                                        <label>
-                                            <span>alternativeText</span>
-                                            <input type="text" name="alternativeText"/>
-                                        </label>
-                                        <label>
-                                            <span>mimeType</span>
-                                            <input type="text" name="mimeType"/>
-                                        </label>
-                                    </div>
-                                </fieldset>
-
-                            </article>
-
-                            <footer>
-                                <button type="submit">Speichern</button>
-                            </footer>
-                        </form>
-                    </section>
                 </div>
             </div>
         </div>
@@ -242,7 +163,7 @@
             <input type="text" name="source"/>
         </label>
 
-        <div>
+        <div class="moreOptionsWrapper">
             <a class="button button_moreOptions" href="#">
                 <span class="button_icon"><i class="fas fa-plus"></i></span>
                 Weitere Optionen...
@@ -270,7 +191,7 @@
         <input type="hidden" name="type" value="list"/>
         <input type="hidden" name="name" value=""/>
         <fieldset>
-            <ul>
+            <ul class="listChildItemsWrapper">
 
             </ul>
         </fieldset>
@@ -284,10 +205,12 @@
 
             </fieldset>
         </fieldset>
-        <span class="listStatusIcon">
-            <i class="fas fa-angle-down"></i>
-        </span>
         <span class="listOpenTrigger"></span>
+        <div class="listStatusIcon">
+            <span class="listStatusIcon__icon">
+                <i class="fas fa-angle-down"></i>
+            </span>
+        </div>
     </li>
 
     <!-- list-text -->
