@@ -292,7 +292,8 @@ body > header {
       .toolBar .overlayWrapper .overlay .body {
         overflow: auto;
         height: calc(100% - 100px);
-        padding: 30px; }
+        padding: 30px;
+        box-sizing: border-box; }
       .toolBar .overlayWrapper .overlay h2, .toolBar .overlayWrapper .overlay h3, .toolBar .overlayWrapper .overlay h4 {
         margin: 0;
         font-weight: normal; }
