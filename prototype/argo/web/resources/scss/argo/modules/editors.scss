@@ -127,6 +127,25 @@
       }
     }
 
+
+    .button_moreOptions {
+      .button_moreOptions__copy--closed {
+        display: block;
+      }
+      .button_moreOptions__copy--opened {
+        display: none;
+      }
+
+      &.opened {
+        .button_moreOptions__copy--closed {
+          display: none;
+        }
+        .button_moreOptions__copy--opened {
+          display: block;
+        }
+      }
+    }
+
     .moreOptionsWrapper {
       .moreOptions {
         display: none;

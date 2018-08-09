@@ -597,6 +597,14 @@ textarea {
   margin-bottom: 15px; }
   .editor fieldset[data-type=list] .imagePreview img {
     max-width: 100%; }
+.editor fieldset[data-type=list] .button_moreOptions .button_moreOptions__copy--closed {
+  display: block; }
+.editor fieldset[data-type=list] .button_moreOptions .button_moreOptions__copy--opened {
+  display: none; }
+.editor fieldset[data-type=list] .button_moreOptions.opened .button_moreOptions__copy--closed {
+  display: none; }
+.editor fieldset[data-type=list] .button_moreOptions.opened .button_moreOptions__copy--opened {
+  display: block; }
 .editor fieldset[data-type=list] .moreOptionsWrapper .moreOptions {
   display: none;
   box-sizing: border-box;
