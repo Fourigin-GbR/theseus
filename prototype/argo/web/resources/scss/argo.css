@@ -328,8 +328,7 @@ body > header {
             margin-top: 10px;
             display: block; }
             .toolBar .overlayWrapper .overlay section fieldset label span {
-              display: block;
-              margin-bottom: 5px; }
+              display: block; }
           .toolBar .overlayWrapper .overlay section fieldset textarea {
             min-height: 15vh;
             max-height: 60vh;
@@ -522,30 +521,27 @@ textarea {
   font-size: .9rem; }
 
 .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li {
-  border-top: 1px solid #9a9a9a;
-  padding: 10px 0 0 15px;
+  padding: 10px 15px 0 15px;
   position: relative;
-  transition: all .3s ease; }
-  .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li:last-of-type {
-    border-bottom: 1px solid #9a9a9a; }
+  transition: all .3s ease;
+  background-color: #dcdcdc;
+  margin-bottom: 2px; }
   .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li > fieldset,
   .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li > fieldset > fieldset {
     margin: 0; }
   .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li .listStatusIcon {
-    font-size: 1.5rem;
-    transition: all .6s ease;
-    position: relative; }
-    .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li .listStatusIcon .listStatusIcon__icon {
-      background-color: #43948d;
-      padding: 0 30px;
-      color: #fff;
-      font-size: 1rem;
-      line-height: 1;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%) rotate(180deg);
-      cursor: pointer; }
+    background-color: #686868;
+    padding: 5px 30px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    cursor: pointer;
+    transition: top .6s ease; }
   .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li .listOpenTrigger {
     display: none;
     position: absolute;
@@ -562,7 +558,9 @@ textarea {
         padding-left: 0; }
       .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView > fieldset > fieldset > fieldset:last-of-type {
         padding-right: 0; }
-    .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView .listStatusIcon .listStatusIcon__icon {
+    .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView .listStatusIcon {
+      top: auto;
+      bottom: 0;
       transform: translateX(-50%) rotate(0deg); }
     .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView .listOpenTrigger {
       display: block; }
@@ -584,7 +582,7 @@ textarea {
       .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView fieldset[data-type=text] label textarea {
         height: 40px;
         background-color: transparent;
-        color: #b1b1b1;
+        color: #686868;
         resize: none;
         min-height: initial;
         margin: 0;
@@ -592,6 +590,10 @@ textarea {
         overflow: hidden; }
     .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView fieldset[data-type=listGroup] > fieldset {
       display: flex; }
+  .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li:hover {
+    background-color: #b1b1b1; }
+    .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li:hover .listStatusIcon {
+      background-color: #43948d; }
 .editor fieldset[data-type=list] .imagePreview {
   width: 100%;
   margin-bottom: 15px; }
@@ -681,7 +683,8 @@ form button {
 form button[type=submit] {
   background-color: #43948d;
   color: #fff;
-  margin-top: 20px; }
+  margin-top: 20px;
+  cursor: pointer; }
 form input {
   border: 0;
   padding: 5px 10px; }

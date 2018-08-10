@@ -3,117 +3,120 @@
 
 .editor {
   fieldset[data-type=list] {
-    > fieldset ul.listChildItemsWrapper > li {
-      border-top: 1px solid $base_color_medium_gray3;
-      padding: 10px 0 0 15px;
-      position: relative;
-      transition: all .3s ease;
-
-      &:last-of-type {
-        border-bottom: 1px solid $base_color_medium_gray3;
-      }
-
-      > fieldset,
-      > fieldset > fieldset {
-        margin: 0;
-      }
-
-      .listStatusIcon {
-        font-size: 1.5rem;
-        transition: all .6s ease;
+    > fieldset ul.listChildItemsWrapper {
+      > li {
+        padding: 10px 15px 0 15px;
         position: relative;
+        transition: all .3s ease;
+        background-color: $base_color_light_gray;
+        margin-bottom: 2px;
 
-        .listStatusIcon__icon {
-          background-color: $base_color_green;
-          padding: 0 30px;
+        > fieldset,
+        > fieldset > fieldset {
+          margin: 0;
+        }
+
+        .listStatusIcon {
+          background-color: $base_color_medium_gray4;
+          padding: 5px 30px;
           color: #fff;
           font-size: 1rem;
           line-height: 1;
           position: absolute;
-          bottom: 0;
+          top: 0;
+          bottom: auto;
           left: 50%;
           transform: translateX(-50%) rotate(180deg);
           cursor: pointer;
-        }
-      }
-      .listOpenTrigger {
-        display: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-      }
-
-      &.compactView {
-        padding: 5px 0 5px 15px;
-        cursor: pointer;
-
-
-        > fieldset > fieldset > fieldset {
-          padding: 0 10px;
-
-          &:first-of-type {
-            padding-left: 0;
-          }
-          &:last-of-type {
-            padding-right: 0;
-          }
-        }
-
-        .listStatusIcon {
-          .listStatusIcon__icon {
-            transform: translateX(-50%) rotate(0deg);
-          }
+          transition: top .6s ease;
         }
 
         .listOpenTrigger {
-          display: block;
-        }
-
-        .imagePreview {
-          margin-bottom: 0;
-        }
-
-        .moreOptionsWrapper {
           display: none;
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
         }
 
-        fieldset[data-type=object] {
-          label,
-          .imagePreview span {
+        &.compactView {
+          padding: 5px 0 5px 15px;
+          cursor: pointer;
+
+          > fieldset > fieldset > fieldset {
+            padding: 0 10px;
+
+            &:first-of-type {
+              padding-left: 0;
+            }
+            &:last-of-type {
+              padding-right: 0;
+            }
+          }
+
+          .listStatusIcon {
+            top: auto;
+            bottom: 0;
+            transform: translateX(-50%) rotate(0deg);
+          }
+
+          .listOpenTrigger {
+            display: block;
+          }
+
+          .imagePreview {
+            margin-bottom: 0;
+          }
+
+          .moreOptionsWrapper {
             display: none;
           }
 
-          .imagePreview,
-          .imagePreview img {
-            height: 40px;
-          }
-        }
-
-        fieldset[data-type=text] {
-          label {
-            margin: 0;
-            background-color: transparent;
-
-            span {
+          fieldset[data-type=object] {
+            label,
+            .imagePreview span {
               display: none;
             }
-            textarea {
+
+            .imagePreview,
+            .imagePreview img {
               height: 40px;
-              background-color: transparent;
-              color: $base_color_medium_gray2;
-              resize: none;
-              min-height: initial;
-              margin: 0;
-              padding: 2px 10px;
-              overflow: hidden;
             }
+          }
+
+          fieldset[data-type=text] {
+            label {
+              margin: 0;
+              background-color: transparent;
+
+              span {
+                display: none;
+              }
+              textarea {
+                height: 40px;
+                background-color: transparent;
+                color: $base_color_medium_gray4;
+                resize: none;
+                min-height: initial;
+                margin: 0;
+                padding: 2px 10px;
+                overflow: hidden;
+              }
+            }
+          }
+
+          fieldset[data-type=listGroup] > fieldset {
+            display: flex;
           }
         }
 
-        fieldset[data-type=listGroup] > fieldset {
-          display: flex;
+        &:hover {
+          background-color: $base_color_medium_gray2;
+
+          .listStatusIcon {
+            background-color: $base_color_green;
+          }
         }
       }
     }
@@ -126,7 +129,6 @@
         max-width: 100%;
       }
     }
-
 
     .button_moreOptions {
       .button_moreOptions__copy--closed {
