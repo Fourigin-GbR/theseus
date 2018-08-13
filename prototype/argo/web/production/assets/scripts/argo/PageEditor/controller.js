@@ -158,29 +158,6 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
     PageEditor.prototype.setEvents = function() {
         var self = this;
 
-        var openLayer = function (jLayer) {
-            jLayer.addClass("active");
-        };
-        var closeLayer = function (jLayer) {
-            jLayer.removeClass("active");
-            jLayer.find(".layer").removeClass("active");
-        };
-
-        var toggleNextLayer = function (jLayoutTrigger) {
-            var jNextChildLayer = jLayoutTrigger.siblings(".layer:first");
-            //
-            // Hide all other layer from this level first:
-            jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
-            jLayoutTrigger.closest(".listItemsAsFlyoutTargets").find(".layoutTrigger").filter(":not(jLayoutTrigger)").removeClass("active");
-            jLayoutTrigger.addClass("active");
-            jNextChildLayer.toggleClass("active");
-            // TODO: Close ALL others on the same level
-            if (!jNextChildLayer.hasClass("active")) {
-                /* Close ALL child layers */
-                jNextChildLayer.find(".layer").removeClass("active");
-            }
-        };
-
         jQuery("[data-overlay-id='overlay_editPageContent']").on("click", function() {
             self.overlayPageEditor.show();
         });

@@ -13,9 +13,9 @@
     left: 0;
     right: 0;
     padding: 30px 20px;
-    background-color: $base_color_light_gray;
-    color: $base_color_dark_light_gray;
-    border-top: 2px solid $base_color_dark_light_gray;
+    background-color: #fff;
+    color: $base_color_medium_gray;
+    border-top: 2px solid $base_color_dark_gray;
     transition: all 1s cubic-bezier(.68,-0.55,.27,1.55);
     transform: translateY(100%);
     display: flex;
@@ -32,6 +32,11 @@
 
     .copy {
       font-size: 1rem;
+
+      h5 {
+        font-size: 1.2rem;
+        margin: 0;
+      }
     }
   }
 }
