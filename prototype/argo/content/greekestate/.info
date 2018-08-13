@@ -7,15 +7,15 @@
     "displayName" : "search",
     "description" : "Auto-created directory info. Don't forget to specify all properties!",
     "templateReference" : {
-      "templateId" : "unspecified",
-      "variationId" : "unspecified",
-      "revision" : "unspecified"
+      "templateId" : "",
+      "variationId" : "",
+      "revision" : ""
     },
     "staged" : false,
     "compileState" : {
       "checksum" : "",
       "compiled" : false,
-      "timestamp" : 1529442637008,
+      "timestamp" : 1533736619832,
       "message" : ""
     },
     "checksum" : {
@@ -45,9 +45,9 @@
     },
     "staged" : false,
     "compileState" : {
-      "checksum" : "",
+      "checksum" : "A18718BF2A1934A4D9A7EC01F43EBA46-9FC4D1098A4D4C11A5024F1BDD0FDE5E-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F",
       "compiled" : false,
-      "timestamp" : 1529442637021,
+      "timestamp" : 1534191520297,
       "message" : ""
     },
     "checksum" : {
@@ -78,9 +78,9 @@
     },
     "staged" : false,
     "compileState" : {
-      "checksum" : "",
+      "checksum" : "859EC687B86D96F7F35BC05DA1F5C926-7FA54A1FA62018CA446A2DE1152E17CE-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F",
       "compiled" : false,
-      "timestamp" : 1529442637039,
+      "timestamp" : 1534192965811,
       "message" : ""
     },
     "checksum" : {
@@ -106,7 +106,7 @@
     "compileState" : {
       "checksum" : "",
       "compiled" : false,
-      "timestamp" : 1529442637047,
+      "timestamp" : 1533736619863,
       "message" : ""
     },
     "checksum" : {
@@ -127,23 +127,24 @@
     "templateReference" : {
       "templateId" : "greekestate.index",
       "variationId" : "default",
-      "revision" : "unspecified"
+      "revision" : ""
     },
     "staged" : false,
     "compileState" : {
-      "checksum" : "",
-      "compiled" : false,
-      "timestamp" : 1529442637054,
+      "checksum" : "3C3CAD0549D70F4A879EBE1FD7A9D6BE-5D8210F45E804C74DA382995293C28BA-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F-9DCF2A6F12095ECFF342E9FA0C5CA72F",
+      "compiled" : true,
+      "timestamp" : 1534192961962,
       "message" : ""
     },
     "checksum" : {
       "metaDataValue" : "3C3CAD0549D70F4A879EBE1FD7A9D6BE",
-      "contentValue" : "371FC3A59CFE7AD897AC5F4CB0B914B0",
+      "contentValue" : "5D8210F45E804C74DA382995293C28BA",
       "dataSourceValues" : {
         "allNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
         "timestamp" : "9DCF2A6F12095ECFF342E9FA0C5CA72F",
         "objectNodes" : "9DCF2A6F12095ECFF342E9FA0C5CA72F"
       }
-    }
+    },
+    "revision" : "1"
   } ]
 }
