@@ -628,7 +628,7 @@ textarea {
     right: 0;
     bottom: 0; }
   .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView {
-    padding: 5px 0 5px 15px;
+    padding: 5px 15px 5px 15px;
     cursor: pointer; }
     .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView > fieldset > fieldset > fieldset {
       padding: 0 10px; }
@@ -637,8 +637,6 @@ textarea {
       .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView > fieldset > fieldset > fieldset:last-of-type {
         padding-right: 0; }
     .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView .listStatusIcon {
-      top: auto;
-      bottom: 0;
       transform: translateX(-50%) rotate(0deg); }
     .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li.compactView .listOpenTrigger {
       display: block; }

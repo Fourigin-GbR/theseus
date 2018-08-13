@@ -199,7 +199,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             adjustHeightOfTextareaToContentSize(jQuery(this));
         });
         jAllTextareas.on('focusout', function() {
-            jQuery(this).removeClass("enlarge");
+            var jCurrentFocusedElement = jQuery(this);
+            window.setTimeout(function(){jCurrentFocusedElement.removeClass("enlarge");}, 300);
         });
 
         var blockerTimeoutHandleCache = null;
