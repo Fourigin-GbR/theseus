@@ -64,7 +64,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                 jHotSpot.find("h4").text(oHotSpot.title);
                 //jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
                 //
-                this.writeSpecificEditor(oContent, jHotSpot.find("form .editableFields"));
+                this.writeSpecificEditor(oContent, jHotSpot.find("form [data-type='editor-fields']"));
                 jHotSpot.find("form").attr("data-content-path", property);
                 //
                 jEditorRoot.append(jHotSpot);
@@ -225,14 +225,22 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             jQuery(this).removeClass("enlarge");
         });
 
-
+        var blockerTimeoutHandleCache = null;
 
         jQuery("form").on("submit", function (e) {
             e.preventDefault();
             e.stopPropagation();
             //
-            var jData = self.Model.generateArgoContentElementJsonByMarkup(jQuery(this).find("fieldset:first"));
+            var jData = self.Model.generateArgoContentElementJsonByMarkup(jQuery(this).find("fieldset:first")),
+                jBlockingLayer = jQuery(this).find(".blockingOverlay");
             // TODO: das klappt so nicht. ich muss über die DOM-Elemente interieren, damit ich jedes <fieldset> umwandeln kann in ein Type-Element oder ein Elements.
+
+            blockerTimeoutHandleCache = blockerTimeoutHandleCache || null;
+
+            if(blockerTimeoutHandleCache) {
+                window.clearTimeout(blockerTimeoutHandleCache);
+            }
+            blockerTimeoutHandleCache = window.setTimeout(function(){jBlockingLayer.addClass("active")}, 1000);
 
             var oNewDataObject = {
                 "base": self.Model.getBase(),
@@ -251,11 +259,21 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             });
 
             request.done(function (msg) {
+                jBlockingLayer.removeClass("active");
+                if(blockerTimeoutHandleCache) {
+                    window.clearTimeout(blockerTimeoutHandleCache);
+                    blockerTimeoutHandleCache = null;
+                }
                 jQuery("iframe#pageContent")[0].contentWindow.location.reload(true);
             });
 
             request.fail(function (jqXHR, textStatus) {
                 alert("Request failed: " + textStatus);
+                jBlockingLayer.removeClass("active");
+                if(blockerTimeoutHandleCache) {
+                    window.clearTimeout(blockerTimeoutHandleCache);
+                    blockerTimeoutHandleCache = null;
+                }
             });
         });
     };

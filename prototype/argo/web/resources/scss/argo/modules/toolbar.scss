@@ -1,4 +1,5 @@
 @import "../_settings/_colors.scss";
+@import "../_settings/_animations.scss";
 
 .toolBar {
   background-color: $color_basic_dark_background;
@@ -150,6 +151,35 @@
 
       article, footer {
         margin-left: 20px;
+        position: relative;
+      }
+
+      article .blockingOverlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(255,255,255,.8);
+        justify-content: center;
+        align-items: center;
+        display: none;
+
+        &.active {
+          display: flex;
+        }
+
+        .blockingOverlay__statusMessage {
+          border: 1px solid #838383;
+          padding: 5px 20px;
+          background-color: #ececec;
+
+          .blockingOverlay__statusMessage__icon {
+            display: inline-block;
+            margin-right: 10px;
+          }
+        }
+
       }
 
       footer {
