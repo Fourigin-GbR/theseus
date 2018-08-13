@@ -267,12 +267,10 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                     window.clearTimeout(blockerTimeoutHandleCache);
                     blockerTimeoutHandleCache = null;
                 }
-                jMessageSuccessfullySaved.removeClass("inactive");
                 jMessageSuccessfullySaved.addClass("active");
                 window.setTimeout(function(){
                     jMessageSuccessfullySaved.removeClass("active");
-                    jMessageSuccessfullySaved.addClass("inactive");
-                }(), 2000);
+                }, 2500);
                 jQuery("iframe#pageContent")[0].contentWindow.location.reload(true);
             });
 

@@ -199,13 +199,11 @@
           color: #fff;
           opacity: 0;
           pointer-events: none;
+          transition: opacity 5s ease;
 
           &.active {
-            animation: fadeIn 1s linear 1;
-          }
-          &.inactive {
-            animation: fadeOut 5s linear 1;
-            pointer-events: none;
+            transition: opacity .5s ease;
+            opacity: 1;
           }
 
           &:after {

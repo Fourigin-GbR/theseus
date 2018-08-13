@@ -368,12 +368,11 @@ body > header {
           background-color: #fb9d23;
           color: #fff;
           opacity: 0;
-          pointer-events: none; }
+          pointer-events: none;
+          transition: opacity 5s ease; }
           .toolBar .overlayWrapper .overlay .messages .messages__message.active {
-            animation: fadeIn 1s linear 1; }
-          .toolBar .overlayWrapper .overlay .messages .messages__message.inactive {
-            animation: fadeOut 5s linear 1;
-            pointer-events: none; }
+            transition: opacity .5s ease;
+            opacity: 1; }
           .toolBar .overlayWrapper .overlay .messages .messages__message:after {
             top: 100%;
             right: 10%;
