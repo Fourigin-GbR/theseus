@@ -119,7 +119,7 @@ body > header {
           .iFrameContent aside > ul > li > span:hover {
             background-color: #9a9a9a; }
           .iFrameContent aside > ul > li > span.active {
-            background-color: #e0512f; }
+            background-color: #fb9d23; }
           .iFrameContent aside > ul > li > span i {
             /* TODO: Hacked, define clear styles */
             padding: 0 0 10px 0;
@@ -217,6 +217,16 @@ body > header {
     transform: scale(1); }
   100% {
     transform: scale(1); } }
+@keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 .toolBar {
   background-color: #222326;
   height: 91px;
@@ -298,7 +308,7 @@ body > header {
           margin: 0; }
         .toolBar .overlayWrapper .overlay header .interactionButton {
           position: absolute;
-          background-color: orange;
+          background-color: #e0512f;
           padding: 10px;
           color: #fff;
           font-size: 1.3rem;
@@ -347,6 +357,37 @@ body > header {
             margin-right: 10px; }
       .toolBar .overlayWrapper .overlay footer {
         text-align: end; }
+      .toolBar .overlayWrapper .overlay .messages {
+        position: relative; }
+        .toolBar .overlayWrapper .overlay .messages .messages__message {
+          position: absolute;
+          right: 5px;
+          bottom: 0;
+          padding: 5px 10px;
+          border: 2px solid #fb9d23;
+          background-color: #fb9d23;
+          color: #fff;
+          opacity: 0;
+          pointer-events: none; }
+          .toolBar .overlayWrapper .overlay .messages .messages__message.active {
+            animation: fadeIn 1s linear 1; }
+          .toolBar .overlayWrapper .overlay .messages .messages__message.inactive {
+            animation: fadeOut 5s linear 1;
+            pointer-events: none; }
+          .toolBar .overlayWrapper .overlay .messages .messages__message:after {
+            top: 100%;
+            right: 10%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-top-color: #fb9d23;
+            border-width: 10px; }
+          .toolBar .overlayWrapper .overlay .messages .messages__message .messages__message__icon {
+            display: inline-block;
+            margin-right: 10px; }
       .toolBar .overlayWrapper .overlay section {
         border-bottom: 1px solid #dcdcdc;
         margin: 20px 0 0 0;
@@ -536,7 +577,7 @@ textarea {
 ul.listItemsAsFlyoutTargets > li .layoutTrigger:hover {
   background-color: #9a9a9a; }
 ul.listItemsAsFlyoutTargets > li .layoutTrigger.active {
-  background-color: #e0512f; }
+  background-color: #fb9d23; }
 ul.listItemsAsFlyoutTargets > li .listItemsAsFlyoutTargets__wrapper {
   display: flex;
   align-items: center;
@@ -659,9 +700,9 @@ textarea {
   padding: 4px 10px;
   min-width: 180px; }
   .graphicTextBox.graphicTextBox--primeStatus {
-    border-bottom: 2px solid #e0512f; }
+    border-bottom: 2px solid #fb9d23; }
   .graphicTextBox .graphicTextBox__icon {
-    background-color: #e0512f;
+    background-color: #fb9d23;
     align-content: center;
     padding: 5px;
     border-radius: 5px; }

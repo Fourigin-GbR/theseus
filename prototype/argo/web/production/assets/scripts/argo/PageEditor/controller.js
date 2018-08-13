@@ -228,10 +228,13 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         var blockerTimeoutHandleCache = null;
 
         jQuery("form").on("submit", function (e) {
+            var jThis = jQuery(this),
+                jMessageSuccessfullySaved = jThis.find(".messages__message[data-type='successfully-stored']");
+            //
             e.preventDefault();
             e.stopPropagation();
             //
-            var jData = self.Model.generateArgoContentElementJsonByMarkup(jQuery(this).find("fieldset:first")),
+            var jData = self.Model.generateArgoContentElementJsonByMarkup(jThis.find("fieldset:first")),
                 jBlockingLayer = jQuery(this).find(".blockingOverlay");
             // TODO: das klappt so nicht. ich muss über die DOM-Elemente interieren, damit ich jedes <fieldset> umwandeln kann in ein Type-Element oder ein Elements.
 
@@ -264,6 +267,12 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                     window.clearTimeout(blockerTimeoutHandleCache);
                     blockerTimeoutHandleCache = null;
                 }
+                jMessageSuccessfullySaved.removeClass("inactive");
+                jMessageSuccessfullySaved.addClass("active");
+                window.setTimeout(function(){
+                    jMessageSuccessfullySaved.removeClass("active");
+                    jMessageSuccessfullySaved.addClass("inactive");
+                }(), 2000);
                 jQuery("iframe#pageContent")[0].contentWindow.location.reload(true);
             });
 

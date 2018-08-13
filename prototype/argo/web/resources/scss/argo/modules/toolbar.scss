@@ -113,7 +113,7 @@
 
           .interactionButton {
             position: absolute;
-            background-color: orange;
+            background-color: $base_color_red;
             padding: 10px;
             color: #fff;
             font-size: 1.3rem;
@@ -184,6 +184,48 @@
 
       footer {
         text-align: end;
+      }
+
+      .messages {
+        position: relative;
+
+        .messages__message {
+          position: absolute;
+          right: 5px;
+          bottom: 0;
+          padding: 5px 10px;
+          border: 2px solid $base_color_orange;
+          background-color: $base_color_orange;
+          color: #fff;
+          opacity: 0;
+          pointer-events: none;
+
+          &.active {
+            animation: fadeIn 1s linear 1;
+          }
+          &.inactive {
+            animation: fadeOut 5s linear 1;
+            pointer-events: none;
+          }
+
+          &:after {
+            top: 100%;
+            right: 10%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-top-color: $base_color_orange;
+            border-width: 10px;
+          }
+
+          .messages__message__icon {
+            display: inline-block;
+            margin-right: 10px;
+          }
+        }
       }
 
       section {
