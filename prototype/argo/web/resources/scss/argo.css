@@ -693,6 +693,35 @@ textarea {
 
 /* colors */
 /* usages */
+.globalNotifications {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50; }
+  .globalNotifications .globalNotifications__globalNotification {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 20px;
+    background-color: #dcdcdc;
+    color: #505050;
+    border-top: 2px solid #505050;
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform: translateY(100%);
+    display: flex;
+    align-items: center; }
+    .globalNotifications .globalNotifications__globalNotification.active {
+      transform: translateY(0); }
+    .globalNotifications .globalNotifications__globalNotification .icon {
+      font-size: 2rem;
+      margin-right: 50px; }
+    .globalNotifications .globalNotifications__globalNotification .copy {
+      font-size: 1rem; }
+
+/* colors */
+/* usages */
 .graphicTextBox {
   background-color: #000;
   color: #dcdcdc;

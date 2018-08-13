@@ -229,7 +229,8 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 
         jQuery("form").on("submit", function (e) {
             var jThis = jQuery(this),
-                jMessageSuccessfullySaved = jThis.find(".messages__message[data-type='successfully-stored']");
+                jMessageSuccessfullySaved = jThis.find(".messages__message[data-type='successfully-stored']"),
+                jGlobalMessagePageReloaded = jQuery(".globalNotifications__globalNotification[data-type='page-reloaded']");
             //
             e.preventDefault();
             e.stopPropagation();
@@ -272,6 +273,10 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                     jMessageSuccessfullySaved.removeClass("active");
                 }, 2500);
                 jQuery("iframe#pageContent")[0].contentWindow.location.reload(true);
+                jGlobalMessagePageReloaded.addClass("active");
+                window.setTimeout(function(){
+                    jGlobalMessagePageReloaded.removeClass("active");
+                }, 5000);
             });
 
             request.fail(function (jqXHR, textStatus) {
