@@ -190,7 +190,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 
 
         var adjustHeightOfTextareaToContentSize = function(jTextarea) {
-            jTextarea.addClass("enlarge");
+            if(jTextarea[0].scrollHeight > Math.ceil(jTextarea.height() + 30)) { // add padding TODO: read padding dynamically
+                jTextarea.addClass("enlarge");
+            }
         };
 
         var jAllTextareas = jQuery(".overlay textarea");
