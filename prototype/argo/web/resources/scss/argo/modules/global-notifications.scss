@@ -40,3 +40,19 @@
     }
   }
 }
+
+
+
+
+.badge {
+  display: inline-block;
+  padding: 0 3px 1px 3px;
+  background-color: $base_color_orange;
+  line-height: 1;
+  position: relative;
+  top: -.5em;
+  font-size: .9em;
+  color: $base_color_dark_light_gray;
+  margin-left: 5px;
+  border-radius: 3px;
+}
