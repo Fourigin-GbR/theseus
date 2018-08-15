@@ -1,0 +1,14 @@
+@import "../_settings/_colors.scss";
+@import "../_settings/_fonts.scss";
+
+.editor {
+  fieldset[data-type="list"] {
+    .compactView {
+      .mce-tinymce {
+        .mce-top-part, .mce-statusbar {
+          display: none;
+        }
+      }
+    }
+  }
+}

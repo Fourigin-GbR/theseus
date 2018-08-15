@@ -612,14 +612,8 @@ textarea {
   font-family: 'Titillium Web', sans-serif;
   font-size: .9rem; }
 
-.trumbowyg-editor {
-  background-color: #222326;
-  padding: 15px;
-  border: 0;
-  box-shadow: unset;
-  color: #dcdcdc;
-  width: 100%;
-  box-sizing: border-box; }
+.editor fieldset[data-type="list"] .compactView .mce-tinymce .mce-top-part, .editor fieldset[data-type="list"] .compactView .mce-tinymce .mce-statusbar {
+  display: none; }
 
 .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li {
   padding: 10px 15px 0 15px;
