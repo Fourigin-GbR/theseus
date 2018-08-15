@@ -240,6 +240,11 @@
           background-color: $base_color_medium_light_gray;
           padding: 10px;
           border: 1px solid $base_color_light_gray;
+          display: none;
+
+          &.active {
+            display: block;
+          }
         }
 
         fieldset {

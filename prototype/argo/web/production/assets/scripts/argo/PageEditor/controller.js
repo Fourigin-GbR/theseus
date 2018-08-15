@@ -62,6 +62,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
                 //
                 //jItemTypeIcon = jQuery("#argoEditorPrototypes").find(".contentTypeIcon[data-content-type='" + oContent.type + "']").clone();
                 jHotSpot.find("h4").text(oHotSpot.title);
+                if(oHotSpot.description) {
+                    jHotSpot.find(".information").addClass("active").text(oHotSpot.description);
+                }
                 //jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
                 //
                 this.writeSpecificEditor(oContent, jHotSpot.find("form [data-type='editor-fields']"));
@@ -161,7 +164,11 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jQuery("[data-overlay-id='overlay_editPageContent']").on("click", function() {
             self.overlayPageEditor.show();
         });
-
+        tinymce.init({
+            selector: 'textarea.html',
+            menubar: false,
+            content_css: '/assets/styles/argo-tinymce.css'
+        });
 
         jQuery(".button_moreOptions").on("click", function() {
             //jQuery(this).siblings(".moreOptions").toggle();
@@ -198,11 +205,11 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         var jAllTextareas = jQuery(".overlay textarea");
 
         jAllTextareas.on('input, focus', function() {
-            adjustHeightOfTextareaToContentSize(jQuery(this));
+            //adjustHeightOfTextareaToContentSize(jQuery(this));
         });
         jAllTextareas.on('focusout', function() {
-            var jCurrentFocusedElement = jQuery(this);
-            window.setTimeout(function(){jCurrentFocusedElement.removeClass("enlarge");}, 300);
+            //var jCurrentFocusedElement = jQuery(this);
+            //window.setTimeout(function(){jCurrentFocusedElement.removeClass("enlarge");}, 300);
         });
 
         var blockerTimeoutHandleCache = null;
@@ -214,6 +221,9 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             //
             e.preventDefault();
             e.stopPropagation();
+            //
+            // If available, update html-editor-content in textarea:
+            window.tinyMCE.triggerSave();
             //
             var jData = self.Model.generateArgoContentElementJsonByMarkup(jThis.find("fieldset:first")),
                 jBlockingLayer = jQuery(this).find(".blockingOverlay");

@@ -1,0 +1,11 @@
+@import "argo/_settings/_colors.scss";
+@import "argo/_settings/_fonts.scss";
+
+
+body {
+  background-color: $color_basic_dark_background;
+  padding: 5px 10px;
+  border: 0;
+  color: $color_font_on_dark_background;
+  box-sizing: border-box;
+}

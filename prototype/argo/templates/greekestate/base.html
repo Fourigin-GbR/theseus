@@ -88,8 +88,8 @@
 
 
     <article th:fragment="article-h1-block()">
-        <h1 th:text="${argo.contentElementUtility.getElement('/headline').content}">#headline</h1>
-        <p  th:text="${argo.contentElementUtility.getElement('/body').content}">
+        <h1 th:utext="${argo.contentElementUtility.getElement('/headline').content}">#headline</h1>
+        <p  th:utext="${argo.contentElementUtility.getElement('/body').content}">
             #body
         </p>
     </article>

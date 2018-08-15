@@ -1,0 +1,12 @@
+@import "../_settings/_colors.scss";
+@import "../_settings/_fonts.scss";
+
+.trumbowyg-editor {
+  background-color: $color_basic_dark_background;
+  padding: 15px;
+  border: 0;
+  box-shadow: unset;
+  color: $color_font_on_dark_background;
+  width: 100%;
+  box-sizing: border-box;
+}

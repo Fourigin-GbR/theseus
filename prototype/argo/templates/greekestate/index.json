@@ -287,11 +287,11 @@
 	"hotspots": {
 		"/headline": {
 			"title": "Headline",
-			"description": "Headline"
+			"description": "Top headline, important for SEO. Use significant copy."
 		},
 		"/body": {
 			"title": "Body",
-			"description": "Article body"
+			"description": "The main article. Make the user interesting for the page."
 		},
 		"/stage": {
 			"title": "Stage",

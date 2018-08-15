@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Titillium+Web");
 @import url("https://fonts.googleapis.com/css?family=Titillium+Web");
 @import url("https://fonts.googleapis.com/css?family=Titillium+Web");
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web");
 body {
   font-family: 'Titillium Web', sans-serif;
   font-size: 14px; }
@@ -397,7 +398,10 @@ body > header {
         .toolBar .overlayWrapper .overlay section article.information {
           background-color: #eee;
           padding: 10px;
-          border: 1px solid #dcdcdc; }
+          border: 1px solid #dcdcdc;
+          display: none; }
+          .toolBar .overlayWrapper .overlay section article.information.active {
+            display: block; }
         .toolBar .overlayWrapper .overlay section fieldset {
           margin-top: 10px;
           margin-bottom: 10px;
@@ -597,6 +601,25 @@ body {
 textarea {
   font-family: 'Titillium Web', sans-serif;
   font-size: .9rem; }
+
+/* colors */
+/* usages */
+body {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14px; }
+
+textarea {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: .9rem; }
+
+.trumbowyg-editor {
+  background-color: #222326;
+  padding: 15px;
+  border: 0;
+  box-shadow: unset;
+  color: #dcdcdc;
+  width: 100%;
+  box-sizing: border-box; }
 
 .editor fieldset[data-type=list] > fieldset ul.listChildItemsWrapper > li {
   padding: 10px 15px 0 15px;
