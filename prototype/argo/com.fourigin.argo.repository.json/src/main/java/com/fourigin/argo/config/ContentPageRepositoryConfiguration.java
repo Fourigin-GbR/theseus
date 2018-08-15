@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
 import com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver;
-import com.fourigin.argo.repository.JsonFilesContentRepositoryFactory;
+import com.fourigin.argo.repository.HiddenDirectoryContentRepositoryFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.model.mapping.JsonInfoModule;
 import com.fourigin.argo.repository.strategies.DefaultPageInfoTraversingStrategy;
@@ -18,19 +18,15 @@ import org.springframework.context.annotation.Configuration;
 public class ContentPageRepositoryConfiguration {
 
     @Bean
-    public JsonFilesContentRepositoryFactory jsonFilesContentRepositoryFactory(
+    public HiddenDirectoryContentRepositoryFactory jsonFilesContentRepositoryFactory(
         @Value("${content-page-repository.root-path}") String basePath,
         @Value("${content-page-repository.key-name}") String keyName,
-        @Value("${content-page-repository.site-structure-file-name}") String siteStructureFileName,
-        @Value("${content-page-repository.directory-info-file-name}") String directoryInfoFileName,
         @Autowired PageInfoTraversingStrategy defaultTraversingStrategy
     ) {
-        JsonFilesContentRepositoryFactory factory = new JsonFilesContentRepositoryFactory();
+        HiddenDirectoryContentRepositoryFactory factory = new HiddenDirectoryContentRepositoryFactory();
 
         factory.setBasePath(basePath);
         factory.setKeyName(keyName);
-        factory.setSiteStructureFileName(siteStructureFileName);
-        factory.setDirectoryInfoFileName(directoryInfoFileName);
         factory.setDefaultTraversingStrategy(defaultTraversingStrategy);
         factory.setObjectMapper(objectMapper());
 

@@ -2,6 +2,7 @@ package com.fourigin.argo.compiler.datasource;
 
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
+import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.repository.ContentResolver;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +26,7 @@ public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
     }
 
     @Override
-    public ContentElement generateContent(ContentResolver contentResolver, EmptyDataSourceQuery query) {
+    public ContentElement generateContent(ContentResolver contentResolver, DataSourceIdentifier id, EmptyDataSourceQuery query) {
         String timestamp = FORMAT.format(new Date());
 
         return new TextContentElement.Builder()

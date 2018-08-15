@@ -8,15 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class JsonFilesContentRepositoryFactory implements ContentRepositoryFactory {
+public class HiddenDirectoryContentRepositoryFactory implements ContentRepositoryFactory {
 
     private String basePath;
 
     private String keyName;
-
-    private String siteStructureFileName;
-
-    private String directoryInfoFileName;
 
     private PageInfoTraversingStrategy defaultTraversingStrategy;
 
@@ -24,13 +20,13 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
 
     private PropertiesReplacement propertiesReplacement = new PropertiesReplacement();
 
-    private ConcurrentHashMap<String, JsonFilesContentRepository> cache = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, HiddenDirectoryContentRepository> cache = new ConcurrentHashMap<>();
 
-    private final Logger logger = LoggerFactory.getLogger(JsonFilesContentRepositoryFactory.class);
+    private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepositoryFactory.class);
 
     @Override
     public ContentRepository getInstance(String key) {
-        JsonFilesContentRepository repository = cache.get(key);
+        HiddenDirectoryContentRepository repository = cache.get(key);
         if(repository != null){
             if (logger.isDebugEnabled()) logger.debug("Using cached ContentRepository instance for key '{}'.", key);
             return repository;
@@ -39,11 +35,9 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
         String path = propertiesReplacement.process(basePath, keyName, key);
 
         if (logger.isDebugEnabled()) logger.debug("Instantiating a new ContentRepository instance for key '{}' and path '{}'.", key, path);
-        repository = new JsonFilesContentRepository();
+        repository = new HiddenDirectoryContentRepository();
 
         repository.setContentRoot(path);
-        repository.setSiteStructureFileName(siteStructureFileName);
-        repository.setDirectoryInfoFileName(directoryInfoFileName);
         repository.setDefaultTraversingStrategy(defaultTraversingStrategy);
         repository.setObjectMapper(objectMapper);
 
@@ -58,14 +52,6 @@ public class JsonFilesContentRepositoryFactory implements ContentRepositoryFacto
 
     public void setKeyName(String keyName) {
         this.keyName = keyName;
-    }
-
-    public void setSiteStructureFileName(String siteStructureFileName) {
-        this.siteStructureFileName = siteStructureFileName;
-    }
-
-    public void setDirectoryInfoFileName(String directoryInfoFileName) {
-        this.directoryInfoFileName = directoryInfoFileName;
     }
 
     public void setDefaultTraversingStrategy(PageInfoTraversingStrategy defaultTraversingStrategy) {

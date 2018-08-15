@@ -5,6 +5,7 @@ import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
+import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
@@ -52,10 +53,11 @@ public class CompileController {
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
 
         PageInfo pageInfo = aggregation.getPageInfo();
+        PageState pageState = aggregation.getPageState();
         String pageName = pageInfo.getName();
 
-        String pageContentChecksum = pageInfo.getChecksum().getCombinedValue();
-        CompileState compileState = pageInfo.getCompileState();
+        String pageContentChecksum = pageState.getChecksum().getCombinedValue();
+        CompileState compileState = pageState.getCompileState();
         if(compileState != null){
             if (logger.isDebugEnabled()) logger.debug("Verifying compile state of the page '{}'.", pageName);
             String compileBaseChecksum = compileState.getChecksum();

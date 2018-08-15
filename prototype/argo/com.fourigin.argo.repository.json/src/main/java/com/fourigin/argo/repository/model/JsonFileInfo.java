@@ -1,7 +1,5 @@
 package com.fourigin.argo.repository.model;
 
-import com.fourigin.argo.models.structure.CompileState;
-import com.fourigin.argo.models.structure.ContentPageChecksum;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.TemplateReference;
 
@@ -14,9 +12,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
     private String description;
 
     private TemplateReference templateReference;
-    private boolean staged;
-    private CompileState compileState;
-    private ContentPageChecksum checksum;
 
     public JsonFileInfo() {
     }
@@ -29,9 +24,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
             this.description = nodeInfo.getDescription();
 
             this.templateReference = nodeInfo.getTemplateReference();
-            this.staged = nodeInfo.isStaged();
-            this.compileState = nodeInfo.getCompileState();
-            this.checksum = nodeInfo.getChecksum();
         }
     }
 
@@ -43,9 +35,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
             .withDisplayName(displayName)
             .withDescription(description)
             .withTemplateReference(templateReference)
-            .withStaged(staged)
-            .withCompileState(compileState)
-            .withChecksum(checksum)
             .build();
     }
 
@@ -97,53 +86,21 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
         this.templateReference = templateReference;
     }
 
-    public boolean isStaged() {
-        return staged;
-    }
-
-    public void setStaged(boolean staged) {
-        this.staged = staged;
-    }
-
-    public CompileState getCompileState() {
-        return compileState;
-    }
-
-    public void setCompileState(CompileState compileState) {
-        this.compileState = compileState;
-    }
-
-    public ContentPageChecksum getChecksum() {
-        return checksum;
-    }
-
-    public void setChecksum(ContentPageChecksum checksum) {
-        this.checksum = checksum;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof JsonFileInfo)) return false;
-
         JsonFileInfo that = (JsonFileInfo) o;
-
-        if (staged != that.staged) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (localizedName != null ? !localizedName.equals(that.localizedName) : that.localizedName != null)
-            return false;
-        if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (templateReference != null ? !templateReference.equals(that.templateReference) : that.templateReference != null)
-            return false;
-        //noinspection SimplifiableIfStatement
-        if (compileState != null ? !compileState.equals(that.compileState) : that.compileState != null) return false;
-        return checksum != null ? checksum.equals(that.checksum) : that.checksum == null;
+        return Objects.equals(name, that.name) &&
+            Objects.equals(localizedName, that.localizedName) &&
+            Objects.equals(displayName, that.displayName) &&
+            Objects.equals(description, that.description) &&
+            Objects.equals(templateReference, that.templateReference);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, localizedName, displayName, description, templateReference, staged, compileState, checksum);
+        return Objects.hash(name, localizedName, displayName, description, templateReference);
     }
 
     @Override
@@ -154,9 +111,6 @@ public class JsonFileInfo implements JsonInfo<PageInfo> {
             ", displayName='" + displayName + '\'' +
             ", description='" + description + '\'' +
             ", templateReference=" + templateReference +
-            ", staged=" + staged +
-            ", compileState=" + compileState +
-            ", checksum=" + checksum +
             '}';
     }
 }

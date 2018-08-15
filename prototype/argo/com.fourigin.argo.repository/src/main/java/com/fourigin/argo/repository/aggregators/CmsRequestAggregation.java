@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository.aggregators;
 
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateReference;
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class CmsRequestAggregation {
     private ContentRepository contentRepository;
     private PageInfo pageInfo;
+    private PageState pageState;
     private TemplateReference templateReference;
     private Template template;
     private ContentPage contentPage;
@@ -34,6 +36,14 @@ public class CmsRequestAggregation {
 
     public void setPageInfo(PageInfo pageInfo) {
         this.pageInfo = pageInfo;
+    }
+
+    public PageState getPageState() {
+        return pageState;
+    }
+
+    public void setPageState(PageState pageState) {
+        this.pageState = pageState;
     }
 
     public TemplateReference getTemplateReference() {
@@ -67,6 +77,7 @@ public class CmsRequestAggregation {
         CmsRequestAggregation that = (CmsRequestAggregation) o;
         return Objects.equals(contentRepository, that.contentRepository) &&
             Objects.equals(pageInfo, that.pageInfo) &&
+            Objects.equals(pageState, that.pageState) &&
             Objects.equals(templateReference, that.templateReference) &&
             Objects.equals(template, that.template) &&
             Objects.equals(contentPage, that.contentPage);
@@ -74,7 +85,7 @@ public class CmsRequestAggregation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(contentRepository, pageInfo, templateReference, template, contentPage);
+        return Objects.hash(contentRepository, pageInfo, pageState, templateReference, template, contentPage);
     }
 
     @Override
@@ -82,6 +93,7 @@ public class CmsRequestAggregation {
         return "CmsModelAggregator{" +
             "contentRepository=" + contentRepository +
             ", pageInfo=" + pageInfo +
+            ", pageState=" + pageState +
             ", templateReference=" + templateReference +
             ", template=" + template +
             ", contentPage=" + contentPage +

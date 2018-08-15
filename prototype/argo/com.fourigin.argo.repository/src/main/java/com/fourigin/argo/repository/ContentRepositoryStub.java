@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository;
 
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
@@ -19,16 +20,19 @@ public class ContentRepositoryStub implements ContentRepository {
 
     private Map<PageInfo, ContentPage> pages;
 
+    private Map<PageInfo, PageState> states;
+
     private PageInfoTraversingStrategy defaultTraversingStrategy = new DefaultPageInfoTraversingStrategy();
 
     public void flush(){
         // nothing to do!
     }
 
-    public ContentRepositoryStub(Map<String, String> siteAttributes, Map<String, SiteNodeInfo> infos, Map<PageInfo, ContentPage> pages) {
+    public ContentRepositoryStub(Map<String, String> siteAttributes, Map<String, SiteNodeInfo> infos, Map<PageInfo, ContentPage> pages, Map<PageInfo, PageState> states) {
         this.siteAttributes = siteAttributes;
         this.infos = infos;
         this.pages = pages;
+        this.states = states;
     }
 
     @Override
@@ -144,4 +148,23 @@ public class ContentRepositoryStub implements ContentRepository {
         pages.remove(info);
     }
 
+    @Override
+    public void createPageState(PageInfo pageInfo, PageState pageState) {
+        states.put(pageInfo, pageState);
+    }
+
+    @Override
+    public void updatePageState(PageInfo pageInfo, PageState pageState) {
+        states.put(pageInfo, pageState);
+    }
+
+    @Override
+    public void deletePageState(PageInfo pageInfo, PageState pageState) {
+        states.remove(pageInfo);
+    }
+
+    @Override
+    public PageState resolvePageState(PageInfo pageInfo) {
+        return states.get(pageInfo);
+    }
 }

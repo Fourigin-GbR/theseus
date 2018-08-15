@@ -49,11 +49,11 @@ public class ContentPage implements Serializable {
     @Override
     public String toString() {
         return "ContentPage{" +
-          "id='" + id + '\'' +
-          ", metaData=" + metaData +
-          ", content=" + content +
-          ", dataSourceContents=" + dataSourceContents +
-          '}';
+            "id='" + id + '\'' +
+            ", metaData=" + metaData +
+            ", content=" + content +
+            ", dataSourceContents=" + dataSourceContents +
+            '}';
     }
 
     public static class Builder {

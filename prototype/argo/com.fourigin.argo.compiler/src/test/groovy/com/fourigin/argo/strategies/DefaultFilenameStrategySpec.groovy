@@ -51,7 +51,6 @@ class DefaultFilenameStrategySpec extends Specification {
             .withParent(a)
             .withLocalizedName('a_1')
             .withTemplateReference(templateReference)
-            .withCompileState(compileState)
             .build()
 
     static SiteNodeInfo a2 = new PageInfo.Builder()
@@ -60,7 +59,6 @@ class DefaultFilenameStrategySpec extends Specification {
             .withParent(a)
             .withLocalizedName('a_2')
             .withTemplateReference(templateReference)
-            .withCompileState(compileState)
             .build()
 
     static SiteNodeInfo b1 = new PageInfo.Builder()
@@ -69,7 +67,6 @@ class DefaultFilenameStrategySpec extends Specification {
             .withParent(b)
             .withLocalizedName('b_1')
             .withTemplateReference(templateReference)
-            .withCompileState(compileState)
             .build()
 
     static SiteNodeContainerInfo b2 = new DirectoryInfo.Builder()
@@ -85,7 +82,6 @@ class DefaultFilenameStrategySpec extends Specification {
             .withParent(b2)
             .withLocalizedName('b_2_1')
             .withTemplateReference(templateReference)
-            .withCompileState(compileState)
             .build()
 
     @Unroll

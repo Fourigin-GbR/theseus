@@ -2,6 +2,7 @@ package com.fourigin.argo.requests;
 
 import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateReference;
@@ -36,6 +37,11 @@ public  class CmsRequestAggregationResolver {
             throw new IllegalStateException("No PageInfo found for path '" + path + "'! Is this path valid?");
         }
 
+        PageState pageState = contentRepository.resolvePageState(pageInfo);
+        if(pageState == null){
+            throw new IllegalStateException("No PageState found for page '" + path + "'! Is this path valid?");
+        }
+
         TemplateReference templateReference = pageInfo.getTemplateReference();
         if(templateReference == null){
             throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
@@ -63,6 +69,7 @@ public  class CmsRequestAggregationResolver {
 
         result.setContentRepository(contentRepository);
         result.setPageInfo(pageInfo);
+        result.setPageState(pageState);
         result.setTemplateReference(templateReference);
         result.setTemplate(template);
         result.setContentPage(contentPage);

@@ -2,12 +2,14 @@ package com.fourigin.argo.models.datasource;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 public class DataSourceIdentifier implements Serializable, Comparable<DataSourceIdentifier> {
 
     private static final long serialVersionUID = 4193612352125682106L;
 
     private String type;
+    private Map<String, String> revisions;
     private Map<String, Object> query;
     private String checksum;
 
@@ -35,6 +37,14 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
         this.checksum = checksum;
     }
 
+    public Map<String, String> getRevisions() {
+        return revisions;
+    }
+
+    public void setRevisions(Map<String, String> revisions) {
+        this.revisions = revisions;
+    }
+
     @Override
     public int compareTo(DataSourceIdentifier o) {
         return checksum.compareTo(o.checksum);
@@ -44,30 +54,25 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DataSourceIdentifier)) return false;
-
         DataSourceIdentifier that = (DataSourceIdentifier) o;
-
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (query != null ? !query.equals(that.query) : that.query != null) return false;
-        return checksum != null ? checksum.equals(that.checksum) : that.checksum == null;
-
+        return Objects.equals(type, that.type) &&
+            Objects.equals(revisions, that.revisions) &&
+            Objects.equals(query, that.query) &&
+            Objects.equals(checksum, that.checksum);
     }
 
     @Override
     public int hashCode() {
-        int result = type != null ? type.hashCode() : 0;
-        result = 31 * result + (query != null ? query.hashCode() : 0);
-        result = 31 * result + (checksum != null ? checksum.hashCode() : 0);
-        return result;
+        return Objects.hash(type, revisions, query, checksum);
     }
 
     @Override
     public String toString() {
         return "DataSourceIdentifier{" +
-          "type='" + type + '\'' +
-          ", query=" + query +
-          ", checksum='" + checksum + '\'' +
-          '}';
+            "type='" + type + '\'' +
+            ", revisions=" + revisions +
+            ", query=" + query +
+            ", checksum='" + checksum + '\'' +
+            '}';
     }
 }

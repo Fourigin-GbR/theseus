@@ -59,7 +59,7 @@ public class DataSourcesResolver {
             }
 
             String previousChecksum = dataSourceId.getChecksum();
-            ContentElement resolvedContent = dataSource.generateContent(contentResolver, query);
+            ContentElement resolvedContent = dataSource.generateContent(contentResolver, dataSourceId, query);
             String newChecksum = ChecksumGenerator.getChecksum(resolvedContent);
             if(newChecksum.equals(previousChecksum)){
                 if (logger.isInfoEnabled()) logger.info("Resolved unchanged data (name: '{}') with checksum '{}'.", name, newChecksum);

@@ -12,6 +12,7 @@ public interface PageCompiler {
 
     /**
      *
+     * @param path Tha site structure path of the page to compile.
      * @param pageInfo PageInfo with all information about the page to compile.
      * @param processingMode the mode to compile
      * @param outputStrategy {@link CompilerOutputStrategy} where the result should be written.

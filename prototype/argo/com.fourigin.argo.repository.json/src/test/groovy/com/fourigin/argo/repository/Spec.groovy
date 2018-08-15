@@ -17,14 +17,13 @@ class Spec extends Specification {
     ObjectMapper objectMapper
 
     def "test1"() {
-        JsonFileContentPageRepository contentPageRepository = new JsonFileContentPageRepository.Builder()
-                .withObjectMapper(objectMapper)
-                .withContentRoot("/work/content/")
-                .build()
+        HiddenDirectoryContentRepository contentPageRepository = new HiddenDirectoryContentRepository()
+        contentPageRepository.setObjectMapper(objectMapper)
+        contentPageRepository.setContentRoot('/work/content')
 
         expect:
         contentPageRepository != null
-        contentPageRepository.contentRoot == "/work/content/"
+        contentPageRepository.contentRoot.absolutePath == '/work/content'
         contentPageRepository.objectMapper != null
     }
 

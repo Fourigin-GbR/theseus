@@ -10,27 +10,27 @@ import java.io.File;
 import java.io.IOException;
 
 public class DefaultCompilerInterceptor implements CompilerInterceptor {
-    private String preparedContentRoot;
-    private String base;
+//    private String preparedContentRoot;
+//    private String base;
     private File baseDir;
     private FilenameStrategy preparedContentFilenameStrategy;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public DefaultCompilerInterceptor(String preparedContentRoot, String base, FilenameStrategy preparedContentFilenameStrategy) {
-        this.preparedContentRoot = preparedContentRoot;
-        this.base = base;
+//        this.preparedContentRoot = preparedContentRoot;
+//        this.base = base;
         this.preparedContentFilenameStrategy = preparedContentFilenameStrategy;
 
         File root = new File(preparedContentRoot);
         if(!root.exists()){
-            if(!root.mkdirs()){
+            if(!root.mkdirs()){ // NOPMD
                 throw new IllegalStateException("Unable to create root directory for prepared-content files '" + root.getAbsolutePath() + "'!");
             }
         }
 
         baseDir = new File(root, base);
         if(!baseDir.exists()){
-            if(!baseDir.mkdirs()){
+            if(!baseDir.mkdirs()){ // NOPMD
                 throw new IllegalStateException("Unable to create base directory for prepared-content files '" + baseDir.getAbsolutePath() + "'!");
             }
         }
@@ -48,7 +48,7 @@ public class DefaultCompilerInterceptor implements CompilerInterceptor {
 
         File folder = new File(baseDir, folderPath);
         if(!folder.exists()){
-            if(!folder.mkdirs()){
+            if(!folder.mkdirs()){ // NOPMD
                 throw new IllegalStateException("Unable to create directory for prepared-content files '" + folder.getAbsolutePath() + "'!");
             }
         }

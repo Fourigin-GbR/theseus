@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository;
 
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
@@ -15,6 +16,8 @@ public interface ContentResolver extends Flushable {
 
     <T extends SiteNodeInfo> T resolveInfo(Class<T> type, String path);
     <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path);
+
+    PageState resolvePageState(PageInfo pageInfo);
 
     Collection<PageInfo> resolveInfos(String path);
     Collection<PageInfo> resolveInfos(String path, PageInfoTraversingStrategy traversingStrategy);

@@ -2,6 +2,7 @@ package com.fourigin.argo.compiler;
 
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
+import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.ContentRepository;
 import org.slf4j.Logger;
@@ -16,9 +17,11 @@ public class Compiler {
     public void compile(PageInfo page){
         String pageName = page.getName();
 
-        String pageContentChecksum = page.getChecksum().getCombinedValue();
+        PageState state = contentRepository.resolvePageState(page);
 
-        CompileState compileState = page.getCompileState();
+        String pageContentChecksum = state.getChecksum().getCombinedValue();
+
+        CompileState compileState = state.getCompileState();
         if(compileState != null){
             if (logger.isDebugEnabled()) logger.debug("Verifying compile state of the page '{}'.", pageName);
             String compileBaseChecksum = compileState.getChecksum();
@@ -39,12 +42,15 @@ public class Compiler {
 
     private CompileState compileInternal(PageInfo info){
         ContentPage contentPage = contentRepository.retrieve(info);
+
+        PageState state = contentRepository.resolvePageState(info);
+
         // TODO: implement me!
 
         if (logger.isDebugEnabled()) logger.debug("contentPage: {}", contentPage);
 
 
-        return info.getCompileState();
+        return state.getCompileState();
     }
 
     public void setContentRepository(ContentRepository contentRepository) {
