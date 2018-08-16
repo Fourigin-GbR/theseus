@@ -1,5 +1,7 @@
 package com.fourigin.argo.models.structure;
 
+import java.util.Objects;
+
 public class CompileState {
     private String checksum;
     private boolean compiled;
@@ -36,6 +38,22 @@ public class CompileState {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompileState)) return false;
+        CompileState that = (CompileState) o;
+        return compiled == that.compiled &&
+            timestamp == that.timestamp &&
+            Objects.equals(checksum, that.checksum) &&
+            Objects.equals(message, that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(checksum, compiled, timestamp, message);
     }
 
     @Override
