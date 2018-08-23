@@ -2,15 +2,9 @@ package com.fourigin.argo.models.structure.nodes;
 
 import java.util.List;
 
-public interface SiteNodeContainerInfo {
-    String getPath();
-    void setPath(String path);
-
+public interface SiteNodeContainerInfo extends SiteNodeInfo {
     List<SiteNodeInfo> getNodes();
     void setNodes(List<SiteNodeInfo> nodes);
-
-    SiteNodeContainerInfo getParent();
-    void setParent(SiteNodeContainerInfo siteNode);
 
     SiteNodeInfo getDefaultTarget();
 }

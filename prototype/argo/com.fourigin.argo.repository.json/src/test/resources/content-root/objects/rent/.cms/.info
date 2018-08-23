@@ -1,0 +1,41 @@
+{
+	"path": "/",
+	"children": [
+			{
+    			"type": "file",
+    			"name": "1",
+    			"localizedName": "1",
+    			"displayName": "1",
+    			"description": "Auto-created directory info. Don't forget to specify all properties!",
+    			"templateReference": {
+    				"templateId": "",
+    				"variationId": "",
+    				"revision": ""
+    			}
+    		},
+			{
+    			"type": "file",
+    			"name": "2",
+    			"localizedName": "2",
+    			"displayName": "2",
+    			"description": "Auto-created directory info. Don't forget to specify all properties!",
+    			"templateReference": {
+    				"templateId": "",
+    				"variationId": "",
+    				"revision": ""
+    			}
+    		},
+			{
+    			"type": "file",
+    			"name": "3",
+    			"localizedName": "3",
+    			"displayName": "3",
+    			"description": "Auto-created directory info. Don't forget to specify all properties!",
+    			"templateReference": {
+    				"templateId": "",
+    				"variationId": "",
+    				"revision": ""
+    			}
+    		}
+	]
+}

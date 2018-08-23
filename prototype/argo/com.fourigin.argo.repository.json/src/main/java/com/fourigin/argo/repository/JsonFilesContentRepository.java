@@ -815,7 +815,7 @@
 //    }
 //
 //    private Map<String, String> readSiteStructureAttributes() {
-//        File structureFile = getSiteDescriptionFile();
+//        File structureFile = getSiteStructureAttributesFile();
 //
 //        SiteStructureAttributes result;
 //
@@ -837,7 +837,7 @@
 //    }
 //
 //    private void writeSiteStructureAttributes(Map<String, String> structure) {
-//        File structureFile = getSiteDescriptionFile();
+//        File structureFile = getSiteStructureAttributesFile();
 //
 //        try(OutputStream os = new BufferedOutputStream(new FileOutputStream(structureFile))) {
 //            objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, structure);
@@ -847,7 +847,7 @@
 //        }
 //    }
 //
-//    private File getSiteDescriptionFile() {
+//    private File getSiteStructureAttributesFile() {
 //        File rootDirectory = new File(contentRoot);
 //
 //        //noinspection ResultOfMethodCallIgnored

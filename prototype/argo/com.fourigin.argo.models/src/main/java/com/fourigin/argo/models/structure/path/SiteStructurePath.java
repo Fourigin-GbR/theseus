@@ -29,31 +29,42 @@ public final class SiteStructurePath {
 
         List<SiteNodeInfo> nodes = parent.getNodes();
 
-        SiteNodeInfo nodeInfo = null;
+        SiteNodeInfo nodeInfo;
 
-        StringTokenizer tok = new StringTokenizer(path, "/");
-        while(tok.hasMoreTokens()) {
-            String token = tok.nextToken().trim();
-            if(token.isEmpty()) {
-                continue;
-            }
+        if("/".equals(path)) {
+            nodeInfo = parent;
+        }
+        else {
+            nodeInfo = null;
 
-            if(nodes != null) {
-                nodeInfo = null;
+            StringTokenizer tok = new StringTokenizer(path, "/");
+            while (tok.hasMoreTokens()) {
+                String token = tok.nextToken().trim();
+                if (token.isEmpty()) {
+                    continue;
+                }
 
-                for (SiteNodeInfo node : nodes) {
-                    if(token.equals(node.getName())) {
-                        nodeInfo = node;
-                        break;
+                if (nodes != null) {
+                    nodeInfo = null;
+
+                    for (SiteNodeInfo node : nodes) {
+                        if (token.equals(node.getName())) {
+                            nodeInfo = node;
+                            break;
+                        }
                     }
                 }
-            }
 
-            if(nodeInfo == null) {
-                throw new InvalidSiteStructurePathException(path, token);
-            }
+                if (nodeInfo == null) {
+                    throw new InvalidSiteStructurePathException(path, token);
+                }
 
-            steps.add(token);
+                steps.add(token);
+
+                if(nodeInfo instanceof DirectoryInfo) {
+                    nodes = ((DirectoryInfo) nodeInfo).getNodes();
+                }
+            }
         }
 
         this.nodeInfo = nodeInfo;

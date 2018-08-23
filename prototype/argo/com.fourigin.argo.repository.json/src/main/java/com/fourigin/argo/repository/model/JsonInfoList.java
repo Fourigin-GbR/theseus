@@ -1,7 +1,11 @@
 package com.fourigin.argo.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class JsonInfoList {
@@ -30,6 +34,20 @@ public class JsonInfoList {
 
     public void setChildren(List<JsonInfo> children) {
         this.children = children;
+
+    }
+
+    @JsonIgnore
+    public Map<String, JsonInfo> getLookup() {
+        HashMap<String, JsonInfo> lookup = new HashMap<>();
+
+        if(children != null && !children.isEmpty()) {
+            for (JsonInfo child : children) {
+                lookup.put(child.getName(), child);
+            }
+        }
+
+        return lookup;
     }
 
     @Override

@@ -1,0 +1,55 @@
+{
+	"path": "/",
+	"children": [
+			{
+    			"type": "file",
+    			"name": "home",
+    			"localizedName": "home",
+    			"displayName": "home",
+    			"description": "Auto-created directory info. Don't forget to specify all properties!",
+    			"templateReference": {
+    				"templateId": "greekestate.index",
+    				"variationId": "default",
+    				"revision": ""
+    			}
+    		},
+		{
+			"type": "file",
+			"name": "search",
+			"localizedName": "search",
+			"displayName": "search",
+			"description": "Auto-created directory info. Don't forget to specify all properties!",
+			"templateReference": {
+				"templateId": "",
+				"variationId": "",
+				"revision": ""
+			}
+		},
+		{
+			"type": "dir",
+			"name": "regions",
+			"localizedName": "regions",
+			"displayName": "regions",
+			"description": "Auto-created directory info. Don't forget to specify all properties!"
+		},
+		{
+			"type": "dir",
+			"name": "objects",
+			"localizedName": "objects",
+			"displayName": "objects",
+			"description": "Auto-created directory info. Don't forget to specify all properties!"
+		},
+		{
+			"type": "file",
+			"name": "about",
+			"localizedName": "about",
+			"displayName": "about",
+			"description": "Auto-created directory info. Don't forget to specify all properties!",
+			"templateReference": {
+				"templateId": "",
+				"variationId": "",
+				"revision": ""
+			}
+		}
+	]
+}

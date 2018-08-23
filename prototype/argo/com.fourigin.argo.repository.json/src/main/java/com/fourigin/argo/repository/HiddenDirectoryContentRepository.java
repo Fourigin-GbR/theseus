@@ -10,6 +10,7 @@ import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.structure.path.SiteStructurePath;
+import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.model.JsonDirectoryInfo;
 import com.fourigin.argo.repository.model.JsonFileInfo;
 import com.fourigin.argo.repository.model.JsonInfo;
@@ -30,6 +31,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-@SuppressWarnings("Duplicates")
+@SuppressWarnings({"Duplicates", "WeakerAccess"})
 public class HiddenDirectoryContentRepository implements ContentRepository {
 
     private static final String HIDDEN_DIRECTORY_NAME = ".cms";
@@ -46,6 +48,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     private static final String SITE_STRUCTURE_FILENAME = ".site";
 
     private static final String DIRECTORY_INFO_FILENAME = ".info";
+
+    private static final String DELETED_DIRECTORY_NAME = ".trash";
 
     private static final String PAGE_INFO_FILE_POSTFIX = "_info";
 
@@ -57,7 +61,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
 
     private String contentRoot;
 
-    private SiteNodeContainerInfo root = null; // not initialized
+    private SiteNodeContainerInfo root;
+
+    private Date initTimestamp;
 
     private PageInfoTraversingStrategy defaultTraversingStrategy;
 
@@ -98,6 +104,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, String path) {
         Objects.requireNonNull(path, "Path must not be null!");
 
+        ensureInit();
+
         return resolveInfo(type, root, path);
     }
 
@@ -105,6 +113,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
         Objects.requireNonNull(parent, "Parent must not be null!");
         Objects.requireNonNull(path, "Path must not be null!");
+
+        ensureInit();
 
         SiteStructurePath pathPointer = SiteStructurePath.forPath(path, parent);
         SiteNodeInfo result = pathPointer.getNodeInfo();
@@ -177,6 +187,10 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         ensureInit();
 
         String parentPath = parent.getPath();
+        String parentName = parent.getName();
+        if(parentName != null) {
+            parentPath += parentName;
+        }
 
         ReadWriteLock lock = getLock(parentPath);
         lock.writeLock().lock();
@@ -206,25 +220,30 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             // write the dir-info file
             File dirInfoFile = getDirectoryInfoFile(hiddenDir);
 
-            JsonInfoList infoList = readDirectoryInfoFile(dirInfoFile);
+            JsonInfoList infoList;
+            try {
+                infoList = readDirectoryInfoFile(dirInfoFile);
+            }
+            catch(Exception ex) {
+                infoList = new JsonInfoList(parentPath);
+            }
+
             List<JsonInfo> oldChildren = infoList.getChildren();
-
-            List<JsonInfo> newChildren = new ArrayList<>();
-            for (JsonInfo child : oldChildren) {
-                if (child.getName().equals(node.getName())) {
-                    JsonInfo changedInfo = null;
-
-                    if (node instanceof PageInfo) {
-                        changedInfo = new JsonFileInfo((PageInfo) node);
-                    } else if (node instanceof DirectoryInfo) {
-                        changedInfo = new JsonDirectoryInfo((DirectoryInfo) node);
+            if (node instanceof PageInfo) {
+                oldChildren.add(new JsonFileInfo((PageInfo) node));
+            } else if (node instanceof DirectoryInfo) {
+                oldChildren.add(new JsonDirectoryInfo((DirectoryInfo) node));
+                File newDir = new File(contentDir, node.getName());
+                try {
+                    if (!newDir.mkdirs()) {
+                        throw new IllegalStateException("without reason ...");
                     }
-                    newChildren.add(changedInfo);
-                } else {
-                    newChildren.add(child);
+                }
+                catch(Exception ex){
+                    throw new IllegalStateException("Unable to create directory '" + newDir.getAbsolutePath() + "'!", ex);
                 }
             }
-            infoList.setChildren(newChildren);
+            infoList.setChildren(oldChildren);
 
             writeDirectoryInfoFile(dirInfoFile, infoList);
         } finally {
@@ -317,76 +336,96 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public void deleteInfo(String path) {
         ensureInit();
 
-        // TODO implement me!
+        SiteStructurePath pathPointer = SiteStructurePath.forPath(path, root);
+        SiteNodeInfo node = pathPointer.getNodeInfo();
 
-//        ReadWriteLock lock = getLock(path);
-//        lock.writeLock().lock();
-//
-//        try {
-//            // reload the content directory
-//            File hiddenDir = getHiddenDirectory(path);
-//            File contentDir = hiddenDir.getParentFile();
-//            processContentDirectory(contentDir, parentPath, parent);
-//
-//            // add a new node
-//            List<SiteNodeInfo> children = parent.getNodes();
-//            if (children == null) {
-//                children = new ArrayList<>();
-//            }
-//
-//            String name = node.getName();
-//            SiteNodeInfo match = null;
-//            for (SiteNodeInfo child : children) {
-//                if (name.equals(child.getName())) {
-//                    match = child;
-//                    break;
-//                }
-//            }
-//
-//            if(match == null) {
-//                throw new IllegalStateException("No info node found for name '" + name + "'!");
-//            }
-//
-//            children.remove(match);
-//            children.add(node);
-//            parent.setNodes(children);
-//
-//            // write the dir-info file
-//            File dirInfoFile = getDirectoryInfoFile(hiddenDir);
-//
-//            JsonInfoList infoList = readDirectoryInfoFile(dirInfoFile);
-//            List<JsonInfo> oldChildren = infoList.getChildren();
-//
-//            List<JsonInfo> newChildren = new ArrayList<>();
-//            for (JsonInfo child : oldChildren) {
-//                if (child.getName().equals(node.getName())) {
-//                    JsonInfo changedInfo = null;
-//
-//                    if (node instanceof PageInfo) {
-//                        changedInfo = new JsonFileInfo((PageInfo) node);
-//                    } else if (node instanceof DirectoryInfo) {
-//                        changedInfo = new JsonDirectoryInfo((DirectoryInfo) node);
-//                    }
-//                    newChildren.add(changedInfo);
-//                } else {
-//                    newChildren.add(child);
-//                }
-//            }
-//            infoList.setChildren(newChildren);
-//
-//            writeDirectoryInfoFile(dirInfoFile, infoList);
-//        }
-//        finally {
-//            lock.writeLock().unlock();
-//        }
+        SiteNodeContainerInfo parent = node.getParent();
+        String nodeName = node.getName();
+
+        deleteInfo(parent, nodeName);
     }
 
     @Override
     public void deleteInfo(SiteNodeContainerInfo parent, String nodeName) {
         ensureInit();
 
-        // TODO implement me!
+        String parentPath = parent.getPath();
 
+        ReadWriteLock lock = getLock(parentPath);
+        lock.writeLock().lock();
+
+        try {
+            // reload the content directory
+            File hiddenDir = getHiddenDirectory(parentPath);
+            File contentDir = hiddenDir.getParentFile();
+            processContentDirectory(contentDir, parentPath, parent);
+
+            File deletedContainer = new File(contentDir, DELETED_DIRECTORY_NAME);
+            if(!deletedContainer.exists()) {
+                if(!deletedContainer.mkdirs()) {
+                    throw new IllegalStateException("Unable to create a directory '" + deletedContainer.getAbsolutePath() + "'!");
+                }
+            }
+
+            // add a new node
+            List<SiteNodeInfo> children = parent.getNodes();
+            if (children == null) {
+                children = new ArrayList<>();
+            }
+
+            SiteNodeInfo match = null;
+            for (SiteNodeInfo child : children) {
+                if (nodeName.equals(child.getName())) {
+                    match = child;
+                    break;
+                }
+            }
+
+            if(match == null) {
+                throw new IllegalStateException("No info node found for name '" + nodeName + "'!");
+            }
+
+            children.remove(match);
+            parent.setNodes(children);
+
+            if(match instanceof PageInfo) {
+                String fileName = nodeName + ".json";
+                File contentFile = new File(contentDir, fileName);
+                if(!contentFile.renameTo(new File(deletedContainer, fileName))) {
+                    throw new IllegalStateException("Unable to delete file '" + fileName + "'! Error while moving it to the deleted container '" + deletedContainer.getAbsolutePath() + "'!");
+                }
+            }
+            else if(match instanceof DirectoryInfo) {
+                File dir = new File(contentDir, nodeName);
+                if(!dir.renameTo(new File(deletedContainer, nodeName))) {
+                    throw new IllegalStateException("Unable to delete directory '" + nodeName + "'! Error while moving it to the deleted container '" + deletedContainer.getAbsolutePath() + "'!");
+                }
+            }
+            else {
+                throw new UnsupportedNodeTypeException(match.getClass());
+            }
+
+            // write the dir-info file
+            File dirInfoFile = getDirectoryInfoFile(hiddenDir);
+
+            JsonInfoList infoList = readDirectoryInfoFile(dirInfoFile);
+            List<JsonInfo> oldChildren = infoList.getChildren();
+
+            List<JsonInfo> newChildren = new ArrayList<>();
+            for (JsonInfo child : oldChildren) {
+                if (child.getName().equals(nodeName)) {
+                    continue;
+                }
+
+                newChildren.add(child);
+            }
+            infoList.setChildren(newChildren);
+
+            writeDirectoryInfoFile(dirInfoFile, infoList);
+        }
+        finally {
+            lock.writeLock().unlock();
+        }
     }
 
     //******* PAGE STATE methods *******//
@@ -399,9 +438,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         String path = pageInfo.getPath();
 
         File hiddenDir = getHiddenDirectory(path);
-        File pageInfoFile = getPageInfoFile(hiddenDir, name);
+        File pageInfoFile = getPageStateFile(hiddenDir, name);
 
-        return readPageInfoFile(pageInfoFile);
+        return readPageStateFile(pageInfoFile);
     }
 
     @Override
@@ -412,9 +451,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         String path = pageInfo.getPath();
 
         File hiddenDir = getHiddenDirectory(path);
-        File pageInfoFile = getPageInfoFile(hiddenDir, name);
+        File pageInfoFile = getPageStateFile(hiddenDir, name);
 
-        writePageInfoFile(pageInfoFile, pageState);
+        writePageStateFile(pageInfoFile, pageState);
     }
 
     @Override
@@ -425,9 +464,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         String path = pageInfo.getPath();
 
         File hiddenDir = getHiddenDirectory(path);
-        File pageInfoFile = getPageInfoFile(hiddenDir, name);
+        File pageInfoFile = getPageStateFile(hiddenDir, name);
 
-        writePageInfoFile(pageInfoFile, pageState);
+        writePageStateFile(pageInfoFile, pageState);
     }
 
     @Override
@@ -438,7 +477,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         String path = pageInfo.getPath();
 
         File hiddenDir = getHiddenDirectory(path);
-        File pageInfoFile = getPageInfoFile(hiddenDir, name);
+        File pageInfoFile = getPageStateFile(hiddenDir, name);
 
         if (!pageInfoFile.delete()) {
             throw new IllegalStateException("Unable to delete page info file '" + pageInfoFile.getAbsolutePath() + "'!");
@@ -498,9 +537,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             }
 
             writeContentPage(info, contentPage, contentFile);
-        }
-        finally
-        {
+        } finally {
             lock.writeLock().unlock();
         }
     }
@@ -528,9 +565,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             }
 
             writeContentPage(info, contentPage, contentFile);
-        }
-        finally
-        {
+        } finally {
             lock.writeLock().unlock();
         }
     }
@@ -557,12 +592,10 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             }
 
             boolean deleted = contentFile.delete();
-            if(!deleted){
+            if (!deleted) {
                 throw new IllegalStateException("Unable to delete content-file '" + contentFile.getAbsolutePath() + "'!");
             }
-        }
-        finally
-        {
+        } finally {
             lock.writeLock().unlock();
         }
     }
@@ -572,6 +605,10 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     @Override
     public void flush() {
         initialize();
+    }
+
+    public Date getInitTimestamp(){
+        return initTimestamp;
     }
 
     //******* private methods *******//
@@ -592,11 +629,16 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return result;
     }
 
-    private File getSiteDescriptionFile() {
+    /* private -> testing */
+    File getSiteStructureAttributesFile() {
         File rootDirectory = new File(contentRoot);
 
-        //noinspection ResultOfMethodCallIgnored
-        rootDirectory.mkdirs();
+        if(!rootDirectory.exists()) {
+            if(!rootDirectory.mkdirs()) {
+                throw new IllegalArgumentException("Unable to create a root directory '" + rootDirectory.getAbsolutePath() + "'!");
+            }
+        }
+
         if (!rootDirectory.isDirectory()) {
             throw new IllegalArgumentException("root '" + rootDirectory.getAbsolutePath() + "' is not a directory!");
         }
@@ -609,8 +651,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return siteStructureFile;
     }
 
-    private Map<String, String> readSiteStructureAttributes() {
-        File structureFile = getSiteDescriptionFile();
+    /* private -> testing */
+    Map<String, String> readSiteStructureAttributes() {
+        File structureFile = getSiteStructureAttributesFile();
 
         SiteStructureAttributes result;
 
@@ -632,8 +675,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return result;
     }
 
-    private void writeSiteStructureAttributes(Map<String, String> structure) {
-        File structureFile = getSiteDescriptionFile();
+    /* private -> testing */
+    void writeSiteStructureAttributes(Map<String, String> structure) {
+        File structureFile = getSiteStructureAttributesFile();
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(structureFile))) {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, structure);
@@ -643,7 +687,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
     }
 
-    protected File getHiddenDirectory(String path) {
+    /* private -> testing */
+    File getHiddenDirectory(String path) {
         File rootDirectory = getContentRoot();
 
         String normalizedPath = path.trim();
@@ -692,11 +737,13 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return hiddenDir;
     }
 
-    private File getDirectoryInfoFile(File hiddenDir) {
+    /* private -> testing */
+    File getDirectoryInfoFile(File hiddenDir) {
         return new File(hiddenDir, DIRECTORY_INFO_FILENAME);
     }
 
-    private JsonInfoList readDirectoryInfoFile(File infoFile) {
+    /* private -> testing */
+    JsonInfoList readDirectoryInfoFile(File infoFile) {
         try (InputStream is = new BufferedInputStream(new FileInputStream(infoFile))) {
             return objectMapper.readValue(is, JsonInfoList.class);
         } catch (IOException ex) {
@@ -705,7 +752,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
     }
 
-    private void writeDirectoryInfoFile(File infoFile, JsonInfoList infoList) {
+    /* private -> testing */
+    void writeDirectoryInfoFile(File infoFile, JsonInfoList infoList) {
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(infoFile))) {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, infoList);
         } catch (IOException ex) {
@@ -714,13 +762,19 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
     }
 
-    private File getPageInfoFile(File hiddenDir, String pageName) {
-        String fileName = pageName + PAGE_INFO_FILE_POSTFIX;
+    /* private -> testing */
+    File getPageStateFile(File hiddenDir, String pageName) {
+        String fileName = pageName + PAGE_INFO_FILE_POSTFIX + ".json";
 
         return new File(hiddenDir, fileName);
     }
 
-    private PageState readPageInfoFile(File infoFile) {
+    /* private -> testing */
+    PageState readPageStateFile(File infoFile) {
+        if (!infoFile.exists()) {
+            return null;
+        }
+
         try (InputStream is = new BufferedInputStream(new FileInputStream(infoFile))) {
             return objectMapper.readValue(is, PageState.class);
         } catch (IOException ex) {
@@ -730,16 +784,18 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
     }
 
-    private void writePageInfoFile(File infoFile, PageState pageState) {
-        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(infoFile))) {
+    /* private -> testing */
+    void writePageStateFile(File pageStateFile, PageState pageState) {
+        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(pageStateFile))) {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, pageState);
         } catch (IOException ex) {
             // TODO: create proper exception handling
-            throw new IllegalArgumentException("Error writing page info file (" + infoFile.getAbsolutePath() + ")!", ex);
+            throw new IllegalArgumentException("Error writing page state file (" + pageStateFile.getAbsolutePath() + ")!", ex);
         }
     }
 
-    private File getContentRoot() {
+    /* private -> testing */
+    File getContentRoot() {
         File rootDirectory = new File(contentRoot);
 
         if (!rootDirectory.exists()) {
@@ -756,7 +812,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return rootDirectory;
     }
 
-    private File getContentPageFile(PageInfo info) {
+    /* private -> testing */
+    File getContentPageFile(PageInfo info) {
         File contentRootFile = new File(contentRoot);
 
         //noinspection ResultOfMethodCallIgnored
@@ -784,7 +841,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return contentFile;
     }
 
-    private ContentPage readContentPage(PageInfo info, File contentFile) {
+    /* private -> testing */
+    ContentPage readContentPage(PageInfo info, File contentFile) {
         InputStream is = null;
         ContentPage result;
         try {
@@ -809,7 +867,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         return result;
     }
 
-    private void writeContentPage(PageInfo info, ContentPage contentPage, File contentFile) {
+    /* private -> testing */
+    void writeContentPage(PageInfo info, ContentPage contentPage, File contentFile) {
         OutputStream os = null;
         try {
             os = new BufferedOutputStream(new FileOutputStream(contentFile));
@@ -822,24 +881,28 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
     }
 
-    private void initialize() {
+    /* private -> testing */
+    void initialize() {
         this.root = null;
 
         ensureInit();
     }
 
-    private void ensureInit() {
+    /* private -> testing */
+    void ensureInit() {
         if (root != null) {
             return;
         }
 
         File rootDir = getContentRoot();
-        
+
         root = new DirectoryInfo();
-        root.setPath("/");
+        root.setPath("");
         root.setParent(null);
 
-        processContentDirectory(rootDir, "", root);
+        processContentDirectory(rootDir, "/", root);
+
+        initTimestamp = new Date();
     }
 
     private void processContentDirectory(File dir, String parentPath, SiteNodeContainerInfo containerInfo) {
@@ -852,15 +915,18 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         File hiddenDir = getHiddenDirectory(parentPath);
         File dirInfoFile = getDirectoryInfoFile(hiddenDir);
 
+        boolean changed = false;
         JsonInfoList infoList;
         if (dirInfoFile.exists()) {
             infoList = readDirectoryInfoFile(dirInfoFile);
         } else {
             infoList = new JsonInfoList(parentPath);
             infoList.setChildren(new ArrayList<>());
+            changed = true;
         }
 
         Map<String, SiteNodeInfo> infos = new HashMap<>();
+        Map<String, JsonInfo> infoListLookup = infoList.getLookup();
 
         for (File file : files) {
             String fileName = file.getName();
@@ -870,33 +936,66 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
                 continue;
             }
 
-            String path = parentPath + '/' + fileName;
+            String path = parentPath;
+            if(!path.endsWith("/")) {
+                path += '/';
+            }
+            path += fileName;
 
             if (file.isDirectory()) {
                 DirectoryInfo dirInfo = new DirectoryInfo();
 
-                dirInfo.setPath(path);
+                dirInfo.setPath(parentPath);
+                dirInfo.setName(fileName);
                 // TODO: fill other fields
+
+                JsonInfo info = infoListLookup.get(fileName);
+                if(info != null) {
+                    dirInfo.setDescription(info.getDescription());
+                    dirInfo.setDisplayName(info.getDisplayName());
+                    dirInfo.setLocalizedName(info.getLocalizedName());
+                }
+
+                dirInfo.setParent(containerInfo);
 
                 processContentDirectory(file, path, dirInfo);
 
                 infos.put(fileName, dirInfo);
             } else if (file.isFile()) {
+                String pageName = fileName.substring(0, fileName.lastIndexOf("."));
+
                 PageInfo pageInfo = new PageInfo();
 
-                pageInfo.setPath(path);
+                pageInfo.setPath(parentPath);
+                pageInfo.setName(pageName);
                 // TODO: fill other fields
 
-                infos.put(fileName, pageInfo);
+                JsonInfo info = infoListLookup.get(fileName);
+                if(info != null) {
+                    pageInfo.setDescription(info.getDescription());
+                    pageInfo.setDisplayName(info.getDisplayName());
+                    pageInfo.setLocalizedName(info.getLocalizedName());
+
+                    pageInfo.setTemplateReference(((JsonFileInfo) info).getTemplateReference());
+                }
+                else {
+                    pageInfo.setTemplateReference(new TemplateReference());
+                }
+
+                pageInfo.setParent(containerInfo);
+
+                infos.put(pageName, pageInfo);
             }
         }
 
         // sort entries corresponding to the previous stored list
         List<SiteNodeInfo> children = new ArrayList<>();
+        List<JsonInfo> changedInfoList = new ArrayList<>();
 
         for (JsonInfo childInfo : infoList.getChildren()) {
             String fileName = childInfo.getName();
             SiteNodeInfo infoNode = infos.remove(fileName);
+            changedInfoList.add(childInfo);
 
             if (infoNode == null) {
                 // no file present anymore, skip it
@@ -911,6 +1010,27 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
 
         containerInfo.setNodes(children);
+
+        if(changed) {
+            for (SiteNodeInfo child : children) {
+                if(child instanceof PageInfo) {
+                    changedInfoList.add(new JsonFileInfo((PageInfo) child));
+                }
+                else if(child instanceof DirectoryInfo){
+                    changedInfoList.add(new JsonDirectoryInfo((DirectoryInfo) child));
+                }
+                else {
+                    throw new UnsupportedNodeTypeException(child.getClass());
+                }
+            }
+            infoList.setChildren(changedInfoList);
+            writeDirectoryInfoFile(dirInfoFile, infoList);
+        }
+    }
+
+    /* private -> testing */
+    SiteNodeContainerInfo getRoot() {
+        return root;
     }
 
     //******* setters *******//
@@ -926,5 +1046,4 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public void setDefaultTraversingStrategy(PageInfoTraversingStrategy defaultTraversingStrategy) {
         this.defaultTraversingStrategy = defaultTraversingStrategy;
     }
-
 }
