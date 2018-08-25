@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class DirectoryContentBasedTemplateResolver implements TemplateResolver {
@@ -35,6 +36,8 @@ public class DirectoryContentBasedTemplateResolver implements TemplateResolver {
 
     @Override
     public Template retrieve(String id) {
+        Objects.requireNonNull(id, "Template id must not be null!");
+
         if (logger.isDebugEnabled()) logger.debug("Retrieving template for '{}' ...", id);
 
         File baseDir = new File(templateBasePath);

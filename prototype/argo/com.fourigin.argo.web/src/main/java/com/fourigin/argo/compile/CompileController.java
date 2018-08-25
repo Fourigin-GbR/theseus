@@ -7,6 +7,7 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
@@ -48,9 +49,11 @@ public class CompileController {
         @RequestParam(RequestParameters.PATH) String path,
         @RequestParam(value = "writeOutput", required = false, defaultValue = "false") boolean writeOutput
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing compile request for base {} & path {}.", base, path);
+        if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
+
+        ContentRepository contentRepository = aggregation.getContentRepository();
 
         PageInfo pageInfo = aggregation.getPageInfo();
         PageState pageState = aggregation.getPageState();
@@ -108,9 +111,11 @@ public class CompileController {
             compileState.setTimestamp(timestamp);
             compileState.setChecksum(pageContentChecksum);
 
-//            SiteNodeContainerInfo parent = pageInfo.getParent();
             String parentPath = pageInfo.getPath();
-            aggregation.getContentRepository().updateInfo(parentPath, pageInfo);
+            contentRepository.updateInfo(parentPath, pageInfo);
+
+            pageState.setCompileState(compileState);
+            contentRepository.updatePageState(pageInfo, pageState);
         }
     }
 
@@ -129,11 +134,6 @@ public class CompileController {
 
         return pageCompiler.prepareContent(aggregation.getPageInfo());
     }
-
-//    @RequestMapping(value = "/persist", method = RequestMethod.GET)
-//    public StatusAwareContentElementResponse save(@RequestBody SaveChangesRequest request){
-//
-//    }
 
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

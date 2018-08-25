@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -361,10 +362,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             processContentDirectory(contentDir, parentPath, parent);
 
             File deletedContainer = new File(contentDir, DELETED_DIRECTORY_NAME);
-            if(!deletedContainer.exists()) {
-                if(!deletedContainer.mkdirs()) {
-                    throw new IllegalStateException("Unable to create a directory '" + deletedContainer.getAbsolutePath() + "'!");
-                }
+            if(!deletedContainer.exists() && !deletedContainer.mkdirs()) {
+                throw new IllegalStateException("Unable to create a directory '" + deletedContainer.getAbsolutePath() + "'!");
             }
 
             // add a new node
@@ -440,7 +439,17 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         File hiddenDir = getHiddenDirectory(path);
         File pageInfoFile = getPageStateFile(hiddenDir, name);
 
-        return readPageStateFile(pageInfoFile);
+        PageState result = readPageStateFile(pageInfoFile);
+        if(result == null) {
+            if (logger.isDebugEnabled()) logger.debug("No PageState file found for {}, creating an empty initial state.", pageInfo);
+            result = new PageState.Builder()
+                .withMetaDataChecksum("")
+                .withContentChecksum("")
+                .withDataSourceChecksum(new TreeMap<>())
+                .withStaged(false).build();
+        }
+
+        return result;
     }
 
     @Override
@@ -633,14 +642,12 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     File getSiteStructureAttributesFile() {
         File rootDirectory = new File(contentRoot);
 
-        if(!rootDirectory.exists()) {
-            if(!rootDirectory.mkdirs()) {
-                throw new IllegalArgumentException("Unable to create a root directory '" + rootDirectory.getAbsolutePath() + "'!");
+        if(rootDirectory.exists()) {
+            if (!rootDirectory.isDirectory()) {
+                throw new IllegalArgumentException("root '" + rootDirectory.getAbsolutePath() + "' is not a directory!");
             }
-        }
-
-        if (!rootDirectory.isDirectory()) {
-            throw new IllegalArgumentException("root '" + rootDirectory.getAbsolutePath() + "' is not a directory!");
+        } else if(!rootDirectory.mkdirs()) {
+            throw new IllegalArgumentException("Unable to create a root directory '" + rootDirectory.getAbsolutePath() + "'!");
         }
 
         File siteStructureFile = new File(rootDirectory, SITE_STRUCTURE_FILENAME);
@@ -731,8 +738,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             throw new IllegalArgumentException("HIDDEN '" + hiddenPath + "' is not a directory!");
         }
 
-        if (logger.isTraceEnabled())
-            logger.trace("Resolved HIDDEN directory to '{}'", hiddenPath);
+        if (logger.isDebugEnabled())
+            logger.debug("Resolved HIDDEN directory to '{}'", hiddenPath);
 
         return hiddenDir;
     }
@@ -770,17 +777,18 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     }
 
     /* private -> testing */
-    PageState readPageStateFile(File infoFile) {
-        if (!infoFile.exists()) {
+    PageState readPageStateFile(File pageStateFile) {
+        if (!pageStateFile.exists()) {
+            if (logger.isDebugEnabled()) logger.debug("No pageState file '{}' exists.", pageStateFile.getAbsolutePath());
             return null;
         }
 
-        try (InputStream is = new BufferedInputStream(new FileInputStream(infoFile))) {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(pageStateFile))) {
             return objectMapper.readValue(is, PageState.class);
         } catch (IOException ex) {
             if (logger.isErrorEnabled())
-                logger.error("Error reading page info file ({})!", infoFile.getAbsolutePath(), ex);
-            throw new IllegalStateException("Unable to read page info file (" + infoFile.getAbsolutePath() + ")", ex);
+                logger.error("Error reading page state file ({})!", pageStateFile.getAbsolutePath(), ex);
+            throw new IllegalStateException("Unable to read page state file (" + pageStateFile.getAbsolutePath() + ")", ex);
         }
     }
 
@@ -809,6 +817,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             throw new IllegalArgumentException("root '" + rootDirectory.getAbsolutePath() + "' is not a directory!");
         }
 
+        if (logger.isDebugEnabled()) logger.debug("Content-root: '{}'", rootDirectory.getAbsolutePath());
         return rootDirectory;
     }
 
@@ -918,12 +927,16 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         boolean changed = false;
         JsonInfoList infoList;
         if (dirInfoFile.exists()) {
+            if (logger.isDebugEnabled()) logger.debug("Reading info file '{}'.", dirInfoFile.getAbsolutePath());
             infoList = readDirectoryInfoFile(dirInfoFile);
         } else {
+            if (logger.isDebugEnabled()) logger.debug("Creating a new (empty) info file for path '{}'.", parentPath);
             infoList = new JsonInfoList(parentPath);
             infoList.setChildren(new ArrayList<>());
             changed = true;
         }
+
+        if (logger.isDebugEnabled()) logger.debug("Content of the info file: {}", infoList);
 
         Map<String, SiteNodeInfo> infos = new HashMap<>();
         Map<String, JsonInfo> infoListLookup = infoList.getLookup();
@@ -970,7 +983,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
                 pageInfo.setName(pageName);
                 // TODO: fill other fields
 
-                JsonInfo info = infoListLookup.get(fileName);
+                JsonInfo info = infoListLookup.get(pageName);
                 if(info != null) {
                     pageInfo.setDescription(info.getDescription());
                     pageInfo.setDisplayName(info.getDisplayName());

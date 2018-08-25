@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class PageState {
     private boolean staged;
@@ -106,5 +107,64 @@ public class PageState {
             ", checksum=" + checksum +
             ", revision='" + revision + '\'' +
             '}';
+    }
+
+    public static class Builder {
+        private boolean staged;
+        private CompileState compileState;
+        private String metaDataChecksum;
+        private String contentChecksum;
+        private SortedMap<String, String> dataSourceChecksum;
+        private String revision;
+
+        public Builder withStaged(boolean staged) {
+            this.staged = staged;
+            return this;
+        }
+
+        public Builder withCompileState(CompileState compileState) {
+            this.compileState = compileState;
+            return this;
+        }
+
+        public Builder withMetaDataChecksum(String metaDataChecksum) {
+            this.metaDataChecksum = metaDataChecksum;
+            return this;
+        }
+
+        public Builder withContentChecksum(String contentChecksum) {
+            this.contentChecksum = contentChecksum;
+            return this;
+        }
+
+        public Builder withDataSourceChecksum(SortedMap<String, String> dataSourceChecksum) {
+            this.dataSourceChecksum = new TreeMap<>(dataSourceChecksum);
+            return this;
+        }
+
+        public Builder withRevision(String revision) {
+            this.revision = revision;
+            return this;
+        }
+
+        public PageState build() {
+            PageState state = new PageState();
+
+            state.setStaged(staged);
+
+            if(compileState != null) {
+                state.setCompileState(compileState);
+            }
+
+            String meta = metaDataChecksum == null ? "" : metaDataChecksum;
+            String content = contentChecksum == null ? "" : contentChecksum;
+            SortedMap<String, String> dataSource = dataSourceChecksum == null ? new TreeMap<>() : dataSourceChecksum;
+            state.setChecksum(meta, content, dataSource);
+
+            String rev = revision == null ? "1" : revision;
+            state.setRevision(rev);
+
+            return state;
+        }
     }
 }

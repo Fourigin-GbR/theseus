@@ -260,20 +260,21 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         beforeReInit.before(repository.initTimestamp)
     }
 
-    def 'ensureInit() works as expected'() {
-        setup:
-        HiddenDirectoryContentRepository repository = initRepository()
-
-        when:
-        repository.ensureInit()
-
-        and:
-        def expected = stubRoot(false)
-
-        then:
-        repository.initTimestamp != null
-        repository.root == expected
-    }
+    // create the tree & initialize it on-the-fly!
+//    def 'ensureInit() works as expected'() {
+//        setup:
+//        HiddenDirectoryContentRepository repository = initRepository()
+//
+//        when:
+//        repository.ensureInit()
+//
+//        and:
+//        def expected = stubRoot(false)
+//
+//        then:
+//        repository.initTimestamp != null
+//        repository.root == expected
+//    }
 
     def 'createInfo() works as expected'() {
         setup:
@@ -338,6 +339,29 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         storedDirInfo4.path == '/dir'
         storedDirInfo4.children.size() == 1
         storedDirInfo4.children.contains(new JsonFileInfo(pageInfo3))
+    }
+
+    def 'resolveInfo() works as expected'() {
+        setup:
+        HiddenDirectoryContentRepository repository = initRepository()
+
+        when:
+        def homeInfo = repository.resolveInfo(PageInfo.class, '/home')
+
+        then:
+        homeInfo == new PageInfo(
+                path: '/',
+                name: 'home',
+                parent: repository.root,
+                description: 'Auto-created directory info. Don\'t forget to specify all properties!',
+                localizedName: 'home',
+                displayName: 'home',
+                templateReference: new TemplateReference(
+                        templateId: 'greekestate.index',
+                        variationId: 'default',
+                        revision: ''
+                )
+        )
     }
 
     def 'resolveInfo() and updateInfo() works as expected'() {

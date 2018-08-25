@@ -39,7 +39,7 @@ public class JsonInfoList {
 
     @JsonIgnore
     public Map<String, JsonInfo> getLookup() {
-        HashMap<String, JsonInfo> lookup = new HashMap<>();
+        Map<String, JsonInfo> lookup = new HashMap<>();
 
         if(children != null && !children.isEmpty()) {
             for (JsonInfo child : children) {

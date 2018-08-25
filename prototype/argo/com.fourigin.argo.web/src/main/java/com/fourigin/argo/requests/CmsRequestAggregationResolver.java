@@ -37,9 +37,14 @@ public  class CmsRequestAggregationResolver {
             throw new IllegalStateException("No PageInfo found for path '" + path + "'! Is this path valid?");
         }
 
+        if (logger.isDebugEnabled()) logger.debug("pageInfo for path '{}': {}", path, pageInfo);
+
         PageState pageState = contentRepository.resolvePageState(pageInfo);
         if(pageState == null){
-            throw new IllegalStateException("No PageState found for page '" + path + "'! Is this path valid?");
+            if (logger.isDebugEnabled()) logger.debug("No PageState found for page '{}'. Returning a new PageState", path);
+            pageState = new PageState.Builder()
+                .withStaged(false)
+                .build();
         }
 
         TemplateReference templateReference = pageInfo.getTemplateReference();
@@ -49,6 +54,10 @@ public  class CmsRequestAggregationResolver {
         if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
 
         String templateId = templateReference.getTemplateId();
+        if(templateId == null) {
+            throw new IllegalStateException("The defined TemplateReference does not include a template-id for " + pageInfo);
+        }
+
         Template template = templateResolver.retrieve(templateId);
         if(template == null){
             throw new IllegalStateException("No template found for id '" + templateId + "'!");
