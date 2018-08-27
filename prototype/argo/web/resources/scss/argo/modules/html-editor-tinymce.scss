@@ -2,12 +2,26 @@
 @import "../_settings/_fonts.scss";
 
 .editor {
+
+  .mce-tinymce, .mce-edit-area {
+    box-shadow: none;
+    border: 0;
+  }
+  .mce-tinymce {
+    position: relative;
+    top: 0;
+  }
+
+  .mce-edit-area {
+    background-color: $color_basic_dark_background;
+    color: #fff;
+  }
+
   fieldset[data-type="list"] {
     .compactView {
       .mce-tinymce {
-        .mce-top-part, .mce-statusbar {
-          display: none;
-        }
+        top: 200px; /* The tinyEditor is not triggering change-events on content-changes, if the editor is hidden. So
+         move him just out of the visible area (hack) */
       }
     }
   }

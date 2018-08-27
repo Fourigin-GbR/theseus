@@ -7,11 +7,14 @@ com.fourigin = com.fourigin || {};
 com.fourigin.argo = com.fourigin.argo || {};
 com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
 {
-    var PageEditor = function() {
+    var PageEditor = function(oConfiguration) {
         this.Model = new com.fourigin.argo.pageEditor.Model();
         this.Overlays = new com.fourigin.argo.Overlays();
         this.overlayPageEditor = null;
+        this.setData(oConfiguration);
         this.initOverlays();
+        this.writeHotspots();
+        this.setEvents();
         //
         return this;
     };
@@ -29,19 +32,6 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         this.Model.setHotspots(oData.hotspots);
     };
     //
-    PageEditor.prototype.loadContent = function () {
-        var self = this,
-            jRequest = jQuery.ajax({
-            "url": "/cms/compile/prepare-content?base=" + this.Model.getBase() + "&path=" + this.Model.getPath() + "&verbose=true"
-        });
-        jRequest.done(function (data) {
-                console.log("loaded content.");
-                self.Model.setContent(data.content);
-                self.writeHotspots();
-                self.setEvents();
-            }
-        );
-    };
 
     PageEditor.prototype.writeHotspots = function() {
         var oHotSpots = this.Model.getHotspots(),
@@ -55,22 +45,19 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         console.log("write hotspots", oHotSpots);
         for(property in oHotSpots) {
             if(oHotSpots.hasOwnProperty(property)) {
-                var jHotSpot = jPrototype.clone().removeAttr("data-prototype"),
-                    oHotSpot = oHotSpots[property],
-                    jItemTypeIcon = null,
-                    oContent = this.Model.getContentByPath(property);
-                //
-                //jItemTypeIcon = jQuery("#argoEditorPrototypes").find(".contentTypeIcon[data-content-type='" + oContent.type + "']").clone();
-                jHotSpot.find("h4").text(oHotSpot.title);
-                if(oHotSpot.description) {
-                    jHotSpot.find(".information").addClass("active").text(oHotSpot.description);
-                }
-                //jHotSpot.find(".listItemsAsFlyoutTargets_contentTypeIcon").append(jItemTypeIcon);
-                //
-                this.writeSpecificEditor(oContent, jHotSpot.find("form [data-type='editor-fields']"));
-                jHotSpot.find("form").attr("data-content-path", property);
-                //
-                jEditorRoot.append(jHotSpot);
+
+                var jHotSpotPrototypeClone = jPrototype.clone().removeAttr("data-prototype");
+
+                new com.fourigin.argo.content.HotspotEditor(
+                    {
+                        "siteBase": this.Model.getBase(),
+                        "sitePath": this.Model.getPath(),
+                        "contentPath": property,
+                        "hotSpotDefinition": oHotSpots[property],
+                        "view_target": jEditorRoot,
+                        "view_prototype": jHotSpotPrototypeClone
+                    }
+                );
             }
         }
 
@@ -106,6 +93,7 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         // fill with data
         jPrototype.find("input[name=name]").val(oTextItem.name);
         jPrototype.find("textarea[name=content]").val(oTextItem.content);
+        jPrototype.find(".contentHtmlRendered").html(oTextItem.content);
         // append to editor
         jTarget.append(jPrototype);
     };
@@ -164,37 +152,53 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
         jQuery("[data-overlay-id='overlay_editPageContent']").on("click", function() {
             self.overlayPageEditor.show();
         });
-        tinymce.init({
-            selector: 'textarea.html',
-            menubar: false,
-            content_css: '/assets/styles/argo-tinymce.css'
-        });
 
-        jQuery(".button_moreOptions").on("click", function() {
-            //jQuery(this).siblings(".moreOptions").toggle();
-            var jThis = jQuery(this),
-                jMoreOptions = jThis.siblings(".moreOptions");
-            if(jThis.hasClass("opened")) {
-                jMoreOptions.slideUp();
-                jThis.removeClass("opened");
-            }
-            else {
-                jMoreOptions.slideDown();
-                jThis.addClass("opened");
-            }
-        });
+        var updateTextPreviewBoxAsHtml = function(jTextElement) {
+            jTextElement.find(".contentHtmlRendered").html(jTextElement.find("textarea").val());
+        };
+
 
         var openCloseListEditorItems = function() {
-            var jTrigger = jQuery("fieldset[data-type=list] > fieldset > ul > li .listStatusIcon, fieldset[data-type=list] > fieldset > ul > li .listOpenTrigger");
+            var jTrigger = jQuery("fieldset[data-type=list] > fieldset > ul > li [data-action=openClose], fieldset[data-type=list] > fieldset > ul > li .listOpenTrigger");
             jTrigger.on("click", function(e) {
                 if("TEXTAREA" !== e.target.nodeName || "INPUT" !== e.target.nodeName) {
                     jQuery(this).closest("li").toggleClass("compactView");
+                    window.tinyMCE.triggerSave();
+                    updateTextPreviewBoxAsHtml(jQuery(this).closest("li").find("[data-type=text]"));
                 }
             })
         };
         openCloseListEditorItems();
 
+        var deleteListEntry = function() {
+            jTrigger = jQuery("fieldset[data-type=list] [data-action=delete]");
+            jTrigger.on("click", function() {
+                jQuery(this).closest("li").slideUp(function(){jQuery(this).remove()});
+            });
+        };
 
+        deleteListEntry();
+
+        var addEntryTop = function() {
+            jTrigger = jQuery("fieldset[data-type=list] [data-action=addTop]");
+            jTrigger.on("click", function() {
+                var jUl = jQuery(this).closest("fieldset").find("ul:first"),
+                    jFirstLiClone = jUl.find("li:first").clone();
+                jUl.prepend(jFirstLiClone);
+            });
+        };
+        addEntryTop();
+
+        var addEntryBottom = function() {
+            jTrigger = jQuery("fieldset[data-type=list] [data-action=addBottom]");
+            jTrigger.on("click", function() {
+                var jUl = jQuery(this).closest("fieldset").find("ul:first"),
+                    jFirstLiClone = jUl.find("li:last").clone();
+                jUl.append(jFirstLiClone);
+            });
+        };
+
+        addEntryBottom();
 
         var adjustHeightOfTextareaToContentSize = function(jTextarea) {
             if(jTextarea[0].scrollHeight > Math.ceil(jTextarea.height() + 30)) { // add padding TODO: read padding dynamically
@@ -212,72 +216,6 @@ com.fourigin.argo.PageEditor = com.fourigin.argo.PageEditor || (function ()
             //window.setTimeout(function(){jCurrentFocusedElement.removeClass("enlarge");}, 300);
         });
 
-        var blockerTimeoutHandleCache = null;
-
-        jQuery("form").on("submit", function (e) {
-            var jThis = jQuery(this),
-                jMessageSuccessfullySaved = jThis.find(".messages__message[data-type='successfully-stored']"),
-                jGlobalMessagePageReloaded = jQuery(".globalNotifications__globalNotification[data-type='page-reloaded']");
-            //
-            e.preventDefault();
-            e.stopPropagation();
-            //
-            // If available, update html-editor-content in textarea:
-            window.tinyMCE.triggerSave();
-            //
-            var jData = self.Model.generateArgoContentElementJsonByMarkup(jThis.find("fieldset:first")),
-                jBlockingLayer = jQuery(this).find(".blockingOverlay");
-            // TODO: das klappt so nicht. ich muss über die DOM-Elemente interieren, damit ich jedes <fieldset> umwandeln kann in ein Type-Element oder ein Elements.
-
-            blockerTimeoutHandleCache = blockerTimeoutHandleCache || null;
-
-            if(blockerTimeoutHandleCache) {
-                window.clearTimeout(blockerTimeoutHandleCache);
-            }
-            blockerTimeoutHandleCache = window.setTimeout(function(){jBlockingLayer.addClass("active")}, 1000);
-
-            var oNewDataObject = {
-                "base": self.Model.getBase(),
-                "path": self.Model.getPath(),
-                "contentPath": $(this).attr("data-content-path"),
-                "originalChecksum": "",
-                "modifiedContentElement": jData
-            };
-            console.log("for mdata as json: ", oNewDataObject);
-
-            var request = $.ajax({
-                url: "http://argo.greekestate.fourigin.com/cms/editors/save",
-                method: "POST",
-                data: JSON.stringify(oNewDataObject),
-                contentType: "application/json"
-            });
-
-            request.done(function (msg) {
-                jBlockingLayer.removeClass("active");
-                if(blockerTimeoutHandleCache) {
-                    window.clearTimeout(blockerTimeoutHandleCache);
-                    blockerTimeoutHandleCache = null;
-                }
-                jMessageSuccessfullySaved.addClass("active");
-                window.setTimeout(function(){
-                    jMessageSuccessfullySaved.removeClass("active");
-                }, 2500);
-                jQuery("iframe#pageContent")[0].contentWindow.location.reload(true);
-                jGlobalMessagePageReloaded.addClass("active");
-                window.setTimeout(function(){
-                    jGlobalMessagePageReloaded.removeClass("active");
-                }, 5000);
-            });
-
-            request.fail(function (jqXHR, textStatus) {
-                alert("Request failed: " + textStatus);
-                jBlockingLayer.removeClass("active");
-                if(blockerTimeoutHandleCache) {
-                    window.clearTimeout(blockerTimeoutHandleCache);
-                    blockerTimeoutHandleCache = null;
-                }
-            });
-        });
     };
     //
     return PageEditor;

@@ -29,7 +29,7 @@
                         <div class="heroStageOffer">
                             <div class="image">
                                 <img th:src="${product.elements[0].source}" src="//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG"/>
-                                <div class="teaser" th:text="${product.elements[1].content}">Teaser</div>
+                                <div class="teaser" th:utext="${product.elements[1].content}">Teaser</div>
                             </div>
                         </div>
                     </li>
@@ -70,8 +70,8 @@
                                 <img th:src="${product.elements[0].source}" src="//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG"/>
                             </div>
                             <div class="description">
-                                <h2 th:text="${product.elements[1].content}"></h2>
-                                <div th:text="${product.elements[2].content}" class="copy">
+                                <h2 th:utext="${product.elements[1].content}"></h2>
+                                <div th:utext="${product.elements[2].content}" class="copy">
                                     Informationen...
                                 </div>
                             </div>

@@ -22,6 +22,30 @@
     <script type="text/javascript" src="/assets/scripts/argo/Overlays/Overlay/model.js"></script>
     <script type="text/javascript" src="/assets/scripts/argo/Overlays/Overlay/controller.js"></script>
 
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Text/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Text/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Text/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Object/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Object/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Object/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Group/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Group/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Group/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/List/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/List/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/List/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/HotspotEditor/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/HotspotEditor/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/HotspotEditor/controller.js"></script>
+
     <link rel="stylesheet" href="/assets/libs/quill/quill.core.css"/>
     <script src="/assets/libs/tinymce/js/tinymce/tinymce.min.js"></script>
 </head>
@@ -161,6 +185,7 @@
         <input type="hidden" name="name" value=""/>
         <label>
             <span>content</span>
+            <div class="contentHtmlRendered"></div>
             <textarea class="html" name="content"></textarea>
         </label>
     </fieldset>
@@ -214,28 +239,69 @@
         <input type="hidden" name="name" value=""/>
         <fieldset>
             <legend>list</legend>
+            <div class="addItem">
+                <div class="addItem__button" data-action="addTop">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
             <ul class="listChildItemsWrapper">
 
             </ul>
+            <div class="addItem">
+                <div class="addItem__button" data-action="addBottom">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
         </fieldset>
     </fieldset>
 
     <!-- list-group -->
     <li data-prototype="listGroup" class="compactView">
+        <div class="editorControlls">
+            <div class="button button--icon" data-action="openClose">
+                <span class="button__icon"><i class="fas fa-angle-right"></i></span>
+            </div>
+            <div class="button button--icon">
+                <span class="button__icon"><i class="far fa-eye-slash"></i></span>
+                <span class="button__copy">Ausblenden</span>
+            </div>
+            <div class="button button--icon">
+                <span class="button__icon"><i class="far fa-clone"></i></span>
+                <span class="button__copy">Duplizieren</span>
+            </div>
+            <div class="button button--icon" data-action="delete">
+                <span class="button__icon"><i class="far fa-trash-alt"></i></span>
+                <span class="button__copy">Entfernen</span>
+            </div>
+        </div>
         <fieldset data-type="listGroup">
             <input type="hidden" name="type" value="list-group"/>
             <fieldset>
 
             </fieldset>
         </fieldset>
-        <span class="listOpenTrigger"></span>
-        <div class="listStatusIcon">
-            <i class="fas fa-angle-down"></i>
-        </div>
+        <div class="listOpenTrigger"></div>
     </li>
 
     <!-- list-text -->
     <li data-prototype="listText" class="compactView">
+        <div class="editorControlls">
+            <div class="button button--icon">
+                <span class="button__icon"><i class="far fa-angle-right"></i></span>
+            </div>
+            <div class="button button--icon">
+                <span class="button__icon"><i class="far fa-eye-slash"></i></span>
+                <span class="button__copy">Ausblenden</span>
+            </div>
+            <div class="button button--icon">
+                <span class="button__icon"><i class="far fa-clone"></i></span>
+                <span class="button__copy">Duplizieren</span>
+            </div>
+            <div class="button button--icon">
+                <span class="button__icon"><i class="far fa-trash-alt"></i></span>
+                <span class="button__copy">Entfernen</span>
+            </div>
+        </div>
         <fieldset data-type="listText">
             <input type="hidden" name="type" value="list-text"/>
             <input type="hidden" name="name" value=""/>
@@ -244,9 +310,6 @@
                 <textarea name="content"></textarea>
             </label>
         </fieldset>
-        <span class="listStatusIcon">
-            <i class="fas fa-angle-right"></i>
-        </span>
         <span class="listOpenTrigger"></span>
     </li>
 
@@ -273,15 +336,13 @@
 </div>
 
 <script type="text/javascript" th:inline="javascript">
-    var argoPageEditor = new com.fourigin.argo.PageEditor();
-    argoPageEditor.setData(
+    var argoPageEditor = new com.fourigin.argo.PageEditor(
         {
             "base": [[${argo.base}]],
             "path": [[${argo.path}]],
             "hotspots": [[${data_hotspots}]]
         }
     );
-    argoPageEditor.loadContent();
 </script>
 
 <script type='text/javascript'>
