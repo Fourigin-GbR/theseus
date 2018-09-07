@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
- 	<!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+ 	<include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <appender name="MULTIPLEX-SOCKET" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+        <Compressing>true</Compressing>
+        <ReconnectionDelay>30000</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+        <ApplicationIdentifier>argo</ApplicationIdentifier>
+        <RemoteHosts>
+            localhost,
+            192.168.0.2
+        </RemoteHosts>
+    </appender>
 
-	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <!--<include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
 
-	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
-	<include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+	<!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
 
-
-	<!--<appender name="MULTIPLEX-SOCKET" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">-->
-		<!--<Compressing>true</Compressing>-->
-		<!--<ReconnectionDelay>30000</ReconnectionDelay>-->
-		<!--<IncludeCallerData>true</IncludeCallerData>-->
-		<!--<ApplicationIdentifier>argo</ApplicationIdentifier>-->
-		<!--<RemoteHosts>-->
-			<!--localhost-->
-		<!--</RemoteHosts>-->
-	<!--</appender>-->
+	<!--<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>-->
+	<!--<include resource="org/springframework/boot/logging/logback/file-appender.xml" />-->
 
 	<!--<logger name="org.springframework" level="DEBUG"/>-->
 	<!--<logger name="org.springframework.security" level="DEBUG"/>-->
@@ -31,7 +31,7 @@
 	<root level="INFO">
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="FILE"/>
-		<!--<appender-ref ref="MULTIPLEX-SOCKET"/>-->
+		<appender-ref ref="MULTIPLEX-SOCKET"/>
 	</root>
 
 </configuration>

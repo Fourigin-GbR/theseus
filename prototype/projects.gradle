@@ -153,6 +153,7 @@ project(':argo') {
             compile argoTemplateEngine
             compile argoRepository
             compile utilitiesCore
+            compile managedDependency('org.apache.commons:commons-lang3')
         }
     }
 
