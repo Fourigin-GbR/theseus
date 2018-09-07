@@ -10,6 +10,14 @@ public class ContentPageMetaData implements Serializable {
     private String title;
     private Map<String, String> attributes;
 
+    public ContentPageMetaData() {
+    }
+
+    public ContentPageMetaData(ContentPageMetaData prototype) {
+        this.title = prototype.title;
+        this.attributes = new HashMap<>(prototype.attributes);
+    }
+
     public String getTitle() {
         return title;
     }

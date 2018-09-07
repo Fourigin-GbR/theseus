@@ -6,6 +6,7 @@ import com.fourigin.argo.models.content.DataSourceContent;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.repository.ContentResolver;
+import org.apache.commons.lang3.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +22,13 @@ public class DataSourcesResolver {
     private final Logger logger = LoggerFactory.getLogger(DataSourcesResolver.class);
 
     public ContentPage resolve(ContentResolver contentResolver, ContentPage contentPage){
-        Collection<DataSourceContent> dataSourceGroups = contentPage.getDataSourceContents();
-        if(dataSourceGroups == null || dataSourceGroups.isEmpty()){
+        if(!contentPage.hasDataSourceContents()){
             if (logger.isDebugEnabled()) logger.debug("No dataSources defined, nothing to resolve.");
             return contentPage;
         }
+
+        ContentPage result = SerializationUtils.clone(contentPage);
+        Collection<DataSourceContent> dataSourceGroups = result.getDataSourceContents();
 
         Map<String, DataSource<DataSourceQuery>> dataSourceMap = new HashMap<>();
         for (DataSource<? extends DataSourceQuery> dataSource : dataSources) {
@@ -75,7 +78,7 @@ public class DataSourcesResolver {
             throw new DataSourceResolvingExceptions(errors);
         }
 
-        return contentPage;
+        return result;
     }
 
     public void setDataSources(Collection<DataSource<? extends DataSourceQuery>> dataSources) {

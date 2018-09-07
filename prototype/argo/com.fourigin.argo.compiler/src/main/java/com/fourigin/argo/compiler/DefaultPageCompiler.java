@@ -3,6 +3,7 @@ package com.fourigin.argo.compiler;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.models.template.TemplateVariation;
@@ -56,7 +57,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
     public ContentPage prepareContent(PageInfo pageInfo) {
         String pageName = pageInfo.getName();
-        if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
+        if (logger.isInfoEnabled()) logger.info("Preparing content page '{}'.", pageName);
 
         ContentPage contentPage = contentRepository.retrieve(pageInfo);
         if (contentPage == null) {
@@ -64,14 +65,24 @@ public class DefaultPageCompiler implements PageCompiler {
         }
         if (logger.isDebugEnabled()) logger.debug("Content page: {}", contentPage.getId());
 
+        ContentPage result = contentPage;
+
         // resolve all data sources
         if (dataSourcesResolver != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
-            contentPage = dataSourcesResolver.resolve(contentRepository, contentPage);
-            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
+            result = dataSourcesResolver.resolve(contentRepository, contentPage);
+//            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
+
+            if(!contentPage.equals(result)) {
+                if (logger.isDebugEnabled()) logger.debug("Updating modified content page");
+                contentRepository.update(pageInfo, result);
+            }
+            else {
+                if (logger.isDebugEnabled()) logger.debug("No dataSource changes detected, the content page is unchanged.");
+            }
         }
 
-        return contentPage;
+        return result;
     }
 
     @Override
@@ -144,17 +155,105 @@ public class DefaultPageCompiler implements PageCompiler {
             compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, contentPage);
         }
 
+        applyTemplate(pageInfo, contentPage, processingMode, template, templateVariation, templateEngine, outputStrategy);
+
+        return templateVariation.getOutputContentType();
+    }
+
+    @Override
+    public String compile(String path, PageInfo pageInfo, ContentPage preparedContentPage, ProcessingMode processingMode, CompilerOutputStrategy outputStrategy) {
+        String pageName = pageInfo.getName();
+        if (logger.isInfoEnabled()) logger.info("Compiling page '{}'.", pageName);
+
+        TemplateReference templateReference = pageInfo.getTemplateReference();
+        if (templateReference == null) {
+            throw new IllegalStateException("No TemplateReference defined for PageInfo " + pageInfo);
+        }
+        if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
+
+        String templateId = templateReference.getTemplateId();
+        Template template = templateResolver.retrieve(templateId);
+        if (template == null) {
+            throw new IllegalStateException("No template found for id '" + templateId + "'!");
+        }
+        if (logger.isDebugEnabled()) logger.debug("Template: {}", templateId);
+
+        String currentTemplateRevision = template.getRevision();
+        String lastTemplateRevision = templateReference.getRevision();
+        if (logger.isDebugEnabled())
+            logger.debug("Last revision: {},\ncurrent revision: {}", lastTemplateRevision, currentTemplateRevision);
+
+        Collection<TemplateVariation> variations = template.getVariations();
+        if (variations == null || variations.isEmpty()) {
+            throw new IllegalStateException("No template variations defined in template '" + templateId + "'!");
+        }
+        String templateVariationId = templateReference.getVariationId();
+        if (logger.isDebugEnabled()) logger.debug("Template variation id: '{}'", templateVariationId);
+
+        TemplateVariation templateVariation = null;
+        for (TemplateVariation variation : variations) {
+            if (templateVariationId.equals(variation.getId())) {
+                templateVariation = variation;
+                break;
+            }
+        }
+        if (templateVariation == null) {
+            throw new IllegalStateException("No template variation found in template '" + templateId + "' for id '" + templateVariationId + "'!");
+        }
+        if (logger.isDebugEnabled()) logger.debug("Template variation: '{}'", templateVariation);
+
+        Type templateType = templateVariation.getType();
+        if (logger.isDebugEnabled()) logger.debug("Template type: {}", templateType);
+
+        TemplateEngine templateEngine = templateEngineFactory.getInstance(templateType);
+        if (templateEngine == null) {
+            throw new IllegalStateException("Unsupported template engine type '" + templateType + "'!");
+        }
+
+        // initialize the template engine
+        templateEngine.setBase(compilerBase);
+        templateEngine.setPath(path);
+
+        if (PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
+            ((PageInfoAwareTemplateEngine) templateEngine).setPageInfo(pageInfo);
+        }
+        if (SiteAttributesAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
+            Map<String, String> siteAttributes = contentRepository.resolveSiteAttributes();
+            ((SiteAttributesAwareTemplateEngine) templateEngine).setSiteAttributes(siteAttributes);
+        }
+
+        if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
+
+        if(compilerInterceptor != null){
+            compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, preparedContentPage);
+        }
+
+        applyTemplate(pageInfo, preparedContentPage, processingMode, template, templateVariation, templateEngine, outputStrategy);
+
+        return templateVariation.getOutputContentType();
+    }
+
+    private void applyTemplate(
+        SiteNodeInfo pageInfo,
+        ContentPage preparedContentPage,
+        ProcessingMode processingMode,
+        Template template,
+        TemplateVariation templateVariation,
+        TemplateEngine templateEngine,
+        CompilerOutputStrategy outputStrategy
+    ){
         // process content page
+        String pageName = pageInfo.getName();
+
         String fileExtension = resolveFileExtension(templateVariation.getOutputContentType());
         try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, compilerBase)) {
-            templateEngine.process(contentPage, template, templateVariation, processingMode, out);
+            templateEngine.process(preparedContentPage, template, templateVariation, processingMode, out);
             if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
         } catch (IOException ex) {
             if (logger.isErrorEnabled()) logger.error("Error compiling content!", ex);
             throw new IllegalStateException("Error occurred while compiling the page.", ex);
         }
 
-        return templateVariation.getOutputContentType();
     }
 
     private String resolveFileExtension(String outputContentType) {

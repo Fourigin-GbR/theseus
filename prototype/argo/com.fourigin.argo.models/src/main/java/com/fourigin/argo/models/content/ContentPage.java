@@ -3,8 +3,10 @@ package com.fourigin.argo.models.content;
 import com.fourigin.argo.models.content.elements.ContentElement;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class ContentPage implements Serializable {
     private static final long serialVersionUID = -6314470617724474054L;
@@ -13,6 +15,20 @@ public class ContentPage implements Serializable {
     private ContentPageMetaData metaData;
     private List<ContentElement> content;
     private Collection<DataSourceContent> dataSourceContents;
+
+    public ContentPage() {
+    }
+
+    public ContentPage(ContentPage prototype) {
+        this.id = prototype.id;
+        this.metaData = new ContentPageMetaData(prototype.metaData);
+        this.content = new ArrayList<>(prototype.content);
+        this.dataSourceContents = new ArrayList<>(prototype.dataSourceContents);
+    }
+
+    public boolean hasDataSourceContents(){
+        return dataSourceContents != null && !dataSourceContents.isEmpty();
+    }
 
     public String getId() {
         return id;
@@ -44,6 +60,22 @@ public class ContentPage implements Serializable {
 
     public void setDataSourceContents(Collection<DataSourceContent> dataSourceContents) {
         this.dataSourceContents = dataSourceContents;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ContentPage)) return false;
+        ContentPage that = (ContentPage) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(metaData, that.metaData) &&
+            Objects.equals(content, that.content) &&
+            Objects.equals(dataSourceContents, that.dataSourceContents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, metaData, content, dataSourceContents);
     }
 
     @Override
