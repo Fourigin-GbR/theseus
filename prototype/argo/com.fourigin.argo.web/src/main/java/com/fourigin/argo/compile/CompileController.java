@@ -20,8 +20,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,8 +49,14 @@ public class CompileController {
     public HttpEntity<byte[]> compile(
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path,
-        @RequestParam(value = "writeOutput", required = false, defaultValue = "false") boolean writeOutput
+        @RequestHeader(value = "referer", required = false) String referrer
     ) {
+
+        if(referrer != null) {
+            if (logger.isWarnEnabled()) logger.warn("Detected a referrer '{}', ignoring the request.", referrer);
+            return null;
+        }
+
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
@@ -66,6 +74,7 @@ public class CompileController {
             String compileBaseChecksum = compileState.getChecksum();
             if(compileBaseChecksum.equals(pageContentChecksum)){
                 if (logger.isInfoEnabled()) logger.info("Would skip compiling page, please implement me ..."); // NOPMD
+                // TODO
                 //                if (logger.isInfoEnabled()) logger.info("Skipping page '{}', checksum unchanged.", pageName);
                 //                return;
             }
@@ -76,18 +85,20 @@ public class CompileController {
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        if (writeOutput) {
-            try {
-                pageCompiler.compile(path, pageInfo, STAGE, storageCompilerOutputStrategy);
-                storageCompilerOutputStrategy.finish();
-            } catch (Throwable ex) {
-                storageCompilerOutputStrategy.reset();
-            }
-        }
+        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo);
+
+//        if (writeOutput) {
+//            try {
+//                pageCompiler.compile(path, pageInfo, preparedContentPage, STAGE, storageCompilerOutputStrategy);
+//                storageCompilerOutputStrategy.finish();
+//            } catch (Throwable ex) {
+//                storageCompilerOutputStrategy.reset();
+//            }
+//        }
 
         BufferedCompilerOutputStrategy bufferedCompilerOutputStrategy = new BufferedCompilerOutputStrategy();
         try {
-            String outputContentType = pageCompiler.compile(path, pageInfo, CMS, bufferedCompilerOutputStrategy);
+            String outputContentType = pageCompiler.compile(path, pageInfo, preparedContentPage, CMS, bufferedCompilerOutputStrategy);
             byte[] bytes = bufferedCompilerOutputStrategy.getBytes();
 
             HttpHeaders headers = new HttpHeaders();
@@ -117,6 +128,55 @@ public class CompileController {
             pageState.setCompileState(compileState);
             contentRepository.updatePageState(pageInfo, pageState);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/write-output", method = RequestMethod.POST)
+    public ResponseEntity<CompileResult> writeOutput(
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam(RequestParameters.PATH) String path
+    ) {
+        if (logger.isDebugEnabled()) logger.debug("Processing write-output request for base '{}' & path '{}'.", base, path);
+
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
+
+        PageInfo pageInfo = aggregation.getPageInfo();
+        PageState pageState = aggregation.getPageState();
+
+        CompileState compileState = pageState.getCompileState();
+        if(compileState == null){
+            compileState = new CompileState();
+        }
+
+        if(!compileState.isCompiled()) {
+            return new ResponseEntity<>(
+                new CompileResult(STAGE, false, "Page must have a successful compiled-state!"),
+                HttpStatus.BAD_REQUEST
+            );
+        }
+
+        PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
+
+        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo);
+
+        long startTimestamp = System.currentTimeMillis();
+        try {
+            pageCompiler.compile(path, pageInfo, preparedContentPage, STAGE, storageCompilerOutputStrategy);
+            storageCompilerOutputStrategy.finish();
+        } catch (Throwable ex) {
+            storageCompilerOutputStrategy.reset();
+            return new ResponseEntity<>(
+                new CompileResult(STAGE, false).withAttribute("cause", ex),
+                HttpStatus.BAD_REQUEST
+            );
+        }
+
+        long duration = System.currentTimeMillis() - startTimestamp;
+
+        return new ResponseEntity<>(
+            new CompileResult(STAGE, true).withAttribute("duration", duration),
+            HttpStatus.OK
+        );
     }
 
     @ResponseBody
