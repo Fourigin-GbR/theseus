@@ -105,6 +105,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, String path) {
         Objects.requireNonNull(path, "Path must not be null!");
 
+        if (logger.isTraceEnabled()) logger.trace("resolveInfo({}, {})", type, path);
+
         ensureInit();
 
         return resolveInfo(type, root, path);
@@ -114,6 +116,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, SiteNodeContainerInfo parent, String path) {
         Objects.requireNonNull(parent, "Parent must not be null!");
         Objects.requireNonNull(path, "Path must not be null!");
+
+        if (logger.isTraceEnabled()) logger.trace("resolveInfo({}, {}, {})", type, parent.toTreeString(0), path);
 
         ensureInit();
 
@@ -187,7 +191,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public void createInfo(SiteNodeContainerInfo parent, SiteNodeInfo node) {
         ensureInit();
 
-        String parentPath = parent.getPath();
+        String parentPath = resolveParentPath(parent);
         String parentName = parent.getName();
         if(parentName != null) {
             parentPath += parentName;
@@ -270,7 +274,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public void updateInfo(SiteNodeContainerInfo parent, SiteNodeInfo node) {
         ensureInit();
 
-        String parentPath = parent.getPath();
+        String parentPath = resolveParentPath(parent);
 
         ReadWriteLock lock = getLock(parentPath);
         lock.writeLock().lock();
@@ -300,8 +304,9 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
                 throw new IllegalStateException("No info node found for name '" + name + "'!");
             }
 
+            int pos = children.indexOf(match);
             children.remove(match);
-            children.add(node);
+            children.add(pos, node);
             parent.setNodes(children);
 
             // write the dir-info file
@@ -350,7 +355,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public void deleteInfo(SiteNodeContainerInfo parent, String nodeName) {
         ensureInit();
 
-        String parentPath = parent.getPath();
+        String parentPath = resolveParentPath(parent);
 
         ReadWriteLock lock = getLock(parentPath);
         lock.writeLock().lock();
@@ -621,6 +626,15 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     }
 
     //******* private methods *******//
+
+    private String resolveParentPath(SiteNodeContainerInfo parent) {
+        String result = parent.getPath();
+        if("".equals(result)) {
+            result = "/";
+        }
+
+        return result;
+    }
 
     private ReadWriteLock getLock(String id) {
         ReadWriteLock result = locks.get(id);
@@ -910,6 +924,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         root.setParent(null);
 
         processContentDirectory(rootDir, "/", root);
+
+        if (logger.isDebugEnabled()) logger.debug("Initialized info:\n{}", root.toTreeString(0));
 
         initTimestamp = new Date();
     }

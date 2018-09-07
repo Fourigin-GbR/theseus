@@ -18,4 +18,6 @@ public interface SiteNodeInfo {
 
     SiteNodeContainerInfo getParent();
     void setParent(SiteNodeContainerInfo siteNode);
+
+    String toTreeString(int depth);
 }

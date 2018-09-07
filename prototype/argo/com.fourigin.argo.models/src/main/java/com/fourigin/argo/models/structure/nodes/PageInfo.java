@@ -151,6 +151,65 @@ public class PageInfo implements SiteNodeInfo {
             '}';
     }
 
+    @Override
+    public String toTreeString(int depth) {
+        StringBuilder builder = new StringBuilder();
+
+        for(int i=0; i<depth; i++){
+            builder.append('\t');
+        }
+
+        builder.append("PageInfo{");
+        if(path == null) {
+            builder.append(" path=<null>");
+        }
+        else {
+            builder.append(" path='").append(path).append('\'');
+        }
+
+        if(name == null) {
+            builder.append(", name=<null>");
+        }
+        else {
+            builder.append(", name='").append(name).append('\'');
+        }
+
+        if(localizedName == null){
+            builder.append(", localizedName=<null>");
+        }
+        else {
+            builder.append(", localizedName='").append(localizedName).append('\'');
+        }
+
+        if(displayName == null){
+            builder.append(", displayName=<null>");
+        }
+        else {
+            builder.append(", displayName='").append(displayName).append('\'');
+        }
+
+        if(description == null){
+            builder.append(", description=<null>");
+        }
+        else {
+            builder.append(", description='").append(description).append('\'');
+        }
+
+        if(templateReference == null){
+            builder.append(", templateReference=<null>");
+        }
+        else {
+            builder.append(", templateReference={")
+                .append(templateReference.getTemplateId()).append("/")
+                .append(templateReference.getVariationId()).append(", rev: ")
+                .append(templateReference.getRevision()).append('}');
+        }
+
+        builder.append('}');
+
+        return builder.toString();
+    }
+
     public static class Builder {
         private String path;
         private String name;

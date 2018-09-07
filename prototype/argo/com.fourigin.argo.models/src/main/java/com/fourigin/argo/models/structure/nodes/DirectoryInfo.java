@@ -121,6 +121,58 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
             '}';
     }
 
+    @Override
+    public String toTreeString(int depth) {
+        StringBuilder builder = new StringBuilder();
+
+        for(int i=0; i<depth; i++){
+            builder.append('\t');
+        }
+
+        String indent = builder.toString();
+
+        builder.append("DirectoryInfo{");
+        if(path == null) {
+            builder.append(" path=<null>");
+        }
+        else {
+            builder.append(" path='").append(path).append('\'');
+        }
+
+        if(name == null) {
+            builder.append(", name=<null>");
+        }
+        else {
+            builder.append(", name='").append(name).append('\'');
+        }
+
+        if(localizedName == null){
+            builder.append(", localizedName=<null>");
+        }
+        else {
+            builder.append(", localizedName='").append(localizedName).append('\'');
+        }
+
+        if(displayName == null){
+            builder.append(", displayName=<null>");
+        }
+        else {
+            builder.append(", displayName='").append(displayName).append('\'');
+        }
+
+        if(nodes != null && !nodes.isEmpty()) {
+            builder.append(", nodes=[");
+            for (SiteNodeInfo node : nodes) {
+                builder.append('\n').append(node.toTreeString(depth+1));
+            }
+            builder.append('\n').append(indent).append(']');
+        }
+
+        builder.append('}');
+
+        return builder.toString();
+    }
+
     public static class Builder {
         private String path;
         private String name;
