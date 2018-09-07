@@ -86,16 +86,7 @@ public class CompileController {
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
         ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo);
-
-//        if (writeOutput) {
-//            try {
-//                pageCompiler.compile(path, pageInfo, preparedContentPage, STAGE, storageCompilerOutputStrategy);
-//                storageCompilerOutputStrategy.finish();
-//            } catch (Throwable ex) {
-//                storageCompilerOutputStrategy.reset();
-//            }
-//        }
-
+        
         BufferedCompilerOutputStrategy bufferedCompilerOutputStrategy = new BufferedCompilerOutputStrategy();
         try {
             String outputContentType = pageCompiler.compile(path, pageInfo, preparedContentPage, CMS, bufferedCompilerOutputStrategy);
