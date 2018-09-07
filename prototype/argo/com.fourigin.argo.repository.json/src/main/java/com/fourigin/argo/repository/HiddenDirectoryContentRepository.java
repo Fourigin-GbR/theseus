@@ -129,7 +129,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
 
         if (!type.isAssignableFrom(result.getClass())) {
-            throw new InvalidSiteStructurePathException(path, type.getClass(), result.getClass());
+            throw new InvalidSiteStructurePathException(path, type, result.getClass());
         }
 
         return type.cast(result);
@@ -192,10 +192,10 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         ensureInit();
 
         String parentPath = resolveParentPath(parent);
-        String parentName = parent.getName();
-        if(parentName != null) {
-            parentPath += parentName;
-        }
+//        String parentName = parent.getName();
+//        if(parentName != null) {
+//            parentPath += parentName;
+//        }
 
         ReadWriteLock lock = getLock(parentPath);
         lock.writeLock().lock();
@@ -274,6 +274,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     public void updateInfo(SiteNodeContainerInfo parent, SiteNodeInfo node) {
         ensureInit();
 
+        if (logger.isTraceEnabled()) logger.trace("updateInfo({}, {})", parent.toTreeString(0), node);
+
         String parentPath = resolveParentPath(parent);
 
         ReadWriteLock lock = getLock(parentPath);
@@ -284,6 +286,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             File hiddenDir = getHiddenDirectory(parentPath);
             File contentDir = hiddenDir.getParentFile();
             processContentDirectory(contentDir, parentPath, parent);
+
+            if (logger.isDebugEnabled()) logger.debug("Parent after reloading the content directory:\n{}", parent.toTreeString(0));
 
             // add a new node
             List<SiteNodeInfo> children = parent.getNodes();
@@ -628,12 +632,21 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     //******* private methods *******//
 
     private String resolveParentPath(SiteNodeContainerInfo parent) {
-        String result = parent.getPath();
-        if("".equals(result)) {
-            result = "/";
+        String path = parent.getPath();
+        String name = parent.getName();
+        if(name == null) {
+            name = "";
         }
 
-        return result;
+        if("".equals(path)) {
+            return "/" + name;
+        }
+
+        if(path.endsWith("/")){
+            return path + name;
+        }
+        
+        return path + '/' + name;
     }
 
     private ReadWriteLock getLock(String id) {
@@ -728,9 +741,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
 
         if (!target.exists()) {
-            if (logger.isDebugEnabled())
-                logger.debug("Invalid path '{}', resolved to '{}'.", path, target.getAbsolutePath());
-            return null;
+            throw new IllegalArgumentException("HIDDEN '" + path + "', resolved to " + target.getAbsolutePath() + " is invalid!");
         }
 
         File hiddenDir;

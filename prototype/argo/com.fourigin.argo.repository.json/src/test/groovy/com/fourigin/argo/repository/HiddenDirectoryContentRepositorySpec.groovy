@@ -56,9 +56,9 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         def hidden = repository.getHiddenDirectory("/a-non-existing-path")
 
         then:
-        hidden == null
-//        NullPointerException ex = thrown()
-//        ex.message == 'availability must not be null!'
+//        hidden == null
+        IllegalArgumentException ex = thrown()
+        ex.message == "HIDDEN \'/a-non-existing-path\', resolved to " + repository.contentRoot.absolutePath + "/a-non-existing-path.json" + " is invalid!"
     }
 
     def 'getSiteStructureAttributesFile() works as expected'() {
