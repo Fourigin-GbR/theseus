@@ -28,7 +28,7 @@ class DefaultFilenameStrategySpec extends Specification {
             .withName('/')
             .withPath(null)
             .withParent(null)
-            .withLocalizedName('/')
+            .withLocalizedName(null)
             .build()
 
     static SiteNodeContainerInfo a = new DirectoryInfo.Builder()
@@ -84,31 +84,64 @@ class DefaultFilenameStrategySpec extends Specification {
             .withTemplateReference(templateReference)
             .build()
 
+    static {
+        root.nodes = [a, b]
+
+        a.nodes = [a1, a2]
+
+        b.nodes = [b1, b2]
+
+        b2.nodes = [b21]
+    }
+
     @Unroll
-    'filename resolving for #node returns #expectedFilename'() {
+    'filename resolving (without index-replacement) for (#node.path, #node.localizedName) returns #expectedFilename'() {
         given:
-        DefaultFilenameStrategy strategy = new DefaultFilenameStrategy()
+        DefaultFilenameStrategy strategy
 
         when:
-        String filename = strategy.getFilename(node)
+        strategy = new DefaultFilenameStrategy(false)
 
         then:
-        filename == expectedFilename
+        strategy.getFilename(node) == expectedFilename
 
         where:
         node | expectedFilename
         root | null
-        a    | null
+        a    | 'a'
         a1   | 'a_1'
         a2   | 'a_2'
-        b    | null
+        b    | 'b'
         b1   | 'b_1'
-        b2   | null
+        b2   | 'b_2'
         b21  | 'b_2_1'
     }
 
     @Unroll
-    'folder resolving for #node returns #expectedFolder'() {
+    'filename resolving (with index-replacement) for (#node.path, #node.localizedName) returns #expectedFilename'() {
+        given:
+        DefaultFilenameStrategy strategy
+
+        when:
+        strategy = new DefaultFilenameStrategy(true)
+
+        then:
+        strategy.getFilename(node) == expectedFilename
+
+        where:
+        node | expectedFilename
+        root | null
+        a    | 'a'
+        a1   | 'index'
+        a2   | 'a_2'
+        b    | 'b'
+        b1   | 'index'
+        b2   | 'b_2'
+        b21  | 'index'
+    }
+
+    @Unroll
+    'folder resolving for (#node.path, #node.localizedName) returns #expectedFolder'() {
         given:
         DefaultFilenameStrategy strategy = new DefaultFilenameStrategy()
 
@@ -121,12 +154,12 @@ class DefaultFilenameStrategySpec extends Specification {
         where:
         node | expectedFolder
         root | '/'
-        a    | '/a'
+        a    | '/'
         a1   | '/a'
         a2   | '/a'
-        b    | '/b'
+        b    | '/'
         b1   | '/b'
-        b2   | '/b/b_2'
+        b2   | '/b'
         b21  | '/b/b_2'
     }
 }

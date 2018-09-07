@@ -33,13 +33,19 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
 
     public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String base) {
         String filename = filenameStrategy.getFilename(info);
+        if (logger.isDebugEnabled()) logger.debug("filename (from strategy): '{}'", filename);
+
         if (filenamePostfix != null && !"".equals(filenamePostfix)) {
             filename = filename + filenamePostfix;
         }
         filename = filename + extension;
+        if (logger.isDebugEnabled()) logger.debug("filename (after modifications): '{}'", filename);
 
         String folder = filenameStrategy.getFolder(info);
+        if (logger.isDebugEnabled()) logger.debug("Folder (from strategy): '{}'", folder);
+
         String docRoot = documentRootResolverStrategy.resolveDocumentRoot(base);
+        if (logger.isDebugEnabled()) logger.debug("Document root (from strategy): '{}'", docRoot);
 
         File docRootFile = new File(docRoot);
         if (docRootFile.mkdirs()) {
@@ -49,7 +55,14 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
             throw new IllegalStateException("Document root '" + docRootFile.getAbsolutePath() + "' is not a directory!");
         }
 
-        File nodeRootFile = new File(docRootFile, folder);
+        File nodeRootFile;
+        if("/".equals(folder)) {
+            nodeRootFile = docRootFile;
+        }
+        else {
+            nodeRootFile = new File(docRootFile, folder);
+        }
+
         if (nodeRootFile.mkdirs()) {
             if (logger.isInfoEnabled()) logger.info("Created '{}'.", nodeRootFile.getAbsolutePath()); // NOPMD
         }
