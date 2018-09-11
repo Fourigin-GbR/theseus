@@ -29,20 +29,26 @@ com.fourigin.argo.content.editor.list.View = com.fourigin.argo.content.editor.li
         if(!this.jPrototype || 0 === this.jPrototype.length) {
             console.error("Prototype not defined!");
         }
-        var jTarget = this.jPrototype.find("> fieldset > ul");
+        var jListItemPrototype = this.jPrototype.find("li[data-prototype=listItem]").clone().removeAttr('data-prototype'),
+            jTarget = this.jPrototype.find("> fieldset > ul");
         // add to html
         this.jTarget.append(this.jPrototype);
         // fill with data
         this.jPrototype.find("input[name=name]").val(oContent.name);
         // fill with data: write the elements
         for(var i=0, il=oContent.elements.length; i<il; i++) {
-            var oCurrentContent = oContent.elements[i];
+            var oCurrentContent = oContent.elements[i],
+                jCurrentListItem = jListItemPrototype.clone(),
+                jListItemContentTarget = jCurrentListItem.find(".listItemContent");
+            // Attach listItem Prototype in target (=> li into ul):
+            jTarget.append(jCurrentListItem);
+
             switch(oCurrentContent.type) {
                 case "text":
-                    new com.fourigin.argo.content.editor.Text(jTarget, oCurrentContent);
+                    new com.fourigin.argo.content.editor.Text(jListItemContentTarget, oCurrentContent);
                     break;
                 case "list-group":
-                    this.generateEditorListGroup(jTarget, oCurrentContent);
+                    this.generateEditorListGroup(jListItemContentTarget, oCurrentContent);
                     break;
             }
         }

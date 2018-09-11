@@ -246,6 +246,37 @@
             </div>
             <ul class="listChildItemsWrapper">
 
+                <li data-prototype="listItem" class="compactView">
+                    <div class="touchBar">
+                        <div class="titleElements">
+                            <div class="button button--icon" data-action="openClose">
+                                <span class="button__icon"><i class="fas fa-angle-right"></i></span>
+                            </div>
+                            <div class="previewItems">
+
+                            </div>
+                        </div>
+                        <div class="editorControlls">
+                            <div class="button button--icon">
+                                <span class="button__icon"><i class="far fa-eye-slash"></i></span>
+                                <span class="button__copy">Ausblenden</span>
+                            </div>
+                            <div class="button button--icon">
+                                <span class="button__icon"><i class="far fa-clone"></i></span>
+                                <span class="button__copy">Duplizieren</span>
+                            </div>
+                            <div class="button button--icon" data-action="delete">
+                                <span class="button__icon"><i class="far fa-trash-alt"></i></span>
+                                <span class="button__copy">Entfernen</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listItemContent">
+
+                    </div>
+                    <div class="listOpenTrigger"></div>
+                </li>
+
             </ul>
             <div class="addItem">
                 <div class="addItem__button" data-action="addBottom">
@@ -256,59 +287,17 @@
     </fieldset>
 
     <!-- list-group -->
-    <li data-prototype="listGroup" class="compactView">
-        <div class="touchBar">
-            <div class="titleElements">
-                <div class="button button--icon" data-action="openClose">
-                    <span class="button__icon"><i class="fas fa-angle-right"></i></span>
-                </div>
-                <div class="previewItems">
-
-                </div>
-            </div>
-            <div class="editorControlls">
-                <div class="button button--icon">
-                    <span class="button__icon"><i class="far fa-eye-slash"></i></span>
-                    <span class="button__copy">Ausblenden</span>
-                </div>
-                <div class="button button--icon">
-                    <span class="button__icon"><i class="far fa-clone"></i></span>
-                    <span class="button__copy">Duplizieren</span>
-                </div>
-                <div class="button button--icon" data-action="delete">
-                    <span class="button__icon"><i class="far fa-trash-alt"></i></span>
-                    <span class="button__copy">Entfernen</span>
-                </div>
-            </div>
-        </div>
+    <div data-prototype="listGroup">
         <fieldset data-type="listGroup">
             <input type="hidden" name="type" value="list-group"/>
             <fieldset>
 
             </fieldset>
         </fieldset>
-        <div class="listOpenTrigger"></div>
-    </li>
+    </div>
 
     <!-- list-text -->
-    <li data-prototype="listText" class="compactView">
-        <div class="editorControlls">
-            <div class="button button--icon">
-                <span class="button__icon"><i class="far fa-angle-right"></i></span>
-            </div>
-            <div class="button button--icon">
-                <span class="button__icon"><i class="far fa-eye-slash"></i></span>
-                <span class="button__copy">Ausblenden</span>
-            </div>
-            <div class="button button--icon">
-                <span class="button__icon"><i class="far fa-clone"></i></span>
-                <span class="button__copy">Duplizieren</span>
-            </div>
-            <div class="button button--icon">
-                <span class="button__icon"><i class="far fa-trash-alt"></i></span>
-                <span class="button__copy">Entfernen</span>
-            </div>
-        </div>
+    <div data-prototype="listText">
         <fieldset data-type="listText">
             <input type="hidden" name="type" value="list-text"/>
             <input type="hidden" name="name" value=""/>
@@ -317,8 +306,7 @@
                 <textarea name="content"></textarea>
             </label>
         </fieldset>
-        <span class="listOpenTrigger"></span>
-    </li>
+    </div>
 
     <!-- group -->
     <fieldset data-type="group">
