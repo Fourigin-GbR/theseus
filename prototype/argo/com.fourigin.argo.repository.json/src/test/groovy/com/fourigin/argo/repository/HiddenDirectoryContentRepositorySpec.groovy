@@ -3,6 +3,7 @@ package com.fourigin.argo.repository
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule
+import com.fourigin.argo.models.datasource.index.DataSourceIndex
 import com.fourigin.argo.models.structure.CompileState
 import com.fourigin.argo.models.structure.PageState
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo
@@ -426,6 +427,65 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         deletedContentFile.exists()
     }
 
+    def 'getIndexFile() works as expected'() {
+        setup:
+        HiddenDirectoryContentRepository repository = initRepository()
+        File hiddenDir = repository.getHiddenDirectory('/')
+
+        when:
+        def indexFile = repository.getIndexFile(hiddenDir, 'page-name', 'index-name')
+
+        then:
+        indexFile.absolutePath == hiddenDir.absolutePath + '/page-name_index-name_index.json'
+    }
+
+    def 'readIndexFile() works as expected'() {
+        setup:
+        DataSourceIndex index = new DataSourceIndex(
+                name: 'index-name-1',
+                categories: [],
+                fields: [],
+                searchValues: []
+        )
+
+        File someDir = File.createTempDir()
+
+        HiddenDirectoryContentRepository repository = initRepository()
+        writeIndexFile(someDir, 'page-name', index)
+
+        File indexFile = new File(someDir, 'page-name_index-name-1_index.json')
+
+        when:
+        def readIndex = repository.readIndexFile(indexFile)
+
+        then:
+        readIndex == index
+    }
+
+    def 'writeIndexFile() works as expected'() {
+        setup:
+        DataSourceIndex index = new DataSourceIndex(
+                name: 'index-name-1',
+                categories: [],
+                fields: [],
+                searchValues: []
+        )
+
+        File someDir = File.createTempDir()
+        File indexFile = new File(someDir, 'page-name_index-name-1_index.json')
+
+        HiddenDirectoryContentRepository repository = initRepository()
+
+        when:
+        repository.writeIndexFile(indexFile, index)
+
+        and:
+        def readIndex = repository.readIndexFile(indexFile)
+
+        then:
+        readIndex == index
+    }
+
     // Helper methods
 
     HiddenDirectoryContentRepository initRepository() {
@@ -605,6 +665,18 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         }
 
         return builder.build()
+    }
+
+    void writeIndexFile(File dir, String pageName, DataSourceIndex index) {
+        File indexFile = new File(dir, pageName + '_' + index.name + '_index.json')
+
+        OutputStream os = new BufferedOutputStream(new FileOutputStream(indexFile))
+
+        try {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, index)
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Error writing index file (" + indexFile.absolutePath + ")!", ex)
+        }
     }
 
     ObjectMapper createObjectMapper() {

@@ -1,5 +1,7 @@
 package com.fourigin.argo.compiler.datasource;
 
+import com.fourigin.argo.models.datasource.DataSourceQuery;
+
 import java.util.Map;
 
 public class EmptyDataSourceQuery implements DataSourceQuery {

@@ -2,12 +2,14 @@ package com.fourigin.argo.compiler.datasource;
 
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
+import com.fourigin.argo.models.datasource.DataSource;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
-import com.fourigin.argo.repository.ContentResolver;
+import com.fourigin.argo.models.structure.nodes.PageInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.SimpleTimeZone;
 
 public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
@@ -26,7 +28,7 @@ public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
     }
 
     @Override
-    public ContentElement generateContent(ContentResolver contentResolver, DataSourceIdentifier id, EmptyDataSourceQuery query) {
+    public ContentElement generateContent(PageInfo ownerPage, DataSourceIdentifier id, EmptyDataSourceQuery query, Map<String, Object> context) {
         String timestamp = FORMAT.format(new Date());
 
         return new TextContentElement.Builder()

@@ -1,5 +1,7 @@
 package com.fourigin.argo.models.datasource;
 
+import com.fourigin.argo.models.datasource.index.IndexDefinition;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
@@ -11,6 +13,7 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
     private String type;
     private Map<String, String> revisions;
     private Map<String, Object> query;
+    private IndexDefinition index;
     private String checksum;
 
     public String getType() {
@@ -27,6 +30,14 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
 
     public void setQuery(Map<String, Object> query) {
         this.query = query;
+    }
+
+    public IndexDefinition getIndex() {
+        return index;
+    }
+
+    public void setIndex(IndexDefinition index) {
+        this.index = index;
     }
 
     public String getChecksum() {
@@ -58,12 +69,13 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
         return Objects.equals(type, that.type) &&
             Objects.equals(revisions, that.revisions) &&
             Objects.equals(query, that.query) &&
+            Objects.equals(index, that.index) &&
             Objects.equals(checksum, that.checksum);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, revisions, query, checksum);
+        return Objects.hash(type, revisions, query, index, checksum);
     }
 
     @Override
@@ -72,6 +84,7 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
             "type='" + type + '\'' +
             ", revisions=" + revisions +
             ", query=" + query +
+            ", index=" + index +
             ", checksum='" + checksum + '\'' +
             '}';
     }

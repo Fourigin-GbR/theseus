@@ -1,4 +1,4 @@
-package com.fourigin.argo.compiler.datasource;
+package com.fourigin.argo.models.datasource;
 
 import java.util.Map;
 

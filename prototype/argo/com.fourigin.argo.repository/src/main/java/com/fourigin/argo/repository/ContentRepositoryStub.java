@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository;
 
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ContentRepositoryStub implements ContentRepository {
     private Map<String, String> siteAttributes;
@@ -22,17 +24,26 @@ public class ContentRepositoryStub implements ContentRepository {
 
     private Map<PageInfo, PageState> states;
 
+    private Map<PageInfo, Map<String, DataSourceIndex>> indexes;
+
     private PageInfoTraversingStrategy defaultTraversingStrategy = new DefaultPageInfoTraversingStrategy();
 
-    public void flush(){
+    public void flush() {
         // nothing to do!
     }
 
-    public ContentRepositoryStub(Map<String, String> siteAttributes, Map<String, SiteNodeInfo> infos, Map<PageInfo, ContentPage> pages, Map<PageInfo, PageState> states) {
+    public ContentRepositoryStub(
+        Map<String, String> siteAttributes,
+        Map<String, SiteNodeInfo> infos,
+        Map<PageInfo, ContentPage> pages,
+        Map<PageInfo, PageState> states,
+        Map<PageInfo, Map<String, DataSourceIndex>> indexes
+    ) {
         this.siteAttributes = siteAttributes;
         this.infos = infos;
         this.pages = pages;
         this.states = states;
+        this.indexes = indexes;
     }
 
     @Override
@@ -48,11 +59,11 @@ public class ContentRepositoryStub implements ContentRepository {
     @Override
     public <T extends SiteNodeInfo> T resolveInfo(Class<T> type, String path) {
         SiteNodeInfo info = infos.get(path);
-        if(info == null){
+        if (info == null) {
             return null;
         }
 
-        if(type.isAssignableFrom(info.getClass())) {
+        if (type.isAssignableFrom(info.getClass())) {
             return type.cast(infos.get(path));
         }
 
@@ -73,11 +84,11 @@ public class ContentRepositoryStub implements ContentRepository {
     @Override
     public Collection<PageInfo> resolveInfos(String path, PageInfoTraversingStrategy traversingStrategy) {
         SiteNodeInfo info = infos.get(path);
-        if(info == null){
+        if (info == null) {
             return null;
         }
 
-        if(PageInfo.class.isAssignableFrom(info.getClass())){
+        if (PageInfo.class.isAssignableFrom(info.getClass())) {
             return Collections.singletonList(PageInfo.class.cast(info));
         }
 
@@ -159,12 +170,51 @@ public class ContentRepositoryStub implements ContentRepository {
     }
 
     @Override
-    public void deletePageState(PageInfo pageInfo, PageState pageState) {
+    public void deletePageState(PageInfo pageInfo) {
         states.remove(pageInfo);
     }
 
     @Override
     public PageState resolvePageState(PageInfo pageInfo) {
         return states.get(pageInfo);
+    }
+
+    @Override
+    public void createIndex(PageInfo info, DataSourceIndex index) {
+        Map<String, DataSourceIndex> map = indexes.get(info);
+        if (map == null) {
+            map = new HashMap<>();
+            indexes.put(info, map);
+        }
+
+        map.put(index.getName(), index);
+    }
+
+    @Override
+    public void deleteIndex(PageInfo info, String indexName) {
+        Map<String, DataSourceIndex> map = indexes.get(info);
+        if (map != null) {
+            map.remove(indexName);
+        }
+    }
+
+    @Override
+    public Set<String> listIndexes(PageInfo info) {
+        Map<String, DataSourceIndex> map = indexes.get(info);
+        if (map != null) {
+            return map.keySet();
+        }
+
+        return Collections.emptySet();
+    }
+
+    @Override
+    public DataSourceIndex resolveIndex(PageInfo info, String name) {
+        Map<String, DataSourceIndex> map = indexes.get(info);
+        if (map != null) {
+            return map.get(name);
+        }
+
+        return null;
     }
 }

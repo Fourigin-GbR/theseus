@@ -1,5 +1,7 @@
 package com.fourigin.argo.compiler.datasource;
 
+import com.fourigin.argo.models.datasource.DataSourceResolvingException;
+
 public class UnknownDataSourceTypeException extends DataSourceResolvingException {
     private String type;
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.InvalidSiteStructurePathException;
 import com.fourigin.argo.models.UnsupportedNodeTypeException;
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -53,6 +55,8 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     private static final String DELETED_DIRECTORY_NAME = ".trash";
 
     private static final String PAGE_INFO_FILE_POSTFIX = "_info";
+
+    private static final String PAGE_INDEX_FILE_POSTFIX = "_index";
 
     private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepository.class);
 
@@ -488,7 +492,7 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     }
 
     @Override
-    public void deletePageState(PageInfo pageInfo, PageState pageState) {
+    public void deletePageState(PageInfo pageInfo) {
         ensureInit();
 
         String name = pageInfo.getName();
@@ -615,6 +619,76 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
             }
         } finally {
             lock.writeLock().unlock();
+        }
+    }
+
+    //******* INDEX methods *******//
+
+    @Override
+    public Set<String> listIndexes(PageInfo info) {
+        Objects.requireNonNull(info, "PageInfo must not be null!");
+
+        ensureInit();
+
+        String pageName = info.getName();
+        String path = info.getPath();
+
+        File hiddenDir = getHiddenDirectory(path);
+        Map<String, File> indexFiles = getIndexFiles(hiddenDir, pageName);
+
+        return indexFiles.keySet();
+    }
+
+    @Override
+    public DataSourceIndex resolveIndex(PageInfo info, String indexName) {
+        Objects.requireNonNull(info, "PageInfo must not be null!");
+        Objects.requireNonNull(indexName, "Index name must not be null!");
+
+        ensureInit();
+
+        if (logger.isDebugEnabled())
+            logger.debug("Retrieving index '{}' for info '{}'", indexName, info);
+
+        String pageName = info.getName();
+        String path = info.getPath();
+
+        File hiddenDir = getHiddenDirectory(path);
+        File indexFile = getIndexFile(hiddenDir, pageName, indexName);
+
+        return readIndexFile(indexFile);
+    }
+
+    @Override
+    public void createIndex(PageInfo info, DataSourceIndex index) {
+        Objects.requireNonNull(info, "PageInfo must not be null!");
+        Objects.requireNonNull(index, "Index must not be null!");
+
+        ensureInit();
+
+        String pageName = info.getName();
+        String path = info.getPath();
+
+        File hiddenDir = getHiddenDirectory(path);
+        File indexFile = getIndexFile(hiddenDir, pageName, index.getName());
+
+        writeIndexFile(indexFile, index);
+    }
+
+    @Override
+    public void deleteIndex(PageInfo info, String indexName) {
+        Objects.requireNonNull(info, "PageInfo must not be null!");
+        Objects.requireNonNull(indexName, "Index name must not be null!");
+
+        ensureInit();
+
+        String pageName = info.getName();
+        String path = info.getPath();
+
+        File hiddenDir = getHiddenDirectory(path);
+        File indexFile = getIndexFile(hiddenDir, pageName, indexName);
+
+        if (!indexFile.delete()) {
+            throw new IllegalStateException("Unable to delete index file '" + indexFile.getAbsolutePath() + "'!");
         }
     }
 
@@ -824,6 +898,56 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         } catch (IOException ex) {
             // TODO: create proper exception handling
             throw new IllegalArgumentException("Error writing page state file (" + pageStateFile.getAbsolutePath() + ")!", ex);
+        }
+    }
+
+    /* private -> testing */
+    File getIndexFile(File hiddenDir, String pageName, String indexName){
+        String fileName = pageName + '_' + indexName + PAGE_INDEX_FILE_POSTFIX + ".json";
+
+        return new File(hiddenDir, fileName);
+    }
+
+    /* private -> testing */
+    Map<String, File> getIndexFiles(File hiddenDir, String pageName){
+        final String prefix = pageName + "_";
+        final String postfix = PAGE_INDEX_FILE_POSTFIX + ".json";
+
+        File[] indexFiles = hiddenDir.listFiles((dir, name)
+            -> name.startsWith(prefix) && name.endsWith(postfix));
+
+        Map<String, File> result = new HashMap<>();
+        if(indexFiles != null && indexFiles.length > 0){
+            int startPos = (prefix).length();
+
+            for (File indexFile : indexFiles) {
+                String fileName = indexFile.getName();
+                int endPos = fileName.indexOf(postfix);
+                String indexName = fileName.substring(startPos, endPos);
+                result.put(indexName, indexFile);
+            }
+        }
+
+        return result;
+    }
+
+    /* private -> testing */
+    DataSourceIndex readIndexFile(File indexFile) {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(indexFile))) {
+            return objectMapper.readValue(is, DataSourceIndex.class);
+        } catch (IOException ex) {
+            if (logger.isErrorEnabled()) logger.error("Error reading index file ({})!", indexFile.getAbsolutePath(), ex);
+            throw new IllegalStateException("Unable to read index file (" + indexFile.getAbsolutePath() + ")", ex);
+        }
+    }
+
+    /* private -> testing */
+    void writeIndexFile(File indexFile, DataSourceIndex index) {
+        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(indexFile))) {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, index);
+        } catch (IOException ex) {
+            // TODO: create proper exception handling
+            throw new IllegalArgumentException("Error writing index file (" + indexFile.getAbsolutePath() + ")!", ex);
         }
     }
 

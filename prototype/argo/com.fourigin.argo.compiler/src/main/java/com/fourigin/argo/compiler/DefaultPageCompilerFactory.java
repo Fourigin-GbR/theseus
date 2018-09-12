@@ -1,7 +1,7 @@
 package com.fourigin.argo.compiler;
 
-import com.fourigin.argo.compiler.datasource.DataSourceQueryBuilder;
-import com.fourigin.argo.compiler.datasource.DataSourceQueryFactory;
+import com.fourigin.argo.models.datasource.DataSourceQueryBuilder;
+import com.fourigin.argo.models.datasource.DataSourceQueryFactory;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.EmptyDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
