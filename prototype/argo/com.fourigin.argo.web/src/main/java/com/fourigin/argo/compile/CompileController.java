@@ -53,8 +53,8 @@ public class CompileController {
     ) {
 
         if(referrer != null) {
-            if (logger.isWarnEnabled()) logger.warn("Detected a referrer '{}', ignoring the request.", referrer);
-            return null;
+            if (logger.isWarnEnabled()) logger.warn("Detected a referrer '{}', ignoring the request.", referrer); // NOPMD
+//            return null;
         }
 
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
