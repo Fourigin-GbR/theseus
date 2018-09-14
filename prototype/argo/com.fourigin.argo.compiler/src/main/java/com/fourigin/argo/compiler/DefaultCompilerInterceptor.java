@@ -5,20 +5,20 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.strategies.FilenameStrategy;
 import com.fourigin.argo.template.engine.ProcessingMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class DefaultCompilerInterceptor implements CompilerInterceptor {
-//    private String preparedContentRoot;
-//    private String base;
     private File baseDir;
     private FilenameStrategy preparedContentFilenameStrategy;
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private final Logger logger = LoggerFactory.getLogger(DefaultCompilerInterceptor.class);
+
     public DefaultCompilerInterceptor(String preparedContentRoot, String base, FilenameStrategy preparedContentFilenameStrategy) {
-//        this.preparedContentRoot = preparedContentRoot;
-//        this.base = base;
         this.preparedContentFilenameStrategy = preparedContentFilenameStrategy;
 
         File root = new File(preparedContentRoot);
@@ -38,10 +38,10 @@ public class DefaultCompilerInterceptor implements CompilerInterceptor {
 
     @Override
     public void afterPrepareContent(String path, PageInfo pageInfo, ProcessingMode processingMode, ContentPage contentPage) {
-        if(processingMode != ProcessingMode.STAGE) {
-            // only write prepared content in STAGE mode
-            return;
-        }
+//        if(processingMode != ProcessingMode.STAGE) {
+//            // only write prepared content in STAGE mode
+//            return;
+//        }
 
         String folderPath = preparedContentFilenameStrategy.getFolder(pageInfo);
         String filename = preparedContentFilenameStrategy.getFilename(pageInfo);
@@ -55,6 +55,7 @@ public class DefaultCompilerInterceptor implements CompilerInterceptor {
 
         File targetFile = new File(folder, filename + ".json");
         try {
+            if (logger.isDebugEnabled()) logger.debug("Writing prepared content of {} to {}", pageInfo, targetFile.getAbsolutePath());
             objectMapper.writeValue(targetFile, contentPage);
         } catch (IOException ex) {
             throw new IllegalStateException("Unable to write prepared content to file '" + targetFile.getAbsolutePath() + "'!", ex);

@@ -6,6 +6,7 @@ import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
+import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
@@ -69,6 +70,8 @@ public class App {
     private String preparedContentRoot;
 
     private ContentRepositoryFactory contentRepositoryFactory;
+
+    private RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory;
 
     @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
     private TemplateEngineFactory templateEngineFactory;
@@ -180,6 +183,7 @@ public class App {
             templateEngineFactory,
             templateResolver,
             dataSourcesResolver(),
+            runtimeConfigurationResolverFactory,
             preparedContentRoot
         );
     }
@@ -213,6 +217,11 @@ public class App {
     @Autowired
     public void setTemplateResolver(TemplateResolver templateResolver) {
         this.templateResolver = templateResolver;
+    }
+
+    @Autowired
+    public void setRuntimeConfigurationResolverFactory(RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory) {
+        this.runtimeConfigurationResolverFactory = runtimeConfigurationResolverFactory;
     }
 
     /*

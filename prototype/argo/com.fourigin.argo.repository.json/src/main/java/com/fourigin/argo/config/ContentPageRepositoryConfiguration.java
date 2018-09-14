@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
 import com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver;
+import com.fourigin.argo.repository.FileBasedRuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.HiddenDirectoryContentRepositoryFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.model.mapping.JsonInfoModule;
@@ -131,5 +132,18 @@ public class ContentPageRepositoryConfiguration {
 //
 //            return template;
 //        };
+    }
+
+    @Bean
+    public FileBasedRuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory(
+        @Value("${content-page-repository.root-path}") String basePath,
+        @Value("${content-page-repository.key-name}") String keyName
+    ){
+        FileBasedRuntimeConfigurationResolverFactory factory = new FileBasedRuntimeConfigurationResolverFactory();
+
+        factory.setBasePath(basePath);
+        factory.setKeyName(keyName);
+
+        return factory;
     }
 }

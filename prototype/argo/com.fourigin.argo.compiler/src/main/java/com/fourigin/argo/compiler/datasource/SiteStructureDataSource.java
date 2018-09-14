@@ -1,23 +1,24 @@
 package com.fourigin.argo.compiler.datasource;
 
+import com.fourigin.argo.models.content.elements.ContentElement;
+import com.fourigin.argo.models.content.elements.LinkElement;
+import com.fourigin.argo.models.content.elements.TextContentElement;
 import com.fourigin.argo.models.datasource.DataSource;
+import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.datasource.index.FieldDefinition;
 import com.fourigin.argo.models.datasource.index.FieldValue;
 import com.fourigin.argo.models.datasource.index.IndexAwareDataSource;
-import com.fourigin.argo.models.content.elements.ContentElement;
-import com.fourigin.argo.models.content.elements.ContentGroup;
-import com.fourigin.argo.models.content.elements.LinkElement;
-import com.fourigin.argo.models.content.elements.TextContentElement;
-import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.datasource.index.IndexDefinition;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.ContentResolver;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,18 +35,17 @@ public class SiteStructureDataSource implements
     }
 
     @Override
-    public ContentElement generateContent(PageInfo ownerPage, DataSourceIdentifier id, SiteStructureDataSourceQuery query, Map<String, Object> context) {
+    public List<ContentElement> generateContent(PageInfo ownerPage, DataSourceIdentifier id, SiteStructureDataSourceQuery query, Map<String, Object> context) {
         ContentResolver contentResolver = (ContentResolver) context.get(CTX_CONTENT_RESOLVER);
 
         String path = query.getPath();
-
-        ContentGroup.Builder builder = new ContentGroup.Builder()
-            .withName("siteStructureElements");
 
         Map<String, String> revisions = id.getRevisions();
         if (revisions == null) {
             revisions = new HashMap<>();
         }
+
+        List<ContentElement> result = new ArrayList<>();
 
         Collection<PageInfo> infos = contentResolver.resolveInfos(path);
         if (infos != null && !infos.isEmpty()) {
@@ -77,13 +77,13 @@ public class SiteStructureDataSource implements
                     .withName(info.getName())
                     .withElement(textBuilder.build());
 
-                builder.withElement(linkBuilder.build());
+                result.add(linkBuilder.build());
             }
         }
 
         id.setRevisions(revisions);
 
-        return builder.build();
+        return result;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class SiteStructureDataSource implements
         PageInfo ownerPage,
         DataSourceIdentifier id,
         SiteStructureDataSourceQuery query,
-        ContentElement generatedContent
+        List<ContentElement> generatedContent
     ) {
         DataSourceIndex index = new DataSourceIndex();
 

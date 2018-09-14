@@ -2,6 +2,8 @@ package com.fourigin.argo.compiler;
 
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.content.config.RuntimeConfiguration;
+import com.fourigin.argo.models.content.config.RuntimeConfigurations;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.template.Template;
@@ -9,6 +11,7 @@ import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepository;
+import com.fourigin.argo.repository.RuntimeConfigurationResolver;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.PageInfoAwareTemplateEngine;
@@ -23,7 +26,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class DefaultPageCompiler implements PageCompiler {
     private String compilerBase;
@@ -37,6 +42,8 @@ public class DefaultPageCompiler implements PageCompiler {
     private DataSourcesResolver dataSourcesResolver;
 
     private CompilerInterceptor compilerInterceptor;
+
+    private RuntimeConfigurationResolver runtimeConfigurationResolver;
 
     private final Logger logger = LoggerFactory.getLogger(DefaultPageCompiler.class);
 
@@ -71,14 +78,40 @@ public class DefaultPageCompiler implements PageCompiler {
         if (dataSourcesResolver != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
             result = dataSourcesResolver.resolve(pageInfo, contentRepository, contentPage);
-//            if (logger.isDebugEnabled()) logger.debug("Content page with resolved data sources: {}", contentPage);
 
-            if(!contentPage.equals(result)) {
+            if (!contentPage.equals(result)) {
                 if (logger.isDebugEnabled()) logger.debug("Updating modified content page");
                 contentRepository.update(pageInfo, result);
+            } else {
+                if (logger.isDebugEnabled())
+                    logger.debug("No dataSource changes detected, the content page is unchanged.");
+            }
+        }
+
+        if (runtimeConfigurationResolver != null) {
+            RuntimeConfigurations configurations = result.getConfigurations();
+            if (configurations != null) {
+                Set<String> names = configurations.getNames();
+
+                Set<RuntimeConfiguration> configs = new HashSet<>();
+                for (String configName : names) {
+                    if (logger.isDebugEnabled()) logger.debug("Resolving runtime configuration for name '{}'", configName);
+
+                    RuntimeConfiguration config = runtimeConfigurationResolver.resolveConfiguration(configName);
+                    if (config != null) {
+                        if (logger.isDebugEnabled()) logger.debug("Applying resolved configuration {}", config);
+                        configs.add(config);
+                    }
+                    else {
+                        if (logger.isWarnEnabled()) logger.warn("Unable to load runtime configuration for name '{}'!", configName);
+                    }
+                }
+
+                configurations.setConfigurations(configs);
+                result.setConfigurations(configurations);
             }
             else {
-                if (logger.isDebugEnabled()) logger.debug("No dataSource changes detected, the content page is unchanged.");
+                if (logger.isDebugEnabled()) logger.debug("No runtime configuration requested from the content page.");
             }
         }
 
@@ -151,7 +184,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
         ContentPage contentPage = prepareContent(pageInfo);
 
-        if(compilerInterceptor != null){
+        if (compilerInterceptor != null) {
             compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, contentPage);
         }
 
@@ -224,7 +257,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
 
-        if(compilerInterceptor != null){
+        if (compilerInterceptor != null) {
             compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, preparedContentPage);
         }
 
@@ -241,7 +274,7 @@ public class DefaultPageCompiler implements PageCompiler {
         TemplateVariation templateVariation,
         TemplateEngine templateEngine,
         CompilerOutputStrategy outputStrategy
-    ){
+    ) {
         // process content page
         String pageName = pageInfo.getName();
 
@@ -286,5 +319,9 @@ public class DefaultPageCompiler implements PageCompiler {
 
     public void setCompilerInterceptor(CompilerInterceptor compilerInterceptor) {
         this.compilerInterceptor = compilerInterceptor;
+    }
+
+    public void setRuntimeConfigurationResolver(RuntimeConfigurationResolver runtimeConfigurationResolver) {
+        this.runtimeConfigurationResolver = runtimeConfigurationResolver;
     }
 }

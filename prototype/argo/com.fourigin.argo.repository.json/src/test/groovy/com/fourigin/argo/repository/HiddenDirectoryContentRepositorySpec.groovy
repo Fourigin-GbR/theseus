@@ -443,7 +443,7 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         setup:
         DataSourceIndex index = new DataSourceIndex(
                 name: 'index-name-1',
-                categories: [],
+                categories: [:],
                 fields: [],
                 searchValues: []
         )
@@ -466,7 +466,7 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         setup:
         DataSourceIndex index = new DataSourceIndex(
                 name: 'index-name-1',
-                categories: [],
+                categories: [:],
                 fields: [],
                 searchValues: []
         )

@@ -4,13 +4,15 @@ import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
 public class DataSourceContent implements Serializable {
     private static final long serialVersionUID = 5480644248235587413L;
 
     private String name;
     private DataSourceIdentifier identifier;
-    private ContentElement content;
+    private List<ContentElement> content;
 
     public String getName() {
         return name;
@@ -28,11 +30,11 @@ public class DataSourceContent implements Serializable {
         this.identifier = identifier;
     }
 
-    public ContentElement getContent() {
+    public List<ContentElement> getContent() {
         return content;
     }
 
-    public void setContent(ContentElement content) {
+    public void setContent(List<ContentElement> content) {
         this.content = content;
     }
 
@@ -40,21 +42,15 @@ public class DataSourceContent implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DataSourceContent)) return false;
-
         DataSourceContent that = (DataSourceContent) o;
-
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
-        return content != null ? content.equals(that.content) : that.content == null;
+        return Objects.equals(name, that.name) &&
+            Objects.equals(identifier, that.identifier) &&
+            Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        return result;
+        return Objects.hash(name, identifier, content);
     }
 
     @Override

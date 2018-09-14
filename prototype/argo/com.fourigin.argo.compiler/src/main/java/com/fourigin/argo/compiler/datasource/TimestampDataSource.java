@@ -7,7 +7,9 @@ import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SimpleTimeZone;
@@ -28,12 +30,12 @@ public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
     }
 
     @Override
-    public ContentElement generateContent(PageInfo ownerPage, DataSourceIdentifier id, EmptyDataSourceQuery query, Map<String, Object> context) {
+    public List<ContentElement> generateContent(PageInfo ownerPage, DataSourceIdentifier id, EmptyDataSourceQuery query, Map<String, Object> context) {
         String timestamp = FORMAT.format(new Date());
 
-        return new TextContentElement.Builder()
+        return Collections.singletonList(new TextContentElement.Builder()
             .withName("processedOn")
             .withContent(timestamp)
-            .build();
+            .build());
     }
 }

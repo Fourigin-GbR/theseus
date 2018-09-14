@@ -68,7 +68,7 @@ public class PageState {
         if (dataSources != null) {
             for (DataSourceContent dataSource : dataSources) {
                 String name = dataSource.getName();
-                ContentElement dataSourceContent = dataSource.getContent();
+                List<ContentElement> dataSourceContent = dataSource.getContent();
                 String dataSourceChecksum = null;
                 if(dataSourceContent != null) {
                     dataSourceChecksum = ChecksumGenerator.getChecksum(dataSourceContent);

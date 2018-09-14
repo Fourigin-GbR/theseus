@@ -23,7 +23,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,15 +47,8 @@ public class CompileController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
         @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam(RequestParameters.PATH) String path,
-        @RequestHeader(value = "referer", required = false) String referrer
+        @RequestParam(RequestParameters.PATH) String path
     ) {
-
-        if(referrer != null) {
-            if (logger.isWarnEnabled()) logger.warn("Detected a referrer '{}', ignoring the request.", referrer); // NOPMD
-//            return null;
-        }
-
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);

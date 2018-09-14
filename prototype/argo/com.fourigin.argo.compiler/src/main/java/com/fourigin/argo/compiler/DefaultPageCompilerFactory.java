@@ -1,13 +1,14 @@
 package com.fourigin.argo.compiler;
 
-import com.fourigin.argo.models.datasource.DataSourceQueryBuilder;
-import com.fourigin.argo.models.datasource.DataSourceQueryFactory;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.EmptyDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
+import com.fourigin.argo.models.datasource.DataSourceQueryBuilder;
+import com.fourigin.argo.models.datasource.DataSourceQueryFactory;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
+import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.strategies.DefaultFilenameStrategy;
 import com.fourigin.argo.strategies.FilenameStrategy;
@@ -22,18 +23,21 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
     private TemplateResolver templateResolver;
     private DataSourcesResolver dataSourcesResolver;
     private String preparedContentRoot;
+    private RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory;
 
     public DefaultPageCompilerFactory(
         ContentRepositoryFactory contentRepositoryFactory,
         TemplateEngineFactory templateEngineFactory,
         TemplateResolver templateResolver,
         DataSourcesResolver dataSourcesResolver,
+        RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory,
         String preparedContentRoot
     ) {
         this.contentRepositoryFactory = contentRepositoryFactory;
         this.templateEngineFactory = templateEngineFactory;
         this.templateResolver = templateResolver;
         this.dataSourcesResolver = dataSourcesResolver;
+        this.runtimeConfigurationResolverFactory = runtimeConfigurationResolverFactory;
         this.preparedContentRoot = preparedContentRoot;
     }
 
@@ -59,6 +63,8 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
             preparedContentFilenameStrategy
         );
         compiler.setCompilerInterceptor(compilerInterceptor);
+
+        compiler.setRuntimeConfigurationResolver(runtimeConfigurationResolverFactory.getInstance(base));
 
         return compiler;
     }

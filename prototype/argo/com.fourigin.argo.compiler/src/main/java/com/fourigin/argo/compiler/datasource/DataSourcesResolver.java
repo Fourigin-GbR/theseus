@@ -78,7 +78,7 @@ public class DataSourcesResolver {
             }
 
             String previousChecksum = dataSourceId.getChecksum();
-            ContentElement resolvedContent = dataSource.generateContent(ownerPage, dataSourceId, query, context);
+            List<ContentElement> resolvedContent = dataSource.generateContent(ownerPage, dataSourceId, query, context);
             String newChecksum = ChecksumGenerator.getChecksum(resolvedContent);
             if (newChecksum.equals(previousChecksum)) {
                 if (logger.isInfoEnabled())

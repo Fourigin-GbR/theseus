@@ -1,5 +1,6 @@
 package com.fourigin.argo.models.content;
 
+import com.fourigin.argo.models.content.config.RuntimeConfigurations;
 import com.fourigin.argo.models.content.elements.ContentElement;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class ContentPage implements Serializable {
     private ContentPageMetaData metaData;
     private List<ContentElement> content;
     private Collection<DataSourceContent> dataSourceContents;
+    private RuntimeConfigurations configurations;
 
     public ContentPage() {
     }
@@ -62,6 +64,14 @@ public class ContentPage implements Serializable {
         this.dataSourceContents = dataSourceContents;
     }
 
+    public RuntimeConfigurations getConfigurations() {
+        return configurations;
+    }
+
+    public void setConfigurations(RuntimeConfigurations configurations) {
+        this.configurations = configurations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,12 +80,13 @@ public class ContentPage implements Serializable {
         return Objects.equals(id, that.id) &&
             Objects.equals(metaData, that.metaData) &&
             Objects.equals(content, that.content) &&
-            Objects.equals(dataSourceContents, that.dataSourceContents);
+            Objects.equals(dataSourceContents, that.dataSourceContents) &&
+            Objects.equals(configurations, that.configurations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, metaData, content, dataSourceContents);
+        return Objects.hash(id, metaData, content, dataSourceContents, configurations);
     }
 
     @Override
@@ -85,6 +96,7 @@ public class ContentPage implements Serializable {
             ", metaData=" + metaData +
             ", content=" + content +
             ", dataSourceContents=" + dataSourceContents +
+            ", configurations=" + configurations +
             '}';
     }
 
@@ -93,6 +105,7 @@ public class ContentPage implements Serializable {
         private ContentPageMetaData metaData;
         private List<ContentElement> content;
         private Collection<DataSourceContent> dataSourceContents;
+        private RuntimeConfigurations configurations;
 
         public Builder withId(String id){
             this.id = id;
@@ -114,12 +127,18 @@ public class ContentPage implements Serializable {
             return this;
         }
 
+        public Builder withConfigurations(RuntimeConfigurations configurations){
+            this.configurations = configurations;
+            return this;
+        }
+
         public ContentPage build(){
             ContentPage page = new ContentPage();
             page.setId(id);
             page.setMetaData(metaData);
             page.setContent(content);
             page.setDataSourceContents(dataSourceContents);
+            page.setConfigurations(configurations);
             return page;
         }
     }

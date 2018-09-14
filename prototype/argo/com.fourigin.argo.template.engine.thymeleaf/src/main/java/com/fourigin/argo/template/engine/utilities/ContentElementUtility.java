@@ -14,6 +14,7 @@ import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.template.engine.IncompatibleContentElementException;
 
 import java.util.List;
+import java.util.Map;
 
 public class ContentElementUtility implements ContentPageAwareThymeleafTemplateUtility {
 
@@ -59,6 +60,15 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         }
 
         throw new UnsupportedOperationException("Unknown content element type '" + element.getClass() + "'!");
+    }
+
+    public Map<String, Object> getConfig(String name) {
+        Map<String, Object> config = ContentPageManager.resolveConfig(contentPage, name);
+        if (config == null) {
+            throw new IllegalArgumentException("No config found for name '" + name + "'!");
+        }
+
+        return config;
     }
 
     public ContentElement getElement(String path) {
