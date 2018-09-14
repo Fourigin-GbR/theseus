@@ -76,6 +76,25 @@
     .touchBar {
       display: flex;
       justify-content: space-between;
+
+      .titleElements {
+        display: flex;
+
+        .previewItems {
+          display: flex;
+          align-items: center;
+
+          .previewItem {
+            margin: 0 5px;
+          }
+
+          .previewItems__image img {
+            height: 30px;
+            width: auto;
+            display: block;
+          }
+        }
+      }
     }
 
     .imagePreview {
@@ -93,6 +112,7 @@
       margin: 0;
       position: relative;
       z-index: 5;
+      transition: all .4s ease;
 
       .button {
         padding: 5px 10px;

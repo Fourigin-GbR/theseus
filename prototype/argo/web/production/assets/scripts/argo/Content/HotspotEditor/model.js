@@ -95,6 +95,14 @@ com.fourigin.argo.content.hotspotEditor.Model = com.fourigin.argo.content.hotspo
 
 
     Model.prototype.loadContent = function (callback) {
+        if(!this.getSiteBase()) {
+            console.error("'site base' empty! Can not load content.");
+            return;
+        }
+        if(!this.getSitePath()) {
+            console.error("'site path' empty! Can not load content.");
+            return;
+        }
         var self = this,
             jRequest = jQuery.ajax({
                 "url": "/cms/compile/prepare-content?base=" + this.getSiteBase() + "&path=" + this.getSitePath() + "&verbose=true"
@@ -114,6 +122,14 @@ com.fourigin.argo.content.hotspotEditor.Model = com.fourigin.argo.content.hotspo
     };
 
     Model.prototype.loadContentPrototype = function (callback) {
+        if(!this.getSiteBase()) {
+            console.error("'site base' empty! Can not load prototype.");
+            return;
+        }
+        if(!this.getSitePath()) {
+            console.error("'site path' empty! Can not load prototype.");
+            return;
+        }
         var self = this,
             jRequest = jQuery.ajax({
                 "url": "/cms/editors/prototype?base=" + this.getSiteBase() + "&path=" + this.getSitePath()
