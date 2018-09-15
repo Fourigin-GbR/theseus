@@ -1,80 +1,64 @@
 {
-  "id": "home",
-  "metaData": {
-    "title": "GreekEstate - Region Athen",
-    "attributes": {
-      "key-1": "value-1",
-      "key-2": "value-2",
-      "key-3": "value-3"
-    }
-  },
-  "content": [
-    {
-      "name": "headline",
-      "type": "text",
-      "content": "Übersicht über die Regionen in Griechenland"
-    },
-    {
-      "name": "body",
-      "type": "text",
-      "content": "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten. Damit man möglichst viel von der Vielfalt."
-    },
-    {
-      "type": "list",
-      "name": "hero-images",
-      "elements": [
-        {
-          "type": "list-group",
-          "elements": [
-            {
-              "type": "object",
-              "name": "image",
-              "referenceId": "1234567",
-              "source": "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
-              "alternateText": "Image one",
-              "mimeType": "jpg"
-            },
-            {
-              "type": "text",
-              "name": "title",
-              "content": "#title"
-            },
-            {
-              "type": "text",
-              "name": "description",
-              "content": "#description"
-            },
-            {
-              "type": "link",
-              "name": "link",
-              "url": "site://sales/123 | site:../123 | http(s)://google.de | //google.de",
-              "title": "blah",
-              "target": "?"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "dataSourceContents": [
-    {
-      "name": "timestamp",
-      "identifier": {
-        "type": "TIMESTAMP",
-        "checksum": ""
-      },
-      "content": null
-    },
-    {
-      "name": "site-structure",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-        	"INFO_PATH": "/"
-        },
-        "checksum": ""
-      },
-      "content": null
-    }
-  ]
+	"id": "index",
+	"metaData": {
+		"title": "GreekEstate - Region Athen",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"type": "text",
+			"name": "body",
+			"content": "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten. Damit man möglichst viel von der Vielfalt."
+		},
+		{
+			"type": "list",
+			"name": "hero-images",
+			"elements": [
+				{
+					"type": "list-group",
+					"elements": [
+						{
+							"type": "object",
+							"name": "image",
+							"referenceId": "1234567",
+							"source": "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+							"alternateText": "Image one",
+							"mimeType": "jpg"
+						},
+						{
+							"type": "text",
+							"name": "title",
+							"content": "#title..."
+						},
+						{
+							"type": "text",
+							"name": "description",
+							"content": "#description.-.-.."
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "text",
+			"name": "headline",
+			"content": "<p style=\"text-align: left;\">Übersich<strong>t über di</strong>e Regionen Griechenlands</p><br><br>"
+		}
+	],
+	"dataSourceContents": [
+		{
+			"name": "regions",
+			"identifier": {
+				"type": "SITE",
+				"query": {
+					"INFO_PATH": "/regions"
+				},
+				"checksum": ""
+			}
+		}
+	]
 }

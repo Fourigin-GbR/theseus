@@ -1,68 +1,67 @@
 {
-  "id" : "athen",
-  "metaData" : {
-    "title" : "GreekEstate - Region Athen",
-    "attributes" : {
-      "key-1" : "value-1",
-      "key-2" : "value-2",
-      "key-3" : "value-3"
-    }
-  },
-  "content" : [ {
-    "type" : "text",
-    "name" : "headline",
-    "content" : "Athen"
-  }, {
-    "type" : "text",
-    "name" : "body",
-    "content" : "Lorem ipsum ..."
-  }, {
-    "type" : "list",
-    "name" : "stage",
-    "elements" : [ {
-      "type" : "list-group",
-      "elements" : [ {
-        "type" : "object",
-        "name" : "image",
-        "referenceId" : "1234567",
-        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
-        "alternateText" : "Image one",
-        "mimeType" : "jpg"
-      }, {
-        "type" : "text",
-        "name" : "teaser",
-        "content" : "Athen die Perle!"
-      } ]
-    }, {
-      "type" : "list-group",
-      "elements" : [ {
-        "type" : "object",
-        "name" : "image",
-        "referenceId" : "1234567",
-        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki-2.JPG",
-        "alternateText" : "Image one",
-        "mimeType" : "jpg"
-      }, {
-        "type" : "text",
-        "name" : "teaser",
-        "content" : "Nochmal toll!"
-      } ]
-    } ]
-  } ],
-  "dataSourceContents" : [ {
-    "name" : "timestamp",
-    "identifier" : {
-      "type" : "TIMESTAMP",
-      "checksum" : ""
-    }
-  }, {
-    "name" : "site-structure",
-    "identifier" : {
-      "type" : "SITE",
-      "query" : {
-        "INFO_PATH" : "/"
-      },
-      "checksum" : ""
-    }
-  } ]
+	"id": "athen",
+	"metaData": {
+		"title": "GreekEstate - Region Athen",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"type": "text",
+			"name": "headline",
+			"content": "Athen"
+		},
+		{
+			"type": "list",
+			"name": "stage",
+			"elements": [
+				{
+					"type": "list-group",
+					"elements": [
+						{
+							"type": "object",
+							"name": "image",
+							"referenceId": "1234567",
+							"source": "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+							"alternateText": "Image one",
+							"mimeType": "jpg"
+						},
+						{
+							"type": "text",
+							"name": "teaser",
+							"content": "Athen die Perle!"
+						}
+					]
+				},
+				{
+					"type": "list-group",
+					"elements": [
+						{
+							"type": "object",
+							"name": "image",
+							"referenceId": "1234567",
+							"source": "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki-2.JPG",
+							"alternateText": "Image one",
+							"mimeType": "jpg"
+						},
+						{
+							"type": "text",
+							"name": "teaser",
+							"content": "Nochmal toll!"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "text",
+			"name": "body",
+			"content": "Lorem ipsum Karsten ..."
+		}
+	],
+	"dataSourceContents": [
+	]
 }

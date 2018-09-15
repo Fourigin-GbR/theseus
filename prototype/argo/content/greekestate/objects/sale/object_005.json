@@ -21,24 +21,5 @@
     }
   ],
   "dataSourceContents": [
-    {
-      "name": "timestamp",
-      "identifier": {
-        "type": "TIMESTAMP",
-        "checksum": ""
-      },
-      "content": null
-    },
-    {
-      "name": "site-structure",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-          "INFO_PATH": "/"
-        },
-        "checksum": ""
-      },
-      "content": null
-    }
   ]
 }
