@@ -51,9 +51,52 @@ com.fourigin.argo.content.editor.list.View = com.fourigin.argo.content.editor.li
                     this.generateEditorListGroup(jListItemContentTarget, oCurrentContent);
                     break;
             }
+
+            this.generateListItemPreviews(oCurrentContent, jCurrentListItem);
         }
 
         this.setEvents();
+    };
+
+    View.prototype.generateListItemPreviews = function(oContent, jListItem) {
+        // TODO: Now is using content, but needs to use content-prototype and resolve  the contents!
+        var jPrototypeImage = jListItem.find("[data-prototype=previewImage]").clone().removeAttr("data-prototype"),
+            jPrototypeText = jListItem.find("[data-prototype=previewText]").clone().removeAttr("data-prototype"),
+            jTarget = jListItem.find(".touchBar .titleElements .previewItems");
+        //
+        console.log("### jTarget, jPrototypeImage", jTarget, jPrototypeImage, this.jPrototype);
+
+            var jListContentPreviewItem = null;
+            // Content can be an single item, of if multiple a group with the items. Respect that:
+            console.log("### Direct list item:",oContent );
+            switch(oContent.type) {
+                case "list-group":
+                    for(var j=0, jl= oContent.elements.length; j < jl; j++) {
+                        var oListChildGroupContent = oContent.elements[j];
+                        jListContentPreviewItem = null;
+
+                        switch(oListChildGroupContent.type) {
+                            case "object":
+                                jListContentPreviewItem = jPrototypeImage.clone();
+                                jListContentPreviewItem.find("img").attr("src", oListChildGroupContent.source);
+                                break;
+                            case "text":
+                                jListContentPreviewItem = jPrototypeText.clone();
+                                jListContentPreviewItem.html(oListChildGroupContent.content);
+                                break;
+                            default:
+                                console.info("### Kann listContentPreviewItem nicht erstellen...", oListChildGroupContent);
+                                break;
+                        }
+
+                        if(jListContentPreviewItem) {
+                            console.info("### Add preview items??", jTarget, jListContentPreviewItem);
+                            jTarget.append(jListContentPreviewItem);
+                        }
+                    }
+                    break;
+            }
+
     };
 
     View.prototype.generateEditorListGroup = function(jTarget, oContent) {
