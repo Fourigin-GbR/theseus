@@ -31,8 +31,13 @@
   		    {
   		      "name": "number-of-rooms",
   		      "type": "text",
-  		      "content": "3"
+  		      "content": "4"
   		    },
+		    {
+		      "name": "region",
+		      "type": "text",
+		      "content": "loutraki"
+		    },
   		    {
   		      "name": "area",
   		      "type": "text",
@@ -46,12 +51,12 @@
   		    {
   		      "name": "distance-to-sea",
   		      "type": "text",
-  		      "content": "100"
+  		      "content": "250"
   		    },
   		    {
   		      "name": "price",
   		      "type": "text",
-  		      "content": "1750000"
+  		      "content": "150000"
   		    }
   		]
   	},

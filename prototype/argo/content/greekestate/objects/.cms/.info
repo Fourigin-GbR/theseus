@@ -1,0 +1,10 @@
+{
+  "path" : "/objects",
+  "children" : [ {
+    "type" : "dir",
+    "name" : "sale"
+  }, {
+    "type" : "dir",
+    "name" : "rent"
+  } ]
+}

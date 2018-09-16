@@ -34,6 +34,11 @@
 		      "content": "3"
 		    },
 		    {
+		      "name": "region",
+		      "type": "text",
+		      "content": "loutraki"
+		    },
+		    {
 		      "name": "area",
 		      "type": "text",
 		      "content": "123"
@@ -51,7 +56,7 @@
 		    {
 		      "name": "price",
 		      "type": "text",
-		      "content": "1750000"
+		      "content": "100000"
 		    }
 		]
 	},

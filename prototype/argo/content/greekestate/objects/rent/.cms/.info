@@ -1,0 +1,27 @@
+{
+  "path" : "/objects/rent",
+  "children" : [ {
+    "type" : "file",
+    "name" : "search",
+    "templateReference" : {
+      "templateId" : "greekestate.object-search",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_002",
+    "displayName" : "002",
+    "templateReference" : { }
+  }, {
+    "type" : "file",
+    "name" : "object_001",
+    "displayName" : "001",
+    "templateReference" : { }
+  }, {
+    "type" : "file",
+    "name" : "object_004",
+    "displayName" : "004",
+    "templateReference" : { }
+  } ]
+}

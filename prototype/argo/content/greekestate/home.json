@@ -131,6 +131,14 @@
       } ]
     } ]
   }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "<p>Es existieren Unterbegriffe (wie Blah oder Blubb), die Immobilien nach ihrer Nutzung differenzieren. Nicht immer sind diese eindeutig definiert: Aber es gibt Grenzwerte. Gewerbeimmobilie: Ein Geb&auml;ude oder ein Geb&auml;udeteil, das ausschlie&szlig;lich oder &uuml;berwiegend zu gewerblichen Zwecken genutzt wird. Wohnimmobilie: Ein Geb&auml;ude, das ausschlie&szlig;lich oder &uuml;berwiegend zu Wohnzwecken genutzt wird. Sozialimmobilie: Darunter werden Geb&auml;ude zusammengefasst, die der Erkennung, Behandlung, Vermeidung und Rehabilitation von akuten Krankheiten dienen (Gesundheitsimmobilien wie Krankenh&auml;user und Kliniken). Als Sozialimmobilien im engeren Sinne gelten insbesondere Geb&auml;ude, die dem Wohnen, der Unterbringung, der Betreuung und der Pflege von alten, behinderten und pflegebed&uuml;rftigen, schwerstkranken und sterbenden Menschen sowie sozialen Randgruppen dienen. Insofern fallen hierunter die Seniorenimmobilien, wie Altenwohnheime, Pflegeheime, aber auch sogenannte ambulant betreute Wohngemeinschaften sowie integrierte Seniorenimmobilien, die vorgenannte Nutzungsarten kombinieren, aber auch Einrichtungen wie Kinder- und Jugendheime oder Obdachlosenheime.[4] Spezialimmobilie oder auch Sonderimmobilie: ein Geb&auml;ude, das f&uuml;r eine genau bestimmte, besondere Nutzung erstellt und vorgesehen ist, beispielsweise ein Bahnhof, ein Kraftwerksgeb&auml;ude oder ein Hotel.[5] Renditeimmobilie oder auch Anlageimmobilie: Eine Gewerbeimmobilie oder eine Wohnimmobilie, welche ausschlie&szlig;lich der Verzinsung des investierten Kapitals dient und nicht zur Selbstnutzung vorgesehen ist.[6] Betriebliche Immobilie bzw. Betriebsimmobilie oder, im internationalen Umfeld, Corporate-Real-Estate (CRE) ist die Umschreibung der Immobilien von Unternehmen, welche nicht zum Zweck der Kapitalanlage, sondern bedingt durch die Nutzung durch das jeweilige Unternehmen errichtet, betrieben und verwertet werden. Serviceimmobilie: Grundst&uuml;cke einschlie&szlig;lich der aufstehenden Geb&auml;ude sowie deren Zubeh&ouml;r, die zur Erbringung von Dienstleistungen notwendig sind und die f&uuml;r den Dienstleistungsanbieter das origin&auml;re Instrument der Erbringung seiner Dienstleistungen sind. Dabei &uuml;bernimmt der Dienstleistungserbringer regelm&auml;&szlig;ig auch die Funktion des Immobilienbetreibers. Insoweit sind Serviceimmobilien h&auml;ufig auch sog. Betreiberimmobilien. Mit diesem Immobilientyp besch&auml;ftigt sich seit 2003 ein eigener Arbeitskreis der Gesellschaft f&uuml;r Immobilienwirtschaftliche Forschung (gif), in dem der Begriff der Serviceimmobilie, zur&uuml;ckgehend auf Erich Limpens und Lutz H. Michel, erstmals gesondert definiert wurde.[7] Der Arbeitskreis hat u. a. einen Kriterienkatalog zur Beurteilung von Service-Wohnimmobilien entwickelt. Betreiberimmobilie: Eine Betreiberimmobilie umfasst solche Grundst&uuml;cke nebst der aufstehenden Geb&auml;ude sowie ihr Zubeh&ouml;r, deren Nutzung eines Betreibers bedarf. Die Immobilie gewinnt ihren wirtschaftlichen Wert durch die Betriebsleistung dieses Betreibers, die &uuml;ber die blo&szlig;e Nutzung hinausgeht. Daher sind sie &bdquo;investmentsensibel&ldquo; in dem Sinn, dass Eigent&uuml;mer und Betreiber in einem speziellen Abh&auml;ngigkeitsverh&auml;ltnis zueinander stehen, das durch die eingeschr&auml;nkte Drittverwendungsf&auml;higkeit gekennzeichnet ist.</p>"
+  }, {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "<p style=\"text-align: center;\">Willkommen!! :-) Griechenland &lt;3</p>"
+  }, {
     "type" : "list",
     "name" : "stage",
     "elements" : [ {
@@ -145,7 +153,7 @@
       }, {
         "type" : "text",
         "name" : "teaser",
-        "content" : "<p>Sommerlichezzzz <strong>Abende</strong> am <em>Meer</em> genie&szlig;en und Wellen z&auml;hlen</p>"
+        "content" : "<p>Sommerliche <strong>Abende</strong> am <em>Meer</em> genie&szlig;en und Wellen z&auml;hlen</p>"
       } ]
     }, {
       "type" : "list-group",
@@ -176,25 +184,17 @@
         "content" : "<p>Gibt es Sch&ouml;neres?</p>"
       } ]
     } ]
-  }, {
-    "type" : "text",
-    "name" : "body",
-    "content" : "<p>Es existieren Unterbegriffe (wie Blah oder Blubb), die Immobilien nach ihrer Nutzung differenzieren. Nicht immer sind diese eindeutig definiert: Aber es gibt Grenzwerte. Gewerbeimmobilie: Ein Geb&auml;ude oder ein Geb&auml;udeteil, das ausschlie&szlig;lich oder &uuml;berwiegend zu gewerblichen Zwecken genutzt wird. Wohnimmobilie: Ein Geb&auml;ude, das ausschlie&szlig;lich oder &uuml;berwiegend zu Wohnzwecken genutzt wird. Sozialimmobilie: Darunter werden Geb&auml;ude zusammengefasst, die der Erkennung, Behandlung, Vermeidung und Rehabilitation von akuten Krankheiten dienen (Gesundheitsimmobilien wie Krankenh&auml;user und Kliniken). Als Sozialimmobilien im engeren Sinne gelten insbesondere Geb&auml;ude, die dem Wohnen, der Unterbringung, der Betreuung und der Pflege von alten, behinderten und pflegebed&uuml;rftigen, schwerstkranken und sterbenden Menschen sowie sozialen Randgruppen dienen. Insofern fallen hierunter die Seniorenimmobilien, wie Altenwohnheime, Pflegeheime, aber auch sogenannte ambulant betreute Wohngemeinschaften sowie integrierte Seniorenimmobilien, die vorgenannte Nutzungsarten kombinieren, aber auch Einrichtungen wie Kinder- und Jugendheime oder Obdachlosenheime.[4] Spezialimmobilie oder auch Sonderimmobilie: ein Geb&auml;ude, das f&uuml;r eine genau bestimmte, besondere Nutzung erstellt und vorgesehen ist, beispielsweise ein Bahnhof, ein Kraftwerksgeb&auml;ude oder ein Hotel.[5] Renditeimmobilie oder auch Anlageimmobilie: Eine Gewerbeimmobilie oder eine Wohnimmobilie, welche ausschlie&szlig;lich der Verzinsung des investierten Kapitals dient und nicht zur Selbstnutzung vorgesehen ist.[6] Betriebliche Immobilie bzw. Betriebsimmobilie oder, im internationalen Umfeld, Corporate-Real-Estate (CRE) ist die Umschreibung der Immobilien von Unternehmen, welche nicht zum Zweck der Kapitalanlage, sondern bedingt durch die Nutzung durch das jeweilige Unternehmen errichtet, betrieben und verwertet werden. Serviceimmobilie: Grundst&uuml;cke einschlie&szlig;lich der aufstehenden Geb&auml;ude sowie deren Zubeh&ouml;r, die zur Erbringung von Dienstleistungen notwendig sind und die f&uuml;r den Dienstleistungsanbieter das origin&auml;re Instrument der Erbringung seiner Dienstleistungen sind. Dabei &uuml;bernimmt der Dienstleistungserbringer regelm&auml;&szlig;ig auch die Funktion des Immobilienbetreibers. Insoweit sind Serviceimmobilien h&auml;ufig auch sog. Betreiberimmobilien. Mit diesem Immobilientyp besch&auml;ftigt sich seit 2003 ein eigener Arbeitskreis der Gesellschaft f&uuml;r Immobilienwirtschaftliche Forschung (gif), in dem der Begriff der Serviceimmobilie, zur&uuml;ckgehend auf Erich Limpens und Lutz H. Michel, erstmals gesondert definiert wurde.[7] Der Arbeitskreis hat u. a. einen Kriterienkatalog zur Beurteilung von Service-Wohnimmobilien entwickelt. Betreiberimmobilie: Eine Betreiberimmobilie umfasst solche Grundst&uuml;cke nebst der aufstehenden Geb&auml;ude sowie ihr Zubeh&ouml;r, deren Nutzung eines Betreibers bedarf. Die Immobilie gewinnt ihren wirtschaftlichen Wert durch die Betriebsleistung dieses Betreibers, die &uuml;ber die blo&szlig;e Nutzung hinausgeht. Daher sind sie &bdquo;investmentsensibel&ldquo; in dem Sinn, dass Eigent&uuml;mer und Betreiber in einem speziellen Abh&auml;ngigkeitsverh&auml;ltnis zueinander stehen, das durch die eingeschr&auml;nkte Drittverwendungsf&auml;higkeit gekennzeichnet ist.</p>"
-  }, {
-    "type" : "text",
-    "name" : "headline",
-    "content" : "<p style=\"text-align: center;\">Willkommen!! :-)..</p>"
   } ],
   "dataSourceContents" : [ {
     "name" : "timestamp",
     "identifier" : {
       "type" : "TIMESTAMP",
-      "checksum" : "3A713FB94931305BAE35128EE72F1C2E"
+      "checksum" : "2E2A7D9617D10E3115692E94446D7231"
     },
     "content" : [ {
       "type" : "text",
       "name" : "processedOn",
-      "content" : "2018.09.14 20:31:55 +0000"
+      "content" : "2018.09.16 06:27:27 +0000"
     } ]
   }, {
     "name" : "allNodes",
@@ -383,7 +383,7 @@
         "VERBOSE" : true,
         "IGNORE_OWNER_PAGE" : true
       },
-      "checksum" : "ED13C5C588507198BC8C3DD199F528F1"
+      "checksum" : "8AA81A437CB00A9F85F9F242809DF6BF"
     },
     "content" : [ {
       "type" : "link",
@@ -460,7 +460,7 @@
           "info.template.variationId" : "default",
           "info.content.parent" : "/objects/rent",
           "info.state.compileState.checksum" : "-",
-          "info.state.compileState.timestamp" : "1536686448219",
+          "info.state.compileState.timestamp" : "1537049687963",
           "info.state.compileState.compiled" : "true",
           "info.state.checksum" : "-",
           "info.state.revision" : "1",
@@ -532,7 +532,7 @@
         "INFO_PATH" : "/objects/rent",
         "INCLUDE_CONTENT" : "/headline, /short-description, /long-description, /properties/price, /properties/code"
       },
-      "checksum" : "A57919265E856F6FD6CA9E4E8BFAF955"
+      "checksum" : "CD9E3F9A6038AA3B405D25F1C10A0B68"
     },
     "content" : [ {
       "type" : "link",
@@ -568,7 +568,7 @@
       }, {
         "type" : "text",
         "name" : "price",
-        "content" : "1750000"
+        "content" : "150000"
       }, {
         "type" : "text",
         "name" : "code",
@@ -597,7 +597,7 @@
       }, {
         "type" : "text",
         "name" : "price",
-        "content" : "1750000"
+        "content" : "100000"
       }, {
         "type" : "text",
         "name" : "code",
@@ -626,7 +626,7 @@
       }, {
         "type" : "text",
         "name" : "price",
-        "content" : "1750000"
+        "content" : "200000"
       }, {
         "type" : "text",
         "name" : "code",

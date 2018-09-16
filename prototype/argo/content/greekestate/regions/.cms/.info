@@ -1,0 +1,36 @@
+{
+  "path" : "/regions",
+  "children" : [ {
+    "type" : "file",
+    "name" : "athen",
+    "templateReference" : { 
+    "templateId" : "greekestate.stage-article-text",
+    "variationId" : "default",
+    "revision" : "unspecified"
+	}
+  }, {
+    "type" : "file",
+    "name" : "index",
+    "templateReference" : { 
+    "templateId" : "greekestate.overview-article-gallery",
+    "variationId" : "default",
+    "revision" : "unspecified"
+	}
+  }, {
+    "type" : "file",
+    "name" : "salamina",
+    "templateReference" : { 
+    "templateId" : "greekestate.stage-article-text",
+    "variationId" : "default",
+    "revision" : "unspecified"
+	}
+  }, {
+    "type" : "file",
+    "name" : "loutraki",
+    "templateReference" : { 
+    "templateId" : "greekestate.stage-article-text",
+    "variationId" : "default",
+    "revision" : "unspecified"
+	}
+  } ]
+}

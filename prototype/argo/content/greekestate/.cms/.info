@@ -1,0 +1,49 @@
+{
+  "path" : "/",
+  "children" : [ {
+    "type" : "file",
+    "name" : "home",
+    "localizedName" : "home",
+    "templateReference" : {
+      "templateId" : "greekestate.index",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "search",
+    "localizedName" : "search",
+    "templateReference" : { }
+  }, {
+    "type" : "dir",
+    "name" : "regions",
+    "localizedName" : "regions"
+  }, {
+    "type" : "dir",
+    "name" : "objects",
+    "localizedName" : "objects"
+  }, {
+    "type" : "file",
+    "name" : "contact",
+    "localizedName" : "contact",
+    "templateReference" : {
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "about",
+    "localizedName" : "about",
+    "templateReference" : { }
+  }, {
+    "type" : "file",
+    "name" : "impressum",
+    "localizedName" : "impressum",
+    "templateReference" : {
+      "templateId" : "greekestate.article-text",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  } ]
+}

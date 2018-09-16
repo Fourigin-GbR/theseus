@@ -20,6 +20,63 @@
       "content": "#Infotext"
     }
   ],
-  "dataSourceContents": [
-  ]
+"dataSourceContents": [
+	{
+		"name": "timestamp",
+		"identifier": {
+			"type": "TIMESTAMP",
+			"checksum": "8F1F46FAFE1921A1D26598058883BFF4"
+		}
+	},
+	{
+		"name": "site-structure",
+		"identifier": {
+			"type": "SITE",
+			"revisions": {
+			},
+			"query": {
+				"INFO_PATH": "/objects/sale",
+				"IGNORE_OWNER_PAGE": "true",
+				"INCLUDE_CONTENT": "/headline, /short-description, /long-description, /properties"					
+			},
+			"index": {
+				"name": "objects-to-rent",
+				"categories": [
+					"/headline"
+				],
+				"fields": [
+					{
+						"name": "price",
+						"path": "/price",
+						"type": "PRICE"
+					},
+					{
+						"name": "distance",
+						"path": "/location/distance-to-sea",
+						"type": "NUMBER"
+					},
+					{
+						"name": "available-from",
+						"path": "/available-from",
+						"type": "DATE"
+					},
+					{
+						"name": "location-properties",
+						"path": "/location/properties",
+						"type": "LIST_OF_TEXT"
+					},
+					{
+						"name": "number-of-rooms",
+						"path": "/number-of-rooms",
+						"type": "NUMBER"
+					}
+				],
+				"fullTextSearch": [
+					"/body"
+				]
+			},
+			"checksum": "6D9628F3DBD2C7BDC24FA356AFBA2C69"
+		}
+	}
+]
 }

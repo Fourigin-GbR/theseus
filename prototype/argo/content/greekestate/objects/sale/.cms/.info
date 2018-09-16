@@ -1,0 +1,24 @@
+{
+  "path" : "/objects/sale",
+  "children" : [ {
+    "type" : "file",
+    "name" : "search",
+    "templateReference" : { 
+    "templateId" : "object-search",
+    "variationId" : "default",
+    "revision" : ""
+	}
+  }, {
+    "type" : "file",
+    "name" : "object_003",
+    "templateReference" : { }
+  }, {
+    "type" : "file",
+    "name" : "object_004",
+    "templateReference" : { }
+  }, {
+    "type" : "file",
+    "name" : "object_005",
+    "templateReference" : { }
+  } ]
+}
