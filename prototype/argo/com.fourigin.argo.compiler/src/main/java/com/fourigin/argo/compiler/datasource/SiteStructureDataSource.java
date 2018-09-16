@@ -5,11 +5,13 @@ import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.UnresolvableContentPathException;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.LinkElement;
+import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
 import com.fourigin.argo.models.datasource.DataSource;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.datasource.index.FieldDefinition;
+import com.fourigin.argo.models.datasource.index.FieldType;
 import com.fourigin.argo.models.datasource.index.FieldValue;
 import com.fourigin.argo.models.datasource.index.IndexAwareDataSource;
 import com.fourigin.argo.models.datasource.index.IndexDefinition;
@@ -26,6 +28,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,20 +87,20 @@ public class SiteStructureDataSource implements
                         .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
                         .withAttribute("info.state.revision", state.getRevision());
 
-                    if(templateReference != null) {
+                    if (templateReference != null) {
                         textBuilder
                             .withAttribute("info.template.templateId", templateReference.getTemplateId())
                             .withAttribute("info.template.variationId", templateReference.getVariationId())
                             .withAttribute("info.template.revision", templateReference.getRevision());
                     }
 
-                    if(contentReference != null) {
+                    if (contentReference != null) {
                         textBuilder
                             .withAttribute("info.content.parent", contentReference.getParentPath())
                             .withAttribute("info.content.id", contentReference.getContentId());
                     }
 
-                    if(compileState != null) {
+                    if (compileState != null) {
                         textBuilder
                             .withAttribute("info.state.compileState.checksum", compileState.getChecksum())
                             .withAttribute("info.state.compileState.compiled", String.valueOf(compileState.isCompiled()))
@@ -124,8 +127,7 @@ public class SiteStructureDataSource implements
                                     logger.warn("Unable to resolve content reference {} for {}", reference, info);
                                 continue;
                             }
-                        }
-                        catch(UnresolvableContentPathException ex){
+                        } catch (UnresolvableContentPathException ex) {
                             if (logger.isWarnEnabled())
                                 logger.warn("Unable to resolve content reference {} for {}", reference, info);
                             continue;
@@ -161,34 +163,136 @@ public class SiteStructureDataSource implements
         }
 
         String indexName = indexDefinition.getName();
-        Set<String> categoryNames = indexDefinition.getCategories();
+        Map<String, String> categoryDefinitions = indexDefinition.getCategories();
         Set<FieldDefinition> fieldDefinitions = indexDefinition.getFields();
         Set<String> fullTextSearch = indexDefinition.getFullTextSearch();
+        Set<String> keywords = indexDefinition.getKeywords();
 
-        Map<String, String> categories = new HashMap<>();
-        for (String categoryName : categoryNames) {
-            categories.put(categoryName, "blah"); // TODO: implement me!
+        if (generatedContent != null && !generatedContent.isEmpty()) {
+
+            List<String> references = new ArrayList<>();
+
+            List<String> targets = new ArrayList<>();
+
+            Map<String, Map<String, List<Integer>>> categories = new HashMap<>();
+
+            List<FieldValue> fields = new ArrayList<>();
+            for (FieldDefinition fieldDefinition : fieldDefinitions) {
+                FieldValue fieldValue = new FieldValue();
+                fieldValue.setName(fieldDefinition.getName());
+                fieldValue.setType(fieldDefinition.getType());
+                fieldValue.setPath(fieldDefinition.getPath());
+                fields.add(fieldValue);
+            }
+
+            Map<String, Set<Integer>> searchValues = new HashMap<>();
+
+            int referenceNumber = 0;
+            for (ContentElement referenceElement : generatedContent) {
+                LinkElement linkElement = (LinkElement) referenceElement;
+
+                // reference
+                String reference = linkElement.getName();
+                references.add(reference);
+
+                // target
+                String target = linkElement.getTarget();
+                targets.add(target);
+
+                List<ContentElement> elements = linkElement.getElements();
+
+                for (Map.Entry<String, String> entry : categoryDefinitions.entrySet()) {
+                    String categoryName = entry.getKey();
+                    String categoryValuePath = entry.getValue();
+                    ContentElement categoryValueElement = ContentPageManager.resolve(categoryValuePath, elements);
+                    String value = getCategoryValue(categoryValueElement);
+                    Map<String, List<Integer>> values = categories.get(categoryName);
+                    if (values == null) {
+                        values = new HashMap<>();
+                        categories.put(categoryName, values);
+                    }
+                    List<Integer> refs = values.get(value);
+                    if (refs == null) {
+                        refs = new ArrayList<>();
+                        values.put(value, refs);
+                    }
+                    refs.add(referenceNumber);
+                }
+
+                for (FieldValue field : fields) {
+                    List<String> values = field.getValue();
+                    if (values == null) {
+                        values = new ArrayList<>();
+                        field.setValue(values);
+                    }
+                    ContentElement fieldElement = ContentPageManager.resolve(field.getPath(), elements);
+                    String value = getFieldValue(fieldElement, field.getType());
+                    values.add(value);
+                }
+
+                if(keywords != null && !keywords.isEmpty()) {
+                    if (logger.isDebugEnabled()) logger.debug("Indexing keywords {}", keywords);
+
+                    StringBuilder builder = new StringBuilder();
+                    for (String path : fullTextSearch) {
+                        ContentElement textSearchElement = ContentPageManager.resolve(path, elements);
+                        String value = getSearchValue(textSearchElement);
+                        if(value != null) {
+                            builder.append(value.toLowerCase(Locale.US)).append(';');
+                        }
+                    }
+
+                    String textForSearch = builder.toString();
+                    if (logger.isDebugEnabled()) logger.debug("Collected text: {}", textForSearch);
+
+                    for (String keyword : keywords) {
+                        if (textForSearch.contains(keyword)) {
+                            if (logger.isDebugEnabled()) logger.debug("Found a match '{}'", keyword);
+                            Set<Integer> matches = searchValues.get(keyword);
+                            if (matches == null) {
+                                matches = new HashSet<>();
+                                searchValues.put(keyword, matches);
+                            }
+                            matches.add(referenceNumber);
+                        }
+                    }
+                }
+
+                referenceNumber++;
+            }
+
+            index.setName(indexName);
+            index.setReferences(references);
+            index.setTargets(targets);
+            index.setCategories(categories);
+            index.setFields(fields);
+            index.setSearchValues(searchValues);
         }
-
-        Set<FieldValue> fields = new HashSet<>();
-        for (FieldDefinition fieldDefinition : fieldDefinitions) {
-            FieldValue fieldValue = new FieldValue();
-            fieldValue.setName(fieldDefinition.getName());
-            fieldValue.setType(fieldDefinition.getType());
-            fieldValue.setValue("blah"); // TODO: implement me!
-            fields.add(fieldValue);
-        }
-
-        Set<String> searchValues = new HashSet<>();
-        for (String textSearch : fullTextSearch) {
-            searchValues.add(textSearch + "-blah"); // TODO: implement me!
-        }
-
-        index.setName(indexName);
-        index.setCategories(categories);
-        index.setFields(fields);
-        index.setSearchValues(searchValues);
 
         return index;
+    }
+
+    private String getSearchValue(ContentElement element) {
+        if (element instanceof TextAwareContentElement) {
+            return ((TextAwareContentElement) element).getContent();
+        }
+
+        return null;
+    }
+
+    private String getFieldValue(ContentElement element, FieldType type) {
+        if (element instanceof TextAwareContentElement) {
+            return ((TextAwareContentElement) element).getContent();
+        }
+
+        return null;
+    }
+
+    private String getCategoryValue(ContentElement element) {
+        if (element instanceof TextAwareContentElement) {
+            return ((TextAwareContentElement) element).getContent();
+        }
+
+        return null;
     }
 }

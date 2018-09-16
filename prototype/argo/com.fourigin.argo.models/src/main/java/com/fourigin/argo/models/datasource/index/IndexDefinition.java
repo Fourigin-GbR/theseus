@@ -1,6 +1,7 @@
 package com.fourigin.argo.models.datasource.index;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -8,9 +9,10 @@ public class IndexDefinition implements Serializable {
     private static final long serialVersionUID = 6246629291824599676L;
     
     private String name;
-    private Set<String> categories;
+    private Map<String, String> categories;
     private Set<FieldDefinition> fields;
     private Set<String> fullTextSearch;
+    private Set<String> keywords;
 
     public String getName() {
         return name;
@@ -20,11 +22,11 @@ public class IndexDefinition implements Serializable {
         this.name = name;
     }
 
-    public Set<String> getCategories() {
+    public Map<String, String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<String> categories) {
+    public void setCategories(Map<String, String> categories) {
         this.categories = categories;
     }
 
@@ -44,6 +46,14 @@ public class IndexDefinition implements Serializable {
         this.fullTextSearch = fullTextSearch;
     }
 
+    public Set<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(Set<String> keywords) {
+        this.keywords = keywords;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,12 +62,13 @@ public class IndexDefinition implements Serializable {
         return Objects.equals(name, that.name) &&
             Objects.equals(categories, that.categories) &&
             Objects.equals(fields, that.fields) &&
-            Objects.equals(fullTextSearch, that.fullTextSearch);
+            Objects.equals(fullTextSearch, that.fullTextSearch) &&
+            Objects.equals(keywords, that.keywords);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, categories, fields, fullTextSearch);
+        return Objects.hash(name, categories, fields, fullTextSearch, keywords);
     }
 
     @Override
@@ -67,6 +78,7 @@ public class IndexDefinition implements Serializable {
             ", categories=" + categories +
             ", fields=" + fields +
             ", fullTextSearch=" + fullTextSearch +
+            ", keywords=" + keywords +
             '}';
     }
 }

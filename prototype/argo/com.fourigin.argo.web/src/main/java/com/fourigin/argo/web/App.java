@@ -47,6 +47,7 @@ import java.util.Map;
 @ComponentScan({
     "com.fourigin.argo.web",
     "com.fourigin.argo.compile",
+    "com.fourigin.argo.search",
     "com.fourigin.argo.editors",
     "com.fourigin.argo.config"
 })

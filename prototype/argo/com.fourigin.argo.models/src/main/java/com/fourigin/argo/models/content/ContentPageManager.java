@@ -201,7 +201,7 @@ public final class ContentPageManager {
         return builder.toString();
     }
 
-    private static ContentElement resolve(String path, List<ContentElement> elements) {
+    public static ContentElement resolve(String path, List<ContentElement> elements) {
         ContentElement current = null;
 
         StringTokenizer tok = new StringTokenizer(path, "/");
