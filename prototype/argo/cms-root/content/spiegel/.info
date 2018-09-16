@@ -1,0 +1,20 @@
+[ {
+  "type" : "file",
+  "path" : "/spiegel",
+  "name" : "article-1",
+  "localizedName" : "article-1",
+  "displayName" : "article-1",
+  "description" : "",
+  "templateReference" : {
+    "templateId" : "spiegel.article",
+    "variationId" : "default",
+    "revision" : "unspecified"
+  },
+  "staged" : false,
+  "compileState" : {
+    "checksum" : "",
+    "compiled" : false,
+    "timestamp" : 1486844874469,
+    "message" : ""
+  }
+} ]

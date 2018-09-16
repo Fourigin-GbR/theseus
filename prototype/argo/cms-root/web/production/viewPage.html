@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CMS Html Editor</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/argo.css"/>
+    <!---->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <!---->
+    <script type="text/javascript" src="/assets/scripts/argo/PageEditor/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/PageEditor/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/Overlay/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Overlays/Overlay/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Text/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Text/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Text/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Object/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Object/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Object/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Group/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Group/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/Group/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/List/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/List/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/Editors/List/controller.js"></script>
+
+    <script type="text/javascript" src="/assets/scripts/argo/Content/HotspotEditor/view.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/HotspotEditor/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/Content/HotspotEditor/controller.js"></script>
+
+    <link rel="stylesheet" href="/assets/libs/quill/quill.core.css"/>
+    <script src="/assets/libs/tinymce/js/tinymce/tinymce.min.js"></script>
+</head>
+<body>
+<!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
+
+<header>
+    <div class="metaInformationBar">
+        <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        Übersicht
+                    </a>
+                </li>
+                <li class="selected">
+                    <a href="#">
+                        Inhalte
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Seitenstruktur
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Bilder
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Abmelden
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="toolBar">
+        <div class="mainElements">
+            <div class="mainElements__currentPagePath">
+                <span class="mainElements__currentPagePath__icon"><i class="far fa-folder-open"></i></span>
+                <ul class="pathAsLinkElements">
+                    <li class="pathAsLinkElements__element" th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                        <a href="#" target="_top" th:href="@{/view/(base=${argo.base},path=${argo.path})}"
+                           th:text="${pathToken}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class="tabsBar">
+            <li>
+                <span class="tabsBar_iconButton" data-overlay-id="overlay_editPageContent">
+                    <span class="tabsBar_iconButton_icon"><i class="fas fa-edit"></i></span>
+                    Seiteninhalte bearbeiten
+                    <span class="badge" th:text="${#lists.size(data_hotspots)}">0</span>
+                </span>
+            </li>
+        </ul>
+        <!---->
+        <div class="overlayWrapper">
+            <div class="background"></div>
+            <div id="overlay_editPageContent" class="overlay editor">
+                <header>
+                    <h2>Inhalte bearbeiten</h2>
+
+                    <div class="interactionButton interactionButton__close"><i class="fas fa-times"></i></div>
+                </header>
+                <div class="body">
+                    <h3>Editierbare Inhalte</h3>
+
+                    <div data-type="editor-fields"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="iFrameContent">
+    <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
+            th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
+</div>
+
+<!-- prototypes -->
+
+<div id="argoEditorPrototypes">
+
+    <!-- content types -->
+    <div class="contentTypeIcon contentTypeIcon--text" data-content-type="text">
+        <i class="fas fa-font"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--list" data-content-type="list">
+        <i class="fas fa-list-ul"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--object" data-content-type="object">
+        <i class="far fa-image"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--group" data-content-type="group">
+        <i class="fas fa-expand"></i>
+    </div>
+
+    <!-- hotspot (section)  -->
+    <section data-prototype="hotspot">
+        <form>
+            <h4>#headline</h4>
+
+            <article class="information">
+                #information
+            </article>
+
+            <article class="editableFields">
+                <div data-type="editor-fields" class=""></div>
+                <div class="blockingOverlay">
+                    <div class="blockingOverlay__statusMessage blockingOverlay__statusMessage--loading">
+                        <span class="blockingOverlay__statusMessage__icon"><i class="fas fa-envelope"></i></span>
+                        <span class="blockingOverlay__statusMessage__copy">Speichere die Daten...</span>
+                    </div>
+                </div>
+            </article>
+
+            <footer>
+                <div class="messages">
+                    <div class="messages__message messages__message--success" data-type="successfully-stored">
+                        <span class="messages__message__icon"><i class="fas fa-check"></i></span>
+                        <span class="messages__message__copy">Erfolgreich gespeichert!</span>
+                    </div>
+                </div>
+                <button type="submit">Speichern</button>
+            </footer>
+        </form>
+    </section>
+
+    <!-- text -->
+    <fieldset data-type="text">
+        <input type="hidden" name="type" value="text"/>
+        <input type="hidden" name="name" value=""/>
+        <label>
+            <span>content</span>
+            <div class="contentHtmlRendered"></div>
+            <textarea class="html" name="content"></textarea>
+        </label>
+    </fieldset>
+
+    <!-- object -->
+    <fieldset data-type="object">
+        <input type="hidden" name="type" value="object"/>
+        <input type="hidden" name="name" value=""/>
+
+        <div class="imagePreview">
+            <span>image</span>
+            <img src="/nothing.jpg"/>
+        </div>
+        <label>
+            <span>source</span>
+            <input type="text" name="source"/>
+        </label>
+
+        <div class="moreOptionsWrapper">
+            <a class="button button_moreOptions" href="#">
+                <span class="button_moreOptions__copy--closed">
+                    <span class="button_icon"><i class="fas fa-plus"></i></span>
+                    Weitere Optionen...
+                </span>
+                <span class="button_moreOptions__copy--opened">
+                    <span class="button_icon"><i class="fas fa-minus"></i></span>
+                    Weniger Optionen...
+                </span>
+            </a>
+            <div class="moreOptions">
+                <label>
+                    <span>referenceId</span>
+                    <input disabled="disabled" type="text" name="referenceId"/>
+                </label>
+                <label>
+                    <span>alternativeText</span>
+                    <input type="text" name="alternativeText"/>
+                </label>
+                <label>
+                    <span>mimeType</span>
+                    <input type="text" name="mimeType"/>
+                </label>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <!-- list -->
+    <fieldset data-type="list">
+        <input type="hidden" name="type" value="list"/>
+        <input type="hidden" name="name" value=""/>
+        <fieldset>
+            <legend>list</legend>
+            <div class="addItem">
+                <div class="addItem__button" data-action="addTop">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+            <ul class="listChildItemsWrapper">
+
+                <li data-prototype="listItem" class="compactView">
+                    <div class="touchBar">
+                        <div class="titleElements">
+                            <div class="button button--icon" data-action="openClose">
+                                <span class="button__icon"><i class="fas fa-angle-right"></i></span>
+                            </div>
+                            <div class="previewItems">
+                                <div data-prototype="previewImage" class="previewItem previewItems__image">
+                                    <img src="https://static1.giessener-allgemeine.de/storage/image/3/9/9/2/2182993_teaserbig_1rqOL5_6iptwf.jpg"/>
+                                </div>
+                                <div data-prototype="previewText" class="previewItem previewItems__text">
+                                    Beispiel-Text
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editorControlls">
+                            <div class="button button--icon">
+                                <span class="button__icon"><i class="far fa-eye-slash"></i></span>
+                                <span class="button__copy">Ausblenden</span>
+                            </div>
+                            <div class="button button--icon">
+                                <span class="button__icon"><i class="far fa-clone"></i></span>
+                                <span class="button__copy">Duplizieren</span>
+                            </div>
+                            <div class="button button--icon" data-action="delete">
+                                <span class="button__icon"><i class="far fa-trash-alt"></i></span>
+                                <span class="button__copy">Entfernen</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listItemContent">
+
+                    </div>
+                    <div class="listOpenTrigger"></div>
+                </li>
+
+            </ul>
+            <div class="addItem">
+                <div class="addItem__button" data-action="addBottom">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        </fieldset>
+    </fieldset>
+
+    <!-- list-group -->
+    <div data-prototype="listGroup">
+        <fieldset data-type="listGroup">
+            <input type="hidden" name="type" value="list-group"/>
+            <fieldset>
+
+            </fieldset>
+        </fieldset>
+    </div>
+
+    <!-- list-text -->
+    <div data-prototype="listText">
+        <fieldset data-type="listText">
+            <input type="hidden" name="type" value="list-text"/>
+            <input type="hidden" name="name" value=""/>
+            <label>
+                <span>content</span>
+                <textarea name="content"></textarea>
+            </label>
+        </fieldset>
+    </div>
+
+    <!-- group -->
+    <fieldset data-type="group">
+        <input type="hidden" name="type" value="list-group"/>
+        <input type="hidden" name="name" value=""/>
+        <fieldset>
+
+        </fieldset>
+    </fieldset>
+</div>
+
+<div class="globalNotifications">
+    <div class="globalNotifications__globalNotification" data-type="page-reloaded">
+        <span class="icon">
+           <i class="fas fa-redo"></i>
+        </span>
+        <span class="copy">
+            <h5>Die Seite wurde neu geladen.</h5>
+            <p>Die aktuelle Seite enthält aktualisierte Inhalte und wurde neu geladen.</p>
+        </span>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    var argoPageEditor = new com.fourigin.argo.PageEditor(
+        {
+            "base": [[${argo.base}]],
+            "path": [[${argo.path}]],
+            "hotspots": [[${data_hotspots}]]
+        }
+    );
+</script>
+
+<script type='text/javascript'>
+
+    jQuery(function () {
+
+        var iFrames = jQuery('iframe');
+
+        function iResize() {
+
+            for (var i = 0, j = iFrames.length; i < j; i++) {
+                iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight + 'px';
+            }
+        }
+
+        iFrames.on("load", function () {
+            this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+        });
+
+        $.fn.serializeObject = function () {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+{
+  "id" : "article-1",
+  "metaData" : {
+    "title" : "My first ContentPage for testing...",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "group",
+    "name" : "article",
+    "elements" : [ {
+      "type" : "list",
+      "name" : "body",
+      "elements" : [ {
+        "type" : "list-text",
+        "content" : "Ein Tweet der Berliner SPD hat kurz vor der Wahl des <a href=\"http://www.spiegel.de/thema/bundespraesidentenwahl_2017/\" title=\"Bundespräsidenten\" class=\"text-link-int lp-text-link-int\">Bundespräsidenten</a> für Ärger gesorgt. InAnspielung auf den gemeinsamen Kandidaten der schwarz-roten Koalition, <a href=\"http://www.spiegel.de/thema/frank_walter_steinmeier/\" title=\"Frank-Walter Steinmeier\" class=\"text-link-int lp-text-link-int\">Frank-WalterSteinmeier</a> (SPD), twitterte die Landes-SPD zu einem Foto des Amtssitzes Schloss Bellevue: \"Wir freuen uns auf den neuen sozialdemokratischen Schlossherrn.\" Die Empörung darüber war so groß, dass die Berliner SPD die Nachricht später löschte und sich entschuldigte.",
+        "markupAllowed" : true
+      }, {
+        "type" : "list-text",
+        "content" : "CDU-Generalsekretär Peter Tauber schrieb am Samstag in dem Kurznachrichtendienst: \"<a href=\"https://twitter.com/petertauber/status/830364629931085824\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">Lieber Herr Steinmeier, ich hoffe Sie sind ab Morgen der Präsident für alle Deutschen und nicht nur für @spdberlin.</a>\". CDU-Bundesvize Julia Klöckner twitterte: \"<a href=\"https://twitter.com/JuliaKloeckner/status/830334142894178304\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">Damit schadet die SPD dem Kandidaten und dem Amt. Wirklich unangebracht</a>\". Die ehemalige Verbraucherministerin Renate Künast schrieb: \"<a href=\"https://twitter.com/RenateKuenast/status/830188305710977025\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">Ist das ein Fake oder Original #SPD? Dringend Klarstellung vor der Wahl!</a>\"",
+        "markupAllowed" : true
+      }, {
+        "type" : "list-text",
+        "content" : "Der rheinland-pfälzische CDU-Generalsekretär und Bundestagsabgeordnete Patrick Schnieder warf sogar die Frage auf: \"<a href=\"https://twitter.com/PSchnieder/status/830371453925203969\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">Ob Steinmeier im ersten Wahlgang gewählt wird?</a>\" SPD-Generalsekretärin Katarina Barley fragte im Gegenzug, wie Schnieder wegen des \"Missgriffs\" eines Berliner SPD-Referenten die Wahl eines Kandidaten infrage stellen könne, den auch Kanzlerin Angela Merkel als den besten bezeichnet habe: \"<a href=\"https://twitter.com/katarinabarley/status/830374263534264320\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">Mensch, müsst Ihr die Hosen voll haben...</a>\"",
+        "markupAllowed" : true
+      }, {
+        "type" : "list-text",
+        "content" : "Der stellvertretende Grünen-Fraktionsvorsitzende im Bundestag, Konstantin von Notz, nannte den Berliner SPD-Tweet \"<a href=\"https://twitter.com/KonstantinNotz/status/830184293913784330\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">irgendwie krass geschmacklos</a>\". Andere Nutzer kommentierten, dass \"Schlossherr\" nicht zu Sozialdemokraten passe, zudem stehe die Wahl ja erst noch bevor.",
+        "markupAllowed" : true
+      }, {
+        "type" : "list-text",
+        "content" : "Der Landesverband der SPD versicherte zunächst, dass Steinmeier das Amt überparteilich ausfüllen werde. \"Wir freuen uns aber sehr, dass der von der SPD vorgeschlagene Kandidat gute Chancen hat\", twitterten die Sozialdemokraten. Später löschten sie den Ursprungs-Post. \"Für unseren Tweet entschuldigen wir uns aufrichtig\", schrieb der Landesverband stattdessen. Es sei \"ungeschickt und unangebracht\" gewesen, die Unterstützung für Steinmeier so auszudrücken.",
+        "markupAllowed" : true
+      }, {
+        "type" : "list-text",
+        "content" : "Kanzleramtsminister Peter Altmaier (CDU) begrüßte den Schritt. Er twitterte: \"<a href=\"https://twitter.com/peteraltmaier/status/830389982128914432\" target=\"_blank\" title=\"\" class=\"spTextlinkExt text-link-ext lp-text-link-ext\">Gut dass Sie so schnell reagiert haben.</a>\" Zuvor hatte er kritisiert, dass die SPD Steinmeier für sich habe vereinnahmen wollen. Christopher Lauer, früher Piratenpolitiker im Berliner Abgeordnetenhaus und heute SPD-Mitglied, bedankte sich auf Twitter für die Entschuldigung seines Landesverbandes.",
+        "markupAllowed" : true
+      } ]
+    }, {
+      "type" : "list",
+      "name" : "forum",
+      "elements" : [ {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "author",
+          "content" : "liebling-kreuzberg",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "date",
+          "content" : "heute, 16:32 Uhr",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Ist das unser Verständnis",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "body",
+          "content" : "von Demokratie? Und wir wundern uns über Ablauf und Entscheidungen von Präsidentenwahlen anderer Staaten?",
+          "markupAllowed" : false
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "author",
+          "content" : "qjhg",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "date",
+          "content" : "heute, 16:34 Uhr",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Es gibt leider immer Dumme",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "body",
+          "content" : "In den Parteien, auch in der SPD. Der Vorfall ist unentschuldbar. Ich denke, der Verantwortliche sollte einen Fortbildungskurs belegen oder sich von der Parteipolitik verabschieden.",
+          "markupAllowed" : false
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "author",
+          "content" : "Jimbofeider 1",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "date",
+          "content" : "heute, 16:38 Uhr",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Damokles",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "body",
+          "content" : "Über Steinmeier schwebt das Schwert des Damokles, dasheißt Agenda 2010. er verteidigt sie bis heute. In seiner Funktion Als Aussenminister hat man darüber wegesehen. Aber als zukünftiger BP sieht das anders aus. er soll Gräben zuschütten, zusammenführen. Mit dieser starren Haltung wird er sich schwer tun mit \"seinem Volk\" !",
+          "markupAllowed" : false
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "author",
+          "content" : "Vlad",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "date",
+          "content" : "morgen, 09:61 Uhr",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Grüße an Simon",
+          "markupAllowed" : false
+        }, {
+          "type" : "text",
+          "name" : "body",
+          "content" : "Hallo Simon!",
+          "markupAllowed" : false
+        } ]
+      } ]
+    }, {
+      "type" : "text",
+      "name" : "intro",
+      "content" : "Das ist hier nur ein Hotspot! Ach Karsten!",
+      "markupAllowed" : false
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "headline",
+    "elements" : [ {
+      "type" : "text",
+      "name" : "intro",
+      "content" : "\"Bellevue\"-Tweet - Karsten Schäfer bekommt einen neuen Job. Mal wieder. Diesmal wird es bestimmt noch besser funktionieren! Ach Michael!",
+      "markupAllowed" : false
+    }, {
+      "type" : "text",
+      "name" : "body",
+      "content" : "Die SPD zittert - Vlad Satanovski in die Ukraine wieder abgeschoben. Ach Simon! Ach Vlad!",
+      "markupAllowed" : false
+    } ]
+  } ],
+  "dataSourceContents" : [ ]
+}

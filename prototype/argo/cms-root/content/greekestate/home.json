@@ -1,0 +1,641 @@
+{
+  "id" : "home",
+  "metaData" : {
+    "title" : "GreekEstate homepage",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "group",
+    "name" : "offers",
+    "elements" : [ {
+      "type" : "text",
+      "name" : "headline",
+      "content" : "<p>Besondere Angebote</p>"
+    }, {
+      "type" : "list",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki-2.JPG",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "<p>Objekt ABC</p>"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "<p>175.000,00 &euro;</p>"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "<p>Apartment gro&szlig;</p>"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "<p>15.000,00 &euro;</p>"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "<p>Gewerbefl&auml;che</p>"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "<p>50.750,00 &euro;</p>"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "<p>Seeplatz</p>"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "<p>175.000,00 &euro;</p>"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "<p>H&uuml;tte</p>"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "<p>15.000,00 &euro;</p>"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "name" : "stage",
+    "elements" : [ {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+        "alternateText" : "Image one",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "text",
+        "name" : "teaser",
+        "content" : "<p>Sommerlichezzzz <strong>Abende</strong> am <em>Meer</em> genie&szlig;en und Wellen z&auml;hlen</p>"
+      } ]
+    }, {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki.JPG",
+        "alternateText" : "Image one",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "text",
+        "name" : "teaser",
+        "content" : "<p>Sommerliche Abende am Meer genie&szlig;en :-)</p>"
+      } ]
+    }, {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "//de.greekestate.fourigin.com/assets/shared/greekestate/assets/images/start-loutraki-2.JPG",
+        "alternateText" : "Image one",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "text",
+        "name" : "teaser",
+        "content" : "<p>Gibt es Sch&ouml;neres?</p>"
+      } ]
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "<p>Es existieren Unterbegriffe (wie Blah oder Blubb), die Immobilien nach ihrer Nutzung differenzieren. Nicht immer sind diese eindeutig definiert: Aber es gibt Grenzwerte. Gewerbeimmobilie: Ein Geb&auml;ude oder ein Geb&auml;udeteil, das ausschlie&szlig;lich oder &uuml;berwiegend zu gewerblichen Zwecken genutzt wird. Wohnimmobilie: Ein Geb&auml;ude, das ausschlie&szlig;lich oder &uuml;berwiegend zu Wohnzwecken genutzt wird. Sozialimmobilie: Darunter werden Geb&auml;ude zusammengefasst, die der Erkennung, Behandlung, Vermeidung und Rehabilitation von akuten Krankheiten dienen (Gesundheitsimmobilien wie Krankenh&auml;user und Kliniken). Als Sozialimmobilien im engeren Sinne gelten insbesondere Geb&auml;ude, die dem Wohnen, der Unterbringung, der Betreuung und der Pflege von alten, behinderten und pflegebed&uuml;rftigen, schwerstkranken und sterbenden Menschen sowie sozialen Randgruppen dienen. Insofern fallen hierunter die Seniorenimmobilien, wie Altenwohnheime, Pflegeheime, aber auch sogenannte ambulant betreute Wohngemeinschaften sowie integrierte Seniorenimmobilien, die vorgenannte Nutzungsarten kombinieren, aber auch Einrichtungen wie Kinder- und Jugendheime oder Obdachlosenheime.[4] Spezialimmobilie oder auch Sonderimmobilie: ein Geb&auml;ude, das f&uuml;r eine genau bestimmte, besondere Nutzung erstellt und vorgesehen ist, beispielsweise ein Bahnhof, ein Kraftwerksgeb&auml;ude oder ein Hotel.[5] Renditeimmobilie oder auch Anlageimmobilie: Eine Gewerbeimmobilie oder eine Wohnimmobilie, welche ausschlie&szlig;lich der Verzinsung des investierten Kapitals dient und nicht zur Selbstnutzung vorgesehen ist.[6] Betriebliche Immobilie bzw. Betriebsimmobilie oder, im internationalen Umfeld, Corporate-Real-Estate (CRE) ist die Umschreibung der Immobilien von Unternehmen, welche nicht zum Zweck der Kapitalanlage, sondern bedingt durch die Nutzung durch das jeweilige Unternehmen errichtet, betrieben und verwertet werden. Serviceimmobilie: Grundst&uuml;cke einschlie&szlig;lich der aufstehenden Geb&auml;ude sowie deren Zubeh&ouml;r, die zur Erbringung von Dienstleistungen notwendig sind und die f&uuml;r den Dienstleistungsanbieter das origin&auml;re Instrument der Erbringung seiner Dienstleistungen sind. Dabei &uuml;bernimmt der Dienstleistungserbringer regelm&auml;&szlig;ig auch die Funktion des Immobilienbetreibers. Insoweit sind Serviceimmobilien h&auml;ufig auch sog. Betreiberimmobilien. Mit diesem Immobilientyp besch&auml;ftigt sich seit 2003 ein eigener Arbeitskreis der Gesellschaft f&uuml;r Immobilienwirtschaftliche Forschung (gif), in dem der Begriff der Serviceimmobilie, zur&uuml;ckgehend auf Erich Limpens und Lutz H. Michel, erstmals gesondert definiert wurde.[7] Der Arbeitskreis hat u. a. einen Kriterienkatalog zur Beurteilung von Service-Wohnimmobilien entwickelt. Betreiberimmobilie: Eine Betreiberimmobilie umfasst solche Grundst&uuml;cke nebst der aufstehenden Geb&auml;ude sowie ihr Zubeh&ouml;r, deren Nutzung eines Betreibers bedarf. Die Immobilie gewinnt ihren wirtschaftlichen Wert durch die Betriebsleistung dieses Betreibers, die &uuml;ber die blo&szlig;e Nutzung hinausgeht. Daher sind sie &bdquo;investmentsensibel&ldquo; in dem Sinn, dass Eigent&uuml;mer und Betreiber in einem speziellen Abh&auml;ngigkeitsverh&auml;ltnis zueinander stehen, das durch die eingeschr&auml;nkte Drittverwendungsf&auml;higkeit gekennzeichnet ist.</p>"
+  }, {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "<p style=\"text-align: center;\">Willkommen!! :-) Griechenland &lt;3</p>"
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "F8631B49E64F2EA9321C49F3C12645EF"
+    },
+    "content" : [ {
+      "type" : "text",
+      "name" : "processedOn",
+      "content" : "2018.09.16 15:40:10 +0000"
+    } ]
+  }, {
+    "name" : "allNodes",
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/home" : "1",
+        "/search" : "1",
+        "/regions/athen" : "1",
+        "/regions/index" : "1",
+        "/regions/salamina" : "1",
+        "/regions/loutraki" : "1",
+        "/objects/sale/search" : "1",
+        "/objects/sale/object_003" : "1",
+        "/objects/sale/object_004" : "1",
+        "/objects/sale/object_005" : "1",
+        "/objects/rent/search" : "1",
+        "/objects/rent/object_002" : "1",
+        "/objects/rent/object_001" : "1",
+        "/objects/rent/object_004" : "1",
+        "/contact" : "1",
+        "/about" : "1",
+        "/impressum" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/"
+      },
+      "checksum" : "20ED47E8C22E955D2FDB044A7E92BD0E"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "athen",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/athen"
+    }, {
+      "type" : "link",
+      "name" : "index",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/index"
+    }, {
+      "type" : "link",
+      "name" : "salamina",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/salamina"
+    }, {
+      "type" : "link",
+      "name" : "loutraki",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/loutraki"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/search"
+    }, {
+      "type" : "link",
+      "name" : "object_003",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_003"
+    }, {
+      "type" : "link",
+      "name" : "object_004",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_004"
+    }, {
+      "type" : "link",
+      "name" : "object_005",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_005"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/search"
+    }, {
+      "type" : "link",
+      "name" : "object_002",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "002"
+      } ],
+      "target" : "/objects/rent/object_002"
+    }, {
+      "type" : "link",
+      "name" : "object_001",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "001"
+      } ],
+      "target" : "/objects/rent/object_001"
+    }, {
+      "type" : "link",
+      "name" : "object_004",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "004"
+      } ],
+      "target" : "/objects/rent/object_004"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "objectNodes",
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/objects/sale/search" : "1",
+        "/objects/sale/object_003" : "1",
+        "/objects/sale/object_004" : "1",
+        "/objects/sale/object_005" : "1",
+        "/objects/rent/search" : "1",
+        "/objects/rent/object_002" : "1",
+        "/objects/rent/object_001" : "1",
+        "/objects/rent/object_004" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/objects",
+        "VERBOSE" : true,
+        "IGNORE_OWNER_PAGE" : true
+      },
+      "checksum" : "ED13C5C588507198BC8C3DD199F528F1"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "object-search",
+          "info.content.id" : "search",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/objects/sale",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/search"
+    }, {
+      "type" : "link",
+      "name" : "object_003",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "object_003",
+          "info.content.parent" : "/objects/sale",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_003"
+    }, {
+      "type" : "link",
+      "name" : "object_004",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "object_004",
+          "info.content.parent" : "/objects/sale",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_004"
+    }, {
+      "type" : "link",
+      "name" : "object_005",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "object_005",
+          "info.content.parent" : "/objects/sale",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_005"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.object-search",
+          "info.content.id" : "search",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/objects/rent",
+          "info.state.compileState.checksum" : "-",
+          "info.state.compileState.timestamp" : "1536686448219",
+          "info.state.compileState.compiled" : "true",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/search"
+    }, {
+      "type" : "link",
+      "name" : "object_002",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "object_002",
+          "info.content.parent" : "/objects/rent",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name",
+        "content" : "002"
+      } ],
+      "target" : "/objects/rent/object_002"
+    }, {
+      "type" : "link",
+      "name" : "object_001",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "object_001",
+          "info.content.parent" : "/objects/rent",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name",
+        "content" : "001"
+      } ],
+      "target" : "/objects/rent/object_001"
+    }, {
+      "type" : "link",
+      "name" : "object_004",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "object_004",
+          "info.content.parent" : "/objects/rent",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name",
+        "content" : "004"
+      } ],
+      "target" : "/objects/rent/object_004"
+    } ]
+  }, {
+    "name" : "objectNodesWithContent",
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/objects/rent/search" : "1",
+        "/objects/rent/object_002" : "1",
+        "/objects/rent/object_001" : "1",
+        "/objects/rent/object_004" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/objects/rent",
+        "INCLUDE_CONTENT" : "/headline, /short-description, /long-description, /properties/price, /properties/code"
+      },
+      "checksum" : "A57919265E856F6FD6CA9E4E8BFAF955"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "#Immobilie mieten"
+      } ],
+      "target" : "/objects/rent/search"
+    }, {
+      "type" : "link",
+      "name" : "object_002",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "002"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Villa mit Luxuspool"
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+      }, {
+        "type" : "text",
+        "name" : "long-description",
+        "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. \n\t\t\n\t\tAenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. Pellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. Vivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+      }, {
+        "type" : "text",
+        "name" : "price",
+        "content" : "1750000"
+      }, {
+        "type" : "text",
+        "name" : "code",
+        "content" : "3124"
+      } ],
+      "target" : "/objects/rent/object_002"
+    }, {
+      "type" : "link",
+      "name" : "object_001",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "001"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Villa mit Luxuspool"
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+      }, {
+        "type" : "text",
+        "name" : "long-description",
+        "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. Aenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. \n\t  \n\t  Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. Pellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. Vivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+      }, {
+        "type" : "text",
+        "name" : "price",
+        "content" : "1750000"
+      }, {
+        "type" : "text",
+        "name" : "code",
+        "content" : "1324"
+      } ],
+      "target" : "/objects/rent/object_001"
+    }, {
+      "type" : "link",
+      "name" : "object_004",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "004"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Villa mit Luxuspool"
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+      }, {
+        "type" : "text",
+        "name" : "long-description",
+        "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. \n\t\t\n\t\tAenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. \n\t\t\n\t\tPellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. \n\t\t\n\t\tVivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+      }, {
+        "type" : "text",
+        "name" : "price",
+        "content" : "1750000"
+      }, {
+        "type" : "text",
+        "name" : "code",
+        "content" : "4123"
+      } ],
+      "target" : "/objects/rent/object_004"
+    } ]
+  } ],
+  "configurations" : {
+    "names" : [ "bar", "main", "foo" ]
+  }
+}

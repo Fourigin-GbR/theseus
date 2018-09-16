@@ -1,0 +1,17 @@
+/* colors */
+/* usages */
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web");
+body {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14px; }
+
+textarea {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: .9rem; }
+
+body {
+  background-color: transparent;
+  padding: 5px 10px;
+  border: 0;
+  color: #dcdcdc;
+  box-sizing: border-box; }

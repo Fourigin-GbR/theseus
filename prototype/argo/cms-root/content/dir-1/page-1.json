@@ -1,0 +1,80 @@
+{
+  "id": "homepage",
+  "metaData": {
+    "title": "My first ContentPage for testing...",
+    "attributes": {
+      "key-1": "value-1",
+      "key-2": "value-2",
+      "key-3": "value-3"
+    }
+  },
+  "content": [
+    {
+      "name": "header",
+      "type": "group",
+      "elements": []
+    },
+    {
+      "name": "main-content",
+      "type": "group",
+      "elements": [
+        {
+          "name": "headline",
+          "type": "text",
+          "markupAllowed": "false",
+          "title": "Headline's title",
+          "content": "Hello World!"
+        },
+        {
+          "name": "link",
+          "type": "text-link",
+          "markupAllowed": "true",
+          "content": "This is text with <b>markup</b>",
+          "url": "http://google.de"
+        },
+        {
+          "name": "image",
+          "type": "object",
+          "referenceId": "1234567",
+          "mimeType": "png",
+          "alternateText": "Image one",
+          "source": "/images/image1.png"
+        },
+        {
+          "name": "image-link",
+          "type": "object-link",
+          "referenceId": "1234567",
+          "mimeType": "png",
+          "alternateText": "Image one",
+          "source": "/images/image1.png",
+          "url": "http://yahoo.de"
+        },
+        {
+          "name": "list",
+          "type": "list",
+          "elements": [
+            {
+              "type": "list-text",
+              "content": "Item A"
+            },
+            {
+              "type": "list-text",
+              "content": "Item B"
+            },
+            {
+              "type": "list-text",
+              "content": "Item C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "type": "group",
+      "elements": []
+    }
+  ],
+  "dataSourceContents": [
+  ]
+}

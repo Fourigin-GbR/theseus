@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CMS Html Editor</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/argo.css"/>
+    <!---->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <!---->
+    <script type="text/javascript" src="/assets/scripts/argo/PageEditor/model.js"></script>
+    <script type="text/javascript" src="/assets/scripts/argo/PageEditor/controller.js"></script>
+</head>
+<body>
+<!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
+
+<header>
+    <div class="metaInformationBar">
+        <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        Übersicht
+                    </a>
+                </li>
+                <li class="selected">
+                    <a href="#">
+                        Inhalte
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Seitenstrukturz
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Bilder
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Abmelden
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="toolbar">
+        <div class="siteBrand">
+            <div class="siteBrand__title">Webseiten von: <span class="siteBrand__name"></span></div>
+            <div class="siteBrand__logo">
+                <img src="/assets/greekestate/assets/images/greekestate-logo.png" class="siteLogo"/>
+            </div>
+        </div>
+        <div class="tools">
+            <div class="tools__item">
+                <div class="graphicTextBox graphicTextBox--primeStatus">
+                    <div class="graphicTextBox__contentWrapper">
+                        <div class="graphicTextBox__label">
+                            Seiten-Pfad:
+                        </div>
+                        <ul class="graphicTextBox__content graphicTextBox__content--path">
+                            <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                                <a href="#" target="_top" th:href="@{/compile/(base=${argo.base},path=${pathToken})}"
+                                   th:text="${pathToken}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tools__item">
+                <div class="selectElement" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                    <div class="selectElement__label">
+                        Template:
+                    </div>
+                    <div class="selectElement__selectBox">
+                        <span th:utext="${templateReference.templateId}"></span>
+                    </div>
+                    <div class="selectElement__icon">
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="tools__item">
+                <div class="selectElement" th:with="templateReference = ${argo.pageInfo.templateReference}">
+                    <div class="selectElement__label">
+                        Template-Variation:
+                    </div>
+                    <div class="selectElement__selectBox">
+                        <span th:utext="${templateReference.variationId}"></span>
+                    </div>
+                    <div class="selectElement__icon">
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="iFrameContent">
+    <!---->
+    <aside>
+        <ul class="asideTabBar">
+            <li>
+                <span class="asideTabBar__tab" data-target-layer-id="1"><i class="icon"><i class="far fa-edit"></i></i> Seite bearbeiten</span>
+                <!---->
+                <!--                    <div class="layer">
+                                        <h4>Inhalts-Element bearbeiten</h4>
+                                        <form>
+                                            <input type="text" value="..." />
+                                            <button class="submit">Speichern</button>
+                                        </form>
+                                    </div>-->
+            </li>
+        </ul>
+    </aside>
+    <!---->
+    <div class="layerContainer">
+        <div data-layer-id="1" class="layer">
+            <h4>Freigegebene Seiten-Inhalte zum bearbeiten</h4>
+            <ul class="listItemsAsFlyoutTargets" id="contentList">
+                <li data-prototype="hotspot">
+                    <div class="listItemsAsFlyoutTargets__wrapper layoutTrigger">
+                        <span class="listItemsAsFlyoutTargets_contentTypeIcon">
+
+                        </span>
+                        <div class="listItemsAsFlyoutTargets__title"></div>
+                        <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>
+                    </div>
+                    <!---->
+                    <div class="layer">
+                        <form data-content-path="/" action="#" method="POST">
+                            <header>
+                                <h4>Editieren</h4>
+                                <h5></h5>
+                            </header>
+                            <div class="layer__form">
+                                <!---->
+                                <div class="editorFields"></div>
+                                <!---->
+                            </div>
+                            <footer>
+                                <button type="submit">Speichern</button>
+                            </footer>
+                        </form>
+                        <!---->
+                        <button class="layer__button close"><i class="fas fa-angle-double-left"></i></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
+            th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
+</div>
+
+<!-- prototypes -->
+
+<div id="argoEditorPrototypes">
+
+    <!-- content types -->
+    <div class="contentTypeIcon contentTypeIcon--text" data-content-type="text">
+        <i class="fas fa-font"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--list" data-content-type="list">
+        <i class="fas fa-list-ul"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--object" data-content-type="object">
+        <i class="far fa-image"></i>
+    </div>
+    <div class="contentTypeIcon contentTypeIcon--group" data-content-type="group">
+        <i class="fas fa-expand"></i>
+    </div>
+
+    <!-- text -->
+    <fieldset data-type="text">
+        <input type="hidden" name="type" value="text"/>
+        <input type="hidden" name="name" value=""/>
+        <label>
+            <span>content</span>
+            <textarea name="content"></textarea>
+        </label>
+    </fieldset>
+
+    <!-- object -->
+    <fieldset data-type="object">
+        <input type="hidden" name="type" value="object"/>
+        <input type="hidden" name="name" value=""/>
+        <div class="imagePreview">
+            <img src="#"/>
+        </div>
+        <label>
+            <span>source</span>
+            <input type="text" name="source"/>
+        </label>
+        <label>
+            <span>referenceId</span>
+            <input disabled="disabled" type="text" name="referenceId"/>
+        </label>
+        <label>
+            <span>alternativeText</span>
+            <input type="text" name="alternativeText"/>
+        </label>
+        <label>
+            <span>mimeType</span>
+            <input type="text" name="mimeType"/>
+        </label>
+    </fieldset>
+
+    <!-- list -->
+    <fieldset data-type="list">
+        <input type="hidden" name="type" value="list"/>
+        <input type="hidden" name="name" value=""/>
+        <fieldset>
+            <ul>
+
+            </ul>
+        </fieldset>
+    </fieldset>
+
+    <!-- list-group -->
+    <li data-prototype="listGroup" class="compactView">
+        <fieldset data-type="listGroup">
+            <input type="hidden" name="type" value="list-group"/>
+            <fieldset>
+
+            </fieldset>
+        </fieldset>
+        <span class="listStatusIcon">
+            <i class="fas fa-angle-down"></i>
+        </span>
+        <span class="listOpenTrigger"></span>
+    </li>
+
+    <!-- list-text -->
+    <li data-prototype="listText" class="compactView">
+        <fieldset data-type="listText">
+            <input type="hidden" name="type" value="list-text"/>
+            <input type="hidden" name="name" value=""/>
+            <label>
+                <span>content</span>
+                <textarea name="content"></textarea>
+            </label>
+        </fieldset>
+        <span class="listStatusIcon">
+            <i class="fas fa-angle-right"></i>
+        </span>
+        <span class="listOpenTrigger"></span>
+    </li>
+
+    <!-- group -->
+    <fieldset data-type="group">
+        <input type="hidden" name="type" value="list-group"/>
+        <input type="hidden" name="name" value=""/>
+        <fieldset>
+
+        </fieldset>
+    </fieldset>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    var argoPageEditor = new com.fourigin.argo.PageEditor();
+    argoPageEditor.setData(
+        {
+            "base": [[${argo.base}]],
+            "path": [[${argo.path}]],
+            "hotspots": [[${data_hotspots}]]
+        }
+    );
+    argoPageEditor.loadContent();
+</script>
+
+<script type='text/javascript'>
+
+    jQuery(function () {
+
+        var iFrames = jQuery('iframe');
+
+        function iResize() {
+
+            for (var i = 0, j = iFrames.length; i < j; i++) {
+                iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight + 'px';
+            }
+        }
+
+        iFrames.on("load", function () {
+            this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+        });
+
+        $.fn.serializeObject = function () {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+    });
+
+</script>
+
+</body>
+</html>

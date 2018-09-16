@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CMS Html Editor</title>
+    <link rel="stylesheet" type="text/css" href="assets/styles/cms.css"/>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Lobster|Raleway" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body class="cms">
+<header>
+    <div class="logo">
+        <span class="brand">fourigin</span><span class="product">CMS</span>
+    </div>
+    <div class="navigation">
+        <ul>
+            <li>
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                Edit page content</li>
+            <li>
+                <i class="fa fa-coffee" aria-hidden="true"></i>
+                Trink coffee</li>
+        </ul>
+        <!--<div>-->
+            <!--*requestURI: <span th:text="${#httpServletRequest.requestURI}"></span><br/>-->
+            <!--*pathInfo: <span th:text="${#httpServletRequest.pathInfo}"></span><br/>-->
+            <!--*pathTranslated: <span th:text="${#httpServletRequest.pathTranslated}"></span><br/>-->
+            <!--*queryString: <span th:text="${#httpServletRequest.queryString}"></span><br/>-->
+            <!--*requestURL: <span th:text="${#httpServletRequest.requestURL}"></span><br/>-->
+            <!--*servletPath: <span th:text="${#httpServletRequest.servletPath}"></span><br/>-->
+            <!--*contextPath: <span th:text="${#httpServletRequest.contextPath}"></span><br/>-->
+        <!--</div>-->
+    </div>
+</header>
+<!--/*@thymesVar id="base" type="java.lang.String"*/-->
+<!--/*@thymesVar id="path" type="java.lang.String"*/-->
+<iframe id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?base=DE&amp;path=/spiegel/article-1"
+        th:src="@{/compile/(base=${base},path=${path})}"></iframe>
+
+<div>
+	footer ...
+</div>
+</body>
+</html>
