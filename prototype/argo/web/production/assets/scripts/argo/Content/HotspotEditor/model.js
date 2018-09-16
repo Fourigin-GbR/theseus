@@ -240,7 +240,7 @@ com.fourigin.argo.content.hotspotEditor.Model = com.fourigin.argo.content.hotspo
             oList.name = sName;
         }
         jElementsWrapper.each(function(){
-            oList.elements.push(self.generateArgoContentElementJsonByMarkup(jQuery(this).find(" > fieldset")));
+            oList.elements.push(self.generateArgoContentElementJsonByMarkup(jQuery(this).find("fieldset:first")));
         });
         //
         return oList;
@@ -307,7 +307,7 @@ com.fourigin.argo.content.hotspotEditor.Model = com.fourigin.argo.content.hotspo
 
         request.fail(function (jqXHR, textStatus) {
             if(callbackError) {
-                callbackError(msg);
+                callbackError(textStatus);
             }
         });
     };

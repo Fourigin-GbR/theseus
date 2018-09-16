@@ -31,6 +31,8 @@ com.fourigin.argo.content.editor.list.View = com.fourigin.argo.content.editor.li
         }
         var jListItemPrototype = this.jPrototype.find("li[data-prototype=listItem]").clone().removeAttr('data-prototype'),
             jTarget = this.jPrototype.find("> fieldset > ul");
+        //
+        this.jPrototype.find("li[data-prototype=listItem]").remove();
         // add to html
         this.jTarget.append(this.jPrototype);
         // fill with data
@@ -64,11 +66,11 @@ com.fourigin.argo.content.editor.list.View = com.fourigin.argo.content.editor.li
             jPrototypeText = jListItem.find("[data-prototype=previewText]").clone().removeAttr("data-prototype"),
             jTarget = jListItem.find(".touchBar .titleElements .previewItems");
         //
-        console.log("### jTarget, jPrototypeImage", jTarget, jPrototypeImage, this.jPrototype);
+        jListItem.find("[data-prototype=previewImage]").remove();
+        jListItem.find("[data-prototype=previewText]").remove();
 
             var jListContentPreviewItem = null;
             // Content can be an single item, of if multiple a group with the items. Respect that:
-            console.log("### Direct list item:",oContent );
             switch(oContent.type) {
                 case "list-group":
                     for(var j=0, jl= oContent.elements.length; j < jl; j++) {
