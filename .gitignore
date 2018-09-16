@@ -13,3 +13,7 @@ prototype/theseus.pid
 node_modules
 prototype/cms/web/production/assets/styles
 /prototype/argo/com.fourigin.argo.web/argo.pid
+/prototype/argo/cms-root/argo.pid
+/prototype/argo/cms-root/argo.log.2018-09-15.0.gz
+/prototype/argo/cms-root/argo.log
+/prototype/argo/cms-root/argo-1.0-SNAPSHOT.jar
