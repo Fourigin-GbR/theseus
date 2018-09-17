@@ -9,6 +9,7 @@ public class SearchRequest implements Serializable {
     
     private String index;
     private Map<String, Set<String>> categories;
+    private Map<String, FieldValueComparator> fields;
 
     public String getIndex() {
         return index;
@@ -26,11 +27,20 @@ public class SearchRequest implements Serializable {
         this.categories = categories;
     }
 
+    public Map<String, FieldValueComparator> getFields() {
+        return fields;
+    }
+
+    public void setFields(Map<String, FieldValueComparator> fields) {
+        this.fields = fields;
+    }
+
     @Override
     public String toString() {
         return "SearchRequest{" +
             "index='" + index + '\'' +
             ", categories=" + categories +
+            ", fields=" + fields +
             '}';
     }
 }
