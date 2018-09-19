@@ -1,6 +1,6 @@
 package com.fourigin.argo.interceptors;
 
-import com.fourigin.argo.compile.RequestParameters;
+import com.fourigin.argo.controller.compile.RequestParameters;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;

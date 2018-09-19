@@ -46,9 +46,7 @@ import java.util.Map;
 @EnableAutoConfiguration
 @ComponentScan({
     "com.fourigin.argo.web",
-    "com.fourigin.argo.compile",
-    "com.fourigin.argo.search",
-    "com.fourigin.argo.editors",
+    "com.fourigin.argo.controller",
     "com.fourigin.argo.config"
 })
 @SpringBootApplication(

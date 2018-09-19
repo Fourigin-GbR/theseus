@@ -445,7 +445,7 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
                 name: 'index-name-1',
                 categories: [:],
                 fields: [],
-                searchValues: []
+                searchValues: [:]
         )
 
         File someDir = File.createTempDir()
@@ -468,7 +468,7 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
                 name: 'index-name-1',
                 categories: [:],
                 fields: [],
-                searchValues: []
+                searchValues: [:]
         )
 
         File someDir = File.createTempDir()

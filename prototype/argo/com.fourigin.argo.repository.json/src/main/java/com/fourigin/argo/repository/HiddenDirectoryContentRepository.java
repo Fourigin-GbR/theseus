@@ -17,6 +17,7 @@ import com.fourigin.argo.repository.model.JsonFileInfo;
 import com.fourigin.argo.repository.model.JsonInfo;
 import com.fourigin.argo.repository.model.JsonInfoList;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
+import com.fourigin.utilities.core.FileBasedRepository;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,12 +40,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @SuppressWarnings({"Duplicates", "WeakerAccess"})
-public class HiddenDirectoryContentRepository implements ContentRepository {
+public class HiddenDirectoryContentRepository extends FileBasedRepository implements ContentRepository {
 
     private static final String HIDDEN_DIRECTORY_NAME = ".cms";
 
@@ -61,8 +60,6 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
     private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepository.class);
 
     private ObjectMapper objectMapper;
-
-    private ConcurrentHashMap<String, ReadWriteLock> locks = new ConcurrentHashMap<>();
 
     private String contentRoot;
 
@@ -721,22 +718,6 @@ public class HiddenDirectoryContentRepository implements ContentRepository {
         }
         
         return path + '/' + name;
-    }
-
-    private ReadWriteLock getLock(String id) {
-        ReadWriteLock result = locks.get(id);
-        if (result != null) {
-            return result;
-        }
-
-        if (logger.isInfoEnabled())
-            logger.info("Creating new lock for id '{}'", id);
-
-        result = new ReentrantReadWriteLock();
-        locks.putIfAbsent(id, result);
-        result = locks.get(id); // to be sure it's really the correct lock...
-
-        return result;
     }
 
     /* private -> testing */

@@ -6,6 +6,9 @@ def theseusService                          = project(':theseus:com.fourigin.the
 def argoModels                              = project(':argo:com.fourigin.argo.models')
 def argoRepository                          = project(':argo:com.fourigin.argo.repository')
 def argoRepositoryJson                      = project(':argo:com.fourigin.argo.repository.json')
+def argoAssetsModels                        = project(':argo:com.fourigin.argo.assets.models')
+def argoAssetsRepository                    = project(':argo:com.fourigin.argo.assets.repository')
+def argoAssetsRepositoryJson                = project(':argo:com.fourigin.argo.assets.repository.json')
 def argoTemplateEngine                      = project(':argo:com.fourigin.argo.template.engine')
 def argoTemplateEngineThymeleaf             = project(':argo:com.fourigin.argo.template.engine.thymeleaf')
 def argoCompiler                            = project(':argo:com.fourigin.argo.compiler')
@@ -124,6 +127,49 @@ project(':argo') {
         }
     }
 
+    project('com.fourigin.argo.assets.models') {  
+        version = argoVersion
+
+        dependencies {
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            testCompile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.junit')
+        }
+    }
+
+    project('com.fourigin.argo.assets.repository') {
+        version = argoVersion
+
+        dependencies {
+            compile argoAssetsModels
+        }
+    }
+
+    project('com.fourigin.argo.assets.repository.json') {
+        version = argoVersion
+
+        dependencies {
+            compile argoAssetsModels
+            compile argoAssetsRepository
+            compile utilitiesCore
+
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            compile managedDependency('commons-io:commons-io')
+
+            compile managedDependency('org.springframework:spring-context')
+            compile managedDependency('org.springframework:spring-test')
+
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.blobs')
+
+            testCompile managedDependency('org.spockframework:spock-spring')
+        }
+    }
+    
     project('com.fourigin.argo.template.engine') {
         version = argoVersion
 
@@ -173,10 +219,13 @@ project(':argo') {
 
         dependencies {
             compile argoModels
-            compile argoTemplateEngine
-            compile argoTemplateEngineThymeleaf
             compile argoRepository
             runtime argoRepositoryJson
+            compile argoTemplateEngine
+            compile argoTemplateEngineThymeleaf
+            compile argoAssetsModels
+            compile argoAssetsRepository
+            runtime argoAssetsRepositoryJson
             compile argoCompiler
 
             compile thymeleaf
@@ -200,6 +249,7 @@ project(':argo') {
 //            compile managedDependency('org.activiti:activiti-spring-boot-starter-actuator')
 //
 //            runtime managedDependency('mysql:mysql-connector-java')
+            compile managedDependency('org.apache.pdfbox:pdfbox')
         }
     }
 }

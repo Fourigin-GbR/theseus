@@ -11,7 +11,6 @@ import com.fourigin.argo.models.datasource.DataSource;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.datasource.index.FieldDefinition;
-import com.fourigin.argo.models.datasource.index.FieldType;
 import com.fourigin.argo.models.datasource.index.FieldValue;
 import com.fourigin.argo.models.datasource.index.IndexAwareDataSource;
 import com.fourigin.argo.models.datasource.index.IndexDefinition;
@@ -62,10 +61,8 @@ public class SiteStructureDataSource implements
         Collection<PageInfo> infos = contentResolver.resolveInfos(path);
         if (infos != null && !infos.isEmpty()) {
             for (PageInfo info : infos) {
-                if (query.isIgnoreOwnerPage()) {
-                    if (info.equals(ownerPage)) {
-                        continue;
-                    }
+                if (query.isIgnoreOwnerPage() && info.equals(ownerPage)) {
+                    continue;
                 }
 
                 PageState state = contentResolver.resolvePageState(info);
@@ -226,7 +223,7 @@ public class SiteStructureDataSource implements
                         field.setValue(values);
                     }
                     ContentElement fieldElement = ContentPageManager.resolve(field.getPath(), elements);
-                    String value = getFieldValue(fieldElement, field.getType());
+                    String value = getFieldValue(fieldElement);
                     values.add(value);
                 }
 
@@ -280,7 +277,8 @@ public class SiteStructureDataSource implements
         return null;
     }
 
-    private String getFieldValue(ContentElement element, FieldType type) {
+//    private String getFieldValue(ContentElement element, FieldType type) {
+    private String getFieldValue(ContentElement element) {
         if (element instanceof TextAwareContentElement) {
             return ((TextAwareContentElement) element).getContent();
         }
