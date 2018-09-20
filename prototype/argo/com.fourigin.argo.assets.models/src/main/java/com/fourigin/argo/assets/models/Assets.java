@@ -257,4 +257,17 @@ public final class Assets {
 
         return attributes;
     }
+
+    public static String resolveAssetBasePath(String assetId){
+        String firstBlobPart = assetId.substring(0,2);
+        String remainingBlobPart = assetId.substring(2);
+        return firstBlobPart + "/" + remainingBlobPart;
+    }
+
+    public static String resolveAssetFileName(Asset asset){
+        String mimeType = asset.getMimeType();
+        String fileEnding = MIME_TYPE_EXTENSION_MAPPING.get(mimeType);
+
+        return asset.getName() + fileEnding;
+    }
 }

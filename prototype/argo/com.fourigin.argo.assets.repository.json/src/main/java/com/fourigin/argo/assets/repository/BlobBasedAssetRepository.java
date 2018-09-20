@@ -3,6 +3,7 @@ package com.fourigin.argo.assets.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.AssetFactory;
+import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.utilities.core.FileBasedRepository;
 import de.huxhorn.sulky.blobs.impl.BlobRepositoryImpl;
 import org.slf4j.Logger;
@@ -16,7 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +26,12 @@ import java.util.concurrent.locks.ReadWriteLock;
 public class BlobBasedAssetRepository extends FileBasedRepository implements AssetRepository {
     private final Logger logger = LoggerFactory.getLogger(BlobBasedAssetRepository.class);
 
-//    private File baseDirectory;
+    private final static String DIR_BLOB_BASE = "blobs";
+    private final static String DIR_META_BASE = "meta";
+
+    private File baseDirectory;
 
     private BlobRepositoryImpl blobRepository;
-
-    private Method getFileForMethod;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -45,19 +46,16 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
             }
         }
 
-//        this.baseDirectory = baseDirectory;
+        this.baseDirectory = baseDirectory;
+        if (logger.isDebugEnabled()) logger.debug("Using {} as base directory", baseDirectory.getAbsolutePath());
+
+        File blobBaseDirectory = new File(baseDirectory, DIR_BLOB_BASE);
+        if(!blobBaseDirectory.exists() && !blobBaseDirectory.mkdirs()){
+            throw new IllegalStateException("Unable to create missing BLOB base directory '" + blobBaseDirectory.getAbsolutePath() + "'!");
+        }
 
         blobRepository = new BlobRepositoryImpl();
-        blobRepository.setBaseDirectory(baseDirectory);
-
-        // make getFileFor(id) accessible
-        Class<? extends BlobRepositoryImpl> repoClass = blobRepository.getClass();
-        try {
-            getFileForMethod = repoClass.getDeclaredMethod("getFileFor");
-            getFileForMethod.setAccessible(true);
-        } catch (NoSuchMethodException ex) {
-            throw new IllegalStateException("Incompatible blob repository implementation!", ex);
-        }
+        blobRepository.setBaseDirectory(blobBaseDirectory);
     }
 
     @Override
@@ -161,11 +159,11 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
 
     /* private -> testing */
     File getPropsFile(String base, String assetId){
-        File assetDirectory;
-        try {
-            assetDirectory = (File) getFileForMethod.invoke(blobRepository, assetId);
-        } catch (Throwable ex) {
-            throw new IllegalArgumentException("Error getting asset property file!", ex);
+        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(assetId);
+        File assetDirectory = new File(baseDirectory, assetBase);
+
+        if(!assetDirectory.exists() && !assetDirectory.mkdirs()){
+            throw new IllegalStateException("Unable to create missing asset directory '" + assetDirectory.getAbsolutePath() + "'!");
         }
 
         String propsFile = "props_" + base + ".json";
