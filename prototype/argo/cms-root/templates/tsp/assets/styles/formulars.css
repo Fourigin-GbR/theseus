@@ -48,6 +48,7 @@ label span {
     font-weight: bold;
     margin: 0 0 5px 0;
     color: #4a4a4a;
+    white-space: nowrap;
 }
 
 fieldset.radioList,
@@ -75,6 +76,7 @@ fieldset.checkboxList label span {
 
 
 input,
+select,
 textarea {
     box-shadow: none;
     padding: 10px 15px;
@@ -85,14 +87,19 @@ textarea {
     transition: all .4s ease;
     color: #4e4e4e;
 }
+textarea {
+    resize: vertical;
+}
 
 input:focus,
+select:focus,
 textarea:focus {
     border-color: #00b393;
     color: #202020;
 }
 
 input.error,
+select.error,
 textarea.error {
     border-color: #e21719;
     color: #e21719;
