@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Formulare - Prototypen</title>
+    <link rel="stylesheet" href="assets/styles/formulars.css"/>
+</head>
+<body>
+<h1>Formulare - Prototypen</h1>
+<h2>Stil: Basis</h2>
+
+<div class="example1">
+    <form action="#" method="get">
+        <fieldset>
+            <legend>Persönliche Daten</legend>
+            <label>
+                <span>Vorname</span>
+                <input type="text" name="vorname"/>
+            </label>
+            <label>
+                <span>Nachname</span>
+                <input type="text" name="nachname"/>
+            </label>
+            <div class="FormularGroup street houseNumber">
+                <label class="street">
+                    <span>Straße</span>
+                    <input type="text" name="strasse"/>
+                </label>
+                <label class="houseNumber">
+                    <span>Nr.</span>
+                    <input type="text" name="hausnummer"/>
+                </label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Lustige Sachen</legend>
+            <label>
+                <span>Beschreibe Deinen besten Joke</span>
+                <textarea name="joke">
+                </textarea>
+            </label>
+            <fieldset class="radioList">
+                <legend>Was ist besser?</legend>
+                <label>
+                    <input type="radio" name="besser" value="ein tropfen"/>
+                    <span>Ein Regentropfen</span>
+                </label>
+                <label>
+                    <input type="radio" name="besser" value="zwei tropfen"/>
+                    <span>Zwei Regentropfen</span>
+                </label>
+                <label>
+                    <input type="radio" name="besser" value="drei tropfen"/>
+                    <span>Drei Regentropfen</span>
+                </label>
+            </fieldset>
+            <div class="FormularGroup street houseNumber">
+                <label class="street">
+                    <span>Straße - hier ist was falsch:</span>
+                    <input type="text" name="strasse" class="error" value="Strazse Eins"/>
+                    <div class="validationMessage error">
+                        Schreibfehler. Die Straße wurde nicht gefunden. Die Hausnummer bitte als Zahl in das nächste Feld eintragen.
+                    </div>
+                </label>
+                <label class="houseNumber">
+                    <span>Nr.</span>
+                    <input type="text" name="hausnummer"/>
+                </label>
+            </div>
+            <fieldset class="checkboxList">
+                <legend>Was ist teuer?</legend>
+                <label>
+                    <input type="checkbox" name="besser" value="gelb"/>
+                    <span>Gelb</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="besser" value="orange"/>
+                    <span>Orange</span>
+                </label>
+                <label>
+                    <input type="checkbox" name="besser" value="hell rosa"/>
+                    <span>Hell rosa</span>
+                </label>
+            </fieldset>
+        </fieldset>
+        <footer>
+            <button type="submit">Absenden</button>
+            <button type="reset">Zurücksetzen</button>
+        </footer>
+    </form>
+</div>
+
+</body>
+</html>
