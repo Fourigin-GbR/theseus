@@ -77,7 +77,7 @@ public class CompileController {
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo);
+        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, CMS);
         
         BufferedCompilerOutputStrategy bufferedCompilerOutputStrategy = new BufferedCompilerOutputStrategy();
         try {
@@ -140,7 +140,7 @@ public class CompileController {
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo);
+        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, STAGE);
 
         long startTimestamp = System.currentTimeMillis();
         try {
@@ -175,7 +175,7 @@ public class CompileController {
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
 
-        return pageCompiler.prepareContent(aggregation.getPageInfo());
+        return pageCompiler.prepareContent(aggregation.getPageInfo(), CMS);
     }
 
     @ExceptionHandler(IllegalStateException.class)

@@ -5,6 +5,10 @@ import java.util.Set;
 
 public interface Asset {
 
+    /*
+        Add ASSET-ID as a property to be able to replace resource of an existing asset.
+     */
+
     String LOCALIZED_FILENAME_PREFIX = "localized-filename-prefix";
     String LOCALIZED_ALT_TEXT_PREFIX = "localized-alt-text-prefix";
     String DEFAULT_ALT_TEXT = "default-alt-text";

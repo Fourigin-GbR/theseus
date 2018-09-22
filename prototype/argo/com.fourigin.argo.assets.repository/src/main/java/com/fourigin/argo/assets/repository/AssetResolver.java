@@ -11,5 +11,7 @@ public interface AssetResolver {
 
     Map<String, Asset> retrieveAssets(String base, Collection<String> assetIds);
 
-    InputStream retrieveAssetData(String base, String assetId);
+    InputStream retrieveAssetData(String assetId);
+
+    long sizeOfAssetData(String assetId);
 }

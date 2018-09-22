@@ -1,4 +1,4 @@
-package com.fourigin.argo.assets.repository;
+package com.fourigin.argo.assets.models;
 
 import java.util.HashMap;
 

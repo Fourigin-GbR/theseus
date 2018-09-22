@@ -1,6 +1,7 @@
 package com.fourigin.argo.compiler;
 
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
+import com.fourigin.argo.compiler.processor.ContentPageProcessor;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.config.RuntimeConfiguration;
 import com.fourigin.argo.models.content.config.RuntimeConfigurations;
@@ -27,6 +28,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +43,9 @@ public class DefaultPageCompiler implements PageCompiler {
 
     private DataSourcesResolver dataSourcesResolver;
 
-    private CompilerInterceptor compilerInterceptor;
+    private List<ContentPageProcessor> contentPageProcessors;
+
+    private List<CompilerInterceptor> compilerInterceptors;
 
     private RuntimeConfigurationResolver runtimeConfigurationResolver;
 
@@ -62,7 +66,7 @@ public class DefaultPageCompiler implements PageCompiler {
         return compilerBase;
     }
 
-    public ContentPage prepareContent(PageInfo pageInfo) {
+    public ContentPage prepareContent(PageInfo pageInfo, ProcessingMode processingMode) {
         String pageName = pageInfo.getName();
         if (logger.isInfoEnabled()) logger.info("Preparing content page '{}'.", pageName);
 
@@ -74,18 +78,32 @@ public class DefaultPageCompiler implements PageCompiler {
 
         ContentPage result = contentPage;
 
+        boolean maybeChanged = false;
+
         // resolve all data sources
         if (dataSourcesResolver != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
             result = dataSourcesResolver.resolve(pageInfo, contentRepository, contentPage);
+            maybeChanged = true;
+        }
 
-            if (!contentPage.equals(result)) {
-                if (logger.isDebugEnabled()) logger.debug("Updating modified content page");
-                contentRepository.update(pageInfo, result);
-            } else {
-                if (logger.isDebugEnabled())
-                    logger.debug("No dataSource changes detected, the content page is unchanged.");
+        // process content
+        if(contentPageProcessors != null){
+            if (logger.isDebugEnabled()) logger.debug("Applying content page processors");
+
+            for (ContentPageProcessor contentPageProcessor : contentPageProcessors) {
+                contentPageProcessor.process(compilerBase, pageInfo, processingMode, result);
             }
+
+            maybeChanged = true;
+        }
+
+        if (maybeChanged && !contentPage.equals(result)) {
+            if (logger.isDebugEnabled()) logger.debug("Updating modified content page");
+            contentRepository.update(pageInfo, result);
+        } else {
+            if (logger.isDebugEnabled())
+                logger.debug("No dataSource changes detected, the content page is unchanged.");
         }
 
         if (runtimeConfigurationResolver != null) {
@@ -182,10 +200,12 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
 
-        ContentPage contentPage = prepareContent(pageInfo);
+        ContentPage contentPage = prepareContent(pageInfo, processingMode);
 
-        if (compilerInterceptor != null) {
-            compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, contentPage);
+        if (compilerInterceptors != null) {
+            for (CompilerInterceptor compilerInterceptor : compilerInterceptors) {
+                compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, contentPage);
+            }
         }
 
         applyTemplate(pageInfo, contentPage, processingMode, template, templateVariation, templateEngine, outputStrategy);
@@ -257,8 +277,10 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
 
-        if (compilerInterceptor != null) {
-            compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, preparedContentPage);
+        if (compilerInterceptors != null) {
+            for (CompilerInterceptor compilerInterceptor : compilerInterceptors) {
+                compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, preparedContentPage);
+            }
         }
 
         applyTemplate(pageInfo, preparedContentPage, processingMode, template, templateVariation, templateEngine, outputStrategy);
@@ -317,8 +339,12 @@ public class DefaultPageCompiler implements PageCompiler {
         this.dataSourcesResolver = dataSourcesResolver;
     }
 
-    public void setCompilerInterceptor(CompilerInterceptor compilerInterceptor) {
-        this.compilerInterceptor = compilerInterceptor;
+    public void setContentPageProcessors(List<ContentPageProcessor> contentPageProcessors) {
+        this.contentPageProcessors = contentPageProcessors;
+    }
+
+    public void setCompilerInterceptors(List<CompilerInterceptor> compilerInterceptors) {
+        this.compilerInterceptors = compilerInterceptors;
     }
 
     public void setRuntimeConfigurationResolver(RuntimeConfigurationResolver runtimeConfigurationResolver) {

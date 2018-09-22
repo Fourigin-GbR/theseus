@@ -1,9 +1,14 @@
 package com.fourigin.argo.web;
 
+import com.fourigin.argo.assets.processor.AssetsContentPageProcessor;
+import com.fourigin.argo.assets.repository.AssetResolver;
 import com.fourigin.argo.compiler.DefaultPageCompilerFactory;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
+import com.fourigin.argo.compiler.processor.ContentPageProcessor;
+import com.fourigin.argo.controller.assets.ThumbnailDimensions;
+import com.fourigin.argo.controller.assets.ThumbnailResolver;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
@@ -37,9 +42,13 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
+import java.awt.Dimension;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -68,6 +77,15 @@ public class App {
     @Value("${prepared-content.base}")
     private String preparedContentRoot;
 
+    @Value("${assets.domain}")
+    private String assetsDomain;
+
+    @Value("#{'${assets.load-balancer-document-roots}'.split(',')}")
+    private List<File> loadBalancerDocumentRoots;
+
+    @Value("${assets.thumbnails.target}")
+    private String thumbnailsDirectory;
+
     private ContentRepositoryFactory contentRepositoryFactory;
 
     private RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory;
@@ -77,6 +95,8 @@ public class App {
 
     @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
     private TemplateResolver templateResolver;
+
+    private AssetResolver assetResolver;
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
@@ -183,7 +203,8 @@ public class App {
             templateResolver,
             dataSourcesResolver(),
             runtimeConfigurationResolverFactory,
-            preparedContentRoot
+            preparedContentRoot,
+            contentPageProcessors()
         );
     }
 
@@ -196,6 +217,39 @@ public class App {
         ));
 
         return resolver;
+    }
+
+    @Bean
+    public List<ContentPageProcessor> contentPageProcessors(){
+        AssetsContentPageProcessor assetsContentPageProcessor = new AssetsContentPageProcessor();
+        assetsContentPageProcessor.setAssetResolver(assetResolver);
+        assetsContentPageProcessor.setAssetsDomain(assetsDomain);
+        assetsContentPageProcessor.setLoadBalancerDocumentRoots(loadBalancerDocumentRoots);
+
+        return Collections.singletonList(
+            assetsContentPageProcessor
+        );
+    }
+
+    @Bean
+    public ThumbnailResolver thumbnailResolver(){
+        ThumbnailResolver thumbnailResolver = new ThumbnailResolver();
+
+        thumbnailResolver.setAssetResolver(assetResolver);
+        thumbnailResolver.setTargetDirectory(thumbnailsDirectory);
+        thumbnailResolver.setUnsupportedMimeTypesIconDirectory(thumbnailsDirectory + "/unsupported-mime-type-icons");
+
+        return thumbnailResolver;
+    }
+
+    @Bean
+    public ThumbnailDimensions thumbnailDimensions(){
+        ThumbnailDimensions dimensions = new ThumbnailDimensions();
+
+        dimensions.put("big", new Dimension(150, 150));
+        dimensions.put("small", new Dimension(50, 50));
+
+        return dimensions;
     }
 
     @Bean
@@ -221,6 +275,11 @@ public class App {
     @Autowired
     public void setRuntimeConfigurationResolverFactory(RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory) {
         this.runtimeConfigurationResolverFactory = runtimeConfigurationResolverFactory;
+    }
+
+    @Autowired
+    public void setAssetResolver(AssetResolver assetResolver) {
+        this.assetResolver = assetResolver;
     }
 
     /*

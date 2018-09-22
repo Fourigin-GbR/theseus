@@ -31,13 +31,7 @@ public class SearchController {
     public SearchController(ContentRepositoryFactory contentRepositoryFactory) {
         this.contentRepositoryFactory = contentRepositoryFactory;
     }
-
-    @RequestMapping("/test")
-    @ResponseBody
-    public String simpleRequest() {
-        return "I'm here!";
-    }
-
+    
     @RequestMapping("/")
     @ResponseBody
     public List<String> resolveMatchingIndexTargets(

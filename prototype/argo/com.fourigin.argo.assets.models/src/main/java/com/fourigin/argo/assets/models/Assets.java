@@ -96,6 +96,8 @@ public final class Assets {
         }
     }
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Assets.class);
+
     private Assets() {
     }
 
@@ -264,10 +266,14 @@ public final class Assets {
         return firstBlobPart + "/" + remainingBlobPart;
     }
 
-    public static String resolveAssetFileName(Asset asset){
+    public static String resolveAssetFileName(String base, Asset asset){
+        if (LOGGER.isDebugEnabled()) LOGGER.debug("Resolving localized filename for base {} and {}", base, asset);
+
         String mimeType = asset.getMimeType();
         String fileEnding = MIME_TYPE_EXTENSION_MAPPING.get(mimeType);
 
-        return asset.getName() + fileEnding;
+        // TODO: use base to resolve localized filename
+
+        return asset.getName() + "." + fileEnding;
     }
 }

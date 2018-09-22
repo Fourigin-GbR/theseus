@@ -1,6 +1,5 @@
 package com.fourigin.argo.assets.models;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,14 +22,14 @@ public final class AssetFactory {
         throw new IllegalArgumentException("Unsupported asset type '" + clazz.getName() + "'!");
     }
 
-    public static <T extends Asset> T createFromProperties(Map<String, Object> assetProperties) {
+    public static <T extends Asset> T createFromProperties(AssetProperties assetProperties) {
         if(assetProperties == null){
             return null;
         }
 
         String className = (String) assetProperties.get(PROP_ASSET_CLASS_NAME);
 
-        if ("ImageAsset".equals(className)) {
+        if (ImageAsset.class.getName().equals(className)) {
             // read properties
             String id = (String) assetProperties.get(PROP_ASSET_ID);
 
@@ -62,8 +61,8 @@ public final class AssetFactory {
         throw new IllegalArgumentException("Unsupported asset type '" + className + "'!");
     }
 
-    public static <T extends Asset> Map<String, Object> convertToProperties(T asset) {
-        Map<String, Object> assetProperties = new HashMap<>();
+    public static <T extends Asset> AssetProperties convertToProperties(T asset) {
+        AssetProperties assetProperties = new AssetProperties();
 
         assetProperties.put(PROP_ASSET_CLASS_NAME, asset.getClass().getName());
         assetProperties.put(PROP_ASSET_ID, asset.getId());

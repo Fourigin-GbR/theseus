@@ -5,6 +5,8 @@ import com.fourigin.argo.models.content.config.RuntimeConfigurations;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentElementsContainer;
 import com.fourigin.argo.models.content.elements.ContentGroup;
+import com.fourigin.argo.models.content.elements.ContentList;
+import com.fourigin.argo.models.content.elements.ContentListElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,19 +35,19 @@ public final class ContentPageManager {
         }
 
         RuntimeConfigurations container = contentPage.getConfigurations();
-        if(container == null) {
+        if (container == null) {
             if (LOGGER.isInfoEnabled()) LOGGER.info("No configurations available!");
             return null;
         }
 
         Set<RuntimeConfiguration> configs = container.getConfigurations();
-        if(configs == null) {
+        if (configs == null) {
             if (LOGGER.isInfoEnabled()) LOGGER.info("No configurations available!");
             return null;
         }
 
         for (RuntimeConfiguration configuration : configs) {
-            if(configName.equals(configuration.getName())){
+            if (configName.equals(configuration.getName())) {
                 return configuration.getSettings();
             }
         }
@@ -238,5 +240,74 @@ public final class ContentPageManager {
         }
 
         return current;
+    }
+
+    public static <T> List<T> collect(ContentPage page, java.lang.Class<T> iface) {
+        List<T> result = collect(page.getContent(), iface);
+
+        Collection<DataSourceContent> dataSourceContents = page.getDataSourceContents();
+        if (dataSourceContents != null) {
+            List<T> dataSourceElements = new ArrayList<>();
+
+            for (DataSourceContent dataSourceContent : dataSourceContents) {
+                List<T> dataSourceResult = collect(dataSourceContent.getContent(), iface);
+                if (dataSourceResult != null) {
+                    dataSourceElements.addAll(dataSourceResult);
+                }
+            }
+
+            if (result == null) {
+                result = dataSourceElements;
+            } else {
+                result.addAll(dataSourceElements);
+            }
+        }
+
+        return result;
+    }
+
+    public static <T> List<T> collect(List<ContentElement> elements, java.lang.Class<T> iface) {
+        List<T> result = new ArrayList<>();
+
+        collectChildren(iface, elements, result);
+
+        return result;
+    }
+
+    private static <T> void collectChildren(Class<T> iface, List<? extends ContentElement> children, List<T> result) {
+        if (children != null) {
+            for (ContentElement element : children) {
+                if (iface.isInstance(element)) {
+                    result.add(iface.cast(element));
+                }
+
+                checkSubContainer(iface, element, result);
+            }
+        }
+    }
+
+    private static <T> void collectListChildren(Class<T> iface, List<? extends ContentListElement> children, List<T> result) {
+        if (children != null) {
+            for (ContentListElement element : children) {
+                if (iface.isInstance(element)) {
+                    result.add(iface.cast(element));
+                }
+
+                checkSubContainer(iface, element, result);
+            }
+        }
+    }
+
+    private static <T> void checkSubContainer(Class<T> iface, Object element, List<T> result){
+        if (element instanceof ContentList) {
+            //noinspection unchecked
+            List<? extends ContentListElement> subChildren = ((ContentList) element).getElements();
+            collectListChildren(iface, subChildren, result);
+        }
+        else if (element instanceof ContentElementsContainer) {
+            //noinspection unchecked
+            List<? extends ContentElement> subChildren = ((ContentElementsContainer) element).getElements();
+            collectChildren(iface, subChildren, result);
+        }
     }
 }

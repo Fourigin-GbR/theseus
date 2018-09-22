@@ -9,6 +9,7 @@ def argoRepositoryJson                      = project(':argo:com.fourigin.argo.r
 def argoAssetsModels                        = project(':argo:com.fourigin.argo.assets.models')
 def argoAssetsRepository                    = project(':argo:com.fourigin.argo.assets.repository')
 def argoAssetsRepositoryJson                = project(':argo:com.fourigin.argo.assets.repository.json')
+def argoAssetsProcessor                     = project(':argo:com.fourigin.argo.assets.processor')
 def argoTemplateEngine                      = project(':argo:com.fourigin.argo.template.engine')
 def argoTemplateEngineThymeleaf             = project(':argo:com.fourigin.argo.template.engine.thymeleaf')
 def argoCompiler                            = project(':argo:com.fourigin.argo.compiler')
@@ -147,6 +148,16 @@ project(':argo') {
         }
     }
 
+    project('com.fourigin.argo.assets.processor') {
+        version = argoVersion
+
+        dependencies {
+            compile argoAssetsModels
+            compile argoAssetsRepository
+            compile argoCompiler
+        }
+    }
+
     project('com.fourigin.argo.assets.repository.json') {
         version = argoVersion
 
@@ -226,12 +237,16 @@ project(':argo') {
             compile argoAssetsModels
             compile argoAssetsRepository
             runtime argoAssetsRepositoryJson
+            compile argoAssetsProcessor
             compile argoCompiler
 
             compile thymeleaf
             compile thymeleafSpring
 
 //            runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.blobs')
+
+            compile managedDependency('commons-io:commons-io')
 
             compile managedDependency('org.springframework.boot:spring-boot-starter-web')
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
