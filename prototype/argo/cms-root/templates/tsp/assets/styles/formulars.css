@@ -6,6 +6,34 @@ body {
 }
 
 
+/* Simple Grid */
+.Grid {
+    display: flex;
+}
+.Grid .Grid__Module {
+    margin-right: 10px;
+}
+.Grid .Grid__Module:last-of-type {
+    margin-right: 0;
+}
+
+.Grid .Grid_Module--20 {
+    width: 20%;
+}
+.Grid .Grid_Module--40 {
+    width: 40%;
+}
+.Grid .Grid_Module--50 {
+    width: 50%;
+}
+.Grid .Grid_Module--60 {
+    width: 60%;
+}
+.Grid .Grid_Module--80 {
+    width: 80%;
+}
+
+/* Form */
 form {
     font-size: 14px;
 }
