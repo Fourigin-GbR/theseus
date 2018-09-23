@@ -145,5 +145,85 @@
     </form>
 </div>
 
+<div class="Tabs">
+    <nav>
+        <span class="TabNavigationItem active" data-target-tab-id="tab1">Tab 1</span>
+        <span class="TabNavigationItem" data-target-tab-id="tab2">Tab 2</span>
+        <span class="TabNavigationItem" data-target-tab-id="tab3">Tab 3</span>
+    </nav>
+    <div class="TabsWrapper">
+        <div data-tab-id="tab1" class="Tab active">
+            <h2>Schritt 1</h2>
+            <form action="#" method="get">
+                <fieldset>
+                    <legend>Persönliche Daten</legend>
+                    <label>
+                        <span>Vorname</span>
+                        <input type="text" name="vorname"/>
+                    </label>
+                    <label>
+                        <span>Nachname</span>
+                        <input type="text" name="nachname"/>
+                    </label>
+                    <div class="FormularGroup Grid">
+                        <div class="Grid__Module Grid_Module--80">
+                            <label>
+                                <span>Straße</span>
+                                <input type="text" name="strasse" value="Talblick"/>
+                            </label>
+                        </div>
+                        <div class="Grid__Module Grid_Module--20">
+                            <label>
+                                <span>Nr.</span>
+                                <input type="text" name="hausnummer"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="FormularGroup Grid">
+                        <div class="Grid__Module Grid_Module--20">
+                            <label>
+                                <span>Kontonummer</span>
+                                <input type="text" name="kto" value=""/>
+                            </label>
+                        </div>
+                        <div class="Grid__Module Grid_Module--20">
+                            <label>
+                                <span>Pin</span>
+                                <input type="text" name="pin"/>
+                            </label>
+                        </div>
+                        <div class="Grid__Module Grid_Module--20">
+                            <label>
+                                <span>Handynummer</span>
+                                <input type="text" name="pin"/>
+                            </label>
+                        </div>
+                        <div class="Grid__Module Grid_Module--20">
+                            <label>
+                                <span>Pin</span>
+                                <input type="text" name="pin"/>
+                            </label>
+                        </div>
+                        <div class="Grid__Module Grid_Module--20">
+                            <label>
+                                <span>Kreditkarte</span>
+                                <input type="text" name="pin"/>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div data-tab-id="tab2" class="Tab">
+            <h2>Schritt 2</h2>
+        </div>
+        <div data-tab-id="tab3" class="Tab">
+            <h2>Schritt 3</h2>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/scripts/Tabs.js"></script>
+
 </body>
 </html>

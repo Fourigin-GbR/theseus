@@ -189,10 +189,35 @@ footer button:first-of-type {
     margin-left: 0;
 }
 
-/* Specific constructs */
-.FormularGroup.street.houseNumber label.street {
-    width: calc(100% - 80px);
+
+/* Tabs */
+.Tabs {
+
 }
-.FormularGroup.street.houseNumber label.houseNumber {
-    width: 80px;
+.Tabs nav {
+    display: flex;
+}
+.Tabs nav span {
+    padding: 15px 10px;
+    background-color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Tabs nav span.active {
+    font-weight: bold;
+    background-color: #2ab46b;
+    color: #fff;
+    text-decoration: none;
+}
+.TabsWrapper {
+    position: relative;
+    border: 1px solid #2ab46b;
+    padding: 20px;
+    transition: all .4s ease;
+}
+.TabsWrapper .Tab {
+    display: none;
+}
+.TabsWrapper .Tab.active {
+    display: block;
 }
