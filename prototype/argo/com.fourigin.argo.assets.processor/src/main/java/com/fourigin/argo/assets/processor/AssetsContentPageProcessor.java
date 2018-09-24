@@ -4,6 +4,7 @@ import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.argo.assets.repository.AssetResolver;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
+import com.fourigin.argo.config.CustomerSpecificConfiguration;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,9 +39,11 @@ import java.util.concurrent.Future;
 public class AssetsContentPageProcessor implements ContentPageProcessor {
     private AssetResolver assetResolver;
 
-    private List<File> loadBalancerDocumentRoots;
+    private CustomerSpecificConfiguration customerSpecificConfiguration;
 
-    private String assetsDomain;
+//    private List<File> loadBalancerDocumentRoots;
+
+//    private String assetsDomain;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(32);
     private final CompletionService<FileCopyResult> completionService = new ExecutorCompletionService<>(executorService);
@@ -47,7 +51,7 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
     private final Logger logger = LoggerFactory.getLogger(AssetsContentPageProcessor.class);
 
     @Override
-    public void process(String base, PageInfo info, ProcessingMode processingMode, ContentPage page) {
+    public void process(String customer, String base, PageInfo info, ProcessingMode processingMode, ContentPage page) {
         String pageId = page.getId();
 
         if (logger.isInfoEnabled()) logger.info("Processing assets of page {}", pageId);
@@ -76,6 +80,10 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
                 logger.info("No object aware elements found with reference-id in the content page {}", pageId);
             return;
         }
+
+        if (logger.isDebugEnabled()) logger.debug("customer specific configuration: {}", customerSpecificConfiguration);
+
+        String assetsDomain = customerSpecificConfiguration.getAssetsDomain().get(customer);
 
         Map<String, Asset> assets = assetResolver.retrieveAssets(base, assetIds);
         Map<String, String> resolvedAssetPaths = new HashMap<>();
@@ -113,7 +121,7 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
                     assetsToTransfer.add(asset);
                 }
             }
-            transferResources(assetsToTransfer, resolvedAssetPaths);
+            transferResources(customer, assetsToTransfer, resolvedAssetPaths);
         }
     }
 
@@ -127,7 +135,13 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
         return basePath + "/" + filename;
     }
 
-    private void transferResources(Collection<Asset> assets, Map<String, String> resourcePathMapping) {
+    private void transferResources(String customer, Collection<Asset> assets, Map<String, String> resourcePathMapping) {
+        String loadBalancerDocumentRootPaths = customerSpecificConfiguration.getAssetsLoadBalancerRoot().get(customer);
+        List<File> loadBalancerDocumentRoots = new ArrayList<>();
+        for(String path : loadBalancerDocumentRootPaths.split(",")){
+            loadBalancerDocumentRoots.add(new File(path.trim()));
+        }
+
         int maxValue = loadBalancerDocumentRoots.size() * assets.size();
 
         FileCopyResultRunnable runnable = new FileCopyResultRunnable(maxValue);
@@ -156,28 +170,32 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
         }
     }
 
-    public void setLoadBalancerDocumentRoots(List<File> loadBalancerDocumentRoots) {
-        this.loadBalancerDocumentRoots = loadBalancerDocumentRoots;
-    }
+//    public void setLoadBalancerDocumentRoots(List<File> loadBalancerDocumentRoots) {
+//        this.loadBalancerDocumentRoots = loadBalancerDocumentRoots;
+//    }
 
-    public void setAssetsDomain(String assetsDomain) {
-        Objects.requireNonNull(assetsDomain, "assetDomain must not be null!");
-
-        if (!assetsDomain.endsWith("/")) {
-            assetsDomain += "/";
-        }
-
-        this.assetsDomain = assetsDomain;
-    }
+//    public void setAssetsDomain(String assetsDomain) {
+//        Objects.requireNonNull(assetsDomain, "assetDomain must not be null!");
+//
+//        if (!assetsDomain.endsWith("/")) {
+//            assetsDomain += "/";
+//        }
+//
+//        this.assetsDomain = assetsDomain;
+//    }
 
     public void setAssetResolver(AssetResolver assetResolver) {
         this.assetResolver = assetResolver;
     }
 
+    public void setCustomerSpecificConfiguration(CustomerSpecificConfiguration customerSpecificConfiguration) {
+        this.customerSpecificConfiguration = customerSpecificConfiguration;
+    }
+
     private class FileCopyResultRunnable implements Runnable {
         private int count;
 
-        private FileCopyResultRunnable(int count) {
+        FileCopyResultRunnable(int count) {
             this.count = count;
         }
 

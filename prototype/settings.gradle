@@ -10,6 +10,7 @@ include ':theseus:com.fourigin.theseus.service'
 include ':theseus:com.fourigin.theseus.web'
 
 include ':argo'
+include ':argo:com.fourigin.argo.core'
 include ':argo:com.fourigin.argo.models'
 include ':argo:com.fourigin.argo.repository'
 include ':argo:com.fourigin.argo.repository.json'

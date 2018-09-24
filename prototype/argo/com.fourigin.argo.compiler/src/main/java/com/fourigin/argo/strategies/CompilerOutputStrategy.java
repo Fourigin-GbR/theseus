@@ -9,6 +9,7 @@ public interface CompilerOutputStrategy {
         SiteNodeInfo info,
         String filenamePostfix,
         String extension,
+        String customer,
         String base
     );
 

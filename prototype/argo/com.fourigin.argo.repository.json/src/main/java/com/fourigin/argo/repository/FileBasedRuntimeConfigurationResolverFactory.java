@@ -12,14 +12,14 @@ public class FileBasedRuntimeConfigurationResolverFactory implements RuntimeConf
 
     private String keyName;
 
-    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement();
+    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement("\\[(.+?)\\]");
 
     private ConcurrentHashMap<String, RuntimeConfigurationResolver> cache = new ConcurrentHashMap<>();
 
     private final Logger logger = LoggerFactory.getLogger(FileBasedRuntimeConfigurationResolverFactory.class);
 
     @Override
-    public RuntimeConfigurationResolver getInstance(String key) {
+    public RuntimeConfigurationResolver getInstance(String customer, String key) {
         RuntimeConfigurationResolver resolver = cache.get(key);
         if(resolver != null){
             if (logger.isDebugEnabled()) logger.debug("Using cached RuntimeConfigurationResolver instance for key '{}'.", key);
@@ -29,7 +29,7 @@ public class FileBasedRuntimeConfigurationResolverFactory implements RuntimeConf
         String path = propertiesReplacement.process(basePath, keyName, key);
 
         if (logger.isDebugEnabled()) logger.debug("Instantiating a new RuntimeConfigurationResolver instance for key '{}' and path '{}'.", key, path);
-        resolver = new FileBasedRuntimeConfigurationResolver(path);
+        resolver = new FileBasedRuntimeConfigurationResolver(customer, path);
 
         cache.putIfAbsent(key, resolver);
 

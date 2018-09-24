@@ -18,21 +18,23 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
 
     private ObjectMapper objectMapper;
 
-    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement();
+    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement("\\[(.+?)\\]");
 
     private ConcurrentHashMap<String, HiddenDirectoryContentRepository> cache = new ConcurrentHashMap<>();
 
     private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepositoryFactory.class);
 
     @Override
-    public ContentRepository getInstance(String key) {
-        HiddenDirectoryContentRepository repository = cache.get(key);
+    public ContentRepository getInstance(String customer, String key) {
+        String cacheKey = customer + ":" + key;
+
+        HiddenDirectoryContentRepository repository = cache.get(cacheKey);
         if(repository != null){
-            if (logger.isDebugEnabled()) logger.debug("Using cached ContentRepository instance for key '{}'.", key);
+            if (logger.isDebugEnabled()) logger.debug("Using cached ContentRepository instance for key '{}'.", cacheKey);
             return repository;
         }
 
-        String path = propertiesReplacement.process(basePath, keyName, key);
+        String path = propertiesReplacement.process(basePath, "customer", customer, keyName, key);
 
         if (logger.isDebugEnabled()) logger.debug("Instantiating a new ContentRepository instance for key '{}' and path '{}'.", key, path);
         repository = new HiddenDirectoryContentRepository();
@@ -41,7 +43,7 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
         repository.setDefaultTraversingStrategy(defaultTraversingStrategy);
         repository.setObjectMapper(objectMapper);
 
-        cache.putIfAbsent(key, repository);
+        cache.putIfAbsent(cacheKey, repository);
 
         return repository;
     }

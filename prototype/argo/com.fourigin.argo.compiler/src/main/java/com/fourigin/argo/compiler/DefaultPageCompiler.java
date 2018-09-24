@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class DefaultPageCompiler implements PageCompiler {
+    private String customer;
+
     private String compilerBase;
 
     private ContentRepository contentRepository;
@@ -57,7 +59,8 @@ public class DefaultPageCompiler implements PageCompiler {
         CONTENT_TYPE_EXTENSION_MAPPING.put("text/html", ".html");
     }
 
-    public DefaultPageCompiler(String base) {
+    public DefaultPageCompiler(String customer, String base) {
+        this.customer = customer;
         this.compilerBase = base;
     }
 
@@ -88,11 +91,11 @@ public class DefaultPageCompiler implements PageCompiler {
         }
 
         // process content
-        if(contentPageProcessors != null){
+        if (contentPageProcessors != null) {
             if (logger.isDebugEnabled()) logger.debug("Applying content page processors");
 
             for (ContentPageProcessor contentPageProcessor : contentPageProcessors) {
-                contentPageProcessor.process(compilerBase, pageInfo, processingMode, result);
+                contentPageProcessor.process(customer, compilerBase, pageInfo, processingMode, result);
             }
 
             maybeChanged = true;
@@ -113,22 +116,22 @@ public class DefaultPageCompiler implements PageCompiler {
 
                 Set<RuntimeConfiguration> configs = new HashSet<>();
                 for (String configName : names) {
-                    if (logger.isDebugEnabled()) logger.debug("Resolving runtime configuration for name '{}'", configName);
+                    if (logger.isDebugEnabled())
+                        logger.debug("Resolving runtime configuration for name '{}'", configName);
 
                     RuntimeConfiguration config = runtimeConfigurationResolver.resolveConfiguration(configName);
                     if (config != null) {
                         if (logger.isDebugEnabled()) logger.debug("Applying resolved configuration {}", config);
                         configs.add(config);
-                    }
-                    else {
-                        if (logger.isWarnEnabled()) logger.warn("Unable to load runtime configuration for name '{}'!", configName);
+                    } else {
+                        if (logger.isWarnEnabled())
+                            logger.warn("Unable to load runtime configuration for name '{}'!", configName);
                     }
                 }
 
                 configurations.setConfigurations(configs);
                 result.setConfigurations(configurations);
-            }
-            else {
+            } else {
                 if (logger.isDebugEnabled()) logger.debug("No runtime configuration requested from the content page.");
             }
         }
@@ -301,7 +304,7 @@ public class DefaultPageCompiler implements PageCompiler {
         String pageName = pageInfo.getName();
 
         String fileExtension = resolveFileExtension(templateVariation.getOutputContentType());
-        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, compilerBase)) {
+        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, customer, compilerBase)) {
             templateEngine.process(preparedContentPage, template, templateVariation, processingMode, out);
             if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
         } catch (IOException ex) {

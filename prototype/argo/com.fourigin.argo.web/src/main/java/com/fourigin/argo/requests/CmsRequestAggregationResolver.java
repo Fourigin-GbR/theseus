@@ -29,8 +29,8 @@ public  class CmsRequestAggregationResolver {
     }
 
     @Cacheable("aggregations")
-    public CmsRequestAggregation resolveAggregation(String base, String path){
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(base);
+    public CmsRequestAggregation resolveAggregation(String customer, String base, String path){
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
 
         PageInfo pageInfo = contentRepository.resolveInfo(PageInfo.class, path);
         if(pageInfo == null){

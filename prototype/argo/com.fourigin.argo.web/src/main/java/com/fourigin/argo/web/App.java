@@ -7,6 +7,7 @@ import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
+import com.fourigin.argo.config.CustomerSpecificConfiguration;
 import com.fourigin.argo.controller.assets.ThumbnailDimensions;
 import com.fourigin.argo.controller.assets.ThumbnailResolver;
 import com.fourigin.argo.models.template.Type;
@@ -35,6 +36,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.context.ApplicationPidFileWriter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,7 +45,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.awt.Dimension;
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,17 +72,17 @@ public class App {
     @Value("${template.engine.thymeleaf.base}")
     private String templateBasePath;
 
-    @Value("${document-root.base}")
-    private String documentRootBasePath;
+//    @Value("${document-root.base}")
+//    private String documentRootBasePath;
 
     @Value("${prepared-content.base}")
     private String preparedContentRoot;
 
-    @Value("${assets.domain}")
-    private String assetsDomain;
-
-    @Value("#{'${assets.load-balancer-document-roots}'.split(',')}")
-    private List<File> loadBalancerDocumentRoots;
+//    @Value("${assets.domain}")
+//    private String assetsDomain;
+//
+//    @Value("#{'${assets.load-balancer-document-roots}'.split(',')}")
+//    private List<File> loadBalancerDocumentRoots;
 
     @Value("${assets.thumbnails.target}")
     private String thumbnailsDirectory;
@@ -117,13 +118,13 @@ public class App {
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
 //        return new PlaceholderDocumentRootResolverStrategy(documentRootBasePath);
 
-        // TODO: make configurable!
-        Map<String, String> mapping = new HashMap<>();
-        mapping.put("DE", documentRootBasePath + "greekestate.de");
-        mapping.put("EN", documentRootBasePath + "greekestate.en");
-        mapping.put("RU", documentRootBasePath + "greekestate.ru");
+//        // TODO: make configurable!
+//        Map<String, String> mapping = new HashMap<>();
+//        mapping.put("DE", documentRootBasePath + "greekestate.de");
+//        mapping.put("EN", documentRootBasePath + "greekestate.en");
+//        mapping.put("RU", documentRootBasePath + "greekestate.ru");
 
-        return new MappingDocumentRootResolverStrategy(mapping);
+        return new MappingDocumentRootResolverStrategy(customerSpecificConfiguration());
     }
 
     @Bean
@@ -223,8 +224,9 @@ public class App {
     public List<ContentPageProcessor> contentPageProcessors(){
         AssetsContentPageProcessor assetsContentPageProcessor = new AssetsContentPageProcessor();
         assetsContentPageProcessor.setAssetResolver(assetResolver);
-        assetsContentPageProcessor.setAssetsDomain(assetsDomain);
-        assetsContentPageProcessor.setLoadBalancerDocumentRoots(loadBalancerDocumentRoots);
+        assetsContentPageProcessor.setCustomerSpecificConfiguration(customerSpecificConfiguration());
+//        assetsContentPageProcessor.setAssetsDomain(assetsDomain);
+//        assetsContentPageProcessor.setLoadBalancerDocumentRoots(loadBalancerDocumentRoots);
 
         return Collections.singletonList(
             assetsContentPageProcessor
@@ -280,6 +282,12 @@ public class App {
     @Autowired
     public void setAssetResolver(AssetResolver assetResolver) {
         this.assetResolver = assetResolver;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "customer")
+    public CustomerSpecificConfiguration customerSpecificConfiguration(){
+        return new CustomerSpecificConfiguration();
     }
 
     /*

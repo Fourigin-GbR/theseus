@@ -1,5 +1,5 @@
 package com.fourigin.argo.repository;
 
 public interface RuntimeConfigurationResolverFactory {
-    RuntimeConfigurationResolver getInstance(String key);
+    RuntimeConfigurationResolver getInstance(String customer, String key);
 }

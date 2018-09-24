@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,14 +29,15 @@ public class ViewController {
 
     private final Logger logger = LoggerFactory.getLogger(ViewController.class);
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/{customer}/", method = RequestMethod.GET)
     public ModelAndView view(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing view request for base {} & path {}.", base, path);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
 
         Template template = aggregation.getTemplate();
 

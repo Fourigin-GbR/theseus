@@ -28,8 +28,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 public class BlobBasedAssetRepository extends FileBasedRepository implements AssetRepository {
     private final Logger logger = LoggerFactory.getLogger(BlobBasedAssetRepository.class);
 
-    private final static String DIR_BLOB_BASE = "blobs";
-    private final static String DIR_META_BASE = "meta";
+    private static final String DIR_BLOB_BASE = "blobs";
+    private static final String DIR_META_BASE = "meta";
 
     private File baseDirectory;
 

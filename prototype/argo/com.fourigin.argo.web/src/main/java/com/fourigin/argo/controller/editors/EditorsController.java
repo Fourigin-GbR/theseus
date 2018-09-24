@@ -17,9 +17,11 @@ import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/editors")
+@RequestMapping("/{customer}/editors")
 public class EditorsController {
 
     private final Logger logger = LoggerFactory.getLogger(EditorsController.class);
@@ -37,13 +39,14 @@ public class EditorsController {
 
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public ContentPagePrototype retrievePrototype(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
     ) {
         if (logger.isDebugEnabled())
             logger.debug("Processing retrieve prototype request for base {} and sitePath {}", base, path);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
 
         Template template = aggregation.getTemplate();
 
@@ -51,13 +54,20 @@ public class EditorsController {
     }
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
-    public ContentElementResponse retrieve(@RequestBody RetrieveContentRequest request) {
+    public ContentElementResponse retrieve(
+        @PathVariable String customer,
+        @RequestBody RetrieveContentRequest request
+    ) {
         if (logger.isDebugEnabled()) logger.debug("Processing retrieve request {}.", request);
 
         ContentElementResponse response = new ContentElementResponse();
         response.copyFrom(request);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(request.getBase(), request.getPath());
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
+            customer,
+            request.getBase(),
+            request.getPath()
+        );
 
         ContentElement contentElement = resolveContentElement(request, aggregation);
         String currentChecksum = buildChecksum(contentElement);
@@ -69,6 +79,7 @@ public class EditorsController {
 
     @RequestMapping(value = "/retrieveP", method = RequestMethod.GET)
     public ContentElementResponse r(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path,
         @RequestParam("contentPath") String contentPath
@@ -78,59 +89,91 @@ public class EditorsController {
         request.setPath(path);
         request.setContentPath(contentPath);
 
-        return retrieve(request);
+        return retrieve(customer, request);
     }
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
-    public StatusAwareContentElementResponse isUpToDate(@RequestBody UpToDateRequest request) {
+    public StatusAwareContentElementResponse isUpToDate(
+        @PathVariable String customer,
+        @RequestBody UpToDateRequest request
+    ) {
         if (logger.isDebugEnabled()) logger.debug("Processing up-to-date request {}.", request);
 
-        StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
-        response.copyFrom(request);
+        MDC.put("customer", customer);
+        MDC.put("base", request.getBase());
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(request.getBase(), request.getPath());
+        try {
+            StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
+            response.copyFrom(request);
 
-        ContentElement contentElement = resolveContentElement(request, aggregation);
-        String currentChecksum = buildChecksum(contentElement);
-        if (currentChecksum.equals(request.getChecksum())) {
-            response.setStatus(true);
-            if (logger.isDebugEnabled()) logger.debug("Referenced content element is up-to-date.");
-        } else {
-            response.setStatus(false);
-            response.setCurrentContentElement(contentElement);
-            response.setCurrentChecksum(currentChecksum);
-            if (logger.isDebugEnabled())
-                logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
+            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
+                customer,
+                request.getBase(),
+                request.getPath()
+            );
+
+            ContentElement contentElement = resolveContentElement(request, aggregation);
+            String currentChecksum = buildChecksum(contentElement);
+            if (currentChecksum.equals(request.getChecksum())) {
+                response.setStatus(true);
+                if (logger.isDebugEnabled()) logger.debug("Referenced content element is up-to-date.");
+            } else {
+                response.setStatus(false);
+                response.setCurrentContentElement(contentElement);
+                response.setCurrentChecksum(currentChecksum);
+                if (logger.isDebugEnabled())
+                    logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
+            }
+
+            return response;
         }
-
-        return response;
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public StatusAwareContentElementResponse save(@RequestBody SaveChangesRequest request) {
+    public StatusAwareContentElementResponse save(
+        @PathVariable String customer,
+        @RequestBody SaveChangesRequest request
+    ) {
         if (logger.isDebugEnabled()) logger.debug("Processing save request {}.", request);
 
-        StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
-        response.copyFrom(request);
+        MDC.put("customer", customer);
+        MDC.put("base", request.getBase());
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(request.getBase(), request.getPath());
+        try {
+            StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
+            response.copyFrom(request);
 
-        ContentElement currentContentElement = resolveContentElement(request, aggregation);
-        String currentChecksum = buildChecksum(currentContentElement);
-        response.setCurrentChecksum(currentChecksum);
-        if (currentChecksum.equals(request.getOriginalChecksum())) {
-            response.setStatus(false);
-            response.setCurrentContentElement(currentContentElement);
-            if (logger.isDebugEnabled())
-                logger.debug("Modified content element is not updated. Current checksum is '{}'.", currentChecksum);
-        } else {
-            response.setStatus(true);
-            ContentElement modifiedContentElement = request.getModifiedContentElement();
-            updateContentElement(request, modifiedContentElement, aggregation);
-            if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
+            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
+                customer,
+                request.getBase(),
+                request.getPath()
+            );
+
+            ContentElement currentContentElement = resolveContentElement(request, aggregation);
+            String currentChecksum = buildChecksum(currentContentElement);
+            response.setCurrentChecksum(currentChecksum);
+            if (currentChecksum.equals(request.getOriginalChecksum())) {
+                response.setStatus(false);
+                response.setCurrentContentElement(currentContentElement);
+                if (logger.isDebugEnabled())
+                    logger.debug("Modified content element is not updated. Current checksum is '{}'.", currentChecksum);
+            } else {
+                response.setStatus(true);
+                ContentElement modifiedContentElement = request.getModifiedContentElement();
+                updateContentElement(request, modifiedContentElement, aggregation);
+                if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
+            }
+
+            return response;
         }
-
-        return response;
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
     }
 
     @ExceptionHandler({

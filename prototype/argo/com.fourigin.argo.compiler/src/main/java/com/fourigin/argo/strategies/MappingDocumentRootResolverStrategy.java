@@ -1,22 +1,24 @@
 package com.fourigin.argo.strategies;
 
+import com.fourigin.argo.config.CustomerSpecificConfiguration;
+
 import java.util.Map;
 import java.util.Objects;
 
 public class MappingDocumentRootResolverStrategy implements DocumentRootResolverStrategy {
-    private Map<String, String> mapping;
+    private CustomerSpecificConfiguration customerSpecificConfiguration;
 
-    public MappingDocumentRootResolverStrategy(Map<String, String> mapping) {
-        Objects.requireNonNull(mapping, "mapping must not be null!");
-        if(mapping.isEmpty()){
-            throw new IllegalArgumentException("mapping must not be empty!");
-        }
-
-        this.mapping = mapping;
+    public MappingDocumentRootResolverStrategy(CustomerSpecificConfiguration customerSpecificConfiguration) {
+        this.customerSpecificConfiguration = customerSpecificConfiguration;
     }
 
     @Override
-    public String resolveDocumentRoot(String base) {
-        return mapping.get(base);
+    public String resolveDocumentRoot(String customer, String base) {
+        Map<String, Map<String, String>> docRoots = customerSpecificConfiguration.getDocumentRoots();
+
+        Map<String, String> customerRoots = docRoots.get(customer);
+        Objects.requireNonNull(customerRoots, "No customer specific document root specified for '" + customer + "'!");
+
+        return customerRoots.get(base);
     }
 }

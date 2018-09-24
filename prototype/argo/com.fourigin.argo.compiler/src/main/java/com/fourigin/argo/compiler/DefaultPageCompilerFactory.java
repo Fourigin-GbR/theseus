@@ -14,6 +14,7 @@ import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.strategies.DefaultFilenameStrategy;
 import com.fourigin.argo.strategies.FilenameStrategy;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
+import com.fourigin.utilities.core.PropertiesReplacement;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
     private String preparedContentRoot;
     private RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory;
     private List<ContentPageProcessor> contentPageProcessors;
+
+    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement("\\[(.+?)\\]");
 
     public DefaultPageCompilerFactory(
         ContentRepositoryFactory contentRepositoryFactory,
@@ -48,15 +51,15 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
     }
 
     @Override
-    public PageCompiler getInstance(String base) {
+    public PageCompiler getInstance(String customer, String base) {
         Map<String, DataSourceQueryBuilder> queryBuilders = new HashMap<>();
         queryBuilders.put(TimestampDataSource.TYPE, new DataSourceQueryBuilder(EmptyDataSourceQuery.class));
         queryBuilders.put(SiteStructureDataSource.TYPE, new DataSourceQueryBuilder(SiteStructureDataSourceQuery.class));
         DataSourceQueryFactory.setBuilders(queryBuilders);
 
-        DefaultPageCompiler compiler = new DefaultPageCompiler(base);
+        DefaultPageCompiler compiler = new DefaultPageCompiler(customer, base);
 
-        compiler.setContentRepository(contentRepositoryFactory.getInstance(base));
+        compiler.setContentRepository(contentRepositoryFactory.getInstance(customer, base));
         compiler.setTemplateEngineFactory(templateEngineFactory);
         compiler.setTemplateResolver(templateResolver);
         compiler.setDataSourcesResolver(dataSourcesResolver);
@@ -67,8 +70,10 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
             compiler.setContentPageProcessors(contentPageProcessors);
         }
 
+        String preparedContentResolvedPath = propertiesReplacement.process(preparedContentRoot, "customer", customer);
+
         DefaultCompilerInterceptor compilerInterceptor = new DefaultCompilerInterceptor(
-            preparedContentRoot,
+            preparedContentResolvedPath,
             base,
             preparedContentFilenameStrategy
         );
@@ -77,7 +82,7 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
             compilerInterceptor
         ));
 
-        compiler.setRuntimeConfigurationResolver(runtimeConfigurationResolverFactory.getInstance(base));
+        compiler.setRuntimeConfigurationResolver(runtimeConfigurationResolverFactory.getInstance(customer, base));
 
         return compiler;
     }

@@ -3,6 +3,7 @@ def theseusModels                           = project(':theseus:com.fourigin.the
 def theseusRepository                       = project(':theseus:com.fourigin.theseus.repository')
 def theseusService                          = project(':theseus:com.fourigin.theseus.service')
 
+def argoCore                                = project(':argo:com.fourigin.argo.core')
 def argoModels                              = project(':argo:com.fourigin.argo.models')
 def argoRepository                          = project(':argo:com.fourigin.argo.repository')
 def argoRepositoryJson                      = project(':argo:com.fourigin.argo.repository.json')
@@ -87,10 +88,15 @@ project(':argo') {
     def argoVersion = "1.0-SNAPSHOT"
     group = 'com.fourigin.argo'
 
+    project('com.fourigin.argo.core') {
+        version = argoVersion
+    }
+
     project('com.fourigin.argo.models') {
         version = argoVersion
 
         dependencies {
+            compile argoCore
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')

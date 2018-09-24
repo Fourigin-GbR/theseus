@@ -15,6 +15,7 @@ import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.ContentPageCompilerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +35,7 @@ import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
 import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 
 @Controller
-@RequestMapping("/compile")
+@RequestMapping("/{customer}/compile")
 public class CompileController {
 
     private final Logger logger = LoggerFactory.getLogger(CompileController.class);
@@ -46,12 +48,16 @@ public class CompileController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
     ) {
+        MDC.put("customer", customer);
+        MDC.put("base", base);
+
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
 
         ContentRepository contentRepository = aggregation.getContentRepository();
 
@@ -61,24 +67,23 @@ public class CompileController {
 
         String pageContentChecksum = pageState.getChecksum().getCombinedValue();
         CompileState compileState = pageState.getCompileState();
-        if(compileState != null){
+        if (compileState != null) {
             if (logger.isDebugEnabled()) logger.debug("Verifying compile state of the page '{}'.", pageName);
             String compileBaseChecksum = compileState.getChecksum();
-            if(compileBaseChecksum.equals(pageContentChecksum)){
+            if (compileBaseChecksum.equals(pageContentChecksum)) {
                 if (logger.isInfoEnabled()) logger.info("Would skip compiling page, please implement me ..."); // NOPMD
                 // TODO
                 //                if (logger.isInfoEnabled()) logger.info("Skipping page '{}', checksum unchanged.", pageName);
                 //                return;
             }
-        }
-        else {
+        } else {
             compileState = new CompileState();
         }
 
-        PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
+        PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
 
         ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, CMS);
-        
+
         BufferedCompilerOutputStrategy bufferedCompilerOutputStrategy = new BufferedCompilerOutputStrategy();
         try {
             String outputContentType = pageCompiler.compile(path, pageInfo, preparedContentPage, CMS, bufferedCompilerOutputStrategy);
@@ -99,8 +104,7 @@ public class CompileController {
             compileState.setCompiled(false);
 
             throw ex;
-        }
-        finally {
+        } finally {
             long timestamp = System.currentTimeMillis();
             compileState.setTimestamp(timestamp);
             compileState.setChecksum(pageContentChecksum);
@@ -110,72 +114,94 @@ public class CompileController {
 
             pageState.setCompileState(compileState);
             contentRepository.updatePageState(pageInfo, pageState);
+
+            MDC.remove("customer");
+            MDC.remove("base");
         }
     }
 
     @ResponseBody
     @RequestMapping(value = "/write-output", method = RequestMethod.POST)
     public ResponseEntity<CompileResult> writeOutput(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing write-output request for base '{}' & path '{}'.", base, path);
-
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
-
-        PageInfo pageInfo = aggregation.getPageInfo();
-        PageState pageState = aggregation.getPageState();
-
-        CompileState compileState = pageState.getCompileState();
-        if(compileState == null){
-            compileState = new CompileState();
-        }
-
-        if(!compileState.isCompiled()) {
-            return new ResponseEntity<>(
-                new CompileResult(STAGE, false, "Page must have a successful compiled-state!"),
-                HttpStatus.BAD_REQUEST
-            );
-        }
-
-        PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
-
-        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, STAGE);
-
-        long startTimestamp = System.currentTimeMillis();
+        MDC.put("customer", customer);
+        MDC.put("base", base);
         try {
-            pageCompiler.compile(path, pageInfo, preparedContentPage, STAGE, storageCompilerOutputStrategy);
-            storageCompilerOutputStrategy.finish();
-        } catch (Throwable ex) {
-            storageCompilerOutputStrategy.reset();
+            if (logger.isDebugEnabled())
+                logger.debug("Processing write-output request for base '{}' & path '{}'.", base, path);
+
+            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+
+            PageInfo pageInfo = aggregation.getPageInfo();
+            PageState pageState = aggregation.getPageState();
+
+            CompileState compileState = pageState.getCompileState();
+            if (compileState == null) {
+                compileState = new CompileState();
+            }
+
+            if (!compileState.isCompiled()) {
+                return new ResponseEntity<>(
+                    new CompileResult(STAGE, false, "Page must have a successful compiled-state!"),
+                    HttpStatus.BAD_REQUEST
+                );
+            }
+
+            PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+
+            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, STAGE);
+
+            long startTimestamp = System.currentTimeMillis();
+            try {
+                pageCompiler.compile(path, pageInfo, preparedContentPage, STAGE, storageCompilerOutputStrategy);
+                storageCompilerOutputStrategy.finish();
+            } catch (Throwable ex) {
+                storageCompilerOutputStrategy.reset();
+                return new ResponseEntity<>(
+                    new CompileResult(STAGE, false).withAttribute("cause", ex),
+                    HttpStatus.BAD_REQUEST
+                );
+            }
+
+            long duration = System.currentTimeMillis() - startTimestamp;
+
             return new ResponseEntity<>(
-                new CompileResult(STAGE, false).withAttribute("cause", ex),
-                HttpStatus.BAD_REQUEST
+                new CompileResult(STAGE, true).withAttribute("duration", duration),
+                HttpStatus.OK
             );
+        } finally {
+            MDC.remove("customer");
+            MDC.remove("base");
         }
-
-        long duration = System.currentTimeMillis() - startTimestamp;
-
-        return new ResponseEntity<>(
-            new CompileResult(STAGE, true).withAttribute("duration", duration),
-            HttpStatus.OK
-        );
     }
 
     @ResponseBody
     @RequestMapping(value = "/prepare-content", method = RequestMethod.GET)
     public ContentPage showPreparedContent(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path
     ) {
-        if (logger.isDebugEnabled())
-            logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
+        MDC.put("customer", customer);
+        MDC.put("base", base);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(base, path);
+        try {
+            if (logger.isDebugEnabled())
+                logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
 
-        PageCompiler pageCompiler = pageCompilerFactory.getInstance(base);
+            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
 
-        return pageCompiler.prepareContent(aggregation.getPageInfo(), CMS);
+            PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+
+            return pageCompiler.prepareContent(aggregation.getPageInfo(), CMS);
+        }
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
     }
 
     @ExceptionHandler(IllegalStateException.class)

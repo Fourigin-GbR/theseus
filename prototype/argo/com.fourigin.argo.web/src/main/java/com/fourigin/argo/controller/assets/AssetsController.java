@@ -8,6 +8,7 @@ import com.fourigin.argo.controller.compile.RequestParameters;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -38,7 +39,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/assets")
+@RequestMapping("/{customer}/assets")
 public class AssetsController {
 
     private final Logger logger = LoggerFactory.getLogger(AssetsController.class);
@@ -70,25 +71,39 @@ public class AssetsController {
 
     @RequestMapping("/info")
     public Asset resolveAsset(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam("id") String assetId
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing resolveAsset request for base {} and id {}", base, assetId);
 
-        Asset asset = assetRepository.retrieveAsset(base, assetId);
+        MDC.put("customer", customer);
+        MDC.put("base", base);
 
-        if (logger.isDebugEnabled()) logger.debug("Returning asset {} for id {}", asset, assetId);
+        try {
+            Asset asset = assetRepository.retrieveAsset(base, assetId);
 
-        return asset;
+            if (logger.isDebugEnabled()) logger.debug("Returning asset {} for id {}", asset, assetId);
+
+            return asset;
+        }
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
     }
 
     @RequestMapping("/data")
     public void resolveAsset(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam("id") String assetId,
         HttpServletResponse response
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing resolveAssetData request for base {} and id {}", base, assetId);
+
+        MDC.put("customer", customer);
+        MDC.put("base", base);
 
         Asset asset = assetRepository.retrieveAsset(base, assetId);
 
@@ -102,60 +117,78 @@ public class AssetsController {
         catch (Throwable th){
             if (logger.isErrorEnabled()) logger.error("Unexpected error occurred!", th);
         }
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadAssetsResponse upload(
+        @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam("file") MultipartFile multipartFile
     ) {
         Objects.requireNonNull(base, "base must not be null!");
 
-        UploadAssetsResponse result = new UploadAssetsResponse();
+        MDC.put("customer", customer);
+        MDC.put("base", base);
 
-        String originalFileName = multipartFile.getOriginalFilename();
+        try {
+            UploadAssetsResponse result = new UploadAssetsResponse();
 
-        String contentType = multipartFile.getContentType();
+            String originalFileName = multipartFile.getOriginalFilename();
 
-        File tmp = null;
-        try (InputStream is = multipartFile.getInputStream()) {
-            tmp = File.createTempFile("upload", "");
-            try (OutputStream os = new FileOutputStream(tmp)) {
-                IOUtils.copyLarge(is, os);
-            }
-        } catch (IOException ex) {
-            if (logger.isWarnEnabled()) logger.warn("Error copying file", ex);
-            if (tmp != null && !tmp.delete()) {
-                if (logger.isWarnEnabled()) // NOPMD
-                    logger.warn("Unable to remove temp file '{}'", tmp.getAbsolutePath()); // NOPMD
-            }
-            tmp = null;
-            result.registerFail(originalFileName, ex);
-        }
+            String contentType = multipartFile.getContentType();
 
-        if(tmp != null) {
-            try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
-                Asset asset = readAsset(base, originalFileName, multipartFile.getSize(), contentType, is);
-
-                result.registerSuccess(asset);
-            } catch (IOException | IllegalArgumentException ex) {
-                if (logger.isErrorEnabled())
-                    logger.error("Unable to read asset {}!", originalFileName, ex);
+            File tmp = null;
+            try (InputStream is = multipartFile.getInputStream()) {
+                tmp = File.createTempFile("upload", "");
+                try (OutputStream os = new FileOutputStream(tmp)) {
+                    IOUtils.copyLarge(is, os);
+                }
+            } catch (IOException ex) {
+                if (logger.isWarnEnabled()) logger.warn("Error copying file", ex);
+                if (tmp != null && !tmp.delete()) {
+                    if (logger.isWarnEnabled()) // NOPMD
+                        logger.warn("Unable to remove temp file '{}'", tmp.getAbsolutePath()); // NOPMD
+                }
+                tmp = null;
                 result.registerFail(originalFileName, ex);
             }
-        }
 
-        return result;
+            if (tmp != null) {
+                try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
+                    Asset asset = readAsset(base, originalFileName, multipartFile.getSize(), contentType, is);
+
+                    result.registerSuccess(asset);
+                } catch (IOException | IllegalArgumentException ex) {
+                    if (logger.isErrorEnabled())
+                        logger.error("Unable to read asset {}!", originalFileName, ex);
+                    result.registerFail(originalFileName, ex);
+                }
+            }
+
+            return result;
+        }
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
     }
 
     @RequestMapping(value = "/thumbnail/{dimension}", method = RequestMethod.GET)
     public void getThumbnail(
+        @PathVariable String customer,
         @PathVariable("dimension") String dimensionName,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam("id") String assetId,
         @RequestHeader(value = RequestResponseConstants.IF_NONE_MATCH_REQUEST_HEADER, required = false) String etag,
         HttpServletResponse response
     ) throws IOException {
+
+        MDC.put("customer", customer);
+        MDC.put("base", base);
 
         Dimension desiredDimension = dimensions.get(dimensionName);
         if (desiredDimension == null) {
@@ -189,6 +222,10 @@ public class AssetsController {
                 if (logger.isInfoEnabled())
                     logger.info("Returned {} bytes of data for resource {}.", count, assetId);
             }
+        }
+        finally {
+            MDC.remove("customer");
+            MDC.remove("base");
         }
     }
 

@@ -10,7 +10,7 @@ public class ContentRepositoryStubFactory implements ContentRepositoryFactory {
     }
 
     @Override
-    public ContentRepository getInstance(String key) {
-        return repositories.get(key);
+    public ContentRepository getInstance(String customer, String key) {
+        return repositories.get(customer + "_" + key);
     }
 }

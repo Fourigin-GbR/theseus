@@ -2,6 +2,7 @@ package com.fourigin.argo.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.content.config.RuntimeConfiguration;
+import com.fourigin.utilities.core.PropertiesReplacement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +17,18 @@ import java.util.Set;
 public class FileBasedRuntimeConfigurationResolver implements RuntimeConfigurationResolver {
     private static final String CONFIG_DIRECTORY_NAME = ".config";
 
+    private String customer;
+
     private String basePath;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement("\\[(.+?)\\]");
+
     private final Logger logger = LoggerFactory.getLogger(FileBasedRuntimeConfigurationResolver.class);
 
-    public FileBasedRuntimeConfigurationResolver(String basePath) {
+    public FileBasedRuntimeConfigurationResolver(String customer, String basePath) {
+        this.customer = customer;
         this.basePath = basePath;
     }
 
@@ -79,7 +85,9 @@ public class FileBasedRuntimeConfigurationResolver implements RuntimeConfigurati
 
     /* private -> testing */
     File getConfigDirectory() {
-        File rootDirectory = new File(basePath);
+        String resolvedBasePath = propertiesReplacement.process(basePath, "customer", customer);
+
+        File rootDirectory = new File(resolvedBasePath);
 
         File configDirectory = new File(rootDirectory, CONFIG_DIRECTORY_NAME);
 

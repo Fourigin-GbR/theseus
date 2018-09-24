@@ -6,11 +6,15 @@ import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
+import org.springframework.web.servlet.HandlerMapping;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
@@ -38,13 +42,29 @@ public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
 
         if(flushCaches) {
             String base = request.getParameter(RequestParameters.BASE);
-            ContentResolver contentResolver = contentRepositoryFactory.getInstance(base);
 
-            if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", base);
-            contentResolver.flush();
+            Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 
-            if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", base);
-            cmsRequestAggregationResolver.flush();
+            if (logger.isInfoEnabled()) logger.info("path-variables: {}", pathVariables);
+
+            String customer = (String) pathVariables.get("customer");
+
+            MDC.put("customer", customer);
+            MDC.put("base", base);
+
+            try {
+                ContentResolver contentResolver = contentRepositoryFactory.getInstance(customer, base);
+
+                if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", base);
+                contentResolver.flush();
+
+                if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", base);
+                cmsRequestAggregationResolver.flush();
+            }
+            finally {
+                MDC.remove("customer");
+                MDC.remove("base");
+            }
         }
     }
 

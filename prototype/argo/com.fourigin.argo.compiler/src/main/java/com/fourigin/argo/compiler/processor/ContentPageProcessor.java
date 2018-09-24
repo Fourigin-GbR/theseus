@@ -5,5 +5,5 @@ import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.template.engine.ProcessingMode;
 
 public interface ContentPageProcessor {
-    void process(String base, PageInfo info, ProcessingMode processingMode, ContentPage page);
+    void process(String customer, String base, PageInfo info, ProcessingMode processingMode, ContentPage page);
 }
