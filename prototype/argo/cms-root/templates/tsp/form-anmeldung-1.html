@@ -11,25 +11,37 @@
 
 <div class="example1">
     <form action="#" method="get">
-        <fieldset>
+        <fieldset name="kennzeichen">
             <legend>Kennzeichen</legend>
             <label>
                 <span>das alte Kennzeichen (nur bei Ummeldungen)</span>
                 <input type="text" name="kennzeichen_alt"/>
             </label>
 
-            <fieldset class="checkboxList">
+            <fieldset name="neues_kennzeichen" class="checkboxList">
                 <legend>das neue Kennzeichen</legend>
                 <label>
-                    <input type="checkbox" name="besser" value="gelb"/>
+                    <input type="checkbox" name="besser" value="gelb" data-activate-fieldset-name="neues_kennzeichen_details"/>
                     <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
-                    <input type="text" name="kennzeichen_neu_wuensche"/>
                 </label>
+                <fieldset name="neues_kennzeichen_details" disabled="disabled">
+                    <label>
+                        <span>Wünsche</span>
+                        <input type="text" name="kennzeichen_neu_wuensche"/>
+                    </label>
+                </fieldset>
+                <!---->
                 <label>
-                    <input type="checkbox" name="besser" value="orange"/>
+                    <input type="checkbox" name="besser" value="orange" data-activate-fieldset-name="neues_kennzeichen_reservierung_details"/>
                     <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
-                    <input type="text" name="kennzeichen_neu_reserviert"/>
                 </label>
+                <fieldset name="neues_kennzeichen_reservierung_details" disabled="disabled">
+                    <label>
+                        <span>Reservierung</span>
+                        <input type="text" name="kennzeichen_neu_reserviert"/>
+                    </label>
+                </fieldset>
+                <!---->
                 <label>
                     <input type="checkbox" name="besser" value="hell rosa"/>
                     <span>Spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
@@ -38,7 +50,7 @@
 
         </fieldset>
 
-        <fieldset>
+        <fieldset name="fahrzeugdaten">
             <legend>Fahrzeugdaten</legend>
 
             <div class="FormularGroup ident brief">
@@ -167,6 +179,8 @@
         </footer>
     </form>
 </div>
+
+<script type="text/javascript" src="assets/scripts/Forms.js"></script>
 
 </body>
 </html>
