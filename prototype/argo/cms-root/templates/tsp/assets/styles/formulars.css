@@ -219,7 +219,7 @@ a.hint:hover {
 
 /* Tabs */
 .Tabs {
-
+    padding: 50px 50px;
 }
 .Tabs nav {
     display: flex;
