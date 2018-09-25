@@ -170,6 +170,22 @@ footer button:first-of-type {
     margin-left: 0;
 }
 
+a.hint {
+    display: inline-block;
+    background-color: #c6c6c6;
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: #2ab46b;
+    font-size: .8em;
+    font-weight: bold;
+    text-decoration: none;
+}
+a.hint:hover {
+    background-color: #2ab46b;
+    color: #fff;
+}
+
+
 .validationMessage {
     padding: 10px;
     margin-top: 5px;
