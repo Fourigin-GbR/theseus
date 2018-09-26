@@ -1,0 +1,167 @@
+{
+  "form": "register-vehicle",
+  "validation-patterns": {
+    "nameplates": "[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}",
+    "bank-account-codes": "^DE([0-9a-zA-Z]\\s?){20}$"
+  },
+  "fields": {
+    "vehicle.existing-nameplate": {
+      "type": "form-text",
+      "validation": {
+        "pattern": "nameplates"
+      }
+    },
+    "vehicle.new-nameplate": {
+      "type": "form-choose",
+      "validation": {
+        "mandatory": true
+      },
+      "values": {
+        "portal": {
+          "context": {
+            "nameplate-customer-requirements": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            }
+          }
+        },
+        "self": {
+          "context": {
+            "nameplate-customer-reservation": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true,
+                "pattern": "nameplates"
+              }
+            }
+          }
+        },
+        "random": null
+      }
+    },
+    "vehicle-data.ident": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "vehicle-data.vehicle-id": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "vehicle-data.leasing": {
+      "type": "form-check"
+    },
+    "vehicle-insurance.id": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "tax.account": {
+      "type": "form-choose",
+      "validation": {
+        "mandatory": true
+      },
+      "values": {
+        "use-stored-account": {
+          "context": {
+            "stored-account": {
+              "type": "form-choose",
+              "values": {
+                "account-1": null,
+                "account-2": null
+              }
+            }
+          }
+        },
+        "use-new-account": {
+          "context": {
+            "new-account-code": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            },
+            "new-account-bankcode": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            },
+            "new-account-bankname": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            },
+            "new-account-owner": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "payment.methods": {
+      "type": "form-choose",
+      "validation": {
+        "mandatory": true
+      },
+      "values": {
+        "paypal": null,
+        "sofort": null,
+        "pre-payment": null,
+        "debit-from-existing-account": {
+          "context": {
+            "stored-account": {
+              "type": "form-choose",
+              "values": {
+                "account-1": null,
+                "account-2": null
+              }
+            }
+          }
+        },
+        "debit-from-new-account": {
+          "context": {
+            "new-account-code": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            },
+            "new-account-bankcode": {
+              "type": "form-text"
+            },
+            "new-account-bankname": {
+              "type": "form-text"
+            },
+            "new-account-owner": {
+              "type": "form-text",
+              "validation": {
+                "mandatory": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "handover.options": {
+      "type": "form-choose",
+      "validation": {
+        "mandatory": true
+      },
+      "values": {
+        "office-delivering": null,
+        "pickup": null
+      }
+    }
+  }
+}

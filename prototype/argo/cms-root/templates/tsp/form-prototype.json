@@ -1,0 +1,273 @@
+{
+  "form": "register-new-vehicle",
+  "definition-id": "register-vehicle",
+  "form-steps": [
+    {
+      "label": "Fahrzeug",
+      "elements": [
+        {
+          "type": "form-group",
+          "label": "Kennzeichen",
+          "elements": [
+            {
+              "type": "form-field",
+              "reference-id": "vehicle.existing-nameplate",
+              "label": "das alte Kennzeichen (nur bei Ummeldungen):"
+            },
+            {
+              "type": "form-field",
+              "reference-id": "vehicle.new-nameplate",
+              "label": "das neue Kennzeichen",
+              "values": [
+                {
+                  "value-reference": "portal",
+                  "label": "soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:",
+                  "context": [
+                    {
+                      "type": "form-field",
+                      "reference-id": "nameplate-customer-requirements",
+                      "label": ""
+                    }
+                  ]
+                },
+                {
+                  "value-reference": "self",
+                  "label": "ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:",
+                  "context": [
+                    {
+                      "type": "form-field",
+                      "reference-id": "nameplate-customer-reservation",
+                      "label": ""
+                    }
+                  ]
+                },
+                {
+                  "value-reference": "random",
+                  "label": "spielt für Sie keine Rolle und soll zufällig vergeben werden"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "form-group",
+          "label": "Fahrzeugdaten",
+          "elements": [
+            {
+              "type": "form-field",
+              "reference-id": "vehicle-data.ident",
+              "label": "Ident-Nummer:",
+              "hint": {
+                "label": "Wo finde ich sie?",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum congue neque vel volutpat. Quisque."
+              }
+            },
+            {
+              "type": "form-field",
+              "reference-id": "vehicle-data.vehicle-id",
+              "label": "Fahrzeugbrief-Nummer:",
+              "hint": {
+                "label": "Wo finde ich sie?",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum congue neque vel volutpat. Quisque."
+              }
+            },
+            {
+              "type": "form-field",
+              "reference-id": "vehicle-data.leasing",
+              "label": "Fahrzeug wird finanziert bzw. geleast"
+            }
+          ]
+        },
+        {
+          "type": "form-group",
+          "label": "KFZ-Versicherung",
+          "elements": [
+            {
+              "type": "form-field",
+              "reference-id": "vehicle-insurance.id",
+              "label": "eVB-Nummer:",
+              "hint": {
+                "label": "Wo finde ich sie?",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum congue neque vel volutpat. Quisque."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "KFZ-Steuer",
+      "elements": [
+        {
+          "type": "form-group",
+          "label": "Bankdaten für die Abbuchung der KFZ-Steuer",
+          "elements": [
+            {
+              "type": "form-field",
+              "reference-id": "tax.account",
+              "values": [
+                {
+                  "value-reference": "use-stored-account",
+                  "label": "die hinterlegte Bankverbindung verwenden:",
+                  "context": [
+                    {
+                      "type": "form-field",
+                      "reference-id": "stored-account",
+                      "values": [
+                        {
+                          "value-reference": "account-1",
+                          "label": "Deutsche Bank, IBAN: 1234 5678 9012 3456 78"
+                        },
+                        {
+                          "value-reference": "account-2",
+                          "label": "Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value-reference": "use-new-account",
+                  "label": "eine neue Bankverbindung verwenden:",
+                  "context": [
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-code",
+                      "label": "IBAN:"
+                    },
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-bankcode",
+                      "label": "BIC:"
+                    },
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-bankname",
+                      "label": "Bank:"
+                    },
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-owner",
+                      "label": "Kontoinhaber (falls abweichend vom Antragsteller):"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Zahlung",
+      "elements": [
+        {
+          "type": "form-group",
+          "label": "Verfügbare Zahlungsmethoden",
+          "elements": [
+            {
+              "type": "form-field",
+              "reference-id": "payment.methods",
+              "values": [
+                {
+                  "value-reference": "paypal",
+                  "label": "PayPal"
+                },
+                {
+                  "value-reference": "sofort",
+                  "label": "Sofort-Überweisung"
+                },
+                {
+                  "value-reference": "pre-payment",
+                  "label": "Vorkasse"
+                },
+                {
+                  "value-reference": "debit-from-existing-account",
+                  "label": "Lastschrifteinzug von einer hinterlegten Bankverbindung",
+                  "context": [
+                    {
+                      "type": "form-field",
+                      "name": "stored-account",
+                      "values": [
+                        {
+                          "value-reference": "account-1",
+                          "label": "Deutsche Bank, IBAN: 1234 5678 9012 3456 78"
+                        },
+                        {
+                          "value-reference": "account-2",
+                          "label": "Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value-reference": "debit-from-new-account",
+                  "label": "Lastschrifteinzug von einer neuen Bankverbindung",
+                  "context": [
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-code",
+                      "label": "IBAN:"
+                    },
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-bankcode",
+                      "label": "BIC:"
+                    },
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-bankname",
+                      "label": "Bank:"
+                    },
+                    {
+                      "type": "form-field",
+                      "reference-id": "new-account-owner",
+                      "label": "Kontoinhaber (falls abweichend vom Antragsteller):"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Dokumentenübergabe",
+      "elements": [
+        {
+          "type": "form-group",
+          "label": "Folgende Optionen stehen Ihnen zur Verfügung",
+          "elements": [
+            {
+              "type": "form-field",
+              "reference-id": "handover.options",
+              "values": [
+                {
+                  "value-reference": "office-delivering",
+                  "label": "Sie bringen Ihre Unterlagen zu uns",
+                  "description": "Unsere Adresse und reguläre Öffnungszeiten finden Sie in der Bestätigung-Email."
+                },
+                {
+                  "value-reference": "pickup",
+                  "label": "Sie lassen uns Ihre Unterlagen abholen",
+                  "description": "Der Termin und Abholort kann bequem über den Link vereinbart werden, welcher in der Bestätigung-Email steht."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Prüfen & abschließen",
+      "elements": [
+        {
+          "type": "form-group",
+          "label": "Zusammenfassung Ihres Auftrages"
+        }
+      ]
+    }
+  ]
+}
