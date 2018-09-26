@@ -120,7 +120,7 @@ label.Checkbox > span {
     width: calc(100% - 50px);
     margin: 0;
     font-weight: normal;
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 
@@ -251,16 +251,21 @@ a.hint:hover {
     display: flex;
 }
 .Tabs nav span {
-    padding: 15px 10px;
-    background-color: #fff;
-    text-decoration: underline;
+    padding: 10px 15px 5px 15px;
+    background-color: #eae7e7;
+    text-decoration: none;
     cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin-right: 1px;
+    margin-top: 5px;
+}
+.Tabs nav span:hover {
+    margin-top: 0;
 }
 .Tabs nav span.active {
-    font-weight: bold;
     background-color: #2ab46b;
     color: #fff;
-    text-decoration: none;
+    margin-top: 0;
 }
 .TabsWrapper {
     position: relative;
