@@ -3,7 +3,7 @@ var fieldsets = document.getElementsByTagName("fieldset");
 console.log("inputs, fieldsets", inputs, fieldsets);
 
 var inputsWithBoundFieldSets = Array.prototype.filter.call(inputs, function(element, index, aElements) {
-    return element.hasAttributes("data-activate-fieldset-name");
+    return element.hasAttribute("data-activate-fieldset-name");
 });
 
 var _inputsWithBoundFieldSets = null; //inputs.querySelectorAll("[data-activate-fieldset-name]");

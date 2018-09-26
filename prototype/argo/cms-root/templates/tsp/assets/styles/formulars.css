@@ -42,9 +42,6 @@ fieldset {
     border: none;
     margin: 40px 0 0 0;
 }
-fieldset[disabled="disabled"] {
-    display: none;
-}
 
 fieldset legend {
     margin: 0;
@@ -83,34 +80,49 @@ label span {
 }
 
 fieldset.radioList,
-fieldset.checkboxList {
+fieldset.CheckboxList {
     margin: 40px 0;
 }
 
 fieldset.radioList > fieldset,
-fieldset.checkboxList > fieldset {
+fieldset.CheckboxList .CheckboxList__item {
     margin: 0 0 0 40px;
 }
 
 fieldset.radioList > label,
-fieldset.checkboxList > label {
+fieldset.CheckboxList .CheckboxList__item__checkbox {
     display: flex;
     align-items: center;
 }
 
 fieldset.radioList > label > input,
-fieldset.checkboxList > label > input {
-    width: 10%;
+fieldset.CheckboxList .CheckboxList__item__checkbox input {
+    width: 50px;
     margin: 0;
 }
 
 fieldset.radioList > label > span,
-fieldset.checkboxList > label > span {
-    width: 90%;
+fieldset.CheckboxList .CheckboxList__item__checkbox span {
+    width: calc(100% - 50px);
     margin: 0;
     font-weight: normal;
     font-size: 1em;
 }
+
+label.Checkbox {
+    display: flex;
+}
+label.Checkbox > input {
+    width: 50px;
+    margin: 0;
+}
+label.Checkbox > span {
+    width: calc(100% - 50px);
+    margin: 0;
+    font-weight: normal;
+    font-size: 1em;
+}
+
 
 
 input,
@@ -214,6 +226,20 @@ a.hint:hover {
 }
 .FormularGroup label:first-of-type {
     margin-left: 0;
+}
+
+
+/* Dependence */
+
+.DependencyGroup .DependencyGroup__dependant {
+    margin: 0 0 10px 40px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    opacity: 1;
+    transition: all .4s ease;
+}
+.DependencyGroup .DependencyGroup__dependant[disabled="disabled"] {
+    opacity: .3;
 }
 
 

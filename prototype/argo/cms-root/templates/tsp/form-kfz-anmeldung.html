@@ -3,12 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Formulare - Prototypen</title>
+    <link rel="stylesheet" href="assets/styles/kfz-anmeldung.css"/>
     <link rel="stylesheet" href="assets/styles/formulars.css"/>
 </head>
 <body>
 <h1>KFZ-Anmeldung</h1>
 
-<div class="Tabs">
+<div class="Tabs fccFormular">
     <nav>
         <span class="TabNavigationItem active" data-target-tab-id="tab1">Fahrzeug</span>
         <span class="TabNavigationItem" data-target-tab-id="tab2">KFZ-Steuer</span>
@@ -26,39 +27,44 @@
                         <input type="text" name="kennzeichen_alt"/>
                     </label>
 
-                    <fieldset class="checkboxList">
+                    <fieldset name="neues_kennzeichen" class="CheckboxList">
                         <legend>das neue Kennzeichen</legend>
-                        <fieldset>
-                            <label>
-                                <input type="checkbox" name="besser" value="gelb"/>
+
+                        <div class="CheckboxList__item DependencyGroup">
+                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                <input type="checkbox" name="besser" value="gelb" data-activate-fieldset-name="neues_kennzeichen_details"/>
                                 <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
                             </label>
-                            <div class="Grid">
-                                <div class="Grid__Module Grid_Module--20">&nbsp;</div>
-                                <div class="Grid__Module Grid_Module--80">
+                            <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_details" disabled="disabled">
+                                <label>
+                                    <span>Wünsche</span>
                                     <input type="text" name="kennzeichen_neu_wuensche"/>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <label>
-                                <input type="checkbox" name="besser" value="orange"/>
+                                </label>
+                            </fieldset>
+                        </div>
+                        <!---->
+                        <div class="CheckboxList__item DependencyGroup">
+                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                <input type="checkbox" name="besser" value="orange" data-activate-fieldset-name="neues_kennzeichen_reservierung_details"/>
                                 <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
                             </label>
-                            <div class="Grid">
-                                <div class="Grid__Module Grid_Module--20">&nbsp;</div>
-                                <div class="Grid__Module Grid_Module--80">
+                            <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_reservierung_details" disabled="disabled">
+                                <label>
+                                    <span>Reservierung</span>
                                     <input type="text" name="kennzeichen_neu_reserviert"/>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <label>
+                                </label>
+                            </fieldset>
+                        </div>
+                        <!---->
+                        <div class="CheckboxList__item">
+                            <label class="CheckboxList__item__checkbox">
                                 <input type="checkbox" name="besser" value="hell rosa"/>
-                                <span>spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
+                                <span>Spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
                             </label>
-                        </fieldset>
+                        </div>
                     </fieldset>
+
+
                 </fieldset>
 
                 <fieldset>
@@ -79,12 +85,12 @@
                         </div>
                     </div>
 
-                    <fieldset class="checkboxList">
-                        <label>
-                            <input type="checkbox" name="besser" value="hell rosa"/>
-                            <span>Fahrzeug wird finanziert bzw. geleast</span>
-                        </label>
-                    </fieldset>
+
+                    <label class="Checkbox">
+                        <input type="checkbox" name="leasing" value="hell rosa"/>
+                        <span>Fahrzeug wird finanziert bzw. geleast</span>
+                    </label>
+
 
                 </fieldset>
 
@@ -285,6 +291,7 @@
 
 </div>
 
+<script type="text/javascript" src="assets/scripts/Forms.js"></script>
 <script type="text/javascript" src="assets/scripts/Tabs.js"></script>
 
 </body>
