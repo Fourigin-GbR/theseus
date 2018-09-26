@@ -111,63 +111,65 @@
             </footer>
         </div>
 
+
+
+
+
+
         <div data-tab-id="tab2" class="Tab">
             <form action="#" method="get">
                 <fieldset class="checkboxList">
                     <legend>Bankdaten für die Abbuchung der KFZ-Steuer</legend>
-                    <fieldset>
-                        <label>
-                            <input type="checkbox" name="besser" value="gelb"/>
+                    <div class="DependencyGroup">
+                        <label class="Checkbox DependencyGroup__master">
+                            <input type="checkbox" name="besser" value="gelb" data-activate-fieldset-name="hinterlegte_kontodaten"/>
                             <span>die hinterlegte Bankverbindung verwenden:</span>
                         </label>
-                        <div class="Grid">
-                            <div class="Grid__Module Grid_Module--20">&nbsp;</div>
-                            <div class="Grid__Module Grid_Module--80">
-                                <label>
-                                    <select name="auswahl">
-                                        <option value="eis">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
-                                        <option value="sahne">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <label>
-                            <input type="checkbox" name="besser" value="hell rosa"/>
+                        <fieldset name="hinterlegte_kontodaten" class="DependencyGroup__dependant">
+                            <label>
+                                <select name="auswahl">
+                                    <option value="eis">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
+                                    <option value="sahne">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43
+                                    </option>
+                                </select>
+                            </label>
+                        </fieldset>
+                    </div>
+
+                    <div class="DependencyGroup">
+                        <label class="Checkbox DependencyGroup__master">
+                            <input type="checkbox" name="besser" value="hell rosa"  data-activate-fieldset-name="neue_kontodaten"/>
                             <span>eine neue Bankverbindung verwenden:</span>
                         </label>
-                        <div class="Grid">
-                            <div class="Grid__Module Grid_Module--10">&nbsp;</div>
-                            <div class="Grid__Module Grid_Module--40">
-                                <label>
-                                    <span>IBAN:</span>
-                                    <input type="text" name="evb_nummer"/>
-                                </label>
+                        <fieldset name="neue_kontodaten" class="DependencyGroup__dependant">
+                            <div class="Grid">
+                                <div class="Grid__Module Grid_Module--40">
+                                    <label>
+                                        <span>IBAN:</span>
+                                        <input type="text" name="evb_nummer"/>
+                                    </label>
+                                </div>
+                                <div class="Grid__Module Grid_Module--30">
+                                    <label>
+                                        <span>BIC:</span>
+                                        <input type="text" name="evb_nummer" readonly="readonly"/>
+                                    </label>
+                                </div>
+                                <div class="Grid__Module Grid_Module--30">
+                                    <label>
+                                        <span>Bank:</span>
+                                        <input type="text" name="evb_nummer" readonly="readonly"/>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="Grid__Module Grid_Module--20">
-                                <label>
-                                    <span>BIC:</span>
-                                    <input type="text" name="evb_nummer" readonly="readonly"/>
-                                </label>
-                            </div>
-                            <div class="Grid__Module Grid_Module--30">
-                                <label>
-                                    <span>Bank:</span>
-                                    <input type="text" name="evb_nummer" readonly="readonly"/>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="Grid">
-                            <div class="Grid__Module Grid_Module--10">&nbsp;</div>
-                            <div class="Grid__Module Grid_Module--90">
-                                <label>
-                                    <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
-                                    <input type="text" name="evb_nummer"/>
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
+
+                            <label>
+                                <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
+                                <input type="text" name="evb_nummer"/>
+                            </label>
+
+                        </fieldset>
+                    </div>
                 </fieldset>
             </form>
 
@@ -182,64 +184,66 @@
                 <fieldset class="checkboxList">
                     <legend>Verfügbare Zahlungsmethoden</legend>
                     <fieldset>
-                        <label>
-                            <input type="checkbox" name="besser" value="gelb"/>
+                        <label class="Radio">
+                            <input type="radio" name="besser" value="gelb"/>
                             <span>PayPal</span>
                         </label>
-                        <label>
-                            <input type="checkbox" name="besser" value="gelb"/>
+                        <label class="Radio">
+                            <input type="radio" name="besser" value="gelb"/>
                             <span>Sofort-Überweisung</span>
                         </label>
-                        <label>
-                            <input type="checkbox" name="besser" value="gelb"/>
+                        <label class="Radio">
+                            <input type="radio" name="besser" value="gelb"/>
                             <span>Vorkasse</span>
                         </label>
-                        <fieldset>
-                            <label>
-                                <input type="checkbox" name="besser" value="gelb"/>
+                        <div class="DependencyGroup">
+                            <label class="Radio DependencyGroup__master">
+                                <input type="radio" name="besser" value="gelb" data-activate-fieldset-name="neue_bankverbindung"/>
                                 <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
                             </label>
-                            <select name="auswahl">
-                                <option value="eis">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
-                                <option value="sahne">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43</option>
-                            </select>
-                        </fieldset>
-                        <fieldset>
-                            <label>
-                                <input type="checkbox" name="besser" value="hell rosa"/>
+                            <fieldset class="DependencyGroup__dependant" name="hinterlegte_bankverbindung">
+                                <label>
+                                    <span>Bankdaten</span>
+                                    <select name="auswahl">
+                                        <option value="eis">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
+                                        <option value="sahne">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43</option>
+                                    </select>
+                                </label>
+                            </fieldset>
+                        </div>
+                        <div class="DependencyGroup">
+                            <label class="Radio DependencyGroup__master">
+                                <input type="radio" name="besser" value="hell rosa" data-activate-fieldset-name="neu_neu_neu"/>
                                 <span>Lastschrifteinzug von einer neuen Bankverbindung</span>
                             </label>
-                            <div class="Grid">
-                                <div class="Grid__Module Grid_Module--10">&nbsp;</div>
-                                <div class="Grid__Module Grid_Module--40">
-                                    <label>
-                                        <span>IBAN:</span>
-                                        <input type="text" name="evb_nummer"/>
-                                    </label>
+                            <fieldset class="DependencyGroup__dependant" name="neu_neu_neu">
+                                <div class="Grid">
+                                    <div class="Grid__Module Grid_Module--40">
+                                        <label>
+                                            <span>IBAN:</span>
+                                            <input type="text" name="evb_nummer"/>
+                                        </label>
+                                    </div>
+                                    <div class="Grid__Module Grid_Module--30">
+                                        <label>
+                                            <span>BIC:</span>
+                                            <input type="text" name="evb_nummer" readonly="readonly"/>
+                                        </label>
+                                    </div>
+                                    <div class="Grid__Module Grid_Module--30">
+                                        <label>
+                                            <span>Bank:</span>
+                                            <input type="text" name="evb_nummer" readonly="readonly"/>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="Grid__Module Grid_Module--20">
-                                    <label>
-                                        <span>BIC:</span>
-                                        <input type="text" name="evb_nummer" readonly="readonly"/>
-                                    </label>
-                                </div>
-                                <div class="Grid__Module Grid_Module--30">
-                                    <label>
-                                        <span>Bank:</span>
-                                        <input type="text" name="evb_nummer" readonly="readonly"/>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="Grid">
-                                <div class="Grid__Module Grid_Module--10">&nbsp;</div>
-                                <div class="Grid__Module Grid_Module--90">
-                                    <label>
-                                        <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
-                                        <input type="text" name="evb_nummer"/>
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
+
+                                <label>
+                                    <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
+                                    <input type="text" name="evb_nummer"/>
+                                </label>
+                            </fieldset>
+                        </div>
                     </fieldset>
                 </fieldset>
             </form>
@@ -254,20 +258,20 @@
             <form action="#" method="get">
                 <fieldset class="checkboxList">
                     <legend>Folgende Optionen stehen Ihnen zur Verfügung</legend>
-                    <fieldset>
-                        <label>
-                            <input type="checkbox" name="besser" value="gelb"/>
+
+                        <label class="Radio">
+                            <input type="radio" name="besser" value="gelb"/>
                             <span>Sie bringen Ihre Unterlagen zu uns</span>
+                            <p class="description">Unsere Adresse und reguläre Öffnungszeiten finden Sie in der Bestätigung-Email.</p>
                         </label>
-                        Unsere Adresse und reguläre Öffnungszeiten finden Sie in der Bestätigung-Email.
-                    </fieldset>
-                    <fieldset>
-                        <label>
-                            <input type="checkbox" name="besser" value="gelb"/>
+
+
+                        <label class="Radio">
+                            <input type="radio" name="besser" value="gelb"/>
                             <span>Sie lassen uns Ihre Unterlagen abholen</span>
+                            <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden, welcher in der Bestätigung-Email steht.</p>
                         </label>
-                        Der Termin und Abholort kann bequem über den Link vereinbart werden, welcher in der Bestätigung-Email steht.
-                    </fieldset>
+
                 </fieldset>
             </form>
 
