@@ -1,0 +1,27 @@
+{
+  "form": "register-new-vehicle",
+  "definition-id": "register-vehicle",
+  "pre-validation": true,
+  "valid": false,
+  "fields": {
+    "vehicle.existing-nameplate": {
+      "value": null,
+      "valid": true
+    },
+    "vehicle.new-nameplate": {
+      "value": "portal",
+      "valid": true
+    },
+    "vehicle.new-nameplate/nameplate-customer-requirements": {
+      "value": null,
+      "valid": false,
+      "reasons": [
+        "MISSING_MANDATORY_FIELD_VALUE"
+      ]
+    },
+    "vehicle-data.ident": {
+      "value": "123",
+      "valid": true
+    }
+  }
+}

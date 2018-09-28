@@ -1,0 +1,11 @@
+{
+  "form": "register-new-vehicle",
+  "definition-id": "register-vehicle",
+  "pre-validation": true,
+  "fields": {
+    "vehicle.existing-nameplate": null,
+    "vehicle.new-nameplate": "portal",
+    "vehicle.new-nameplate/nameplate-customer-requirements": null,
+    "vehicle-data.ident": "123"
+  }
+}
