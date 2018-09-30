@@ -273,6 +273,15 @@ project(':argo') {
             compile managedDependency('org.apache.pdfbox:pdfbox')
         }
     }
+
+    project('com.fourigin.argo.forms.web') {
+        version = argoVersion
+
+        dependencies {
+            compile managedDependency('io.netty:netty-all')
+            compile managedDependency('com.google.guava:guava')
+        }
+    }
 }
 
 project(':hera') {
