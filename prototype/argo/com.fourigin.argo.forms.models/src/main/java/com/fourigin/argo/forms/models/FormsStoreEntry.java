@@ -1,4 +1,4 @@
-package com.fourigin.argo.forms.model;
+package com.fourigin.argo.forms.models;
 
 import java.io.Serializable;
 import java.util.Map;

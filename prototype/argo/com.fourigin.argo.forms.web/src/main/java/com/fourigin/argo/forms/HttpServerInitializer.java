@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
     private final String contextPath;
+    private FormsStoreRepository formsStoreRepository;
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerInitializer.class);
 
-    public HttpServerInitializer(String contextPath) {
+    public HttpServerInitializer(String contextPath, FormsStoreRepository formsStoreRepository) {
         this.contextPath = contextPath;
+        this.formsStoreRepository = formsStoreRepository;
 
         if (logger.isInfoEnabled()) logger.info("Initializing with contextPath {}", contextPath);
     }
@@ -26,6 +28,6 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
-        pipeline.addLast(new HttpServerHandler(contextPath));
+        pipeline.addLast(new HttpServerHandler(contextPath, formsStoreRepository));
     }
 }

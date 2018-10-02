@@ -1,7 +1,7 @@
-package com.fourigin.argo.forms.model;
+package com.fourigin.argo.forms.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class FormsStoreEntryInfo implements Serializable {
@@ -9,11 +9,11 @@ public class FormsStoreEntryInfo implements Serializable {
 
     private String id;
 
-    private String revision;
+    private long revision;
 
-    private FormsRequestHeader header;
+    private FormsStoreEntryHeader header;
 
-    private List<FormsDataProcessorState> states;
+    private Map<String, FormsDataProcessingState> processingStates;
 
     public String getId() {
         return id;
@@ -23,28 +23,28 @@ public class FormsStoreEntryInfo implements Serializable {
         this.id = id;
     }
 
-    public String getRevision() {
+    public long getRevision() {
         return revision;
     }
 
-    public void setRevision(String revision) {
+    public void setRevision(long revision) {
         this.revision = revision;
     }
 
-    public FormsRequestHeader getHeader() {
+    public FormsStoreEntryHeader getHeader() {
         return header;
     }
 
-    public void setHeader(FormsRequestHeader header) {
+    public void setHeader(FormsStoreEntryHeader header) {
         this.header = header;
     }
 
-    public List<FormsDataProcessorState> getStates() {
-        return states;
+    public Map<String, FormsDataProcessingState> getProcessingStates() {
+        return processingStates;
     }
 
-    public void setStates(List<FormsDataProcessorState> states) {
-        this.states = states;
+    public void setProcessingStates(Map<String, FormsDataProcessingState> states) {
+        this.processingStates = states;
     }
 
     @Override
@@ -55,12 +55,12 @@ public class FormsStoreEntryInfo implements Serializable {
         return Objects.equals(id, that.id) &&
             Objects.equals(revision, that.revision) &&
             Objects.equals(header, that.header) &&
-            Objects.equals(states, that.states);
+            Objects.equals(processingStates, that.processingStates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, revision, header, states);
+        return Objects.hash(id, revision, header, processingStates);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class FormsStoreEntryInfo implements Serializable {
             "id='" + id + '\'' +
             ", revision='" + revision + '\'' +
             ", header=" + header +
-            ", states=" + states +
+            ", processingStates=" + processingStates +
             '}';
     }
 }

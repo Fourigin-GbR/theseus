@@ -1,10 +1,10 @@
-package com.fourigin.argo.forms.model;
+package com.fourigin.argo.forms.models;
 
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class FormsRequestHeader implements Serializable {
+public class FormsStoreEntryHeader implements Serializable {
     private static final long serialVersionUID = 7175957709964797404L;
 
     private String formDefinition;
@@ -47,8 +47,8 @@ public class FormsRequestHeader implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FormsRequestHeader)) return false;
-        FormsRequestHeader that = (FormsRequestHeader) o;
+        if (!(o instanceof FormsStoreEntryHeader)) return false;
+        FormsStoreEntryHeader that = (FormsStoreEntryHeader) o;
         return Objects.equals(formDefinition, that.formDefinition) &&
             Objects.equals(customer, that.customer) &&
             Objects.equals(base, that.base) &&

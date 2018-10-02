@@ -1,4 +1,4 @@
-package com.fourigin.argo.forms.model;
+package com.fourigin.argo.forms.models;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -9,8 +9,6 @@ public class ProcessingHistory implements Serializable {
 
     private long timestamp;
 
-    private ProcessingState state;
-
     private Map<String, String> context;
 
     public long getTimestamp() {
@@ -19,14 +17,6 @@ public class ProcessingHistory implements Serializable {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public ProcessingState getState() {
-        return state;
-    }
-
-    public void setState(ProcessingState state) {
-        this.state = state;
     }
 
     public Map<String, String> getContext() {
@@ -43,20 +33,19 @@ public class ProcessingHistory implements Serializable {
         if (!(o instanceof ProcessingHistory)) return false;
         ProcessingHistory that = (ProcessingHistory) o;
         return timestamp == that.timestamp &&
-            state == that.state &&
             Objects.equals(context, that.context);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(timestamp, state, context);
+
+        return Objects.hash(timestamp, context);
     }
 
     @Override
     public String toString() {
         return "ProcessingHistory{" +
             "timestamp=" + timestamp +
-            ", state=" + state +
             ", context=" + context +
             '}';
     }

@@ -11,14 +11,12 @@
       "client": "IE5"
     }
   },
-  "states": [
-    {
-      "processor": "mailer",
+  "processing-states": {
+    "mailer": {
       "state": "SUCCESS",
       "processing-history": [
         {
           "timestamp": 102938475647382910,
-          "state": "SUCCESS",
           "context": {
             "cc": "info@tsp.com",
             "mail": "max.mustermann@aol.com"
@@ -26,13 +24,11 @@
         }
       ]
     },
-    {
-      "processor": "tax-payment-form-completer",
+    "tax-payment-form-completer": {
       "state": "SUCCESS",
       "processing-history": [
         {
           "processing-timestamp": 102938475647382910,
-          "state": "SUCCESS",
           "context": {
             "form": "einzugsermaechtigung",
             "attachment-name": "tax-payment-form"
@@ -40,13 +36,11 @@
         }
       ]
     },
-    {
-      "processor": "register-form-completer",
+    "register-form-completer": {
       "state": "SUCCESS",
       "processing-history": [
         {
           "processing-timestamp": 102938475647382910,
-          "state": "FAILED",
           "context": {
             "form": "zulassungsantrag",
             "cause": "Service unavailable"
@@ -54,7 +48,6 @@
         },
         {
           "processing-timestamp": 102938475647382910,
-          "state": "SUCCESS",
           "context": {
             "form": "zulassungsantrag",
             "cause": "register-form"
@@ -62,5 +55,5 @@
         }
       ]
     }
-  ]
+  }
 }

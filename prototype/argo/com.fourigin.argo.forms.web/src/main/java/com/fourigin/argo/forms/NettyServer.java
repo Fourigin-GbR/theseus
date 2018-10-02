@@ -1,5 +1,8 @@
 package com.fourigin.argo.forms;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -13,8 +16,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan("com.fourigin.argo.config")
 public class NettyServer {
 
     private int port;
@@ -30,11 +35,13 @@ public class NettyServer {
     }
 
     @Bean
-    public ServerBootstrap serverBootstrap() {
+    public ServerBootstrap serverBootstrap(
+        @Autowired FormsStoreRepository formsStoreRepository
+    ) {
         return new ServerBootstrap()
             .group(eventLoopGroup())
             .handler(new LoggingHandler(LogLevel.INFO))
-            .childHandler(new HttpServerInitializer(contextPath))
+            .childHandler(new HttpServerInitializer(contextPath, formsStoreRepository))
             .channel(NioServerSocketChannel.class);
     }
 
@@ -47,7 +54,18 @@ public class NettyServer {
     public Channel channel(@Autowired ServerBootstrap serverBootstrap) throws InterruptedException {
         return serverBootstrap.bind(port).sync().channel();
     }
-    
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//        objectMapper.registerModule(new ContentPageModule());
+
+        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+
+        return objectMapper;
+    }
+
     @Value("${server.port}")
     public void setPort(int port) {
         this.port = port;
