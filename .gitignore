@@ -17,3 +17,5 @@ prototype/cms/web/production/assets/styles
 /prototype/argo/cms-root/argo.log.2018-09-15.0.gz
 /prototype/argo/cms-root/argo.log
 /prototype/argo/cms-root/argo-1.0-SNAPSHOT.jar
+/prototype/argo/com.fourigin.argo.models/src/main/java/com/fourigin/argo/models/content/elements/forms
+/prototype/argo/com.fourigin.argo.forms.web/storage
