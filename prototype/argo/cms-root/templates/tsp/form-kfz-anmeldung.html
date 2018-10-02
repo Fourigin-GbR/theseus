@@ -18,111 +18,114 @@
         <span class="TabNavigationItem" data-target-tab-id="tab5">Prüfen &amp; abschließen</span>
     </nav>
     <div class="TabsWrapper">
-        <div data-tab-id="tab1" class="Tab active">
-            <form action="#" method="get">
+        <form action="#" method="get">
+            <div data-tab-id="tab1" class="Tab active">
                 <fieldset>
-                    <legend>Kennzeichen</legend>
-                    <label>
-                        <span>das alte Kennzeichen (nur bei Ummeldungen)</span>
-                        <input type="text" name="kennzeichen_alt"/>
-                    </label>
+                    <legend>Informationen zum Fahrzeug</legend>
+                    <fieldset>
+                        <legend>Kennzeichen</legend>
+                        <label>
+                            <span>das alte Kennzeichen (nur bei Ummeldungen)</span>
+                            <input type="text" name="kennzeichen_alt"/>
+                        </label>
 
-                    <fieldset name="neues_kennzeichen" class="CheckboxList">
-                        <legend>das neue Kennzeichen</legend>
+                        <fieldset name="neues_kennzeichen" class="CheckboxList">
+                            <legend>das neue Kennzeichen</legend>
 
-                        <div class="CheckboxList__item DependencyGroup">
-                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                <input type="checkbox" name="new_nameplate" value="portal" data-activate-fieldset-name="neues_kennzeichen_details"/>
-                                <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
-                            </label>
-                            <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_details" disabled="disabled">
-                                <label>
-                                    <!--<span>Wünsche</span>-->
-                                    <input type="text" name="kennzeichen_neu_wuensche"/>
+                            <div class="CheckboxList__item DependencyGroup">
+                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                    <input type="checkbox" name="new_nameplate" value="portal"
+                                           data-activate-fieldset-name="neues_kennzeichen_details"/>
+                                    <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
                                 </label>
-                            </fieldset>
-                        </div>
-                        <!---->
-                        <div class="CheckboxList__item DependencyGroup">
-                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                <input type="checkbox" name="new_nameplate" value="self" data-activate-fieldset-name="neues_kennzeichen_reservierung_details"/>
-                                <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
-                            </label>
-                            <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_reservierung_details" disabled="disabled">
-                                <label>
-                                    <!--<span>Reservierung</span>-->
-                                    <input type="text" name="kennzeichen_neu_reserviert"/>
+                                <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_details"
+                                          disabled="disabled">
+                                    <label>
+                                        <!--<span>Wünsche</span>-->
+                                        <input type="text" name="kennzeichen_neu_wuensche"/>
+                                    </label>
+                                </fieldset>
+                            </div>
+                            <!---->
+                            <div class="CheckboxList__item DependencyGroup">
+                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                    <input type="checkbox" name="new_nameplate" value="self"
+                                           data-activate-fieldset-name="neues_kennzeichen_reservierung_details"/>
+                                    <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
                                 </label>
-                            </fieldset>
+                                <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_reservierung_details"
+                                          disabled="disabled">
+                                    <label>
+                                        <!--<span>Reservierung</span>-->
+                                        <input type="text" name="kennzeichen_neu_reserviert"/>
+                                    </label>
+                                </fieldset>
+                            </div>
+                            <!---->
+                            <div class="CheckboxList__item">
+                                <label class="CheckboxList__item__checkbox">
+                                    <input type="checkbox" name="new_nameplate" value="random"/>
+                                    <span>Spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Fahrzeugdaten</legend>
+
+                        <div class="FormularGroup Grid">
+                            <div class="Grid_Module--50">
+                                <label>
+                                    <span>Ident-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
+                                    <input type="text" name="strasse"/>
+                                </label>
+                            </div>
+                            <div class="Grid_Module--50">
+                                <label>
+                                    <span>Fahrzeugbrief-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
+                                    <input type="text" name="hausnummer"/>
+                                </label>
+                            </div>
                         </div>
-                        <!---->
-                        <div class="CheckboxList__item">
-                            <label class="CheckboxList__item__checkbox">
-                                <input type="checkbox" name="new_nameplate" value="random"/>
-                                <span>Spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
-                            </label>
-                        </div>
+
+
+                        <label class="Checkbox">
+                            <input type="checkbox" name="leasing" value="hell rosa"/>
+                            <span>Fahrzeug wird finanziert bzw. geleast</span>
+                        </label>
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>KFZ-Versicherung</legend>
+
+                        <label>
+                            <span>eVB-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
+                            <input type="text" name="evb_nummer"/>
+                        </label>
+
                     </fieldset>
 
 
+                    <footer>
+                        <button type="button" data-action="nextTab">Weiter</button>
+                    </footer>
                 </fieldset>
-
-                <fieldset>
-                    <legend>Fahrzeugdaten</legend>
-
-                    <div class="FormularGroup Grid">
-                        <div class="Grid_Module--50">
-                            <label>
-                                <span>Ident-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
-                                <input type="text" name="strasse"/>
-                            </label>
-                        </div>
-                        <div class="Grid_Module--50">
-                            <label>
-                                <span>Fahrzeugbrief-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
-                                <input type="text" name="hausnummer"/>
-                            </label>
-                        </div>
-                    </div>
+            </div>
 
 
-                    <label class="Checkbox">
-                        <input type="checkbox" name="leasing" value="hell rosa"/>
-                        <span>Fahrzeug wird finanziert bzw. geleast</span>
-                    </label>
+            <div data-tab-id="tab2" class="Tab">
 
-
-                </fieldset>
-
-                <fieldset>
-                    <legend>KFZ-Versicherung</legend>
-
-                    <label>
-                        <span>eVB-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
-                        <input type="text" name="evb_nummer"/>
-                    </label>
-
-                </fieldset>
-            </form>
-
-            <footer>
-                <button type="submit">Weiter</button>
-                <button type="reset">Zurücksetzen</button>
-            </footer>
-        </div>
-
-
-
-
-
-
-        <div data-tab-id="tab2" class="Tab">
-            <form action="#" method="get">
                 <fieldset class="checkboxList">
                     <legend>Bankdaten für die Abbuchung der KFZ-Steuer</legend>
                     <div class="DependencyGroup">
                         <label class="Checkbox DependencyGroup__master">
-                            <input type="checkbox" name="besser" value="gelb" data-activate-fieldset-name="hinterlegte_kontodaten"/>
+                            <input type="checkbox" name="besser" value="gelb"
+                                   data-activate-fieldset-name="hinterlegte_kontodaten"/>
                             <span>die hinterlegte Bankverbindung verwenden:</span>
                         </label>
                         <fieldset name="hinterlegte_kontodaten" class="DependencyGroup__dependant">
@@ -138,7 +141,8 @@
 
                     <div class="DependencyGroup">
                         <label class="Checkbox DependencyGroup__master">
-                            <input type="checkbox" name="besser" value="hell rosa"  data-activate-fieldset-name="neue_kontodaten"/>
+                            <input type="checkbox" name="besser" value="hell rosa"
+                                   data-activate-fieldset-name="neue_kontodaten"/>
                             <span>eine neue Bankverbindung verwenden:</span>
                         </label>
                         <fieldset name="neue_kontodaten" class="DependencyGroup__dependant">
@@ -171,16 +175,15 @@
                         </fieldset>
                     </div>
                 </fieldset>
-            </form>
 
-            <footer>
-                <button type="button">Zurück</button>
-                <button type="submit">Weiter</button>
-            </footer>
-        </div>
+                <footer>
+                    <button type="button" data-action="previousTab">Zurück</button>
+                    <button type="button" data-action="nextTab">Weiter</button>
+                </footer>
+            </div>
 
-        <div data-tab-id="tab3" class="Tab">
-            <form action="#" method="get">
+            <div data-tab-id="tab3" class="Tab">
+
                 <fieldset class="checkboxList">
                     <legend>Verfügbare Zahlungsmethoden</legend>
                     <fieldset>
@@ -198,7 +201,8 @@
                         </label>
                         <div class="DependencyGroup">
                             <label class="Radio DependencyGroup__master">
-                                <input type="radio" name="besser" value="gelb" data-activate-fieldset-name="neue_bankverbindung"/>
+                                <input type="radio" name="besser" value="gelb"
+                                       data-activate-fieldset-name="neue_bankverbindung"/>
                                 <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
                             </label>
                             <fieldset class="DependencyGroup__dependant" name="hinterlegte_bankverbindung">
@@ -213,7 +217,8 @@
                         </div>
                         <div class="DependencyGroup">
                             <label class="Radio DependencyGroup__master">
-                                <input type="radio" name="besser" value="hell rosa" data-activate-fieldset-name="neu_neu_neu"/>
+                                <input type="radio" name="besser" value="hell rosa"
+                                       data-activate-fieldset-name="neu_neu_neu"/>
                                 <span>Lastschrifteinzug von einer neuen Bankverbindung</span>
                             </label>
                             <fieldset class="DependencyGroup__dependant" name="neu_neu_neu">
@@ -246,57 +251,59 @@
                         </div>
                     </fieldset>
                 </fieldset>
-            </form>
 
-            <footer>
-                <button type="button">Zurück</button>
-                <button type="submit">Weiter</button>
-            </footer>
-        </div>
 
-        <div data-tab-id="tab4" class="Tab">
-            <form action="#" method="get">
+                <footer>
+                    <button type="button" data-action="previousTab">Zurück</button>
+                    <button type="button" data-action="nextTab">Weiter</button>
+                </footer>
+            </div>
+
+            <div data-tab-id="tab4" class="Tab">
+
                 <fieldset class="checkboxList">
                     <legend>Folgende Optionen stehen Ihnen zur Verfügung</legend>
 
-                        <label class="Radio">
-                            <input type="radio" name="besser" value="gelb"/>
-                            <span>Sie bringen Ihre Unterlagen zu uns</span>
-                            <p class="description">Unsere Adresse und reguläre Öffnungszeiten finden Sie in der Bestätigung-Email.</p>
-                        </label>
+                    <label class="Radio">
+                        <input type="radio" name="besser" value="gelb"/>
+                        <span>Sie bringen Ihre Unterlagen zu uns</span>
+                        <p class="description">Unsere Adresse und reguläre Öffnungszeiten finden Sie in der
+                            Bestätigung-Email.</p>
+                    </label>
 
 
-                        <label class="Radio">
-                            <input type="radio" name="besser" value="gelb"/>
-                            <span>Sie lassen uns Ihre Unterlagen abholen</span>
-                            <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden, welcher in der Bestätigung-Email steht.</p>
-                        </label>
+                    <label class="Radio">
+                        <input type="radio" name="besser" value="gelb"/>
+                        <span>Sie lassen uns Ihre Unterlagen abholen</span>
+                        <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden,
+                            welcher in der Bestätigung-Email steht.</p>
+                    </label>
 
                 </fieldset>
-            </form>
 
-            <footer>
-                <button type="button">Zurück</button>
-                <button type="submit">Weiter</button>
-            </footer>
-        </div>
 
-        <div data-tab-id="tab5" class="Tab">
-            <form action="#" method="get">
-            </form>
+                <footer>
+                    <button type="button" data-action="previousTab">Zurück</button>
+                    <button type="button" data-action="nextTab">Weiter</button>
+                </footer>
+            </div>
 
-            <footer>
-                <button type="button">Zurück</button>
-                <button type="submit">Abschließen</button>
-            </footer>
-        </div>
+            <div data-tab-id="tab5" class="Tab">
+
+
+                <footer>
+                    <button type="button" data-action="previousTab">Zurück</button>
+                    <button type="submit">Absenden</button>
+                </footer>
+            </div>
+        </form>
     </div>
 
 
 </div>
 
 <script type="text/javascript" src="assets/scripts/Forms.js"></script>
-<script type="text/javascript" src="assets/scripts/Tabs.js"></script>
+<script type="text/javascript" src="assets/scripts/TabBoxes.js"></script>
 
 </body>
 </html>
