@@ -1,6 +1,5 @@
 package com.fourigin.argo.forms;
 
-import com.google.common.io.Resources;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,9 +11,11 @@ import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.CharsetUtil;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,7 +87,12 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private void serveStatic(ChannelHandlerContext ctx, String path) throws Exception {
         try {
-            byte[] raw = Resources.toByteArray(Resources.getResource(path.substring(1)));
+            URL resource = this.getClass().getResource(path);
+            if(resource == null){
+                throw new IllegalArgumentException("No resource available for path '" + path + "'!");
+            }
+            byte[] raw = IOUtils.toByteArray(resource);
+
             ByteBuf content = Unpooled.wrappedBuffer(raw);
 
             FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
@@ -94,7 +100,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
             ctx.write(response);
         } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
             serve404(ctx);
         }
 

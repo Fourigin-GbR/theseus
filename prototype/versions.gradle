@@ -112,7 +112,6 @@ registerVersion('com.fasterxml.jackson.core:jackson-annotations', versionMap.jac
 registerVersion('com.fasterxml.jackson.core:jackson-core', versionMap.jackson)
 registerVersion('com.fasterxml.jackson.core:jackson-databind', versionMap.jackson)
 registerVersion('com.fasterxml.jackson.module:jackson-module-afterburner', versionMap.jacksonAfterburner)
-registerVersion('com.google.guava:guava','17.0')
 registerVersion('com.mortennobel:java-image-scaling', '0.8.5')
 registerVersion('com.sun.xml.messaging.saaj:saaj-impl', '1.3')
 registerVersion('com.twelvemonkeys.imageio:imageio-jpeg', versionMap.twelvemonkeys)

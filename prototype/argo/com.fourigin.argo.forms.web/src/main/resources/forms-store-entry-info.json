@@ -13,11 +13,11 @@
   },
   "states": [
     {
-      "data-processor": "mailer",
+      "processor": "mailer",
       "state": "SUCCESS",
-      "processing-states": [
+      "processing-history": [
         {
-          "processing-timestamp": 102938475647382910,
+          "timestamp": 102938475647382910,
           "state": "SUCCESS",
           "context": {
             "cc": "info@tsp.com",
@@ -27,9 +27,9 @@
       ]
     },
     {
-      "data-processor": "tax-payment-form-completer",
+      "processor": "tax-payment-form-completer",
       "state": "SUCCESS",
-      "processing-states": [
+      "processing-history": [
         {
           "processing-timestamp": 102938475647382910,
           "state": "SUCCESS",
@@ -41,9 +41,9 @@
       ]
     },
     {
-      "data-processor": "register-form-completer",
+      "processor": "register-form-completer",
       "state": "SUCCESS",
-      "processing-states": [
+      "processing-history": [
         {
           "processing-timestamp": 102938475647382910,
           "state": "FAILED",
