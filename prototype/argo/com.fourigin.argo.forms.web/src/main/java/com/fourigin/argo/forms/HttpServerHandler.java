@@ -1,5 +1,6 @@
 package com.fourigin.argo.forms;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.Map;
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
     private final String contextPath;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerHandler.class);
 
@@ -54,6 +58,11 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             return;
         }
 
+        if((contextPath + "/jsonInput").equals(uri)){
+            serveJsonInput(ctx, msg);
+            return;
+        }
+
         serveStatic(ctx, uri.substring(contextPath.length()));
     }
 
@@ -77,6 +86,40 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             }
         }
         sb.append("]");
+
+        ByteBuf content = Unpooled.copiedBuffer(sb.toString(), CharsetUtil.UTF_8);
+        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json");
+        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
+        ctx.write(response);
+    }
+
+    private void serveJsonInput(ChannelHandlerContext ctx, FullHttpRequest msg) throws IOException {
+        if (logger.isInfoEnabled()) logger.info("Serving json input ...");
+
+        String input = msg.content().toString(StandardCharsets.UTF_8);
+        if (logger.isInfoEnabled()) logger.info("input: {}", input);
+
+        Object value;
+
+        try {
+            value = objectMapper.readValue(input, Object.class);
+        }
+        catch(Throwable th){
+            if (logger.isErrorEnabled()) logger.error("Unable to map object from string '{}': {}", input, th.getMessage());
+            value = null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("\"processed\":true,");
+        if(value != null) {
+            sb.append("\"input\":\"").append(value.toString()).append("\"");
+        }
+        else {
+            sb.append("\"input\":null");
+        }
+        sb.append("}");
 
         ByteBuf content = Unpooled.copiedBuffer(sb.toString(), CharsetUtil.UTF_8);
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
