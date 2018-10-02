@@ -124,7 +124,6 @@ project(':argo') {
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
-            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
             compile managedDependency('commons-io:commons-io')
 
             compile managedDependency('org.springframework:spring-context')
@@ -275,11 +274,30 @@ project(':argo') {
     }
 
     project('com.fourigin.argo.forms.web') {
+        apply plugin: 'org.springframework.boot'
+
         version = argoVersion
+
+        archivesBaseName = 'argo-forms'
+        jar {
+            baseName = "argo-forms"
+        }
 
         dependencies {
             compile managedDependency('io.netty:netty-all')
             compile managedDependency('com.google.guava:guava')
+
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.blobs')
+
+            compile managedDependency('commons-io:commons-io')
+
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+
+            compile managedDependency('org.springframework.boot:spring-boot-starter')
+            compile managedDependency('org.springframework:spring-context-support')
+
         }
     }
 }

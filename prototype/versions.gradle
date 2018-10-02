@@ -28,7 +28,7 @@ def versionMap = [
 		'slf4j': '1.7.25',
 		'spock': '1.1-groovy-2.4',
 		'spring': '5.0.4.RELEASE',
-		'springboot': '2.0.0.RELEASE',
+		'springboot': '2.0.4.RELEASE',
 		'springsecurity': '5.0.3.RELEASE',
 		'springshell': '1.2.0.RELEASE',
 		//'springws': '2.4.0.RELEASE',
@@ -223,6 +223,7 @@ registerVersion('org.spockframework:spock-core', versionMap.spock)
 registerVersion('org.spockframework:spock-spring', versionMap.spock)
 registerVersion('org.springframework.boot:spring-boot-gradle-plugin', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot-starter-web', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot-starter-thymeleaf', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot-starter-tomcat', versionMap.springboot)

@@ -6,13 +6,19 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
-    private final Cache<Long, String> dataCache;
+    private final String contextPath;
 
-    public HttpServerInitializer(Cache<Long, String> dataCache) {
-        this.dataCache = dataCache;
+    private final Logger logger = LoggerFactory.getLogger(HttpServerInitializer.class);
+
+    public HttpServerInitializer(String contextPath) {
+        this.contextPath = contextPath;
+
+        if (logger.isInfoEnabled()) logger.info("Initializing with contextPath {}", contextPath);
     }
 
     @Override
@@ -21,6 +27,6 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
-        pipeline.addLast(new HttpServerHandler(dataCache));
+        pipeline.addLast(new HttpServerHandler(contextPath));
     }
 }
