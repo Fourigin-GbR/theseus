@@ -1,0 +1,17 @@
+{
+  "id": "ABC1234567890DEF",
+  "data": {
+    "vehicle.existing-nameplate": "",
+    "vehicle.new-nameplate": "portal",
+    "vehicle.new-nameplate/nameplate-customer-requirements": "DA-VN 757",
+    "vehicle-data.ident": "1234567890",
+    "vehicle-data.vehicle-id": "1029384756",
+    "vehicle-data.leasing": false,
+    "vehicle-insurance.id": "0192837465",
+    "tax.account": "use-stored-account",
+    "tax.account/stored-account": "account-2",
+    "payment.methods": "debit-from-existing-account",
+    "payment.methods/stored-account": "account-2",
+    "handover.options": "office-delivering"
+  }
+}

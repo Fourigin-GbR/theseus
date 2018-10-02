@@ -1,0 +1,66 @@
+{
+  "id": "ABC1234567890DEF",
+  "revision": 5,
+  "header": {
+    "form-definition": "register-vehicle",
+    "customer": "tsp",
+    "base": "DE",
+    "timestamp": 102938475647382910,
+    "referrer": {
+      "url": "www.tsp.de/registrierung/neu",
+      "client": "IE5"
+    }
+  },
+  "states": [
+    {
+      "data-processor": "mailer",
+      "state": "SUCCESS",
+      "processing-states": [
+        {
+          "processing-timestamp": 102938475647382910,
+          "state": "SUCCESS",
+          "context": {
+            "cc": "info@tsp.com",
+            "mail": "max.mustermann@aol.com"
+          }
+        }
+      ]
+    },
+    {
+      "data-processor": "tax-payment-form-completer",
+      "state": "SUCCESS",
+      "processing-states": [
+        {
+          "processing-timestamp": 102938475647382910,
+          "state": "SUCCESS",
+          "context": {
+            "form": "einzugsermaechtigung",
+            "attachment-name": "tax-payment-form"
+          }
+        }
+      ]
+    },
+    {
+      "data-processor": "register-form-completer",
+      "state": "SUCCESS",
+      "processing-states": [
+        {
+          "processing-timestamp": 102938475647382910,
+          "state": "FAILED",
+          "context": {
+            "form": "zulassungsantrag",
+            "cause": "Service unavailable"
+          }
+        },
+        {
+          "processing-timestamp": 102938475647382910,
+          "state": "SUCCESS",
+          "context": {
+            "form": "zulassungsantrag",
+            "cause": "register-form"
+          }
+        }
+      ]
+    }
+  ]
+}
