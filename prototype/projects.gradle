@@ -416,6 +416,8 @@ project(':utilities') {
         version = utilitiesVersion
 
         dependencies {
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
         }
     }
 }

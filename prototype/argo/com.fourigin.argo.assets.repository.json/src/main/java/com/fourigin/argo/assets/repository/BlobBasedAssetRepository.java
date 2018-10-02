@@ -1,41 +1,34 @@
 package com.fourigin.argo.assets.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.AssetFactory;
 import com.fourigin.argo.assets.models.AssetProperties;
 import com.fourigin.argo.assets.models.Assets;
-import com.fourigin.utilities.core.FileBasedRepository;
+import com.fourigin.utilities.core.JsonFileBasedRepository;
 import de.huxhorn.sulky.blobs.AmbiguousIdException;
 import de.huxhorn.sulky.blobs.impl.BlobRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.locks.ReadWriteLock;
 
-public class BlobBasedAssetRepository extends FileBasedRepository implements AssetRepository {
+public class BlobBasedAssetRepository extends JsonFileBasedRepository implements AssetRepository {
     private final Logger logger = LoggerFactory.getLogger(BlobBasedAssetRepository.class);
 
     private static final String DIR_BLOB_BASE = "blobs";
     private static final String DIR_META_BASE = "meta";
 
-    private File baseDirectory;
+//    private File baseDirectory;
 
     private BlobRepositoryImpl blobRepository;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+//    private ObjectMapper objectMapper = new ObjectMapper();
 
     public BlobBasedAssetRepository(File baseDirectory) {
         Objects.requireNonNull(baseDirectory, "baseDirectory must not be null!");
@@ -49,7 +42,7 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
             }
         }
 
-        this.baseDirectory = baseDirectory;
+        setBaseDirectory(baseDirectory);
         if (logger.isDebugEnabled()) logger.debug("Using {} as base directory", baseDirectory.getAbsolutePath());
 
         File blobBaseDirectory = new File(baseDirectory, DIR_BLOB_BASE);
@@ -65,7 +58,7 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
     public Asset retrieveAsset(String base, String assetId) {
         if (logger.isDebugEnabled()) logger.debug("Retrieving asset for base {} and id {}", base, assetId);
 
-        AssetProperties props = readAssetProperties(base, assetId);
+        AssetProperties props = read(AssetProperties.class, assetId, base);
 
         return AssetFactory.createFromProperties(props);
     }
@@ -77,7 +70,7 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
         Map<String, Asset> assets = new HashMap<>();
 
         for (String assetId : assetIds) {
-            AssetProperties props = readAssetProperties(base, assetId);
+            AssetProperties props = read(AssetProperties.class, assetId, base);
             Asset asset = AssetFactory.createFromProperties(props);
 
             if (asset != null) {
@@ -150,7 +143,7 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
         asset.setId(blobId);
 
         AssetProperties props = AssetFactory.convertToProperties(asset);
-        writeAssetProperties(base, blobId, props);
+        write(props, blobId, base);
 
         return blobId;
     }
@@ -160,7 +153,7 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
         if (logger.isDebugEnabled()) logger.debug("Updating asset {} for base {} ", asset, base);
 
         AssetProperties props = AssetFactory.convertToProperties(asset);
-        writeAssetProperties(base, asset.getId(), props);
+        write(props, asset.getId(), base);
     }
 
     @Override
@@ -176,7 +169,7 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
     public void removeAsset(String base, String assetId) {
         if (logger.isDebugEnabled()) logger.debug("Removing asset for base {} and id {}", base, assetId);
 
-        File propsFile = getPropsFile(base, assetId);
+        File propsFile = getFile(AssetProperties.class, assetId, base);
         if (propsFile.exists() && !propsFile.delete()) {
             throw new IllegalStateException("Unable to delete asset properties file '" + propsFile.getAbsolutePath() + "'!");
         }
@@ -191,48 +184,76 @@ public class BlobBasedAssetRepository extends FileBasedRepository implements Ass
         }
     }
 
-    /* private -> testing */
-    File getPropsFile(String base, String assetId) {
-        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(assetId);
-        File assetDirectory = new File(baseDirectory, assetBase);
-
-        if (!assetDirectory.exists() && !assetDirectory.mkdirs()) {
-            throw new IllegalStateException("Unable to create missing asset directory '" + assetDirectory.getAbsolutePath() + "'!");
-        }
-
-        String propsFile = "props_" + base + ".json";
-        return new File(assetDirectory, propsFile);
+    @Override
+    protected <T> File getDataFileBase(Class<T> target, String id, String... path) {
+        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(id);
+        return new File(getBaseDirectory(), assetBase);
     }
 
-    /* private -> testing */
-    AssetProperties readAssetProperties(String base, String assetId) {
-        File propsFile = getPropsFile(base, assetId);
-        if (!propsFile.exists()) {
-            return null;
-        }
-
-        ReadWriteLock lock = getLock(base + "/" + assetId);
-        lock.readLock().lock();
-
-        try (InputStream is = new BufferedInputStream(new FileInputStream(propsFile))) {
-            return objectMapper.readValue(is, AssetProperties.class);
-        } catch (IOException ex) {
-            // TODO: create proper exception handling
-            throw new IllegalArgumentException("Error reading asset properties from file (" + propsFile.getAbsolutePath() + ")!", ex);
-        } finally {
-            lock.readLock().unlock();
-        }
+    @Override
+    protected <T> String getDataFileName(Class<T> target, String... path) {
+        return "props_" + path[0];
     }
 
-    /* private -> testing */
-    void writeAssetProperties(String base, String assetId, AssetProperties properties) {
-        File propsFile = getPropsFile(base, assetId);
+//    protected <T> File getFile(Class<T> target, String id, String... path) {
+//        File directory = new File(baseDirectory, resolveBasePath(id));
+//
+//        if (!directory.exists() && !directory.mkdirs()) {
+//            throw new IllegalStateException("Unable to create missing directory '" + directory.getAbsolutePath() + "'!");
+//        }
+//
+//        String propsFile = getDataFileName(target, path) + ".json";
+//        return new File(directory, propsFile);
+//    }
 
-        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(propsFile))) {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, properties);
-        } catch (IOException ex) {
-            // TODO: create proper exception handling
-            throw new IllegalArgumentException("Error writing asset properties to file (" + propsFile.getAbsolutePath() + ")!", ex);
-        }
-    }
+//    /* private -> testing */
+//    File getPropsFile(String base, String assetId) {
+//        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(assetId);
+//        File assetDirectory = new File(baseDirectory, assetBase);
+//
+//        if (!assetDirectory.exists() && !assetDirectory.mkdirs()) {
+//            throw new IllegalStateException("Unable to create missing asset directory '" + assetDirectory.getAbsolutePath() + "'!");
+//        }
+//
+//        String propsFile = "props_" + base + ".json";
+//        return new File(assetDirectory, propsFile);
+//    }
+//
+//    /* private -> testing */
+//    AssetProperties readAssetProperties(String base, String assetId) {
+//        File propsFile = getPropsFile(base, assetId);
+//        if (!propsFile.exists()) {
+//            return null;
+//        }
+//
+//        ReadWriteLock lock = getLock(base + "/" + assetId);
+//        lock.readLock().lock();
+//
+//        try (InputStream is = new BufferedInputStream(new FileInputStream(propsFile))) {
+//            return objectMapper.readValue(is, AssetProperties.class);
+//        } catch (IOException ex) {
+//            // TODO: create proper exception handling
+//            throw new IllegalArgumentException("Error reading asset properties from file (" + propsFile.getAbsolutePath() + ")!", ex);
+//        } finally {
+//            lock.readLock().unlock();
+//        }
+//    }
+//
+//    /* private -> testing */
+//    void writeAssetProperties(String base, String assetId, AssetProperties properties) {
+//        File propsFile = getPropsFile(base, assetId);
+//
+//        ReadWriteLock lock = getLock(base + "/" + assetId);
+//        lock.writeLock().lock();
+//
+//        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(propsFile))) {
+//            objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, properties);
+//        } catch (IOException ex) {
+//            // TODO: create proper exception handling
+//            throw new IllegalArgumentException("Error writing asset properties to file (" + propsFile.getAbsolutePath() + ")!", ex);
+//        }
+//        finally {
+//            lock.writeLock().unlock();
+//        }
+//    }
 }
