@@ -17,33 +17,8 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
 
     private File baseDirectory;
 
-    abstract protected <T> File getDataFileBase(Class<T> target, String id, String... path);
-    abstract protected <T> String getDataFileName(Class<T> target, String... path);
-
-    protected <T> File getFile(Class<T> target, String id, String... path) {
-//        File directory = new File(baseDirectory, resolveBasePath(id));
-        File directory = getDataFileBase(target, id, path);
-
-        if (!directory.exists() && !directory.mkdirs()) {
-            throw new IllegalStateException("Unable to create missing directory '" + directory.getAbsolutePath() + "'!");
-        }
-
-        String propsFile = getDataFileName(target, path) + ".json";
-        return new File(directory, propsFile);
-    }
-
-//    File getPropsFile(String base, String assetId) {
-//        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(assetId);
-//        File assetDirectory = new File(baseDirectory, assetBase);
-//
-//        if (!assetDirectory.exists() && !assetDirectory.mkdirs()) {
-//            throw new IllegalStateException("Unable to create missing asset directory '" + assetDirectory.getAbsolutePath() + "'!");
-//        }
-//
-//        String propsFile = "props_" + base + ".json";
-//        return new File(assetDirectory, propsFile);
-//    }
-
+    abstract protected <T> File getFile(Class<T> target, String id, String... path);
+    
     protected <T> T read(Class<T> target, String id, String... path) {
         File file = getFile(target, id, path);
         if (!file.exists()) {

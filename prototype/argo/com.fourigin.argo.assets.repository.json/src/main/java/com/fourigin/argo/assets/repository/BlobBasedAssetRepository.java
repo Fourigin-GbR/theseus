@@ -3,7 +3,6 @@ package com.fourigin.argo.assets.repository;
 import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.AssetFactory;
 import com.fourigin.argo.assets.models.AssetProperties;
-import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.utilities.core.JsonFileBasedRepository;
 import de.huxhorn.sulky.blobs.AmbiguousIdException;
 import de.huxhorn.sulky.blobs.impl.BlobRepositoryImpl;
@@ -185,27 +184,18 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
     }
 
     @Override
-    protected <T> File getDataFileBase(Class<T> target, String id, String... path) {
-        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(id);
-        return new File(getBaseDirectory(), assetBase);
+    protected <T> File getFile(Class<T> target, String id, String... path) {
+        String assetBase = DIR_META_BASE + "/" + JsonFileBasedRepository.resolveBasePath(id);
+        File assetDirectory = new File(getBaseDirectory(), assetBase);
+
+        if (!assetDirectory.exists() && !assetDirectory.mkdirs()) {
+            throw new IllegalStateException("Unable to create missing asset directory '" + assetDirectory.getAbsolutePath() + "'!");
+        }
+
+        String propsFile = "props_" + path[0] + ".json";
+        return new File(assetDirectory, propsFile);
     }
-
-    @Override
-    protected <T> String getDataFileName(Class<T> target, String... path) {
-        return "props_" + path[0];
-    }
-
-//    protected <T> File getFile(Class<T> target, String id, String... path) {
-//        File directory = new File(baseDirectory, resolveBasePath(id));
-//
-//        if (!directory.exists() && !directory.mkdirs()) {
-//            throw new IllegalStateException("Unable to create missing directory '" + directory.getAbsolutePath() + "'!");
-//        }
-//
-//        String propsFile = getDataFileName(target, path) + ".json";
-//        return new File(directory, propsFile);
-//    }
-
+    
 //    /* private -> testing */
 //    File getPropsFile(String base, String assetId) {
 //        String assetBase = DIR_META_BASE + "/" + Assets.resolveAssetBasePath(assetId);
