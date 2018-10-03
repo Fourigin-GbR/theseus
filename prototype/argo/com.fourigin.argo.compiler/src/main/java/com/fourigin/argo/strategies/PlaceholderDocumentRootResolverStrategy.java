@@ -9,7 +9,7 @@ public class PlaceholderDocumentRootResolverStrategy implements DocumentRootReso
 
     private PropertiesReplacement propertiesReplacement = new PropertiesReplacement("\\[(.+?)\\]");
 
-    public PlaceholderDocumentRootResolverStrategy(String customer, String basePath) {
+    public PlaceholderDocumentRootResolverStrategy(String basePath) {
         Objects.requireNonNull(basePath, "basePath must not be null!");
 
         this.basePath = basePath;
