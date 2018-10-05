@@ -9,17 +9,17 @@
 <body>
 <h1>KFZ-Anmeldung</h1>
 
-<div class="Tabs fccFormular">
+<div class="Tabs StepsBox" id="fccFormular">
     <nav>
-        <span class="TabNavigationItem active" data-target-tab-id="tab1">Fahrzeug</span>
-        <span class="TabNavigationItem" data-target-tab-id="tab2">KFZ-Steuer</span>
-        <span class="TabNavigationItem" data-target-tab-id="tab3">Zahlung</span>
-        <span class="TabNavigationItem" data-target-tab-id="tab4">Dokumentenübergabe</span>
-        <span class="TabNavigationItem" data-target-tab-id="tab5">Prüfen &amp; abschließen</span>
+        <span class="TabNavigationItem active" data-tab-id="tab1">Fahrzeug</span>
+        <span class="TabNavigationItem" data-tab-id="tab2">KFZ-Steuer</span>
+        <span class="TabNavigationItem" data-tab-id="tab3">Zahlung</span>
+        <span class="TabNavigationItem" data-tab-id="tab4">Dokumentenübergabe</span>
+        <span class="TabNavigationItem" data-tab-id="tab5">Prüfen &amp; abschließen</span>
     </nav>
     <div class="TabsWrapper">
         <form action="#" method="get">
-            <div data-tab-id="tab1" class="Tab active">
+            <div data-target-tab-id="tab1" class="Tab StepsBox__step active">
                 <fieldset>
                     <legend>Informationen zum Fahrzeug</legend>
                     <fieldset>
@@ -118,7 +118,7 @@
             </div>
 
 
-            <div data-tab-id="tab2" class="Tab">
+            <div data-target-tab-id="tab2" class="Tab StepsBox__step">
 
                 <fieldset class="checkboxList">
                     <legend>Bankdaten für die Abbuchung der KFZ-Steuer</legend>
@@ -182,7 +182,7 @@
                 </footer>
             </div>
 
-            <div data-tab-id="tab3" class="Tab">
+            <div data-target-tab-id="tab3" class="Tab StepsBox__step">
 
                 <fieldset class="checkboxList">
                     <legend>Verfügbare Zahlungsmethoden</legend>
@@ -259,7 +259,7 @@
                 </footer>
             </div>
 
-            <div data-tab-id="tab4" class="Tab">
+            <div data-target-tab-id="tab4" class="Tab StepsBox__step">
 
                 <fieldset class="checkboxList">
                     <legend>Folgende Optionen stehen Ihnen zur Verfügung</legend>
@@ -288,7 +288,7 @@
                 </footer>
             </div>
 
-            <div data-tab-id="tab5" class="Tab">
+            <div data-target-tab-id="tab5" class="Tab StepsBox__step">
 
 
                 <footer>

@@ -1,4 +1,119 @@
-var TabBoxes = document.getElementsByClassName('Tabs');
+if ("undefined" === typeof Fourigin) {
+    var Fourigin = {};
+}
+
+Fourigin.StepsBox = Fourigin.StepsBox || (function () {
+    var StepsBox = function (htmlNode_stepsBox, function_validateFormElements) {
+        this.function_validateFormElements = function_validateFormElements;
+        this.steps = [];
+        this.currentStep = 1;
+        this.totalSteps = null;
+        this.htmlNodes = {
+            "stepsBox": htmlNode_stepsBox,
+            "stepCssSelector": "StepsBox__step"
+        };
+        //
+        this.init();
+        this.setStepsNavigationButtons();
+        //
+        return this;
+    };
+
+    StepsBox.prototype.init = function() {
+        /**
+         * Scan all Steps
+         */
+        var htmlNodes_steps = this.htmlNodes.stepsBox.getElementsByClassName(this.htmlNodes.stepCssSelector);
+        //
+        for(var i= 0, il= htmlNodes_steps.length; i<il; i++) {
+            /**
+             * Get Tab by attribute 'data-tab-id'
+             * @type {number}
+             */
+            var htmlNode_currentStep = htmlNodes_steps[i],
+                targetTabId = htmlNode_currentStep.getAttribute("data-target-tab-id"),
+                htmlNode_tab = this.htmlNodes.stepsBox.querySelectorAll("[data-tab-id=\"" + targetTabId + "\"]")[0];
+            this.steps.push(
+                {"htmlNode_content": htmlNode_currentStep, "htmlNode_stepTab": htmlNode_tab, "validated": false}
+            );
+        }
+    };
+
+    StepsBox.prototype.setStepsNavigationButtons = function() {
+        var self = this;
+        this.htmlNodes.stepsBox.addEventListener("click", function (event) {
+            var targetElement = event.target || event.srcElement;
+            if (targetElement.tagName = "BUTTON") {
+                if (targetElement.getAttribute("data-action") === "nextTab") {
+                    self.setNextStepActive(this);
+                }
+                else if (targetElement.getAttribute("data-action") === "previousTab") {
+                    self.setPreviousStepActive(this);
+                }
+            }
+        });
+    };
+
+    StepsBox.prototype.resetAllStepsActiveStatus = function() {
+        for(var i=0, il= this.steps.length; i<il; i++) {
+            this.steps[i].htmlNode_content.classList.remove("active", "validated");
+            this.steps[i].htmlNode_stepTab.classList.remove("active", "validated");
+        }
+    };
+
+    StepsBox.prototype.updateAllStepsView = function() {
+        for(var i=0, il= this.steps.length; i<il; i++) {
+            var currentStep = this.steps[i];
+            if(currentStep.validated) {
+                currentStep.htmlNode_content.classList.add("validated");
+                currentStep.htmlNode_stepTab.classList.add("validated");
+            }
+        }
+        // Set current step active:
+        this.steps[this.currentStep -1].htmlNode_content.classList.add("active");
+        this.steps[this.currentStep -1].htmlNode_stepTab.classList.add("active");
+    };
+
+
+    StepsBox.prototype.setNextStepActive = function () {
+        /**
+         * Get current step, get next step and activate him, if it is validated
+         */
+        if(this.validateStep()) {
+            this.resetAllStepsActiveStatus();
+            this.steps[this.currentStep - 1].validated = true;
+            this.currentStep = this.currentStep < this.steps.length ? this.currentStep + 1 : this.currentStep;
+            this.updateAllStepsView();
+        }
+    };
+
+    StepsBox.prototype.setPreviousStepActive = function () {
+        /**
+         * Get current step, get next step and activate him, if it is validated
+         */
+        this.resetAllStepsActiveStatus();
+        this.currentStep = this.currentStep > 0 ? this.currentStep - 1 : 0;
+        this.updateAllStepsView();
+    };
+
+    StepsBox.prototype.validateStep = function() {
+        /**
+         * Collect all form fields in the step and validate them
+          */
+        var htmlNode_currentStep = this.steps[(this.currentStep-1)].htmlNode_content,
+            allFormFieldInStep = htmlNode_currentStep.getElementsByTagName("input", "textarea");
+        //
+        return this.function_validateFormElements(allFormFieldInStep);
+    };
+    //
+    return StepsBox;
+})();
+
+var htmlNode_setsBox = document.getElementById("fccFormular");
+var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function(allFormFieldInStep){console.log("Validate me: ", allFormFieldInStep); return true;});
+
+
+/*var TabBoxes = document.getElementsByClassName('Tabs');
 var activeTabIndex = 0;
 
 var setTabActive = function (Tab, TabNavigationItems, TabNavigationItem) {
@@ -7,7 +122,7 @@ var setTabActive = function (Tab, TabNavigationItems, TabNavigationItem) {
         var targetId = TabNavigationItem.getAttribute("data-target-tab-id");
         var allTabContents = Tab.querySelectorAll("[data-tab-id]");
 
-        /* tab contents */
+        /!* tab contents *!/
 
         // Reset all tab contents:
         Array.prototype.forEach.call(allTabContents, function (el) {
@@ -16,7 +131,7 @@ var setTabActive = function (Tab, TabNavigationItems, TabNavigationItem) {
         // Set current active:
         Tab.querySelectorAll("[data-tab-id=\"" + targetId + "\"]")[0].classList.add("active");
 
-        /* tab navigation */
+        /!* tab navigation *!/
 
         // Reset all tab contents:
         Array.prototype.forEach.call(TabNavigationItems, function (el) {
@@ -86,4 +201,4 @@ for (var i = 0, il = TabBoxes.length; i < il; i++) {
             }
         }(TabBox, j), false);
     }
-}
+}*/
