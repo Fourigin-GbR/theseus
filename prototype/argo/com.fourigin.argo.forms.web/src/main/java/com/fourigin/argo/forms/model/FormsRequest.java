@@ -1,6 +1,6 @@
 package com.fourigin.argo.forms.model;
 
-import com.fourigin.argo.forms.models.FormsStoreEntryHeader;
+import com.fourigin.argo.forms.models.FormsEntryHeader;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -9,23 +9,23 @@ import java.util.Objects;
 public class FormsRequest implements Serializable {
     private static final long serialVersionUID = 940469824505958177L;
 
-    private FormsStoreEntryHeader header;
+    private FormsEntryHeader header;
 
-    private Map<String, Object> data;
+    private Map<String, String> data;
 
-    public FormsStoreEntryHeader getHeader() {
+    public FormsEntryHeader getHeader() {
         return header;
     }
 
-    public void setHeader(FormsStoreEntryHeader header) {
+    public void setHeader(FormsEntryHeader header) {
         this.header = header;
     }
 
-    public Map<String, Object> getData() {
+    public Map<String, String> getData() {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(Map<String, String> data) {
         this.data = data;
     }
 

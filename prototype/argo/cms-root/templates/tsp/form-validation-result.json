@@ -16,7 +16,10 @@
       "value": null,
       "valid": false,
       "reasons": [
-        "MISSING_MANDATORY_FIELD_VALUE"
+        {
+          "validator": "MandatoryFormFieldValidator",
+          "failure": "MISSING_MANDATORY_FIELD_VALUE",
+        }
       ]
     },
     "vehicle-data.ident": {

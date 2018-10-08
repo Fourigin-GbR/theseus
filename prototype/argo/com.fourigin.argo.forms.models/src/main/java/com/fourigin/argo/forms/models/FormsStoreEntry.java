@@ -10,7 +10,7 @@ public class FormsStoreEntry implements Serializable {
 
     private String id;
 
-    private Map<String, Object> data;
+    private Map<String, String> data;
 
     public String getId() {
         return id;
@@ -20,11 +20,11 @@ public class FormsStoreEntry implements Serializable {
         this.id = id;
     }
 
-    public Map<String, Object> getData() {
+    public Map<String, String> getData() {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(Map<String, String> data) {
         this.data = data;
     }
 

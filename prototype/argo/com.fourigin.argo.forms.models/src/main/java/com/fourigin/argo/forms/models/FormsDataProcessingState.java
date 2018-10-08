@@ -9,7 +9,7 @@ public class FormsDataProcessingState implements Serializable {
 
     private ProcessingState processingState;
 
-    private List<ProcessingHistory> processingHistory;
+    private List<ProcessingHistoryRecord> processingHistory;
 
     public ProcessingState getProcessingState() {
         return processingState;
@@ -19,11 +19,11 @@ public class FormsDataProcessingState implements Serializable {
         this.processingState = processingState;
     }
 
-    public List<ProcessingHistory> getProcessingHistory() {
+    public List<ProcessingHistoryRecord> getProcessingHistory() {
         return processingHistory;
     }
 
-    public void setProcessingHistory(List<ProcessingHistory> processingHistory) {
+    public void setProcessingHistory(List<ProcessingHistoryRecord> processingHistory) {
         this.processingHistory = processingHistory;
     }
 

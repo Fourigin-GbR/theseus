@@ -12,12 +12,14 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
     private final String contextPath;
     private FormsStoreRepository formsStoreRepository;
+    private FormDefinitionRepository formDefinitionRepository;
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerInitializer.class);
 
-    public HttpServerInitializer(String contextPath, FormsStoreRepository formsStoreRepository) {
+    public HttpServerInitializer(String contextPath, FormsStoreRepository formsStoreRepository, FormDefinitionRepository formDefinitionRepository) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
+        this.formDefinitionRepository = formDefinitionRepository;
 
         if (logger.isInfoEnabled()) logger.info("Initializing with contextPath {}", contextPath);
     }
@@ -28,6 +30,6 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
-        pipeline.addLast(new HttpServerHandler(contextPath, formsStoreRepository));
+        pipeline.addLast(new HttpServerHandler(contextPath, formsStoreRepository, formDefinitionRepository));
     }
 }

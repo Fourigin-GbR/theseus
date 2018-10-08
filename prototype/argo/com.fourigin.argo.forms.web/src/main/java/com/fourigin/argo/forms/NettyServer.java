@@ -36,12 +36,13 @@ public class NettyServer {
 
     @Bean
     public ServerBootstrap serverBootstrap(
-        @Autowired FormsStoreRepository formsStoreRepository
+        @Autowired FormsStoreRepository formsStoreRepository,
+        @Autowired FormDefinitionRepository formDefinitionRepository
     ) {
         return new ServerBootstrap()
             .group(eventLoopGroup())
             .handler(new LoggingHandler(LogLevel.INFO))
-            .childHandler(new HttpServerInitializer(contextPath, formsStoreRepository))
+            .childHandler(new HttpServerInitializer(contextPath, formsStoreRepository, formDefinitionRepository))
             .channel(NioServerSocketChannel.class);
     }
 

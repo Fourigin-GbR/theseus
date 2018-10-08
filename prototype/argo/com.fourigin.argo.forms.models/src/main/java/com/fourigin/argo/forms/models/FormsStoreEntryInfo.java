@@ -11,7 +11,7 @@ public class FormsStoreEntryInfo implements Serializable {
 
     private long revision;
 
-    private FormsStoreEntryHeader header;
+    private FormsEntryHeader header;
 
     private Map<String, FormsDataProcessingState> processingStates;
 
@@ -31,11 +31,11 @@ public class FormsStoreEntryInfo implements Serializable {
         this.revision = revision;
     }
 
-    public FormsStoreEntryHeader getHeader() {
+    public FormsEntryHeader getHeader() {
         return header;
     }
 
-    public void setHeader(FormsStoreEntryHeader header) {
+    public void setHeader(FormsEntryHeader header) {
         this.header = header;
     }
 

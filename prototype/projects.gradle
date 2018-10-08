@@ -14,9 +14,10 @@ def argoAssetsProcessor                     = project(':argo:com.fourigin.argo.a
 def argoTemplateEngine                      = project(':argo:com.fourigin.argo.template.engine')
 def argoTemplateEngineThymeleaf             = project(':argo:com.fourigin.argo.template.engine.thymeleaf')
 def argoCompiler                            = project(':argo:com.fourigin.argo.compiler')
-def argoFormsModels                        = project(':argo:com.fourigin.argo.forms.models')
-def argoFormsRepository                    = project(':argo:com.fourigin.argo.forms.repository')
-def argoFormsRepositoryJson                = project(':argo:com.fourigin.argo.forms.repository.json')
+def argoFormsModels                         = project(':argo:com.fourigin.argo.forms.models')
+def argoFormsRepository                     = project(':argo:com.fourigin.argo.forms.repository')
+def argoFormsRepositoryJson                 = project(':argo:com.fourigin.argo.forms.repository.json')
+def argoFormsProcessing                     = project(':argo:com.fourigin.argo.forms.processing')
 
 def heraCore                                = project(':hera:com.fourigin.hera.core')
 //def heraSpringBootStarter                 = project(':hera:com.fourigin.hera.spring-boot-starter')
@@ -318,7 +319,16 @@ project(':argo') {
             testCompile managedDependency('org.spockframework:spock-spring')
         }
     }
-    
+
+    project('com.fourigin.argo.forms.processing') {
+        version = argoVersion
+
+        dependencies {
+            compile argoFormsModels
+            compile argoFormsRepository
+        }
+    }
+
     project('com.fourigin.argo.forms.web') {
         apply plugin: 'org.springframework.boot'
 
@@ -333,6 +343,7 @@ project(':argo') {
             compile argoFormsModels
             compile argoFormsRepository
             compile argoFormsRepositoryJson
+            compile argoFormsProcessing
 
             compile managedDependency('io.netty:netty-all')
 

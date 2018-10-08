@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class ProcessingHistory implements Serializable {
+public class ProcessingHistoryRecord implements Serializable {
     private static final long serialVersionUID = -4844436078035132403L;
 
     private long timestamp;
@@ -30,8 +30,8 @@ public class ProcessingHistory implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProcessingHistory)) return false;
-        ProcessingHistory that = (ProcessingHistory) o;
+        if (!(o instanceof ProcessingHistoryRecord)) return false;
+        ProcessingHistoryRecord that = (ProcessingHistoryRecord) o;
         return timestamp == that.timestamp &&
             Objects.equals(context, that.context);
     }

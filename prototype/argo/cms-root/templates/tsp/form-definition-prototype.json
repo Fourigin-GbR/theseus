@@ -18,23 +18,19 @@
       },
       "values": {
         "portal": {
-          "context": {
-            "nameplate-customer-requirements": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
+          "nameplate-customer-requirements": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
             }
           }
         },
         "self": {
-          "context": {
-            "nameplate-customer-reservation": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true,
-                "pattern": "nameplates"
-              }
+          "nameplate-customer-reservation": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true,
+              "pattern": "nameplates"
             }
           }
         },
@@ -69,41 +65,37 @@
       },
       "values": {
         "use-stored-account": {
-          "context": {
-            "stored-account": {
-              "type": "form-choose",
-              "values": {
-                "account-1": null,
-                "account-2": null
-              }
+          "stored-account": {
+            "type": "form-choose",
+            "values": {
+              "account-1": null,
+              "account-2": null
             }
           }
         },
         "use-new-account": {
-          "context": {
-            "new-account-code": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
-            },
-            "new-account-bankcode": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
-            },
-            "new-account-bankname": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
-            },
-            "new-account-owner": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
+          "new-account-code": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
+            }
+          },
+          "new-account-bankcode": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
+            }
+          },
+          "new-account-bankname": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
+            }
+          },
+          "new-account-owner": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
             }
           }
         }
@@ -119,35 +111,31 @@
         "sofort": null,
         "pre-payment": null,
         "debit-from-existing-account": {
-          "context": {
-            "stored-account": {
-              "type": "form-choose",
-              "values": {
-                "account-1": null,
-                "account-2": null
-              }
+          "stored-account": {
+            "type": "form-choose",
+            "values": {
+              "account-1": null,
+              "account-2": null
             }
           }
         },
         "debit-from-new-account": {
-          "context": {
-            "new-account-code": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
-            },
-            "new-account-bankcode": {
-              "type": "form-text"
-            },
-            "new-account-bankname": {
-              "type": "form-text"
-            },
-            "new-account-owner": {
-              "type": "form-text",
-              "validation": {
-                "mandatory": true
-              }
+          "new-account-code": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
+            }
+          },
+          "new-account-bankcode": {
+            "type": "form-text"
+          },
+          "new-account-bankname": {
+            "type": "form-text"
+          },
+          "new-account-owner": {
+            "type": "form-text",
+            "validation": {
+              "mandatory": true
             }
           }
         }

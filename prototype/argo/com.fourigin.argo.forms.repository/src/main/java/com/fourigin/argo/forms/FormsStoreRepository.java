@@ -2,7 +2,7 @@ package com.fourigin.argo.forms;
 
 import com.fourigin.argo.forms.models.Attachment;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
-import com.fourigin.argo.forms.models.FormsStoreEntryHeader;
+import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingState;
 
@@ -16,7 +16,7 @@ public interface FormsStoreRepository {
     FormsStoreEntry retrieveEntry(String entryId);
 
     // info
-    void createEntryInfo(String entryId, FormsStoreEntryHeader header);
+    void createEntryInfo(String entryId, FormsEntryHeader header);
     FormsStoreEntryInfo retrieveEntryInfo(String entryId);
 
     // processing states
