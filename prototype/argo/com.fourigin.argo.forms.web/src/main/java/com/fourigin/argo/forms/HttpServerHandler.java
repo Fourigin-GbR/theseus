@@ -131,6 +131,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             String formDefinitionId = header.getFormDefinition();
 
             FormDefinition formDefinition = formDefinitionRepository.retrieve(formDefinitionId);
+            if(formDefinition == null){
+                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+            }
 
             FormData formData = new FormData();
             formData.setFormDefinitionId(formDefinitionId);
@@ -160,6 +163,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             String formDefinitionId = header.getFormDefinition();
 
             FormDefinition formDefinition = formDefinitionRepository.retrieve(formDefinitionId);
+            if(formDefinition == null){
+                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+            }
 
             FormData formData = new FormData();
             formData.setFormDefinitionId(formDefinitionId);
