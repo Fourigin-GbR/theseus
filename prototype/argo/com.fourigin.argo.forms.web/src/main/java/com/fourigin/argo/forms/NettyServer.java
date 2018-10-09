@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,12 +23,19 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.fourigin.argo.config")
 public class NettyServer {
 
+    private static final String APP_NAME = "argo-forms";
+
     private int port;
 
     private String contextPath;
 
     public static void main(String... args) throws Exception {
-        ConfigurableApplicationContext context = SpringApplication.run(NettyServer.class, args);
+        SpringApplication app = new SpringApplication(NettyServer.class);
+        app.addListeners(
+            new ApplicationPidFileWriter(APP_NAME + ".pid")
+        );
+
+        ConfigurableApplicationContext context = app.run(args);
 
         Channel channel = context.getBean(Channel.class);
 
@@ -42,7 +50,12 @@ public class NettyServer {
         return new ServerBootstrap()
             .group(eventLoopGroup())
             .handler(new LoggingHandler(LogLevel.INFO))
-            .childHandler(new HttpServerInitializer(contextPath, formsStoreRepository, formDefinitionRepository))
+            .childHandler(new HttpServerInitializer(
+                contextPath,
+                formsStoreRepository,
+                formDefinitionRepository,
+                objectMapper()
+            ))
             .channel(NioServerSocketChannel.class);
     }
 
@@ -60,10 +73,7 @@ public class NettyServer {
     public ObjectMapper objectMapper(){
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        objectMapper.registerModule(new ContentPageModule());
-
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-
         return objectMapper;
     }
 

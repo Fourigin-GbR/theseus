@@ -31,7 +31,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private final String contextPath;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper;
 
     private FormsStoreRepository formsStoreRepository;
 
@@ -45,10 +45,15 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerHandler.class);
 
-    public HttpServerHandler(String contextPath, FormsStoreRepository formsStoreRepository, FormDefinitionRepository formDefinitionRepository) {
+    public HttpServerHandler(
+        String contextPath,
+        FormDefinitionRepository formDefinitionRepository, FormsStoreRepository formsStoreRepository,
+        ObjectMapper objectMapper
+    ) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
+        this.objectMapper = objectMapper;
 
         if (logger.isInfoEnabled()) logger.info("Initialized with contextPath '{}'", contextPath);
     }
@@ -129,7 +134,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
             FormData formData = new FormData();
             formData.setFormDefinitionId(formDefinitionId);
-            formData.setFormId(null); // TODO
+            formData.setFormId(formsRequest.getFormId());
             formData.setPreValidation(true);
             formData.setValidateFields(formsRequest.getData());
             FormValidationResult result = FormsValidator.validate(formDefinition, formData);
@@ -158,7 +163,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
             FormData formData = new FormData();
             formData.setFormDefinitionId(formDefinitionId);
-            formData.setFormId(null); // TODO
+            formData.setFormId(formsRequest.getFormId());
             formData.setPreValidation(false);
             formData.setValidateFields(formsRequest.getData());
             FormValidationResult result = FormsValidator.validate(formDefinition, formData);
