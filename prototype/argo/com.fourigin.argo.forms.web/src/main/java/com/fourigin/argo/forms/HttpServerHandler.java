@@ -258,7 +258,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     }
 
     private void serve404(ChannelHandlerContext ctx, String msg) {
-        String message = "Resource no found: " + msg;
+        String message = "Resource not found: " + msg;
         writeText(ctx, message, HttpResponseStatus.NOT_FOUND);
     }
 
