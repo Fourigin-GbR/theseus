@@ -192,12 +192,14 @@ class FormsValidatorSpec extends Specification {
     def 'validate with one specified text field with pattern works as expected'() {
         FormDefinition definition = new FormDefinition(
                 form: 'test-form',
-                validationPatterns: [:],
+                validationPatterns: [
+                        'nameplate': '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                ],
                 fields: [
                         'nameplate': new FieldDefinition(
                                 type: Type.TEXT,
                                 validation: [
-                                        'pattern': '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                                        'pattern': 'nameplate'
                                 ]
                         )
                 ]
@@ -224,12 +226,14 @@ class FormsValidatorSpec extends Specification {
     def 'validate with one specified text field with a wrong pattern fails as expected'() {
         FormDefinition definition = new FormDefinition(
                 form: 'test-form',
-                validationPatterns: [:],
+                validationPatterns: [
+                        'nameplate': '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                ],
                 fields: [
                         'nameplate': new FieldDefinition(
                                 type: Type.TEXT,
                                 validation: [
-                                        'pattern': '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                                        'pattern': 'nameplate'
                                 ]
                         )
                 ]

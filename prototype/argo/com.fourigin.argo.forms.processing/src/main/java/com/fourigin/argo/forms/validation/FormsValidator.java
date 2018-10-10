@@ -34,7 +34,7 @@ public final class FormsValidator {
 
         final Logger logger = LoggerFactory.getLogger(FormsValidator.class);
 
-        if(data.isPreValidation()){
+        if (data.isPreValidation()) {
             if (logger.isDebugEnabled()) logger.debug("Pre-validating form fields");
             return preValidateForm(formDefinition, data);
         }
@@ -43,7 +43,7 @@ public final class FormsValidator {
         return validateForm(formDefinition, data);
     }
 
-    private static FormValidationResult preValidateForm(FormDefinition formDefinition, FormData data){
+    private static FormValidationResult preValidateForm(FormDefinition formDefinition, FormData data) {
         final Logger logger = LoggerFactory.getLogger(FormsValidator.class);
 
         FormValidationResult result = new FormValidationResult();
@@ -64,13 +64,17 @@ public final class FormsValidator {
             String fieldName = entry.getKey();
             String fieldValue = entry.getValue();
 
-            FieldDefinition fieldDefinition = fieldDefinitions.get(fieldName);
-            if (fieldDefinition == null) {
+            FieldDefinition fieldDefinition;
+            try {
+                fieldDefinition = findFieldDefinition(fieldDefinitions, fieldName, data);
+                if (logger.isDebugEnabled()) logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
+            } catch (Exception ex) {
                 if (logger.isInfoEnabled())
                     logger.info("No field definition found for field '{}', validation failed", fieldName);
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_DEFINITION)
+                    .withArgument("cause", ex.getMessage())
                     .build()
                 );
                 continue;
@@ -87,7 +91,7 @@ public final class FormsValidator {
             }
 
             boolean failed = validateRules(formDefinition, fieldName, fieldValue, validationRules, result);
-            if(!failed) {
+            if (!failed) {
                 if (logger.isInfoEnabled()) logger.info("Field validation successful for field '{}'", fieldName);
                 success(result, fieldName, fieldValue);
             }
@@ -96,7 +100,7 @@ public final class FormsValidator {
         return result;
     }
 
-    private static FormValidationResult validateForm(FormDefinition formDefinition, FormData data){
+    private static FormValidationResult validateForm(FormDefinition formDefinition, FormData data) {
         final Logger logger = LoggerFactory.getLogger(FormsValidator.class);
 
         FormValidationResult result = new FormValidationResult();
@@ -122,10 +126,14 @@ public final class FormsValidator {
             String fieldName = entry.getKey();
             String fieldValue = entry.getValue();
 
-            FieldDefinition fieldDefinition = fieldDefinitions.get(fieldName);
-            if (fieldDefinition == null) {
+            FieldDefinition fieldDefinition;
+            try {
+                fieldDefinition = findFieldDefinition(fieldDefinitions, fieldName, data);
+                if (logger.isDebugEnabled()) logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
+            }
+            catch(Exception ex) {
                 if (logger.isInfoEnabled())
-                    logger.info("No field definition found for field '{}', validation failed", fieldName);
+                    logger.info("No field definition found for field '{}', validation failed", fieldName, ex);
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_DEFINITION)
@@ -154,7 +162,7 @@ public final class FormsValidator {
             }
 
             boolean failed = validateRules(formDefinition, fieldName, fieldValue, validationRules, result);
-            if(!failed) {
+            if (!failed) {
                 if (logger.isInfoEnabled()) logger.info("Field validation successful for field '{}'", fieldName);
                 success(result, fieldName, fieldValue);
             }
@@ -163,7 +171,67 @@ public final class FormsValidator {
         return result;
     }
 
-    private static boolean validateRules(FormDefinition formDefinition, String fieldName, String fieldValue, Map<String, Object> validationRules, FormValidationResult result){
+    private static FieldDefinition findFieldDefinition(
+        Map<String, FieldDefinition> fieldDefinitions,
+        String fieldName,
+        FormData data
+    ) {
+
+        if (!fieldName.contains("/")) {
+            // single field reference
+            FieldDefinition result = fieldDefinitions.get(fieldName);
+            if (result == null) {
+                throw new IllegalArgumentException("No field definition found for the reference '" + fieldName + "'!");
+            }
+            return result;
+        }
+
+        // field chain reference, search inside of value contexts
+
+        int pos = fieldName.indexOf('/');
+        String parentFieldName = fieldName.substring(0, pos);
+        String childFieldName = fieldName.substring(pos + 1);
+
+        FieldDefinition parentField = fieldDefinitions.get(parentFieldName);
+        if (parentField == null) {
+            throw new IllegalArgumentException("No field definition found for the parent reference '" + parentFieldName + "'!");
+        }
+
+        Map<String, Map<String, FieldDefinition>> values = parentField.getValues();
+        if (values == null || values.isEmpty()) {
+            throw new IllegalArgumentException("No field values found!");
+        }
+
+        String parentFieldValue = getFieldValue(data, parentFieldName);
+        Map<String, FieldDefinition> valueContext = values.get(parentFieldValue);
+        if (valueContext == null || valueContext.isEmpty()) {
+            throw new IllegalArgumentException("No value context found for field value '" + parentFieldValue + "'!");
+        }
+
+        return findFieldDefinition(valueContext, childFieldName, data);
+    }
+
+    private static String getFieldValue(FormData data, String fieldName) {
+        String value = null;
+
+        Map<String, String> fields = data.getValidateFields();
+        if (fields != null && !fields.isEmpty()) {
+            value = fields.get(fieldName);
+        }
+
+        if (value != null) {
+            return value;
+        }
+
+        fields = data.getStateFields();
+        if (fields != null && !fields.isEmpty()) {
+            value = fields.get(fieldName);
+        }
+
+        return value;
+    }
+
+    private static boolean validateRules(FormDefinition formDefinition, String fieldName, String fieldValue, Map<String, Object> validationRules, FormValidationResult result) {
         final Logger logger = LoggerFactory.getLogger(FormsValidator.class);
 
         boolean failed = false;
