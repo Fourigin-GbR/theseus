@@ -256,4 +256,74 @@ class FormsValidatorSpec extends Specification {
         !result.valid
         !result.fields['nameplate'].valid
     }
+
+    def 'validate with one specified choose field works as expected'() {
+        FormDefinition definition = new FormDefinition(
+                form: 'test-form',
+                validationPatterns: [:],
+                fields: [
+                        'a': new FieldDefinition(
+                                type: Type.CHOOSE,
+                                validation: null,
+                                values: [
+                                        "a1": null,
+                                        "a2": null,
+                                        "a3": null
+                                ] as Map
+                        )
+                ]
+        )
+
+        FormData data = new FormData(
+                formId: 'my-test-form-1',
+                formDefinitionId: 'test-form',
+                preValidation: false,
+                validateFields: [
+                        'a': 'a1'
+                ],
+                stateFields: [:]
+        )
+
+        FormValidationResult result = FormsValidator.validate(definition, data)
+
+        expect:
+        result != null
+        result.valid
+        result.fields['a'].valid
+    }
+
+    def 'validate with one specified choose field and a wrong value fails as expected'() {
+        FormDefinition definition = new FormDefinition(
+                form: 'test-form',
+                validationPatterns: [:],
+                fields: [
+                        'a': new FieldDefinition(
+                                type: Type.CHOOSE,
+                                validation: null,
+                                values: [
+                                        "a1": null,
+                                        "a2": null,
+                                        "a3": null
+                                ] as Map
+                        )
+                ]
+        )
+
+        FormData data = new FormData(
+                formId: 'my-test-form-1',
+                formDefinitionId: 'test-form',
+                preValidation: true,
+                validateFields: [
+                        'a': 'a4'
+                ],
+                stateFields: [:]
+        )
+
+        FormValidationResult result = FormsValidator.validate(definition, data)
+
+        expect:
+        result != null
+        !result.valid
+        !result.fields['a'].valid
+    }
 }

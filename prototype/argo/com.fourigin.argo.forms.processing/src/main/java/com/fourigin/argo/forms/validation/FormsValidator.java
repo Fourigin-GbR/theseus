@@ -16,6 +16,7 @@ public final class FormsValidator {
 
     public static final String VALIDATION_ERROR_MISSING_FIELD_DEFINITION = "MISSING_FIELD_DEFINITION";
     public static final String VALIDATION_ERROR_MISSING_FIELD_VALIDATOR = "MISSING_FIELD_VALIDATOR";
+    public static final String VALIDATION_ERROR_MISMATCHED_FIELD_VALUE = "MISMATCHED_FIELD_VALUE";
 
     private static final Map<String, FormFieldValidator> FIELD_VALIDATORS;
 
@@ -67,7 +68,19 @@ public final class FormsValidator {
             FieldDefinition fieldDefinition;
             try {
                 fieldDefinition = findFieldDefinition(fieldDefinitions, fieldName, data);
-                if (logger.isDebugEnabled()) logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
+                if (logger.isDebugEnabled())
+                    logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
+
+                if(!verifyMatchingFieldValue(fieldDefinition, fieldValue)) {
+                    if (logger.isInfoEnabled())
+                        logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
+                    failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                        .withValidator("FormsValidator")
+                        .withCode(VALIDATION_ERROR_MISMATCHED_FIELD_VALUE)
+                        .build()
+                    );
+                    continue;
+                }
             } catch (Exception ex) {
                 if (logger.isInfoEnabled())
                     logger.info("No field definition found for field '{}', validation failed", fieldName);
@@ -129,9 +142,20 @@ public final class FormsValidator {
             FieldDefinition fieldDefinition;
             try {
                 fieldDefinition = findFieldDefinition(fieldDefinitions, fieldName, data);
-                if (logger.isDebugEnabled()) logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
-            }
-            catch(Exception ex) {
+                if (logger.isDebugEnabled())
+                    logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
+
+                if(!verifyMatchingFieldValue(fieldDefinition, fieldValue)) {
+                    if (logger.isInfoEnabled())
+                        logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
+                    failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                        .withValidator("FormsValidator")
+                        .withCode(VALIDATION_ERROR_MISMATCHED_FIELD_VALUE)
+                        .build()
+                    );
+                    continue;
+                }
+            } catch (Exception ex) {
                 if (logger.isInfoEnabled())
                     logger.info("No field definition found for field '{}', validation failed", fieldName, ex);
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
@@ -140,6 +164,8 @@ public final class FormsValidator {
                     .build()
                 );
             }
+
+            if (logger.isDebugEnabled()) logger.debug("Field definition validation for field '{}' and value '{}' done", fieldName, fieldValue);
         }
 
         for (Map.Entry<String, FieldDefinition> definitionEntry : fieldDefinitions.entrySet()) {
@@ -171,12 +197,25 @@ public final class FormsValidator {
         return result;
     }
 
+    private static boolean verifyMatchingFieldValue(FieldDefinition definition, String value) {
+        switch (definition.getType()) {
+            case TEXT:
+                return true;
+            case CHOOSE:
+                Map<String, Map<String, FieldDefinition>> values = definition.getValues();
+                return (values.keySet().contains(value));
+            case CHECK:
+                return "true".equals(value) || "false".equals(value);
+            default:
+                throw new UnsupportedOperationException("Unknown field definition type '" + definition.getType() + "'!");
+        }
+    }
+
     private static FieldDefinition findFieldDefinition(
         Map<String, FieldDefinition> fieldDefinitions,
         String fieldName,
         FormData data
     ) {
-
         if (!fieldName.contains("/")) {
             // single field reference
             FieldDefinition result = fieldDefinitions.get(fieldName);
@@ -203,6 +242,10 @@ public final class FormsValidator {
         }
 
         String parentFieldValue = getFieldValue(data, parentFieldName);
+        if (parentFieldValue == null) {
+            throw new IllegalArgumentException("No field value found for the parent reference '" + parentFieldName + "'!");
+        }
+
         Map<String, FieldDefinition> valueContext = values.get(parentFieldValue);
         if (valueContext == null || valueContext.isEmpty()) {
             throw new IllegalArgumentException("No value context found for field value '" + parentFieldValue + "'!");
