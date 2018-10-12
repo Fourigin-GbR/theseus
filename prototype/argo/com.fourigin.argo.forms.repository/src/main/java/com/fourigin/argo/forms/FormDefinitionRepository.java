@@ -2,6 +2,7 @@ package com.fourigin.argo.forms;
 
 import com.fourigin.argo.forms.definition.FormDefinition;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface FormDefinitionRepository {
@@ -10,4 +11,6 @@ public interface FormDefinitionRepository {
     void create(FormDefinition formDefinition);
     void update(FormDefinition formDefinition);
     void delete(String formDefinitionId);
+
+    void setExternalValueResolvers(Collection<ExternalValueResolver> resolvers);
 }

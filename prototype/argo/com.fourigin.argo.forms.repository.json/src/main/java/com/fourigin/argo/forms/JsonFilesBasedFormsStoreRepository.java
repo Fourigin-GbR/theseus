@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,8 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     private BlobRepositoryImpl blobRepository;
 
     private File definitionsBaseDir;
+
+    private Collection<ExternalValueResolver> externalValueResolvers;
 
     private static final String DIR_BLOBS = ".blobs";
 
@@ -245,17 +248,27 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     @Override
     public FormDefinition retrieve(String formDefinitionId) {
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if(!defFile.exists()){
+        if (!defFile.exists()) {
             if (logger.isErrorEnabled()) logger.error("No form definition found for id '{}'!", formDefinitionId);
             return null;
         }
 
+        FormDefinition formDefinition;
         try {
-            return getObjectMapper().readValue(defFile, FormDefinition.class);
+            formDefinition = getObjectMapper().readValue(defFile, FormDefinition.class);
         } catch (IOException ex) {
-            if (logger.isErrorEnabled()) logger.error("Unable to read form definition file '{}'!", defFile.getAbsolutePath(), ex);
+            if (logger.isErrorEnabled())
+                logger.error("Unable to read form definition file '{}'!", defFile.getAbsolutePath(), ex);
             return null;
         }
+
+        if (externalValueResolvers != null && !externalValueResolvers.isEmpty()) {
+            for (ExternalValueResolver externalValueResolver : externalValueResolvers) {
+                externalValueResolver.resolveValues(formDefinition);
+            }
+        }
+
+        return formDefinition;
     }
 
     @Override
@@ -263,7 +276,7 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
         String formDefinitionId = formDefinition.getForm();
 
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if(defFile.exists()){
+        if (defFile.exists()) {
             throw new IllegalArgumentException("Unable to create form definition '" + formDefinitionId + "', because it's already exists!");
         }
 
@@ -279,7 +292,7 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
         String formDefinitionId = formDefinition.getForm();
 
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if(!defFile.exists()){
+        if (!defFile.exists()) {
             throw new IllegalArgumentException("Unable to update form definition '" + formDefinitionId + "', because it doesn't exist!");
         }
 
@@ -293,12 +306,17 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     @Override
     public void delete(String formDefinitionId) {
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if(!defFile.exists()){
+        if (!defFile.exists()) {
             throw new IllegalArgumentException("Unable to delete form definition '" + formDefinitionId + "', because it doesn't exist!");
         }
 
-        if(!defFile.delete()){
+        if (!defFile.delete()) {
             throw new IllegalStateException("Error deleting form definition file '" + defFile.getAbsolutePath() + "'!");
         }
+    }
+
+    @Override
+    public void setExternalValueResolvers(Collection<ExternalValueResolver> externalValueResolvers) {
+        this.externalValueResolvers = externalValueResolvers;
     }
 }

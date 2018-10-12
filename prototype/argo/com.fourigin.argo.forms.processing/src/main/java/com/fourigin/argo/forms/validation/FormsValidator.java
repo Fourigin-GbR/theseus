@@ -1,6 +1,7 @@
 package com.fourigin.argo.forms.validation;
 
 import com.fourigin.argo.forms.definition.FieldDefinition;
+import com.fourigin.argo.forms.definition.FieldDefinitions;
 import com.fourigin.argo.forms.definition.FormDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,11 +68,16 @@ public final class FormsValidator {
 
             FieldDefinition fieldDefinition;
             try {
-                fieldDefinition = findFieldDefinition(fieldDefinitions, fieldName, data);
+                fieldDefinition = FieldDefinitions.findFieldDefinition(
+                    fieldDefinitions,
+                    fieldName,
+                    data.getValidateFields(),
+                    data.getStateFields()
+                );
                 if (logger.isDebugEnabled())
                     logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
 
-                if(!verifyMatchingFieldValue(fieldDefinition, fieldValue)) {
+                if (hasInvalidValues(fieldDefinition, fieldValue)) {
                     if (logger.isInfoEnabled())
                         logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
                     failure(result, fieldName, fieldValue, new FailureReason.Builder()
@@ -141,11 +147,16 @@ public final class FormsValidator {
 
             FieldDefinition fieldDefinition;
             try {
-                fieldDefinition = findFieldDefinition(fieldDefinitions, fieldName, data);
+                fieldDefinition = FieldDefinitions.findFieldDefinition(
+                    fieldDefinitions,
+                    fieldName,
+                    data.getValidateFields(),
+                    data.getStateFields()
+                );
                 if (logger.isDebugEnabled())
                     logger.debug("Found matching field definition of field '{}': {}", fieldName, fieldDefinition);
 
-                if(!verifyMatchingFieldValue(fieldDefinition, fieldValue)) {
+                if (hasInvalidValues(fieldDefinition, fieldValue)) {
                     if (logger.isInfoEnabled())
                         logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
                     failure(result, fieldName, fieldValue, new FailureReason.Builder()
@@ -165,7 +176,8 @@ public final class FormsValidator {
                 );
             }
 
-            if (logger.isDebugEnabled()) logger.debug("Field definition validation for field '{}' and value '{}' done", fieldName, fieldValue);
+            if (logger.isDebugEnabled())
+                logger.debug("Field definition validation for field '{}' and value '{}' done", fieldName, fieldValue);
         }
 
         for (Map.Entry<String, FieldDefinition> definitionEntry : fieldDefinitions.entrySet()) {
@@ -197,81 +209,18 @@ public final class FormsValidator {
         return result;
     }
 
-    private static boolean verifyMatchingFieldValue(FieldDefinition definition, String value) {
+    private static boolean hasInvalidValues(FieldDefinition definition, String value) {
         switch (definition.getType()) {
             case TEXT:
-                return true;
+                return false;
             case CHOOSE:
                 Map<String, Map<String, FieldDefinition>> values = definition.getValues();
-                return (values.keySet().contains(value));
+                return (!values.keySet().contains(value));
             case CHECK:
-                return "true".equals(value) || "false".equals(value);
+                return !"true".equals(value) && !"false".equals(value);
             default:
                 throw new UnsupportedOperationException("Unknown field definition type '" + definition.getType() + "'!");
         }
-    }
-
-    private static FieldDefinition findFieldDefinition(
-        Map<String, FieldDefinition> fieldDefinitions,
-        String fieldName,
-        FormData data
-    ) {
-        if (!fieldName.contains("/")) {
-            // single field reference
-            FieldDefinition result = fieldDefinitions.get(fieldName);
-            if (result == null) {
-                throw new IllegalArgumentException("No field definition found for the reference '" + fieldName + "'!");
-            }
-            return result;
-        }
-
-        // field chain reference, search inside of value contexts
-
-        int pos = fieldName.indexOf('/');
-        String parentFieldName = fieldName.substring(0, pos);
-        String childFieldName = fieldName.substring(pos + 1);
-
-        FieldDefinition parentField = fieldDefinitions.get(parentFieldName);
-        if (parentField == null) {
-            throw new IllegalArgumentException("No field definition found for the parent reference '" + parentFieldName + "'!");
-        }
-
-        Map<String, Map<String, FieldDefinition>> values = parentField.getValues();
-        if (values == null || values.isEmpty()) {
-            throw new IllegalArgumentException("No field values found!");
-        }
-
-        String parentFieldValue = getFieldValue(data, parentFieldName);
-        if (parentFieldValue == null) {
-            throw new IllegalArgumentException("No field value found for the parent reference '" + parentFieldName + "'!");
-        }
-
-        Map<String, FieldDefinition> valueContext = values.get(parentFieldValue);
-        if (valueContext == null || valueContext.isEmpty()) {
-            throw new IllegalArgumentException("No value context found for field value '" + parentFieldValue + "'!");
-        }
-
-        return findFieldDefinition(valueContext, childFieldName, data);
-    }
-
-    private static String getFieldValue(FormData data, String fieldName) {
-        String value = null;
-
-        Map<String, String> fields = data.getValidateFields();
-        if (fields != null && !fields.isEmpty()) {
-            value = fields.get(fieldName);
-        }
-
-        if (value != null) {
-            return value;
-        }
-
-        fields = data.getStateFields();
-        if (fields != null && !fields.isEmpty()) {
-            value = fields.get(fieldName);
-        }
-
-        return value;
     }
 
     private static boolean validateRules(FormDefinition formDefinition, String fieldName, String fieldValue, Map<String, Object> validationRules, FormValidationResult result) {

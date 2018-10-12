@@ -9,6 +9,7 @@ public class FormDefinition implements Serializable {
 
     private String form;
     private Map<String, String> validationPatterns;
+    private Map<String, Map<String, String>> externalValueReferences;
     private Map<String, FieldDefinition> fields;
 
     public String getForm() {
@@ -27,6 +28,14 @@ public class FormDefinition implements Serializable {
         this.validationPatterns = validationPatterns;
     }
 
+    public Map<String, Map<String, String>> getExternalValueReferences() {
+        return externalValueReferences;
+    }
+
+    public void setExternalValueReferences(Map<String, Map<String, String>> externalValueReferences) {
+        this.externalValueReferences = externalValueReferences;
+    }
+
     public Map<String, FieldDefinition> getFields() {
         return fields;
     }
@@ -42,12 +51,13 @@ public class FormDefinition implements Serializable {
         FormDefinition that = (FormDefinition) o;
         return Objects.equals(form, that.form) &&
             Objects.equals(validationPatterns, that.validationPatterns) &&
+            Objects.equals(externalValueReferences, that.externalValueReferences) &&
             Objects.equals(fields, that.fields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(form, validationPatterns, fields);
+        return Objects.hash(form, validationPatterns, externalValueReferences, fields);
     }
 
     @Override
@@ -55,6 +65,7 @@ public class FormDefinition implements Serializable {
         return "FormDefinition{" +
             "form='" + form + '\'' +
             ", validationPatterns=" + validationPatterns +
+            ", externalValueReferences=" + externalValueReferences +
             ", fields=" + fields +
             '}';
     }

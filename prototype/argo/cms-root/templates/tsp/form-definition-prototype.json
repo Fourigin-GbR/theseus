@@ -4,7 +4,56 @@
     "nameplates": "[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}",
     "bank-account-codes": "^DE([0-9a-zA-Z]\\s?){20}$"
   },
+  "external-value-references": {
+    "customer-database-record": {
+      "customer.firstname": "firstname",
+      "customer.lastname": "name",
+      "customer.street": "address/street",
+      "customer.house-number": "address/house-number",
+      "customer.zip-code": "address/zip",
+      "customer.city": "address/city",
+      "vehicle.existing-nameplate": "current/vehicle/nameplate",
+      "tax.account:use-stored-account/stored-account": "current/bank/accounts",
+      "payment.methods:debit-from-existing-account/stored-account": "current/bank/accounts"
+    }
+  },
   "fields": {
+    "customer.firstname": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "customer.lastname": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "customer.street": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "customer.house-number": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "customer.zip-code": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "customer.city": {
+      "type": "form-text",
+      "validation": {
+        "mandatory": true
+      }
+    },
     "vehicle.existing-nameplate": {
       "type": "form-text",
       "validation": {
