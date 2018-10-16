@@ -103,14 +103,28 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
         var htmlNode_currentStep = this.steps[(this.currentStep-1)].htmlNode_content,
             allFormFieldInStep = htmlNode_currentStep.getElementsByTagName("input", "textarea");
         //
-        return this.function_validateFormElements(allFormFieldInStep);
+        this.function_validateFormElements(allFormFieldInStep);
     };
     //
     return StepsBox;
 })();
 
 var htmlNode_setsBox = document.getElementById("fccFormular");
-var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function(allFormFieldInStep){console.log("Validate me: ", allFormFieldInStep); return true;});
+var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function(allFormFieldInStep){
+    console.log("Validate me: ", allFormFieldInStep);
+    $.ajax({
+        url: 'http://argo.tsp.fourigin.com/forms/pre-validate',
+        data: $(allFormFieldInStep).serialize()
+    })
+        .done(function(res) {
+            console.log(res);
+        })
+        .fail(function(err) {
+            console.log('Error: ' + err.status);
+        });
+    return true;
+        }
+);
 
 
 /*var TabBoxes = document.getElementsByClassName('Tabs');
