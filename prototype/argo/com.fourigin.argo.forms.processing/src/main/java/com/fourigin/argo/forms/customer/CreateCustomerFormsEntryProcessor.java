@@ -1,10 +1,9 @@
-package com.fourigin.argo.forms.mapping;
+package com.fourigin.argo.forms.customer;
 
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
-import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.models.Attachment;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 

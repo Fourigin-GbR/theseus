@@ -3,7 +3,7 @@ package com.fourigin.argo.forms;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fourigin.argo.forms.mapping.CreateCustomerFormsEntryProcessor;
+import com.fourigin.argo.forms.customer.CreateCustomerFormsEntryProcessor;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
