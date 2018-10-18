@@ -2,7 +2,7 @@ package com.fourigin.argo.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.ExternalValueResolver;
-import com.fourigin.argo.forms.JsonFilesBasedFormsStoreRepository;
+import com.fourigin.argo.forms.JsonFilesBasedFormsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +15,12 @@ import java.util.Set;
 public class FormsStoreRepositoryConfiguration {
 
     @Bean
-    public JsonFilesBasedFormsStoreRepository jsonFilesBasedFormsStoreRepository(
+    public JsonFilesBasedFormsRepository jsonFilesBasedFormsStoreRepository(
         @Value("${forms-store-repository.root-path}") File basePath,
         @Autowired ObjectMapper objectMapper,
         @Autowired(required = false) Set<ExternalValueResolver> externalValueResolvers
     ) {
-        JsonFilesBasedFormsStoreRepository result = new JsonFilesBasedFormsStoreRepository(basePath, objectMapper);
+        JsonFilesBasedFormsRepository result = new JsonFilesBasedFormsRepository(basePath, objectMapper);
         result.setExternalValueResolvers(externalValueResolvers);
         return result;
     }

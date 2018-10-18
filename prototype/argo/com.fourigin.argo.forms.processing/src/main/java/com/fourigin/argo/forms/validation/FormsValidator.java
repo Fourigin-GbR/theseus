@@ -50,7 +50,7 @@ public final class FormsValidator {
 
         FormValidationResult result = new FormValidationResult();
 
-        result.setFormDefinitionId(data.getFormDefinitionId());
+        result.setFormDefinition(formDefinition);
         result.setPreValidation(true);
         result.setValid(true);
 
@@ -124,7 +124,7 @@ public final class FormsValidator {
 
         FormValidationResult result = new FormValidationResult();
 
-        result.setFormDefinitionId(data.getFormDefinitionId());
+        result.setFormDefinition(formDefinition);
         result.setPreValidation(false);
         result.setValid(true);
 
@@ -212,6 +212,7 @@ public final class FormsValidator {
     private static boolean hasInvalidValues(FieldDefinition definition, String value) {
         switch (definition.getType()) {
             case TEXT:
+            case HIDDEN:
                 return false;
             case CHOOSE:
                 Map<String, Map<String, FieldDefinition>> values = definition.getValues();

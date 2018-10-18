@@ -9,6 +9,7 @@
     }
   },
   "data": {
+    "customer.id": "1234567890abcdef",
     "vehicle.existing-nameplate": "",
     "vehicle.new-nameplate": "portal",
     "vehicle.new-nameplate/nameplate-customer-requirements": "DA-VN 757",

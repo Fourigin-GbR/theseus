@@ -11,6 +11,7 @@ public class FormDefinition implements Serializable {
     private Map<String, String> validationPatterns;
     private Map<String, Map<String, String>> externalValueReferences;
     private Map<String, FieldDefinition> fields;
+    private Map<String, FormObjectDefinition> objectMappings;
 
     public String getForm() {
         return form;
@@ -44,6 +45,14 @@ public class FormDefinition implements Serializable {
         this.fields = fields;
     }
 
+    public Map<String, FormObjectDefinition> getObjectMappings() {
+        return objectMappings;
+    }
+
+    public void setObjectMappings(Map<String, FormObjectDefinition> objectMappings) {
+        this.objectMappings = objectMappings;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,12 +61,13 @@ public class FormDefinition implements Serializable {
         return Objects.equals(form, that.form) &&
             Objects.equals(validationPatterns, that.validationPatterns) &&
             Objects.equals(externalValueReferences, that.externalValueReferences) &&
-            Objects.equals(fields, that.fields);
+            Objects.equals(fields, that.fields) &&
+            Objects.equals(objectMappings, that.objectMappings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(form, validationPatterns, externalValueReferences, fields);
+        return Objects.hash(form, validationPatterns, externalValueReferences, fields, objectMappings);
     }
 
     @Override
@@ -67,6 +77,7 @@ public class FormDefinition implements Serializable {
             ", validationPatterns=" + validationPatterns +
             ", externalValueReferences=" + externalValueReferences +
             ", fields=" + fields +
+            ", objectMappings=" + objectMappings +
             '}';
     }
 }

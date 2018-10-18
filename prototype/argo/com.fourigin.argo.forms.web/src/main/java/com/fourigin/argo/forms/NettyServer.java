@@ -19,6 +19,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootApplication
 @ComponentScan("com.fourigin.argo.config")
 public class NettyServer {
@@ -45,7 +49,9 @@ public class NettyServer {
     @Bean
     public ServerBootstrap serverBootstrap(
         @Autowired FormsStoreRepository formsStoreRepository,
-        @Autowired FormDefinitionRepository formDefinitionRepository
+        @Autowired FormDefinitionRepository formDefinitionRepository,
+        @Autowired FormsProcessingDispatcher formsProcessingDispatcher
+//        @Autowired CustomerRepository customerRepository
     ) {
         return new ServerBootstrap()
             .group(eventLoopGroup())
@@ -54,6 +60,8 @@ public class NettyServer {
                 contextPath,
                 formsStoreRepository,
                 formDefinitionRepository,
+                formsProcessingDispatcher,
+//                customerRepository,
                 objectMapper()
             ))
             .channel(NioServerSocketChannel.class);
@@ -70,11 +78,56 @@ public class NettyServer {
     }
 
     @Bean
-    public ObjectMapper objectMapper(){
+    public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         return objectMapper;
+    }
+
+    @Bean
+    public FormsEntryProcessorMapping formsEntryProcessorMapping() {
+        FormsEntryProcessorMapping mapping = new FormsEntryProcessorMapping();
+
+        mapping.put("register-customer", Collections.emptyList());
+
+        return mapping;
+    }
+
+    @Bean
+    public FormsEntryProcessorFactory formsEntryProcessorFactory(
+//        @Autowired FormsStoreRepository formsStoreRepository,
+//        @Autowired CustomerRepository customerRepository
+    ) {
+//        RegisterCustomerEntryProcessor registerCustomerEntryProcessor = new RegisterCustomerEntryProcessor(
+//            formsStoreRepository,
+//            customerRepository
+//        );
+
+        Map<String, FormsEntryProcessor> processors = new HashMap<>();
+//        processors.put(RegisterCustomerEntryProcessor.NAME, registerCustomerEntryProcessor);
+
+        return new DefaultFormsEntryProcessorFactory(processors);
+    }
+
+    @Bean
+    public FormsRegistry formsRegistry(){
+        return new FormsRegistry();
+    }
+
+    @Bean
+    public FormsProcessingDispatcher formsProcessingDispatcher(
+        @Autowired FormsStoreRepository formsStoreRepository,
+        @Autowired FormsEntryProcessorMapping formsEntryProcessorMapping,
+        @Autowired FormsEntryProcessorFactory formsEntryProcessorFactory,
+        @Autowired FormsRegistry formsRegistry
+    ) {
+        return new DefaultFormsProcessingDispatcher(
+            formsStoreRepository,
+            formsEntryProcessorMapping,
+            formsEntryProcessorFactory,
+            formsRegistry
+        );
     }
 
     @Value("${server.port}")

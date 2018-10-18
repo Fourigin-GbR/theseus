@@ -1,6 +1,7 @@
 package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.definition.FormDefinition;
 import com.fourigin.argo.forms.models.Attachment;
 import com.fourigin.argo.forms.models.FormsDataProcessingState;
@@ -28,10 +29,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository implements FormsStoreRepository, FormDefinitionRepository {
+public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository implements FormsStoreRepository, FormDefinitionRepository, CustomerRepository {
     private BlobRepositoryImpl blobRepository;
 
     private File definitionsBaseDir;
+
+    private File customersBaseDir;
 
     private Collection<ExternalValueResolver> externalValueResolvers;
 
@@ -41,9 +44,11 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
 
     private static final String DIR_DEFINITIONS = ".definitions";
 
-    private final Logger logger = LoggerFactory.getLogger(JsonFilesBasedFormsStoreRepository.class);
+    private static final String DIR_CUSTOMERS = ".customers";
 
-    public JsonFilesBasedFormsStoreRepository(File baseDirectory, ObjectMapper objectMapper) {
+    private final Logger logger = LoggerFactory.getLogger(JsonFilesBasedFormsRepository.class);
+
+    public JsonFilesBasedFormsRepository(File baseDirectory, ObjectMapper objectMapper) {
         setBaseDirectory(baseDirectory);
         setObjectMapper(objectMapper);
 
@@ -58,6 +63,11 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
         definitionsBaseDir = new File(baseDirectory, DIR_DEFINITIONS);
         if (!definitionsBaseDir.exists() && !definitionsBaseDir.mkdirs()) {
             throw new IllegalArgumentException("Unable to create form-definitions base directory '" + definitionsBaseDir.getAbsolutePath() + "'!");
+        }
+
+        customersBaseDir = new File(baseDirectory, DIR_CUSTOMERS);
+        if (!customersBaseDir.exists() && !customersBaseDir.mkdirs()) {
+            throw new IllegalArgumentException("Unable to create customers base directory '" + customersBaseDir.getAbsolutePath() + "'!");
         }
     }
 
@@ -204,34 +214,6 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     }
 
     @Override
-    protected <T> File getFile(Class<T> target, String id, String... path) {
-        if (FormsStoreEntryInfo.class.isAssignableFrom(target)) {
-            // info
-            File directory = new File(getBaseDirectory(), resolveBasePath(id));
-            if (!directory.exists() && !directory.mkdirs()) {
-                throw new IllegalStateException("Unable to create missing info directory '" + directory.getAbsolutePath() + "'!");
-            }
-
-            String targetFile = "info.json";
-            return new File(directory, targetFile);
-        }
-
-        if (Attachment.class.isAssignableFrom(target)) {
-            // attachments
-            File directory = new File(getBaseDirectory() + "/" + resolveBasePath(id) + "/" + DIR_ATTACHMENTS);
-
-            if (!directory.exists() && !directory.mkdirs()) {
-                throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
-            }
-
-            String attachmentFile = path[0] + ".json";
-            return new File(directory, attachmentFile);
-        }
-
-        throw new UnsupportedOperationException("Target class '" + target.getName() + "' not supported!");
-    }
-
-    @Override
     public List<String> listDefinitionIds() {
         List<String> result = new ArrayList<>();
 
@@ -246,7 +228,7 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     }
 
     @Override
-    public FormDefinition retrieve(String formDefinitionId) {
+    public FormDefinition retrieveDefinition(String formDefinitionId) {
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
         if (!defFile.exists()) {
             if (logger.isErrorEnabled()) logger.error("No form definition found for id '{}'!", formDefinitionId);
@@ -272,7 +254,7 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     }
 
     @Override
-    public void create(FormDefinition formDefinition) {
+    public void createDefinition(FormDefinition formDefinition) {
         String formDefinitionId = formDefinition.getForm();
 
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
@@ -288,7 +270,7 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     }
 
     @Override
-    public void update(FormDefinition formDefinition) {
+    public void updateDefinition(FormDefinition formDefinition) {
         String formDefinitionId = formDefinition.getForm();
 
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
@@ -304,7 +286,7 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
     }
 
     @Override
-    public void delete(String formDefinitionId) {
+    public void deleteDefinition(String formDefinitionId) {
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
         if (!defFile.exists()) {
             throw new IllegalArgumentException("Unable to delete form definition '" + formDefinitionId + "', because it doesn't exist!");
@@ -313,6 +295,112 @@ public class JsonFilesBasedFormsStoreRepository extends JsonFileBasedRepository 
         if (!defFile.delete()) {
             throw new IllegalStateException("Error deleting form definition file '" + defFile.getAbsolutePath() + "'!");
         }
+    }
+
+    @Override
+    public List<String> listCustomerIds() {
+        List<String> result = new ArrayList<>();
+
+        String[] files = customersBaseDir.list((dir, name) -> name.endsWith(".json"));
+        if (files != null && files.length > 0) {
+            for (String file : files) {
+                result.add(file.substring(0, file.indexOf(".json")));
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public Customer retrieveCustomer(String customerId) {
+        File customerFile = new File(customersBaseDir, customerId + ".json");
+        if (!customerFile.exists()) {
+            if (logger.isErrorEnabled()) logger.error("No form customer found for id '{}'!", customerId);
+            return null;
+        }
+
+        Customer customer;
+        try {
+            customer = getObjectMapper().readValue(customerFile, Customer.class);
+        } catch (IOException ex) {
+            if (logger.isErrorEnabled())
+                logger.error("Unable to read form customer file '{}'!", customerFile.getAbsolutePath(), ex);
+            return null;
+        }
+
+        return customer;
+    }
+
+    @Override
+    public void createCustomer(Customer customer) {
+        String customerId = customer.getId();
+
+        File customerFile = new File(customersBaseDir, customerId + ".json");
+        if (customerFile.exists()) {
+            throw new IllegalArgumentException("Unable to create form customer '" + customerId + "', because it's already exists!");
+        }
+
+        try {
+            getObjectMapper().writeValue(customerFile, customer);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Error writing form customer file '" + customerFile.getAbsolutePath() + "'!", ex);
+        }
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        String customerId = customer.getId();
+
+        File customerFile = new File(customersBaseDir, customerId + ".json");
+        if (!customerFile.exists()) {
+            throw new IllegalArgumentException("Unable to update form customer '" + customerId + "', because it doesn't exist!");
+        }
+
+        try {
+            getObjectMapper().writeValue(customerFile, customer);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Error writing form customer file '" + customerFile.getAbsolutePath() + "'!", ex);
+        }
+    }
+
+    @Override
+    public void deleteCustomer(String customerId) {
+        File customerFile = new File(customersBaseDir, customerId + ".json");
+        if (!customerFile.exists()) {
+            throw new IllegalArgumentException("Unable to delete form customer '" + customerId + "', because it doesn't exist!");
+        }
+
+        if (!customerFile.delete()) {
+            throw new IllegalStateException("Error deleting form customer file '" + customerFile.getAbsolutePath() + "'!");
+        }
+    }
+
+    @Override
+    protected <T> File getFile(Class<T> target, String id, String... path) {
+        if (FormsStoreEntryInfo.class.isAssignableFrom(target)) {
+            // info
+            File directory = new File(getBaseDirectory(), resolveBasePath(id));
+            if (!directory.exists() && !directory.mkdirs()) {
+                throw new IllegalStateException("Unable to create missing info directory '" + directory.getAbsolutePath() + "'!");
+            }
+
+            String targetFile = "info.json";
+            return new File(directory, targetFile);
+        }
+
+        if (Attachment.class.isAssignableFrom(target)) {
+            // attachments
+            File directory = new File(getBaseDirectory() + "/" + resolveBasePath(id) + "/" + DIR_ATTACHMENTS);
+
+            if (!directory.exists() && !directory.mkdirs()) {
+                throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
+            }
+
+            String attachmentFile = path[0] + ".json";
+            return new File(directory, attachmentFile);
+        }
+
+        throw new UnsupportedOperationException("Target class '" + target.getName() + "' not supported!");
     }
 
     @Override

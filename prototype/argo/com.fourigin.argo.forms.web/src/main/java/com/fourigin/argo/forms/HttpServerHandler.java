@@ -3,7 +3,11 @@ package com.fourigin.argo.forms;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.definition.FormDefinition;
+import com.fourigin.argo.forms.definition.FormObjectDefinition;
+import com.fourigin.argo.forms.definition.FormObjectMapperDefinition;
+import com.fourigin.argo.forms.mapping.FormObjectMapper;
 import com.fourigin.argo.forms.model.FormsRequest;
+import com.fourigin.argo.forms.models.Attachment;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.validation.FormData;
@@ -26,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
@@ -37,6 +42,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private FormDefinitionRepository formDefinitionRepository;
 
+    private FormsProcessingDispatcher formsProcessingDispatcher;
+
     private static final String URI_REGISTER_FORM = "/register-form";
 
     private static final String URI_PRE_VALIDATE_FORM = "/pre-validate";
@@ -47,12 +54,15 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     public HttpServerHandler(
         String contextPath,
-        FormDefinitionRepository formDefinitionRepository, FormsStoreRepository formsStoreRepository,
+        FormDefinitionRepository formDefinitionRepository,
+        FormsStoreRepository formsStoreRepository,
+        FormsProcessingDispatcher formsProcessingDispatcher,
         ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
+        this.formsProcessingDispatcher = formsProcessingDispatcher;
         this.objectMapper = objectMapper;
 
         if (logger.isInfoEnabled()) logger.info("Initialized with contextPath '{}'", contextPath);
@@ -76,12 +86,6 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             return;
         }
 
-        if ((contextPath + URI_REGISTER_FORM).equals(uri)) {
-            if (logger.isDebugEnabled()) logger.debug("Processing register-form request");
-            serveRegisterForm(ctx, request);
-            return;
-        }
-
         if ((contextPath + URI_PRE_VALIDATE_FORM).equals(uri)) {
             if (logger.isDebugEnabled()) logger.debug("Processing pre-validate form request");
             servePreValidateForm(ctx, request);
@@ -89,8 +93,14 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
 
         if ((contextPath + URI_VALIDATE_FORM).equals(uri)) {
-            if (logger.isDebugEnabled()) logger.debug("Processing validate -form request");
+            if (logger.isDebugEnabled()) logger.debug("Processing validate-form request");
             serveValidateForm(ctx, request);
+            return;
+        }
+
+        if ((contextPath + URI_REGISTER_FORM).equals(uri)) {
+            if (logger.isDebugEnabled()) logger.debug("Processing register-form request");
+            serveRegisterForm(ctx, request);
             return;
         }
 
@@ -102,50 +112,16 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         ctx.flush();
     }
 
-    private void serveRegisterForm(ChannelHandlerContext ctx, FullHttpRequest request) {
-        if (logger.isInfoEnabled()) logger.info("Serving register-form ...");
-
-        try {
-            FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
-
-            FormsStoreEntry entry = new FormsStoreEntry();
-            entry.setData(formsRequest.getData());
-            String entryId = formsStoreRepository.createEntry(entry);
-
-            formsStoreRepository.createEntryInfo(entryId, formsRequest.getHeader());
-
-            ByteBuf content = Unpooled.copiedBuffer(entryId, CharsetUtil.UTF_8);
-            writeResponseBody(ctx, content, HttpResponseStatus.OK);
-        } catch (Throwable th) {
-            if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
-            serve500(ctx, th);
-        }
-    }
-
     private void servePreValidateForm(ChannelHandlerContext ctx, FullHttpRequest request) {
         if (logger.isInfoEnabled()) logger.info("Serving pre-validate form ...");
 
         try {
             FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
-            FormsEntryHeader header = formsRequest.getHeader();
-            String formDefinitionId = header.getFormDefinition();
+            FormValidationResult result = internalValidate(formsRequest, true);
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieve(formDefinitionId);
-            if(formDefinition == null){
-                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
-            }
-
-            FormData formData = new FormData();
-            formData.setFormDefinitionId(formDefinitionId);
-            formData.setFormId(formsRequest.getFormId());
-            formData.setPreValidation(true);
-            formData.setValidateFields(formsRequest.getData());
-            FormValidationResult result = FormsValidator.validate(formDefinition, formData);
-
-            if(result.isValid()){
+            if (result.isValid()) {
                 writeResponseBody(ctx, result, HttpResponseStatus.OK);
-            }
-            else {
+            } else {
                 writeResponseBody(ctx, result, HttpResponseStatus.NOT_ACCEPTABLE);
             }
         } catch (Throwable th) {
@@ -159,25 +135,11 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
         try {
             FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
-            FormsEntryHeader header = formsRequest.getHeader();
-            String formDefinitionId = header.getFormDefinition();
+            FormValidationResult result = internalValidate(formsRequest, false);
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieve(formDefinitionId);
-            if(formDefinition == null){
-                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
-            }
-
-            FormData formData = new FormData();
-            formData.setFormDefinitionId(formDefinitionId);
-            formData.setFormId(formsRequest.getFormId());
-            formData.setPreValidation(false);
-            formData.setValidateFields(formsRequest.getData());
-            FormValidationResult result = FormsValidator.validate(formDefinition, formData);
-
-            if(result.isValid()){
+            if (result.isValid()) {
                 writeResponseBody(ctx, result, HttpResponseStatus.OK);
-            }
-            else {
+            } else {
                 writeResponseBody(ctx, result, HttpResponseStatus.NOT_ACCEPTABLE);
             }
         } catch (Throwable th) {
@@ -186,65 +148,116 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
     }
 
-//    private void serveData(ChannelHandlerContext ctx) {
-//        if (logger.isInfoEnabled()) logger.info("Serving data ...");
-//
-//        Map<Long, String> data = new HashMap<>();
-//        data.put(1L, "One");
-//        data.put(2L, "Two");
-//        data.put(3L, "Three");
-//
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("[");
-//        int num = 0;
-//        int size = data.size();
-//        for (Map.Entry<Long, String> entry : data.entrySet()) {
-//            sb.append('"').append(entry.getValue()).append('"');
-//            num++;
-//            if (num < size) {
-//                sb.append(",");
-//            }
-//        }
-//        sb.append("]");
-//
-//        ByteBuf content = Unpooled.copiedBuffer(sb.toString(), CharsetUtil.UTF_8);
-//        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-//        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json");
-//        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
-//        ctx.write(response);
-//    }
-//
-//    private void serveJsonInput(ChannelHandlerContext ctx, FullHttpRequest msg) {
-//        if (logger.isInfoEnabled()) logger.info("Serving json input ...");
-//
-//        String input = msg.content().toString(StandardCharsets.UTF_8);
-//        if (logger.isInfoEnabled()) logger.info("input: {}", input);
-//
-//        Object value;
-//        try {
-//            value = objectMapper.readValue(input, Object.class);
-//        } catch (Throwable th) {
-//            if (logger.isErrorEnabled())
-//                logger.error("Unable to map object from string '{}': {}", input, th.getMessage());
-//            value = null;
-//        }
-//
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("{");
-//        sb.append("\"processed\":true,");
-//        if (value != null) {
-//            sb.append("\"input\":\"").append(value.toString()).append("\"");
-//        } else {
-//            sb.append("\"input\":null");
-//        }
-//        sb.append("}");
-//
-//        ByteBuf content = Unpooled.copiedBuffer(sb.toString(), CharsetUtil.UTF_8);
-//        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-//        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json");
-//        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
-//        ctx.write(response);
-//    }
+    private void serveRegisterForm(ChannelHandlerContext ctx, FullHttpRequest request) {
+        if (logger.isInfoEnabled()) logger.info("Serving register-form ...");
+
+        try {
+            FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
+            if (logger.isDebugEnabled()) logger.debug("Processing form {}", formsRequest);
+
+            // validate form
+            FormValidationResult validationResult = internalValidate(formsRequest, false);
+
+            if (!validationResult.isValid()) {
+                if (logger.isDebugEnabled()) logger.debug("Validation *not* successful!");
+                writeResponseBody(ctx, validationResult, HttpResponseStatus.NOT_ACCEPTABLE);
+                return;
+            }
+
+            // store form data
+            if (logger.isDebugEnabled()) logger.debug("Validation successful, storing the form");
+            FormsStoreEntry entry = new FormsStoreEntry();
+            entry.setData(formsRequest.getData());
+            String entryId = formsStoreRepository.createEntry(entry);
+
+            formsStoreRepository.createEntryInfo(entryId, formsRequest.getHeader());
+
+            // map form entry to defined objects
+            FormDefinition formDefinition = validationResult.getFormDefinition();
+            Map<String, FormObjectDefinition> objectMappings = formDefinition.getObjectMappings();
+            if (objectMappings != null && !objectMappings.isEmpty()) {
+                if (logger.isDebugEnabled()) logger.debug("Map form objects");
+
+                for (Map.Entry<String, FormObjectDefinition> objectDefinitionEntry : objectMappings.entrySet()) {
+                    String objectName = objectDefinitionEntry.getKey();
+                    FormObjectDefinition objectDefinition = objectDefinitionEntry.getValue();
+                    Object mappedObject = mapObject(objectDefinition, entry);
+
+                    Attachment attachment = new Attachment();
+                    attachment.setPayload(mappedObject);
+                    attachment.setTimestamp(System.currentTimeMillis());
+                    attachment.setProducer("/");
+                    if (logger.isDebugEnabled()) logger.debug("Adding an attachment {}", attachment);
+
+                    formsStoreRepository.addAttachment(entryId, objectName, attachment);
+                }
+            }
+
+            // start processing form entry
+            formsProcessingDispatcher.registerFormEntry(entryId);
+
+            // generate response
+            ByteBuf content = Unpooled.copiedBuffer(entryId, CharsetUtil.UTF_8);
+            writeResponseBody(ctx, content, HttpResponseStatus.OK);
+        } catch (Throwable th) {
+            if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
+            serve500(ctx, th);
+        }
+    }
+
+    private Object mapObject(FormObjectDefinition objectDefinition, FormsStoreEntry entry) {
+        String targetType = objectDefinition.getType();
+        Class<?> targetClass;
+        try {
+            targetClass = Class.forName(targetType);
+        } catch (ClassNotFoundException ex) {
+            throw new IllegalArgumentException("Unable to resolve target class name '" + targetType + "'!", ex);
+        }
+
+        FormObjectMapperDefinition mappingDefinition = objectDefinition.getMapper();
+        String mapperType = mappingDefinition.getType();
+        Class mapperClass;
+        try {
+            mapperClass = Class.forName(mapperType);
+        } catch (ClassNotFoundException ex) {
+            throw new IllegalArgumentException("Unable to resolve mapper class name '" + mapperType + "'!", ex);
+        }
+
+        if (!FormObjectMapper.class.isAssignableFrom(mapperClass)) {
+            throw new IllegalArgumentException("Mapper type " + mapperType + " doesn't match FormObjectMapper's interface!");
+        }
+
+        Object mapperObject;
+        try {
+            mapperObject = mapperClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            throw new IllegalArgumentException("Unable to instantiate class for name '" + mapperType + "'!", ex);
+        }
+
+        FormObjectMapper formObjectMapper = (FormObjectMapper) mapperObject;
+
+        Map<String, Object> mapperSettings = mappingDefinition.getSettings();
+        formObjectMapper.initialize(mapperSettings);
+
+        return formObjectMapper.parseValue(targetClass, entry);
+    }
+
+    private FormValidationResult internalValidate(FormsRequest formsRequest, boolean preValidation) {
+        FormsEntryHeader header = formsRequest.getHeader();
+        String formDefinitionId = header.getFormDefinition();
+
+        FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+        if (formDefinition == null) {
+            throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+        }
+
+        FormData formData = new FormData();
+        formData.setFormDefinitionId(formDefinitionId);
+        formData.setFormId(formsRequest.getFormId());
+        formData.setPreValidation(preValidation);
+        formData.setValidateFields(formsRequest.getData());
+        return FormsValidator.validate(formDefinition, formData);
+    }
 
     private void serveStatic(ChannelHandlerContext ctx, String path) throws Exception {
         URL resource = this.getClass().getResource(path);

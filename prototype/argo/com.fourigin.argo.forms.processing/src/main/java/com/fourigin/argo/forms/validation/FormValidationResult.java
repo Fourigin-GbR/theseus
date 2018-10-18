@@ -1,5 +1,7 @@
 package com.fourigin.argo.forms.validation;
 
+import com.fourigin.argo.forms.definition.FormDefinition;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,18 +10,10 @@ import java.util.Objects;
 public class FormValidationResult implements Serializable {
     private static final long serialVersionUID = 8089342375430013642L;
 
-    private String formDefinitionId;
     private boolean preValidation;
     private boolean valid;
     private Map<String, FormFieldValidationResult> fields;
-
-    public String getFormDefinitionId() {
-        return formDefinitionId;
-    }
-
-    public void setFormDefinitionId(String formDefinitionId) {
-        this.formDefinitionId = formDefinitionId;
-    }
+    private FormDefinition formDefinition;
 
     public boolean isPreValidation() {
         return preValidation;
@@ -43,6 +37,14 @@ public class FormValidationResult implements Serializable {
 
     public void setFields(Map<String, FormFieldValidationResult> fields) {
         this.fields = fields;
+    }
+
+    public FormDefinition getFormDefinition() {
+        return formDefinition;
+    }
+
+    public void setFormDefinition(FormDefinition formDefinition) {
+        this.formDefinition = formDefinition;
     }
 
     public void addFieldValidationResult(String fieldName, FormFieldValidationResult result){
@@ -75,19 +77,19 @@ public class FormValidationResult implements Serializable {
         FormValidationResult that = (FormValidationResult) o;
         return preValidation == that.preValidation &&
             valid == that.valid &&
-            Objects.equals(formDefinitionId, that.formDefinitionId) &&
+            Objects.equals(formDefinition, that.formDefinition) &&
             Objects.equals(fields, that.fields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(formDefinitionId, preValidation, valid, fields);
+        return Objects.hash(formDefinition, preValidation, valid, fields);
     }
 
     @Override
     public String toString() {
         return "FormValidationResult{" +
-            "formDefinitionId='" + formDefinitionId + '\'' +
+            "formDefinition='" + formDefinition + '\'' +
             ", preValidation=" + preValidation +
             ", valid=" + valid +
             ", fields=" + fields +

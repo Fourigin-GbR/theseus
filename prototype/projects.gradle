@@ -324,6 +324,7 @@ project(':argo') {
         version = argoVersion
 
         dependencies {
+            compile utilitiesCore
             compile argoFormsModels
             compile argoFormsRepository
         }
@@ -348,6 +349,7 @@ project(':argo') {
             compile managedDependency('io.netty:netty-all')
 
             compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.blobs')
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.groovy')
 
             compile managedDependency('commons-io:commons-io')
 
