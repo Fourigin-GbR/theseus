@@ -15,7 +15,6 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
     private FormsStoreRepository formsStoreRepository;
     private FormDefinitionRepository formDefinitionRepository;
     private FormsProcessingDispatcher formsProcessingDispatcher;
-//    private CustomerRepository customerRepository;
     private ObjectMapper objectMapper;
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerInitializer.class);
@@ -25,14 +24,12 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         FormsStoreRepository formsStoreRepository,
         FormDefinitionRepository formDefinitionRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
-//        CustomerRepository customerRepository,
         ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
-//        this.customerRepository = customerRepository;
         this.objectMapper = objectMapper;
 
         if (logger.isInfoEnabled()) logger.info("Initializing with contextPath {}", contextPath);

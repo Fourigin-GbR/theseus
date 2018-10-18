@@ -3,6 +3,7 @@ package com.fourigin.argo.forms;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.mapping.CreateCustomerFormsEntryProcessor;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -51,7 +52,6 @@ public class NettyServer {
         @Autowired FormsStoreRepository formsStoreRepository,
         @Autowired FormDefinitionRepository formDefinitionRepository,
         @Autowired FormsProcessingDispatcher formsProcessingDispatcher
-//        @Autowired CustomerRepository customerRepository
     ) {
         return new ServerBootstrap()
             .group(eventLoopGroup())
@@ -61,7 +61,6 @@ public class NettyServer {
                 formsStoreRepository,
                 formDefinitionRepository,
                 formsProcessingDispatcher,
-//                customerRepository,
                 objectMapper()
             ))
             .channel(NioServerSocketChannel.class);
@@ -89,23 +88,23 @@ public class NettyServer {
     public FormsEntryProcessorMapping formsEntryProcessorMapping() {
         FormsEntryProcessorMapping mapping = new FormsEntryProcessorMapping();
 
-        mapping.put("register-customer", Collections.emptyList());
+        mapping.put("register-customer", Collections.singletonList("CREATE-CUSTOMER"));
 
         return mapping;
     }
 
     @Bean
     public FormsEntryProcessorFactory formsEntryProcessorFactory(
-//        @Autowired FormsStoreRepository formsStoreRepository,
-//        @Autowired CustomerRepository customerRepository
+        @Autowired FormsStoreRepository formsStoreRepository,
+        @Autowired CustomerRepository customerRepository
     ) {
-//        RegisterCustomerEntryProcessor registerCustomerEntryProcessor = new RegisterCustomerEntryProcessor(
-//            formsStoreRepository,
-//            customerRepository
-//        );
+        CreateCustomerFormsEntryProcessor createCustomerFormsEntryProcessor = new CreateCustomerFormsEntryProcessor(
+            formsStoreRepository,
+            customerRepository
+        );
 
         Map<String, FormsEntryProcessor> processors = new HashMap<>();
-//        processors.put(RegisterCustomerEntryProcessor.NAME, registerCustomerEntryProcessor);
+        processors.put(CreateCustomerFormsEntryProcessor.NAME, createCustomerFormsEntryProcessor);
 
         return new DefaultFormsEntryProcessorFactory(processors);
     }
