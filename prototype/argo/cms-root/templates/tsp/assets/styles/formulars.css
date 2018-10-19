@@ -272,6 +272,12 @@ a.hint:hover {
     text-decoration: none;
     margin-right: 1px;
 }
+.Tabs nav span i.fa {
+    background-color: #fff;
+    border-radius: 100%;
+    color: #000;
+    padding: 4px;
+}
 
 .Tabs nav span.validated,
 .Tabs nav span.active {
