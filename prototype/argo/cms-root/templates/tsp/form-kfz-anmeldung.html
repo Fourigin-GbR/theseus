@@ -5,16 +5,17 @@
     <title>Formulare - Prototypen</title>
     <link rel="stylesheet" href="assets/styles/kfz-anmeldung.css"/>
     <link rel="stylesheet" href="assets/styles/formulars.css"/>
+    <link rel="stylesheet" href="assets/webfonts/line-awesome/css/line-awesome-font-awesome.min.css"/>
 </head>
 <body>
 <h1>KFZ-Anmeldung</h1>
 
 <div class="Tabs StepsBox" id="fccFormular">
     <nav>
-        <span class="TabNavigationItem active" data-tab-id="tab1">Fahrzeug</span>
-        <span class="TabNavigationItem" data-tab-id="tab2">KFZ-Steuer</span>
-        <span class="TabNavigationItem" data-tab-id="tab3">Zahlung</span>
-        <span class="TabNavigationItem" data-tab-id="tab4">Dokumentenübergabe</span>
+        <span class="TabNavigationItem active" data-tab-id="tab1">Fahrzeug <i class="fa fa-angle-double-right la la-angle-double-right"></i></span>
+        <span class="TabNavigationItem" data-tab-id="tab2">KFZ-Steuer <i class="fa fa-angle-double-right la la-angle-double-right"></i></span>
+        <span class="TabNavigationItem" data-tab-id="tab3">Zahlung <i class="fa fa-angle-double-right la la-angle-double-right"></i></span>
+        <span class="TabNavigationItem" data-tab-id="tab4">Dokumentenübergabe <i class="fa fa-angle-double-right la la-angle-double-right"></i></span>
         <span class="TabNavigationItem" data-tab-id="tab5">Prüfen &amp; abschließen</span>
     </nav>
     <div class="TabsWrapper">
@@ -112,6 +113,9 @@
 
 
                     <footer>
+                        <div class="ValidationMessages">
+                            <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                        </div>
                         <button type="button" data-action="nextTab">Weiter</button>
                     </footer>
                 </fieldset>
@@ -177,6 +181,9 @@
                 </fieldset>
 
                 <footer>
+                    <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                    </div>
                     <button type="button" data-action="previousTab">Zurück</button>
                     <button type="button" data-action="nextTab">Weiter</button>
                 </footer>
@@ -254,6 +261,9 @@
 
 
                 <footer>
+                    <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                    </div>
                     <button type="button" data-action="previousTab">Zurück</button>
                     <button type="button" data-action="nextTab">Weiter</button>
                 </footer>
@@ -283,6 +293,9 @@
 
 
                 <footer>
+                    <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                    </div>
                     <button type="button" data-action="previousTab">Zurück</button>
                     <button type="button" data-action="nextTab">Weiter</button>
                 </footer>
@@ -292,6 +305,9 @@
 
 
                 <footer>
+                    <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                    </div>
                     <button type="button" data-action="previousTab">Zurück</button>
                     <button type="submit">Absenden</button>
                 </footer>

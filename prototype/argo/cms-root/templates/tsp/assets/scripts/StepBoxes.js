@@ -46,6 +46,7 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
             if (targetElement.tagName = "BUTTON") {
                 if (targetElement.getAttribute("data-action") === "nextTab") {
                     self.setNextStepActive(this);
+                    self.setAllMessagesInactive();
                 }
                 else if (targetElement.getAttribute("data-action") === "previousTab") {
                     self.setPreviousStepActive(this);
@@ -105,15 +106,34 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
         //
         this.function_validateFormElements(allFormFieldInStep);
     };
+
+    StepsBox.prototype.setMessageActive = function(messageType) {
+        var htmlNode_currentStep = this.steps[(this.currentStep-1)].htmlNode_content,
+            htmlNode_message = null;
+        //
+        htmlNode_message = htmlNode_currentStep.querySelectorAll("[data-validation-message-type=\"" + messageType + "\"]")[0];
+        htmlNode_message.classList.add("active");
+    };
+
+    StepsBox.prototype.setAllMessagesInactive = function() {
+        var htmlNode_currentStep = this.steps[(this.currentStep-1)].htmlNode_content,
+            htmlNode_message = null;
+        //
+        htmlNode_messages = htmlNode_currentStep.querySelectorAll("[data-validation-message-type]");
+        Array.prototype.forEach.call(htmlNode_messages, function(el) {
+            el.classList.remove("active");
+        });
+    };
     //
     return StepsBox;
 })();
 
 var htmlNode_setsBox = document.getElementById("fccFormular");
 var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function(allFormFieldInStep){
+    var self = this;
     console.log("Validate me: ", allFormFieldInStep);
     $.ajax({
-        url: 'http://argo.tsp.fourigin.com/forms/pre-validate',
+        url: '/forms/pre-validate',
         data: $(allFormFieldInStep).serialize()
     })
         .done(function(res) {
@@ -121,6 +141,9 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function(allFormFieldInStep){
         })
         .fail(function(err) {
             console.log('Error: ' + err.status);
+            (function(context) {
+                self.setMessageActive('error');
+            })(self);
         });
     return true;
         }

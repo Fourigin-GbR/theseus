@@ -264,26 +264,24 @@ a.hint:hover {
 }
 .Tabs nav {
     display: flex;
+    border-bottom: 1px solid #cbcbcb;
 }
 .Tabs nav span {
     padding: 10px 15px 5px 15px;
     background-color: #eae7e7;
     text-decoration: none;
-    border-radius: 5px 5px 0 0;
     margin-right: 1px;
-    margin-top: 5px;
 }
 
 .Tabs nav span.validated,
 .Tabs nav span.active {
     background-color: #2ab46b;
     color: #fff;
-    margin-top: 0;
     cursor: pointer;
 }
 .TabsWrapper {
     position: relative;
-    border: 1px solid #2ab46b;
+    border-bottom: 1px solid #cbcbcb;
     padding: 20px;
     transition: all .4s ease;
 }
@@ -292,4 +290,25 @@ a.hint:hover {
 }
 .TabsWrapper .Tab.active {
     display: block;
+}
+
+/* Validation message */
+.ValidationMessages {
+    width: 100%;
+    text-align: left;
+    margin: 20px 0;
+}
+.ValidationMessages__message {
+    background-color: #ccc;
+    padding: 20px;
+    color: #000;
+    font-weight: bold;
+    display: none;
+}
+.ValidationMessages__message.active {
+    display: block;
+}
+.ValidationMessages__message--error {
+    background-color: #ab0000;
+    color: #f3f3f3;
 }
