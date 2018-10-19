@@ -130,11 +130,37 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
 
 var htmlNode_setsBox = document.getElementById("fccFormular");
 var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function(allFormFieldInStep){
-    var self = this;
+    console.log(allFormFieldInStep, typeof allFormFieldInStep);
+
+    var formToJSON = function(form) {
+        var data = {};
+        for (var i = 0; i < form.length; i++) {
+            var item = form[i];
+            data[item.name] = item.value;
+        }
+        return data;
+    };
+
+    var self = this,
+        dataJson = {
+            "header": {
+                "formDefinition": "register-vehicle",
+                "customer": "tsp",
+                "base": "DE",
+                "referrer": {
+                    "url": "www.tsp.de/registrierung/neu",
+                    "client": "IE6"
+                }
+            },
+            "data": formToJSON(allFormFieldInStep)
+        };
     console.log("Validate me: ", allFormFieldInStep);
     $.ajax({
         url: '/forms/pre-validate',
-        data: $(allFormFieldInStep).serialize()
+        dataType: 'JSON',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify(dataJson)
     })
         .done(function(res) {
             console.log(res);
