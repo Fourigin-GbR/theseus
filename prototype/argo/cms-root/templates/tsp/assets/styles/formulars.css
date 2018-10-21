@@ -171,6 +171,13 @@ textarea.error {
     color: #e21719;
     background-color: rgba(179, 35, 63, 0.18);
 }
+input.invalid,
+select.invalid,
+textarea.invalid {
+    border-color: #e21719;
+    color: #e21719;
+    background-color: rgba(179, 35, 63, 0.18);
+}
 
 textarea {
     text-align: left;
@@ -313,6 +320,10 @@ a.hint:hover {
 }
 .ValidationMessages__message.active {
     display: block;
+}
+.ValidationMessages__message--invalid {
+    background-color: rgba(255, 126, 25, 0.99);
+    color: #f3f3f3;
 }
 .ValidationMessages__message--error {
     background-color: #ab0000;

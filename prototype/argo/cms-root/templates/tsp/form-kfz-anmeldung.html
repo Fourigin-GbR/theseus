@@ -27,7 +27,7 @@
                         <legend>Kennzeichen</legend>
                         <label>
                             <span>das alte Kennzeichen (nur bei Ummeldungen)</span>
-                            <input type="text" name="kennzeichen_alt"/>
+                            <input type="text" name="vehicle.existing-nameplate"/>
                         </label>
 
                         <fieldset name="neues_kennzeichen" class="CheckboxList">
@@ -35,37 +35,37 @@
 
                             <div class="CheckboxList__item DependencyGroup">
                                 <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                    <input type="checkbox" name="new_nameplate" value="portal"
-                                           data-activate-fieldset-name="neues_kennzeichen_details"/>
+                                    <input type="radio" name="vehicle.new-nameplate" value="portal"
+                                           data-activate-fieldset-name="nameplate-customer-requirements-group"/>
                                     <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
                                 </label>
-                                <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_details"
+                                <fieldset class="DependencyGroup__dependant" name="nameplate-customer-requirements-group"
                                           disabled="disabled">
                                     <label>
                                         <!--<span>Wünsche</span>-->
-                                        <input type="text" name="kennzeichen_neu_wuensche"/>
+                                        <input type="text" name="nameplate-customer-requirements"/>
                                     </label>
                                 </fieldset>
                             </div>
                             <!---->
                             <div class="CheckboxList__item DependencyGroup">
                                 <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                    <input type="checkbox" name="new_nameplate" value="self"
-                                           data-activate-fieldset-name="neues_kennzeichen_reservierung_details"/>
+                                    <input type="radio" name="vehicle.new-nameplate" value="self"
+                                           data-activate-fieldset-name="nameplate-customer-reservation-group"/>
                                     <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
                                 </label>
-                                <fieldset class="DependencyGroup__dependant" name="neues_kennzeichen_reservierung_details"
+                                <fieldset class="DependencyGroup__dependant" name="nameplate-customer-reservation-group"
                                           disabled="disabled">
                                     <label>
                                         <!--<span>Reservierung</span>-->
-                                        <input type="text" name="kennzeichen_neu_reserviert"/>
+                                        <input type="text" name="nameplate-customer-reservation"/>
                                     </label>
                                 </fieldset>
                             </div>
                             <!---->
                             <div class="CheckboxList__item">
                                 <label class="CheckboxList__item__checkbox">
-                                    <input type="checkbox" name="new_nameplate" value="random"/>
+                                    <input type="radio" name="vehicle.new-nameplate" value="random"/>
                                     <span>Spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
                                 </label>
                             </div>
@@ -81,20 +81,20 @@
                             <div class="Grid_Module--50">
                                 <label>
                                     <span>Ident-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
-                                    <input type="text" name="strasse"/>
+                                    <input type="text" name="vehicle-data.ident"/>
                                 </label>
                             </div>
                             <div class="Grid_Module--50">
                                 <label>
                                     <span>Fahrzeugbrief-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
-                                    <input type="text" name="hausnummer"/>
+                                    <input type="text" name="vehicle-data.vehicle-id"/>
                                 </label>
                             </div>
                         </div>
 
 
                         <label class="Checkbox">
-                            <input type="checkbox" name="leasing" value="hell rosa"/>
+                            <input type="checkbox" name="vehicle-data.leasing" />
                             <span>Fahrzeug wird finanziert bzw. geleast</span>
                         </label>
 
@@ -106,7 +106,7 @@
 
                         <label>
                             <span>eVB-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
-                            <input type="text" name="evb_nummer"/>
+                            <input type="text" name="vehicle-insurance.id"/>
                         </label>
 
                     </fieldset>
@@ -114,6 +114,7 @@
 
                     <footer>
                         <div class="ValidationMessages">
+                            <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                             <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                         </div>
                         <button type="button" data-action="nextTab">Weiter</button>

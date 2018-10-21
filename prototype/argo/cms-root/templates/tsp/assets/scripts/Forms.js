@@ -14,7 +14,7 @@ Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
     })[0];
     el.addEventListener("change", function() {
         console.info("Changed. Target is: ", targetFieldset);
-        if(!this.checked || !this.selected) {
+        if(!this.checked && !this.selected) {
             targetFieldset.setAttribute("disabled", "disabled")
         }
         else {
