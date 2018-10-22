@@ -74,7 +74,8 @@ class FormsValidatorSpec extends Specification {
         result.fields['b'].failureReasons == [
                 new FailureReason(
                         validator: 'FormsValidator',
-                        failureCode: FormsValidator.VALIDATION_ERROR_MISSING_FIELD_DEFINITION
+                        failureCode: FormsValidator.VALIDATION_ERROR_MISSING_FIELD_DEFINITION,
+                        arguments: ['b']
                 )
         ]
     }

@@ -17,9 +17,8 @@ public class MandatoryFormFieldValidator implements FormFieldValidator {
             return new FailureReason.Builder()
                 .withValidator("MandatoryFormFieldValidator")
                 .withCode(VALIDATION_ERROR_INCOMPATIBLE_VALIDATOR_VALUE)
-                .withArgument("required", Boolean.class.getName())
-                .withArgument("found", validatorValue.getClass().getName())
-                .withArgument("value", validatorValue.toString())
+                .withArgument(validatorValue.getClass().getName())
+                .withArgument(Boolean.class.getName())
                 .build();
         }
 
@@ -28,6 +27,7 @@ public class MandatoryFormFieldValidator implements FormFieldValidator {
             return new FailureReason.Builder()
                 .withValidator("MandatoryFormFieldValidator")
                 .withCode(VALIDATION_ERROR_MISSING_MANDATORY_VALUE)
+                .withArgument(fieldName)
                 .build();
         }
 

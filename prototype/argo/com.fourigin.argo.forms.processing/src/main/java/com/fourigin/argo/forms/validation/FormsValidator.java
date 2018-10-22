@@ -83,6 +83,8 @@ public final class FormsValidator {
                     failure(result, fieldName, fieldValue, new FailureReason.Builder()
                         .withValidator("FormsValidator")
                         .withCode(VALIDATION_ERROR_MISMATCHED_FIELD_VALUE)
+                        .withArgument(fieldName)
+                        .withArgument(fieldValue)
                         .build()
                     );
                     continue;
@@ -93,7 +95,8 @@ public final class FormsValidator {
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_DEFINITION)
-                    .withArgument("cause", ex.getMessage())
+                    .withArgument(fieldName)
+                    .withArgument(ex.getMessage())
                     .build()
                 );
                 continue;
@@ -159,9 +162,12 @@ public final class FormsValidator {
                 if (hasInvalidValues(fieldDefinition, fieldValue)) {
                     if (logger.isInfoEnabled())
                         logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
+
                     failure(result, fieldName, fieldValue, new FailureReason.Builder()
                         .withValidator("FormsValidator")
                         .withCode(VALIDATION_ERROR_MISMATCHED_FIELD_VALUE)
+                        .withArgument(fieldName)
+                        .withArgument(fieldValue)
                         .build()
                     );
                     continue;
@@ -172,6 +178,7 @@ public final class FormsValidator {
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_DEFINITION)
+                    .withArgument(fieldName)
                     .build()
                 );
             }
@@ -238,7 +245,8 @@ public final class FormsValidator {
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_VALIDATOR)
-                    .withArgument("type", validatorType)
+                    .withArgument(validatorType)
+                    .withArgument(String.valueOf(FIELD_VALIDATORS.keySet()))
                     .build()
                 );
                 failed = true;

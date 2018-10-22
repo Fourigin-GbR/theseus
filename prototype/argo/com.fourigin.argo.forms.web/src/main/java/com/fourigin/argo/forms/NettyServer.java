@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.customer.CreateCustomerFormsEntryProcessor;
+import com.fourigin.argo.forms.processing.FulfillVehicleRegistrationFormEntryProcessor;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -17,10 +18,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +54,8 @@ public class NettyServer {
     public ServerBootstrap serverBootstrap(
         @Autowired FormsStoreRepository formsStoreRepository,
         @Autowired FormDefinitionRepository formDefinitionRepository,
-        @Autowired FormsProcessingDispatcher formsProcessingDispatcher
+        @Autowired FormsProcessingDispatcher formsProcessingDispatcher,
+        @Autowired MessageSource messageSource
     ) {
         return new ServerBootstrap()
             .group(eventLoopGroup())
@@ -61,6 +65,7 @@ public class NettyServer {
                 formsStoreRepository,
                 formDefinitionRepository,
                 formsProcessingDispatcher,
+                messageSource,
                 objectMapper()
             ))
             .channel(NioServerSocketChannel.class);
@@ -88,7 +93,10 @@ public class NettyServer {
     public FormsEntryProcessorMapping formsEntryProcessorMapping() {
         FormsEntryProcessorMapping mapping = new FormsEntryProcessorMapping();
 
-        mapping.put("register-customer", Collections.singletonList("CREATE-CUSTOMER"));
+        mapping.put("register-customer", Arrays.asList(
+            CreateCustomerFormsEntryProcessor.NAME,
+            FulfillVehicleRegistrationFormEntryProcessor.NAME
+        ));
 
         return mapping;
     }
@@ -103,8 +111,14 @@ public class NettyServer {
             customerRepository
         );
 
+        FulfillVehicleRegistrationFormEntryProcessor fulfillFormEntryProcessor = new FulfillVehicleRegistrationFormEntryProcessor(
+            formsStoreRepository,
+            customerRepository
+        );
+
         Map<String, FormsEntryProcessor> processors = new HashMap<>();
         processors.put(CreateCustomerFormsEntryProcessor.NAME, createCustomerFormsEntryProcessor);
+        processors.put(FulfillVehicleRegistrationFormEntryProcessor.NAME, fulfillFormEntryProcessor);
 
         return new DefaultFormsEntryProcessorFactory(processors);
     }
@@ -127,6 +141,16 @@ public class NettyServer {
             formsEntryProcessorFactory,
             formsRegistry
         );
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+        messageSource.setBasename("classpath:messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        
+        return messageSource;
     }
 
     @Value("${server.port}")

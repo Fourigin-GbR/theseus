@@ -8,6 +8,7 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 
 public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
@@ -15,6 +16,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
     private FormsStoreRepository formsStoreRepository;
     private FormDefinitionRepository formDefinitionRepository;
     private FormsProcessingDispatcher formsProcessingDispatcher;
+    private MessageSource messageSource;
     private ObjectMapper objectMapper;
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerInitializer.class);
@@ -24,12 +26,13 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         FormsStoreRepository formsStoreRepository,
         FormDefinitionRepository formDefinitionRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
-        ObjectMapper objectMapper
+        MessageSource messageSource, ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
+        this.messageSource = messageSource;
         this.objectMapper = objectMapper;
 
         if (logger.isInfoEnabled()) logger.info("Initializing with contextPath {}", contextPath);
@@ -46,6 +49,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
             formDefinitionRepository,
             formsStoreRepository,
             formsProcessingDispatcher,
+            messageSource,
             objectMapper
         ));
     }

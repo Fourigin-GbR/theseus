@@ -1,8 +1,8 @@
 package com.fourigin.argo.forms.validation;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FailureReason implements Serializable {
@@ -10,7 +10,8 @@ public class FailureReason implements Serializable {
 
     private String validator;
     private String failureCode;
-    private Map<String, String> arguments;
+    private String formattedMessage;
+    private List<String> arguments;
 
     public String getValidator() {
         return validator;
@@ -28,11 +29,19 @@ public class FailureReason implements Serializable {
         this.failureCode = failureCode;
     }
 
-    public Map<String, String> getArguments() {
+    public String getFormattedMessage() {
+        return formattedMessage;
+    }
+
+    public void setFormattedMessage(String formattedMessage) {
+        this.formattedMessage = formattedMessage;
+    }
+
+    public List<String> getArguments() {
         return arguments;
     }
 
-    public void setArguments(Map<String, String> arguments) {
+    public void setArguments(List<String> arguments) {
         this.arguments = arguments;
     }
 
@@ -40,22 +49,24 @@ public class FailureReason implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof FailureReason)) return false;
-        FailureReason that = (FailureReason) o;
-        return Objects.equals(validator, that.validator) &&
-            Objects.equals(failureCode, that.failureCode) &&
-            Objects.equals(arguments, that.arguments);
+        FailureReason reason = (FailureReason) o;
+        return Objects.equals(validator, reason.validator) &&
+            Objects.equals(failureCode, reason.failureCode) &&
+            Objects.equals(formattedMessage, reason.formattedMessage) &&
+            Objects.equals(arguments, reason.arguments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(validator, failureCode, arguments);
+        return Objects.hash(validator, failureCode, formattedMessage, arguments);
     }
 
     @Override
     public String toString() {
         return "FailureReason{" +
-            "withValidator='" + validator + '\'' +
+            "validator='" + validator + '\'' +
             ", failureCode='" + failureCode + '\'' +
+            ", formattedMessage='" + formattedMessage + '\'' +
             ", arguments=" + arguments +
             '}';
     }
@@ -63,7 +74,8 @@ public class FailureReason implements Serializable {
     static class Builder {
         private String validator;
         private String failureCode;
-        private Map<String, String> arguments;
+        private String formattedMessage;
+        private List<String> arguments;
 
         public Builder withValidator(String validatorClass) {
             this.validator = validatorClass;
@@ -75,11 +87,16 @@ public class FailureReason implements Serializable {
             return this;
         }
 
-        public Builder withArgument(String key, String value) {
+        public Builder withFormattedMessage(String formattedMessage) {
+            this.formattedMessage = formattedMessage;
+            return this;
+        }
+
+        public Builder withArgument(String value) {
             if (arguments == null) {
-                arguments = new HashMap<>();
+                arguments = new ArrayList<>();
             }
-            arguments.put(key, value);
+            arguments.add(value);
             return this;
         }
 
@@ -88,6 +105,7 @@ public class FailureReason implements Serializable {
 
             reason.setValidator(validator);
             reason.setFailureCode(failureCode);
+            reason.setFormattedMessage(formattedMessage);
             reason.setArguments(arguments);
 
             return reason;

@@ -10,7 +10,9 @@ import com.fourigin.argo.forms.model.FormsRequest;
 import com.fourigin.argo.forms.models.Attachment;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
+import com.fourigin.argo.forms.validation.FailureReason;
 import com.fourigin.argo.forms.validation.FormData;
+import com.fourigin.argo.forms.validation.FormFieldValidationResult;
 import com.fourigin.argo.forms.validation.FormValidationResult;
 import com.fourigin.argo.forms.validation.FormsValidator;
 import io.netty.buffer.ByteBuf;
@@ -27,9 +29,12 @@ import io.netty.util.CharsetUtil;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
@@ -37,6 +42,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     private final String contextPath;
 
     private ObjectMapper objectMapper;
+
+    private MessageSource messageSource;
 
     private FormsStoreRepository formsStoreRepository;
 
@@ -57,12 +64,14 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FormDefinitionRepository formDefinitionRepository,
         FormsStoreRepository formsStoreRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
+        MessageSource messageSource,
         ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
+        this.messageSource = messageSource;
         this.objectMapper = objectMapper;
 
         if (logger.isInfoEnabled()) logger.info("Initialized with contextPath '{}'", contextPath);
@@ -256,7 +265,38 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         formData.setFormId(formsRequest.getFormId());
         formData.setPreValidation(preValidation);
         formData.setValidateFields(formsRequest.getData());
-        return FormsValidator.validate(formDefinition, formData);
+        FormValidationResult result = FormsValidator.validate(formDefinition, formData);
+
+        extendFormattedMessages(result, header.getLocale());
+
+        return result;
+    }
+
+    private void extendFormattedMessages(FormValidationResult result, Locale locale) {
+        if (result.isValid()) {
+            return;
+        }
+
+        Map<String, FormFieldValidationResult> fields = result.getFields();
+        for (Map.Entry<String, FormFieldValidationResult> entry : fields.entrySet()) {
+            FormFieldValidationResult fieldResult = entry.getValue();
+            if (fieldResult.isValid()) {
+                continue;
+            }
+
+            List<FailureReason> failureReasons = fieldResult.getFailureReasons();
+            if(failureReasons == null || failureReasons.isEmpty()){
+                continue;
+            }
+
+            for (FailureReason failureReason : failureReasons) {
+                failureReason.setFormattedMessage(messageSource.getMessage(
+                    failureReason.getFailureCode(),
+                    failureReason.getArguments().toArray(),
+                    locale
+                ));
+            }
+        }
     }
 
     private void serveStatic(ChannelHandlerContext ctx, String path) throws Exception {

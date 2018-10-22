@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <!-- FormsValidator -->
+    <entry key="MISSING_FIELD_DEFINITION">Konfigurationsfehler: Keine Felddefinition gefunden für das Feld mit dem Namen {0}</entry>
+    <entry key="MISSING_FIELD_VALIDATOR">Konfigurationsfehler: Ein unbekannter Validator-Name {0} gefunden, bekannt sind folgende Validatoren: {1}</entry>
+    <entry key="MISMATCHED_FIELD_VALUE">Ungültiger Wert {1} gefunden für das Feld {0}</entry>
+
+    <!-- General error messages -->
+    <entry key="INCOMPATIBLE_VALIDATOR_VALUE">Konfigurationsfehler: Einen ungültigen Validator-Wert vom Typ {0} gefunden, erwartet wird der Wert vom Typ {1}</entry>
+
+    <!-- MandatoryFormFieldValidator -->
+    <entry key="MISSING_MANDATORY_VALUE">Der Wert des Pflichtfeldes {0} fehlt</entry>
+
+    <!-- PatternMatchingFormFieldValidator -->
+    <entry key="MISSING_VALUE">Der Wert des Feldes {0} fehlt</entry>
+    <entry key="VALUE_MISMATCH">Der Wert {1} des Feldes {0} entspricht nicht dem Muster {2}</entry>
+    <entry key="UNKNOWN_PATTERN">Konfigurationsfehler: Eine Referenz {0} zu einem ungültigen Muster gefunden, bekannte Musternamen sind: {1}</entry>
+
+</properties>
