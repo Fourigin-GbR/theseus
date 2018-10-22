@@ -18,6 +18,7 @@ def argoFormsModels                         = project(':argo:com.fourigin.argo.f
 def argoFormsRepository                     = project(':argo:com.fourigin.argo.forms.repository')
 def argoFormsRepositoryJson                 = project(':argo:com.fourigin.argo.forms.repository.json')
 def argoFormsProcessing                     = project(':argo:com.fourigin.argo.forms.processing')
+def argoFormsProcessingTsp                  = project(':argo:com.fourigin.argo.forms.processing.tsp')
 
 def heraCore                                = project(':hera:com.fourigin.hera.core')
 //def heraSpringBootStarter                 = project(':hera:com.fourigin.hera.spring-boot-starter')
@@ -330,6 +331,15 @@ project(':argo') {
         }
     }
 
+    project('com.fourigin.argo.forms.processing.tsp') {
+        version = argoVersion
+
+        dependencies {
+            compile argoFormsProcessing
+            compile managedDependency('org.apache.pdfbox:pdfbox')
+        }
+    }
+
     project('com.fourigin.argo.forms.web') {
         apply plugin: 'org.springframework.boot'
 
@@ -345,6 +355,7 @@ project(':argo') {
             compile argoFormsRepository
             compile argoFormsRepositoryJson
             compile argoFormsProcessing
+            compile argoFormsProcessingTsp
 
             compile managedDependency('io.netty:netty-all')
 
