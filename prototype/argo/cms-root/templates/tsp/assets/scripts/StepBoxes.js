@@ -181,6 +181,7 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) 
                     "formDefinition": "register-vehicle",
                     "customer": "tsp",
                     "base": "DE",
+                    "locale": "en_GB",
                     "referrer": {
                         "url": "www.tsp.de/registrierung/neu",
                         "client": "IE6"
