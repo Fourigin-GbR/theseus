@@ -129,15 +129,15 @@
                     <legend>Bankdaten für die Abbuchung der KFZ-Steuer</legend>
                     <div class="DependencyGroup">
                         <label class="Checkbox DependencyGroup__master">
-                            <input type="checkbox" name="besser" value="gelb"
+                            <input type="radio" name="tax.account" value="use-stored-account"
                                    data-activate-fieldset-name="hinterlegte_kontodaten"/>
                             <span>die hinterlegte Bankverbindung verwenden:</span>
                         </label>
                         <fieldset name="hinterlegte_kontodaten" class="DependencyGroup__dependant">
                             <label>
-                                <select name="auswahl">
-                                    <option value="eis">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
-                                    <option value="sahne">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43
+                                <select name="tax.account/stored-account">
+                                    <option value="account-1">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
+                                    <option value="account-2">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43
                                     </option>
                                 </select>
                             </label>
@@ -146,7 +146,7 @@
 
                     <div class="DependencyGroup">
                         <label class="Checkbox DependencyGroup__master">
-                            <input type="checkbox" name="besser" value="hell rosa"
+                            <input type="radio" name="tax.account" value="use-new-account"
                                    data-activate-fieldset-name="neue_kontodaten"/>
                             <span>eine neue Bankverbindung verwenden:</span>
                         </label>
@@ -155,26 +155,26 @@
                                 <div class="Grid__Module Grid_Module--40">
                                     <label>
                                         <span>IBAN:</span>
-                                        <input type="text" name="evb_nummer"/>
+                                        <input type="text" name="tax.account/new-account-code"/>
                                     </label>
                                 </div>
                                 <div class="Grid__Module Grid_Module--30">
                                     <label>
                                         <span>BIC:</span>
-                                        <input type="text" name="evb_nummer" readonly="readonly"/>
+                                        <input type="text" name="tax.account/new-account-bankcode"/>
                                     </label>
                                 </div>
                                 <div class="Grid__Module Grid_Module--30">
                                     <label>
                                         <span>Bank:</span>
-                                        <input type="text" name="evb_nummer" readonly="readonly"/>
+                                        <input type="text" name="tax.account/new-account-bankname"/>
                                     </label>
                                 </div>
                             </div>
 
                             <label>
                                 <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
-                                <input type="text" name="evb_nummer"/>
+                                <input type="text" name="tax.account/new-account-owner"/>
                             </label>
 
                         </fieldset>
@@ -183,6 +183,7 @@
 
                 <footer>
                     <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>
@@ -196,36 +197,36 @@
                     <legend>Verfügbare Zahlungsmethoden</legend>
                     <fieldset>
                         <label class="Radio">
-                            <input type="radio" name="besser" value="gelb"/>
+                            <input type="radio" name="payment.methods" value="paypal"/>
                             <span>PayPal</span>
                         </label>
                         <label class="Radio">
-                            <input type="radio" name="besser" value="gelb"/>
+                            <input type="radio" name="payment.methods" value="sofort"/>
                             <span>Sofort-Überweisung</span>
                         </label>
                         <label class="Radio">
-                            <input type="radio" name="besser" value="gelb"/>
+                            <input type="radio" name="payment.methods" value="pre-payment"/>
                             <span>Vorkasse</span>
                         </label>
                         <div class="DependencyGroup">
                             <label class="Radio DependencyGroup__master">
-                                <input type="radio" name="besser" value="gelb"
+                                <input type="radio" name="payment.methods" value="debit-from-existing-account"
                                        data-activate-fieldset-name="neue_bankverbindung"/>
                                 <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
                             </label>
                             <fieldset class="DependencyGroup__dependant" name="hinterlegte_bankverbindung">
                                 <label>
                                     <span>Bankdaten</span>
-                                    <select name="auswahl">
-                                        <option value="eis">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
-                                        <option value="sahne">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43</option>
+                                    <select name="payment.methods/stored-account">
+                                        <option value="account-1">Deutsche Bank, IBAN: 1234 5678 9012 3456 78</option>
+                                        <option value="account-2">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43</option>
                                     </select>
                                 </label>
                             </fieldset>
                         </div>
                         <div class="DependencyGroup">
                             <label class="Radio DependencyGroup__master">
-                                <input type="radio" name="besser" value="hell rosa"
+                                <input type="radio" name="payment.methods" value="debit-from-new-account"
                                        data-activate-fieldset-name="neu_neu_neu"/>
                                 <span>Lastschrifteinzug von einer neuen Bankverbindung</span>
                             </label>
@@ -234,26 +235,26 @@
                                     <div class="Grid__Module Grid_Module--40">
                                         <label>
                                             <span>IBAN:</span>
-                                            <input type="text" name="evb_nummer"/>
+                                            <input type="text" name="payment.methods/new-account-code"/>
                                         </label>
                                     </div>
                                     <div class="Grid__Module Grid_Module--30">
                                         <label>
                                             <span>BIC:</span>
-                                            <input type="text" name="evb_nummer" readonly="readonly"/>
+                                            <input type="text" name="payment.methods/new-account-bankcode"/>
                                         </label>
                                     </div>
                                     <div class="Grid__Module Grid_Module--30">
                                         <label>
                                             <span>Bank:</span>
-                                            <input type="text" name="evb_nummer" readonly="readonly"/>
+                                            <input type="text" name="payment.methods/new-account-bankname"/>
                                         </label>
                                     </div>
                                 </div>
 
                                 <label>
                                     <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
-                                    <input type="text" name="evb_nummer"/>
+                                    <input type="text" name="payment.methods/new-account-owner"/>
                                 </label>
                             </fieldset>
                         </div>
@@ -263,6 +264,7 @@
 
                 <footer>
                     <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>
@@ -276,7 +278,7 @@
                     <legend>Folgende Optionen stehen Ihnen zur Verfügung</legend>
 
                     <label class="Radio">
-                        <input type="radio" name="besser" value="gelb"/>
+                        <input type="radio" name="handover.options" value="office-delivering"/>
                         <span>Sie bringen Ihre Unterlagen zu uns</span>
                         <p class="description">Unsere Adresse und reguläre Öffnungszeiten finden Sie in der
                             Bestätigung-Email.</p>
@@ -284,7 +286,7 @@
 
 
                     <label class="Radio">
-                        <input type="radio" name="besser" value="gelb"/>
+                        <input type="radio" name="handover.options" value="pickup"/>
                         <span>Sie lassen uns Ihre Unterlagen abholen</span>
                         <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden,
                             welcher in der Bestätigung-Email steht.</p>
@@ -295,6 +297,7 @@
 
                 <footer>
                     <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>
@@ -307,6 +310,7 @@
 
                 <footer>
                     <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>

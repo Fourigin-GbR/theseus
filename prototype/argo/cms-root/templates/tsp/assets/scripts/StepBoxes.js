@@ -219,7 +219,7 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) 
         })
             .done(function (res) {
                 console.log(res);
-                alert("Prima! Sie haben das erste Level gelöst! Sobald der Karsten Zeit hat, geht es hier dann auch weiter :)");
+                alert("Prima! Sie haben das Level gelöst! Auf zu Level " + (self.currentStep +1));
                 self.setCurrentStepValidationStatus(true);
                 self.setNextStepActive();
             })
