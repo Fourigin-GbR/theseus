@@ -6,7 +6,28 @@ var inputsWithBoundFieldSets = Array.prototype.filter.call(inputs, function(elem
     return element.hasAttribute("data-activate-fieldset-name");
 });
 
-var _inputsWithBoundFieldSets = null; //inputs.querySelectorAll("[data-activate-fieldset-name]");
+var setBoundedFieldSetsStatusOnMasterStatus = function(htmlNode_master, htmlNode_boundedFieldSet) {
+    if(!htmlNode_boundedFieldSet) {
+        return;
+    }
+    if(!htmlNode_master.checked && !htmlNode_master.selected) {
+        htmlNode_boundedFieldSet.setAttribute("disabled", "disabled")
+    }
+    else {
+        htmlNode_boundedFieldSet.removeAttribute("disabled");
+    }
+};
+
+var iterateOverAllBoundInputsAndUpdateStatusOfFieldsets = function() {
+    Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
+        var targetFieldset = Array.prototype.filter.call(fieldsets, function(element, index, aElements) {
+            return (element.getAttribute("name") === el.getAttribute('data-activate-fieldset-name'));
+        })[0];
+        if(targetFieldset) {
+            setBoundedFieldSetsStatusOnMasterStatus(el, targetFieldset);
+        }
+    });
+};
 
 Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
     var targetFieldset = Array.prototype.filter.call(fieldsets, function(element, index, aElements) {
@@ -14,11 +35,29 @@ Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
     })[0];
     el.addEventListener("change", function() {
         console.info("Changed. Target is: ", targetFieldset);
-        if(!this.checked && !this.selected) {
-            targetFieldset.setAttribute("disabled", "disabled")
+        setBoundedFieldSetsStatusOnMasterStatus(this, targetFieldset);
+        // if radio, only one element can be active - check other fields:
+        var htmlNode_parentForm = el.closest("form"),
+            radioName = el.getAttribute("name");
+        if(el.getAttribute("type") === "radio") {
+            var htmlNode_radioFields = htmlNode_parentForm.querySelectorAll("input[name='" + radioName + "']");
+
+            console.log("Diese Radios habe ich gefunden:", htmlNode_radioFields);
+            Array.prototype.forEach.call(htmlNode_radioFields, function(elRadio){
+
+                var currentTargetFieldset = Array.prototype.filter.call(fieldsets, function(element, index, aElements) {
+                    if(elRadio.getAttribute('data-activate-fieldset-name')) {
+                        return (element.getAttribute("name") === elRadio.getAttribute('data-activate-fieldset-name'));
+                    }
+                })[0];
+                console.log("Dieses Feld will ich disabeln:", currentTargetFieldset);
+                if(currentTargetFieldset) {
+                    setBoundedFieldSetsStatusOnMasterStatus(elRadio, currentTargetFieldset);
+                }
+            });
         }
-        else {
-            targetFieldset.removeAttribute("disabled");
-        }
+
     });
 });
+
+iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();

@@ -80,11 +80,14 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
         /**
          * Get current step, get next step and activate him, if it is validated
          */
-        if (this.validateStep()) {
+        if (this.isCurrentStepValidated()) {
             this.resetAllStepsActiveStatus();
             this.steps[this.currentStep - 1].validated = true;
             this.currentStep = this.currentStep < this.steps.length ? this.currentStep + 1 : this.currentStep;
             this.updateAllStepsView();
+        }
+        else {
+            this.validateStep();
         }
     };
 
@@ -97,14 +100,31 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
         this.updateAllStepsView();
     };
 
+    StepsBox.prototype.setCurrentStepValidationStatus = function(isValid) {
+        this.steps[(this.currentStep - 1)].validated = isValid;
+    };
+    StepsBox.prototype.isCurrentStepValidated = function() {
+        return this.steps[(this.currentStep - 1)].validated;
+    };
+
     StepsBox.prototype.validateStep = function () {
         /**
          * Collect all form fields in the step and validate them
          */
-        var htmlNode_currentStep = this.steps[(this.currentStep - 1)].htmlNode_content,
-            allFormFieldInStep = htmlNode_currentStep.getElementsByTagName("input", "textarea");
+        var nodeList_currentStep = this.steps[(this.currentStep - 1)].htmlNode_content,
+            htmlNode_currentStep_copy = nodeList_currentStep.cloneNode(true),
+            htmlNodes_formFields = null,
+            htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets = null;
         //
-        this.function_validateFormElements(allFormFieldInStep);
+        htmlNodes_formFields = htmlNode_currentStep_copy.querySelectorAll("input[type='text'], input[type='checkbox']:checked, input[type='radio']:checked, textarea");
+
+        htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets = Array.prototype.filter.call(htmlNodes_formFields, function(element) {
+            /**
+             * Filter out all form-fields, who do not have somewhere on their ancestors a fieldset which is 'disabled'.
+             */
+            return !element.closest("fieldset[disabled='disabled']");
+        });
+       this.function_validateFormElements(htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets);
     };
 
     StepsBox.prototype.setMessageActive = function (messageType) {
@@ -164,7 +184,7 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
 
 var htmlNode_setsBox = document.getElementById("fccFormular");
 var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) {
-        console.log(allFormFieldInStep, typeof allFormFieldInStep);
+        console.log(">>>> ", allFormFieldInStep, typeof allFormFieldInStep);
 
         var formToJSON = function (form) {
             var data = {};
@@ -200,10 +220,12 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) 
             .done(function (res) {
                 console.log(res);
                 alert("Prima! Sie haben das erste Level gelöst! Sobald der Karsten Zeit hat, geht es hier dann auch weiter :)");
+                self.setCurrentStepValidationStatus(true);
+                self.setNextStepActive();
             })
             .fail(function (err) {
                 console.log('Error: ' + err.status);
-                (function (context) {
+                (function () {
                     self.handleValidationMessage(err);
                 })(self);
             });
