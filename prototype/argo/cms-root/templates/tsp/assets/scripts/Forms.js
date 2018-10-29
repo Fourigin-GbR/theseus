@@ -1,6 +1,7 @@
 var inputs = document.getElementsByTagName("input");
 var fieldsets = document.getElementsByTagName("fieldset");
-console.log("inputs, fieldsets", inputs, fieldsets);
+var formular = document.querySelector("#fccFormular form");
+console.log("form, inputs, fieldsets", formular, inputs, fieldsets);
 
 var inputsWithBoundFieldSets = Array.prototype.filter.call(inputs, function(element, index, aElements) {
     return element.hasAttribute("data-activate-fieldset-name");
@@ -61,3 +62,67 @@ Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
 });
 
 iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
+
+var sendForm = function() {
+
+    $("#fccFormular form").on("submit", function(e) {
+       e.preventDefault();
+
+        (function ($) {
+            $.fn.serializeFormJSON = function () {
+
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function () {
+                    if (o[this.name]) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            };
+        })(jQuery);
+
+        var data = $(this).serializeFormJSON();
+
+    var self = this,
+        dataJson = {
+            "header": {
+                "formDefinition": "register-vehicle",
+                "customer": "tsp",
+                "base": "DE",
+                "locale": "en_GB",
+                "referrer": {
+                    "url": "www.tsp.de/registrierung/neu",
+                    "client": "IE6"
+                }
+            },
+            "data": data
+        };
+
+    $.ajax({
+        url: '/forms/register-form',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify(dataJson)
+    })
+        .done(function (res) {
+            console.log(res);
+            alert("Prima! Sie haben ALLE Level gelöst!!");
+
+        })
+        .fail(function (err) {
+            console.log('Error: ' + err.status);
+            alert("Oh nein! Das letzte Level haben Sie nicht geschafft. Bitte neu starten.");
+        });
+    return true;
+
+    });
+};
+
+sendForm();
