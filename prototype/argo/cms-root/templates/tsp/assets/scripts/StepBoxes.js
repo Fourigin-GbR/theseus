@@ -41,6 +41,7 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
 
     StepsBox.prototype.setStepsNavigationButtons = function () {
         var self = this;
+        // Event listener:
         this.htmlNodes.stepsBox.addEventListener("click", function (event) {
             var targetElement = event.target || event.srcElement;
             if (targetElement.tagName = "BUTTON") {
@@ -178,6 +179,14 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
             }
         }
     };
+
+    StepsBox.prototype.unMarkAllFields = function() {
+        var htmlNode_currentStep = this.steps[(this.currentStep - 1)].htmlNode_content,
+            htmlNode_invalidFormFields = htmlNode_currentStep.querySelectorAll(".invalid");
+        Array.prototype.forEach.call(htmlNode_invalidFormFields, function (el) {
+            el.classList.remove("invalid");
+        });
+    };
     //
     return StepsBox;
 })();
@@ -210,6 +219,9 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) 
                 "data": formToJSON(allFormFieldInStep)
             };
         console.log("Validate me: ", allFormFieldInStep);
+
+        self.unMarkAllFields();
+
         $.ajax({
             url: '/forms/pre-validate',
             dataType: 'JSON',
