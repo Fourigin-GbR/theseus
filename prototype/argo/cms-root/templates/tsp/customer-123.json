@@ -1,0 +1,15 @@
+{
+	"id": "123",
+	"gender": "MALE",
+	"firstname": "Hans",
+	"lastname": "Mustermann",
+	"birthname": null,
+	"birthdate": 1234567890,
+	"cityOfBorn": "Musterstadt",
+	"mainAddress": {
+	},
+	"additionalAddresses": null,
+	"email": "hans.mustermall@aol.com",
+	"phone": "0123/456789",
+	"fax": null
+}

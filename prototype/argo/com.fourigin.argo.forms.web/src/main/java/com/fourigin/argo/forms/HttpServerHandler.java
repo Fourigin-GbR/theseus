@@ -7,7 +7,6 @@ import com.fourigin.argo.forms.definition.FormObjectDefinition;
 import com.fourigin.argo.forms.definition.FormObjectMapperDefinition;
 import com.fourigin.argo.forms.mapping.FormObjectMapper;
 import com.fourigin.argo.forms.model.FormsRequest;
-import com.fourigin.argo.forms.models.Attachment;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.validation.FailureReason;
@@ -192,13 +191,14 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                     FormObjectDefinition objectDefinition = objectDefinitionEntry.getValue();
                     Object mappedObject = mapObject(objectDefinition, entry);
 
-                    Attachment attachment = new Attachment();
-                    attachment.setPayload(mappedObject);
-                    attachment.setTimestamp(System.currentTimeMillis());
-                    attachment.setProducer("/");
-                    if (logger.isDebugEnabled()) logger.debug("Adding an attachment {}", attachment);
+//                    Attachment attachment = new Attachment();
+//                    attachment.setPayload(mappedObject);
+//                    attachment.setTimestamp(System.currentTimeMillis());
+//                    attachment.setProducer("/");
+//                    if (logger.isDebugEnabled()) logger.debug("Adding an attachment {}", attachment);
 
-                    formsStoreRepository.addAttachment(entryId, objectName, attachment);
+//                    formsStoreRepository.addAttachment(entryId, objectName, attachment);
+                    formsStoreRepository.addAttachment(entryId, objectName, mappedObject);
                 }
             }
 
@@ -246,6 +246,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FormObjectMapper formObjectMapper = (FormObjectMapper) mapperObject;
 
         Map<String, Object> mapperSettings = mappingDefinition.getSettings();
+        // TODO: put the base path for all scripts
         formObjectMapper.initialize(mapperSettings);
 
         return formObjectMapper.parseValue(targetClass, entry);
@@ -258,7 +259,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
         if (formDefinition == null) {
             throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
-        }
+        }                                                                             
 
         FormData formData = new FormData();
         formData.setFormDefinitionId(formDefinitionId);

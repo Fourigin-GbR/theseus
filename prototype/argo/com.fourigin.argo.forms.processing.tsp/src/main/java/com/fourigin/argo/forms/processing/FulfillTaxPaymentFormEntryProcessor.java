@@ -10,9 +10,9 @@ import com.fourigin.argo.forms.models.EncodedPayload;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
+import com.fourigin.argo.forms.models.payment.BankAccount;
 import com.fourigin.utilities.pdfbox.PdfDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,25 +20,21 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
-public class FulfillVehicleRegistrationFormEntryProcessor implements FormsEntryProcessor {
-    public static final String NAME = "FULFILL-VEHICLE-REGISTRATION-FORM";
+public class FulfillTaxPaymentFormEntryProcessor implements FormsEntryProcessor {
+    public static final String NAME = "FULFILL-TAX-PAYMENT-FORM";
 
     public static final String REGISTRATION_ATTACHMENT_NAME = "vehicle-registration";
 
-    public static final String FORM_ATTACHMENT_NAME = "register-vehicle-form";
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
-
+    public static final String FORM_ATTACHMENT_NAME = "tax-payment-form";
+    
     private FormsStoreRepository formsStoreRepository;
     private CustomerRepository customerRepository;
     private File form;
 
-    private final Logger logger = LoggerFactory.getLogger(FulfillVehicleRegistrationFormEntryProcessor.class);
+    private final Logger logger = LoggerFactory.getLogger(FulfillTaxPaymentFormEntryProcessor.class);
 
-    public FulfillVehicleRegistrationFormEntryProcessor(
+    public FulfillTaxPaymentFormEntryProcessor(
         FormsStoreRepository formsStoreRepository,
         CustomerRepository customerRepository,
         File form
@@ -90,84 +86,65 @@ public class FulfillVehicleRegistrationFormEntryProcessor implements FormsEntryP
 
         Vehicle vehicle = registration.getVehicle();
 
-        // registration checkbox
-        PDCheckBox registrationCheckbox = doc.getCheckboxField("ZulassungWiederzulassung");
-        registrationCheckbox.check();
+        // fist name + last name
+        PDTextField nameField = doc.getTextField("Vorname / Nachname Zahler");
+        nameField.setValue(customer.getFirstname() + " " + customer.getLastname());
 
-        // old nameplate
-        String previousNameplate = vehicle.getPreviousNameplate();
-        if (previousNameplate != null) {
-            PDTextField oldNameplateField = doc.getTextField("Bisheriges Kennzeichen");
-            System.out.println("Default appearance: " + oldNameplateField.getDefaultAppearance());
-            oldNameplateField.setValue(previousNameplate);
+        CustomerAddress address = customer.getMainAddress();
+
+        // street + house number
+        PDTextField streetHouseField = doc.getTextField("Straße / Hausnummer Zahler");
+        String streetValue = address.getStreet() + " " + address.getHouseNumber();
+        if(address.getAdditionalInfo() != null){
+            streetValue += " " + address.getAdditionalInfo();
         }
+        streetHouseField.setValue(streetValue);
 
-        // new nameplate
-        PDTextField newNameplateField = doc.getTextField("Neues Kennzeichen");
+        // zip
+        PDTextField zipField = doc.getTextField("PLZ");
+        zipField.setValue(address.getZipCode());
+
+        // city
+        PDTextField cityField = doc.getTextField("Ort");
+        cityField.setValue(address.getCity());
+
+        // country
+        PDTextField countryField = doc.getTextField("Land");
+        countryField.setValue(address.getCountry());
+
+        BankAccount account = registration.getBankAccountForTaxPayment();
+
+        // iban
+        PDTextField ibanField = doc.getTextField("IBAN");
+        ibanField.setValue(account.getIban());
+
+        // bic
+        PDTextField bicField = doc.getTextField("BIC");
+        bicField.setValue(account.getBic());
+
+        // bank name
+        PDTextField bankNameField = doc.getTextField("Name der Bank");
+        bankNameField.setValue(account.getBankName());
+
+        // bank account holder
+        PDTextField accountHolderField = doc.getTextField("Vorname / Nachname Halter");
+        accountHolderField.setValue(account.getAccountHolder());
+
+        // nameplate
+        PDTextField nameplateField = doc.getTextField("Kennzeichen");
         switch (vehicle.getNewNameplateOption()) {
             case NOT_REGISTERED:
                 // TODO: specify the workflow for this! Just leave empty?
                 break;
             case TO_REGISTER_BY_PORTAL:
                 // TODO: make a reservation!
-                newNameplateField.setValue(vehicle.getNewNameplateAdditionalInfo());
+                nameplateField.setValue(vehicle.getNewNameplateAdditionalInfo());
                 break;
             case ALREADY_REGISTERED_BY_CLIENT:
-                newNameplateField.setValue(vehicle.getNewNameplateAdditionalInfo());
+                nameplateField.setValue(vehicle.getNewNameplateAdditionalInfo());
                 break;
             default:
                 throw new IllegalStateException("Unsupported nameplate option detected: '" + vehicle.getNewNameplateOption() + "'");
         }
-
-        // person
-        PDTextField titleField = doc.getTextField("Anrede");
-        switch (customer.getGender()){
-            case MALE:
-                titleField.setValue("Herr");
-                break;
-            case FEMALE:
-                titleField.setValue("Frau");
-                break;
-            default:
-                titleField.setValue(customer.getGender().name());
-                break;
-        }
-
-        // last name
-        PDTextField lastNameField = doc.getTextField("Name / Firma");
-        lastNameField.setValue(customer.getLastname());
-
-        // first name
-        PDTextField firstNameField = doc.getTextField("Vornamen");
-        firstNameField.setValue(customer.getFirstname());
-
-        // birth name
-        PDTextField birthNameField = doc.getTextField("ggf Geburtsname");
-        birthNameField.setValue(customer.getBirthname());
-
-        // birthday
-        PDTextField birthdayField = doc.getTextField("Geburtsdatum");
-        birthdayField.setValue(DATE_FORMAT.format(customer.getBirthdate()));
-
-        // city of born
-        PDTextField cityOfBornField = doc.getTextField("Geburtsort");
-        cityOfBornField.setValue(customer.getCityOfBorn());
-
-        // address
-        CustomerAddress mainAddress = customer.getMainAddress();
-
-        PDTextField cityField = doc.getTextField("PLZ  Ort");
-        cityField.setValue(mainAddress.getZipCode() + " " + mainAddress.getCity());
-
-        PDTextField addressField = doc.getTextField("Straße  Hausnummer");
-        addressField.setValue(mainAddress.getStreet() + " " + mainAddress.getHouseNumber());
-
-        // vehicle id
-        PDTextField vehicleIdField = doc.getTextField("FahrzeugIdentnummer");
-        vehicleIdField.setValue(vehicle.getVehicleIdentNumber());
-
-        // insurance-id
-        PDTextField insuranceIdField = doc.getTextField("eVBNr");
-        insuranceIdField.setValue(vehicle.getInsuranceId());
     }
 }

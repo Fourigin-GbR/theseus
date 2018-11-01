@@ -31,3 +31,4 @@ include ':argo:com.fourigin.argo.web'
 
 include ':utilities'
 include ':utilities:com.fourigin.utilities.core'
+include ':utilities:com.fourigin.utilities.pdfbox'

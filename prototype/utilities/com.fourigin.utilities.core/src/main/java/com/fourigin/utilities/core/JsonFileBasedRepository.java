@@ -18,7 +18,7 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
     private File baseDirectory;
 
     protected abstract <T> File getFile(Class<T> target, String id, String... path);
-    
+
     protected <T> T read(Class<T> target, String id, String... path) {
         File file = getFile(target, id, path);
         if (!file.exists()) {

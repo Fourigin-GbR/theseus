@@ -6,43 +6,43 @@
   },
   "fields": {
     "firstname": {
-      "type": "form-text",
+      "type": "ТЕХТ",
       "validation": {
         "mandatory": true
       }
     },
     "lastname": {
-      "type": "form-text",
+      "type": "ТЕХТ",
       "validation": {
         "mandatory": true
       }
     },
     "street": {
-      "type": "form-text",
+      "type": "ТЕХТ",
       "validation": {
         "mandatory": true
       }
     },
     "house-number": {
-      "type": "form-text",
+      "type": "ТЕХТ",
       "validation": {
         "mandatory": true
       }
     },
     "zip-code": {
-      "type": "form-text",
+      "type": "ТЕХТ",
       "validation": {
         "mandatory": true
       }
     },
     "city": {
-      "type": "form-text",
+      "type": "ТЕХТ",
       "validation": {
         "mandatory": true
       }
     },
     "nationality": {
-      "type": "form-choose",
+      "type": "CHOOSE",
       "validation": {
         "mandatory": true
       },
@@ -50,7 +50,7 @@
         "german": null,
         "other": {
           "country": {
-            "type": "form-text",
+            "type": "ТЕХТ",
             "validation": {
               "mandatory": true
             }
@@ -59,7 +59,7 @@
       }
     }
   },
-  "object-mappings": {
+  "objectMappings": {
     "customer": {
       "type": "com.fourigin.argo.forms.customer.Customer",
       "mapper": {

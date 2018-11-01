@@ -1,22 +1,86 @@
-package com.fourigin.argo;
+package com.fourigin.argo.forms.processing
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import com.fourigin.argo.forms.CustomerRepository
+import com.fourigin.argo.forms.FormsStoreRepository
+import com.fourigin.argo.forms.customer.Customer
+import com.fourigin.argo.forms.customer.CustomerAddress
+import com.fourigin.argo.forms.customer.Gender
+import com.fourigin.argo.forms.models.HandoverOption
+import com.fourigin.argo.forms.models.NameplateRegistrationOption
+import com.fourigin.argo.forms.models.Vehicle
+import com.fourigin.argo.forms.models.VehicleRegistration
+import com.fourigin.argo.forms.models.payment.BankAccount
+import com.fourigin.argo.forms.models.payment.Paypal
+import org.apache.pdfbox.pdmodel.PDDocument
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import java.text.SimpleDateFormat
 
-public final class PdfBoxPlayground {
-    private PdfBoxPlayground(){
+final class PdfBoxPlayground {
+    private PdfBoxPlayground() {
     }
 
-    public static void main(String[] args) throws IOException {
-        String formIn = "/work/fourigin/tsp/form.pdf";
-        String formOut = "/work/fourigin/tsp/form_out.pdf";
+    static void main(String[] args) throws IOException {
+        String formIn = "/work/fourigin/tsp/form.pdf"
+        String formOut = "/work/fourigin/tsp/form_out.pdf"
 
-        try (PDDocument pdfDocument = PDDocument.load(new File(formIn))) {
+        FormsStoreRepository formsStoreRepository = null
+        CustomerRepository customerRepository = null
+        File form = new File(formIn)
+
+        FulfillVehicleRegistrationFormEntryProcessor processor = new FulfillVehicleRegistrationFormEntryProcessor(
+                formsStoreRepository,
+                customerRepository,
+                form
+        )
+
+        VehicleRegistration registration = new VehicleRegistration(
+                customerId: '123',
+                vehicle: new Vehicle(
+                        previousNameplate: 'DA NN 747',
+                        newNameplateOption: NameplateRegistrationOption.ALREADY_REGISTERED_BY_CLIENT,
+                        newNameplateAdditionalInfo: 'DA VN 757',
+                        vehicleIdentNumber: 'ident123',
+                        vehicleId: 'vehicle123',
+                        insuranceId: 'insurance123'
+                ),
+                bankAccountForTaxPayment: new BankAccount(
+                        iban: '1234 5678 9012 3456 78',
+                        bic: 'DEABCDEFGH',
+                        bankName: 'Musterbank',
+                        accountHolder: 'Max Mustermann'
+                ),
+                servicePaymentMethod: new Paypal(),
+                handoverOption: HandoverOption.OFFICE_DELIVERING
+        )
+
+        SimpleDateFormat format = new SimpleDateFormat('yyyyMMdd', Locale.US)
+
+        Customer customer = new Customer(
+                id: '123',
+                gender: Gender.MALE,
+                firstname: 'Max',
+                lastname: 'Mustermann',
+                birthname: 'Otto-Wagner',
+                birthdate: format.parse("19750414"),
+                cityOfBorn: 'Kharkov / Ukraine',
+                mainAddress: new CustomerAddress(
+                        street: 'Hauptstraße',
+                        houseNumber: 17,
+                        zipCode: 12345,
+                        city: 'Musterstadt',
+                        country: 'Germany'
+                ),
+                email: 'max.mustermann@aol.com',
+                phone: '0123/4567890'
+        )
+
+        PDDocument pdfDocument = PDDocument.load(new File(formIn))
+
+        try {
+
+            processor.fulfillForm(pdfDocument, registration, customer)
+
+/*
             // get the document catalog
             PDAcroForm acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
 
@@ -85,9 +149,13 @@ public final class PdfBoxPlayground {
 //                field = (PDTextField) acroForm.getField("fieldsContainer.nestedSampleField");
 //                field.setValue("Text Entry");
             }
+*/
 
             // Save and close the filled out form.
-            pdfDocument.save(formOut);
+            pdfDocument.save(formOut)
+        }
+        finally {
+
         }
     }
 }

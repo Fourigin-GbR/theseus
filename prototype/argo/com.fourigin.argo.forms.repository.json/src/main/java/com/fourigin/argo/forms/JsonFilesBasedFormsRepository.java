@@ -120,6 +120,13 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
+    public FormsStoreEntryInfo retrieveEntryInfo(String entryId) {
+        Objects.requireNonNull(entryId, "entryId must not be null!");
+
+        return read(FormsStoreEntryInfo.class, entryId);
+    }
+
+    @Override
     public void createEntryInfo(String entryId, FormsEntryHeader header) {
         Objects.requireNonNull(entryId, "entryId must not be null!");
         Objects.requireNonNull(header, "header must not be null!");
@@ -133,10 +140,10 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    public FormsStoreEntryInfo retrieveEntryInfo(String entryId) {
-        Objects.requireNonNull(entryId, "entryId must not be null!");
+    public void updateEntryInfo(FormsStoreEntryInfo info) {
+        Objects.requireNonNull(info, "info must not be null!");
 
-        return read(FormsStoreEntryInfo.class, entryId);
+        write(info, info.getId());
     }
 
     @Override
@@ -191,13 +198,13 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    public void addAttachment(String entryId, String name, Attachment attachment) {
+    public void addAttachment(String entryId, String name, Object attachment) {
         write(attachment, entryId, name);
     }
 
     @Override
-    public Attachment getAttachment(String entryId, String name) {
-        return read(Attachment.class, entryId, name);
+    public <T> T getAttachment(String entryId, String name, Class<T> target) {
+        return read(target, entryId, name);
     }
 
     @Override
@@ -388,7 +395,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
             return new File(directory, targetFile);
         }
 
-        if (Attachment.class.isAssignableFrom(target)) {
+//        if (Attachment.class.isAssignableFrom(target)) {
             // attachments
             File directory = new File(getBaseDirectory() + "/" + resolveBasePath(id) + "/" + DIR_ATTACHMENTS);
 
@@ -398,9 +405,9 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
 
             String attachmentFile = path[0] + ".json";
             return new File(directory, attachmentFile);
-        }
-
-        throw new UnsupportedOperationException("Target class '" + target.getName() + "' not supported!");
+//        }
+//
+//        throw new UnsupportedOperationException("Target class '" + target.getName() + "' not supported!");
     }
 
     @Override

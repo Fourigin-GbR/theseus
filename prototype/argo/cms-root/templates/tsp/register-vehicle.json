@@ -157,5 +157,17 @@
         "pickup": null
       }
     }
+  },
+  "objectMappings": {
+    "vehicle-registration": {
+      "type": "com.fourigin.argo.forms.models.VehicleRegistration",
+      "mapper": {
+        "type": "com.fourigin.argo.forms.mapping.GroovyScriptFormObjectMapper",
+        "settings": {
+          "file": "register-vehicle/vehicle-registration-mapper.groovy"
+        }
+      }
+    }
   }
+  
 }

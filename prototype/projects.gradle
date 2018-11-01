@@ -24,6 +24,7 @@ def heraCore                                = project(':hera:com.fourigin.hera.c
 //def heraSpringBootStarter                 = project(':hera:com.fourigin.hera.spring-boot-starter')
 
 def utilitiesCore                           = project(':utilities:com.fourigin.utilities.core')
+def utilitiesPdfBox                         = project(':utilities:com.fourigin.utilities.pdfbox')
 
 def thymeleaf                               = managedDependency('org.thymeleaf:thymeleaf')
 def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring4')
@@ -274,6 +275,7 @@ project(':argo') {
 //            compile managedDependency('org.activiti:activiti-spring-boot-starter-actuator')
 //
 //            runtime managedDependency('mysql:mysql-connector-java')
+            compile utilitiesPdfBox
             compile managedDependency('org.apache.pdfbox:pdfbox')
         }
     }
@@ -328,6 +330,9 @@ project(':argo') {
             compile utilitiesCore
             compile argoFormsModels
             compile argoFormsRepository
+
+            compile managedDependency('org.springframework:spring-core')
+            compile managedDependency('org.springframework:spring-beans')
         }
     }
 
@@ -337,6 +342,7 @@ project(':argo') {
         dependencies {
             compile argoFormsProcessing
             compile managedDependency('org.apache.pdfbox:pdfbox')
+            compile utilitiesPdfBox
         }
     }
 
@@ -442,6 +448,14 @@ project(':utilities') {
         dependencies {
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+        }
+    }
+
+    project('com.fourigin.utilities.pdfbox') {
+        version = utilitiesVersion
+
+        dependencies {
+            compile managedDependency('org.apache.pdfbox:pdfbox')
         }
     }
 }

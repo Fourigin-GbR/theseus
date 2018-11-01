@@ -1,10 +1,10 @@
-package com.fourigin.argo.forms.customer;
+package com.fourigin.argo.forms.processing.customer;
 
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
-import com.fourigin.argo.forms.models.Attachment;
+import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 
 import java.util.HashMap;
@@ -33,8 +33,9 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
 
     @Override
     public ProcessingHistoryRecord processEntry(String entryId, FormsRegistry registry) {
-        Attachment customerAttachment = formsStoreRepository.getAttachment(entryId, ATTACHMENT_NAME);
-        Customer customer = (Customer) customerAttachment.getPayload();
+//        Attachment customerAttachment = formsStoreRepository.getAttachment(entryId, ATTACHMENT_NAME);
+//        Customer customer = (Customer) customerAttachment.getPayload(); // TODO convert attachment's payload
+        Customer customer = formsStoreRepository.getAttachment(entryId, ATTACHMENT_NAME, Customer.class);
         customerRepository.createCustomer(customer);
 
         Map<String, String> context = new HashMap<>();

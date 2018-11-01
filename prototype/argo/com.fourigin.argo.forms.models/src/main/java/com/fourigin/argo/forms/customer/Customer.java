@@ -1,6 +1,7 @@
 package com.fourigin.argo.forms.customer;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -8,8 +9,12 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = -1363579994073607782L;
 
     private String id;
+    private Gender gender;
     private String firstname;
     private String lastname;
+    private String birthname;
+    private Date birthdate;
+    private String cityOfBorn;
     private CustomerAddress mainAddress;
     private Set<CustomerAddress> additionalAddresses;
     private String email;
@@ -22,6 +27,14 @@ public class Customer implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getFirstname() {
@@ -38,6 +51,30 @@ public class Customer implements Serializable {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getBirthname() {
+        return birthname;
+    }
+
+    public void setBirthname(String birthname) {
+        this.birthname = birthname;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getCityOfBorn() {
+        return cityOfBorn;
+    }
+
+    public void setCityOfBorn(String cityOfBorn) {
+        this.cityOfBorn = cityOfBorn;
     }
 
     public CustomerAddress getMainAddress() {
@@ -86,8 +123,12 @@ public class Customer implements Serializable {
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
         return Objects.equals(id, customer.id) &&
+            gender == customer.gender &&
             Objects.equals(firstname, customer.firstname) &&
             Objects.equals(lastname, customer.lastname) &&
+            Objects.equals(birthname, customer.birthname) &&
+            Objects.equals(birthdate, customer.birthdate) &&
+            Objects.equals(cityOfBorn, customer.cityOfBorn) &&
             Objects.equals(mainAddress, customer.mainAddress) &&
             Objects.equals(additionalAddresses, customer.additionalAddresses) &&
             Objects.equals(email, customer.email) &&
@@ -97,15 +138,19 @@ public class Customer implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, mainAddress, additionalAddresses, email, phone, fax);
+        return Objects.hash(id, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, email, phone, fax);
     }
 
     @Override
     public String toString() {
         return "Customer{" +
             "id='" + id + '\'' +
+            ", gender=" + gender +
             ", firstname='" + firstname + '\'' +
             ", lastname='" + lastname + '\'' +
+            ", birthname='" + birthname + '\'' +
+            ", birthdate=" + birthdate +
+            ", cityOfBorn='" + cityOfBorn + '\'' +
             ", mainAddress=" + mainAddress +
             ", additionalAddresses=" + additionalAddresses +
             ", email='" + email + '\'' +
