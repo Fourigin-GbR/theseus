@@ -184,7 +184,7 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
     }
 
     @Override
-    protected <T> File getFile(Class<T> target, String id, String... path) {
+    protected <T> File getFile(Class<T> target, String id, String mimeType, String... path) {
         String assetBase = DIR_META_BASE + "/" + JsonFileBasedRepository.resolveBasePath(id);
         File assetDirectory = new File(getBaseDirectory(), assetBase);
 

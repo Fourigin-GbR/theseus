@@ -24,10 +24,13 @@ public interface FormsStoreRepository {
     void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context);
 
     // attachments
-    Set<String> getAttachmentNames(String entryId);
-//    void addAttachment(String entryId, String name, Attachment attachment);
-//    Attachment getAttachment(String entryId, String name);
-    void addAttachment(String entryId, String name, Object attachment);
-    <T> T getAttachment(String entryId, String name, Class<T> target);
+    Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId);
+
+    void addObjectAttachment(String entryId, String name, Object attachment);
+    void addBinaryAttachment(String entryId, String name, String mimeType, byte[] data);
+
+    <T> T getObjectAttachment(String entryId, String name, Class<T> target);
+    byte[] getBinaryAttachment(String entryId, String name, String mimeType);
+
     void deleteAttachment(String entryId, String name);
 }

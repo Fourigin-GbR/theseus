@@ -5,6 +5,7 @@ import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.argo.assets.models.ImageAsset;
 import com.fourigin.argo.assets.repository.AssetRepository;
 import com.fourigin.argo.controller.compile.RequestParameters;
+import com.fourigin.utilities.core.MimeTypes;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -231,7 +232,7 @@ public class AssetsController {
 
     private Asset readAsset(String base, String originalFileName, long fileSize, String contentType, InputStream inputStream) {
         String fileName = Assets.resolveSanitizedBasename(originalFileName);
-        String mimeType = Assets.resolveMimeType(originalFileName);
+        String mimeType = MimeTypes.resolveMimeType(originalFileName);
         if (logger.isDebugEnabled())
             logger.debug("Reading asset from file '{}' (mimeType: {}, contentType: {})", originalFileName, mimeType, contentType);
 
@@ -301,7 +302,7 @@ public class AssetsController {
                     // the code below works for gif, jpg and png.
                     // i.e. the currently allowed formats.
                     // Additional formats may require more complex logic.
-                    String mimeByReader = Assets.resolveMimeType("foo." + formatName);
+                    String mimeByReader = MimeTypes.resolveMimeType("foo." + formatName);
                     if (mimeByReader == null) {
                         if (logger.isWarnEnabled())
                             logger.warn("Failed to resolve mime type of format '{}'!", formatName);

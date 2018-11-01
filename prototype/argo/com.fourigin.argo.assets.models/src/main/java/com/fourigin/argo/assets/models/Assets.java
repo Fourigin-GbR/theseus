@@ -1,5 +1,6 @@
 package com.fourigin.argo.assets.models;
 
+import com.fourigin.utilities.core.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,114 +27,15 @@ public final class Assets {
 
     private static final Set<Character> VALID_CHARS = new HashSet<>();
 
-    private static final Map<String, String> EXTENSION_MIME_TYPE_MAPPING = new HashMap<>();
-    private static final Map<String, String> MIME_TYPE_EXTENSION_MAPPING = new HashMap<>();
-
     static {
         for (char c : VALID_CHAR_ARRAY) {
             VALID_CHARS.add(c);
-        }
-
-        EXTENSION_MIME_TYPE_MAPPING.put("avi", "video/avi");
-        EXTENSION_MIME_TYPE_MAPPING.put("bmp", "image/bmp");
-        EXTENSION_MIME_TYPE_MAPPING.put("css", "text/css");
-        EXTENSION_MIME_TYPE_MAPPING.put("gif", "image/gif");
-        EXTENSION_MIME_TYPE_MAPPING.put("flv", "video/x-flv");
-        EXTENSION_MIME_TYPE_MAPPING.put("f4v", "video/x-flv");
-        EXTENSION_MIME_TYPE_MAPPING.put("htm", "text/html");
-        EXTENSION_MIME_TYPE_MAPPING.put("html", "text/html");
-        EXTENSION_MIME_TYPE_MAPPING.put("ico", "image/vnd.microsoft.icon");
-        EXTENSION_MIME_TYPE_MAPPING.put("jpeg", "image/jpeg");
-        EXTENSION_MIME_TYPE_MAPPING.put("jpg", "image/jpeg");
-        EXTENSION_MIME_TYPE_MAPPING.put("js", "text/javascript");
-        EXTENSION_MIME_TYPE_MAPPING.put("json", "application/json");
-        EXTENSION_MIME_TYPE_MAPPING.put("mov", "video/quicktime");
-        EXTENSION_MIME_TYPE_MAPPING.put("qt", "video/quicktime");
-        EXTENSION_MIME_TYPE_MAPPING.put("mp3", "audio/mpeg3");
-        EXTENSION_MIME_TYPE_MAPPING.put("pdf", "application/pdf");
-        EXTENSION_MIME_TYPE_MAPPING.put("php", "application/x-php");
-        EXTENSION_MIME_TYPE_MAPPING.put("php3", "application/x-php");
-        EXTENSION_MIME_TYPE_MAPPING.put("php4", "application/x-php");
-        EXTENSION_MIME_TYPE_MAPPING.put("php5", "application/x-php");
-        EXTENSION_MIME_TYPE_MAPPING.put("png", "image/png");
-        EXTENSION_MIME_TYPE_MAPPING.put("swf", "application/x-shockwave-flash");
-        EXTENSION_MIME_TYPE_MAPPING.put("tif", "image/tiff");
-        EXTENSION_MIME_TYPE_MAPPING.put("tiff", "image/tiff");
-        EXTENSION_MIME_TYPE_MAPPING.put("txt", "text/plain");
-        EXTENSION_MIME_TYPE_MAPPING.put("wav", "audio/wav");
-        EXTENSION_MIME_TYPE_MAPPING.put("xml", "text/xml");
-        EXTENSION_MIME_TYPE_MAPPING.put("zip", "application/zip");
-
-        MIME_TYPE_EXTENSION_MAPPING.put("video/avi", "avi");
-        MIME_TYPE_EXTENSION_MAPPING.put("image/bmp", "bmp");
-        MIME_TYPE_EXTENSION_MAPPING.put("text/css", "css");
-        MIME_TYPE_EXTENSION_MAPPING.put("image/gif", "gif");
-        MIME_TYPE_EXTENSION_MAPPING.put("text/html", "html");
-        MIME_TYPE_EXTENSION_MAPPING.put("image/vnd.microsoft.icon", "ico");
-        MIME_TYPE_EXTENSION_MAPPING.put("image/jpeg", "jpeg");
-        MIME_TYPE_EXTENSION_MAPPING.put("text/javascript", "js");
-        MIME_TYPE_EXTENSION_MAPPING.put("video/quicktime", "mov");
-        MIME_TYPE_EXTENSION_MAPPING.put("audio/mpeg3", "mp3");
-        MIME_TYPE_EXTENSION_MAPPING.put("application/pdf", "pdf");
-        MIME_TYPE_EXTENSION_MAPPING.put("application/x-php", "php");
-        MIME_TYPE_EXTENSION_MAPPING.put("video/x-flv", "flv");
-        MIME_TYPE_EXTENSION_MAPPING.put("image/png", "png");
-        MIME_TYPE_EXTENSION_MAPPING.put("application/x-shockwave-flash", "swf");
-        MIME_TYPE_EXTENSION_MAPPING.put("image/tiff", "tiff");
-        MIME_TYPE_EXTENSION_MAPPING.put("application/json", "json");
-        MIME_TYPE_EXTENSION_MAPPING.put("text/plain", "txt");
-        MIME_TYPE_EXTENSION_MAPPING.put("audio/wav", "wav");
-        MIME_TYPE_EXTENSION_MAPPING.put("text/xml", "xml");
-        MIME_TYPE_EXTENSION_MAPPING.put("application/zip", "zip");
-
-        // sanity check
-        for (Map.Entry<String, String> current : EXTENSION_MIME_TYPE_MAPPING.entrySet()) {
-            assert (MIME_TYPE_EXTENSION_MAPPING.containsKey(current.getValue()));
-        }
-
-        for (Map.Entry<String, String> current : MIME_TYPE_EXTENSION_MAPPING.entrySet()) {
-            assert (EXTENSION_MIME_TYPE_MAPPING.containsKey(current.getValue()));
         }
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Assets.class);
 
     private Assets() {
-    }
-
-    public static String resolveMimeType(String fileName) {
-        if (fileName == null) {
-            return null;
-        }
-
-        final Logger logger = LoggerFactory.getLogger(Assets.class);
-
-        fileName = fileName.toLowerCase(Locale.US);
-        int lastDot = fileName.lastIndexOf('.');
-        if (lastDot <= 0) {
-            return null;
-        }
-
-        String extension = fileName.substring(lastDot + 1);
-        if (logger.isDebugEnabled()) logger.debug("extension: {}", extension);
-
-        String result = EXTENSION_MIME_TYPE_MAPPING.get(extension);
-        if (logger.isDebugEnabled()) logger.debug("MimeType for extension {}: {}", extension, result);
-
-        return result;
-    }
-
-    public static String resolveExtension(String mime) {
-        if (mime == null) {
-            return null;
-        }
-
-        final Logger logger = LoggerFactory.getLogger(Assets.class);
-
-        String result = MIME_TYPE_EXTENSION_MAPPING.get(mime);
-        if (logger.isDebugEnabled()) logger.debug("Extension for MimeType {}: {}", mime, result);
-
-        return result;
     }
 
     public static String resolveSanitizedBasename(String original) {
@@ -143,7 +45,7 @@ public final class Assets {
 
         final Logger logger = LoggerFactory.getLogger(Assets.class);
 
-        String mime = resolveMimeType(original);
+        String mime = MimeTypes.resolveMimeType(original);
 
         String result = original.toLowerCase(Locale.US);
         if (result.endsWith(".jpeg")) {
@@ -209,7 +111,7 @@ public final class Assets {
         }
         String mime = asset.getMimeType();
         if (mime != null) {
-            String extension = resolveExtension(mime);
+            String extension = MimeTypes.resolveFileExtension(mime);
             if (extension != null) {
                 fileName = fileName + "." + extension;
             }
@@ -270,7 +172,7 @@ public final class Assets {
         if (LOGGER.isDebugEnabled()) LOGGER.debug("Resolving localized filename for base {} and {}", base, asset);
 
         String mimeType = asset.getMimeType();
-        String fileEnding = MIME_TYPE_EXTENSION_MAPPING.get(mimeType);
+        String fileEnding = MimeTypes.resolveFileExtension(mimeType);
 
         // TODO: use base to resolve localized filename
 

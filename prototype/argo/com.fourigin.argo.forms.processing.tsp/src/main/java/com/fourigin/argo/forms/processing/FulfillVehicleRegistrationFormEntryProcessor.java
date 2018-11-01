@@ -2,28 +2,22 @@ package com.fourigin.argo.forms.processing;
 
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
-import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.CustomerAddress;
-import com.fourigin.argo.forms.models.EncodedPayload;
-import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import com.fourigin.utilities.pdfbox.PdfDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class FulfillVehicleRegistrationFormEntryProcessor implements FormsEntryProcessor {
+public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFormEntryProcessor implements FormsEntryProcessor {
     public static final String NAME = "FULFILL-VEHICLE-REGISTRATION-FORM";
 
     public static final String REGISTRATION_ATTACHMENT_NAME = "vehicle-registration";
@@ -31,12 +25,6 @@ public class FulfillVehicleRegistrationFormEntryProcessor implements FormsEntryP
     public static final String FORM_ATTACHMENT_NAME = "register-vehicle-form";
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
-
-    private FormsStoreRepository formsStoreRepository;
-    private CustomerRepository customerRepository;
-    private File form;
-
-    private final Logger logger = LoggerFactory.getLogger(FulfillVehicleRegistrationFormEntryProcessor.class);
 
     public FulfillVehicleRegistrationFormEntryProcessor(
         FormsStoreRepository formsStoreRepository,
@@ -54,36 +42,46 @@ public class FulfillVehicleRegistrationFormEntryProcessor implements FormsEntryP
     }
 
     @Override
-    public ProcessingHistoryRecord processEntry(String entryId, FormsRegistry registry) {
-        VehicleRegistration registration = formsStoreRepository.getAttachment(
-            entryId,
-            REGISTRATION_ATTACHMENT_NAME,
-            VehicleRegistration.class
-        );
-        if (logger.isDebugEnabled())
-            logger.debug("Using registration data to fulfill the vehicle registration form: {}", registration);
-
-        Customer customer = customerRepository.retrieveCustomer(registration.getCustomerId());
-        if (logger.isDebugEnabled()) logger.debug("Found customer: {}", customer);
-
-        try (PDDocument pdDocument = PDDocument.load(form)) {
-            fulfillForm(pdDocument, registration, customer);
-
-            // write fulfilled pdf form
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            pdDocument.save(baos);
-            EncodedPayload payload = new EncodedPayload();
-            payload.setEncodedDataFromBytes(baos.toByteArray());
-
-            formsStoreRepository.addAttachment(entryId, FORM_ATTACHMENT_NAME, payload);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Error processing form fulfillment!", ex);
-        }
-
-        ProcessingHistoryRecord record = new ProcessingHistoryRecord();
-        record.setTimestamp(System.currentTimeMillis());
-        return record;
+    protected String getRegistrationAttachmentName() {
+        return REGISTRATION_ATTACHMENT_NAME;
     }
+
+    @Override
+    protected String getFormAttachmentName() {
+        return FORM_ATTACHMENT_NAME;
+    }
+
+    //    @Override
+//    public ProcessingHistoryRecord processEntry(String entryId, FormsRegistry registry) {
+//        VehicleRegistration registration = formsStoreRepository.getAttachment(
+//            entryId,
+//            REGISTRATION_ATTACHMENT_NAME,
+//            VehicleRegistration.class
+//        );
+//        if (logger.isDebugEnabled())
+//            logger.debug("Using registration data to fulfill the vehicle registration form: {}", registration);
+//
+//        Customer customer = customerRepository.retrieveCustomer(registration.getCustomerId());
+//        if (logger.isDebugEnabled()) logger.debug("Found customer: {}", customer);
+//
+//        try (PDDocument pdDocument = PDDocument.load(form)) {
+//            fulfillForm(pdDocument, registration, customer);
+//
+//            // write fulfilled pdf form
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            pdDocument.save(baos);
+//            EncodedPayload payload = new EncodedPayload();
+//            payload.setEncodedDataFromBytes(baos.toByteArray());
+//
+//            formsStoreRepository.addAttachment(entryId, FORM_ATTACHMENT_NAME, payload);
+//        } catch (IOException ex) {
+//            throw new IllegalStateException("Error processing form fulfillment!", ex);
+//        }
+//
+//        ProcessingHistoryRecord record = new ProcessingHistoryRecord();
+//        record.setTimestamp(System.currentTimeMillis());
+//        return record;
+//    }
 
     protected void fulfillForm(PDDocument pdDocument, VehicleRegistration registration, Customer customer) throws IOException {
         PdfDocument doc = new PdfDocument(pdDocument);

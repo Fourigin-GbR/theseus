@@ -17,10 +17,10 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
 
     private File baseDirectory;
 
-    protected abstract <T> File getFile(Class<T> target, String id, String... path);
+    protected abstract <T> File getFile(Class<T> target, String id, String mimeType, String... path);
 
     protected <T> T read(Class<T> target, String id, String... path) {
-        File file = getFile(target, id, path);
+        File file = getFile(target, id, "application/json", path);
         if (!file.exists()) {
             return null;
         }
@@ -39,7 +39,7 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
     }
 
     protected <T> void write(T data, String id,  String... path) {
-        File file = getFile(data.getClass(), id, path);
+        File file = getFile(data.getClass(), id, "application/json", path);
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, data);

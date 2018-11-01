@@ -7,13 +7,11 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 
 public class PdfDocument {
-    private PDDocument pdDocument;
     private PDAcroForm acroForm;
 
     private String defaultAppearance = "/Helv 12 Tf 0 g";
 
     public PdfDocument(PDDocument pdDocument) {
-        this.pdDocument = pdDocument;
         this.acroForm = pdDocument.getDocumentCatalog().getAcroForm();
 
         if (acroForm == null) {

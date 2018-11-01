@@ -11,8 +11,10 @@ import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.utilities.core.JsonFileBasedRepository;
+import com.fourigin.utilities.core.MimeTypes;
 import de.huxhorn.sulky.blobs.AmbiguousIdException;
 import de.huxhorn.sulky.blobs.impl.BlobRepositoryImpl;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,31 +182,77 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    public Set<String> getAttachmentNames(String entryId) {
+    public Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId) {
         File directory = new File(getBaseDirectory() + "/" + resolveBasePath(entryId) + "/" + DIR_ATTACHMENTS);
         if (!directory.exists()) {
             return Collections.emptySet();
         }
 
-        Set<String> names = new HashSet<>();
-        String[] fileNames = directory.list((dir, name) -> dir.equals(directory) && name.endsWith(".json"));
+        Set<AttachmentDescriptor> result = new HashSet<>();
+        String[] fileNames = directory.list((dir, name) -> dir.equals(directory));
         if (fileNames != null && fileNames.length > 0) {
             for (String fileName : fileNames) {
-                names.add(fileName.substring(0, fileName.indexOf(".json")));
+                String attachmentName = fileName.substring(0, fileName.lastIndexOf("."));
+                String mimeType = MimeTypes.resolveMimeType(fileName);
+
+                AttachmentDescriptor descriptor = new AttachmentDescriptor();
+                descriptor.setName(attachmentName);
+                descriptor.setFilename(fileName);
+                descriptor.setMimeType(mimeType);
+
+                result.add(descriptor);
             }
         }
 
-        return names;
+        return result;
     }
 
     @Override
-    public void addAttachment(String entryId, String name, Object attachment) {
+    public void addObjectAttachment(String entryId, String name, Object attachment) {
         write(attachment, entryId, name);
     }
 
     @Override
-    public <T> T getAttachment(String entryId, String name, Class<T> target) {
+    public void addBinaryAttachment(String entryId, String name, String mimeType, byte[] data) {
+        File directory = new File(getBaseDirectory() + "/" + resolveBasePath(entryId) + "/" + DIR_ATTACHMENTS);
+
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
+        }
+
+        String fileExtension = MimeTypes.resolveFileExtension(mimeType);
+        String attachmentFile = name + "." + fileExtension;
+
+        File file = new File(directory, attachmentFile);
+        try {
+            FileUtils.writeByteArrayToFile(file, data);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Error writing data to file (" + file.getAbsolutePath() + ")!", ex);
+        }
+    }
+
+    @Override
+    public <T> T getObjectAttachment(String entryId, String name, Class<T> target) {
         return read(target, entryId, name);
+    }
+
+    @Override
+    public byte[] getBinaryAttachment(String entryId, String mimeType, String name) {
+        File directory = new File(getBaseDirectory() + "/" + resolveBasePath(entryId) + "/" + DIR_ATTACHMENTS);
+
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
+        }
+
+        String fileExtension = MimeTypes.resolveFileExtension(mimeType);
+        String attachmentFile = name + "." + fileExtension;
+
+        File file = new File(directory, attachmentFile);
+        try {
+            return FileUtils.readFileToByteArray(file);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Error writing data to file (" + file.getAbsolutePath() + ")!", ex);
+        }
     }
 
     @Override
@@ -383,7 +431,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    protected <T> File getFile(Class<T> target, String id, String... path) {
+    protected <T> File getFile(Class<T> target, String id, String mimeType, String... path) {
         if (FormsStoreEntryInfo.class.isAssignableFrom(target)) {
             // info
             File directory = new File(getBaseDirectory(), resolveBasePath(id));
@@ -395,19 +443,16 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
             return new File(directory, targetFile);
         }
 
-//        if (Attachment.class.isAssignableFrom(target)) {
-            // attachments
-            File directory = new File(getBaseDirectory() + "/" + resolveBasePath(id) + "/" + DIR_ATTACHMENTS);
+        // attachments
+        File directory = new File(getBaseDirectory() + "/" + resolveBasePath(id) + "/" + DIR_ATTACHMENTS);
 
-            if (!directory.exists() && !directory.mkdirs()) {
-                throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
-            }
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
+        }
 
-            String attachmentFile = path[0] + ".json";
-            return new File(directory, attachmentFile);
-//        }
-//
-//        throw new UnsupportedOperationException("Target class '" + target.getName() + "' not supported!");
+        String fileExtension = MimeTypes.resolveFileExtension(mimeType);
+        String attachmentFile = path[0] + "." + fileExtension;
+        return new File(directory, attachmentFile);
     }
 
     @Override

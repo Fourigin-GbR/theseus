@@ -191,14 +191,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                     FormObjectDefinition objectDefinition = objectDefinitionEntry.getValue();
                     Object mappedObject = mapObject(objectDefinition, entry);
 
-//                    Attachment attachment = new Attachment();
-//                    attachment.setPayload(mappedObject);
-//                    attachment.setTimestamp(System.currentTimeMillis());
-//                    attachment.setProducer("/");
-//                    if (logger.isDebugEnabled()) logger.debug("Adding an attachment {}", attachment);
-
-//                    formsStoreRepository.addAttachment(entryId, objectName, attachment);
-                    formsStoreRepository.addAttachment(entryId, objectName, mappedObject);
+                    formsStoreRepository.addObjectAttachment(entryId, objectName, mappedObject);
                 }
             }
 
