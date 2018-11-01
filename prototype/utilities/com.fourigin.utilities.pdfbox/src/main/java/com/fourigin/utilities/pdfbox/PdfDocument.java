@@ -17,7 +17,6 @@ public class PdfDocument {
         if (acroForm == null) {
             throw new IllegalStateException("No AcroForm found in the document!");
         }
-
     }
 
     public PDTextField getTextField(String fieldName) {
