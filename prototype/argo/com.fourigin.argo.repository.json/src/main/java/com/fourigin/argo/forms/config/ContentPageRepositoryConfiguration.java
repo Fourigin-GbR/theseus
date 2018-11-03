@@ -1,4 +1,4 @@
-package com.fourigin.argo.config;
+package com.fourigin.argo.forms.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;

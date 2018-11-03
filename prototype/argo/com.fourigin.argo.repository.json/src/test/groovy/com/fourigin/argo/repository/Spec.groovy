@@ -1,7 +1,7 @@
 package com.fourigin.argo.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fourigin.argo.config.ContentPageRepositoryConfiguration
+import com.fourigin.argo.forms.config.ContentPageRepositoryConfiguration
 import com.fourigin.argo.models.content.ContentPage
 import com.fourigin.argo.models.content.elements.LinkElement
 import com.fourigin.argo.models.content.elements.ObjectContentElement

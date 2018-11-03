@@ -1,4 +1,4 @@
-package com.fourigin.argo.config;
+package com.fourigin.argo.forms.config;
 
 import java.util.Map;
 

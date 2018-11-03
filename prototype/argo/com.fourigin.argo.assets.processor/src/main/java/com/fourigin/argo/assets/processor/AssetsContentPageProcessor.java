@@ -4,7 +4,7 @@ import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.argo.assets.repository.AssetResolver;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
-import com.fourigin.argo.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;

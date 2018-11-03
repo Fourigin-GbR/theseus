@@ -7,7 +7,7 @@ import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
-import com.fourigin.argo.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
 import com.fourigin.argo.controller.assets.ThumbnailDimensions;
 import com.fourigin.argo.controller.assets.ThumbnailResolver;
 import com.fourigin.argo.models.template.Type;

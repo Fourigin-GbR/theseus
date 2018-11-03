@@ -1,4 +1,4 @@
-package com.fourigin.argo.config;
+package com.fourigin.argo.forms.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.ExternalValueResolver;

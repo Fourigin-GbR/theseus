@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@ComponentScan("com.fourigin.argo.config")
+@ComponentScan("com.fourigin.argo.forms.config")
 public class NettyServer {
 
     private static final String APP_NAME = "argo-forms";

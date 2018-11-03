@@ -1,6 +1,6 @@
 package com.fourigin.argo.strategies;
 
-import com.fourigin.argo.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
 
 import java.util.Map;
 import java.util.Objects;

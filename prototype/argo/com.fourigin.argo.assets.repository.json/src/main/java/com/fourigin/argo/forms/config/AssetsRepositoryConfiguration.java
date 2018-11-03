@@ -1,4 +1,4 @@
-package com.fourigin.argo.config;
+package com.fourigin.argo.forms.config;
 
 import com.fourigin.argo.assets.repository.BlobBasedAssetRepository;
 import org.springframework.beans.factory.annotation.Value;
