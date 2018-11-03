@@ -381,6 +381,39 @@ project(':argo') {
 
         }
     }
+
+    project('com.fourigin.argo.forms.dashboard') {
+        apply plugin: 'org.springframework.boot'
+
+        version = argoVersion
+
+        archivesBaseName = 'argo-forms-dashboard'
+        jar {
+            baseName = "argo-forms-dashboard"
+        }
+
+        dependencies {
+            compile argoFormsModels
+            compile argoFormsRepository
+            compile argoFormsRepositoryJson
+            compile argoFormsProcessing
+            
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.blobs')
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.groovy')
+
+            compile managedDependency('commons-io:commons-io')
+
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+
+            compile managedDependency('org.springframework.boot:spring-boot-starter-web')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
+            
+            compile managedDependency('org.springframework:spring-context-support')
+        }
+    }
 }
 
 project(':hera') {

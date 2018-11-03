@@ -27,9 +27,9 @@ def versionMap = [
 		'selenium': '2.35.0',
 		'slf4j': '1.7.25',
 		'spock': '1.1-groovy-2.4',
-		'spring': '5.0.4.RELEASE',
-		'springboot': '2.0.4.RELEASE',
-		'springsecurity': '5.0.3.RELEASE',
+		'spring': '5.1.2.RELEASE',
+		'springboot': '2.0.6.RELEASE',
+		'springsecurity': '5.1.1.RELEASE',
 		'springshell': '1.2.0.RELEASE',
 		//'springws': '2.4.0.RELEASE',
 		'springws': '3.0.0.RELEASE',
@@ -250,6 +250,7 @@ registerVersion('org.springframework:spring-test', versionMap.spring)
 registerVersion('org.springframework:spring-tx', versionMap.spring)
 registerVersion('org.springframework:spring-web', versionMap.spring)
 registerVersion('org.springframework:spring-webmvc', versionMap.spring)
+registerVersion('org.springframework:spring-expression', versionMap.spring)
 registerVersion('org.thymeleaf.extras:thymeleaf-extras-springsecurity3', '2.1.1.RELEASE')
 registerVersion('org.thymeleaf:thymeleaf', versionMap.thymeleaf)
 registerVersion('org.thymeleaf:thymeleaf-spring4', versionMap.thymeleaf)
