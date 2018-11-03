@@ -5,10 +5,13 @@ import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingState;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 public interface FormsStoreRepository {
+    Collection<String> listEntryIds();
+
     // entry
     String createEntry(FormsStoreEntry entry);
     void deleteEntry(String entryId);

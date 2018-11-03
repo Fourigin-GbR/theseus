@@ -74,6 +74,11 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
+    public Collection<String> listEntryIds() {
+        return blobRepository.idSet();
+    }
+
+    @Override
     public String createEntry(FormsStoreEntry entry) {
         Objects.requireNonNull(entry, "entry must not be null!");
 
