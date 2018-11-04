@@ -66,7 +66,7 @@ iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
 var sendForm = function() {
 
     $("#fccFormular form").on("submit", function(e) {
-       e.preventDefault();
+        e.preventDefault();
 
         (function ($) {
             $.fn.serializeFormJSON = function () {
@@ -92,11 +92,11 @@ var sendForm = function() {
     var self = this,
         dataJson = {
             "header": {
-                "formDefinition": "register-vehicle",
+                "formDefinition": "register-vehicle",  // TODO: replace with the value of hidden input 'formDefinition'
                 "customer": "tsp",
                 "base": "DE",
-                "locale": "en_GB",
-                "referrer": {
+                "locale": "en_GB", // TODO: replace with browser locale
+                "referrer": { // TODO: optional map (schema free), replace with some sane values, for statistics only
                     "url": "www.tsp.de/registrierung/neu",
                     "client": "IE6"
                 }
@@ -120,8 +120,7 @@ var sendForm = function() {
             console.log('Error: ' + err.status);
             alert("Oh nein! Das letzte Level haben Sie nicht geschafft. Bitte neu starten.");
         });
-    return true;
-
+        return true;
     });
 };
 
