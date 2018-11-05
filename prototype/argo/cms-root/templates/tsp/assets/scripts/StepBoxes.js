@@ -23,7 +23,8 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
         /**
          * Scan all Steps
          */
-        var htmlNodes_steps = this.htmlNodes.stepsBox.getElementsByClassName(this.htmlNodes.stepCssSelector);
+        var htmlNodes_steps = this.htmlNodes.stepsBox.getElementsByClassName(this.htmlNodes.stepCssSelector),
+            self = this;
         //
         for (var i = 0, il = htmlNodes_steps.length; i < il; i++) {
             /**
@@ -36,10 +37,14 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
             this.steps.push(
                 {"htmlNode_content": htmlNode_currentStep, "htmlNode_stepTab": htmlNode_tab, "validated": false}
             );
+            // On any change in the step, set the status to "not-validated":
+            //
+            htmlNode_currentStep.addEventListener("change", (function(context) {
+                return function() {
+                    self.setStepValidationStatusInvalid((context + 1));
+                };
+            })(i));
         }
-
-        // On any change in the step, set the status to "not-validated":
-        // TODO !!!!
     };
 
     StepsBox.prototype.setStepsNavigationButtons = function () {
@@ -109,6 +114,10 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
     };
     StepsBox.prototype.isCurrentStepValidated = function() {
         return this.steps[(this.currentStep - 1)].validated;
+    };
+
+    StepsBox.prototype.setStepValidationStatusInvalid = function(step) {
+        this.steps[(step - 1)].validated = false;
     };
 
     StepsBox.prototype.validateStep = function () {
