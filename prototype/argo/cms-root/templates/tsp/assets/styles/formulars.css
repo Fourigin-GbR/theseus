@@ -350,3 +350,68 @@ a.hint:hover {
     background-color: #ab0000;
     color: #f3f3f3;
 }
+
+/* Steps Navigation Item */
+.StepsNavigation {
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    background-color: #fff;
+    margin: 10px 0 20px 0;
+    list-style-type: none;
+}
+.StepsNavigation .StepsNavigation__item {
+    flex-grow: 1;
+    background-image: none;
+    padding: 5px;
+    margin: 0;
+    text-align: center;
+    background-color: #e6e6e6;
+    flex-basis: 50%;
+    position: relative;
+}
+.StepsNavigation .StepsNavigation__item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 51%;
+    width: 60%;
+    background: #e6e6e6;
+    transform: skew(45deg, 0deg);
+    transform-origin: top right;
+    z-index: 1;
+    border-right: 1px solid #fff;
+}
+.StepsNavigation .StepsNavigation__item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    height: 50%;
+    width: 60%;
+    background: #e6e6e6;
+    -ms-transform: skew(-45deg, 0deg);
+    -moz-transform: skew(-45deg, 0deg);
+    -webkit-transform: skew(-45deg, 0deg);
+    transform: skew(-45deg, 0deg);
+    -ms-transform-origin: bottom right;
+    -moz-transform-origin: bottom right;
+    -webkit-transform-origin: bottom right;
+    transform-origin: bottom right;
+    z-index: 1;
+    border-right: 1px solid #fff;
+}
+.StepsNavigation__item__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 20px;
+}
+.StepsNavigation__item__copy {
+    position: relative;
+    z-index: 2;
+    display: block;
+    color: #666;
+}
