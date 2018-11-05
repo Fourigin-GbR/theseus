@@ -96,6 +96,7 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
             this.updateAllStepsView();
         }
         else {
+            this.removeAllFieldValidationMessages();
             this.validateStep();
         }
     };
@@ -158,6 +159,16 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
         });
     };
 
+    StepsBox.prototype.removeAllFieldValidationMessages = function() {
+        var htmlNode_currentStep = this.steps[(this.currentStep - 1)].htmlNode_content;
+        //
+        htmlNode_messages = htmlNode_currentStep.querySelectorAll(".FieldValidationMessage");
+        Array.prototype.forEach.call(htmlNode_messages, function (el) {
+            el.classList.remove("active");
+            el.innerHTML = "";
+        });
+    };
+
     StepsBox.prototype.handleValidationMessage = function (message) {
         console.log("error: ", message);
         //
@@ -187,6 +198,19 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
                 }
                 else {
                     htmlNode_field.classList.add("invalid");
+                }
+
+                // Write message to field:
+                var messageField = htmlNode_currentStep.querySelector("[data-input='" + fieldKey + "']");
+                if(messageField && !fields[fieldKey].valid) {
+                    var messagesString = "";
+                    // TODO:Alle Fehlermeldungen als <p> ausgeben!
+                    console.info("### ", fieldKey, fields[fieldKey]);
+                    for(var i=0, il= fields[fieldKey]['failureReasons'].length; i<il; i++) {
+                        messagesString = messagesString + "<p>" + fields[fieldKey]['failureReasons'][i].formattedMessage + "</p>";
+                    }
+                    messageField.innerHTML = messagesString;
+                    messageField.classList.add("active");
                 }
             }
         }

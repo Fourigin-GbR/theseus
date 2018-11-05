@@ -31,6 +31,7 @@
                             <span>das alte Kennzeichen (nur bei Ummeldungen)</span>
                             <input type="text" name="vehicle.existing-nameplate"/>
                         </label>
+                        <div class="FieldValidationMessage" data-input="vehicle.existing-nameplate" data-element="validation-message"></div>
 
                         <fieldset name="neues_kennzeichen" class="CheckboxList">
                             <legend>das neue Kennzeichen</legend>
@@ -47,6 +48,7 @@
                                         <!--<span>Wünsche</span>-->
                                         <input type="text" name="vehicle.new-nameplate/nameplate-customer-requirements"/>
                                     </label>
+                                    <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-requirements" data-element="validation-message"></div>
                                 </fieldset>
                             </div>
                             <!---->
@@ -62,6 +64,7 @@
                                         <!--<span>Reservierung</span>-->
                                         <input type="text" name="vehicle.new-nameplate/nameplate-customer-reservation"/>
                                     </label>
+                                    <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-reservation" data-element="validation-message"></div>
                                 </fieldset>
                             </div>
                             <!---->
@@ -70,6 +73,7 @@
                                     <input type="radio" name="vehicle.new-nameplate" value="random"/>
                                     <span>Spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
                                 </label>
+                                <div class="FieldValidationMessage" data-input="vehicle.new-nameplate" data-element="validation-message"></div>
                             </div>
                         </fieldset>
 
@@ -85,12 +89,14 @@
                                     <span>Ident-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
                                     <input type="text" name="vehicle-data.ident"/>
                                 </label>
+                                <div class="FieldValidationMessage" data-input="vehicle-data.ident" data-element="validation-message"></div>
                             </div>
                             <div class="Grid_Module--50">
                                 <label>
                                     <span>Fahrzeugbrief-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
                                     <input type="text" name="vehicle-data.vehicle-id"/>
                                 </label>
+                                <div class="FieldValidationMessage" data-input="vehicle-data.vehicle-id" data-element="validation-message"></div>
                             </div>
                         </div>
 
@@ -99,6 +105,7 @@
                             <input type="checkbox" name="vehicle-data.leasing" />
                             <span>Fahrzeug wird finanziert bzw. geleast</span>
                         </label>
+                        <div class="FieldValidationMessage" data-input="vehicle-data.leasing" data-element="validation-message"></div>
 
 
                     </fieldset>
@@ -110,6 +117,7 @@
                             <span>eVB-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
                             <input type="text" name="vehicle-insurance.id"/>
                         </label>
+                        <div class="FieldValidationMessage" data-input="vehicle-insurance.id" data-element="validation-message"></div>
 
                     </fieldset>
 
@@ -142,6 +150,7 @@
                                     </option>
                                 </select>
                             </label>
+                            <div class="FieldValidationMessage" data-input="tax.account/stored-account" data-element="validation-message"></div>
                         </fieldset>
                     </div>
 
@@ -158,18 +167,21 @@
                                         <span>IBAN:</span>
                                         <input type="text" name="tax.account/new-account-code"/>
                                     </label>
+                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-code" data-element="validation-message"></div>
                                 </div>
                                 <div class="Grid__Module Grid_Module--30">
                                     <label>
                                         <span>BIC:</span>
                                         <input type="text" name="tax.account/new-account-bankcode"/>
                                     </label>
+                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-bankcode" data-element="validation-message"></div>
                                 </div>
                                 <div class="Grid__Module Grid_Module--30">
                                     <label>
                                         <span>Bank:</span>
                                         <input type="text" name="tax.account/new-account-bankname"/>
                                     </label>
+                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-bankname" data-element="validation-message"></div>
                                 </div>
                             </div>
 
@@ -177,9 +189,11 @@
                                 <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
                                 <input type="text" name="tax.account/new-account-owner"/>
                             </label>
+                            <div class="FieldValidationMessage" data-input="tax.account/new-account-owner" data-element="validation-message"></div>
 
                         </fieldset>
                     </div>
+                    <div class="FieldValidationMessage" data-input="tax.account" data-element="validation-message"></div>
                 </fieldset>
 
                 <footer>
@@ -215,6 +229,7 @@
                                        data-activate-fieldset-name="payment.methods/stored-account_wrapper"/>
                                 <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
                             </label>
+                            <div class="FieldValidationMessage" data-input="payment.methods" data-element="validation-message"></div>
                             <fieldset class="DependencyGroup__dependant" name="payment.methods/stored-account_wrapper">
                                 <label>
                                     <span>Bankdaten</span>
@@ -223,6 +238,7 @@
                                         <option value="account-2">Sparkasse Berlin, IBAN: 0987 6543 2109 8765 43</option>
                                     </select>
                                 </label>
+                                <div class="FieldValidationMessage" data-input="payment.methods/stored-account" data-element="validation-message"></div>
                             </fieldset>
                         </div>
                         <div class="DependencyGroup">
@@ -238,18 +254,21 @@
                                             <span>IBAN:</span>
                                             <input type="text" name="payment.methods/new-account-code"/>
                                         </label>
+                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-code" data-element="validation-message"></div>
                                     </div>
                                     <div class="Grid__Module Grid_Module--30">
                                         <label>
                                             <span>BIC:</span>
                                             <input type="text" name="payment.methods/new-account-bankcode"/>
                                         </label>
+                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-bankcode" data-element="validation-message"></div>
                                     </div>
                                     <div class="Grid__Module Grid_Module--30">
                                         <label>
                                             <span>Bank:</span>
                                             <input type="text" name="payment.methods/new-account-bankname"/>
                                         </label>
+                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-bankname" data-element="validation-message"></div>
                                     </div>
                                 </div>
 
@@ -257,6 +276,7 @@
                                     <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
                                     <input type="text" name="payment.methods/new-account-owner"/>
                                 </label>
+                                <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner" data-element="validation-message"></div>
                             </fieldset>
                         </div>
                     </fieldset>
@@ -292,7 +312,7 @@
                         <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden,
                             welcher in der Bestätigung-Email steht.</p>
                     </label>
-
+                    <div class="FieldValidationMessage" data-input="handover.options" data-element="validation-message"></div>
                 </fieldset>
 
 

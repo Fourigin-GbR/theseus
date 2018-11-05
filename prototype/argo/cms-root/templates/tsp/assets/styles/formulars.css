@@ -83,6 +83,26 @@ label p.description {
     margin-left: 40px;
 }
 
+
+.FieldValidationMessage {
+    background-color: #f67272;
+    margin: 5px 10px 0 15px;
+    padding: 10px;
+    border-radius: 0 10px 10px 15px;
+    color: #fff;
+    display: none;
+}
+.FieldValidationMessage.active {
+    display: block;
+}
+.FieldValidationMessage p {
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+.FieldValidationMessage p:first-of-type {
+    margin: 0;
+}
+
 fieldset.radioList,
 fieldset.CheckboxList {
     margin: 40px 0;
