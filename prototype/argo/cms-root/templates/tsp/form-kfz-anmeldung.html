@@ -212,10 +212,10 @@
                         <div class="DependencyGroup">
                             <label class="Radio DependencyGroup__master">
                                 <input type="radio" name="payment.methods" value="debit-from-existing-account"
-                                       data-activate-fieldset-name="neue_bankverbindung"/>
+                                       data-activate-fieldset-name="payment.methods/stored-account_wrapper"/>
                                 <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
                             </label>
-                            <fieldset class="DependencyGroup__dependant" name="hinterlegte_bankverbindung">
+                            <fieldset class="DependencyGroup__dependant" name="payment.methods/stored-account_wrapper">
                                 <label>
                                     <span>Bankdaten</span>
                                     <select name="payment.methods/stored-account">
@@ -228,10 +228,10 @@
                         <div class="DependencyGroup">
                             <label class="Radio DependencyGroup__master">
                                 <input type="radio" name="payment.methods" value="debit-from-new-account"
-                                       data-activate-fieldset-name="neu_neu_neu"/>
+                                       data-activate-fieldset-name="payment.methods/new-account_wrapper"/>
                                 <span>Lastschrifteinzug von einer neuen Bankverbindung</span>
                             </label>
-                            <fieldset class="DependencyGroup__dependant" name="neu_neu_neu">
+                            <fieldset class="DependencyGroup__dependant" name="payment.methods/new-account_wrapper">
                                 <div class="Grid">
                                     <div class="Grid__Module Grid_Module--40">
                                         <label>
