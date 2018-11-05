@@ -415,3 +415,8 @@ a.hint:hover {
     display: block;
     color: #666;
 }
+.StepsNavigation .StepsNavigation__item.validated,
+.StepsNavigation .StepsNavigation__item.validated::before,
+.StepsNavigation .StepsNavigation__item.validated::after {
+    background-color: #00b393;
+}
