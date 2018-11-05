@@ -37,6 +37,9 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
                 {"htmlNode_content": htmlNode_currentStep, "htmlNode_stepTab": htmlNode_tab, "validated": false}
             );
         }
+
+        // On any change in the step, set the status to "not-validated":
+        // TODO !!!!
     };
 
     StepsBox.prototype.setStepsNavigationButtons = function () {

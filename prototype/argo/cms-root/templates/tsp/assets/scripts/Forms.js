@@ -8,14 +8,47 @@ var inputsWithBoundFieldSets = Array.prototype.filter.call(inputs, function(elem
 });
 
 var setBoundedFieldSetsStatusOnMasterStatus = function(htmlNode_master, htmlNode_boundedFieldSet) {
-    if(!htmlNode_boundedFieldSet) {
+    /**
+     * Update status of bound fieldsets. Exception: radio-lists. Not all of their options need to have bounded
+     * fieldsets, but only one can be selected.
+     */
+    var type = htmlNode_master.getAttribute("type");
+    if(type !== "radio" && !htmlNode_boundedFieldSet) {
         return;
     }
-    if(!htmlNode_master.checked && !htmlNode_master.selected) {
-        htmlNode_boundedFieldSet.setAttribute("disabled", "disabled")
+    // One process for radios, one for all others:
+    if(type === "radio") {
+        // Iterate over all radios and update status:
+        var radios = formular.querySelectorAll("[name='" + htmlNode_master.getAttribute('name') + "']");
+        Array.prototype.forEach.call(radios, function (el) {
+            updateStatusOfBoundFieldset(el);
+        });
     }
     else {
-        htmlNode_boundedFieldSet.removeAttribute("disabled");
+        updateStatusOfBoundFieldset(htmlNode_master);
+    }
+
+};
+
+var updateStatusOfBoundFieldset = function(input) {
+    console.info("Update status of bound fieldset:", input);
+
+    // Find fieldset
+    var fieldsetName = input.getAttribute("data-activate-fieldset-name");
+    if(!fieldsetName){
+        return;
+    }
+    var targetFieldset = formular.querySelector("[name='" + fieldsetName + "']");
+    //
+    if(!targetFieldset) {
+        console.warn("Could not find a target fieldset!", fieldsetName);
+        return;
+    }
+    if(!input.checked && !input.selected) {
+        targetFieldset.setAttribute("disabled", "disabled")
+    }
+    else {
+        targetFieldset.removeAttribute("disabled");
     }
 };
 
@@ -30,34 +63,39 @@ var iterateOverAllBoundInputsAndUpdateStatusOfFieldsets = function() {
     });
 };
 
-Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
-    var targetFieldset = Array.prototype.filter.call(fieldsets, function(element, index, aElements) {
-        return (element.getAttribute("name") === el.getAttribute('data-activate-fieldset-name'));
-    })[0];
-    el.addEventListener("change", function() {
-        console.info("Changed. Target is: ", targetFieldset);
-        setBoundedFieldSetsStatusOnMasterStatus(this, targetFieldset);
-        // if radio, only one element can be active - check other fields:
-        var htmlNode_parentForm = el.closest("form"),
-            radioName = el.getAttribute("name");
-        if(el.getAttribute("type") === "radio") {
-            var htmlNode_radioFields = htmlNode_parentForm.querySelectorAll("input[name='" + radioName + "']");
+var generateSummarizedListOfAllFormData = function() {
+    /**
+     * Get prototype items and fill each with collected form items:
+     */
+    var prototype = formular.querySelector("[data-prototype='summary-list-item']");
+    var summaryListItemsTarget = formular.querySelector("[data-element='summary-list']");
+    var allLFormularItems = formular.querySelectorAll("input, textarea");
 
-            console.log("Diese Radios habe ich gefunden:", htmlNode_radioFields);
-            Array.prototype.forEach.call(htmlNode_radioFields, function(elRadio){
+    var htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets = Array.prototype.filter.call(allLFormularItems, function(element) {
+        /**
+         * Filter out all form-fields, who do not have somewhere on their ancestors a fieldset which is 'disabled'.
+         */
+        return !element.closest("fieldset[disabled='disabled']");
+    });
 
-                var currentTargetFieldset = Array.prototype.filter.call(fieldsets, function(element, index, aElements) {
-                    if(elRadio.getAttribute('data-activate-fieldset-name')) {
-                        return (element.getAttribute("name") === elRadio.getAttribute('data-activate-fieldset-name'));
-                    }
-                })[0];
-                console.log("Dieses Feld will ich disabeln:", currentTargetFieldset);
-                if(currentTargetFieldset) {
-                    setBoundedFieldSetsStatusOnMasterStatus(elRadio, currentTargetFieldset);
-                }
-            });
+    Array.prototype.forEach.call(htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets, function(el) {
+        var newItem = prototype.cloneNode(true);
+        var title = newItem.querySelector("[data-element='summary-list-title']");
+        var value = newItem.querySelector("[data-element='summary-list-value']");
+
+        if(el.closest("label") && el.closest("label").querySelector("span")) {
+            title.innerHTML = el.closest("label").querySelector("span").textContent;
+            value.innerHTML = el.getAttribute("value");
+            summaryListItemsTarget.appendChild(newItem);
         }
+    });
+};
 
+Array.prototype.forEach.call(inputs, function(el){
+    // Set change event listeners. Don't apply to only those ones with specific attribute, as in a radio-list
+    // not all radios neet to have bound elements! So in general: Tale all inputs and look for bound elements.
+    el.addEventListener("change", function() {
+        setBoundedFieldSetsStatusOnMasterStatus(this);
     });
 });
 
