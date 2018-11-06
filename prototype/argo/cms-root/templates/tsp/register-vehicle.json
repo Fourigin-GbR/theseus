@@ -76,6 +76,10 @@
             "values": {
               "account-1": null,
               "account-2": null
+            },
+            "externalValueReference": {
+              "owner": "customer",
+              "value": "stored-accounts"
             }
           }
         },
@@ -122,6 +126,10 @@
             "values": {
               "account-1": null,
               "account-2": null
+            },
+            "externalValueReference": {
+              "owner": "customer",
+              "value": "stored-accounts"
             }
           }
         },
@@ -169,5 +177,4 @@
       }
     }
   }
-  
 }

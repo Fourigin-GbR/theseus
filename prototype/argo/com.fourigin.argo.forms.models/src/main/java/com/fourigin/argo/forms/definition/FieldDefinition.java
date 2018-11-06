@@ -10,6 +10,7 @@ public class FieldDefinition implements Serializable {
     private Type type;
     private Map<String, Object> validation;
     private Map<String, Map<String, FieldDefinition>> values;
+    private ExternalValueReference externalValueReference;
 
     public Type getType() {
         return type;
@@ -35,6 +36,14 @@ public class FieldDefinition implements Serializable {
         this.values = values;
     }
 
+    public ExternalValueReference getExternalValueReference() {
+        return externalValueReference;
+    }
+
+    public void setExternalValueReference(ExternalValueReference externalValueReference) {
+        this.externalValueReference = externalValueReference;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,12 +51,13 @@ public class FieldDefinition implements Serializable {
         FieldDefinition that = (FieldDefinition) o;
         return type == that.type &&
             Objects.equals(validation, that.validation) &&
-            Objects.equals(values, that.values);
+            Objects.equals(values, that.values) &&
+            Objects.equals(externalValueReference, that.externalValueReference);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, validation, values);
+        return Objects.hash(type, validation, values, externalValueReference);
     }
 
     @Override
@@ -56,6 +66,7 @@ public class FieldDefinition implements Serializable {
             "type=" + type +
             ", validation=" + validation +
             ", values=" + values +
+            ", externalValueReference=" + externalValueReference +
             '}';
     }
 }
