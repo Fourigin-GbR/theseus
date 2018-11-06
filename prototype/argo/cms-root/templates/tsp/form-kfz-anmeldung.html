@@ -14,6 +14,7 @@
     <nav class="StepsNavigation">
         <div class="TabNavigationItem_ StepsNavigation__item active" data-tab-id="tab1">
             <div class="StepsNavigation__item__wrapper">
+                <i class="fa fa-car la la-automobile"></i>
                 <span>
                     <span class="StepsNavigation__item__copy">Fahrzeug</span>
                 </span>
@@ -21,27 +22,31 @@
         </div>
         <div class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab2">
             <div class="StepsNavigation__item__wrapper">
+                <i class="fa fa-pencil-square la la-pencil-square"></i>
                 <span>
                     <span class="StepsNavigation__item__copy">KFZ-Steuer</span>
                 </span>
             </div>
         </div>
         <div class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab3">
-                        <div class="StepsNavigation__item__wrapper">
+            <div class="StepsNavigation__item__wrapper">
+                <i class="fa fa-money la la-money"></i>
                 <span>
                     <span class="StepsNavigation__item__copy">Zahlung</span>
                 </span>
             </div>
         </div>
         <span class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab4">
-                        <div class="StepsNavigation__item__wrapper">
+            <i class="fa fa-suitcase la la-suitcase"></i>
+            <div class="StepsNavigation__item__wrapper">
                 <span>
                     <span class="StepsNavigation__item__copy">Dokumentübergabe</span>
                 </span>
             </div>
         </span>
-        <span class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab5">
-                        <div class="StepsNavigation__item__wrapper">
+        <span class="TabNavigationItem_ StepsNavigation__item StepsNavigation__item--last" data-tab-id="tab5">
+            <i class="fa fa-upload la la-upload"></i>
+            <div class="StepsNavigation__item__wrapper">
                 <span>
                     <span class="StepsNavigation__item__copy">Prüfen & Abschließen</span>
                 </span>
@@ -116,14 +121,14 @@
                         <div class="FormularGroup Grid">
                             <div class="Grid_Module--50">
                                 <label>
-                                    <span>Ident-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
+                                    <span>Ident-Nummer</span>
                                     <input type="text" name="vehicle-data.ident"/>
                                 </label>
                                 <div class="FieldValidationMessage" data-input="vehicle-data.ident" data-element="validation-message"></div>
                             </div>
                             <div class="Grid_Module--50">
                                 <label>
-                                    <span>Fahrzeugbrief-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
+                                    <span>Fahrzeugbrief-Nummer</span>
                                     <input type="text" name="vehicle-data.vehicle-id"/>
                                 </label>
                                 <div class="FieldValidationMessage" data-input="vehicle-data.vehicle-id" data-element="validation-message"></div>
@@ -144,7 +149,7 @@
                         <legend>KFZ-Versicherung</legend>
 
                         <label>
-                            <span>eVB-Nummer: <a href="#" class="hint">Wo finde ich sie?</a></span>
+                            <span>eVB-Nummer</span>
                             <input type="text" name="vehicle-insurance.id"/>
                         </label>
                         <div class="FieldValidationMessage" data-input="vehicle-insurance.id" data-element="validation-message"></div>
@@ -157,7 +162,7 @@
                             <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                             <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                         </div>
-                        <button type="button" data-action="nextTab">Weiter</button>
+                        <button type="button" class="cta" data-action="nextTab">Weiter</button>
                     </footer>
                 </fieldset>
             </div>
@@ -232,7 +237,7 @@
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="button" data-action="nextTab">Weiter</button>
+                    <button type="button" class="cta" data-action="nextTab">Weiter</button>
                 </footer>
             </div>
 
@@ -319,7 +324,7 @@
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="button" data-action="nextTab">Weiter</button>
+                    <button type="button" class="cta" data-action="nextTab">Weiter</button>
                 </footer>
             </div>
 
@@ -352,7 +357,7 @@
                         <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                     </div>
                     <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="button" data-action="nextTab">Weiter</button>
+                    <button type="button" class="cta" data-action="nextTab">Weiter</button>
                 </footer>
             </div>
 

@@ -227,9 +227,13 @@ footer {
 }
 footer button {
     margin-left: 20px;
+    cursor: pointer;
 }
 footer button:first-of-type {
     margin-left: 0;
+}
+footer button.cta {
+    background-color: #2ab46b;
 }
 
 a.hint {
@@ -363,10 +367,10 @@ a.hint:hover {
 .StepsNavigation .StepsNavigation__item {
     flex-grow: 1;
     background-image: none;
-    padding: 5px;
+    padding: 15px 5px;
     margin: 0;
     text-align: center;
-    background-color: #e6e6e6;
+    background-color: #f3f3f3;
     flex-basis: 50%;
     position: relative;
 }
@@ -377,7 +381,7 @@ a.hint:hover {
     right: 0;
     height: 51%;
     width: 60%;
-    background: #e6e6e6;
+    background: #f3f3f3;
     transform: skew(45deg, 0deg);
     transform-origin: top right;
     z-index: 1;
@@ -388,9 +392,9 @@ a.hint:hover {
     position: absolute;
     top: 50%;
     left: 40%;
-    height: 50%;
+    height: 49%;
     width: 60%;
-    background: #e6e6e6;
+    background: #f3f3f3;
     -ms-transform: skew(-45deg, 0deg);
     -moz-transform: skew(-45deg, 0deg);
     -webkit-transform: skew(-45deg, 0deg);
@@ -402,11 +406,14 @@ a.hint:hover {
     z-index: 1;
     border-right: 1px solid #fff;
 }
+.StepsNavigation .StepsNavigation__item i.fa {
+    font-size: 25px;
+    margin-right: 5px;
+    color: #626262;
+    z-index: 2;
+    position: relative;
+}
 .StepsNavigation__item__wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
     margin-left: 20px;
 }
 .StepsNavigation__item__copy {
@@ -415,8 +422,21 @@ a.hint:hover {
     display: block;
     color: #666;
 }
+.StepsNavigation .StepsNavigation__item.active,
+.StepsNavigation .StepsNavigation__item.active::before,
+.StepsNavigation .StepsNavigation__item.active::after {
+    background-color: #e6e6e6;
+}
 .StepsNavigation .StepsNavigation__item.validated,
 .StepsNavigation .StepsNavigation__item.validated::before,
 .StepsNavigation .StepsNavigation__item.validated::after {
     background-color: #00b393;
+}
+.StepsNavigation .StepsNavigation__item.validated .StepsNavigation__item__wrapper .StepsNavigation__item__copy,
+.StepsNavigation .StepsNavigation__item.validated .StepsNavigation__item__wrapper i.fa {
+    color: #fff;
+}
+.StepsNavigation .StepsNavigation__item--last::before,
+.StepsNavigation .StepsNavigation__item--last::after {
+    display: none;
 }

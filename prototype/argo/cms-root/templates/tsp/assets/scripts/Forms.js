@@ -151,12 +151,11 @@ var sendForm = function() {
     })
         .done(function (res) {
             console.log(res);
-            alert("Prima! Sie haben ALLE Level gelöst!!");
 
         })
         .fail(function (err) {
             console.log('Error: ' + err.status);
-            alert("Oh nein! Das letzte Level haben Sie nicht geschafft. Bitte neu starten.");
+            alert("Es ist leider ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.");
         });
         return true;
     });
