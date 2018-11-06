@@ -2,11 +2,16 @@ package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.definition.ExternalValueReference;
+import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
 import com.fourigin.argo.forms.definition.FormObjectDefinition;
 import com.fourigin.argo.forms.definition.FormObjectMapperDefinition;
+import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
+import com.fourigin.argo.forms.initialization.ExternalValueResolver;
 import com.fourigin.argo.forms.mapping.FormObjectMapper;
 import com.fourigin.argo.forms.model.FormsRequest;
+import com.fourigin.argo.forms.model.InitRequest;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.validation.FailureReason;
@@ -32,6 +37,7 @@ import org.springframework.context.MessageSource;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,6 +56,10 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private FormsProcessingDispatcher formsProcessingDispatcher;
 
+    private ExternalValueResolverFactory externalValueResolverFactory;
+
+    private static final String URI_INITIALIZE_FORM = "/init-form";
+
     private static final String URI_REGISTER_FORM = "/register-form";
 
     private static final String URI_PRE_VALIDATE_FORM = "/pre-validate";
@@ -63,6 +73,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FormDefinitionRepository formDefinitionRepository,
         FormsStoreRepository formsStoreRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
+        ExternalValueResolverFactory externalValueResolverFactory,
         MessageSource messageSource,
         ObjectMapper objectMapper
     ) {
@@ -70,6 +81,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
+        this.externalValueResolverFactory = externalValueResolverFactory;
         this.messageSource = messageSource;
         this.objectMapper = objectMapper;
 
@@ -103,6 +115,12 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         if ((contextPath + URI_VALIDATE_FORM).equals(uri)) {
             if (logger.isDebugEnabled()) logger.debug("Processing validate-form request");
             serveValidateForm(ctx, request);
+            return;
+        }
+
+        if ((contextPath + URI_INITIALIZE_FORM).equals(uri)) {
+            if (logger.isDebugEnabled()) logger.debug("Processing init-form request");
+            serveInitializeForm(ctx, request);
             return;
         }
 
@@ -150,6 +168,29 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             } else {
                 writeResponseBody(ctx, result, HttpResponseStatus.NOT_ACCEPTABLE);
             }
+        } catch (Throwable th) {
+            if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
+            serve500(ctx, th);
+        }
+    }
+
+    private void serveInitializeForm(ChannelHandlerContext ctx, FullHttpRequest request) {
+        if (logger.isInfoEnabled()) logger.info("Serving init form ...");
+
+        try {
+            InitRequest initRequest = getRequestBody(InitRequest.class, request);
+
+            String formDefinitionId = initRequest.getFormDefinition();
+            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+
+            String customerId = initRequest.getCustomer();
+
+            Map<String, Object> result = new HashMap<>();
+
+            Map<String, FieldDefinition> fields = formDefinition.getFields();
+            processFields(customerId, fields, null, result);
+
+            writeResponseBody(ctx, result, HttpResponseStatus.OK);
         } catch (Throwable th) {
             if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
             serve500(ctx, th);
@@ -207,6 +248,49 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
     }
 
+    private void processFields(
+        String customerId,
+        Map<String, FieldDefinition> fields,
+        String parentPath,
+        Map<String, Object> initValues
+    ) {
+        if (fields == null || fields.isEmpty()) {
+            return;
+        }
+
+        for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
+            String fieldName = entry.getKey();
+            String currentPath = parentPath == null ? fieldName : parentPath + "/" + fieldName;
+
+            FieldDefinition fieldDefinition = entry.getValue();
+            ExternalValueReference externalValueReference = fieldDefinition.getExternalValueReference();
+            if (externalValueReference != null) {
+
+                String externalValueOwner = externalValueReference.getOwner();
+                String externalValueKey = externalValueReference.getValue();
+
+                ExternalValueResolver processor = externalValueResolverFactory.get(externalValueOwner);
+                if (processor == null) {
+                    throw new IllegalArgumentException("Unsupported external value resolver '" + externalValueOwner + "'!");
+                }
+
+                Map<String, Object> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
+                initValues.put(currentPath, externalValue);
+            }
+
+            Map<String, Map<String, FieldDefinition>> fieldValues = fieldDefinition.getValues();
+            if (fieldValues != null) {
+                for (Map.Entry<String, Map<String, FieldDefinition>> subEntries : fieldValues.entrySet()) {
+//                    String subKey = subEntries.getKey();
+                    Map<String, FieldDefinition> subFields = subEntries.getValue();
+                    if (subFields != null) {
+                        processFields(customerId, subFields, currentPath, initValues);
+                    }
+                }
+            }
+        }
+    }
+
     private Object mapObject(FormObjectDefinition objectDefinition, FormsStoreEntry entry) {
         String targetType = objectDefinition.getType();
         Class<?> targetClass;
@@ -252,7 +336,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
         if (formDefinition == null) {
             throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
-        }                                                                             
+        }
 
         FormData formData = new FormData();
         formData.setFormDefinitionId(formDefinitionId);
@@ -279,7 +363,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             }
 
             List<FailureReason> failureReasons = fieldResult.getFailureReasons();
-            if(failureReasons == null || failureReasons.isEmpty()){
+            if (failureReasons == null || failureReasons.isEmpty()) {
                 continue;
             }
 

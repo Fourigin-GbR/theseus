@@ -1,6 +1,7 @@
 package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -16,6 +17,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
     private FormsStoreRepository formsStoreRepository;
     private FormDefinitionRepository formDefinitionRepository;
     private FormsProcessingDispatcher formsProcessingDispatcher;
+    private ExternalValueResolverFactory externalValueResolverFactory;
     private MessageSource messageSource;
     private ObjectMapper objectMapper;
 
@@ -26,12 +28,14 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         FormsStoreRepository formsStoreRepository,
         FormDefinitionRepository formDefinitionRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
+        ExternalValueResolverFactory externalValueResolverFactory,
         MessageSource messageSource, ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
+        this.externalValueResolverFactory = externalValueResolverFactory;
         this.messageSource = messageSource;
         this.objectMapper = objectMapper;
 
@@ -49,6 +53,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
             formDefinitionRepository,
             formsStoreRepository,
             formsProcessingDispatcher,
+            externalValueResolverFactory,
             messageSource,
             objectMapper
         ));

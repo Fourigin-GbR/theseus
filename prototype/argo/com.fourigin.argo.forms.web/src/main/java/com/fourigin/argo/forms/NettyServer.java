@@ -2,7 +2,9 @@ package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fourigin.argo.forms.models.payment.mapping.PaymentModule;
+import com.fourigin.argo.forms.initialization.CustomerExternalValueResolver;
+import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
+import com.fourigin.argo.forms.customer.payment.mapping.PaymentModule;
 import com.fourigin.argo.forms.processing.FulfillTaxPaymentFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillVehicleRegistrationFormEntryProcessor;
 import com.fourigin.argo.forms.processing.customer.CreateCustomerFormsEntryProcessor;
@@ -58,6 +60,7 @@ public class NettyServer {
         @Autowired FormsStoreRepository formsStoreRepository,
         @Autowired FormDefinitionRepository formDefinitionRepository,
         @Autowired FormsProcessingDispatcher formsProcessingDispatcher,
+        @Autowired ExternalValueResolverFactory externalValueResolverFactory,
         @Autowired MessageSource messageSource
     ) {
         return new ServerBootstrap()
@@ -68,6 +71,7 @@ public class NettyServer {
                 formsStoreRepository,
                 formDefinitionRepository,
                 formsProcessingDispatcher,
+                externalValueResolverFactory,
                 messageSource,
                 objectMapper()
             ))
@@ -166,6 +170,17 @@ public class NettyServer {
             formsEntryProcessorFactory,
             formsRegistry
         );
+    }
+
+    @Bean
+    public ExternalValueResolverFactory externalValueResolverFactory(
+        @Autowired CustomerRepository customerRepository
+    ){
+        ExternalValueResolverFactory externalValueResolverFactory = new ExternalValueResolverFactory();
+
+        externalValueResolverFactory.put("customer", new CustomerExternalValueResolver(customerRepository));
+
+        return externalValueResolverFactory;
     }
 
     @Bean
