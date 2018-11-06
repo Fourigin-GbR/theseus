@@ -7,7 +7,7 @@ import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.CustomerAddress;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
-import com.fourigin.argo.forms.models.payment.BankAccount;
+import com.fourigin.argo.forms.customer.payment.BankAccount;
 import com.fourigin.utilities.pdfbox.PdfDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;

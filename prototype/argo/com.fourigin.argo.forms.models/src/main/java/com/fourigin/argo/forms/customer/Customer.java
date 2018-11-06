@@ -1,5 +1,7 @@
 package com.fourigin.argo.forms.customer;
 
+import com.fourigin.argo.forms.customer.payment.BankAccount;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -17,6 +19,7 @@ public class Customer implements Serializable {
     private String cityOfBorn;
     private CustomerAddress mainAddress;
     private Set<CustomerAddress> additionalAddresses;
+    private Set<BankAccount> bankAccounts;
     private String email;
     private String phone;
     private String fax;
@@ -77,6 +80,14 @@ public class Customer implements Serializable {
         this.cityOfBorn = cityOfBorn;
     }
 
+    public Set<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(Set<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
     public CustomerAddress getMainAddress() {
         return mainAddress;
     }
@@ -131,6 +142,7 @@ public class Customer implements Serializable {
             Objects.equals(cityOfBorn, customer.cityOfBorn) &&
             Objects.equals(mainAddress, customer.mainAddress) &&
             Objects.equals(additionalAddresses, customer.additionalAddresses) &&
+            Objects.equals(bankAccounts, customer.bankAccounts) &&
             Objects.equals(email, customer.email) &&
             Objects.equals(phone, customer.phone) &&
             Objects.equals(fax, customer.fax);
@@ -138,7 +150,7 @@ public class Customer implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, email, phone, fax);
+        return Objects.hash(id, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, bankAccounts, email, phone, fax);
     }
 
     @Override
@@ -153,6 +165,7 @@ public class Customer implements Serializable {
             ", cityOfBorn='" + cityOfBorn + '\'' +
             ", mainAddress=" + mainAddress +
             ", additionalAddresses=" + additionalAddresses +
+            ", bankAccounts=" + bankAccounts +
             ", email='" + email + '\'' +
             ", phone='" + phone + '\'' +
             ", fax='" + fax + '\'' +

@@ -1,7 +1,7 @@
 package com.fourigin.argo.forms.models;
 
-import com.fourigin.argo.forms.models.payment.BankAccount;
-import com.fourigin.argo.forms.models.payment.PaymentMethod;
+import com.fourigin.argo.forms.customer.payment.BankAccount;
+import com.fourigin.argo.forms.customer.payment.PaymentMethod;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 

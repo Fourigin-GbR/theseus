@@ -1,11 +1,11 @@
-package com.fourigin.argo.forms.models.payment.mapping;
+package com.fourigin.argo.forms.customer.payment.mapping;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fourigin.argo.forms.models.payment.BankAccount;
-import com.fourigin.argo.forms.models.payment.Paypal;
-import com.fourigin.argo.forms.models.payment.Prepayment;
-import com.fourigin.argo.forms.models.payment.Sofort;
+import com.fourigin.argo.forms.customer.payment.BankAccount;
+import com.fourigin.argo.forms.customer.payment.Paypal;
+import com.fourigin.argo.forms.customer.payment.Prepayment;
+import com.fourigin.argo.forms.customer.payment.Sofort;
 
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.NAME,

@@ -1,9 +1,9 @@
 import com.fourigin.argo.forms.models.Vehicle
 import com.fourigin.argo.forms.models.VehicleRegistration
-import com.fourigin.argo.forms.models.payment.BankAccount
-import com.fourigin.argo.forms.models.payment.Paypal
-import com.fourigin.argo.forms.models.payment.Prepayment
-import com.fourigin.argo.forms.models.payment.Sofort
+import com.fourigin.argo.forms.customer.payment.BankAccount
+import com.fourigin.argo.forms.customer.payment.Paypal
+import com.fourigin.argo.forms.customer.payment.Prepayment
+import com.fourigin.argo.forms.customer.payment.Sofort
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
