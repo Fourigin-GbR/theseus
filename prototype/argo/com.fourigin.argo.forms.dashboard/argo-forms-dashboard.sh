@@ -2,7 +2,7 @@
 APPName="argo-forms-dashboard"
 APPVersion="1.0-SNAPSHOT"
 JARFile="$APPName-$APPVersion.jar"
-PIDFile="$APPName.pid"
+PIDFile="dashboard.pid"
 SPRING_OPTS="-DLOG_FILE=$APPName.log"
 
 function check_if_pid_file_exists {
