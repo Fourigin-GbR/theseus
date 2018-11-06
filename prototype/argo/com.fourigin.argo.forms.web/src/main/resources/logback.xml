@@ -6,7 +6,7 @@
         <Compressing>true</Compressing>
         <ReconnectionDelay>30000</ReconnectionDelay>
         <IncludeCallerData>true</IncludeCallerData>
-        <ApplicationIdentifier>argo</ApplicationIdentifier>
+        <ApplicationIdentifier>argo-forms</ApplicationIdentifier>
         <RemoteHosts>
             localhost,
             192.168.0.2
