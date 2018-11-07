@@ -379,6 +379,24 @@ a.hint:hover {
     color: #ab0000;
 }
 
+/* Summary List */
+.summaryList .summaryList__entry {
+    list-style-type: none;
+    display: flex;
+}
+.summaryList .summaryList__title {
+    font-weight: normal;
+    margin: 0;
+    padding: 10px 0;
+    width: 40%;
+}
+.summaryList .summaryList__value {
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 0 10px 10px;
+    width: 60%;
+}
+
 /* Steps Navigation Item */
 .StepsNavigation {
     display: flex;

@@ -78,6 +78,9 @@ var generateSummarizedListOfAllFormData = function() {
         return !element.closest("fieldset[disabled='disabled']");
     });
 
+    // clean:
+    summaryListItemsTarget.innerHTML = "";
+
     Array.prototype.forEach.call(htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets, function(el) {
         var newItem = prototype.cloneNode(true);
         var title = newItem.querySelector("[data-element='summary-list-title']");
@@ -85,7 +88,7 @@ var generateSummarizedListOfAllFormData = function() {
 
         if(el.closest("label") && el.closest("label").querySelector("span")) {
             title.innerHTML = el.closest("label").querySelector("span").textContent;
-            value.innerHTML = el.getAttribute("value");
+            value.innerHTML = el.value;
             summaryListItemsTarget.appendChild(newItem);
         }
     });
