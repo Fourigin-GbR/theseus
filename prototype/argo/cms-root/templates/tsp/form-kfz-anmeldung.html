@@ -36,26 +36,51 @@
                 </span>
             </div>
         </div>
-        <span class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab4">
-            <i class="fa fa-suitcase la la-suitcase"></i>
+        <div class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab4">
             <div class="StepsNavigation__item__wrapper">
+                <i class="fa fa-suitcase la la-suitcase"></i>
                 <span>
                     <span class="StepsNavigation__item__copy">Dokumentübergabe</span>
                 </span>
             </div>
-        </span>
-        <span class="TabNavigationItem_ StepsNavigation__item StepsNavigation__item--last" data-tab-id="tab5">
-            <i class="fa fa-upload la la-upload"></i>
+        </div>
+        <div class="TabNavigationItem_ StepsNavigation__item StepsNavigation__item--last" data-tab-id="tab5">
             <div class="StepsNavigation__item__wrapper">
+                <i class="fa fa-upload la la-upload"></i>
                 <span>
                     <span class="StepsNavigation__item__copy">Prüfen & Abschließen</span>
                 </span>
             </div>
-        </span>
+        </div>
     </nav>
     <div class="TabsWrapper">
         <form action="#" method="get">
             <input type="hidden" name="form-definition" value="register-vehicle"/>
+
+            <div id="thankYouPage" class="ThankYouPage">
+                <h2>Dankeschön!</h2>
+                <div class="ThankYouPage__icon">
+                    <i class="fa fa-check-square la la-check-square"></i>
+                </div>
+                <div class="ThankYouPage__subCopy">
+                    Ihre Daten wurden eingetragen.
+                </div>
+                <footer class="ThankYouPage__footer">
+                    <a href="/"><i class="fa fa-reply la la-reply"></i> Zurück zum Dashboard</a>
+                </footer>
+            </div>
+            <div id="errorPage" class="ThankYouPage ErrorPage">
+                <h2>Fehler!</h2>
+                <div class="ThankYouPage__icon ErrorPage__icon">
+                    <i class="fa fa-times la la-times"></i>
+                </div>
+                <div class="ThankYouPage__subCopy">
+                    Bitte versuchen Sie es später noch einmal.
+                </div>
+                <footer class="ThankYouPage__footer">
+                    <a href="/"><i class="fa fa-reply la la-reply"></i> Zurück zum Dashboard</a>
+                </footer>
+            </div>
 
             <div data-target-tab-id="tab1" class="Tab StepsBox__step active">
                 <fieldset>

@@ -5,6 +5,9 @@ body {
     max-width: 600px;
 }
 
+a {
+    color: #00b393;
+}
 
 /* Simple Grid */
 .Grid {
@@ -217,7 +220,7 @@ button {
 }
 button[type=submit] {
     padding: 12px 22px;
-    background-color: #2ab46b;
+    background-color: #00b393;
     color: #fff;
 }
 
@@ -233,7 +236,7 @@ footer button:first-of-type {
     margin-left: 0;
 }
 footer button.cta {
-    background-color: #2ab46b;
+    background-color: #00b393;
 }
 
 a.hint {
@@ -241,13 +244,13 @@ a.hint {
     background-color: #c6c6c6;
     padding: 3px 10px;
     border-radius: 5px;
-    color: #2ab46b;
+    color: #00b393;
     font-size: .8em;
     font-weight: bold;
     text-decoration: none;
 }
 a.hint:hover {
-    background-color: #2ab46b;
+    background-color: #00b393;
     color: #fff;
 }
 
@@ -279,7 +282,6 @@ a.hint:hover {
 
 .DependencyGroup .DependencyGroup__dependant {
     margin: 0 0 10px 40px;
-    border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
     opacity: 1;
     /*transition: all .4s ease;*/
@@ -313,7 +315,7 @@ a.hint:hover {
 
 .Tabs nav span.validated,
 .Tabs nav span.active {
-    background-color: #2ab46b;
+    background-color: #00b393;
     color: #fff;
     cursor: pointer;
 }
@@ -353,6 +355,28 @@ a.hint:hover {
 .ValidationMessages__message--error {
     background-color: #ab0000;
     color: #f3f3f3;
+}
+
+/* Steps Box Step */
+.ThankYouPage {
+    text-align: center;
+    display: none;
+}
+.ThankYouPage.active {
+    display: block;
+}
+.ThankYouPage .ThankYouPage__icon i {
+    font-size: 60px;
+    color: #00b393;
+}
+.ThankYouPage .ThankYouPage__subCopy {
+    margin: 10px 0;
+}
+.ThankYouPage .ThankYouPage__footer a i {
+    text-decoration: none;
+}
+.ErrorPage .ErrorPage__icon i {
+    color: #ab0000;
 }
 
 /* Steps Navigation Item */

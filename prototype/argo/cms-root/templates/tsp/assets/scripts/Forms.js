@@ -91,6 +91,27 @@ var generateSummarizedListOfAllFormData = function() {
     });
 };
 
+var showThankYouPage = function() {
+    var htmlNode_thankYouPage = document.getElementById("thankYouPage"),
+        htmlNodes_stepBoxSteps = document.getElementsByClassName("StepsBox__step");
+    //
+    Array.prototype.forEach.call(htmlNodes_stepBoxSteps, function(el){
+        el.classList.remove("active");
+    });
+    document.querySelector(".StepsNavigation__item--last").classList.add("validated");
+    htmlNode_thankYouPage.classList.add("active");
+};
+
+var showErrorPage = function() {
+    var htmlNode_errorPage = document.getElementById("errorPage"),
+        htmlNodes_stepBoxSteps = document.getElementsByClassName("StepsBox__step");
+    //
+    Array.prototype.forEach.call(htmlNodes_stepBoxSteps, function(el){
+        el.classList.remove("active");
+    });
+    htmlNode_errorPage.classList.add("active");
+};
+
 Array.prototype.forEach.call(inputs, function(el){
     // Set change event listeners. Don't apply to only those ones with specific attribute, as in a radio-list
     // not all radios neet to have bound elements! So in general: Tale all inputs and look for bound elements.
@@ -151,11 +172,11 @@ var sendForm = function() {
     })
         .done(function (res) {
             console.log(res);
-
+            showThankYouPage();
         })
         .fail(function (err) {
             console.log('Error: ' + err.status);
-            alert("Es ist leider ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.");
+            showErrorPage();
         });
         return true;
     });
