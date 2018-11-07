@@ -94,6 +94,7 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
             this.steps[this.currentStep - 1].validated = true;
             this.currentStep = this.currentStep < this.steps.length ? this.currentStep + 1 : this.currentStep;
             this.updateAllStepsView();
+            generateSummarizedListOfAllFormData();
         }
         else {
             this.removeAllFieldValidationMessages();
