@@ -214,6 +214,24 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
+    public AttachmentDescriptor getAttachmentDescriptor(String entryId, String name, String mimeType) {
+        File directory = new File(getBaseDirectory() + "/" + resolveBasePath(entryId) + "/" + DIR_ATTACHMENTS);
+        if (!directory.exists()) {
+            return null;
+        }
+
+        String fileExtension = MimeTypes.resolveFileExtension(mimeType);
+        String attachmentFile = name + "." + fileExtension;
+
+        AttachmentDescriptor descriptor = new AttachmentDescriptor();
+        descriptor.setMimeType(mimeType);
+        descriptor.setFilename(attachmentFile);
+        descriptor.setName(name);
+
+        return descriptor;
+    }
+
+    @Override
     public void addObjectAttachment(String entryId, String name, Object attachment) {
         write(attachment, entryId, name);
     }
@@ -254,6 +272,22 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         String attachmentFile = name + "." + fileExtension;
 
         File file = new File(directory, attachmentFile);
+        try {
+            return FileUtils.readFileToByteArray(file);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Error reading data to file (" + file.getAbsolutePath() + ")!", ex);
+        }
+    }
+
+    @Override
+    public byte[] getBinaryAttachment(String entryId, AttachmentDescriptor descriptor) {
+        File directory = new File(getBaseDirectory() + "/" + resolveBasePath(entryId) + "/" + DIR_ATTACHMENTS);
+
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IllegalStateException("Unable to create missing attachments directory '" + directory.getAbsolutePath() + "'!");
+        }
+
+        File file = new File(directory, descriptor.getFilename());
         try {
             return FileUtils.readFileToByteArray(file);
         } catch (IOException ex) {

@@ -28,12 +28,14 @@ public interface FormsStoreRepository {
 
     // attachments
     Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId);
+    AttachmentDescriptor getAttachmentDescriptor(String entryId, String name, String mimeType);
 
     void addObjectAttachment(String entryId, String name, Object attachment);
     void addBinaryAttachment(String entryId, String name, String mimeType, byte[] data);
 
     <T> T getObjectAttachment(String entryId, String name, Class<T> target);
     byte[] getBinaryAttachment(String entryId, String name, String mimeType);
+    byte[] getBinaryAttachment(String entryId, AttachmentDescriptor descriptor);
 
     void deleteAttachment(String entryId, String name);
 }

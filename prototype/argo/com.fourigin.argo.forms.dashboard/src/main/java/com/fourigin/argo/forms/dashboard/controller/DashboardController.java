@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -96,11 +99,23 @@ public class DashboardController {
     }
 
     @RequestMapping("/attachment")
-    public byte[] attachment(
+    public void attachment(
         @RequestParam String entryId,
         @RequestParam String attachmentName,
-        @RequestParam String mimeType
-    ){
-        return formsStoreRepository.getBinaryAttachment(entryId, attachmentName, mimeType);
+        @RequestParam String mimeType,
+        HttpServletResponse response
+    ) {
+        AttachmentDescriptor descriptor = formsStoreRepository.getAttachmentDescriptor(entryId, attachmentName, mimeType);
+        byte[] data = formsStoreRepository.getBinaryAttachment(entryId, descriptor);
+
+        response.setContentType(mimeType);
+        response.setContentLengthLong(data.length);
+        response.addHeader("Content-Disposition", "attachment; filename=" + descriptor.getFilename());
+
+        try (OutputStream responseOutputStream = response.getOutputStream()) {
+            responseOutputStream.write(data);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Unable to deliver attachment '" + attachmentName + "'!", ex);
+        }
     }
 }
