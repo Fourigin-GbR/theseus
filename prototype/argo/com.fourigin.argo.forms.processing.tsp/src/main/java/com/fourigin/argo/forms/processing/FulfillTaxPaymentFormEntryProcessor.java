@@ -47,38 +47,6 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
         return FORM_ATTACHMENT_NAME;
     }
 
-    //    @Override
-//    public ProcessingHistoryRecord processEntry(String entryId, FormsRegistry registry) {
-//        VehicleRegistration registration = formsStoreRepository.getAttachment(
-//            entryId,
-//            REGISTRATION_ATTACHMENT_NAME,
-//            VehicleRegistration.class
-//        );
-//        if (logger.isDebugEnabled())
-//            logger.debug("Using registration data to fulfill the vehicle registration form: {}", registration);
-//
-//        Customer customer = customerRepository.retrieveCustomer(registration.getCustomerId());
-//        if (logger.isDebugEnabled()) logger.debug("Found customer: {}", customer);
-//
-//        try (PDDocument pdDocument = PDDocument.load(form)) {
-//            fulfillForm(pdDocument, registration, customer);
-//
-//            // write fulfilled pdf form
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            pdDocument.save(baos);
-//            EncodedPayload payload = new EncodedPayload();
-//            payload.setEncodedDataFromBytes(baos.toByteArray());
-//
-//            formsStoreRepository.addAttachment(entryId, FORM_ATTACHMENT_NAME, payload);
-//        } catch (IOException ex) {
-//            throw new IllegalStateException("Error processing form fulfillment!", ex);
-//        }
-//
-//        ProcessingHistoryRecord record = new ProcessingHistoryRecord();
-//        record.setTimestamp(System.currentTimeMillis());
-//        return record;
-//    }
-
     protected void fulfillForm(PDDocument pdDocument, VehicleRegistration registration, Customer customer) throws IOException {
         PdfDocument doc = new PdfDocument(pdDocument);
 
