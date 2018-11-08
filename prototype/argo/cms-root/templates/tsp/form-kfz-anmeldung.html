@@ -55,8 +55,8 @@
     </nav>
     <div class="TabsWrapper">
         <form action="#" method="get" data-form-definition-id="register-vehicle">
-            <input type="hidden" name="customer.id" value="123"/>
-
+            <input type="hidden" name="customer.id" id="customer.id" value="unspecified"/>
+            
             <div id="thankYouPage" class="ThankYouPage">
                 <h2>Dankeschön!</h2>
                 <div class="ThankYouPage__icon">
@@ -419,6 +419,27 @@
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
 <script type="text/javascript" src="assets/scripts/Forms.js"></script>
 <script type="text/javascript" src="assets/scripts/StepBoxes.js"></script>
+
+<script>
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    var customerId = getUrlParameter('customer.id');
+    document.querySelector("input[name='customer.id']").value = customerId;
+    
+</script>
 
 </body>
 </html>
