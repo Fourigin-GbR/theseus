@@ -1,5 +1,6 @@
 package com.fourigin.argo.forms.mapping;
 
+import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import de.huxhorn.sulky.groovy.GroovyInstance;
 import groovy.lang.Binding;
@@ -10,6 +11,13 @@ import java.util.Objects;
 
 public class GroovyScriptFormObjectMapper implements FormObjectMapper {
     private GroovyInstance groovyInstance;
+
+    private CustomerRepository customerRepository;
+
+    @Override
+    public void setCustomerRepository(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public void initialize(Map<String, Object> settings) {
@@ -29,6 +37,7 @@ public class GroovyScriptFormObjectMapper implements FormObjectMapper {
         Script script = groovyInstance.getInstanceAs(Script.class);
 
         Binding binding = new Binding(entry.getData());
+        binding.setVariable("customerRepository", customerRepository);
         script.setBinding(binding);
 
         Object result = script.run();

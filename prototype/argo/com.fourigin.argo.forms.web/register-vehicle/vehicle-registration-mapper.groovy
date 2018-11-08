@@ -1,9 +1,11 @@
 import com.fourigin.argo.forms.models.Vehicle
 import com.fourigin.argo.forms.models.VehicleRegistration
+import com.fourigin.argo.forms.customer.Customer
 import com.fourigin.argo.forms.customer.payment.BankAccount
 import com.fourigin.argo.forms.customer.payment.Paypal
 import com.fourigin.argo.forms.customer.payment.Prepayment
 import com.fourigin.argo.forms.customer.payment.Sofort
+import com.fourigin.argo.forms.CustomerRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -15,6 +17,10 @@ class VehicleMapper {
 
     VehicleRegistration convert() {
         logger.info('binding: {}', binding.variables)
+
+        def customerId = binding.variables['customer.id']
+        CustomerRepository customerRepository = (CustomerRepository) binding.variables['customerRepository']
+        Customer customer = customerRepository.retrieveCustomer(customerId)
 
         // new nameplate
         def newNameplateOption
@@ -38,7 +44,27 @@ class VehicleMapper {
         boolean leasingOption = Boolean.parseBoolean(leasingOptionValue)
 
         // tax account
-        BankAccount taxBankAccount = new BankAccount() // TODO: fill the bank account object
+        BankAccount taxBankAccount
+        def taxPaymentOptionValue = binding.variables['tax.account']
+        if(taxPaymentOptionValue == 'use-stored-account'){
+            String bankAccountId = binding.variables['tax.account/stored-account']
+
+            taxBankAccount = resolveBankAccount(customer, bankAccountId)
+        }
+        else if(taxPaymentOptionValue == 'use-new-account'){
+            taxBankAccount = new BankAccount()
+            taxBankAccount.iban = binding.variables['tax.account/new-account-code']
+            taxBankAccount.bic = binding.variables['tax.account/new-account-bankcode']
+            taxBankAccount.bankName = binding.variables['tax.account/new-account-bankname']
+            taxBankAccount.accountHolder = binding.variables['tax.account/new-account-owner']
+
+            // add a new bank account
+            customer.addBankAccount(taxBankAccount)
+            customerRepository.updateCustomer(customer)
+        }
+        else {
+            // unsupported account type!
+        }
 
         // payment method
         def paymentMethod
@@ -52,8 +78,25 @@ class VehicleMapper {
         else if(paymentMethodValue == 'sofort'){
             paymentMethod = new Sofort()
         }
+        else if(paymentMethodValue == 'debit-from-existing-account'){
+            String bankAccountId = binding.variables['payment.methods/stored-account']
+
+            paymentMethod = resolveBankAccount(customer, bankAccountId)
+
+        }
+        else if(paymentMethodValue == 'debit-from-new-account'){
+            paymentMethod = new BankAccount()
+            paymentMethod.iban = binding.variables['payment.methods/new-account-code']
+            paymentMethod.bic = binding.variables['payment.methods/new-account-bankcode']
+            paymentMethod.bankName = binding.variables['payment.methods/new-account-bankname']
+            paymentMethod.accountHolder = binding.variables['payment.methods/new-account-owner']
+
+            // add a new bank account
+            customer.addBankAccount(paymentMethod)
+            customerRepository.updateCustomer(customer)
+        }
         else {
-            paymentMethod = new BankAccount()  // TODO: fill the bank account object
+            // unsupported account type!
         }
 
         // handover option
@@ -77,7 +120,7 @@ class VehicleMapper {
         )
 
         return new VehicleRegistration(
-                customerId: binding.variables['customer.id'],
+                customerId: customerId,
                 vehicle: vehicle,
                 bankAccountForTaxPayment: taxBankAccount,
                 servicePaymentMethod: paymentMethod,
@@ -85,6 +128,15 @@ class VehicleMapper {
         )
     }
 
+    BankAccount resolveBankAccount(Customer customer, String bankAccountId){
+        for(BankAccount bankAccount : customer.bankAccounts) {
+            if(bankAccount.name == bankAccountId){
+                return bankAccount
+            }
+        }
+
+        return null
+    }
 }
 
 new VehicleMapper(binding: binding).convert()

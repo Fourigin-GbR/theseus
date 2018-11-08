@@ -57,6 +57,7 @@ public class NettyServer {
 
     @Bean
     public ServerBootstrap serverBootstrap(
+        @Autowired CustomerRepository customerRepository,
         @Autowired FormsStoreRepository formsStoreRepository,
         @Autowired FormDefinitionRepository formDefinitionRepository,
         @Autowired FormsProcessingDispatcher formsProcessingDispatcher,
@@ -68,6 +69,7 @@ public class NettyServer {
             .handler(new LoggingHandler(LogLevel.INFO))
             .childHandler(new HttpServerInitializer(
                 contextPath,
+                customerRepository,
                 formsStoreRepository,
                 formDefinitionRepository,
                 formsProcessingDispatcher,

@@ -14,6 +14,7 @@ import org.springframework.context.MessageSource;
 public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
     private final String contextPath;
+    private CustomerRepository customerRepository;
     private FormsStoreRepository formsStoreRepository;
     private FormDefinitionRepository formDefinitionRepository;
     private FormsProcessingDispatcher formsProcessingDispatcher;
@@ -25,6 +26,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
 
     public HttpServerInitializer(
         String contextPath,
+        CustomerRepository customerRepository,
         FormsStoreRepository formsStoreRepository,
         FormDefinitionRepository formDefinitionRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
@@ -32,6 +34,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         MessageSource messageSource, ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
+        this.customerRepository = customerRepository;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
@@ -50,6 +53,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         pipeline.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
         pipeline.addLast(new HttpServerHandler(
             contextPath,
+            customerRepository,
             formDefinitionRepository,
             formsStoreRepository,
             formsProcessingDispatcher,

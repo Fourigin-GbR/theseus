@@ -50,6 +50,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private MessageSource messageSource;
 
+    private CustomerRepository customerRepository;
+
     private FormsStoreRepository formsStoreRepository;
 
     private FormDefinitionRepository formDefinitionRepository;
@@ -70,6 +72,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     public HttpServerHandler(
         String contextPath,
+        CustomerRepository customerRepository,
         FormDefinitionRepository formDefinitionRepository,
         FormsStoreRepository formsStoreRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
@@ -78,6 +81,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         ObjectMapper objectMapper
     ) {
         this.contextPath = contextPath;
+        this.customerRepository = customerRepository;
         this.formsStoreRepository = formsStoreRepository;
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
@@ -321,6 +325,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
 
         FormObjectMapper formObjectMapper = (FormObjectMapper) mapperObject;
+        formObjectMapper.setCustomerRepository(customerRepository);
 
         Map<String, Object> mapperSettings = mappingDefinition.getSettings();
         // TODO: put the base path for all scripts
