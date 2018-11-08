@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Formulare - Prototypen</title>
+    <link rel="stylesheet" href="assets/styles/dashboard.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+</head>
+<body>
+<h1>Dashboard</h1>
+
+<div class="split users">
+    <div>
+        <h2>Kunden</h2>
+        <table id="users" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th>Kd-Nr.</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="user-controls">
+            <input type="button" id="add-user-button" name="add-user" value="Hinzufügen"/>
+            <input type="button" id="delete-user-button" name="delete-user" value="Entfernen"/>
+        </div>
+        <div id="request-controls">
+            <form action="form-kfz-anmeldung.html" target="_blank">
+                einen neuen Auftrag erstellen:
+                <select name="request-type">
+                    <option selected="selected">... bitte wählen ...</option>
+                    <option name="register-vehicle">KFZ-Anmeldung</option>
+                    <option name="register-vehicle">KFZ-Ummeldung</option>
+                    <option name="register-vehicle">KFZ-Abmeldung</option>
+                </select>
+                <input type="hidden" name="customer.id" id="selectedClient"/>
+                <input type="submit" name="start-request" value="Starten"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="split requests">
+    <div>
+        <h2>Aufträge</h2>
+        <table id="requests" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Typ</th>
+                <th>Kd-Nr.</th>
+                <th>Datum</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="request-details">
+            <ul>
+            </ul>
+        </div>
+        <div id="attachments">
+            <div id="attachment-1001">
+                <h3>Anhänge des Auftrages 1001</h3>
+                <ul>
+                    <li><a href="/forms-dashboard/attachment?entryId=1001&attachmentName=register-vehicle-form&mimeType=application/pdf" target="_blank">register-vehicle-form.pdf</a></li>
+                    <li><a href="/forms-dashboard/attachment?entryId=1001&attachmentName=tax-payment-form&mimeType=application/pdf" target="_blank">tax-payment-form.pdf</a></li>
+                    <li><a href="/forms-dashboard/attachment?entryId=1001&attachmentName=vehicle-registration&mimeType=application/json" target="_blank">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1002">
+                <h3>Anhänge des Auftrages 1002</h3>
+                <ul>
+                    <li><a href="#1002">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1003">
+                <h3>Anhänge des Auftrages 1003</h3>
+                <ul>
+                    <li><a href="#1003">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1004">
+                <h3>Anhänge des Auftrages 1004</h3>
+                <ul>
+                    <li><a href="#1004">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1005">
+                <h3>Anhänge des Auftrages 1005</h3>
+                <ul>
+                    <li><a href="#1005">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1006">
+                <h3>Anhänge des Auftrages 1006</h3>
+                <ul>
+                    <li><a href="#1006">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1007">
+                <h3>Anhänge des Auftrages 1007</h3>
+                <ul>
+                    <li><a href="#1007">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1008">
+                <h3>Anhänge des Auftrages 1008</h3>
+                <ul>
+                    <li><a href="#1008">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1009">
+                <h3>Anhänge des Auftrages 1009</h3>
+                <ul>
+                    <li><a href="#1009">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1010">
+                <h3>Anhänge des Auftrages 1010</h3>
+                <ul>
+                    <li><a href="#1010">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1011">
+                <h3>Anhänge des Auftrages 1011</h3>
+                <ul>
+                    <li><a href="#1011">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1012">
+                <h3>Anhänge des Auftrages 1012</h3>
+                <ul>
+                    <li><a href="#1012">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1013">
+                <h3>Anhänge des Auftrages 1013</h3>
+                <ul>
+                    <li><a href="#1013">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1014">
+                <h3>Anhänge des Auftrages 1014</h3>
+                <ul>
+                    <li><a href="#1014">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+            <div id="attachment-1015">
+                <h3>Anhänge des Auftrages 1015</h3>
+                <ul>
+                    <li><a href="#1015">register-vehicle-form.pdf</a></li>
+                    <li><a href="#">tax-payment-form.pdf</a></li>
+                    <li><a href="#">vehicle-registration.json</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/scripts/dashboard.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        initUsersTable();
+        initRequestsTable();
+    });
+</script>
+
+</body>
+</html>
