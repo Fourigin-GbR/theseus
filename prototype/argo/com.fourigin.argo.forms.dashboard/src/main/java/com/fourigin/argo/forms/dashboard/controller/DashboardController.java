@@ -7,14 +7,19 @@ import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.dashboard.CustomerInfo;
 import com.fourigin.argo.forms.dashboard.FormRequestInfo;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
+import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -23,6 +28,8 @@ public class DashboardController {
     private CustomerRepository customerRepository;
 
     private FormsStoreRepository formsStoreRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     public DashboardController(CustomerRepository customerRepository, FormsStoreRepository formsStoreRepository) {
         this.customerRepository = customerRepository;
@@ -36,10 +43,14 @@ public class DashboardController {
             return Collections.emptyList();
         }
 
+        if (logger.isDebugEnabled()) logger.debug("Existing customer IDs: {}", ids);
+
         List<CustomerInfo> result = new ArrayList<>();
 
         for (String id : ids) {
             Customer customer = customerRepository.retrieveCustomer(id);
+
+            if (logger.isDebugEnabled()) logger.debug("Processing customer for id '{}': {}", id, customer);
 
             CustomerInfo info = new CustomerInfo();
             info.setId(id);
@@ -62,6 +73,10 @@ public class DashboardController {
         List<FormRequestInfo> result = new ArrayList<>();
 
         for (String entryId : entryIds) {
+            FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
+            Map<String, String> entryData = entry.getData();
+            String customerId = entryData.get("customer.id"); // TODO: replace with correct customer/client handling!
+
             FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
             FormsEntryHeader header = entryInfo.getHeader();
 
@@ -71,12 +86,21 @@ public class DashboardController {
             info.setId(entryInfo.getId());
             info.setFormDefinition(header.getFormDefinition());
             info.setBase(header.getBase());
-            info.setCustomer(header.getCustomer());
+            info.setCustomer(customerId);
             info.setCreationTimestamp(entryInfo.getCreationTimestamp());
             info.setAttachments(attachments);
             result.add(info);
         }
 
         return result;
+    }
+
+    @RequestMapping("/attachment")
+    public byte[] attachment(
+        @RequestParam String entryId,
+        @RequestParam String attachmentName,
+        @RequestParam String mimeType
+    ){
+        return formsStoreRepository.getBinaryAttachment(entryId, attachmentName, mimeType);
     }
 }
