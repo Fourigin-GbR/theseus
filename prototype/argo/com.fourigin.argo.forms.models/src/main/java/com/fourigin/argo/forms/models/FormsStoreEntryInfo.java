@@ -11,6 +11,8 @@ public class FormsStoreEntryInfo implements Serializable {
 
     private long revision;
 
+    private long creationTimestamp;
+
     private FormsEntryHeader header;
 
     private Map<String, FormsDataProcessingState> processingStates;
@@ -29,6 +31,14 @@ public class FormsStoreEntryInfo implements Serializable {
 
     public void setRevision(long revision) {
         this.revision = revision;
+    }
+
+    public long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
     }
 
     public FormsEntryHeader getHeader() {
@@ -52,22 +62,24 @@ public class FormsStoreEntryInfo implements Serializable {
         if (this == o) return true;
         if (!(o instanceof FormsStoreEntryInfo)) return false;
         FormsStoreEntryInfo that = (FormsStoreEntryInfo) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(revision, that.revision) &&
+        return revision == that.revision &&
+            creationTimestamp == that.creationTimestamp &&
+            Objects.equals(id, that.id) &&
             Objects.equals(header, that.header) &&
             Objects.equals(processingStates, that.processingStates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, revision, header, processingStates);
+        return Objects.hash(id, revision, creationTimestamp, header, processingStates);
     }
 
     @Override
     public String toString() {
         return "FormsStoreEntryInfo{" +
             "id='" + id + '\'' +
-            ", revision='" + revision + '\'' +
+            ", revision=" + revision +
+            ", creationTimestamp=" + creationTimestamp +
             ", header=" + header +
             ", processingStates=" + processingStates +
             '}';

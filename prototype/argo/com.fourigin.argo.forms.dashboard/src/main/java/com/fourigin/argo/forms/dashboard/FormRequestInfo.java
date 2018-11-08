@@ -13,6 +13,7 @@ public class FormRequestInfo implements Serializable {
     private String formDefinition;
     private String customer;
     private String base;
+    private long creationTimestamp;
     private Set<AttachmentDescriptor> attachments;
 
     public String getId() {
@@ -47,6 +48,14 @@ public class FormRequestInfo implements Serializable {
         this.base = base;
     }
 
+    public long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
     public Set<AttachmentDescriptor> getAttachments() {
         return attachments;
     }
@@ -60,7 +69,8 @@ public class FormRequestInfo implements Serializable {
         if (this == o) return true;
         if (!(o instanceof FormRequestInfo)) return false;
         FormRequestInfo that = (FormRequestInfo) o;
-        return Objects.equals(id, that.id) &&
+        return creationTimestamp == that.creationTimestamp &&
+            Objects.equals(id, that.id) &&
             Objects.equals(formDefinition, that.formDefinition) &&
             Objects.equals(customer, that.customer) &&
             Objects.equals(base, that.base) &&
@@ -69,7 +79,7 @@ public class FormRequestInfo implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, formDefinition, customer, base, attachments);
+        return Objects.hash(id, formDefinition, customer, base, creationTimestamp, attachments);
     }
 
     @Override
@@ -79,6 +89,7 @@ public class FormRequestInfo implements Serializable {
             ", formDefinition='" + formDefinition + '\'' +
             ", customer='" + customer + '\'' +
             ", base='" + base + '\'' +
+            ", creationTimestamp=" + creationTimestamp +
             ", attachments=" + attachments +
             '}';
     }

@@ -142,6 +142,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         info.setId(entryId);
         info.setRevision(1L);
         info.setHeader(header);
+        info.setCreationTimestamp(System.currentTimeMillis());
 
         write(info, entryId);
     }
@@ -242,7 +243,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    public byte[] getBinaryAttachment(String entryId, String mimeType, String name) {
+    public byte[] getBinaryAttachment(String entryId, String name, String mimeType) {
         File directory = new File(getBaseDirectory() + "/" + resolveBasePath(entryId) + "/" + DIR_ATTACHMENTS);
 
         if (!directory.exists() && !directory.mkdirs()) {
@@ -256,7 +257,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         try {
             return FileUtils.readFileToByteArray(file);
         } catch (IOException ex) {
-            throw new IllegalArgumentException("Error writing data to file (" + file.getAbsolutePath() + ")!", ex);
+            throw new IllegalArgumentException("Error reading data to file (" + file.getAbsolutePath() + ")!", ex);
         }
     }
 

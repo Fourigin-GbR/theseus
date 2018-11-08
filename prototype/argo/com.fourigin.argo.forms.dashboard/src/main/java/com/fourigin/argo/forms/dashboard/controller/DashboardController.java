@@ -72,6 +72,7 @@ public class DashboardController {
             info.setFormDefinition(header.getFormDefinition());
             info.setBase(header.getBase());
             info.setCustomer(header.getCustomer());
+            info.setCreationTimestamp(entryInfo.getCreationTimestamp());
             info.setAttachments(attachments);
             result.add(info);
         }
