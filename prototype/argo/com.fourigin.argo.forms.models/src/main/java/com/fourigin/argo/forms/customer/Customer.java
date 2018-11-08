@@ -4,6 +4,7 @@ import com.fourigin.argo.forms.customer.payment.BankAccount;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,6 +24,34 @@ public class Customer implements Serializable {
     private String email;
     private String phone;
     private String fax;
+
+    public void addBankAccount(BankAccount bankAccount){
+        Objects.requireNonNull(bankAccount, "BankAccount must not be null!");
+
+        String currentIban = bankAccount.getIban();
+        Objects.requireNonNull(currentIban, "IBAN of the new bank account must not be null!");
+
+        if(bankAccount.getName() == null){
+            bankAccount.setName(currentIban);
+        }
+        String name = bankAccount.getName();
+
+        if(bankAccounts == null){
+            bankAccounts = new HashSet<>();
+        }
+
+        boolean found = false;
+        for (BankAccount account : bankAccounts) {
+            if(name.equals(account.getName())){
+                // found a duplicate, ignore
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            bankAccounts.add(bankAccount);
+        }
+    }
 
     public String getId() {
         return id;
