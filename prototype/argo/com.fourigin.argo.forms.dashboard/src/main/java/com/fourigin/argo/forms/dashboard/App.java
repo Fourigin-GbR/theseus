@@ -2,6 +2,7 @@ package com.fourigin.argo.forms.dashboard;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.customer.payment.mapping.PaymentModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,6 +36,7 @@ public class App {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        objectMapper.registerModule(new PaymentModule());
         return objectMapper;
     }
 }

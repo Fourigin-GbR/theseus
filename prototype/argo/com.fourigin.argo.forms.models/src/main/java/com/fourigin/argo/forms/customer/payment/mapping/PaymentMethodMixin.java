@@ -1,5 +1,6 @@
 package com.fourigin.argo.forms.customer.payment.mapping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fourigin.argo.forms.customer.payment.BankAccount;
@@ -22,4 +23,6 @@ import com.fourigin.argo.forms.customer.payment.Sofort;
     "PMD.AbstractClassWithoutAbstractMethod"
 })
 public abstract class PaymentMethodMixin {
+    @JsonIgnore
+    abstract String getDisplayName();
 }
