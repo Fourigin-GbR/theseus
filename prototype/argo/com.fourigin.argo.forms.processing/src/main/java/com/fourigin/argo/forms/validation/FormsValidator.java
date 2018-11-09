@@ -222,6 +222,11 @@ public final class FormsValidator {
             case HIDDEN:
                 return false;
             case CHOOSE:
+                if(definition.getExternalValueReference() != null){
+                    // ignore external generated values (e.g. customer's IBAN)
+                    return false;
+                }
+
                 Map<String, Map<String, FieldDefinition>> values = definition.getValues();
                 return (!values.keySet().contains(value));
             case CHECK:
