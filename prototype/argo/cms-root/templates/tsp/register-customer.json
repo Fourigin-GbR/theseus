@@ -5,6 +5,16 @@
     "bank-account-codes": "^DE([0-9a-zA-Z]\\s?){20}$"
   },
   "fields": {
+    "gender": {
+      "type": "CHOOSE",
+      "validation": {
+        "mandatory": true
+      },
+      "values": {
+        "MALE" : null,
+        "FEMALE" : null
+      }
+    },
     "firstname": {
       "type": "ТЕХТ",
       "validation": {
@@ -12,6 +22,18 @@
       }
     },
     "lastname": {
+      "type": "ТЕХТ",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "birthname": {
+      "type": "ТЕХТ"
+    },
+    "birthdate": {
+      "type": "ТЕХТ"
+    },
+    "cityOfBorn": {
       "type": "ТЕХТ",
       "validation": {
         "mandatory": true
@@ -28,6 +50,9 @@
       "validation": {
         "mandatory": true
       }
+    },
+    "additional-info": {
+      "type": "ТЕХТ"
     },
     "zip-code": {
       "type": "ТЕХТ",
