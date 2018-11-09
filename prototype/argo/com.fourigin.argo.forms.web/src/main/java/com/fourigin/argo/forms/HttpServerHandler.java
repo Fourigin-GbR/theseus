@@ -7,8 +7,8 @@ import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
 import com.fourigin.argo.forms.definition.FormObjectDefinition;
 import com.fourigin.argo.forms.definition.FormObjectMapperDefinition;
-import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
 import com.fourigin.argo.forms.initialization.ExternalValueResolver;
+import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
 import com.fourigin.argo.forms.mapping.FormObjectMapper;
 import com.fourigin.argo.forms.model.FormsRequest;
 import com.fourigin.argo.forms.model.InitRequest;
@@ -29,7 +29,6 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
-import io.netty.util.CharsetUtil;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -244,8 +243,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             formsProcessingDispatcher.registerFormEntry(entryId);
 
             // generate response
-            ByteBuf content = Unpooled.copiedBuffer(entryId, CharsetUtil.UTF_8);
-            writeResponseBody(ctx, content, HttpResponseStatus.OK);
+            Map<String, String> result = new HashMap<>();
+            result.put("id", entryId);
+            writeResponseBody(ctx, result, HttpResponseStatus.OK);
         } catch (Throwable th) {
             if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
             serve500(ctx, th);
