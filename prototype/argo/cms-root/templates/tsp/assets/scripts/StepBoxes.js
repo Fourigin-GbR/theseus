@@ -244,7 +244,7 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) 
         var self = this,
             dataJson = {
                 "header": {
-                    "formDefinition": "register-vehicle",
+                    "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
                     "customer": "tsp",
                     "base": "DE",
                     "locale": "en_GB",
