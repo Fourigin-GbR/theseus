@@ -154,7 +154,7 @@ var sendForm = function() {
     var self = this,
         dataJson = {
             "header": {
-                "formDefinition": "register-vehicle",  // TODO: replace with the value of hidden input 'formDefinition'
+                "formDefinition": $("#fccFormular form").attr("data-form-definition-id"), //"register-vehicle",  // TODO: replace with the value of hidden input 'formDefinition'
                 "customer": "tsp",
                 "base": "DE",
                 "locale": "en_GB", // TODO: replace with browser locale
