@@ -76,10 +76,28 @@ function initRequestsTable(){
             table.DataTable({
                 "data": data,
                 "columns": [
-                    {"data": "id"},
+                    {
+                        "data": "id"
+                    },
+                    // {
+                    //     "data": "id",
+                    //     "render": function (data) {
+                    //         return data.substring(0, 10) + "...";
+                    //     }
+                    // },
                     {"data": "formDefinition"},
                     {"data": "customer"},
-                    {"data": "creationTimestamp"}
+                    {
+                        "data": "creationTimestamp",
+                        "render": function (data) {
+                            var date = new Date(data);
+                            var month = date.getMonth() + 1;
+                            var y = date.getFullYear();
+                            var m = month < 10 ? "0" + month : "" + month;
+                            var d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                            return d + "." + m + "." + y + "&nbsp;" + date.getHours() + ":" + date.getMinutes();
+                        }
+                    }
                 ]
             });
 
