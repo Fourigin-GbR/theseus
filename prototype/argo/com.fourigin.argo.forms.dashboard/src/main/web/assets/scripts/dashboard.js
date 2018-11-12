@@ -61,7 +61,7 @@ function initUsersTable() {
         alert('Deleting client ' + rowId);
     });
     addUserButton.click( function () {
-        window.open('create-customer.html', '_blank');
+        window.open('form-benutzer-anlegen.html', '_blank'); // TODO: fix it!
     });
 }
 
@@ -85,7 +85,19 @@ function initRequestsTable(){
                     //         return data.substring(0, 10) + "...";
                     //     }
                     // },
-                    {"data": "formDefinition"},
+                    {
+                        "data": "formDefinition",
+                        "render": function (data) {
+                            if("register-vehicle" === data){
+                                return "Anmeldung (KFZ)";
+                            }
+                            if("register-customer" === data){
+                                return "Anmeldung (Kunde)";
+                            }
+
+                            return data;
+                        }
+                    },
                     {"data": "customer"},
                     {
                         "data": "creationTimestamp",
@@ -99,6 +111,14 @@ function initRequestsTable(){
                         }
                     }
                 ]
+                // ,
+                // "columnDefs": [
+                //     {
+                //         "targets": [ 0 ],
+                //         "visible": false,
+                //         "searchable": false
+                //     }
+                // ]
             });
 
             var requestDetails = $('#request-details');
