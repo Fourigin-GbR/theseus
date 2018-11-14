@@ -6,6 +6,7 @@ import de.huxhorn.sulky.groovy.GroovyInstance;
 import groovy.lang.Binding;
 import groovy.lang.Script;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,6 +28,10 @@ public class GroovyScriptFormObjectMapper implements FormObjectMapper {
         if (scriptPath == null) {
             throw new IllegalStateException("No 'file' settings argument present!");
         }
+        File scriptFile = new File(scriptPath);
+        if(!scriptFile.exists()){
+            throw new IllegalArgumentException("No script file found for '" + scriptFile.getAbsolutePath() + "'!");
+        }
 
         groovyInstance = new GroovyInstance();
         groovyInstance.setGroovyFileName(scriptPath);
@@ -35,6 +40,9 @@ public class GroovyScriptFormObjectMapper implements FormObjectMapper {
     @Override
     public <T> T parseValue(Class<T> targetClass, FormsStoreEntry entry) {
         Script script = groovyInstance.getInstanceAs(Script.class);
+        if(script == null){
+            throw new IllegalArgumentException("No script available from '" + groovyInstance.getGroovyFileName() + "'!");
+        }
 
         Binding binding = new Binding(entry.getData());
         binding.setVariable("customerRepository", customerRepository);
