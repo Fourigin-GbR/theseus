@@ -7,17 +7,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public final class FormsValidator {
 
     public static final String VALIDATION_ERROR_MISSING_FIELD_DEFINITION = "MISSING_FIELD_DEFINITION";
     public static final String VALIDATION_ERROR_MISSING_FIELD_VALIDATOR = "MISSING_FIELD_VALIDATOR";
     public static final String VALIDATION_ERROR_MISMATCHED_FIELD_VALUE = "MISMATCHED_FIELD_VALUE";
+    private static final Set<String> VALID_CHECK_VALUES;
 
     private static final Map<String, FormFieldValidator> FIELD_VALIDATORS;
 
@@ -25,6 +29,15 @@ public final class FormsValidator {
         FIELD_VALIDATORS = new HashMap<>();
         FIELD_VALIDATORS.put("mandatory", new MandatoryFormFieldValidator());
         FIELD_VALIDATORS.put("pattern", new PatternMatchingFormFieldValidator());
+
+        VALID_CHECK_VALUES = new HashSet<>(Arrays.asList(
+            "true",
+            "false",
+            "on",
+            "off",
+            "yes",
+            "no"
+        ));
     }
 
     private FormsValidator() {
@@ -230,7 +243,7 @@ public final class FormsValidator {
                 Map<String, Map<String, FieldDefinition>> values = definition.getValues();
                 return (!values.keySet().contains(value));
             case CHECK:
-                return !"true".equals(value) && !"false".equals(value);
+                return !VALID_CHECK_VALUES.contains(value);
             default:
                 throw new UnsupportedOperationException("Unknown field definition type '" + definition.getType() + "'!");
         }
