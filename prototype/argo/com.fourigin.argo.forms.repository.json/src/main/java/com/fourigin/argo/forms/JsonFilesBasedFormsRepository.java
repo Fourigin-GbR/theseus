@@ -144,12 +144,16 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         info.setHeader(header);
         info.setCreationTimestamp(System.currentTimeMillis());
 
+        if (logger.isDebugEnabled()) logger.debug("Creating entry info {}", info);
+
         write(info, entryId);
     }
 
     @Override
     public void updateEntryInfo(FormsStoreEntryInfo info) {
         Objects.requireNonNull(info, "info must not be null!");
+
+        if (logger.isDebugEnabled()) logger.debug("Updating entry info {}", info);
 
         write(info, info.getId());
     }
@@ -435,6 +439,8 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
             throw new IllegalArgumentException("Unable to create form customer '" + customerId + "', because it's already exists!");
         }
 
+        if (logger.isDebugEnabled()) logger.debug("Creating customer {}", customer);
+
         try {
             getObjectMapper().writeValue(customerFile, customer);
         } catch (IOException ex) {
@@ -450,6 +456,8 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         if (!customerFile.exists()) {
             throw new IllegalArgumentException("Unable to update form customer '" + customerId + "', because it doesn't exist!");
         }
+
+        if (logger.isDebugEnabled()) logger.debug("Updating customer {}", customer);
 
         try {
             getObjectMapper().writeValue(customerFile, customer);

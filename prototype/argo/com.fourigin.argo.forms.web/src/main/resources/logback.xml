@@ -13,20 +13,8 @@
         </RemoteHosts>
     </appender>
 
-    <!--<include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
-
-	<!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
-
-	<!--<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>-->
-	<!--<include resource="org/springframework/boot/logging/logback/file-appender.xml" />-->
-
-	<!--<logger name="org.springframework" level="DEBUG"/>-->
-	<!--<logger name="org.springframework.security" level="DEBUG"/>-->
-
-	<logger name="com.fourigin.argo.controller.compile.CompileController" level="DEBUG"/>
-
-	<!--<logger name="com.fasterxml.jackson.databind" level="DEBUG"/>-->
-	<logger name="com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver" level="DEBUG"/>
+	<logger name="com.fourigin.argo.forms.processing.customer" level="DEBUG" />
+    <logger name="com.fourigin.argo.forms" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="CONSOLE"/>
