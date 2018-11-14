@@ -66,6 +66,13 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
                 history.add(historyRecord);
             }
 
+            // reload updated info entry
+            info = formsStoreRepository.retrieveEntryInfo(entryId);
+
+            // reset states
+            info.setProcessingStates(states);
+
+            // update entry
             formsStoreRepository.updateEntryInfo(info);
         }
     }

@@ -73,19 +73,19 @@
                             </label>
                             <div class="FieldValidationMessage" data-input="firstname" data-element="validation-message"></div>
                         </div>
-                        <div class="Grid_Module--40">
-                            <label>
-                                <span>Nachname</span>
-                                <input type="text" name="lastname"/>
-                            </label>
-                            <div class="FieldValidationMessage" data-input="lastname" data-element="validation-message"></div>
-                        </div>
                         <div class="Grid_Module--30">
                             <label>
                                 <span>ggf. Geburtsname</span>
                                 <input type="text" name="birthname"/>
                             </label>
                             <div class="FieldValidationMessage" data-input="birthname" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--40">
+                            <label>
+                                <span>Nachname</span>
+                                <input type="text" name="lastname"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="lastname" data-element="validation-message"></div>
                         </div>
                     </div>
 
@@ -111,7 +111,7 @@
 
                         <div class="CheckboxList__item">
                             <label class="CheckboxList__item__checkbox">
-                                <input type="radio" name="nationality" value="german"/>
+                                <input checked="checked" type="radio" name="nationality" value="german"/>
                                 <span>deutsch</span>
                             </label>
                             <div class="FieldValidationMessage" data-input="nationality" data-element="validation-message"></div>
@@ -119,7 +119,7 @@
                         <!---->
                         <div class="CheckboxList__item DependencyGroup">
                             <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                <input checked="checked" type="radio" name="nationality" value="other"
+                                <input type="radio" name="nationality" value="other"
                                        data-activate-fieldset-name="other"/>
                                 <span>andere:</span>
                             </label>
@@ -131,7 +131,33 @@
                             </fieldset>
                         </div>
                     </fieldset>
+                </fieldset>
 
+                <fieldset>
+                    <legend>Kontaktdaten</legend>
+
+                    <label>
+                        <span>E-Mail</span>
+                        <input type="text" name="contact.email"/>
+                    </label>
+                    <div class="FieldValidationMessage" data-input="contact.email" data-element="validation-message"></div>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Telefon</span>
+                                <input type="text" name="contact.phone"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="contact.phone" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Fax</span>
+                                <input type="text" name="contact.fax"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="contact.fax" data-element="validation-message"></div>
+                        </div>
+                    </div>
                 </fieldset>
 
                 <fieldset>
@@ -182,7 +208,8 @@
                             <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
                             <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
                         </div>
-                        <button type="button" class="cta" data-action="nextTab">Weiter</button>
+                        <!--<button type="button" class="cta" data-action="nextTab">Weiter</button>-->
+                        <button type="submit">Absenden</button>
                     </footer>
 
                 </fieldset>

@@ -5,6 +5,8 @@ import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
+import com.fourigin.argo.forms.models.FormsEntryHeader;
+import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -38,7 +40,17 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
         if (logger.isDebugEnabled())
             logger.debug("Using registration data to fulfill the vehicle registration form: {}", registration);
 
-        Customer customer = customerRepository.retrieveCustomer(registration.getCustomerId());
+        String customerId = registration.getCustomerId();
+
+        FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
+        FormsEntryHeader header = info.getHeader();
+        String existingCustomerId = header.getCustomer();
+        if(!customerId.equals(existingCustomerId)) {
+            header.setCustomer(customerId);
+            formsStoreRepository.updateEntryInfo(info);
+        }
+
+        Customer customer = customerRepository.retrieveCustomer(customerId);
         if (logger.isDebugEnabled()) logger.debug("Found customer: {}", customer);
 
         try (PDDocument pdDocument = PDDocument.load(form)) {

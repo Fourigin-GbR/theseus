@@ -21,6 +21,7 @@ public class Customer implements Serializable {
     private CustomerAddress mainAddress;
     private Set<CustomerAddress> additionalAddresses;
     private Set<BankAccount> bankAccounts;
+    private String nationality;
     private String email;
     private String phone;
     private String fax;
@@ -133,6 +134,14 @@ public class Customer implements Serializable {
         this.additionalAddresses = additionalAddresses;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -172,6 +181,7 @@ public class Customer implements Serializable {
             Objects.equals(mainAddress, customer.mainAddress) &&
             Objects.equals(additionalAddresses, customer.additionalAddresses) &&
             Objects.equals(bankAccounts, customer.bankAccounts) &&
+            Objects.equals(nationality, customer.nationality) &&
             Objects.equals(email, customer.email) &&
             Objects.equals(phone, customer.phone) &&
             Objects.equals(fax, customer.fax);
@@ -179,7 +189,7 @@ public class Customer implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, bankAccounts, email, phone, fax);
+        return Objects.hash(id, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, bankAccounts, nationality, email, phone, fax);
     }
 
     @Override
@@ -195,6 +205,7 @@ public class Customer implements Serializable {
             ", mainAddress=" + mainAddress +
             ", additionalAddresses=" + additionalAddresses +
             ", bankAccounts=" + bankAccounts +
+            ", nationality='" + nationality + '\'' +
             ", email='" + email + '\'' +
             ", phone='" + phone + '\'' +
             ", fax='" + fax + '\'' +

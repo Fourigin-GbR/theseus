@@ -16,52 +16,52 @@
       }
     },
     "firstname": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
     },
     "lastname": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
     },
     "birthname": {
-      "type": "ТЕХТ"
+      "type": "TEXT"
     },
     "birthdate": {
-      "type": "ТЕХТ"
+      "type": "TEXT"
     },
     "cityOfBorn": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
     },
     "street": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
     },
     "house-number": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
     },
     "additional-info": {
-      "type": "ТЕХТ"
+      "type": "TEXT"
     },
     "zip-code": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
     },
     "city": {
-      "type": "ТЕХТ",
+      "type": "TEXT",
       "validation": {
         "mandatory": true
       }
@@ -75,13 +75,25 @@
         "german": null,
         "other": {
           "country": {
-            "type": "ТЕХТ",
+            "type": "TEXT",
             "validation": {
               "mandatory": true
             }
           }
         }
       }
+    },
+    "contact.email": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "contact.phone": {
+      "type": "TEXT"
+    },
+    "contact.fax": {
+      "type": "TEXT"
     }
   },
   "objectMappings": {

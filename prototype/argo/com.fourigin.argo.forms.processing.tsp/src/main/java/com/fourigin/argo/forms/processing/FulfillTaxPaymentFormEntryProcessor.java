@@ -51,10 +51,11 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
         PdfDocument doc = new PdfDocument(pdDocument);
 
         Vehicle vehicle = registration.getVehicle();
+        BankAccount account = registration.getBankAccountForTaxPayment();
 
         // fist name + last name
         PDTextField nameField = doc.getTextField("Vorname / Nachname Zahler");
-        nameField.setValue(customer.getFirstname() + " " + customer.getLastname());
+        nameField.setValue(account.getAccountHolder());
 
         CustomerAddress address = customer.getMainAddress();
 
@@ -78,8 +79,6 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
         PDTextField countryField = doc.getTextField("Land");
         countryField.setValue(address.getCountry());
 
-        BankAccount account = registration.getBankAccountForTaxPayment();
-
         // iban
         PDTextField ibanField = doc.getTextField("IBAN");
         ibanField.setValue(account.getIban());
@@ -94,7 +93,7 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
 
         // bank account holder
         PDTextField accountHolderField = doc.getTextField("Vorname / Nachname Halter");
-        accountHolderField.setValue(account.getAccountHolder());
+        accountHolderField.setValue(customer.getFirstname() + " " + customer.getLastname());
 
         // nameplate
         PDTextField nameplateField = doc.getTextField("Kennzeichen");

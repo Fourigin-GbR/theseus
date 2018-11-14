@@ -87,7 +87,7 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
 
         // person
         PDTextField titleField = doc.getTextField("Anrede");
-        switch (customer.getGender()){
+        switch (customer.getGender()) {
             case MALE:
                 titleField.setValue("Herr");
                 break;
@@ -113,7 +113,9 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
 
         // birthday
         PDTextField birthdayField = doc.getTextField("Geburtsdatum");
-        birthdayField.setValue(DATE_FORMAT.format(customer.getBirthdate()));
+        if (customer.getBirthdate() != null) {
+            birthdayField.setValue(DATE_FORMAT.format(customer.getBirthdate()));
+        }
 
         // city of born
         PDTextField cityOfBornField = doc.getTextField("Geburtsort");
