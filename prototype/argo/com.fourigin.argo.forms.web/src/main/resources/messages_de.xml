@@ -10,11 +10,11 @@
     <entry key="INCOMPATIBLE_VALIDATOR_VALUE">Konfigurationsfehler: Einen ungültigen Validator-Wert vom Typ {0} gefunden, erwartet wird der Wert vom Typ {1}</entry>
 
     <!-- MandatoryFormFieldValidator -->
-    <entry key="MISSING_MANDATORY_VALUE">Der Wert des Pflichtfeldes {0} fehlt</entry>
+    <entry key="MISSING_MANDATORY_VALUE">Eine Eingabe wird hier erwartet</entry>
 
     <!-- PatternMatchingFormFieldValidator -->
-    <entry key="MISSING_VALUE">Der Wert des Feldes {0} fehlt</entry>
-    <entry key="VALUE_MISMATCH">Der Wert {1} des Feldes {0} entspricht nicht dem Muster {2}</entry>
+    <entry key="MISSING_VALUE">Eine Eingabe wird hier erwartet</entry>
+    <entry key="VALUE_MISMATCH">Ihre Eingabe entspricht nicht den Anforderungen, richtige Beispiele wären: {3}</entry>
     <entry key="UNKNOWN_PATTERN">Konfigurationsfehler: Eine Referenz {0} zu einem ungültigen Muster gefunden, bekannte Musternamen sind: {1}</entry>
 
 </properties>

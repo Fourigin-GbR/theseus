@@ -10,11 +10,11 @@
     <entry key="INCOMPATIBLE_VALIDATOR_VALUE">Misconfiguration: Found an invalid validator value of type {0}, expected type is {1}</entry>
 
     <!-- MandatoryFormFieldValidator -->
-    <entry key="MISSING_MANDATORY_VALUE">Missing mandatory value of the field {0}</entry>
+    <entry key="MISSING_MANDATORY_VALUE">Missing mandatory value</entry>
 
     <!-- PatternMatchingFormFieldValidator -->
-    <entry key="MISSING_VALUE">Missing required value of field {0}</entry>
-    <entry key="VALUE_MISMATCH">Value {1} of field {0} does not match the pattern {2}</entry>
+    <entry key="MISSING_VALUE">Missing required value</entry>
+    <entry key="VALUE_MISMATCH">Your input does not match the pattern, valid examples are: {3}</entry>
     <entry key="UNKNOWN_PATTERN">Misconfiguration: Found a reference to the unknown pattern {0}, known patterns are: {1}</entry>
 
 </properties>
