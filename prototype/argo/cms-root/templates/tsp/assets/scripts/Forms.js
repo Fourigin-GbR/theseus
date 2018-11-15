@@ -123,7 +123,84 @@ Array.prototype.forEach.call(inputs, function(el){
     });
 });
 
-iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
+var getUrlParameterAndUpdateAndInitForm = function() {
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    var customerId = getUrlParameter('customer.id');
+    document.querySelector("input[name='customer.id']").value = customerId;
+
+    initializeFormWithRequestData(customerId);
+};
+
+var setFormFieldValues = function(fieldsDataMap) {
+    console.log("setFormFieldValues");
+    for(var fieldProperty in fieldsDataMap) {
+        if(fieldsDataMap.hasOwnProperty(fieldProperty)) {
+            console.log("setFormFieldValues property:", fieldProperty);
+            var formElement = document.querySelector("[name='" + fieldProperty + "']");
+            console.log("setFormFieldValues tagName:", formElement.tagName);
+            switch (formElement.tagName) {
+                case "SELECT":
+                    setFormFieldSelectValues(formElement, fieldsDataMap[fieldProperty]);
+                    break;
+            }
+        }
+    }
+};
+
+var setFormFieldSelectValues = function(formFieldSelect, values) {
+    console.log("Set select values", formFieldSelect, values);
+    formFieldSelect.innerHTML = "";
+    for(var property in values) {
+        if (values.hasOwnProperty(property)) {
+            var newOption = document.createElement('option');
+            newOption.innerHTML = values[property];
+            newOption.setAttribute("value", property);
+            formFieldSelect.appendChild(newOption);
+        }
+    }
+};
+
+var initializeFormWithRequestData = function(customerId) {
+    if(!customerId) {
+        alert("Internal error. Please change your request and try again!");
+        return;
+    }
+    var self = this,
+        dataJson = {
+            "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+            "customer": customerId
+        };
+
+    $.ajax({
+        url: '/forms/init-form',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify(dataJson)
+    })
+        .done(function (res) {
+            console.log(res);
+            setFormFieldValues(res);
+        })
+        .fail(function (err) {
+            console.log('Error: ' + err.status);
+            alert("Internal error. Please verify your request and try again later, or contact your administrator!");
+        });
+};
 
 var sendForm = function() {
 
@@ -151,38 +228,41 @@ var sendForm = function() {
 
         var data = $(this).serializeFormJSON();
 
-    var self = this,
-        dataJson = {
-            "header": {
-                "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
-                "customer": "tsp",
-                "base": "DE",
-                "locale": "en_GB", // TODO: replace with browser locale
-                "referrer": { // TODO: optional map (schema free), replace with some sane values, for statistics only
-                    "url": "www.tsp.de/registrierung/neu",
-                    "client": "IE6"
-                }
-            },
-            "data": data
-        };
+        var self = this,
+            dataJson = {
+                "header": {
+                    "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+                    "customer": "tsp",
+                    "base": "DE",
+                    "locale": "en_GB", // TODO: replace with browser locale
+                    "referrer": { // TODO: optional map (schema free), replace with some sane values, for statistics only
+                        "url": "www.tsp.de/registrierung/neu",
+                        "client": "IE6"
+                    }
+                },
+                "data": data
+            };
 
-    $.ajax({
-        url: '/forms/register-form',
-        dataType: 'JSON',
-        contentType: 'application/json',
-        method: 'POST',
-        data: JSON.stringify(dataJson)
-    })
-        .done(function (res) {
-            console.log(res);
-            showThankYouPage();
+        $.ajax({
+            url: '/forms/register-form',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            method: 'POST',
+            data: JSON.stringify(dataJson)
         })
-        .fail(function (err) {
-            console.log('Error: ' + err.status);
-            showErrorPage();
-        });
+            .done(function (res) {
+                console.log(res);
+                showThankYouPage();
+            })
+            .fail(function (err) {
+                console.log('Error: ' + err.status);
+                showErrorPage();
+            });
         return true;
     });
 };
+
+iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
+getUrlParameterAndUpdateAndInitForm();
 
 sendForm();
