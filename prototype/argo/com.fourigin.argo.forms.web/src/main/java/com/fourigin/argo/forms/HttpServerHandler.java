@@ -233,7 +233,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                 for (Map.Entry<String, FormObjectDefinition> objectDefinitionEntry : objectMappings.entrySet()) {
                     String objectName = objectDefinitionEntry.getKey();
                     FormObjectDefinition objectDefinition = objectDefinitionEntry.getValue();
-                    Object mappedObject = mapObject(objectDefinition, entry);
+                    Object mappedObject = mapObject(objectDefinition, entry, entryId);
 
                     formsStoreRepository.addObjectAttachment(entryId, objectName, mappedObject);
                 }
@@ -295,7 +295,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
     }
 
-    private Object mapObject(FormObjectDefinition objectDefinition, FormsStoreEntry entry) {
+    private Object mapObject(FormObjectDefinition objectDefinition, FormsStoreEntry entry, String entryId) {
         String targetType = objectDefinition.getType();
         Class<?> targetClass;
         try {
@@ -331,7 +331,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         // TODO: put the base path for all scripts
         formObjectMapper.initialize(mapperSettings);
 
-        return formObjectMapper.parseValue(targetClass, entry);
+        return formObjectMapper.parseValue(targetClass, entry, entryId);
     }
 
     private FormValidationResult internalValidate(FormsRequest formsRequest, boolean preValidation) {

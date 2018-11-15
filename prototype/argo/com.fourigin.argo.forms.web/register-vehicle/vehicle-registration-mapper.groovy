@@ -18,6 +18,7 @@ class VehicleMapper {
     VehicleRegistration convert() {
         logger.info('binding: {}', binding.variables)
 
+        def id = binding.variables['id']
         def customerId = binding.variables['customer.id']
         CustomerRepository customerRepository = (CustomerRepository) binding.variables['customerRepository']
         Customer customer = customerRepository.retrieveCustomer(customerId)
@@ -57,6 +58,9 @@ class VehicleMapper {
             taxBankAccount.bic = binding.variables['tax.account/new-account-bankcode']
             taxBankAccount.bankName = binding.variables['tax.account/new-account-bankname']
             taxBankAccount.accountHolder = binding.variables['tax.account/new-account-owner']
+            if(taxBankAccount.accountHolder == null || taxBankAccount.accountHolder.isEmpty()){
+                taxBankAccount.accountHolder = customer.firstname + ' ' + customer.lastname
+            }
 
             // add a new bank account
             customer.addBankAccount(taxBankAccount)
@@ -64,6 +68,7 @@ class VehicleMapper {
         }
         else {
             // unsupported account type!
+            taxBankAccount = null
         }
 
         // payment method
@@ -90,6 +95,9 @@ class VehicleMapper {
             paymentMethod.bic = binding.variables['payment.methods/new-account-bankcode']
             paymentMethod.bankName = binding.variables['payment.methods/new-account-bankname']
             paymentMethod.accountHolder = binding.variables['payment.methods/new-account-owner']
+            if(paymentMethod.accountHolder == null || paymentMethod.accountHolder.isEmpty()){
+                paymentMethod.accountHolder = customer.firstname + ' ' + customer.lastname
+            }
 
             // add a new bank account
             customer.addBankAccount(paymentMethod)
@@ -97,6 +105,7 @@ class VehicleMapper {
         }
         else {
             // unsupported account type!
+            paymentMethod = null
         }
 
         // handover option
@@ -120,6 +129,7 @@ class VehicleMapper {
         )
 
         return new VehicleRegistration(
+                id: id,
                 customerId: customerId,
                 vehicle: vehicle,
                 bankAccountForTaxPayment: taxBankAccount,
@@ -128,7 +138,7 @@ class VehicleMapper {
         )
     }
 
-    BankAccount resolveBankAccount(Customer customer, String bankAccountId){
+    static BankAccount resolveBankAccount(Customer customer, String bankAccountId){
         for(BankAccount bankAccount : customer.bankAccounts) {
             if(bankAccount.name == bankAccountId){
                 return bankAccount

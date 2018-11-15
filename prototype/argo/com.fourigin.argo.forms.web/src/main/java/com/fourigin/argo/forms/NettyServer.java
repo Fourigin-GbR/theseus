@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.initialization.CustomerExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
 import com.fourigin.argo.forms.customer.payment.mapping.PaymentModule;
+import com.fourigin.argo.forms.processing.FulfillInternalCardFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillTaxPaymentFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillVehicleRegistrationFormEntryProcessor;
 import com.fourigin.argo.forms.processing.customer.CreateCustomerFormsEntryProcessor;
@@ -108,7 +109,8 @@ public class NettyServer {
 
         mapping.put("register-vehicle", Arrays.asList(
             FulfillVehicleRegistrationFormEntryProcessor.NAME,
-            FulfillTaxPaymentFormEntryProcessor.NAME
+            FulfillTaxPaymentFormEntryProcessor.NAME,
+            FulfillInternalCardFormEntryProcessor.NAME
         ));
 
         return mapping;
@@ -119,7 +121,8 @@ public class NettyServer {
         @Autowired FormsStoreRepository formsStoreRepository,
         @Autowired CustomerRepository customerRepository,
         @Value("${forms.vehicle-registration.registration-form}") File registrationForm,
-        @Value("${forms.vehicle-registration.tax-payment-form}") File taxPaymentForm
+        @Value("${forms.vehicle-registration.tax-payment-form}") File taxPaymentForm,
+        @Value("${forms.vehicle-registration.registration-card-form}") File internalForm
     ) {
         if(!registrationForm.exists()) {
             throw new IllegalArgumentException("Original vehicle registration form '" + registrationForm.getAbsolutePath() + "' not found!");
@@ -146,10 +149,17 @@ public class NettyServer {
             taxPaymentForm
         );
 
+        FulfillInternalCardFormEntryProcessor fulfillInternalCardFormEntryProcessor = new FulfillInternalCardFormEntryProcessor(
+            formsStoreRepository,
+            customerRepository,
+            internalForm
+        );
+
         Map<String, FormsEntryProcessor> processors = new HashMap<>();
         processors.put(CreateCustomerFormsEntryProcessor.NAME, createCustomerFormsEntryProcessor);
         processors.put(FulfillVehicleRegistrationFormEntryProcessor.NAME, fulfillFormEntryProcessor);
         processors.put(FulfillTaxPaymentFormEntryProcessor.NAME, fulfillTaxPaymentEntryProcessor);
+        processors.put(FulfillInternalCardFormEntryProcessor.NAME, fulfillInternalCardFormEntryProcessor);
 
         return new DefaultFormsEntryProcessorFactory(processors);
     }

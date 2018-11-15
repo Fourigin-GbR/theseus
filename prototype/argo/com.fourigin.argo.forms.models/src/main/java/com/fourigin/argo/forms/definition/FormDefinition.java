@@ -8,7 +8,7 @@ public class FormDefinition implements Serializable {
     private static final long serialVersionUID = 3684763498863264351L;
 
     private String form;
-    private Map<String, String> validationPatterns;
+    private Map<String, ValidationPattern> validationPatterns;
     private Map<String, FieldDefinition> fields;
     private Map<String, FormObjectDefinition> objectMappings;
 
@@ -20,11 +20,11 @@ public class FormDefinition implements Serializable {
         this.form = form;
     }
 
-    public Map<String, String> getValidationPatterns() {
+    public Map<String, ValidationPattern> getValidationPatterns() {
         return validationPatterns;
     }
 
-    public void setValidationPatterns(Map<String, String> validationPatterns) {
+    public void setValidationPatterns(Map<String, ValidationPattern> validationPatterns) {
         this.validationPatterns = validationPatterns;
     }
 

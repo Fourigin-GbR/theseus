@@ -93,7 +93,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
             throw new IllegalArgumentException("Unable to serialize form data!", ex);
         }
 
-
+        entry.setId(entryId);
         return entryId;
     }
 

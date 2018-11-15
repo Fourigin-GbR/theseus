@@ -97,19 +97,9 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
 
         // nameplate
         PDTextField nameplateField = doc.getTextField("Kennzeichen");
-        switch (vehicle.getNewNameplateOption()) {
-            case NOT_REGISTERED:
-                // TODO: specify the workflow for this! Just leave empty?
-                break;
-            case TO_REGISTER_BY_PORTAL:
-                // TODO: make a reservation!
-                nameplateField.setValue(vehicle.getNewNameplateAdditionalInfo());
-                break;
-            case ALREADY_REGISTERED_BY_CLIENT:
-                nameplateField.setValue(vehicle.getNewNameplateAdditionalInfo());
-                break;
-            default:
-                throw new IllegalStateException("Unsupported nameplate option detected: '" + vehicle.getNewNameplateOption() + "'");
+        String nameplateValue = resolveNameplateToUse(vehicle);
+        if(nameplateValue != null){
+            nameplateField.setValue(nameplateValue);
         }
     }
 }

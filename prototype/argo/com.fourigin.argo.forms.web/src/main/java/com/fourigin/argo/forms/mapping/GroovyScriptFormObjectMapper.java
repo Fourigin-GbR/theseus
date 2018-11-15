@@ -38,13 +38,14 @@ public class GroovyScriptFormObjectMapper implements FormObjectMapper {
     }
 
     @Override
-    public <T> T parseValue(Class<T> targetClass, FormsStoreEntry entry) {
+    public <T> T parseValue(Class<T> targetClass, FormsStoreEntry entry, String entryId) {
         Script script = groovyInstance.getInstanceAs(Script.class);
         if(script == null){
             throw new IllegalArgumentException("No script available from '" + groovyInstance.getGroovyFileName() + "'!");
         }
 
         Binding binding = new Binding(entry.getData());
+        binding.setVariable("id", entryId);
         binding.setVariable("customerRepository", customerRepository);
         script.setBinding(binding);
 

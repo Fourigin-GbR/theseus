@@ -10,5 +10,5 @@ public interface FormObjectMapper {
 
     void initialize(Map<String, Object> settings);
 
-    <T> T parseValue(Class<T> targetClass, FormsStoreEntry entry);
+    <T> T parseValue(Class<T> targetClass, FormsStoreEntry entry, String entryId);
 }

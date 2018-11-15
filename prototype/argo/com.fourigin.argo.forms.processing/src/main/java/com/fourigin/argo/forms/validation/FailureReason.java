@@ -96,7 +96,10 @@ public class FailureReason implements Serializable {
             if (arguments == null) {
                 arguments = new ArrayList<>();
             }
-            arguments.add(value);
+            if(value != null) {
+                arguments.add(value);
+            }
+
             return this;
         }
 

@@ -103,10 +103,7 @@
             }
           },
           "new-account-owner": {
-            "type": "TEXT",
-            "validation": {
-              "mandatory": true
-            }
+            "type": "TEXT"
           }
         }
       }
@@ -141,16 +138,19 @@
             }
           },
           "new-account-bankcode": {
-            "type": "TEXT"
-          },
-          "new-account-bankname": {
-            "type": "TEXT"
-          },
-          "new-account-owner": {
             "type": "TEXT",
             "validation": {
               "mandatory": true
             }
+          },
+          "new-account-bankname": {
+            "type": "TEXT",
+            "validation": {
+              "mandatory": true
+            }
+          },
+          "new-account-owner": {
+            "type": "TEXT"
           }
         }
       }

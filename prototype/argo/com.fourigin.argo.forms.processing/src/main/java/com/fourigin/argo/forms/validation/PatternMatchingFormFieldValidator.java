@@ -1,7 +1,9 @@
 package com.fourigin.argo.forms.validation;
 
 import com.fourigin.argo.forms.definition.FormDefinition;
+import com.fourigin.argo.forms.definition.ValidationPattern;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,7 +41,7 @@ public class PatternMatchingFormFieldValidator implements FormFieldValidator {
         }
 
         String patternName = (String) validatorValue;
-        Map<String, String> patternMapping = formDefinition.getValidationPatterns();
+        Map<String, ValidationPattern> patternMapping = formDefinition.getValidationPatterns();
         if (patternMapping == null || !patternMapping.containsKey(patternName)) {
             return new FailureReason.Builder()
                 .withValidator("PatternMatchingFormFieldValidator")
@@ -49,15 +51,29 @@ public class PatternMatchingFormFieldValidator implements FormFieldValidator {
                 .build();
         }
 
-        String pattern = patternMapping.get(patternName);
+        ValidationPattern pattern = patternMapping.get(patternName);
 
-        if (!fieldValue.matches(pattern)) {
+        if (!fieldValue.matches(pattern.getPattern())) {
+            List<String> validExamples = pattern.getValidExamples();
+            String examples = null;
+            if (validExamples != null && !validExamples.isEmpty()) {
+                StringBuilder builder = new StringBuilder();
+                for (String validExample : validExamples) {
+                    if (builder.length() > 0) {
+                        builder.append(", ");
+                    }
+                    builder.append(validExample);
+                }
+                examples = builder.toString();
+            }
+
             return new FailureReason.Builder()
                 .withValidator("PatternMatchingFormFieldValidator")
                 .withCode(VALIDATION_ERROR_VALUE_MISMATCH)
                 .withArgument(fieldName)
                 .withArgument(fieldValue)
-                .withArgument(pattern)
+                .withArgument(patternName)
+                .withArgument(examples)
                 .build();
         }
 

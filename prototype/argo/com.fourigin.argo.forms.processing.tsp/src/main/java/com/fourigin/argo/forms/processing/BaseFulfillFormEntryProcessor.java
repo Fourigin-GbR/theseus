@@ -8,6 +8,7 @@ import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
+import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.slf4j.Logger;
@@ -75,5 +76,20 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
         ProcessingHistoryRecord record = new ProcessingHistoryRecord();
         record.setTimestamp(System.currentTimeMillis());
         return record;
+    }
+
+    protected String resolveNameplateToUse(Vehicle vehicle){
+        switch (vehicle.getNewNameplateOption()) {
+            case NOT_REGISTERED:
+                // TODO: specify the workflow for this! Just leave empty?
+                return null;
+            case TO_REGISTER_BY_PORTAL:
+                // TODO: make a reservation!
+                return null;
+            case ALREADY_REGISTERED_BY_CLIENT:
+                return vehicle.getNewNameplateAdditionalInfo();
+            default:
+                throw new IllegalStateException("Unsupported nameplate option detected: '" + vehicle.getNewNameplateOption() + "'");
+        }
     }
 }
