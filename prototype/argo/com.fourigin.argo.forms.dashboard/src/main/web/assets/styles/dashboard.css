@@ -2,6 +2,16 @@
 body {
     font-family: sans-serif;
 }
+h2 {
+    margin: 0 0 30px 0;
+    display: block;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #4a4a4a;
+    padding: 15px 20px 5px 5px;
+    width: 100%;
+    border-bottom: 2px solid #00b393;
+}
 h3 {
     margin-left: 20px;
 }
@@ -21,7 +31,7 @@ h3 {
     /*width: 30%;*/
     left: 0;
     color: white;
-    background-color: lightgray;
+    /*background-color: lightgray;*/
 }
 
 /* Control the right side */
@@ -29,7 +39,7 @@ h3 {
     /*width: 67%;*/
     right: 0;
     color: white;
-    background-color: lightgray;
+    /*background-color: lightgray;*/
 }
 
 /* If you want the content centered horizontally and vertically */
@@ -74,4 +84,11 @@ table.display {
     position: fixed;
     z-index: 1;
     top: 55px;
+}
+
+table.dataTable tbody tr.selected,
+table.dataTable.display tbody tr.odd.selected > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_1,
+table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
+    background-color: #00b393 !important;
+    color: #fff !important;
 }
