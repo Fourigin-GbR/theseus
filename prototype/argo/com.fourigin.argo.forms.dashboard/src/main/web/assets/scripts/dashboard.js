@@ -122,7 +122,7 @@ function initUsersTable() {
             var requestControls = $('#request-controls');
             var deleteUserButton = $('#delete-user-button');
 
-            table.find('tbody').on('click', 'tr', function () {
+            table.find('tbody').off().on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                     requestControls.hide();
@@ -147,13 +147,13 @@ function initUsersTable() {
     requestControls.hide();
     deleteUserButton.prop('disabled', true);
 
-    deleteUserButton.click( function () {
+    deleteUserButton.off().click( function () {
 //        var rowId = table.$('tr.selected').find('td:eq(0)').text(); // TODO: resolve id!
         var rowId = usersDataTable.row($('tr.selected')).id();
         alert('Deleting client ' + rowId);
     });
 
-    addUserButton.click( function () {
+    addUserButton.off().click( function () {
         window.open('form-benutzer-anlegen.html', '_blank'); // TODO: fix it!
     });
 }
@@ -171,7 +171,7 @@ function initRequestsTable(){
 
             var requestDetails = $('#request-details');
 
-            table.find('tbody').on('click', 'tr', function () {
+            table.find('tbody').off().on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                     requestDetails.hide();
