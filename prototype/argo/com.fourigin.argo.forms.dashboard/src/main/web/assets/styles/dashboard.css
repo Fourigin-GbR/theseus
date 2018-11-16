@@ -70,3 +70,8 @@ table.display {
     list-style: none;
     padding: 5px;
 }
+#languageControls {
+    position: fixed;
+    z-index: 1;
+    top: 55px;
+}

@@ -10,7 +10,9 @@
 </head>
 <body>
 <h1>Dashboard</h1>
-
+<div id="languageControls">
+    <input type="button" id="language-en" value="en"/>&nbsp;<input type="button" id="language-de" value="de"/>
+</div>
 <div class="split users">
     <div>
         <h2>Kunden</h2>
@@ -50,7 +52,6 @@
         <table id="requests" class="display" style="width:100%">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Typ</th>
                 <th>Kd-Nr.</th>
                 <th>Datum</th>
@@ -62,6 +63,7 @@
             </ul>
         </div>
         <div id="attachments">
+<!--
             <div id="attachment-1001">
                 <h3>Anhänge des Auftrages 1001</h3>
                 <ul>
@@ -182,6 +184,7 @@
                     <li><a href="#">vehicle-registration.json</a></li>
                 </ul>
             </div>
+-->
         </div>
     </div>
 </div>
@@ -193,7 +196,24 @@
     $(document).ready(function () {
         initUsersTable();
         initRequestsTable();
+
+        var languageDE = $('#language-de');
+        var languageEN = $('#language-en');
+
+        languageDE.click(function (){
+            selectLanguage('de');
+            languageDE.prop('disabled', true);
+            languageEN.prop('disabled', false);
+        });
+        languageEN.click(function (){
+            selectLanguage('en');
+            languageEN.prop('disabled', true);
+            languageDE.prop('disabled', false);
+        });
+
+        languageDE.prop('disabled', true);
     });
+
 </script>
 
 </body>

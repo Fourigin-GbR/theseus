@@ -1,3 +1,7 @@
+var usersDataTable;
+var requestsDataTable;
+var translationBundle = resolveLanguageBundle('de');
+
 function loadCustomers(){
     return $.ajax({
         url: "/forms-dashboard/customers"
@@ -10,23 +14,110 @@ function loadRequests(){
     });
 }
 
-function initUsersTable() {
+function resolveLanguageBundle(language){
+    if(language === 'en'){
+        translationBundle = "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
+    }
+    else if(language === 'de'){
+        translationBundle = "//cdn.datatables.net/plug-ins/1.10.19/i18n/German.json";
+    }
+    else {
+        // unsupported language, use default (en)
+        translationBundle = "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
+    }
+}
 
+function selectLanguage(lang) {
+    resolveLanguageBundle(lang);
+
+    usersDataTable.destroy();
+    initUsersTable();
+
+    requestsDataTable.destroy();
+    initRequestsTable();
+}
+
+function internalInitUsersTable(data){
+    var table = $('#users');
+
+    usersDataTable = table.DataTable({
+        "data": data,
+        "rowId": function (data) {
+            return data.id;
+        },
+        "columns": [
+            {"data": "id"},
+            {"data": "firstName"},
+            {"data": "lastName"},
+            {"data": "email"}
+        ],
+        "language": {
+            "url": translationBundle
+        }
+    });
+}
+
+function internalInitRequestsTable(data) {
+    var table = $('#requests');
+
+    requestsDataTable = table.DataTable({
+        "data": data,
+        "rowId": function (data) {
+            return data.id;
+        },
+        "columns": [
+            {
+                "data": "formDefinition",
+                "render": function (data) {
+                    if("register-vehicle" === data){
+                        return "KFZ-Anmeldung";
+                    }
+                    if("register-customer" === data){
+                        return "Registrierung";
+                    }
+
+                    return data;
+                }
+            },
+            {"data": "customer"},
+            {
+                "data": "creationTimestamp",
+                "render": function (data) {
+                    var date = new Date(data);
+                    var month = date.getMonth() + 1;
+                    var y = date.getFullYear();
+                    var m = month < 10 ? "0" + month : "" + month;
+                    var day = date.getDate();
+                    var d = day < 10 ? "0" + day : day;
+                    var hh = date.getHours();
+                    var minutes = date.getMinutes();
+                    var mm = minutes < 10 ? "0" + minutes : minutes;
+                    return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+                }
+            }
+        ],
+        "language": {
+            "url": translationBundle
+        }
+        // ,
+        // "columnDefs": [
+        //     {
+        //         "targets": [ 0 ],
+        //         "visible": false,
+        //         "searchable": false
+        //     }
+        // ]
+    });
+}
+
+function initUsersTable() {
     $.when(loadCustomers()).done(
         function(data){
             console.log(data);
 
             var table = $('#users');
 
-            table.DataTable({
-                "data": data,
-                "columns": [
-                    {"data": "id"},
-                    {"data": "firstName"},
-                    {"data": "lastName"},
-                    {"data": "email"}
-                ]
-            });
+            internalInitUsersTable(data);
 
             var requestControls = $('#request-controls');
             var deleteUserButton = $('#delete-user-button');
@@ -40,7 +131,7 @@ function initUsersTable() {
                 else {
                     table.find('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
-                    var rowId = $(this).find('td:eq(0)').text();
+                    var rowId = usersDataTable.row(this).id();
                     requestControls.show();
                     deleteUserButton.prop('disabled', false);
                     $('#selectedClient').val(rowId);
@@ -57,15 +148,18 @@ function initUsersTable() {
     deleteUserButton.prop('disabled', true);
 
     deleteUserButton.click( function () {
-        var rowId = table.$('tr.selected').find('td:eq(0)').text();
+//        var rowId = table.$('tr.selected').find('td:eq(0)').text(); // TODO: resolve id!
+        var rowId = usersDataTable.row($('tr.selected')).id();
         alert('Deleting client ' + rowId);
     });
+
     addUserButton.click( function () {
         window.open('form-benutzer-anlegen.html', '_blank'); // TODO: fix it!
     });
 }
 
 function initRequestsTable(){
+    var dataTable = null;
 
     $.when(loadRequests()).done(
         function(data) {
@@ -73,53 +167,7 @@ function initRequestsTable(){
 
             var table = $('#requests');
 
-            table.DataTable({
-                "data": data,
-                "columns": [
-                    {
-                        "data": "id"
-                    },
-                    // {
-                    //     "data": "id",
-                    //     "render": function (data) {
-                    //         return data.substring(0, 10) + "...";
-                    //     }
-                    // },
-                    {
-                        "data": "formDefinition",
-                        "render": function (data) {
-                            if("register-vehicle" === data){
-                                return "Anmeldung (KFZ)";
-                            }
-                            if("register-customer" === data){
-                                return "Anmeldung (Kunde)";
-                            }
-
-                            return data;
-                        }
-                    },
-                    {"data": "customer"},
-                    {
-                        "data": "creationTimestamp",
-                        "render": function (data) {
-                            var date = new Date(data);
-                            var month = date.getMonth() + 1;
-                            var y = date.getFullYear();
-                            var m = month < 10 ? "0" + month : "" + month;
-                            var d = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                            return d + "." + m + "." + y + "&nbsp;" + date.getHours() + ":" + date.getMinutes();
-                        }
-                    }
-                ]
-                // ,
-                // "columnDefs": [
-                //     {
-                //         "targets": [ 0 ],
-                //         "visible": false,
-                //         "searchable": false
-                //     }
-                // ]
-            });
+            internalInitRequestsTable(data)
 
             var requestDetails = $('#request-details');
 
@@ -131,7 +179,7 @@ function initRequestsTable(){
                 else {
                     table.find('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
-                    var rowId = $(this).find('td:eq(0)').text();
+                    var rowId = requestsDataTable.row(this).id();
                     var content = $('#attachment-' + rowId).clone();
                     requestDetails.html(content);
                     requestDetails.show();
@@ -183,6 +231,8 @@ function initRequestsTable(){
     
     requestDetails.hide();
     $('#attachments').hide();
+
+    return dataTable;
 }
 
 function resolveFAType(mimeType){
