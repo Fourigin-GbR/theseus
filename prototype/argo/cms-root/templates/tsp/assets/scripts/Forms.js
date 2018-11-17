@@ -139,10 +139,11 @@ var getUrlParameterAndUpdateAndInitForm = function() {
         }
     };
 
-    var customerId = getUrlParameter('customer.id');
-    document.querySelector("input[name='customer.id']").value = customerId;
-
-    initializeFormWithRequestData(customerId);
+    var customerId = getUrlParameter('customer.id') || null;
+    if(customerId) {
+        document.querySelector("input[name='customer.id']").value = customerId;
+        initializeFormWithRequestData(customerId);
+    }
 };
 
 var setFormFieldValues = function(fieldsDataMap) {
@@ -202,11 +203,122 @@ var initializeFormWithRequestData = function(customerId) {
         });
 };
 
-var sendForm = function() {
 
+var validateForm = function() {
+    var htmlNodes_formFields = formular.querySelectorAll("input[type='text'], input[type='hidden'], input[type='checkbox']:checked, input[type='radio']:checked, textarea");
+console.log("DAs ist alles was ich zum Validieren habe: ", htmlNodes_formFields);
+    var htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets = Array.prototype.filter.call(htmlNodes_formFields, function(element) {
+        /**
+         * Filter out all form-fields, who do not have somewhere on their ancestors a fieldset which is 'disabled'.
+         */
+        return !element.closest("fieldset[disabled='disabled']");
+    });
+    sendFormDataToValidate(htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets);
+};
+
+var sendFormDataToValidate = function(formData) {
+    console.log(">>>> validate form", formData);
+
+    var formToJSON = function (form) {
+        var data = {};
+        for (var i = 0; i < form.length; i++) {
+            var item = form[i];
+            data[item.name] = item.value;
+        }
+        return data;
+    };
+
+    var self = this,
+        dataJson = {
+            "header": {
+                "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+                "customer": "tsp",
+                "base": "DE",
+                "locale": "en_GB",
+                "referrer": {
+                    "url": "www.tsp.de/registrierung/neu",
+                    "client": "IE6"
+                }
+            },
+            "data": formToJSON(formData)
+        };
+    console.log("Validate me: ", formData);
+
+    resetFormValidations();
+
+    $.ajax({
+        url: '/forms/validate',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify(dataJson)
+    })
+        .done(function (res) {
+            console.log(res);
+            sendForm();
+        })
+        .fail(function (err) {
+            console.error('Error: ' + err.status);
+            alert("Bitte überprüfen Sie Ihre Angaben und korrigieren Sie die angegebenen Felder!");
+            getAllInvalidFieldsAndMarkThem(err);
+        });
+};
+
+var resetFormValidations = function() {
+    var htmlNode_invalidFormFields = formular.querySelectorAll(".invalid");
+    Array.prototype.forEach.call(htmlNode_invalidFormFields, function (el) {
+        el.classList.remove("invalid");
+    });
+};
+
+var getAllInvalidFieldsAndMarkThem = function (message) {
+    var fields = message.responseJSON.fields,
+        htmlNode_currentStep = this.steps[(this.currentStep - 1)].htmlNode_content;
+    //
+    for (var fieldKey in fields) {
+        if (fields.hasOwnProperty(fieldKey)) {
+            var htmlNode_field = htmlNode_currentStep.querySelectorAll("[name=\"" + fieldKey + "\"]")[0];
+            if (!htmlNode_field) {
+                console.warn("Can not find htmlNode to mark invalid element.");
+                return false;
+            }
+            if (fields[fieldKey].valid) {
+                htmlNode_field.classList.remove("invalid");
+            }
+            else {
+                htmlNode_field.classList.add("invalid");
+            }
+
+            // Write message to field:
+            var messageField = htmlNode_currentStep.querySelector("[data-input='" + fieldKey + "']");
+            if(messageField && !fields[fieldKey].valid) {
+                var messagesString = "";
+                // TODO:Alle Fehlermeldungen als <p> ausgeben!
+                console.info("### ", fieldKey, fields[fieldKey]);
+                for(var i=0, il= fields[fieldKey]['failureReasons'].length; i<il; i++) {
+                    messagesString = messagesString + "<p>" + fields[fieldKey]['failureReasons'][i].formattedMessage + "</p>";
+                }
+                messageField.innerHTML = messagesString;
+                messageField.classList.add("active");
+            }
+        }
+    }
+};
+
+
+
+
+
+
+var sendFormEvent = function() {
     $("#fccFormular form").on("submit", function(e) {
         e.preventDefault();
+        validateForm();
+    });
+};
 
+var sendForm = function() {
+    var jForm = $("#fccFormular form");
         (function ($) {
             $.fn.serializeFormJSON = function () {
 
@@ -226,7 +338,7 @@ var sendForm = function() {
             };
         })(jQuery);
 
-        var data = $(this).serializeFormJSON();
+        var data = jForm.serializeFormJSON();
 
         var self = this,
             dataJson = {
@@ -258,11 +370,9 @@ var sendForm = function() {
                 console.log('Error: ' + err.status);
                 showErrorPage();
             });
-        return true;
-    });
 };
+
+sendFormEvent();
 
 iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
 getUrlParameterAndUpdateAndInitForm();
-
-sendForm();
