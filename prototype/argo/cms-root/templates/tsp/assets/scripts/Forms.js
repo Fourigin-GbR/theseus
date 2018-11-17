@@ -101,7 +101,7 @@ var showThankYouPage = function() {
     Array.prototype.forEach.call(htmlNodes_stepBoxSteps, function(el){
         el.classList.remove("active");
     });
-    document.querySelector(".StepsNavigation__item--last").classList.add("validated");
+    // document.querySelector(".StepsNavigation__item--last").classList.add("validated");
     htmlNode_thankYouPage.classList.add("active");
 };
 
@@ -259,7 +259,6 @@ var sendFormDataToValidate = function(formData) {
         })
         .fail(function (err) {
             console.error('Error: ' + err.status);
-            alert("Bitte überprüfen Sie Ihre Angaben und korrigieren Sie die angegebenen Felder!");
             getAllInvalidFieldsAndMarkThem(err);
         });
 };
@@ -269,15 +268,19 @@ var resetFormValidations = function() {
     Array.prototype.forEach.call(htmlNode_invalidFormFields, function (el) {
         el.classList.remove("invalid");
     });
+
+    var htmlNode_messages = formular.querySelectorAll("[data-element='validation-message']");
+    Array.prototype.forEach.call(htmlNode_messages, function (el) {
+        el.classList.remove("active");
+    });
 };
 
 var getAllInvalidFieldsAndMarkThem = function (message) {
-    var fields = message.responseJSON.fields,
-        htmlNode_currentStep = this.steps[(this.currentStep - 1)].htmlNode_content;
+    var fields = message.responseJSON.fields;
     //
     for (var fieldKey in fields) {
         if (fields.hasOwnProperty(fieldKey)) {
-            var htmlNode_field = htmlNode_currentStep.querySelectorAll("[name=\"" + fieldKey + "\"]")[0];
+            var htmlNode_field = formular.querySelectorAll("[name=\"" + fieldKey + "\"]")[0];
             if (!htmlNode_field) {
                 console.warn("Can not find htmlNode to mark invalid element.");
                 return false;
@@ -290,7 +293,7 @@ var getAllInvalidFieldsAndMarkThem = function (message) {
             }
 
             // Write message to field:
-            var messageField = htmlNode_currentStep.querySelector("[data-input='" + fieldKey + "']");
+            var messageField = formular.querySelector("[data-input='" + fieldKey + "']");
             if(messageField && !fields[fieldKey].valid) {
                 var messagesString = "";
                 // TODO:Alle Fehlermeldungen als <p> ausgeben!
