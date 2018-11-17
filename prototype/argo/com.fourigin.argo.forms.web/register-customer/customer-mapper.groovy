@@ -20,8 +20,11 @@ class CustomerMapper {
         def genderOption = binding.variables['gender']
 
         // birthdate
-        def birthdateValue = binding.variables['birthdate']
-        def birthdate = dateFormat.parse(birthdateValue)
+        String birthdateValue = binding.variables['birthdate']
+        def birthdate = null
+        if(birthdateValue != null && !birthdateValue.empty){
+            birthdate = dateFormat.parse(birthdateValue)
+        }
 
         // address
         CustomerAddress mainAddress = new CustomerAddress(
