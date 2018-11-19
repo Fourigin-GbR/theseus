@@ -36,8 +36,6 @@
                 <select name="request-type">
                     <option selected="selected">... bitte wählen ...</option>
                     <option name="register-vehicle">KFZ-Anmeldung</option>
-                    <option name="register-vehicle">KFZ-Ummeldung</option>
-                    <option name="register-vehicle">KFZ-Abmeldung</option>
                 </select>
                 <input type="hidden" name="customer.id" id="selectedClient"/>
                 <input type="submit" name="start-request" value="Starten"/>
@@ -63,128 +61,6 @@
             </ul>
         </div>
         <div id="attachments">
-<!--
-            <div id="attachment-1001">
-                <h3>Anhänge des Auftrages 1001</h3>
-                <ul>
-                    <li data-mime="application/pdf"><span class="fa fa-file-pdf-o fa-lg">&nbsp;</span><a href="/forms-dashboard/attachment?entryId=53a3e2ae0d96c4c29d5f1129a9f030fc881ab36c&attachmentName=register-vehicle-form&mimeType=application/pdf" target="_blank">register-vehicle-form.pdf</a></li>
-                    <li data-mime="application/pdf"><span class="fa fa-file-pdf-o fa-lg">&nbsp;</span><a href="/forms-dashboard/attachment?entryId=53a3e2ae0d96c4c29d5f1129a9f030fc881ab36c&attachmentName=tax-payment-form&mimeType=application/pdf" target="_blank">tax-payment-form.pdf</a></li>
-                    <li data-mime="application/json"><span class="fa fa-file-text-o fa-lg">&nbsp;</span><a href="/forms-dashboard/attachment?entryId=53a3e2ae0d96c4c29d5f1129a9f030fc881ab36c&attachmentName=vehicle-registration&mimeType=application/json" target="_blank">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1002">
-                <h3>Anhänge des Auftrages 1002</h3>
-                <ul>
-                    <li><a href="#1002">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1003">
-                <h3>Anhänge des Auftrages 1003</h3>
-                <ul>
-                    <li><a href="#1003">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1004">
-                <h3>Anhänge des Auftrages 1004</h3>
-                <ul>
-                    <li><a href="#1004">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1005">
-                <h3>Anhänge des Auftrages 1005</h3>
-                <ul>
-                    <li><a href="#1005">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1006">
-                <h3>Anhänge des Auftrages 1006</h3>
-                <ul>
-                    <li><a href="#1006">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1007">
-                <h3>Anhänge des Auftrages 1007</h3>
-                <ul>
-                    <li><a href="#1007">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1008">
-                <h3>Anhänge des Auftrages 1008</h3>
-                <ul>
-                    <li><a href="#1008">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1009">
-                <h3>Anhänge des Auftrages 1009</h3>
-                <ul>
-                    <li><a href="#1009">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1010">
-                <h3>Anhänge des Auftrages 1010</h3>
-                <ul>
-                    <li><a href="#1010">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1011">
-                <h3>Anhänge des Auftrages 1011</h3>
-                <ul>
-                    <li><a href="#1011">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1012">
-                <h3>Anhänge des Auftrages 1012</h3>
-                <ul>
-                    <li><a href="#1012">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1013">
-                <h3>Anhänge des Auftrages 1013</h3>
-                <ul>
-                    <li><a href="#1013">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1014">
-                <h3>Anhänge des Auftrages 1014</h3>
-                <ul>
-                    <li><a href="#1014">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
-            <div id="attachment-1015">
-                <h3>Anhänge des Auftrages 1015</h3>
-                <ul>
-                    <li><a href="#1015">register-vehicle-form.pdf</a></li>
-                    <li><a href="#">tax-payment-form.pdf</a></li>
-                    <li><a href="#">vehicle-registration.json</a></li>
-                </ul>
-            </div>
--->
         </div>
     </div>
 </div>
@@ -194,26 +70,8 @@
 <script type="text/javascript" src="assets/scripts/dashboard.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        initUsersTable();
-        initRequestsTable();
-
-        var languageDE = $('#language-de');
-        var languageEN = $('#language-en');
-
-        languageDE.click(function (){
-            selectLanguage('de');
-            languageDE.prop('disabled', true);
-            languageEN.prop('disabled', false);
-        });
-        languageEN.click(function (){
-            selectLanguage('en');
-            languageEN.prop('disabled', true);
-            languageDE.prop('disabled', false);
-        });
-
-        languageDE.prop('disabled', true);
+        init();
     });
-
 </script>
 
 </body>

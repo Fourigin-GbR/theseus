@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -116,5 +117,19 @@ public class DashboardController {
         } catch (IOException ex) {
             throw new IllegalStateException("Unable to deliver attachment '" + attachmentName + "'!", ex);
         }
+    }
+
+    @RequestMapping("/delete-customer")
+    public void deleteCustomer(
+        @RequestParam String customerId
+    ) {
+        Objects.requireNonNull(customerId, "customerId must not bei null!");
+
+        List<String> allCustomers = customerRepository.listCustomerIds();
+        if(!allCustomers.contains(customerId)){
+            throw new IllegalArgumentException("No customer found for id '" + customerId + "'!");
+        }
+
+        customerRepository.deleteCustomer(customerId);
     }
 }

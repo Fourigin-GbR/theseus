@@ -19,7 +19,7 @@ h3 {
     width: 46%;
     position: fixed;
     z-index: 1;
-    top: 70px;
+    top: 50px;
     bottom: 0;
     overflow-x: hidden;
     margin: 10px;
@@ -28,18 +28,14 @@ h3 {
 
 /* Control the left side */
 .users {
-    /*width: 30%;*/
     left: 0;
     color: white;
-    /*background-color: lightgray;*/
 }
 
 /* Control the right side */
 .requests {
-    /*width: 67%;*/
     right: 0;
     color: white;
-    /*background-color: lightgray;*/
 }
 
 /* If you want the content centered horizontally and vertically */
@@ -80,7 +76,9 @@ table.display {
     list-style: none;
     padding: 5px;
 }
+
 #languageControls {
+    display: none;
     position: fixed;
     z-index: 1;
     top: 55px;

@@ -2,6 +2,29 @@ var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
 
+function init(){
+    translationBundle = resolveLanguageBundle('de');
+
+    initUsersTable();
+    initRequestsTable();
+
+    var languageDE = $('#language-de');
+    var languageEN = $('#language-en');
+
+    languageDE.click(function (){
+        selectLanguage('de');
+        languageDE.prop('disabled', true);
+        languageEN.prop('disabled', false);
+    });
+    languageEN.click(function (){
+        selectLanguage('en');
+        languageEN.prop('disabled', true);
+        languageDE.prop('disabled', false);
+    });
+
+    languageDE.prop('disabled', true);
+}
+
 function loadCustomers(){
     return $.ajax({
         url: "/forms-dashboard/customers"
@@ -14,21 +37,27 @@ function loadRequests(){
     });
 }
 
+function deleteUser(userId){
+    $.ajax({
+        url: "forms-dashboard/delete-customer?customerId=" + userId
+    });
+}
+
 function resolveLanguageBundle(language){
     if(language === 'en'){
-        translationBundle = "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
+        return "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
     }
-    else if(language === 'de'){
-        translationBundle = "//cdn.datatables.net/plug-ins/1.10.19/i18n/German.json";
+
+    if(language === 'de'){
+        return "//cdn.datatables.net/plug-ins/1.10.19/i18n/German.json";
     }
-    else {
-        // unsupported language, use default (en)
-        translationBundle = "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
-    }
+
+    // unsupported language, use default (en)
+    return "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
 }
 
 function selectLanguage(lang) {
-    resolveLanguageBundle(lang);
+    translationBundle = resolveLanguageBundle(lang);
 
     usersDataTable.destroy();
     initUsersTable();
@@ -148,9 +177,15 @@ function initUsersTable() {
     deleteUserButton.prop('disabled', true);
 
     deleteUserButton.off().click( function () {
-//        var rowId = table.$('tr.selected').find('td:eq(0)').text(); // TODO: resolve id!
         var rowId = usersDataTable.row($('tr.selected')).id();
-        alert('Deleting client ' + rowId);
+        if(confirm("Sind Sie sicher, dass der Kunde " + rowId + " gelöscht werden soll?")){
+            deleteUser(rowId);
+            usersDataTable.destroy();
+            initUsersTable();
+        }
+        else{
+            return false;
+        }
     });
 
     addUserButton.off().click( function () {
