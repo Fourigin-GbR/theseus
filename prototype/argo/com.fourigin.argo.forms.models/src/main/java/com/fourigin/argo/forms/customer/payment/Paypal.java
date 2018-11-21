@@ -10,11 +10,6 @@ public class Paypal implements PaymentMethod, Serializable {
     private String email;
 
     @Override
-    public String getDisplayName() {
-        return email;
-    }
-
-    @Override
     public String getName() {
         return name;
     }

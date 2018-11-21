@@ -13,11 +13,6 @@ public class BankAccount implements PaymentMethod, Serializable {
     private String accountHolder;
 
     @Override
-    public String getDisplayName() {
-        return bankName + " " + iban;
-    }
-
-    @Override
     public String getName() {
         return name;
     }

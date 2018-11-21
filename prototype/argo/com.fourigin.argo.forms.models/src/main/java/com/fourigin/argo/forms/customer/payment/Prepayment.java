@@ -9,11 +9,6 @@ public class Prepayment implements PaymentMethod, Serializable {
     private String name;
 
     @Override
-    public String getDisplayName() {
-        return "";
-    }
-
-    @Override
     public String getName() {
         return name;
     }
