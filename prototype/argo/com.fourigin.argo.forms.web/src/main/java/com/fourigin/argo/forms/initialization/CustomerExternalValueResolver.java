@@ -3,6 +3,7 @@ package com.fourigin.argo.forms.initialization;
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.payment.BankAccount;
+import com.fourigin.utilities.core.RegExStringFormatter;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,6 +15,13 @@ public class CustomerExternalValueResolver implements ExternalValueResolver {
     private CustomerRepository customerRepository;
 
     public static final String STORED_ACCOUNTS = "stored-accounts";
+
+    private static final RegExStringFormatter IBAN_FORMATTER = new RegExStringFormatter();
+
+    static {
+        IBAN_FORMATTER.setSelectionPattern("^(DE[0-9]{2})\\s?([0-9]{4})\\s?([0-9]{4})\\s?([0-9]{4})\\s?([0-9]{4})\\s?([0-9]{2})\\s?$");
+        IBAN_FORMATTER.setReplacingPattern("$1 $2 $3 $4 $5 $6");
+    }
 
     public CustomerExternalValueResolver(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -59,7 +67,7 @@ public class CustomerExternalValueResolver implements ExternalValueResolver {
 
         for (BankAccount bankAccount : bankAccounts) {
             String name = bankAccount.getName();
-            String displayName = bankAccount.getDisplayName();
+            String displayName = IBAN_FORMATTER.format(bankAccount.getIban()) + " (" + bankAccount.getBankName() + ")";
             result.put(name, displayName);
         }
 

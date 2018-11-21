@@ -286,6 +286,8 @@ project(':argo') {
         version = argoVersion
 
         dependencies {
+            compile utilitiesCore
+
             compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
