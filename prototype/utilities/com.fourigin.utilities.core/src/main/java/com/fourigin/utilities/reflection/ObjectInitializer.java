@@ -3,7 +3,10 @@ package com.fourigin.utilities.reflection;
 import java.util.Map;
 import java.util.Objects;
 
-public class ObjectInitializer {
+public final class ObjectInitializer {
+
+    private ObjectInitializer(){
+    }
 
     public static <T extends Initializable> T initialize(InitializableObjectDescriptor descriptor) {
         String targetClassName = descriptor.getTargetClass();
