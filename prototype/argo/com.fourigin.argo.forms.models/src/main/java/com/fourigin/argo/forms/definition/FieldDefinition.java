@@ -11,6 +11,8 @@ public class FieldDefinition implements Serializable {
     private Map<String, Object> validation;
     private Map<String, Map<String, FieldDefinition>> values;
     private ExternalValueReference externalValueReference;
+    private String normalizer;
+    private String formatter;
 
     public Type getType() {
         return type;
@@ -44,6 +46,22 @@ public class FieldDefinition implements Serializable {
         this.externalValueReference = externalValueReference;
     }
 
+    public String getNormalizer() {
+        return normalizer;
+    }
+
+    public void setNormalizer(String normalizer) {
+        this.normalizer = normalizer;
+    }
+
+    public String getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,12 +70,14 @@ public class FieldDefinition implements Serializable {
         return type == that.type &&
             Objects.equals(validation, that.validation) &&
             Objects.equals(values, that.values) &&
-            Objects.equals(externalValueReference, that.externalValueReference);
+            Objects.equals(externalValueReference, that.externalValueReference) &&
+            Objects.equals(normalizer, that.normalizer) &&
+            Objects.equals(formatter, that.formatter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, validation, values, externalValueReference);
+        return Objects.hash(type, validation, values, externalValueReference, normalizer, formatter);
     }
 
     @Override
@@ -67,6 +87,8 @@ public class FieldDefinition implements Serializable {
             ", validation=" + validation +
             ", values=" + values +
             ", externalValueReference=" + externalValueReference +
+            ", normalizer='" + normalizer + '\'' +
+            ", formatter='" + formatter + '\'' +
             '}';
     }
 }

@@ -1,16 +1,21 @@
 package com.fourigin.argo.forms.definition;
 
+import com.fourigin.utilities.reflection.InitializableObjectDescriptor;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
 public class FormDefinition implements Serializable {
-    private static final long serialVersionUID = 3684763498863264351L;
+
+    private static final long serialVersionUID = -1574891219507468279L;
 
     private String form;
     private Map<String, ValidationPattern> validationPatterns;
+    private Map<String, InitializableObjectDescriptor> dataNormalizers;
+    private Map<String, InitializableObjectDescriptor> dataFormatters;
     private Map<String, FieldDefinition> fields;
-    private Map<String, FormObjectDefinition> objectMappings;
+    private Map<String, InitializableObjectDescriptor> objectMappings;
 
     public String getForm() {
         return form;
@@ -28,6 +33,22 @@ public class FormDefinition implements Serializable {
         this.validationPatterns = validationPatterns;
     }
 
+    public Map<String, InitializableObjectDescriptor> getDataNormalizers() {
+        return dataNormalizers;
+    }
+
+    public void setDataNormalizers(Map<String, InitializableObjectDescriptor> dataNormalizers) {
+        this.dataNormalizers = dataNormalizers;
+    }
+
+    public Map<String, InitializableObjectDescriptor> getDataFormatters() {
+        return dataFormatters;
+    }
+
+    public void setDataFormatters(Map<String, InitializableObjectDescriptor> dataFormatters) {
+        this.dataFormatters = dataFormatters;
+    }
+
     public Map<String, FieldDefinition> getFields() {
         return fields;
     }
@@ -36,11 +57,11 @@ public class FormDefinition implements Serializable {
         this.fields = fields;
     }
 
-    public Map<String, FormObjectDefinition> getObjectMappings() {
+    public Map<String, InitializableObjectDescriptor> getObjectMappings() {
         return objectMappings;
     }
 
-    public void setObjectMappings(Map<String, FormObjectDefinition> objectMappings) {
+    public void setObjectMappings(Map<String, InitializableObjectDescriptor> objectMappings) {
         this.objectMappings = objectMappings;
     }
 
@@ -51,13 +72,15 @@ public class FormDefinition implements Serializable {
         FormDefinition that = (FormDefinition) o;
         return Objects.equals(form, that.form) &&
             Objects.equals(validationPatterns, that.validationPatterns) &&
+            Objects.equals(dataNormalizers, that.dataNormalizers) &&
+            Objects.equals(dataFormatters, that.dataFormatters) &&
             Objects.equals(fields, that.fields) &&
             Objects.equals(objectMappings, that.objectMappings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(form, validationPatterns, fields, objectMappings);
+        return Objects.hash(form, validationPatterns, dataNormalizers, dataFormatters, fields, objectMappings);
     }
 
     @Override
@@ -65,6 +88,8 @@ public class FormDefinition implements Serializable {
         return "FormDefinition{" +
             "form='" + form + '\'' +
             ", validationPatterns=" + validationPatterns +
+            ", dataNormalizers=" + dataNormalizers +
+            ", dataFormatters=" + dataFormatters +
             ", fields=" + fields +
             ", objectMappings=" + objectMappings +
             '}';

@@ -7,27 +7,21 @@ import groovy.lang.Binding;
 import groovy.lang.Script;
 
 import java.io.File;
-import java.util.Map;
 import java.util.Objects;
 
-public class GroovyScriptFormObjectMapper implements FormObjectMapper {
+public class FormObjectMapper {
     private GroovyInstance groovyInstance;
 
     private CustomerRepository customerRepository;
 
-    @Override
-    public void setCustomerRepository(CustomerRepository customerRepository) {
+    public FormObjectMapper(CustomerRepository customerRepository, String scriptPath) {
         this.customerRepository = customerRepository;
+        initialize(scriptPath);
     }
 
-    @Override
-    public void initialize(Map<String, Object> settings) {
-        Objects.requireNonNull(settings, "settings must not be null!");
+    private void initialize(String scriptPath) {
+        Objects.requireNonNull(scriptPath, "scriptPath must not be null!");
 
-        String scriptPath = (String) settings.get("file");
-        if (scriptPath == null) {
-            throw new IllegalStateException("No 'file' settings argument present!");
-        }
         File scriptFile = new File(scriptPath);
         if(!scriptFile.exists()){
             throw new IllegalArgumentException("No script file found for '" + scriptFile.getAbsolutePath() + "'!");
@@ -37,7 +31,6 @@ public class GroovyScriptFormObjectMapper implements FormObjectMapper {
         groovyInstance.setGroovyFileName(scriptPath);
     }
 
-    @Override
     public <T> T parseValue(Class<T> targetClass, FormsStoreEntry entry, String entryId) {
         Script script = groovyInstance.getInstanceAs(Script.class);
         if(script == null){

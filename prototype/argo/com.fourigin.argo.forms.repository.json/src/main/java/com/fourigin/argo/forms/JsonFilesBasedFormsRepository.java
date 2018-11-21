@@ -38,8 +38,6 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
 
     private File customersBaseDir;
 
-    private Collection<ExternalValueResolver> externalValueResolvers;
-
     private static final String DIR_BLOBS = ".blobs";
 
     private static final String DIR_ATTACHMENTS = "attachments";
@@ -342,13 +340,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
                 logger.error("Unable to read form definition file '{}'!", defFile.getAbsolutePath(), ex);
             return null;
         }
-
-        if (externalValueResolvers != null && !externalValueResolvers.isEmpty()) {
-            for (ExternalValueResolver externalValueResolver : externalValueResolvers) {
-                externalValueResolver.resolveValues(formDefinition);
-            }
-        }
-
+        
         return formDefinition;
     }
 
@@ -501,10 +493,5 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         String fileExtension = MimeTypes.resolveFileExtension(mimeType);
         String attachmentFile = path[0] + "." + fileExtension;
         return new File(directory, attachmentFile);
-    }
-
-    @Override
-    public void setExternalValueResolvers(Collection<ExternalValueResolver> externalValueResolvers) {
-        this.externalValueResolvers = externalValueResolvers;
     }
 }

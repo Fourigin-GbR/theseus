@@ -2,9 +2,11 @@ package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.customer.payment.mapping.PaymentModule;
+import com.fourigin.argo.forms.formatter.mapping.DataFormatterModule;
 import com.fourigin.argo.forms.initialization.CustomerExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
-import com.fourigin.argo.forms.customer.payment.mapping.PaymentModule;
+import com.fourigin.argo.forms.normalizer.mapping.DataNormalizerModule;
 import com.fourigin.argo.forms.processing.FulfillInternalCardFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillTaxPaymentFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillVehicleRegistrationFormEntryProcessor;
@@ -96,6 +98,8 @@ public class NettyServer {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         objectMapper.registerModule(new PaymentModule());
+        objectMapper.registerModule(new DataNormalizerModule());
+        objectMapper.registerModule(new DataFormatterModule());
         return objectMapper;
     }
 

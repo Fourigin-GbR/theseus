@@ -5,20 +5,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.definition.ExternalValueReference;
 import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
-import com.fourigin.argo.forms.definition.FormObjectDefinition;
-import com.fourigin.argo.forms.definition.FormObjectMapperDefinition;
+import com.fourigin.argo.forms.formatter.DataFormatter;
 import com.fourigin.argo.forms.initialization.ExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
 import com.fourigin.argo.forms.mapping.FormObjectMapper;
+import com.fourigin.argo.forms.model.CleanupRequest;
 import com.fourigin.argo.forms.model.FormsRequest;
 import com.fourigin.argo.forms.model.InitRequest;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
+import com.fourigin.argo.forms.normalizer.DataNormalizer;
 import com.fourigin.argo.forms.validation.FailureReason;
 import com.fourigin.argo.forms.validation.FormData;
 import com.fourigin.argo.forms.validation.FormFieldValidationResult;
 import com.fourigin.argo.forms.validation.FormValidationResult;
 import com.fourigin.argo.forms.validation.FormsValidator;
+import com.fourigin.utilities.core.TriConsumer;
+import com.fourigin.utilities.reflection.InitializableObjectDescriptor;
+import com.fourigin.utilities.reflection.ObjectInitializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -40,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
@@ -66,6 +71,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     private static final String URI_PRE_VALIDATE_FORM = "/pre-validate";
 
     private static final String URI_VALIDATE_FORM = "/validate";
+
+    private static final String URI_CLEANUP_DATA = "/cleanup-data";
 
     private final Logger logger = LoggerFactory.getLogger(HttpServerHandler.class);
 
@@ -133,6 +140,12 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             return;
         }
 
+        if ((contextPath + URI_CLEANUP_DATA).equals(uri)) {
+            if (logger.isDebugEnabled()) logger.debug("Processing cleanup-data request");
+            serveCleanupData(ctx, request);
+            return;
+        }
+
         serve404(ctx, uri.substring(contextPath.length()));
     }
 
@@ -146,7 +159,24 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
         try {
             FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
-            FormValidationResult result = internalValidate(formsRequest, true);
+
+            FormsEntryHeader header = formsRequest.getHeader();
+            String formDefinitionId = header.getFormDefinition();
+
+            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            if (formDefinition == null) {
+                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+            }
+
+            Map<String, String> normalizedData = normalizeData(formsRequest.getData(), formDefinition);
+
+            FormValidationResult result = internalValidate(
+                formsRequest.getFormId(),
+                header,
+                normalizedData,
+                formDefinition,
+                true
+            );
 
             if (result.isValid()) {
                 writeResponseBody(ctx, result, HttpResponseStatus.OK);
@@ -164,7 +194,24 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
         try {
             FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
-            FormValidationResult result = internalValidate(formsRequest, false);
+
+            FormsEntryHeader header = formsRequest.getHeader();
+            String formDefinitionId = header.getFormDefinition();
+
+            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            if (formDefinition == null) {
+                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+            }
+
+            Map<String, String> normalizedData = normalizeData(formsRequest.getData(), formDefinition);
+
+            FormValidationResult result = internalValidate(
+                formsRequest.getFormId(),
+                header,
+                normalizedData,
+                formDefinition,
+                false
+            );
 
             if (result.isValid()) {
                 writeResponseBody(ctx, result, HttpResponseStatus.OK);
@@ -191,7 +238,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             Map<String, Object> result = new HashMap<>();
 
             Map<String, FieldDefinition> fields = formDefinition.getFields();
-            processFields(customerId, fields, null, result);
+            initializeFields(customerId, fields, result);
 
             writeResponseBody(ctx, result, HttpResponseStatus.OK);
         } catch (Throwable th) {
@@ -207,32 +254,52 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             FormsRequest formsRequest = getRequestBody(FormsRequest.class, request);
             if (logger.isDebugEnabled()) logger.debug("Processing form {}", formsRequest);
 
+            FormsEntryHeader header = formsRequest.getHeader();
+            String formDefinitionId = header.getFormDefinition();
+
+            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            if (formDefinition == null) {
+                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+            }
+
+            Map<String, String> normalizedData = normalizeData(formsRequest.getData(), formDefinition);
+            if (logger.isDebugEnabled()) logger.debug("Normalized data: {}", normalizedData);
+
             // validate form
-            FormValidationResult validationResult = internalValidate(formsRequest, false);
+            FormValidationResult validationResult = internalValidate(
+                formsRequest.getFormId(),
+                header,
+                normalizedData,
+                formDefinition,
+                false
+            );
 
             if (!validationResult.isValid()) {
                 if (logger.isDebugEnabled()) logger.debug("Validation *not* successful!");
+
                 writeResponseBody(ctx, validationResult, HttpResponseStatus.NOT_ACCEPTABLE);
                 return;
             }
 
+            Map<String, String> formattedData = formatData(normalizedData, formDefinition);
+            if (logger.isDebugEnabled()) logger.debug("Formatted data: {}", formattedData);
+
             // store form data
             if (logger.isDebugEnabled()) logger.debug("Validation successful, storing the form");
             FormsStoreEntry entry = new FormsStoreEntry();
-            entry.setData(formsRequest.getData());
+            entry.setData(formattedData);
             String entryId = formsStoreRepository.createEntry(entry);
 
-            formsStoreRepository.createEntryInfo(entryId, formsRequest.getHeader());
+            formsStoreRepository.createEntryInfo(entryId, header);
 
             // map form entry to defined objects
-            FormDefinition formDefinition = validationResult.getFormDefinition();
-            Map<String, FormObjectDefinition> objectMappings = formDefinition.getObjectMappings();
+            Map<String, InitializableObjectDescriptor> objectMappings = formDefinition.getObjectMappings();
             if (objectMappings != null && !objectMappings.isEmpty()) {
                 if (logger.isDebugEnabled()) logger.debug("Map form objects");
 
-                for (Map.Entry<String, FormObjectDefinition> objectDefinitionEntry : objectMappings.entrySet()) {
+                for (Map.Entry<String, InitializableObjectDescriptor> objectDefinitionEntry : objectMappings.entrySet()) {
                     String objectName = objectDefinitionEntry.getKey();
-                    FormObjectDefinition objectDefinition = objectDefinitionEntry.getValue();
+                    InitializableObjectDescriptor objectDefinition = objectDefinitionEntry.getValue();
                     Object mappedObject = mapObject(objectDefinition, entry, entryId);
 
                     formsStoreRepository.addObjectAttachment(entryId, objectName, mappedObject);
@@ -252,24 +319,159 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
     }
 
-    private void processFields(
+    private void serveCleanupData(ChannelHandlerContext ctx, FullHttpRequest request) {
+        if (logger.isInfoEnabled()) logger.info("Serving cleanup data ...");
+
+        try {
+            CleanupRequest cleanupRequest = getRequestBody(CleanupRequest.class, request);
+
+            String formDefinitionId = cleanupRequest.getFormDefinitionId();
+
+            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            if (formDefinition == null) {
+                throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
+            }
+
+            Map<String, String> normalizedData = normalizeData(cleanupRequest.getData(), formDefinition);
+
+            Map<String, String> formattedData = formatData(normalizedData, formDefinition);
+
+            writeResponseBody(ctx, formattedData, HttpResponseStatus.OK);
+        } catch (Throwable th) {
+            if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
+            serve500(ctx, th);
+        }
+    }
+
+    private Map<String, String> normalizeData(Map<String, String> data, FormDefinition formDefinition) {
+        Map<String, FieldDefinition> fields = formDefinition.getFields();
+        if (fields == null || fields.isEmpty()) {
+            if (logger.isInfoEnabled()) logger.info("No fields found at all.");
+            return data;
+        }
+
+        Map<String, InitializableObjectDescriptor> normalizerDescriptors = formDefinition.getDataNormalizers();
+        if (normalizerDescriptors == null || normalizerDescriptors.isEmpty()) {
+            if (logger.isInfoEnabled()) logger.info("No data normalizers found.");
+            return data;
+        }
+
+        final Map<String, DataNormalizer> normalizers = new HashMap<>();
+        for (Map.Entry<String, InitializableObjectDescriptor> entry : normalizerDescriptors.entrySet()) {
+            String normalizerName = entry.getKey();
+            InitializableObjectDescriptor descriptor = entry.getValue();
+            DataNormalizer normalizer = ObjectInitializer.initialize(descriptor);
+            normalizers.put(normalizerName, normalizer);
+        }
+
+        final Map<String, String> result = new HashMap<>();
+
+        processFields(
+            formDefinition.getFields(),
+            null,
+            fieldDefinition -> true,
+            (fieldName, currentPath, fieldDefinition) -> {
+                String originalValue = data.get(currentPath);
+                if (originalValue == null) {
+                    if (logger.isDebugEnabled()) logger.debug("No value found for '{}'", currentPath);
+                    return;
+                }
+
+                String normalizerName = fieldDefinition.getNormalizer();
+                if (normalizerName == null) {
+                    if (logger.isDebugEnabled())
+                        logger.debug("No normalizer found for '{}', using original value '{}'", currentPath, originalValue);
+                    result.put(currentPath, originalValue);
+                    return;
+                }
+
+                DataNormalizer normalizer = normalizers.get(normalizerName);
+                if (normalizer == null) {
+                    throw new IllegalArgumentException("No data normalizer found for name '" + normalizerName + "'!");
+                }
+
+                String normalizedValue = normalizer.normalize(originalValue);
+                if (logger.isDebugEnabled())
+                    logger.debug("Normalized value of '{}': '{}' --> '{}'", currentPath, originalValue, normalizedValue);
+                result.put(currentPath, normalizedValue);
+            }
+        );
+
+        return result;
+    }
+
+    private Map<String, String> formatData(Map<String, String> data, FormDefinition formDefinition) {
+        Map<String, FieldDefinition> fields = formDefinition.getFields();
+        if (fields == null || fields.isEmpty()) {
+            if (logger.isInfoEnabled()) logger.info("No fields found at all.");
+            return data;
+        }
+
+        final Map<String, InitializableObjectDescriptor> formatterDescriptors = formDefinition.getDataFormatters();
+        if (formatterDescriptors == null || formatterDescriptors.isEmpty()) {
+            if (logger.isInfoEnabled()) logger.info("No data formatters found.");
+            return data;
+        }
+
+        final Map<String, DataFormatter> formatters = new HashMap<>();
+        for (Map.Entry<String, InitializableObjectDescriptor> entry : formatterDescriptors.entrySet()) {
+            String formatterName = entry.getKey();
+            InitializableObjectDescriptor descriptor = entry.getValue();
+            DataFormatter formatter = ObjectInitializer.initialize(descriptor);
+            formatters.put(formatterName, formatter);
+        }
+
+        final Map<String, String> result = new HashMap<>();
+
+        processFields(
+            formDefinition.getFields(),
+            null,
+            fieldDefinition -> true,
+            (fieldName, currentPath, fieldDefinition) -> {
+                String originalValue = data.get(currentPath);
+                if (originalValue == null) {
+                    if (logger.isDebugEnabled()) logger.debug("No value found for '{}'", currentPath);
+                    return;
+                }
+
+                String formatterName = fieldDefinition.getFormatter();
+                if (formatterName == null) {
+                    if (logger.isDebugEnabled())
+                        logger.debug("No formatter found for '{}', using original value '{}'", currentPath, originalValue);
+                    result.put(currentPath, originalValue);
+                    return;
+                }
+
+                DataFormatter formatter = formatters.get(formatterName);
+                if (formatter == null) {
+                    throw new IllegalArgumentException("No data formatter found for name '" + formatterName + "'!");
+                }
+
+                String formattedValue = formatter.format(originalValue);
+                if (logger.isDebugEnabled())
+                    logger.debug("Formatted value of '{}': '{}'", originalValue, formattedValue);
+                result.put(currentPath, formattedValue);
+            }
+        );
+
+        return result;
+    }
+
+    private void initializeFields(
         String customerId,
         Map<String, FieldDefinition> fields,
-        String parentPath,
         Map<String, Object> initValues
     ) {
         if (fields == null || fields.isEmpty()) {
             return;
         }
 
-        for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
-            String fieldName = entry.getKey();
-            String currentPath = parentPath == null ? fieldName : parentPath + "/" + fieldName;
-
-            FieldDefinition fieldDefinition = entry.getValue();
-            ExternalValueReference externalValueReference = fieldDefinition.getExternalValueReference();
-            if (externalValueReference != null) {
-
+        processFields(
+            fields,
+            null,
+            fieldDefinition -> fieldDefinition.getExternalValueReference() != null,
+            (fieldName, currentPath, fieldDefinition) -> {
+                ExternalValueReference externalValueReference = fieldDefinition.getExternalValueReference();
                 String externalValueOwner = externalValueReference.getOwner();
                 String externalValueKey = externalValueReference.getValue();
 
@@ -281,22 +483,73 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                 Map<String, Object> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
                 initValues.put(currentPath, externalValue);
             }
+        );
+
+//        for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
+//            String fieldName = entry.getKey();
+//            String currentPath = parentPath == null ? fieldName : parentPath + "/" + fieldName;
+//
+//            FieldDefinition fieldDefinition = entry.getValue();
+//            ExternalValueReference externalValueReference = fieldDefinition.getExternalValueReference();
+//            if (externalValueReference != null) {
+//
+//                String externalValueOwner = externalValueReference.getOwner();
+//                String externalValueKey = externalValueReference.getValue();
+//
+//                ExternalValueResolver processor = externalValueResolverFactory.get(externalValueOwner);
+//                if (processor == null) {
+//                    throw new IllegalArgumentException("Unsupported external value resolver '" + externalValueOwner + "'!");
+//                }
+//
+//                Map<String, Object> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
+//                initValues.put(currentPath, externalValue);
+//            }
+//
+//            Map<String, Map<String, FieldDefinition>> fieldValues = fieldDefinition.getValues();
+//            if (fieldValues != null) {
+//                for (Map.Entry<String, Map<String, FieldDefinition>> subEntries : fieldValues.entrySet()) {
+//                    Map<String, FieldDefinition> subFields = subEntries.getValue();
+//                    if (subFields != null) {
+//                        initializeFields(customerId, subFields, currentPath, initValues);
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    private void processFields(
+        Map<String, FieldDefinition> fields,
+        String parentPath,
+        Predicate<FieldDefinition> tester,
+        TriConsumer<String, String, FieldDefinition> consumer
+    ) {
+        if (fields == null || fields.isEmpty()) {
+            return;
+        }
+
+        for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
+            String fieldName = entry.getKey();
+            String currentPath = parentPath == null ? fieldName : parentPath + "/" + fieldName;
+
+            FieldDefinition fieldDefinition = entry.getValue();
+            if (tester.test(fieldDefinition)) {
+                consumer.accept(fieldName, currentPath, fieldDefinition);
+            }
 
             Map<String, Map<String, FieldDefinition>> fieldValues = fieldDefinition.getValues();
             if (fieldValues != null) {
                 for (Map.Entry<String, Map<String, FieldDefinition>> subEntries : fieldValues.entrySet()) {
-//                    String subKey = subEntries.getKey();
                     Map<String, FieldDefinition> subFields = subEntries.getValue();
                     if (subFields != null) {
-                        processFields(customerId, subFields, currentPath, initValues);
+                        processFields(subFields, currentPath, tester, consumer);
                     }
                 }
             }
         }
     }
 
-    private Object mapObject(FormObjectDefinition objectDefinition, FormsStoreEntry entry, String entryId) {
-        String targetType = objectDefinition.getType();
+    private Object mapObject(InitializableObjectDescriptor objectDefinition, FormsStoreEntry entry, String entryId) {
+        String targetType = objectDefinition.getTargetClass();
         Class<?> targetClass;
         try {
             targetClass = Class.forName(targetType);
@@ -304,50 +557,25 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             throw new IllegalArgumentException("Unable to resolve target class name '" + targetType + "'!", ex);
         }
 
-        FormObjectMapperDefinition mappingDefinition = objectDefinition.getMapper();
-        String mapperType = mappingDefinition.getType();
-        Class mapperClass;
-        try {
-            mapperClass = Class.forName(mapperType);
-        } catch (ClassNotFoundException ex) {
-            throw new IllegalArgumentException("Unable to resolve mapper class name '" + mapperType + "'!", ex);
-        }
-
-        if (!FormObjectMapper.class.isAssignableFrom(mapperClass)) {
-            throw new IllegalArgumentException("Mapper type " + mapperType + " doesn't match FormObjectMapper's interface!");
-        }
-
-        Object mapperObject;
-        try {
-            mapperObject = mapperClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            throw new IllegalArgumentException("Unable to instantiate class for name '" + mapperType + "'!", ex);
-        }
-
-        FormObjectMapper formObjectMapper = (FormObjectMapper) mapperObject;
-        formObjectMapper.setCustomerRepository(customerRepository);
-
-        Map<String, Object> mapperSettings = mappingDefinition.getSettings();
-        // TODO: put the base path for all scripts
-        formObjectMapper.initialize(mapperSettings);
+        Map<String, Object> settings = objectDefinition.getSettings();
+        String scriptPath = (String) settings.get("file");
+        FormObjectMapper formObjectMapper = new FormObjectMapper(customerRepository, scriptPath);
 
         return formObjectMapper.parseValue(targetClass, entry, entryId);
     }
 
-    private FormValidationResult internalValidate(FormsRequest formsRequest, boolean preValidation) {
-        FormsEntryHeader header = formsRequest.getHeader();
-        String formDefinitionId = header.getFormDefinition();
-
-        FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
-        if (formDefinition == null) {
-            throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
-        }
-
+    private FormValidationResult internalValidate(
+        String formId,
+        FormsEntryHeader header,
+        Map<String, String> data,
+        FormDefinition formDefinition,
+        boolean preValidation
+    ) {
         FormData formData = new FormData();
-        formData.setFormDefinitionId(formDefinitionId);
-        formData.setFormId(formsRequest.getFormId());
+        formData.setFormDefinitionId(formDefinition.getForm());
+        formData.setFormId(formId);
         formData.setPreValidation(preValidation);
-        formData.setValidateFields(formsRequest.getData());
+        formData.setValidateFields(data);
         FormValidationResult result = FormsValidator.validate(formDefinition, formData);
 
         extendFormattedMessages(result, header.getLocale());
