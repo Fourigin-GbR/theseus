@@ -3,6 +3,7 @@ package com.fourigin.argo.forms.processing
 import com.fourigin.argo.forms.definition.FieldDefinition
 import com.fourigin.argo.forms.definition.FormDefinition
 import com.fourigin.argo.forms.definition.Type
+import com.fourigin.argo.forms.definition.ValidationPattern
 import com.fourigin.argo.forms.validation.FailureReason
 import com.fourigin.argo.forms.validation.FormData
 import com.fourigin.argo.forms.validation.FormValidationResult
@@ -194,7 +195,9 @@ class FormsValidatorSpec extends Specification {
         FormDefinition definition = new FormDefinition(
                 form: 'test-form',
                 validationPatterns: [
-                        'nameplate': '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                        'nameplate': new ValidationPattern(
+                                pattern: '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                        )
                 ],
                 fields: [
                         'nameplate': new FieldDefinition(
@@ -228,7 +231,9 @@ class FormsValidatorSpec extends Specification {
         FormDefinition definition = new FormDefinition(
                 form: 'test-form',
                 validationPatterns: [
-                        'nameplate': '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                        'nameplate': new ValidationPattern(
+                                pattern: '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                        )
                 ],
                 fields: [
                         'nameplate': new FieldDefinition(
