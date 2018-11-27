@@ -1,9 +1,10 @@
 #!/bin/bash
+APPRoot="/var/www/vhosts/fourigin.com/apps"
 APPName="argo"
 APPVersion="1.0-SNAPSHOT"
 JARFile="$APPName-$APPVersion.jar"
 SERVER="fourigin.de"
-TARGETPath="/var/www/vhosts/fourigin.com/cms/"
+TARGETPath="$APPRoot/argo"
 
 rsync -avz build/libs/$JARFile $SERVER:$TARGETPath
 

@@ -3,7 +3,7 @@ APPName="argo-forms"
 APPVersion="1.0-SNAPSHOT"
 JARFile="$APPName-$APPVersion.jar"
 PIDFile="$APPName.pid"
-SPRING_OPTS="-DLOG_FILE=$APPName.log"
+SPRING_OPTS="-DLOG_FILE=$APPName.log -Xms16M -Xmx256M"
 
 function check_if_pid_file_exists {
     if [ ! -f $PIDFile ]
