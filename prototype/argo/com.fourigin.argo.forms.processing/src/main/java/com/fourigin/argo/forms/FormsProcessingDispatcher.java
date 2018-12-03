@@ -1,5 +1,6 @@
 package com.fourigin.argo.forms;
 
 public interface FormsProcessingDispatcher {
-    void registerFormEntry(String entryId);
+    void processFormEntry(String entryId);
+
 }

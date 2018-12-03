@@ -20,6 +20,8 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
 
     private FormsRegistry registry;
 
+    public static final String GENERAL_PROCESSING_STATE = "GENERAL_PROCESSING_STATE";
+
     public DefaultFormsProcessingDispatcher(
         FormsStoreRepository formsStoreRepository,
         FormsEntryProcessorMapping processorMapping,
@@ -33,9 +35,11 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
     }
 
     @Override
-    public void registerFormEntry(String entryId) {
+    public void processFormEntry(String entryId) {
         FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
         String formDefinitionId = info.getHeader().getFormDefinition();
+
+        boolean success = true;
 
         List<String> processorNames = processorMapping.get(formDefinitionId);
         if (processorNames != null && !processorNames.isEmpty()) {
@@ -46,9 +50,6 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
             }
 
             for (String processorName : processorNames) {
-                FormsEntryProcessor processor = processorFactory.getInstance(processorName);
-                ProcessingHistoryRecord historyRecord = processor.processEntry(entryId, registry);
-
                 FormsDataProcessingState state = states.get(processorName);
                 if (state == null) {
                     state = new FormsDataProcessingState();
@@ -61,15 +62,34 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
                     state.setProcessingHistory(history);
                 }
 
-                state.setProcessingState(ProcessingState.DONE);
+                try {
+                    FormsEntryProcessor processor = processorFactory.getInstance(processorName);
+                    ProcessingHistoryRecord historyRecord = processor.processEntry(entryId, registry);
+                    history.add(historyRecord);
 
-                history.add(historyRecord);
+                    state.setProcessingState(ProcessingState.DONE);
+                } catch (Throwable th) {
+                    state.setProcessingState(ProcessingState.FAILED);
+                    success = false;
+                }
             }
 
             // reload updated info entry
             info = formsStoreRepository.retrieveEntryInfo(entryId);
 
             // reset states
+            FormsDataProcessingState state = states.get(GENERAL_PROCESSING_STATE);
+            if (state == null) {
+                state = new FormsDataProcessingState();
+                states.put(GENERAL_PROCESSING_STATE, state);
+            }
+
+            if(success){
+                state.setProcessingState(ProcessingState.DONE);
+            }
+            else {
+                state.setProcessingState(ProcessingState.FAILED);
+            }
             info.setProcessingStates(states);
 
             // update entry

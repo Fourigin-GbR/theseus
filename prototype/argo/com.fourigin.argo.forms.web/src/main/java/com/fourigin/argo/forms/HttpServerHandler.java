@@ -8,6 +8,7 @@ import com.fourigin.argo.forms.definition.FormDefinition;
 import com.fourigin.argo.forms.formatter.DataFormatter;
 import com.fourigin.argo.forms.initialization.ExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
+import com.fourigin.argo.forms.initialization.InitialValue;
 import com.fourigin.argo.forms.mapping.FormObjectMapper;
 import com.fourigin.argo.forms.model.CleanupRequest;
 import com.fourigin.argo.forms.model.FormsRequest;
@@ -235,10 +236,16 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
             String customerId = initRequest.getCustomer();
 
-            Map<String, Object> result = new HashMap<>();
+            String entryId = initRequest.getEntryId();
+            FormsStoreEntry entry = null;
+            if (entryId != null) {
+                entry = formsStoreRepository.retrieveEntry(entryId);
+            }
+
+            Map<String, Map<String, InitialValue>> result = new HashMap<>();
 
             Map<String, FieldDefinition> fields = formDefinition.getFields();
-            initializeFields(customerId, fields, result);
+            initializeFields(customerId, entry, fields, result);
 
             writeResponseBody(ctx, result, HttpResponseStatus.OK);
         } catch (Throwable th) {
@@ -307,7 +314,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             }
 
             // start processing form entry
-            formsProcessingDispatcher.registerFormEntry(entryId);
+            formsProcessingDispatcher.processFormEntry(entryId);
 
             // generate response
             Map<String, String> result = new HashMap<>();
@@ -459,8 +466,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private void initializeFields(
         String customerId,
+        FormsStoreEntry entry,
         Map<String, FieldDefinition> fields,
-        Map<String, Object> initValues
+        Map<String, Map<String, InitialValue>> initValues
     ) {
         if (fields == null || fields.isEmpty()) {
             return;
@@ -480,41 +488,37 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                     throw new IllegalArgumentException("Unsupported external value resolver '" + externalValueOwner + "'!");
                 }
 
-                Map<String, Object> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
+                Map<String, InitialValue> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
                 initValues.put(currentPath, externalValue);
             }
         );
 
-//        for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
-//            String fieldName = entry.getKey();
-//            String currentPath = parentPath == null ? fieldName : parentPath + "/" + fieldName;
-//
-//            FieldDefinition fieldDefinition = entry.getValue();
-//            ExternalValueReference externalValueReference = fieldDefinition.getExternalValueReference();
-//            if (externalValueReference != null) {
-//
-//                String externalValueOwner = externalValueReference.getOwner();
-//                String externalValueKey = externalValueReference.getValue();
-//
-//                ExternalValueResolver processor = externalValueResolverFactory.get(externalValueOwner);
-//                if (processor == null) {
-//                    throw new IllegalArgumentException("Unsupported external value resolver '" + externalValueOwner + "'!");
-//                }
-//
-//                Map<String, Object> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
-//                initValues.put(currentPath, externalValue);
-//            }
-//
-//            Map<String, Map<String, FieldDefinition>> fieldValues = fieldDefinition.getValues();
-//            if (fieldValues != null) {
-//                for (Map.Entry<String, Map<String, FieldDefinition>> subEntries : fieldValues.entrySet()) {
-//                    Map<String, FieldDefinition> subFields = subEntries.getValue();
-//                    if (subFields != null) {
-//                        initializeFields(customerId, subFields, currentPath, initValues);
-//                    }
-//                }
-//            }
-//        }
+        if (entry != null) {
+            Map<String, String> storedData = entry.getData();
+            for (Map.Entry<String, String> dataEntry : storedData.entrySet()) {
+                String path = dataEntry.getKey();
+                String value = dataEntry.getValue();
+
+                Map<String, InitialValue> initData = initValues.get(path);
+
+                if (initData != null) {
+                    InitialValue dataValue = initData.get(value);
+                    if (dataValue == null) {
+                        dataValue = new InitialValue();
+                        initData.put(value, dataValue);
+                    }
+                    dataValue.setActive(true);
+                } else {
+                    InitialValue initialValue = new InitialValue();
+                    initialValue.setActive(true);
+
+                    initData = new HashMap<>();
+                    initData.put(value, initialValue);
+
+                    initValues.put(path, initData);
+                }
+            }
+        }
     }
 
     private void processFields(

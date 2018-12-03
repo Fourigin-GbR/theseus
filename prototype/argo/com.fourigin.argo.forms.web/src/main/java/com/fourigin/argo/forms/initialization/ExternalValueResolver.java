@@ -6,5 +6,5 @@ import java.util.Set;
 public interface ExternalValueResolver {
     Set<String> getSupportedKeys();
 
-    Map<String, Object> resolveExternalValue(String customerId, String key);
+    Map<String, InitialValue> resolveExternalValue(String customerId, String key);
 }

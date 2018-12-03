@@ -8,6 +8,7 @@ public class InitRequest implements Serializable {
 
     private String formDefinition;
     private String customer;
+    private String entryId;
 
     public String getFormDefinition() {
         return formDefinition;
@@ -25,18 +26,27 @@ public class InitRequest implements Serializable {
         this.customer = customer;
     }
 
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof InitRequest)) return false;
         InitRequest that = (InitRequest) o;
         return Objects.equals(formDefinition, that.formDefinition) &&
-            Objects.equals(customer, that.customer);
+            Objects.equals(customer, that.customer) &&
+            Objects.equals(entryId, that.entryId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(formDefinition, customer);
+        return Objects.hash(formDefinition, customer, entryId);
     }
 
     @Override
@@ -44,6 +54,7 @@ public class InitRequest implements Serializable {
         return "InitRequest{" +
             "formDefinition='" + formDefinition + '\'' +
             ", customer='" + customer + '\'' +
+            ", entryId='" + entryId + '\'' +
             '}';
     }
 }
