@@ -6,7 +6,6 @@ import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
-import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +35,7 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
     }
 
     @Override
-    public ProcessingHistoryRecord processEntry(String entryId, FormsRegistry registry) {
+    public void processEntry(String entryId, FormsRegistry registry) {
         Customer customer = formsStoreRepository.getObjectAttachment(entryId, ATTACHMENT_NAME, Customer.class);
 
         // search for the next free id
@@ -57,9 +56,5 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
         formsStoreRepository.updateEntryInfo(info);
 
         customerRepository.createCustomer(customer);
-
-        ProcessingHistoryRecord record = new ProcessingHistoryRecord();
-        record.setTimestamp(System.currentTimeMillis());
-        return record;
     }
 }

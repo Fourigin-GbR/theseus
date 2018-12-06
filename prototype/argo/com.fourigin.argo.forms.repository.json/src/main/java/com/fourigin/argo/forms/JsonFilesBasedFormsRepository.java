@@ -4,12 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.definition.FormDefinition;
 import com.fourigin.argo.forms.models.Attachment;
-import com.fourigin.argo.forms.models.FormsDataProcessingState;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
-import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
-import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.utilities.core.JsonFileBasedRepository;
 import com.fourigin.utilities.core.MimeTypes;
 import de.huxhorn.sulky.blobs.AmbiguousIdException;
@@ -156,38 +153,38 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         write(info, info.getId());
     }
 
-    @Override
-    public void addProcessingState(String entryId, String processorName, ProcessingState state) {
-        addProcessingState(entryId, processorName, state, null);
-    }
-
-    @Override
-    public void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context) {
-        FormsStoreEntryInfo info = read(FormsStoreEntryInfo.class, entryId);
-
-        Map<String, FormsDataProcessingState> states = info.getProcessingStates();
-        FormsDataProcessingState formDataProcessingState = states.get(processorName);
-        if (formDataProcessingState == null) {
-            formDataProcessingState = new FormsDataProcessingState();
-            states.put(processorName, formDataProcessingState);
-        }
-        formDataProcessingState.setProcessingState(state);
-
-        List<ProcessingHistoryRecord> history = formDataProcessingState.getProcessingHistory();
-        if (history == null) {
-            history = new ArrayList<>();
-            formDataProcessingState.setProcessingHistory(history);
-        }
-
-        ProcessingHistoryRecord historyEntry = new ProcessingHistoryRecord();
-        historyEntry.setTimestamp(System.currentTimeMillis());
-        if (context != null) {
-            historyEntry.setContext(context);
-        }
-        history.add(historyEntry);
-
-        write(info, entryId);
-    }
+//    @Override
+//    public void addProcessingState(String entryId, String processorName, ProcessingState state) {
+//        addProcessingState(entryId, processorName, state, null);
+//    }
+//
+//    @Override
+//    public void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context) {
+//        FormsStoreEntryInfo info = read(FormsStoreEntryInfo.class, entryId);
+//
+//        Map<String, FormsDataProcessingState> states = info.getProcessingStates();
+//        FormsDataProcessingState formDataProcessingState = states.get(processorName);
+//        if (formDataProcessingState == null) {
+//            formDataProcessingState = new FormsDataProcessingState();
+//            states.put(processorName, formDataProcessingState);
+//        }
+//        formDataProcessingState.setState(state);
+//
+//        List<ProcessingHistoryRecord> history = formDataProcessingState.getHistory();
+//        if (history == null) {
+//            history = new ArrayList<>();
+//            formDataProcessingState.setHistory(history);
+//        }
+//
+//        ProcessingHistoryRecord historyEntry = new ProcessingHistoryRecord();
+//        historyEntry.setTimestamp(System.currentTimeMillis());
+//        if (context != null) {
+//            historyEntry.setContext(context);
+//        }
+//        history.add(historyEntry);
+//
+//        write(info, entryId);
+//    }
 
     @Override
     public Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId) {

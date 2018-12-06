@@ -1,6 +1,8 @@
 package com.fourigin.argo.forms.dashboard;
 
 import com.fourigin.argo.forms.AttachmentDescriptor;
+import com.fourigin.argo.forms.models.FormsDataProcessingState;
+import com.fourigin.argo.forms.models.ProcessingState;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,13 +10,15 @@ import java.util.Set;
 
 public class FormRequestInfo implements Serializable {
     private static final long serialVersionUID = -8317724026909376403L;
-    
+
     private String id;
     private String formDefinition;
     private String customer;
     private String base;
     private long creationTimestamp;
+    private ProcessingState state;
     private Set<AttachmentDescriptor> attachments;
+    private FormsDataProcessingState processingState;
 
     public String getId() {
         return id;
@@ -56,12 +60,31 @@ public class FormRequestInfo implements Serializable {
         this.creationTimestamp = creationTimestamp;
     }
 
+    public ProcessingState getState() {
+        return state;
+    }
+
+    public void setState(ProcessingState state) {
+        this.state = state;
+    }
+
     public Set<AttachmentDescriptor> getAttachments() {
         return attachments;
     }
 
     public void setAttachments(Set<AttachmentDescriptor> attachments) {
         this.attachments = attachments;
+    }
+
+    public FormsDataProcessingState getProcessingState() {
+        return processingState;
+    }
+
+    public void setProcessingState(FormsDataProcessingState processingState) {
+        this.processingState = processingState;
+        if (processingState != null) {
+            this.state = processingState.getState();
+        }
     }
 
     @Override
@@ -74,12 +97,13 @@ public class FormRequestInfo implements Serializable {
             Objects.equals(formDefinition, that.formDefinition) &&
             Objects.equals(customer, that.customer) &&
             Objects.equals(base, that.base) &&
-            Objects.equals(attachments, that.attachments);
+            Objects.equals(attachments, that.attachments) &&
+            Objects.equals(processingState, that.processingState);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, formDefinition, customer, base, creationTimestamp, attachments);
+        return Objects.hash(id, formDefinition, customer, base, creationTimestamp, attachments, processingState);
     }
 
     @Override
@@ -91,6 +115,7 @@ public class FormRequestInfo implements Serializable {
             ", base='" + base + '\'' +
             ", creationTimestamp=" + creationTimestamp +
             ", attachments=" + attachments +
+            ", processingState=" + processingState +
             '}';
     }
 }

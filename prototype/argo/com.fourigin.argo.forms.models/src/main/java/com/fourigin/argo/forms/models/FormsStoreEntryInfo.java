@@ -1,7 +1,6 @@
 package com.fourigin.argo.forms.models;
 
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
 
 public class FormsStoreEntryInfo implements Serializable {
@@ -15,7 +14,7 @@ public class FormsStoreEntryInfo implements Serializable {
 
     private FormsEntryHeader header;
 
-    private Map<String, FormsDataProcessingState> processingStates;
+    private FormsDataProcessingState processingState;
 
     public String getId() {
         return id;
@@ -49,12 +48,12 @@ public class FormsStoreEntryInfo implements Serializable {
         this.header = header;
     }
 
-    public Map<String, FormsDataProcessingState> getProcessingStates() {
-        return processingStates;
+    public FormsDataProcessingState getProcessingState() {
+        return processingState;
     }
 
-    public void setProcessingStates(Map<String, FormsDataProcessingState> states) {
-        this.processingStates = states;
+    public void setProcessingState(FormsDataProcessingState state) {
+        this.processingState = state;
     }
 
     @Override
@@ -66,12 +65,12 @@ public class FormsStoreEntryInfo implements Serializable {
             creationTimestamp == that.creationTimestamp &&
             Objects.equals(id, that.id) &&
             Objects.equals(header, that.header) &&
-            Objects.equals(processingStates, that.processingStates);
+            Objects.equals(processingState, that.processingState);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, revision, creationTimestamp, header, processingStates);
+        return Objects.hash(id, revision, creationTimestamp, header, processingState);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class FormsStoreEntryInfo implements Serializable {
             ", revision=" + revision +
             ", creationTimestamp=" + creationTimestamp +
             ", header=" + header +
-            ", processingStates=" + processingStates +
+            ", processingState=" + processingState +
             '}';
     }
 }

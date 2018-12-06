@@ -75,10 +75,6 @@ public class DashboardController {
         List<FormRequestInfo> result = new ArrayList<>();
 
         for (String entryId : entryIds) {
-//            FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
-//            Map<String, String> entryData = entry.getData();
-//            String customerId = entryData.get("customer.id"); // TODO: replace with correct customer/client handling!
-
             FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
             FormsEntryHeader header = entryInfo.getHeader();
             String customerId = header.getCustomer();
@@ -92,6 +88,7 @@ public class DashboardController {
             info.setCustomer(customerId);
             info.setCreationTimestamp(entryInfo.getCreationTimestamp());
             info.setAttachments(attachments);
+            info.setProcessingState(entryInfo.getProcessingState());
             result.add(info);
         }
 
@@ -105,6 +102,10 @@ public class DashboardController {
         @RequestParam String mimeType,
         HttpServletResponse response
     ) {
+        Objects.requireNonNull(entryId, "entryId must not bei null!");
+        Objects.requireNonNull(attachmentName, "attachmentName must not bei null!");
+        Objects.requireNonNull(mimeType, "mimeType must not bei null!");
+
         AttachmentDescriptor descriptor = formsStoreRepository.getAttachmentDescriptor(entryId, attachmentName, mimeType);
         byte[] data = formsStoreRepository.getBinaryAttachment(entryId, descriptor);
 
@@ -126,10 +127,49 @@ public class DashboardController {
         Objects.requireNonNull(customerId, "customerId must not bei null!");
 
         List<String> allCustomers = customerRepository.listCustomerIds();
-        if(!allCustomers.contains(customerId)){
+        if (!allCustomers.contains(customerId)) {
             throw new IllegalArgumentException("No customer found for id '" + customerId + "'!");
         }
 
         customerRepository.deleteCustomer(customerId);
     }
+
+//    @RequestMapping("/change-state")
+//    public void changeState(
+//        @RequestParam String customerId,
+//        @RequestParam String entryId,
+//        @RequestParam String stateKey,
+//        @RequestParam ProcessingState processingState,
+//        @RequestParam String comment
+//    ) {
+//        Objects.requireNonNull(customerId, "customerId must not bei null!");
+//        Objects.requireNonNull(entryId, "entryId must not bei null!");
+//        Objects.requireNonNull(stateKey, "stateKey must not bei null!");
+//        Objects.requireNonNull(processingState, "state must not bei null!");
+//
+//        ProcessingHistoryRecord historyRecord = new ProcessingHistoryRecord();
+//        historyRecord.setTimestamp(System.currentTimeMillis());
+//
+//        if (comment != null) {
+//            Map<String, String> historyContext = new HashMap<>();
+//            historyContext.put("comment", comment);
+//            historyRecord.setContext(historyContext);
+//        }
+//
+//        FormsDataProcessingState state = new FormsDataProcessingState();
+//        state.setState(processingState);
+//        state.setHistory(Collections.singletonList(
+//            historyRecord
+//        ));
+//
+//        FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
+//        Map<String, FormsDataProcessingState> states = info.getProcessingStates();
+//        if(states == null){
+//            states = new HashMap<>();
+//            info.setProcessingStates(states);
+//        }
+//
+//        states.put(stateKey, state);
+//        formsStoreRepository.updateEntryInfo(info);
+//    }
 }

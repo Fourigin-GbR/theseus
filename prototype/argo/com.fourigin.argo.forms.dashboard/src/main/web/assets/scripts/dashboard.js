@@ -123,6 +123,9 @@ function internalInitRequestsTable(data) {
                     var mm = minutes < 10 ? "0" + minutes : minutes;
                     return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
                 }
+            },
+            {
+                "data": "state"
             }
         ],
         "language": {
@@ -228,7 +231,8 @@ function initRequestsTable(){
                 var req = data[pos];
                 var divId = "attachment-" + req.id;
                 var div = $('<div></div>').prop('id', divId);
-                var h3 = $('<h3></h3>').append('Anhänge des Auftrages ' + req.id);
+                var h3 = $('<h3></h3>').append('Auftrag ' + req.id);
+                var h4 = $('<h4></h4>').append('Anhänge:');
                 var ul = $('<ul></ul>');
 
                 for(n in req.attachments){
@@ -254,6 +258,7 @@ function initRequestsTable(){
 
                 div
                     .append(h3)
+                    .append(h4)
                     .append(ul);
 
                 attachments

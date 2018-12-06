@@ -5,10 +5,7 @@ import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import com.fourigin.argo.forms.models.ProcessingState;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatcher {
 
@@ -20,7 +17,7 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
 
     private FormsRegistry registry;
 
-    public static final String GENERAL_PROCESSING_STATE = "GENERAL_PROCESSING_STATE";
+    public static final String REGISTRATION_PROCESSING_STATE = "REGISTRATION_PROCESSING_STATE";
 
     public DefaultFormsProcessingDispatcher(
         FormsStoreRepository formsStoreRepository,
@@ -41,59 +38,44 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
 
         boolean success = true;
 
+        FormsDataProcessingState state = info.getProcessingState();
+        if (state == null) {
+            state = new FormsDataProcessingState();
+        }
+
+        state.addHistoryRecord(new ProcessingHistoryRecord("status/change", ProcessingState.PROCESSING.name()));
+        state.setState(ProcessingState.PROCESSING);
+
         List<String> processorNames = processorMapping.get(formDefinitionId);
         if (processorNames != null && !processorNames.isEmpty()) {
-            Map<String, FormsDataProcessingState> states = info.getProcessingStates();
-            if (states == null) {
-                states = new HashMap<>();
-                info.setProcessingStates(states);
-            }
+            state.addHistoryRecord(new ProcessingHistoryRecord("processing/start"));
 
             for (String processorName : processorNames) {
-                FormsDataProcessingState state = states.get(processorName);
-                if (state == null) {
-                    state = new FormsDataProcessingState();
-                    states.put(processorName, state);
-                }
-
-                List<ProcessingHistoryRecord> history = state.getProcessingHistory();
-                if (history == null) {
-                    history = new ArrayList<>();
-                    state.setProcessingHistory(history);
-                }
-
                 try {
                     FormsEntryProcessor processor = processorFactory.getInstance(processorName);
-                    ProcessingHistoryRecord historyRecord = processor.processEntry(entryId, registry);
-                    history.add(historyRecord);
-
-                    state.setProcessingState(ProcessingState.DONE);
+                    processor.processEntry(entryId, registry);
+                    state.addHistoryRecord(new ProcessingHistoryRecord("processing/" + processorName));
                 } catch (Throwable th) {
-                    state.setProcessingState(ProcessingState.FAILED);
                     success = false;
                 }
             }
 
-            // reload updated info entry
-            info = formsStoreRepository.retrieveEntryInfo(entryId);
-
-            // reset states
-            FormsDataProcessingState state = states.get(GENERAL_PROCESSING_STATE);
-            if (state == null) {
-                state = new FormsDataProcessingState();
-                states.put(GENERAL_PROCESSING_STATE, state);
-            }
-
-            if(success){
-                state.setProcessingState(ProcessingState.DONE);
-            }
-            else {
-                state.setProcessingState(ProcessingState.FAILED);
-            }
-            info.setProcessingStates(states);
-
-            // update entry
-            formsStoreRepository.updateEntryInfo(info);
+            state.addHistoryRecord(new ProcessingHistoryRecord("processing/done"));
         }
+
+        // reload updated info entry
+        info = formsStoreRepository.retrieveEntryInfo(entryId);
+
+        // set state
+        if (success) {
+            state.addHistoryRecord(new ProcessingHistoryRecord("status/change", ProcessingState.WAITING.name()));
+            state.setState(ProcessingState.WAITING);
+        } else {
+            state.setState(ProcessingState.FAILED);
+        }
+        info.setProcessingState(state);
+
+        // update entry
+        formsStoreRepository.updateEntryInfo(info);
     }
 }

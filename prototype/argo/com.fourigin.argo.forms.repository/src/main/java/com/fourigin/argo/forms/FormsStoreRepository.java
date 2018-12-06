@@ -3,10 +3,8 @@ package com.fourigin.argo.forms;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
-import com.fourigin.argo.forms.models.ProcessingState;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 public interface FormsStoreRepository {
@@ -22,9 +20,9 @@ public interface FormsStoreRepository {
     FormsStoreEntryInfo retrieveEntryInfo(String entryId);
     void updateEntryInfo(FormsStoreEntryInfo info);
 
-    // processing states
-    void addProcessingState(String entryId, String processorName, ProcessingState state);
-    void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context);
+//    // processing states
+//    void addProcessingState(String entryId, String processorName, ProcessingState state);
+//    void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context);
 
     // attachments
     Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId);
