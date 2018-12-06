@@ -160,22 +160,52 @@ var setFormFieldValues = function(fieldsDataMap) {
                 case "SELECT":
                     setFormFieldSelectValues(formElement, fieldsDataMap[fieldProperty]);
                     break;
+                case "INPUT":
+                    setFormFieldInputValues(formElement, fieldsDataMap[fieldProperty]);
+                    break;
+                case "TEXTAREA":
+                    setFormFieldTextareaValues(formElement, fieldsDataMap[fieldProperty]);
+                    break;
+                default:
+                    console.warn("Can not populate field. Field is not supported: '" + formElement.tagName + "'.");
+                    break;
             }
         }
     }
 };
 
-var setFormFieldSelectValues = function(formFieldSelect, values) {
-    console.log("Set select values", formFieldSelect, values);
+var setFormFieldSelectValues = function(formFieldSelect, dataObject) {
+    console.log("Set select values", formFieldSelect, dataObject);
     formFieldSelect.innerHTML = "";
-    for(var property in values) {
-        if (values.hasOwnProperty(property)) {
+    for(var property in dataObject) {
+        if (dataObject.hasOwnProperty(property)) {
             var newOption = document.createElement('option');
-            newOption.innerHTML = values[property];
+            newOption.innerHTML = dataObject[property].displayName;
             newOption.setAttribute("value", property);
+            if(dataObject[property].active === true) {
+                newOption.setAttribute("selected", "selected");
+            }
             formFieldSelect.appendChild(newOption);
         }
     }
+};
+
+var setFormFieldInputValues = function(formField, dataObject) {
+    console.log("Set input values", formField, dataObject);
+    switch (formField.attribute("type")) {
+        case "text":
+            formField.value = dataObject.displayName;
+            break;
+        case "checkbox":
+        case "radio":
+            formField.setAttribute("checked", "checked");
+            break;
+    }
+};
+
+var setFormFieldTextareaValues = function(formField, dataObject) {
+    console.log("Set textarea values", formField, dataObject);
+    formField.innerHTML = dataObject.displayName;
 };
 
 var initializeFormWithRequestData = function(customerId, entryId) {
