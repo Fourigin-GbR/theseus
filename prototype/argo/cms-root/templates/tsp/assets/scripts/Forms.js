@@ -139,11 +139,14 @@ var getUrlParameterAndUpdateAndInitForm = function() {
         }
     };
 
-    var customerId = getUrlParameter('customer.id') || null;
+    var customerId = getUrlParameter('customer.id') || null,
+        entryId = getUrlParameter('entry.id') || null;
     if(customerId) {
         document.querySelector("input[name='customer.id']").value = customerId;
-        initializeFormWithRequestData(customerId);
     }
+
+    initializeFormWithRequestData(customerId, entryId);
+
 };
 
 var setFormFieldValues = function(fieldsDataMap) {
@@ -175,7 +178,7 @@ var setFormFieldSelectValues = function(formFieldSelect, values) {
     }
 };
 
-var initializeFormWithRequestData = function(customerId) {
+var initializeFormWithRequestData = function(customerId, entryId) {
     if(!customerId) {
         alert("Internal error. Please change your request and try again!");
         return;
@@ -185,6 +188,10 @@ var initializeFormWithRequestData = function(customerId) {
             "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
             "customer": customerId
         };
+
+    if(entryId) {
+        dataJson["entryId"] = entryId;
+    }
 
     $.ajax({
         url: '/forms/init-form',
