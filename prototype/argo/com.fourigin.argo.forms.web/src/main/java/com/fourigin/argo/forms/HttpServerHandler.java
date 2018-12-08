@@ -2,13 +2,13 @@ package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.definition.ExternalValueReference;
 import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
 import com.fourigin.argo.forms.formatter.DataFormatter;
 import com.fourigin.argo.forms.initialization.ExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
-import com.fourigin.argo.forms.initialization.InitialValue;
 import com.fourigin.argo.forms.mapping.FormObjectMapper;
 import com.fourigin.argo.forms.model.CleanupRequest;
 import com.fourigin.argo.forms.model.FormsRequest;
@@ -16,6 +16,8 @@ import com.fourigin.argo.forms.model.InitRequest;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.normalizer.DataNormalizer;
+import com.fourigin.argo.forms.prepopulation.PrePopulationType;
+import com.fourigin.argo.forms.prepopulation.PrePopulationValuesResolver;
 import com.fourigin.argo.forms.validation.FailureReason;
 import com.fourigin.argo.forms.validation.FormData;
 import com.fourigin.argo.forms.validation.FormFieldValidationResult;
@@ -45,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
@@ -65,7 +68,11 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private ExternalValueResolverFactory externalValueResolverFactory;
 
+    private Set<PrePopulationValuesResolver> prePopulationValuesResolvers;
+
     private static final String URI_INITIALIZE_FORM = "/init-form";
+
+    private static final String URI_PRE_POPULATE_FORM = "/pre-populate";
 
     private static final String URI_REGISTER_FORM = "/register-form";
 
@@ -84,6 +91,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         FormsStoreRepository formsStoreRepository,
         FormsProcessingDispatcher formsProcessingDispatcher,
         ExternalValueResolverFactory externalValueResolverFactory,
+        Set<PrePopulationValuesResolver> prePopulationValuesResolvers,
         MessageSource messageSource,
         ObjectMapper objectMapper
     ) {
@@ -93,6 +101,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         this.formDefinitionRepository = formDefinitionRepository;
         this.formsProcessingDispatcher = formsProcessingDispatcher;
         this.externalValueResolverFactory = externalValueResolverFactory;
+        this.prePopulationValuesResolvers = prePopulationValuesResolvers;
         this.messageSource = messageSource;
         this.objectMapper = objectMapper;
 
@@ -132,6 +141,12 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         if ((contextPath + URI_INITIALIZE_FORM).equals(uri)) {
             if (logger.isDebugEnabled()) logger.debug("Processing init-form request");
             serveInitializeForm(ctx, request);
+            return;
+        }
+
+        if ((contextPath + URI_PRE_POPULATE_FORM).equals(uri)) {
+            if (logger.isDebugEnabled()) logger.debug("Processing pre-populate-form request");
+            servePrePopulateForm(ctx, request);
             return;
         }
 
@@ -236,16 +251,31 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
             String customerId = initRequest.getCustomer();
 
-            String entryId = initRequest.getEntryId();
-            FormsStoreEntry entry = null;
-            if (entryId != null) {
-                entry = formsStoreRepository.retrieveEntry(entryId);
-            }
-
-            Map<String, Map<String, InitialValue>> result = new HashMap<>();
+            Map<String, Map<String, String>> result = new HashMap<>();
 
             Map<String, FieldDefinition> fields = formDefinition.getFields();
-            initializeFields(customerId, entry, fields, result);
+            initializeFields(customerId, fields, result);
+
+            writeResponseBody(ctx, result, HttpResponseStatus.OK);
+        } catch (Throwable th) {
+            if (logger.isErrorEnabled()) logger.error("Unexpected error!", th);
+            serve500(ctx, th);
+        }
+    }
+
+    private void servePrePopulateForm(ChannelHandlerContext ctx, FullHttpRequest request) {
+        if (logger.isInfoEnabled()) logger.info("Serving pre-populate form ...");
+
+        try {
+            InitRequest initRequest = getRequestBody(InitRequest.class, request);
+
+            String formDefinitionId = initRequest.getFormDefinition();
+            String customerId = initRequest.getCustomer();
+            String entryId = initRequest.getEntryId();
+
+            Map<String, Map<String, String>> result = new HashMap<>();
+
+            prePopulateFields(formDefinitionId, customerId, entryId, result);
 
             writeResponseBody(ctx, result, HttpResponseStatus.OK);
         } catch (Throwable th) {
@@ -464,11 +494,20 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         return result;
     }
 
+    /*
+    {
+		"tax.account/stored-account": {
+			"DE01 2345 6789 0123 45": "DE01 2345 6789 0123 45 (Deutsche Bank Berlin)",
+			"DE66 5555 4444 3333 2222 11": "DE66 5555 4444 3333 2222 11 (Deutsche Bank Berlin)",
+			"DE11222233334444555566": "DE11 2222 3333 4444 5555 66 (Dresdner Bank Dresden)"
+		},
+		...
+	}
+     */
     private void initializeFields(
         String customerId,
-        FormsStoreEntry entry,
         Map<String, FieldDefinition> fields,
-        Map<String, Map<String, InitialValue>> initValues
+        Map<String, Map<String, String>> initValues
     ) {
         if (fields == null || fields.isEmpty()) {
             return;
@@ -488,34 +527,64 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                     throw new IllegalArgumentException("Unsupported external value resolver '" + externalValueOwner + "'!");
                 }
 
-                Map<String, InitialValue> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
+                Map<String, String> externalValue = processor.resolveExternalValue(customerId, externalValueKey);
                 initValues.put(currentPath, externalValue);
             }
         );
+    }
 
-        if (entry != null) {
-            Map<String, String> storedData = entry.getData();
-            for (Map.Entry<String, String> dataEntry : storedData.entrySet()) {
-                String path = dataEntry.getKey();
-                String value = dataEntry.getValue();
+    private void prePopulateFields(
+        String formDefinitionId,
+        String customerId,
+        String entryId,
+        Map<String, Map<String, String>> prePopulationValues
+    ) {
+        if (prePopulationValuesResolvers == null || prePopulationValuesResolvers.isEmpty()) {
+            if (logger.isDebugEnabled()) logger.debug("No pre-population value resolvers defined!");
+            return;
+        }
 
-                Map<String, InitialValue> initData = initValues.get(path);
+        if (entryId != null) {
+            if (logger.isDebugEnabled()) logger.debug("Resolving pre-population values for entry '{}'", entryId);
 
-                if (initData != null) {
-                    InitialValue dataValue = initData.get(value);
-                    if (dataValue == null) {
-                        dataValue = new InitialValue();
-                        initData.put(value, dataValue);
+            final FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
+
+            for (PrePopulationValuesResolver resolver : prePopulationValuesResolvers) {
+                if (resolver.isAccepted(PrePopulationType.ENTRY)) {
+                    Map<String, String> entryValues = resolver.resolveValues(entry);
+                    if (entryValues != null) {
+                        prePopulationValues.put(resolver.getName(), entryValues);
                     }
-                    dataValue.setActive(true);
-                } else {
-                    InitialValue initialValue = new InitialValue();
-                    initialValue.setActive(true);
+                }
+            }
+        }
 
-                    initData = new HashMap<>();
-                    initData.put(value, initialValue);
+        if (formDefinitionId != null) {
+            if (logger.isDebugEnabled()) logger.debug("Resolving pre-population values for formDefinition '{}'", formDefinitionId);
 
-                    initValues.put(path, initData);
+            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+
+            for (PrePopulationValuesResolver resolver : prePopulationValuesResolvers) {
+                if (resolver.isAccepted(PrePopulationType.FORM_DEFINITION)) {
+                    Map<String, String> entryValues = resolver.resolveValues(formDefinition);
+                    if (entryValues != null) {
+                        prePopulationValues.put(resolver.getName(), entryValues);
+                    }
+                }
+            }
+        }
+
+        if (customerId != null) {
+            if (logger.isDebugEnabled()) logger.debug("Resolving pre-population values for customer '{}'", customerId);
+
+            Customer customer = customerRepository.retrieveCustomer(customerId);
+
+            for (PrePopulationValuesResolver resolver : prePopulationValuesResolvers) {
+                if (resolver.isAccepted(PrePopulationType.CUSTOMER)) {
+                    Map<String, String> entryValues = resolver.resolveValues(customer);
+                    if (entryValues != null) {
+                        prePopulationValues.put(resolver.getName(), entryValues);
+                    }
                 }
             }
         }

@@ -7,6 +7,9 @@ import com.fourigin.argo.forms.formatter.mapping.DataFormatterModule;
 import com.fourigin.argo.forms.initialization.CustomerExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
 import com.fourigin.argo.forms.normalizer.mapping.DataNormalizerModule;
+import com.fourigin.argo.forms.prepopulation.DummyNameplatePrePopulationValueResolver;
+import com.fourigin.argo.forms.prepopulation.PrePopulationValuesResolver;
+import com.fourigin.argo.forms.prepopulation.StoredEntryPrePopulationValueResolver;
 import com.fourigin.argo.forms.processing.FulfillInternalCardFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillTaxPaymentFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillVehicleRegistrationFormEntryProcessor;
@@ -33,7 +36,9 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @SpringBootApplication
 @ComponentScan("com.fourigin.argo.forms.config")
@@ -65,6 +70,7 @@ public class NettyServer {
         @Autowired FormDefinitionRepository formDefinitionRepository,
         @Autowired FormsProcessingDispatcher formsProcessingDispatcher,
         @Autowired ExternalValueResolverFactory externalValueResolverFactory,
+        @Autowired(required = false) Set<PrePopulationValuesResolver> prePopulationValuesResolvers,
         @Autowired MessageSource messageSource
     ) {
         return new ServerBootstrap()
@@ -77,6 +83,7 @@ public class NettyServer {
                 formDefinitionRepository,
                 formsProcessingDispatcher,
                 externalValueResolverFactory,
+                prePopulationValuesResolvers,
                 messageSource,
                 objectMapper()
             ))
@@ -128,11 +135,11 @@ public class NettyServer {
         @Value("${forms.vehicle-registration.tax-payment-form}") File taxPaymentForm,
         @Value("${forms.vehicle-registration.registration-card-form}") File internalForm
     ) {
-        if(!registrationForm.exists()) {
+        if (!registrationForm.exists()) {
             throw new IllegalArgumentException("Original vehicle registration form '" + registrationForm.getAbsolutePath() + "' not found!");
         }
 
-        if(!taxPaymentForm.exists()) {
+        if (!taxPaymentForm.exists()) {
             throw new IllegalArgumentException("Original tax payment form '" + taxPaymentForm.getAbsolutePath() + "' not found!");
         }
 
@@ -169,7 +176,7 @@ public class NettyServer {
     }
 
     @Bean
-    public FormsRegistry formsRegistry(){
+    public FormsRegistry formsRegistry() {
         return new FormsRegistry();
     }
 
@@ -191,7 +198,7 @@ public class NettyServer {
     @Bean
     public ExternalValueResolverFactory externalValueResolverFactory(
         @Autowired CustomerRepository customerRepository
-    ){
+    ) {
         ExternalValueResolverFactory externalValueResolverFactory = new ExternalValueResolverFactory();
 
         externalValueResolverFactory.put("customer", new CustomerExternalValueResolver(customerRepository));
@@ -200,12 +207,20 @@ public class NettyServer {
     }
 
     @Bean
+    Set<PrePopulationValuesResolver> prePopulationValuesResolvers() {
+        return new HashSet<>(Arrays.asList(
+            new StoredEntryPrePopulationValueResolver("STORED_DATA"),
+            new DummyNameplatePrePopulationValueResolver("DEFAULTS")
+        ));
+    }
+
+    @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
-        
+
         return messageSource;
     }
 

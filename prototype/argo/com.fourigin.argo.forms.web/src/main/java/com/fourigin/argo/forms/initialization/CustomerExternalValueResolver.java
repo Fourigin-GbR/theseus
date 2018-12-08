@@ -35,7 +35,7 @@ public class CustomerExternalValueResolver implements ExternalValueResolver {
     }
 
     @Override
-    public Map<String, InitialValue> resolveExternalValue(String customerId, String key) {
+    public Map<String, String> resolveExternalValue(String customerId, String key) {
         Objects.requireNonNull(customerId, "customerId must not be null!");
 
         Customer customer = customerRepository.retrieveCustomer(customerId);
@@ -57,21 +57,18 @@ public class CustomerExternalValueResolver implements ExternalValueResolver {
         }
     }
 
-    private Map<String, InitialValue> resolveStoredAccounts(Customer customer) {
+    private Map<String, String> resolveStoredAccounts(Customer customer) {
         Set<BankAccount> bankAccounts = customer.getBankAccounts();
         if (bankAccounts == null || bankAccounts.isEmpty()) {
             return Collections.emptyMap();
         }
 
-        Map<String, InitialValue> result = new HashMap<>();
+        Map<String, String> result = new HashMap<>();
 
         for (BankAccount bankAccount : bankAccounts) {
             String name = bankAccount.getName();
             String displayName = IBAN_FORMATTER.format(bankAccount.getIban()) + " (" + bankAccount.getBankName() + ")";
-            InitialValue initialValue = new InitialValue();
-            initialValue.setDisplayName(displayName);
-            initialValue.setActive(false);
-            result.put(name, initialValue);
+            result.put(name, displayName);
         }
 
         return result;
