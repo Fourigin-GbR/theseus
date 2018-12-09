@@ -108,20 +108,14 @@ function internalInitRequestsTable(data) {
                     return data;
                 }
             },
-            {"data": "customer"},
+            {
+                "data": "customer"
+            },
             {
                 "data": "creationTimestamp",
                 "render": function (data) {
                     var date = new Date(data);
-                    var month = date.getMonth() + 1;
-                    var y = date.getFullYear();
-                    var m = month < 10 ? "0" + month : "" + month;
-                    var day = date.getDate();
-                    var d = day < 10 ? "0" + day : day;
-                    var hh = date.getHours();
-                    var minutes = date.getMinutes();
-                    var mm = minutes < 10 ? "0" + minutes : minutes;
-                    return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+                    return formatDate(date);
                 }
             },
             {
@@ -234,6 +228,10 @@ function initRequestsTable(){
                 var h3 = $('<h3></h3>').append('Auftrag ' + req.id);
                 var h4 = $('<h4></h4>').append('Anhänge:');
                 var ul = $('<ul></ul>');
+                var infoLink = $('<a></a>')
+                    .prop('href', '/request-info.html?entryId=' + req.id)
+                    .prop('target', '_blank')
+                    .append('info');
 
                 for(n in req.attachments){
                     var attachment = req.attachments[n];
@@ -259,7 +257,8 @@ function initRequestsTable(){
                 div
                     .append(h3)
                     .append(h4)
-                    .append(ul);
+                    .append(ul)
+                    .append(infoLink);
 
                 attachments
                     .append(div);
@@ -281,4 +280,16 @@ function resolveFAType(mimeType){
     }
 
     return "fa-file-text-o";
+}
+
+function formatDate(date) {
+    var month = date.getMonth() + 1;
+    var y = date.getFullYear();
+    var m = month < 10 ? "0" + month : "" + month;
+    var day = date.getDate();
+    var d = day < 10 ? "0" + day : day;
+    var hh = date.getHours();
+    var minutes = date.getMinutes();
+    var mm = minutes < 10 ? "0" + minutes : minutes;
+    return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
 }

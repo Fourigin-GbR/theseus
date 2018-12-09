@@ -7,6 +7,7 @@ import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.dashboard.CustomerInfo;
 import com.fourigin.argo.forms.dashboard.FormRequestInfo;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
+import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 @RestController
 public class DashboardController {
@@ -76,23 +80,58 @@ public class DashboardController {
 
         for (String entryId : entryIds) {
             FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
-            FormsEntryHeader header = entryInfo.getHeader();
-            String customerId = header.getCustomer();
-
-            Set<AttachmentDescriptor> attachments = formsStoreRepository.getAttachmentDescriptors(entryId);
-
-            FormRequestInfo info = new FormRequestInfo();
-            info.setId(entryInfo.getId());
-            info.setFormDefinition(header.getFormDefinition());
-            info.setBase(header.getBase());
-            info.setCustomer(customerId);
-            info.setCreationTimestamp(entryInfo.getCreationTimestamp());
-            info.setAttachments(attachments);
-            info.setProcessingState(entryInfo.getProcessingState());
-            result.add(info);
+            result.add(convertEntry(entryInfo));
         }
 
         return result;
+    }
+
+    @RequestMapping("/request")
+    public FormRequestInfo request(
+        @RequestParam String entryId
+    ) {
+        FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
+        if (entryInfo == null) {
+            throw new IllegalArgumentException("No entry found for id '" + entryId + "'!");
+        }
+
+        return convertEntry(entryInfo);
+    }
+
+    private FormRequestInfo convertEntry(FormsStoreEntryInfo entryInfo){
+        FormsEntryHeader header = entryInfo.getHeader();
+        String customerId = header.getCustomer();
+
+        Set<AttachmentDescriptor> attachments = formsStoreRepository.getAttachmentDescriptors(entryInfo.getId());
+
+        FormRequestInfo info = new FormRequestInfo();
+        info.setId(entryInfo.getId());
+        info.setFormDefinition(header.getFormDefinition());
+        info.setBase(header.getBase());
+        info.setCustomer(customerId);
+        info.setCreationTimestamp(entryInfo.getCreationTimestamp());
+        info.setAttachments(attachments);
+        info.setProcessingState(entryInfo.getProcessingState());
+        return info;
+    }
+
+    @RequestMapping("/data")
+    public SortedMap<String, String> data(
+        @RequestParam String entryId
+    ){
+        Objects.requireNonNull(entryId, "entryId must not bei null!");
+
+        FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
+        if (entry == null) {
+            throw new IllegalArgumentException("No entry found for id '" + entryId + "'!");
+        }
+
+        Map<String, String> data = entry.getData();
+        if(data == null){
+            return null;
+        }
+
+        return new TreeMap<>(data);
     }
 
     @RequestMapping("/attachment")
