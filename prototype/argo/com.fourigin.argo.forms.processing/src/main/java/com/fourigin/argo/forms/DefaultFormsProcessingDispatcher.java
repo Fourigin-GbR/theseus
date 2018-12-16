@@ -17,8 +17,6 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
 
     private FormsRegistry registry;
 
-    public static final String REGISTRATION_PROCESSING_STATE = "REGISTRATION_PROCESSING_STATE";
-
     public DefaultFormsProcessingDispatcher(
         FormsStoreRepository formsStoreRepository,
         FormsEntryProcessorMapping processorMapping,
@@ -43,24 +41,24 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
             state = new FormsDataProcessingState();
         }
 
-        state.addHistoryRecord(new ProcessingHistoryRecord("status/change", ProcessingState.PROCESSING.name()));
+        state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, ProcessingState.PROCESSING.name());
         state.setState(ProcessingState.PROCESSING);
 
         List<String> processorNames = processorMapping.get(formDefinitionId);
         if (processorNames != null && !processorNames.isEmpty()) {
-            state.addHistoryRecord(new ProcessingHistoryRecord("processing/start"));
+            state.addHistoryRecord(ProcessingHistoryRecord.KEY_PROCESSING_START);
 
             for (String processorName : processorNames) {
                 try {
                     FormsEntryProcessor processor = processorFactory.getInstance(processorName);
                     processor.processEntry(entryId, registry);
-                    state.addHistoryRecord(new ProcessingHistoryRecord("processing/" + processorName));
+                    state.addHistoryRecord(ProcessingHistoryRecord.KEYPREFIX_PROCESSING + processorName);
                 } catch (Throwable th) {
                     success = false;
                 }
             }
 
-            state.addHistoryRecord(new ProcessingHistoryRecord("processing/done"));
+            state.addHistoryRecord(ProcessingHistoryRecord.KEY_PROCESSING_DONE);
         }
 
         // reload updated info entry
@@ -68,7 +66,7 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
 
         // set state
         if (success) {
-            state.addHistoryRecord(new ProcessingHistoryRecord("status/change", ProcessingState.WAITING.name()));
+            state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, ProcessingState.WAITING.name());
             state.setState(ProcessingState.WAITING);
         } else {
             state.setState(ProcessingState.FAILED);

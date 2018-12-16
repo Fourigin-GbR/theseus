@@ -2,27 +2,128 @@ var keysDataTable;
 var propertiesDataTable;
 var historyDataTable;
 
-function init(){
+function init() {
     var entryId = getUrlParameter('entryId');
     console.log("Retrieving request entry for id " + entryId);
 
     $.when(loadRequestInfo(entryId)).done(
-        function(data) {
+        function (data) {
             console.log("info:");
             console.log(data);
 
             var keysTable = $('#request-keys');
+
+            /*
+                        <tr>
+                            <td class="key">ID</td>
+                            <td class="value" colspan="5">1234567890123456789012345678901234567890</td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                            <td style="display: none;"></td>
+                        </tr>
+                        <tr>
+                            <td class="key">Typ</td>
+                            <td class="value">KFZ-Anmeldung</td>
+                            <td class="key">Kundennummer</td>
+                            <td class="value">1</td>
+                            <td class="key">Datum</td>
+                            <td class="value">17.02.2018</td>
+                        </tr>
+
+             */
+
+            var keysBody = keysTable.find('tbody');
+            keysBody.empty();
+
+            var creationDate = new Date(parseInt(data.creationTimestamp));
+
+            keysBody
+                .append($('<tr></tr>')
+                    .append($('<td></td>').attr('class', 'key').text('ID'))
+                    .append($('<td></td>').attr('class', 'value').attr('colspan', 5).text(data.id))
+                    .append($('<td></td>').attr('style', 'display: none;'))
+                    .append($('<td></td>').attr('style', 'display: none;'))
+                    .append($('<td></td>').attr('style', 'display: none;'))
+                    .append($('<td></td>').attr('style', 'display: none;'))
+                )
+                .append($('<tr></tr>')
+                    .append($('<td></td>').attr('class', 'key').text('Typ'))
+                    .append($('<td></td>').attr('class', 'value').text(data.formDefinition))
+                    .append($('<td></td>').attr('class', 'key').text('Kundennummer'))
+                    .append($('<td></td>').attr('class', 'value').text(data.customer))
+                    .append($('<td></td>').attr('class', 'key').text('Datum'))
+                    .append($('<td></td>').attr('class', 'value').html(formatDate(creationDate, false)))
+                );
+
             keysDataTable = keysTable.DataTable({
-                "paging":   false,
+                "paging": false,
                 "searching": false,
                 "ordering": false,
                 "info": false
             });
 
+            var historyTable = $('#request-history');
+
+            var historyBody = historyTable.find('tbody');
+            historyBody.empty();
+
+            var processingState = data.processingState;
+            var historyData = processingState.history;
+
+            historyData.sort(sortByTimestamp);
+
+            $.each(historyData, function (index, historyEntry) {
+                var row;
+
+                var date = new Date(parseInt(historyEntry.timestamp));
+
+                if (historyEntry.value) {
+                    row = $('<tr></tr>')
+                        .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
+                        .append($('<td></td>').attr('class', 'state').append(historyEntry.key))
+                        .append($('<td></td>').attr('class', 'message').append(historyEntry.value));
+                }
+                else {
+                    row = $('<tr></tr>')
+                        .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
+                        .append($('<td></td>').attr('colspan', 2).attr('class', 'state').append(historyEntry.key))
+                        .append($('<td></td>').attr('style', 'display: none;'));
+                }
+                historyBody.append(row);
+            });
+
+            historyDataTable = historyTable.DataTable({
+                "paging": false,
+                "searching": false,
+                "ordering": false,
+                "info": false
+            });
+        }
+    );
+
+    $.when(loadRequestData(entryId)).done(
+        function (data) {
+            console.log("data:");
+            console.log(data);
+
             var propertiesTable = $('#request-properties');
+
+            var tbody = propertiesTable.find('tbody');
+            tbody.empty();
+
+            $.each(data, function (key, value) {
+                var cell1 = $('<td></td>').attr('class', 'key').append(key);
+                var cell2 = $('<td></td>').attr('class', 'value').append(value);
+                var row = $('<tr></tr>')
+                    .append(cell1)
+                    .append(cell2);
+                tbody.append(row);
+            });
+
             propertiesDataTable = propertiesTable.DataTable({
                 "dom": '<"toolbar">frtip',
-                "paging":   false,
+                "paging": false,
                 "searching": false,
                 "info": false
             });
@@ -30,54 +131,18 @@ function init(){
             $("div.toolbar").html('<h4>Eigenschaften des Auftrages</h4>');
         }
     );
-
-    $.when(loadRequestData(entryId)).done(
-        function(data) {
-            console.log("data:");
-            console.log(data);
-
-            var historyTable = $('#request-history');
-            historyDataTable = historyTable.DataTable({
-                "paging":   false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "columns": [
-                    {
-                        "render": function (data) {
-                            var date = new Date(parseInt(data));
-                            console.log('data: ' + data + ', date: ' + date);
-                            return formatDate(date);
-                        }
-                    },
-                    {
-                        "render": function (data) {
-                            return data;
-                        }
-                    },
-                    {
-                        "render": function (data) {
-                            return data;
-                        }
-                    }
-                ]
-            });
-        }
-    );
 }
 
-function loadRequestInfo(entryId){
-    // return $.ajax({
-    //     url: "/forms-dashboard/request?entryId=" + entryId
-    // });
-    return 0;
+function loadRequestInfo(entryId) {
+    return $.ajax({
+        url: "/forms-dashboard/request?entryId=" + entryId
+    });
 }
 
-function loadRequestData(entryId){
-    // return $.ajax({
-    //     url: "/forms-dashboard/data?entryId=" + entryId
-    // });
-    return 0;
+function loadRequestData(entryId) {
+    return $.ajax({
+        url: "/forms-dashboard/data?entryId=" + entryId
+    });
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {
@@ -95,7 +160,14 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-function formatDate(date) {
+function sortByTimestamp(a, b) {
+    var ts1 = parseInt(a.timestamp);
+    var ts2 = parseInt(b.timestamp);
+    return ((ts2 < ts1) ? -1 : ((ts2 > ts1) ? 1 : 0));
+
+}
+
+function formatDate(date, showSeconds) {
     var month = date.getMonth() + 1;
     var y = date.getFullYear();
     var m = month < 10 ? "0" + month : "" + month;
@@ -104,5 +176,12 @@ function formatDate(date) {
     var hh = date.getHours();
     var minutes = date.getMinutes();
     var mm = minutes < 10 ? "0" + minutes : minutes;
-    return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+    if (showSeconds) {
+        var seconds = date.getSeconds();
+        var ss = seconds < 10 ? "0" + seconds : seconds;
+        return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm + ":" + ss;
+    }
+    else {
+        return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+    }
 }

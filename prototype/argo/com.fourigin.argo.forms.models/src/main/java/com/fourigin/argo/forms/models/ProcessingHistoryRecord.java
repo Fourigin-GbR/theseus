@@ -12,6 +12,12 @@ public class ProcessingHistoryRecord implements Serializable {
 
     private long timestamp;
 
+    public static final String KEY_MESSAGE = "status/message";
+    public static final String KEY_STATUS_CHANGE = "status/change";
+    public static final String KEY_PROCESSING_START = "processing/start";
+    public static final String KEY_PROCESSING_DONE = "processing/done";
+    public static final String KEYPREFIX_PROCESSING = "processing/";
+
     public ProcessingHistoryRecord() {
     }
 

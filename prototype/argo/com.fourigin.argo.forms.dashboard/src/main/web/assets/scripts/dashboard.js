@@ -223,9 +223,21 @@ function initRequestsTable(){
 
             for(pos in data){
                 var req = data[pos];
+                var processingState = req.processingState;
                 var divId = "attachment-" + req.id;
                 var div = $('<div></div>').prop('id', divId);
                 var h3 = $('<h3></h3>').append('Auftrag ' + req.id);
+                var divStatus = $('<div></div>')
+                    .prop('class', 'status')
+                    .append(processingState.state);
+                var divMessage = $('<div></div>')
+                    .prop('class', 'message')
+                    .append(processingState.currentStatusMessage);
+                var fieldsetStatus = $('<fieldset></fieldset>')
+                    .prop('class', 'status-container')
+                    .append(divStatus)
+                    .append(divMessage);
+                
                 var h4 = $('<h4></h4>').append('Anhänge:');
                 var ul = $('<ul></ul>');
                 var infoLink = $('<a></a>')
@@ -256,6 +268,7 @@ function initRequestsTable(){
 
                 div
                     .append(h3)
+                    .append(fieldsetStatus)
                     .append(h4)
                     .append(ul)
                     .append(infoLink);

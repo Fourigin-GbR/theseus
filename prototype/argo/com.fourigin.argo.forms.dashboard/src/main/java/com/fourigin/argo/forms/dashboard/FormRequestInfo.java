@@ -97,13 +97,14 @@ public class FormRequestInfo implements Serializable {
             Objects.equals(formDefinition, that.formDefinition) &&
             Objects.equals(customer, that.customer) &&
             Objects.equals(base, that.base) &&
+            state == that.state &&
             Objects.equals(attachments, that.attachments) &&
             Objects.equals(processingState, that.processingState);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, formDefinition, customer, base, creationTimestamp, attachments, processingState);
+        return Objects.hash(id, formDefinition, customer, base, creationTimestamp, state, attachments, processingState);
     }
 
     @Override
@@ -114,6 +115,7 @@ public class FormRequestInfo implements Serializable {
             ", customer='" + customer + '\'' +
             ", base='" + base + '\'' +
             ", creationTimestamp=" + creationTimestamp +
+            ", state=" + state +
             ", attachments=" + attachments +
             ", processingState=" + processingState +
             '}';

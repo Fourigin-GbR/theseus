@@ -6,9 +6,12 @@ import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.dashboard.CustomerInfo;
 import com.fourigin.argo.forms.dashboard.FormRequestInfo;
+import com.fourigin.argo.forms.models.FormsDataProcessingState;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
+import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
+import com.fourigin.argo.forms.models.ProcessingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -112,6 +115,7 @@ public class DashboardController {
         info.setCreationTimestamp(entryInfo.getCreationTimestamp());
         info.setAttachments(attachments);
         info.setProcessingState(entryInfo.getProcessingState());
+        
         return info;
     }
 
@@ -173,42 +177,31 @@ public class DashboardController {
         customerRepository.deleteCustomer(customerId);
     }
 
-//    @RequestMapping("/change-state")
-//    public void changeState(
-//        @RequestParam String customerId,
-//        @RequestParam String entryId,
-//        @RequestParam String stateKey,
-//        @RequestParam ProcessingState processingState,
-//        @RequestParam String comment
-//    ) {
-//        Objects.requireNonNull(customerId, "customerId must not bei null!");
-//        Objects.requireNonNull(entryId, "entryId must not bei null!");
-//        Objects.requireNonNull(stateKey, "stateKey must not bei null!");
-//        Objects.requireNonNull(processingState, "state must not bei null!");
-//
-//        ProcessingHistoryRecord historyRecord = new ProcessingHistoryRecord();
-//        historyRecord.setTimestamp(System.currentTimeMillis());
-//
-//        if (comment != null) {
-//            Map<String, String> historyContext = new HashMap<>();
-//            historyContext.put("comment", comment);
-//            historyRecord.setContext(historyContext);
-//        }
-//
-//        FormsDataProcessingState state = new FormsDataProcessingState();
-//        state.setState(processingState);
-//        state.setHistory(Collections.singletonList(
-//            historyRecord
-//        ));
-//
-//        FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
-//        Map<String, FormsDataProcessingState> states = info.getProcessingStates();
-//        if(states == null){
-//            states = new HashMap<>();
-//            info.setProcessingStates(states);
-//        }
-//
-//        states.put(stateKey, state);
-//        formsStoreRepository.updateEntryInfo(info);
-//    }
+    @RequestMapping("/change-state")
+    public void changeState(
+        @RequestParam String customerId,
+        @RequestParam String entryId,
+        @RequestParam String stateKey,
+        @RequestParam ProcessingState processingState,
+        @RequestParam String comment
+    ) {
+        Objects.requireNonNull(customerId, "customerId must not bei null!");
+        Objects.requireNonNull(entryId, "entryId must not bei null!");
+        Objects.requireNonNull(stateKey, "stateKey must not bei null!");
+        Objects.requireNonNull(processingState, "state must not bei null!");
+
+        FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
+        FormsDataProcessingState state = info.getProcessingState();
+
+        state.setState(processingState);
+
+        if(comment != null && !comment.isEmpty()) {
+            state.setCurrentStatusMessage(comment);
+
+            state.addHistoryRecord(ProcessingHistoryRecord.KEY_MESSAGE, comment);
+        }
+        state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, processingState.name());
+
+        formsStoreRepository.updateEntryInfo(info);
+    }
 }
