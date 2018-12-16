@@ -233,6 +233,7 @@ var initializeFormWithRequestData = function(customerId, entryId) {
         .done(function (res) {
             console.log(res);
             setFormFieldValues(res);
+            prePopulateFormWithRequestData(customerId, entryId);
         })
         .fail(function (err) {
             console.log('Error: ' + err.status);
@@ -240,6 +241,74 @@ var initializeFormWithRequestData = function(customerId, entryId) {
         });
 };
 
+var prePopulateFormWithRequestData = function(customerId, entryId) {
+    if(!customerId) {
+        alert("Internal error. Please change your request and try again!");
+        return;
+    }
+    var self = this,
+        dataJson = {
+            "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+            "customer": customerId
+        };
+
+    if(entryId) {
+        dataJson["entryId"] = entryId;
+    }
+
+    $.ajax({
+        url: '/forms/pre-populate',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify(dataJson)
+    })
+        .done(function (res) {
+            console.log(res);
+            if(res) {
+                prePopulateForm(res);
+            }
+        })
+        .fail(function (err) {
+            console.log('Error: ' + err.status);
+
+        });
+};
+
+var prePopulateForm = function(data) {
+    /**
+     * Take data and search form-element. On fixed elements like radio, checkbox, selectbox look for the correct value,
+     * on textboxes or textareas enter the current value.
+     */
+    var storedData, defaultValues, currentFormElement;
+    //
+    console.info("prePopulateForm", data);
+    storedData = data["STORED_DATA"];
+    defaultValues = data["DEFAULT_VALUES"];
+    for(var property in storedData) {
+        if (storedData.hasOwnProperty(property)) {
+            currentFormElement = document.querySelector("[name='" + property + "']");
+            switch (currentFormElement.getAttribute("type")) {
+                case "text":
+                    currentFormElement.value = storedData[property];
+                    break;
+                case "radio":
+                case "checkbox":
+                    currentFormElement.setAttribute("checked", "checked");
+                    break;
+                case "select":
+                    var currentOptions = currentFormElement.querySelectorAll("option");
+                    Array.prototype.forEach.call(currentOptions, function (option) {
+                        if(option.value === storedData[property]) {
+                            option.setAttribute("checked", "checked");
+                        }
+                    }());
+                    break;
+            }
+        }
+    }
+    iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
+};
 
 var validateForm = function() {
     var htmlNodes_formFields = formular.querySelectorAll("input[type='text'], input[type='hidden'], input[type='checkbox']:checked, input[type='radio']:checked, textarea");
