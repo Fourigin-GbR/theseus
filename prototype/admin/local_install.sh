@@ -9,12 +9,12 @@ boldFont=`echo "\033[1m"`
 fgGreen=`echo "\033[32m"`
 fgRed=`echo "\033[31m"`
 
-USERS_LIST="karsten michael simon"
-ADM_LIST="sascha vlad"
-ALL_USERS="karsten michael sascha simon vlad"
+USERS_LIST="michael"
+ADM_LIST="karsten sascha vlad"
+ALL_USERS="karsten michael sascha vlad"
 
 USERS_PASSWORD="GeBeEr2015"
-NETCUP_DEV_ROOT_PASSWORD=""
+NETCUP_DEV_ROOT_PASSWORD="xN3sqKm4yQ3awfp"
 NETCUP_STAGE_ROOT_PASSWORD=""
 NETCUP_WEB_ROOT_PASSWORD="rN4TW1b8uksqQda"
 
@@ -38,7 +38,7 @@ if [[ -z "${USER_NAME}" ]]; then
     read -e -p "Enter your user name > " USER_NAME
 
 	case ${USER_NAME} in
-			karsten|michael|sascha|simon|vlad)
+			karsten|michael|sascha|vlad)
 			echo "The user name: \"${USER_NAME}\" is accepted"
 		 ;;
 		*) 	echo "Invalid name ${USER_NAME}"
@@ -55,7 +55,11 @@ if [[ -n "${USER_NAME}" ]]; then
 	echo "2. Update the .bash_profile"
 	echo "3. Create private/public keys pair"
 	echo "4. Copy public key to the server"
-	echo "5. Copy scripts to the server"
+	echo "5. Copy install scripts to the server"
+	echo "6. Copy spring-boot scripts to the server"
+	echo "7. Copy profile script to the server"
+	echo "8. Copy sudoers file to the server"
+
 	printf "\n"
 	printf "Exit - any key\n"
 
@@ -77,7 +81,19 @@ if [[ -n "${USER_NAME}" ]]; then
 			read -p "Click any key..." NULL
 			subMenu "${HOST_IP}" "${ROOT_PASSWORD}" "${HOST_NAME}" "${USER_NAME}"
 		 ;;
-		5) copyScripts "${HOST_IP}" "${ROOT_PASSWORD}"
+		5) copyInstallScripts "${HOST_IP}" "${ROOT_PASSWORD}"
+			read -p "Click any key..." NULL
+			subMenu "${HOST_IP}" "${ROOT_PASSWORD}" "${HOST_NAME}" "${USER_NAME}"
+		 ;;
+		6) copyScriptBootScripts "${HOST_IP}" "${ROOT_PASSWORD}"
+			read -p "Click any key..." NULL
+			subMenu "${HOST_IP}" "${ROOT_PASSWORD}" "${HOST_NAME}" "${USER_NAME}"
+		 ;;
+		7) copyProfileScript "${HOST_IP}" "${ROOT_PASSWORD}"
+			read -p "Click any key..." NULL
+			subMenu "${HOST_IP}" "${ROOT_PASSWORD}" "${HOST_NAME}" "${USER_NAME}"
+		 ;;
+		 8) copySudoersFile "${HOST_IP}" "${ROOT_PASSWORD}"
 			read -p "Click any key..." NULL
 			subMenu "${HOST_IP}" "${ROOT_PASSWORD}" "${HOST_NAME}" "${USER_NAME}"
 		 ;;
@@ -97,8 +113,6 @@ function addUser() {
 		 ;;
 			michael) USER_ID="1001" EXTRA_GROUP=""
 		 ;;
-			simon)  USER_ID="1002" EXTRA_GROUP=""
-		 ;;
 			sascha)  USER_ID="1100" EXTRA_GROUP="-G adm"
 		 ;;
 			vlad)  USER_ID="1101" EXTRA_GROUP="-G adm"
@@ -109,7 +123,9 @@ function addUser() {
 	esac
 
 	echo "Root password: \"${ROOT_PASSWORD}\""
-	ssh root@"${HOST_IP}" "if ! id "${USER_NAME}" >/dev/null 2>&1; then /sbin/useradd -m -u ${USER_ID} -g users "${EXTRA_GROUP}" "${USER_NAME}"; fi"
+	echo ""
+	echo "User password: \"${USERS_PASSWORD}\""
+	ssh root@"${HOST_IP}" "if ! id "${USER_NAME}" >/dev/null 2>&1; then /sbin/useradd -m -u ${USER_ID} -g users "${EXTRA_GROUP}" "${USER_NAME}"; fi; /usr/bin/passwd "${USER_NAME}""
 }
 
 function updateProfile() {
@@ -117,14 +133,21 @@ function updateProfile() {
 	HOST_NAME="$2"
 	USER_NAME="$3"
 
-	echo "Update the .bash_profile"
+	echo "Add alias to the .bash_profile/.profile"
+
+	if [[ -f "${HOME}/.bash_profile" ]]; then
+		PROFILE_FILE="${HOME}/.bash_profile"
+	fi
+	if [[ -f "${HOME}/.profile" ]]; then
+		PROFILE_FILE="${HOME}/.profile"
+	fi
 
 	case ${USER_NAME} in
-			karsten|michael|sascha|simon|vlad)
-					if [[ -z "$(grep -w ${HOST_IP} ${HOME}/.bash_profile)" ]]; then
-          				echo "alias ${HOST_NAME}=\"ssh ${USER_NAME}@${HOST_IP}\"" >> ${HOME}/.bash_profile
+			karsten|michael|sascha|vlad)
+					if [[ -z "$(grep -w ${HOST_IP} ${PROFILE_FILE})" ]]; then
+          				echo "alias ${HOST_NAME}=\"ssh ${USER_NAME}@${HOST_IP}\"" >> ${PROFILE_FILE}
           			else
-		            	echo "Entry for server \"${HOST_NAME}\" in .bash_profile already exists"
+		            	echo "Entry for server \"${HOST_NAME}\" in ${PROFILE_FILE} already exists"
              		fi
 		 ;;
 
@@ -152,7 +175,7 @@ function copyKey() {
 	USER_NAME="$2"
 
 	case ${USER_NAME} in
-			karsten|michael|sascha|simon|vlad)
+			karsten|michael|sascha|vlad)
 					if [[ -f ${HOME}/.ssh/id_rsa\.pub ]]; then
 						echo "User password: \"${USERS_PASSWORD}\""
           				ssh-copy-id -i ${HOME}/.ssh/id_rsa.pub "${USER_NAME}"@"${HOST_ID}"
@@ -167,12 +190,13 @@ function copyKey() {
 }
 
 function createRemoteFolder() {
-	echo "Create /opt/work/scripts folder"
 	HOST_IP="$1"
 	ROOT_PASSWORD="$2"
+	REMOTE_FOLDER="$3"
+	echo "Create remote folder \"${REMOTE_FOLDER}\""
 
 	echo "Root password: \"${ROOT_PASSWORD}\""
-	ssh root@"${HOST_IP}" "if ! -d /opt/work/scripts >/dev/null 2>&1; then /usr/bin/mkdir -p -m 770 /opt/work/scripts; /usr/bin/chown -R vlad:adm /opt/work/scripts; ln -s /opt/work /work; fi"
+	ssh root@"${HOST_IP}" "if ! -d ${REMOTE_FOLDER} >/dev/null 2>&1; then /usr/bin/mkdir -p -m 770 ${REMOTE_FOLDER}; /usr/bin/chown -R vlad:users /opt/work; ln -s /opt/work /work; fi"
 }
 
 function installRsync() {
@@ -183,12 +207,73 @@ function installRsync() {
 	ssh root@"${HOST_IP}" "yum -y install rsync"
 }
 
-function copyScripts() {
-	echo "Copy scripts to the server"
+function copyInstallScripts() {
+	echo "Start transfer scripts to the server"
 	HOST_IP="$1"
 	ROOT_PASSWORD="$2"
 
-	createRemoteFolder "${HOST_IP}" "${ROOT_PASSWORD}"
+	REMOTE_FOLDER="/opt/work/scripts/"
+
+	read -en 1 -p "Create folder \""${REMOTE_FOLDER}"\"? (y/Y) >"
+	if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
+		createRemoteFolder "${HOST_IP}" "${ROOT_PASSWORD}" "${REMOTE_FOLDER}"
+	fi
+
+	read -en 1 -p "Install on the server rsync? (y/Y) >"
+	if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
+		installRsync "${HOST_IP}" "${ROOT_PASSWORD}"
+	fi
+
+	if [[ -f ./remote_adm.sh ]] || [[ -f ./services_manager.sh ]] || [[ -f ./service_template ]]; then
+		echo "Root password: \"${ROOT_PASSWORD}\""
+		rsync -amvzO remote_adm.sh services_manager.sh service_template service_sudo_template root@"${HOST_IP}":"${REMOTE_FOLDER}" --chmod=Fug+r,Fug+w,Fug+x,Fo-r,Fo-w,Fo-x --chown=vlad:users --ignore-errors
+	fi
+}
+
+function copyScriptBootScripts() {
+	echo "Start transfer scripts to the server"
+	HOST_IP="$1"
+	ROOT_PASSWORD="$2"
+
+	read -en 1 -p "Install on the server rsync? (y/Y) >"
+	if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
+		installRsync "${HOST_IP}" "${ROOT_PASSWORD}"
+	fi
+
+	if [[ -f ./bash-completion.sh ]] && [[ -f ./deploy.sh ]] && [[ -f ./deploy.sh ]]; then
+		REMOTE_FOLDER="/opt/work/app/spring-boot"
+
+		read -en 1 -p "Create folder \""${REMOTE_FOLDER}"\"? (y/Y) >"
+		if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
+			createRemoteFolder "${HOST_IP}" "${ROOT_PASSWORD}" "${REMOTE_FOLDER}"
+		fi
+			echo "Start transfer spring boot scripts"
+			echo "Root password: \"${ROOT_PASSWORD}\""
+			rsync -amvzO bash-completion.sh deploy.sh log.sh spring-boot-manager.sh root@"${HOST_IP}":"${REMOTE_FOLDER}" --chmod=Fug+r,Fug+w,Fug+x,Fo-r,Fo-w,Fo-x --chown=vlad:users --ignore-errors
+	else
+		echo "Some of files: bash-completion.sh deploy.sh log.sh is absent"
+	fi
+
+	if [[ -f ./spring-boot ]]; then
+		REMOTE_FOLDER="/opt/work/app/server"
+
+		read -en 1 -p "Create folder \""${REMOTE_FOLDER}"\"? (y/Y) >"
+		if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
+			createRemoteFolder "${HOST_IP}" "${ROOT_PASSWORD}" "${REMOTE_FOLDER}"
+		fi
+			echo "Start transfer spring boot scripts"
+			echo "Root password: \"${ROOT_PASSWORD}\""
+			rsync -amvzO spring-boot root@"${HOST_IP}":"${REMOTE_FOLDER}" --chmod=Fug+r,Fug+w,Fug+x,Fo-r,Fo-w,Fo-x --chown=vlad:users --ignore-errors
+	else
+		echo "Some of files: spring-boot is absent"
+	fi
+}
+
+function copyProfileScript() {
+	echo "Copy profile script to the server"
+	HOST_IP="$1"
+	ROOT_PASSWORD="$2"
+
 	read -en 1 -p "Install on the server rsync? (y/Y) >"
 	if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
 		installRsync "${HOST_IP}" "${ROOT_PASSWORD}"
@@ -196,16 +281,26 @@ function copyScripts() {
 
 	if [[ -f ./zzz_netcupers.sh ]]; then
 		echo "Root password: \"${ROOT_PASSWORD}\""
-		rsync -amvzO zzz_netcupers.sh root@"${HOST_IP}"/etc/profile.d/ --chmod=Fugo+r,Fu+w,Fgo-w,Fugo-x --ignore-errors
-	fi
-
-	if [[ -f ./remote_adm.sh ]] || [[ -f ./remote_root.sh ]]; then
-		echo "Root password: \"${ROOT_PASSWORD}\""
-		rsync -amvzO remote_*.sh root@"${HOST_IP}"/opt/work/scripts/ --chmod=Fug+r,Fug+w,Fug+x,Fo-r,Fo-w,Fo-x --owner=vlad:adm --ignore-errors
+		rsync -amvzO zzz_netcupers.sh root@"${HOST_IP}":/etc/profile.d/ --chmod=Fugo+r,Fu+w,Fgo-w,Fugo-x --ignore-errors
 	fi
 }
 
+function copySudoersFile() {
+	echo "Copy sudoers file to the server"
+	HOST_IP="$1"
+	ROOT_PASSWORD="$2"
 
+	read -en 1 -p "Install on the server rsync? (y/Y) >"
+	if [[ "${REPLY-}" == "y" ]] || [[ "${REPLY-}" == "Y" ]]; then
+		installRsync "${HOST_IP}" "${ROOT_PASSWORD}"
+	fi
+
+	if [[ -f ./netcup_sudoers ]]; then
+		echo "Root password: \"${ROOT_PASSWORD}\""
+		rsync -amvzO netcup_sudoers root@"${HOST_IP}":/etc/sudoers.d/ --chmod=Fug+r,Fu+w,Fo-r,Fgo-w,Fugo-x --ignore-errors
+	fi
+
+}
 
 ################################################################################
 
@@ -238,3 +333,5 @@ case ${REPLY-} in
 	*) echo "Good bye"
 	   exit 0 ;;
 esac
+
+https://tunnelblick.net/downloads.html
