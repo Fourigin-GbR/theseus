@@ -53,6 +53,10 @@ var updateStatusOfBoundFieldset = function(input) {
 };
 
 var iterateOverAllBoundInputsAndUpdateStatusOfFieldsets = function() {
+    /**
+     * Iterate over all found input elements with attribute of target field-sets.
+     * Than look for the target-field, if it exists, call method to update status.
+     */
     Array.prototype.forEach.call(inputsWithBoundFieldSets, function(el){
         var targetFieldset = Array.prototype.filter.call(fieldsets, function(element, index, aElements) {
             return (element.getAttribute("name") === el.getAttribute('data-activate-fieldset-name'));
@@ -293,6 +297,9 @@ var prePopulateForm = function(data) {
                     currentFormElement.value = storedData[property];
                     break;
                 case "radio":
+                    var currentRadio = document.querySelector("[name='" + property + "'][value='" + storedData[property] + "']");
+                    currentRadio.setAttribute("checked", "checked");
+                    break;
                 case "checkbox":
                     currentFormElement.setAttribute("checked", "checked");
                     break;
