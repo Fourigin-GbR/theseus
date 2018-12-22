@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greece - Feriendomizil suchen</title>
+    <link rel="stylesheet" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="assets/styles/slider.css">
+    <link rel="stylesheet" href="assets/styles/greek.css"/>
+    <link rel="stylesheet" href="assets/styles/basic-layout.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="assets/scripts/search-result.js"></script>
+    <script src="assets/scripts/slider.js"></script>
+</head>
+<body>
+<header>
+    <a class="logo" href="index.html"><img src="assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
+    <div class="meta">
+        <div class="contacts">
+            <div class="telephone">
+                <i class="fa fa-phone linkTypeIcon" aria-hidden="true"></i>
+                30 27 41 02 46 22
+            </div>
+            <div class="languages">
+                <select>
+                    <option>deutsch</option>
+                    <option>griechisch</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--<nav>
+        <ul>
+            <li><a href="text.html">Über uns</a></li>
+            <li><a href="regionen.html">Griechische Regionen</a></li>
+            <li><a href="text.html">Kontakt</a></li>
+        </ul>
+    </nav>-->
+</header>
+<div class="body">
+
+    <nav class="breadcrumb">
+        <div class="wrapper">
+            <div class="breadcrumbPath">
+                <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
+                <ul class="folderList">
+                    <li>
+                        <a href="index.html">Start</a>
+                    </li>
+                    <li>
+                        Feriendomizil suchen
+                    </li>
+                </ul>
+            </div>
+            <div class="contextHighlights">
+                <div class="links">
+                    <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+                    <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+                </div>
+                <div class="searchAndGo">
+                    <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
+                    <form action="#">
+                        <label>
+                            <span>Objekt-ID</span>
+                            <input name="objectId" type="text" />
+                        </label>
+                        <input class="cta" type="submit" value="Suchen"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Feriendomizil suchen</h1>
+
+    <!--<article class="linksImageTeaser">
+        <h2>Informationen zu den Regionen</h2>
+        <div class="linksImageTeaserWrapper">
+            <div class="linkImageTeaser">
+                <a href="region.html">
+                    <img src="assets/images/region-loutraki.jpg"/>
+                    <div class="description">
+                        <h2>Loutraki</h2>
+                        <p>Die Perle Griechenlands</p>
+                    </div>
+                </a>
+            </div>
+            <div class="linkImageTeaser">
+                <a href="region.html">
+                    <img src="assets/images/region-kreta.jpg"/>
+                    <div class="description">
+                        <h2>Kreta</h2>
+                        <p>Die Schönheit Griechenlands</p>
+                    </div>
+                </a>
+            </div>
+            <div class="linkImageTeaser">
+                <a href="region.html">
+                    <img src="assets/images/region-athen.jpg"/>
+                    <div class="description">
+                        <h2>Athen</h2>
+                        <p>Die Kultur Griechenlands</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </article>-->
+
+    <article class="search">
+        <h2>Suchen</h2>
+        <div class="searchFilter">
+            <form id="searchObjects" method="get">
+                <div class="region">
+                    <h3>Suche in der Region</h3>
+                    <select>
+                        <option>Loutraki</option>
+                        <option>Kreta</option>
+                        <option>Athen</option>
+                    </select>
+                </div>
+
+                <div class="filterCategory">
+                    <h3>Typ des Objekts</h3>
+                    <fieldset>
+                        <label><input type="checkbox" name="type" value="appartement"><span>Wohnung (22)</span></label>
+                        <label><input type="checkbox" name="type" value="house"><span>Haus (0)</span></label>
+                        <label><input type="checkbox" name="type" value="commercial"><span>Gewerbefläche (94)</span></label>
+                        <label><input type="checkbox" name="type" value="base"><span>Grundstücke (91)</span></label>
+                        <label><input type="checkbox" name="type" value="other"><span>Andere (5)</span></label>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </article>
+
+    <article class="searchResults">
+        <div class="legend">
+            <div class="resultAmount">
+                <i class="fa fa-list-ol" aria-hidden="true"></i>
+                <span class="amount">73</span>
+                <span>Immobilien gefunden.</span>
+            </div>
+            <div class="sorting">
+                <label>
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                    <span>Sortierung nach:</span>
+                    <select name="sort">
+                        <option>Preis (aufsteigend)</option>
+                        <option>Preis (absteigend)</option>
+                        <option>Zimmerzahl</option>
+                        <option>Raumfläche</option>
+                        <option>Entfernung zum Meer</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <ul class="smallItemGalleryList" data-element="search-result-list-container">
+            <li data-prototype="search-result-item">
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul data-element="search-result-item-images-container">
+                                <li data-prototype="search-result-item-image">
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img data-content="image-src" src=""/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div data-content="description" class="category"></div>
+                    <h3><a data-content="link" href="">Link...</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span data-content="price" class="price">
+
+                    </span>
+                    <a data-content="link-href" href="" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery(".slider").each(function () {
+                    new Slider(
+                        jQuery(this),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            });
+        </script>
+    </article>
+
+</div>
+<footer>
+    <div class="content">
+        <div class="logo">
+            <img src="assets/images/greek-estate-logo.jpg" />
+        </div>
+        <div class="company">
+            <div>
+                <h3>Inhaber</h3>
+                <p>Georgios Tzafis</p>
+            </div>
+            <div>
+                <h3>Telefon</h3>
+                <p>+30 698 741 9624</p>
+            </div>
+        </div>
+        <div class="links">
+            <div>
+                <h3><a href="index.html">Start</a></h3>
+            </div>
+            <div>
+                <h3><a href="feriendomizil-suchen.html">Feriendomizil suchen</a></h3>
+                <h3><a href="immobilie-kaufen.html">Immobilie kaufen</a></h3>
+            </div>
+            <div>
+                <h3><a href="regionen.html">Griechische Regionen</a></h3>
+                <div><a href="region.html">Loutraki</a></div>
+                <div><a href="region.html">Kreta</a></div>
+                <div><a href="region.html">Athen</a></div>
+            </div>
+            <div>
+                <h3><a href="text.html">Über uns</a></h3>
+                <div><a href="text.html">Kontakt</a></div>
+                <div><a href="text.html">Impressum</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

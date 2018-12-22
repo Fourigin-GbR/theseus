@@ -1,0 +1,21 @@
+{
+  "a": {
+    "category": "abc",
+    "description": "ABC Ex-Schulhaus",
+    "price": "135.00,- €",
+    "images": [
+      "https://m3.spitogatos.gr/137086295_900x675.jpg?v=20130730",
+      "https://m3.spitogatos.gr/137086313_900x675.jpg?v=20130730"
+    ]
+  },
+  "b": {
+    "category": "Gewerbe",
+    "description": "Wunderbare Oase",
+    "price": "35.00,- €"
+  },
+  "c": {
+    "category": "Miethaus",
+    "description": "Ruhige Luxuslage",
+    "price": "555.00,- €"
+  }
+}
