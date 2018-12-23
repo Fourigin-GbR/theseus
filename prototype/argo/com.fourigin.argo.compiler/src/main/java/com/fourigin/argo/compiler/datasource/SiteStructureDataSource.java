@@ -201,7 +201,11 @@ public class SiteStructureDataSource implements
                 for (Map.Entry<String, String> entry : categoryDefinitions.entrySet()) {
                     String categoryName = entry.getKey();
                     String categoryValuePath = entry.getValue();
-                    ContentElement categoryValueElement = ContentPageManager.resolve(categoryValuePath, elements);
+                    ContentElement categoryValueElement = ContentPageManager.resolveOptional(categoryValuePath, elements);
+                    if (categoryValueElement == null) {
+                        continue;
+                    }
+
                     String value = getCategoryValue(categoryValueElement);
                     Map<String, List<Integer>> values = categories.get(categoryName);
                     if (values == null) {
@@ -222,19 +226,25 @@ public class SiteStructureDataSource implements
                         values = new ArrayList<>();
                         field.setValue(values);
                     }
-                    ContentElement fieldElement = ContentPageManager.resolve(field.getPath(), elements);
-                    String value = getFieldValue(fieldElement);
-                    values.add(value);
+                    ContentElement fieldElement = ContentPageManager.resolveOptional(field.getPath(), elements);
+                    if (fieldElement != null) {
+                        String value = getFieldValue(fieldElement);
+                        values.add(value);
+                    }
                 }
 
-                if(keywords != null && !keywords.isEmpty()) {
+                if (keywords != null && !keywords.isEmpty()) {
                     if (logger.isDebugEnabled()) logger.debug("Indexing keywords {}", keywords);
 
                     StringBuilder builder = new StringBuilder();
                     for (String path : fullTextSearch) {
-                        ContentElement textSearchElement = ContentPageManager.resolve(path, elements);
+                        ContentElement textSearchElement = ContentPageManager.resolveOptional(path, elements);
+                        if (textSearchElement == null) {
+                            continue;
+                        }
+
                         String value = getSearchValue(textSearchElement);
-                        if(value != null) {
+                        if (value != null) {
                             builder.append(value.toLowerCase(Locale.US)).append(';');
                         }
                     }
@@ -277,7 +287,7 @@ public class SiteStructureDataSource implements
         return null;
     }
 
-//    private String getFieldValue(ContentElement element, FieldType type) {
+    //    private String getFieldValue(ContentElement element, FieldType type) {
     private String getFieldValue(ContentElement element) {
         if (element instanceof TextAwareContentElement) {
             return ((TextAwareContentElement) element).getContent();

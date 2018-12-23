@@ -203,6 +203,15 @@ public final class ContentPageManager {
         return builder.toString();
     }
 
+    public static ContentElement resolveOptional(String path, List<ContentElement> elements) {
+        try {
+            return resolve(path, elements);
+        }
+        catch (UnresolvableContentPathException ex){
+            return null;
+        }
+    }
+
     public static ContentElement resolve(String path, List<ContentElement> elements) {
         ContentElement current = null;
 

@@ -15,7 +15,7 @@ ALL_USERS="karsten michael sascha vlad"
 
 USERS_PASSWORD="GeBeEr2015"
 NETCUP_DEV_ROOT_PASSWORD="xN3sqKm4yQ3awfp"
-NETCUP_STAGE_ROOT_PASSWORD=""
+NETCUP_STAGE_ROOT_PASSWORD="HCmFwqHkwGfZ9cg"
 NETCUP_WEB_ROOT_PASSWORD="rN4TW1b8uksqQda"
 
 SERVER_LIST="netcup_dev netcup_stage netcup_web"

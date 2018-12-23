@@ -1,11 +1,8 @@
 package com.fourigin.argo.controller.search;
 
-import com.fourigin.argo.controller.compile.RequestParameters;
 import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.datasource.index.DataSourceIndexProcessing;
-import com.fourigin.argo.models.structure.nodes.PageInfo;
-import com.fourigin.argo.repository.ContentRepository;
-import com.fourigin.argo.repository.ContentRepositoryFactory;
+import com.fourigin.argo.repository.DataSourceIndexResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -23,18 +20,18 @@ import java.util.List;
 public class SearchController {
     private final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
-    private ContentRepositoryFactory contentRepositoryFactory;
+    private DataSourceIndexResolver dataSourceIndexResolver;
 
-    public SearchController(ContentRepositoryFactory contentRepositoryFactory) {
-        this.contentRepositoryFactory = contentRepositoryFactory;
+    public SearchController(DataSourceIndexResolver dataSourceIndexResolver) {
+        this.dataSourceIndexResolver = dataSourceIndexResolver;
     }
     
     @RequestMapping("/")
     @ResponseBody
     public List<String> resolveMatchingIndexTargets(
         @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam(RequestParameters.PATH) String path,
+        @RequestParam("base") String base,
+        @RequestParam("path") String path,
         @RequestBody SearchRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", base, path, request);
@@ -43,21 +40,13 @@ public class SearchController {
         MDC.put("base", base);
 
         try {
-            ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
-
-            PageInfo info = contentRepository.resolveInfo(PageInfo.class, path);
-            if (logger.isDebugEnabled()) logger.debug("Resolved info: {}", info);
-
             String indexName = request.getIndex();
-            DataSourceIndex index = contentRepository.resolveIndex(info, indexName);
+            DataSourceIndex index = dataSourceIndexResolver.resolveIndex(customer, base, path, indexName);
             if (logger.isDebugEnabled()) logger.debug("Resolved index: {}", index);
 
             List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields());
             if (logger.isDebugEnabled()) logger.debug("References: {}", references);
 
-//            List<String> references = index.getReferences();
-//            if (logger.isDebugEnabled()) logger.debug("References: {}", references);
-//
 //            Map<String, Boolean> matchingFlags = new HashMap<>();
 //            for (String reference : references) {
 //                // initialization with 'null'

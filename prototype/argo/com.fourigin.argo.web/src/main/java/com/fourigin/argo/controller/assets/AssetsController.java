@@ -33,6 +33,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
@@ -173,6 +175,66 @@ public class AssetsController {
             return result;
         }
         finally {
+            MDC.remove("customer");
+            MDC.remove("base");
+        }
+    }
+
+    @RequestMapping(value = "/uploadUrl")
+    public UploadAssetsResponse uploadUrl(
+        @PathVariable String customer,
+        @RequestParam(RequestParameters.BASE) String base,
+        @RequestParam("filename") String filename,
+        @RequestParam("contentType") String contentType,
+        @RequestParam("url") String sourceUrl
+    ) {
+        Objects.requireNonNull(base, "base must not be null!");
+
+        MDC.put("customer", customer);
+        MDC.put("base", base);
+
+        try {
+            UploadAssetsResponse result = new UploadAssetsResponse();
+
+            URL url;
+            try {
+                url = new URL(sourceUrl);
+            } catch (MalformedURLException ex) {
+                if (logger.isErrorEnabled()) logger.error("Invalid source url '{}'!", sourceUrl, ex);
+                result.registerFail(filename, ex);
+                return result;
+            }
+
+            File tmp = null;
+            try (InputStream is = url.openStream()) {
+                tmp = File.createTempFile("upload", "");
+                try (OutputStream os = new FileOutputStream(tmp)) {
+                    IOUtils.copyLarge(is, os);
+                }
+            } catch (IOException ex) {
+                if (logger.isWarnEnabled()) logger.warn("Error copying file", ex);
+                if (tmp != null && !tmp.delete()) {
+                    if (logger.isWarnEnabled()) // NOPMD
+                        logger.warn("Unable to remove temp file '{}'", tmp.getAbsolutePath()); // NOPMD
+                }
+                tmp = null;
+                result.registerFail(filename, ex);
+            }
+
+            if (tmp != null) {
+                try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
+                    Asset asset = readAsset(base, filename, tmp.length(), contentType, is);
+
+                    result.registerSuccess(asset);
+                } catch (IOException | IllegalArgumentException ex) {
+                    if (logger.isErrorEnabled())
+                        logger.error("Unable to read asset {}!", filename, ex);
+                    result.registerFail(filename, ex);
+                }
+            }
+
+            return result;
+        } finally {
             MDC.remove("customer");
             MDC.remove("base");
         }

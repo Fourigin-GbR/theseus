@@ -13,6 +13,7 @@ import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.ContentPageCompilerException;
+import com.fourigin.argo.template.engine.ProcessingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
-import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 
 @Controller
 @RequestMapping("/{customer}/compile")
@@ -121,18 +121,20 @@ public class CompileController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/write-output", method = RequestMethod.POST)
+//    @RequestMapping(value = "/write-output", method = RequestMethod.POST)
+    @RequestMapping(value = "/write-output", method = RequestMethod.GET) // TODO: temporary GET for batch processing
     public ResponseEntity<CompileResult> writeOutput(
         @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam(RequestParameters.PATH) String path
+        @RequestParam(RequestParameters.PATH) String path,
+        @RequestParam(value = "mode", required = false, defaultValue = "STAGE") ProcessingMode mode
     ) {
         MDC.put("customer", customer);
         MDC.put("base", base);
         try {
             if (logger.isDebugEnabled())
-                logger.debug("Processing write-output request for base '{}' & path '{}'.", base, path);
-
+                logger.debug("Processing write-output request for base '{}' & path '{}' with processing-mode {}.", base, path, mode);
+            
             CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
 
             PageInfo pageInfo = aggregation.getPageInfo();
@@ -145,23 +147,23 @@ public class CompileController {
 
             if (!compileState.isCompiled()) {
                 return new ResponseEntity<>(
-                    new CompileResult(STAGE, false, "Page must have a successful compiled-state!"),
+                    new CompileResult(mode, false, "Page must have a successful compiled-state!"),
                     HttpStatus.BAD_REQUEST
                 );
             }
 
             PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
 
-            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, STAGE);
+            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
 
             long startTimestamp = System.currentTimeMillis();
             try {
-                pageCompiler.compile(path, pageInfo, preparedContentPage, STAGE, storageCompilerOutputStrategy);
+                pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
                 storageCompilerOutputStrategy.finish();
             } catch (Throwable ex) {
                 storageCompilerOutputStrategy.reset();
                 return new ResponseEntity<>(
-                    new CompileResult(STAGE, false).withAttribute("cause", ex),
+                    new CompileResult(mode, false).withAttribute("cause", ex),
                     HttpStatus.BAD_REQUEST
                 );
             }
@@ -169,7 +171,7 @@ public class CompileController {
             long duration = System.currentTimeMillis() - startTimestamp;
 
             return new ResponseEntity<>(
-                new CompileResult(STAGE, true).withAttribute("duration", duration),
+                new CompileResult(mode, true).withAttribute("duration", duration),
                 HttpStatus.OK
             );
         } finally {

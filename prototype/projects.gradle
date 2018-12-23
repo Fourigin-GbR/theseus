@@ -282,6 +282,46 @@ project(':argo') {
         }
     }
 
+    project('com.fourigin.argo.services') {
+        apply plugin: 'org.springframework.boot'
+
+        version = argoVersion
+
+        archivesBaseName = 'argo-services'
+        jar {
+            baseName = "argo-services"
+        }
+
+        dependencies {
+            compile argoModels
+            compile argoRepository
+            runtime argoRepositoryJson
+            compile argoTemplateEngine
+            compile argoTemplateEngineThymeleaf
+//            compile argoAssetsModels
+//            compile argoAssetsRepository
+//            runtime argoAssetsRepositoryJson
+//            compile argoAssetsProcessor
+//            compile argoCompiler
+
+//            compile thymeleaf
+//            compile thymeleafSpring
+
+//            runtime managedDependency('de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic')
+            compile managedDependency('de.huxhorn.sulky:de.huxhorn.sulky.blobs')
+
+            compile managedDependency('commons-io:commons-io')
+
+            compile managedDependency('org.springframework.boot:spring-boot-starter-web')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
+//            compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
+
+            compile managedDependency('org.springframework:spring-context-support')
+            compile managedDependency('org.springframework:spring-webmvc')
+        }
+    }
+
     project('com.fourigin.argo.forms.models') {
         version = argoVersion
 
@@ -495,4 +535,17 @@ project(':utilities') {
             compile managedDependency('org.apache.pdfbox:pdfbox')
         }
     }
+
+    project('com.fourigin.utilities.playground') {
+        version = utilitiesVersion
+
+        dependencies {
+            compile managedDependency('org.jsoup:jsoup')
+            compile managedDependency('commons-io:commons-io')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+            compile argoModels
+        }
+    }
+
 }

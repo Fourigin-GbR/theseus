@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.search;
+package com.fourigin.argo.models.datasource.index;
 
 public enum FieldValueComparatorType {
     EQUAL,

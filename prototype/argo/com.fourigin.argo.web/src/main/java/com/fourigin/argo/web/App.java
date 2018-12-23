@@ -72,17 +72,8 @@ public class App {
     @Value("${template.engine.thymeleaf.base}")
     private String templateBasePath;
 
-//    @Value("${document-root.base}")
-//    private String documentRootBasePath;
-
     @Value("${prepared-content.base}")
     private String preparedContentRoot;
-
-//    @Value("${assets.domain}")
-//    private String assetsDomain;
-//
-//    @Value("#{'${assets.load-balancer-document-roots}'.split(',')}")
-//    private List<File> loadBalancerDocumentRoots;
 
     @Value("${assets.thumbnails.target}")
     private String thumbnailsDirectory;
@@ -116,14 +107,6 @@ public class App {
 
     @Bean
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
-//        return new PlaceholderDocumentRootResolverStrategy(documentRootBasePath);
-
-//        // TODO: make configurable!
-//        Map<String, String> mapping = new HashMap<>();
-//        mapping.put("DE", documentRootBasePath + "greekestate.de");
-//        mapping.put("EN", documentRootBasePath + "greekestate.en");
-//        mapping.put("RU", documentRootBasePath + "greekestate.ru");
-
         return new MappingDocumentRootResolverStrategy(customerSpecificConfiguration());
     }
 

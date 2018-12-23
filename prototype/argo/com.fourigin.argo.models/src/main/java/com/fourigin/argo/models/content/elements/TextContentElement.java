@@ -18,6 +18,14 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         this.content = content;
     }
 
+    public Map<String, String> getContextSpecificContent() {
+        return contextSpecificContent;
+    }
+
+    public void setContextSpecificContent(Map<String, String> content){
+        contextSpecificContent = content;
+    }
+
     public String getContextSpecificContent(String context, boolean fallback) {
         if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
             return fallback ? content : null;
@@ -46,10 +54,6 @@ public class TextContentElement extends AbstractContentElement implements TextAw
             contextSpecificContent = new HashMap<>();
         }
         contextSpecificContent.put(context, content);
-    }
-
-    public void setContextSpecificContent(Map<String, String> content){
-        contextSpecificContent = content;
     }
 
     @Override

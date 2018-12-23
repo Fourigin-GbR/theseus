@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CMS Html Editor</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/argo.css"/>
+    <!---->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <!---->
+</head>
+<body>
+    <!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
+
+    <header>
+        <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        Übersicht
+                    </a>
+                </li>
+                <li class="selected">
+                    <a href="#">
+                        Inhalte
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Seitenstruktur
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Bilder
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Abmelden
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="toolbar">
+            <img src="/assets/greekestate/assets/images/greekestate-logo.png" class="siteLogo" />
+            <div class="tools">
+                <div class="tools__item">
+                    <span>Aktuelle Seite:</span>
+                    <span class="graphicTextBox">#Seitentitel</span>
+                </div>
+                <div class="tools__item">
+                    <span><i class="far fa-folder-open"></i></span>
+                    <span class="graphicTextBox">
+                        <ul class="graphicTextBox__content graphicTextBox__content--path">
+                            <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                                <a href="#" th:href="@{/compile/(base=${argo.base},path=${pathToken})}" th:text="${pathToken}"></a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="iFrameContent">
+        <!---->
+        <aside>
+            <ul class="asideTabBar">
+                <li>
+                    <span class="asideTabBar__tab" data-target-layer-id="1">Seiten-Inhalte</span>
+                    <!---->
+<!--                    <div class="layer">
+                        <h4>Inhalts-Element bearbeiten</h4>
+                        <form>
+                            <input type="text" value="..." />
+                            <button class="submit">Speichern</button>
+                        </form>
+                    </div>-->
+                </li>
+            </ul>
+        </aside>
+        <!---->
+        <div class="layerContainer">
+            <div data-layer-id="1" class="layer">
+                <h4>Seiteninhalte</h4>
+                <ul class="listItemsAsFlyoutTargets" id="contentList">
+                    <li th:each="hotspot_item : ${data_hotspots}">
+                        <div class="listItemsAsFlyoutTargets__wrapper layoutTrigger">
+                            <div class="listItemsAsFlyoutTargets__title" th:text="${hotspot_item.value.title}">Inhalt</div>
+                            <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>
+                        </div>
+                        <!---->
+                        <div class="layer">
+                            <h4>Editieren</h4>
+                            <!--<span th:utext="${hotspot_item}"></span>-->
+                            <h5 th:text="${hotspot_item.value.title}">#Hotspot name</h5>
+                            <div class="layer__form">
+
+                                <form action="#" method="POST" th:with="
+                                        path = ${hotspot_item.key},
+                                        el = ${argo.contentElementUtility.getElement(path)},
+                                        elType = ${argo.contentElementUtility.getElementType(el)}">
+                                    <!---->
+                                    <input type="hidden" name="base" value="DE"/>
+                                    <input type="hidden" name="path" value="home"/>
+                                    <input type="hidden" name="contentPath" th:value="${path}" value="/"/>
+                                    <input type="hidden" name="originalChecksum" th:value="${argo.pageInfo.checksum.combinedValue}" value="xxx"/>
+                                    <!--<span th:utext="${el}"></span>-->
+                                    <span th:utext="${elType}"></span>
+                                    <th:block th:switch="${elType.name()}">
+                                        <th:block th:case="'TEXT'">
+                                            <th:block th:replace="templates/view-page-editors :: editorFieldTypeText(${el})"/>
+                                        </th:block>
+                                        <th:block th:case="'LIST'">
+                                            <th:block th:replace="templates/view-page-editors :: editorFieldTypeList(el = ${el}, path = ${path})"/>
+                                        </th:block>
+                                    </th:block>
+                                    <!---->
+                                    <button type="submit">Speichern</button>
+                                    <!---->
+
+                                    <!---->
+
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
+            th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
+    </div>
+
+    <script type='text/javascript'>
+
+        jQuery(function(){
+
+            var iFrames = jQuery('iframe');
+
+            function iResize() {
+
+                for (var i = 0, j = iFrames.length; i < j; i++) {
+                    iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight + 'px';}
+            }
+
+            iFrames.on("load", function() {
+                this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+            });
+
+            $.fn.serializeObject = function()
+            {
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function() {
+                    if (o[this.name]) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            };
+
+            jQuery("form").on("submit", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                //
+                var jData = $(this).serializeObject();
+                console.log("for mdata as json: ", jData);
+                jData.modifiedContentElement = {
+                    "type": "text",
+                    "name": "headline",
+                    "content": jData['content']
+                };
+                delete jData['content'];
+
+                var request = $.ajax({
+                    url: "http://argo.greekestate.fourigin.com/cms/editors/save",
+                    method: "POST",
+                    data: JSON.stringify(jData),
+                    contentType: "application/json"
+                });
+
+                request.done(function( msg ) {
+                    alert("Erfolg");
+                });
+
+                request.fail(function( jqXHR, textStatus ) {
+                    alert( "Request failed: " + textStatus );
+                });
+            });
+
+        });
+
+
+
+
+        var openLayer = function(jLayer) {
+            jLayer.addClass("active");
+        };
+        var closeLayer = function(jLayer) {
+            jLayer.removeClass("active");
+            jLayer.find(".layer").removeClass("active");
+        };
+
+        var toggleNextLayer = function(jLayoutTrigger) {
+            var jNextChildLayer = jLayoutTrigger.siblings(".layer:first");
+            //
+            // Hide all other layer from this level first:
+            jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
+            jNextChildLayer.toggleClass("active");
+            // TODO: Close ALL others on the same level
+            if(!jNextChildLayer.hasClass("active")) {
+                /* Close ALL child layers */
+                jNextChildLayer.find(".layer").removeClass("active");
+            }
+        };
+
+        jQuery("[data-target-layer-id]").each(function(){
+            jQuery(this).on("click", function() {
+                var jThis = jQuery(this);
+                // get target layer:
+                var sId = jThis.attr("data-target-layer-id");
+                var jTargetLayer = jQuery("[data-layer-id='" + sId + "']");
+                //
+                if(jThis.hasClass("active")) {
+                    jThis.removeClass("active");
+                    closeLayer(jTargetLayer);
+                }
+                else {
+                    jThis.addClass("active");
+                    openLayer(jTargetLayer);
+                }
+            });
+        });
+
+        jQuery(".layoutTrigger").each(function () {
+            jQuery(this).on("click", function() {
+                toggleNextLayer(jQuery(this));
+            });
+        });
+
+
+
+    </script>
+
+</body>
+</html>
