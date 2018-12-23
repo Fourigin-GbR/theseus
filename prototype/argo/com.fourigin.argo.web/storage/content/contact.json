@@ -1,56 +1,25 @@
 {
-  "id": "contact",
-  "metaData": {
-    "title": "GreekEstate Kontakt",
-    "attributes": {
-      "key-1": "value-1",
-      "key-2": "value-2",
-      "key-3": "value-3"
-    }
-  },
-  "content": [
-    {
-      "name": "headline",
-      "type": "text",
-      "content": "Kontakt"
-    },
-    {
-      "name": "body",
-      "type": "text",
-      "content": "Kontakt zu uns<form action=\"senden.html\" id=\"person\"><label class=\"h2\" form=\"person\">Namenseingabe</label><label for=\"vorname\">Vorname</label><input type=\"text\" name=\"vorname\" id=\"vorname\" maxlength=\"30\"><label for=\"zuname\">Zuname</label><input type=\"text\" name=\"zuname\" id=\"zuname\" maxlength=\"40\"><button type=\"reset\">Eingaben zurücksetzen</button><button type=\"submit\">Eingaben absenden</button></form>"
-    }
-  ],
-  "dataSourceContents": [
-    {
-      "name": "timestamp",
-      "identifier": {
-        "type": "TIMESTAMP",
-        "checksum": ""
-      },
-      "content": null
-    },
-    {
-      "name": "allNodes",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-          "INFO_PATH": "/"
-        },
-        "checksum": ""
-      },
-      "content": null
-    },
-    {
-      "name": "objectNodes",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-          "INFO_PATH": "/objects",
-          "VERBOSE": true
-        },
-        "checksum": ""
-      },
-      "content": null
-    }
-  ]
+	"id": "contact",
+	"metaData": {
+		"title": "GreekEstate Kontakt",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"type": "text",
+			"name": "headline",
+			"content": "Kontakt"
+		},
+		{
+			"type": "text",
+			"name": "body",
+			"content": "Kontakt zu uns<form action=\"senden.html\" id=\"person\"><label class=\"h2\" form=\"person\">Namenseingabe</label><label for=\"vorname\">Vorname</label><input type=\"text\" name=\"vorname\" id=\"vorname\" maxlength=\"30\"><label for=\"zuname\">Zuname</label><input type=\"text\" name=\"zuname\" id=\"zuname\" maxlength=\"40\"><button type=\"reset\">Eingaben zurücksetzen</button><button type=\"submit\">Eingaben absenden</button></form>"
+		}
+	],
+	"dataSourceContents": [
+	]
 }

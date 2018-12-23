@@ -1,0 +1,229 @@
+{
+  "id" : "search",
+  "metaData" : {
+    "title" : "GreekEstate - Immobilie mieten",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "#Immobilie mieten"
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "#Infotext"
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "2BF7A87D2349E04A3BD7D48996FC4337"
+    },
+    "content" : [ {
+      "type" : "text",
+      "name" : "processedOn",
+      "content" : "2018.12.23 10:37:29 +0000"
+    } ]
+  }, {
+    "name" : "site-structure",
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/objects/rent/object_002" : "1",
+        "/objects/rent/object_001" : "1",
+        "/objects/rent/object_004" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/objects/rent",
+        "IGNORE_OWNER_PAGE" : "true",
+        "INCLUDE_CONTENT" : "/headline, /short-description, /long-description, /properties"
+      },
+      "index" : {
+        "name" : "objects-to-rent",
+        "categories" : {
+          "region" : "/properties/region"
+        },
+        "fields" : [ {
+          "name" : "price",
+          "path" : "/properties/price",
+          "type" : "PRICE"
+        }, {
+          "name" : "distance",
+          "path" : "/properties/distance-to-sea",
+          "type" : "NUMBER"
+        }, {
+          "name" : "number-of-rooms",
+          "path" : "/properties/number-of-rooms",
+          "type" : "NUMBER"
+        } ],
+        "fullTextSearch" : [ "/short-description", "/headline", "/long-description", "/properties/region" ],
+        "keywords" : [ "athen", "promenade", "spa", "ruhig", "villa", "loutraki", "supermarkt", "schwimmbad" ]
+      },
+      "checksum" : "F3EB9B7F1CF9607EF4858AD9809E66E7"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "object_002",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "002"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Villa mit Luxuspool"
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+      }, {
+        "type" : "text",
+        "name" : "long-description",
+        "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. \n\t\t\n\t\tAenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. Pellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. Vivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "3124"
+        }, {
+          "type" : "text",
+          "name" : "number-of-rooms",
+          "content" : "4"
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "loutraki"
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "123"
+        }, {
+          "type" : "text",
+          "name" : "floor",
+          "content" : "3"
+        }, {
+          "type" : "text",
+          "name" : "distance-to-sea",
+          "content" : "250"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "150000"
+        } ]
+      } ],
+      "target" : "/objects/rent/object_002"
+    }, {
+      "type" : "link",
+      "name" : "object_001",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "001"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Villa mit Luxuspool"
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+      }, {
+        "type" : "text",
+        "name" : "long-description",
+        "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. Aenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. \n\t  \n\t  Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. Pellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. Vivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "1324"
+        }, {
+          "type" : "text",
+          "name" : "number-of-rooms",
+          "content" : "3"
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "loutraki"
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "123"
+        }, {
+          "type" : "text",
+          "name" : "floor",
+          "content" : "3"
+        }, {
+          "type" : "text",
+          "name" : "distance-to-sea",
+          "content" : "100"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "100000"
+        } ]
+      } ],
+      "target" : "/objects/rent/object_001"
+    }, {
+      "type" : "link",
+      "name" : "object_004",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "004"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Villa mit Luxuspool"
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+      }, {
+        "type" : "text",
+        "name" : "long-description",
+        "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. \n\t\t\n\t\tAenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. \n\t\t\n\t\tPellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. \n\t\t\n\t\tVivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "4123"
+        }, {
+          "type" : "text",
+          "name" : "number-of-rooms",
+          "content" : "2"
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "athen"
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "123"
+        }, {
+          "type" : "text",
+          "name" : "floor",
+          "content" : "3"
+        }, {
+          "type" : "text",
+          "name" : "distance-to-sea",
+          "content" : "20"
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "200000"
+        } ]
+      } ],
+      "target" : "/objects/rent/object_004"
+    } ]
+  } ]
+}

@@ -1,0 +1,85 @@
+{
+	"name": "objects-to-rent",
+	"references": [
+		"object_001",
+		"object_002",
+		"object_003"
+	],
+	"targets": [
+		"/objects/rent/object_001",
+		"/objects/rent/object_002",
+		"/objects/rent/object_003",
+	],
+	"categories": {
+		"region": {
+			"loutraki": [0, 1],
+			"athen": [2]
+		}
+	},
+	"fields": [
+		{
+			"name": "code",
+			"type": "TEXT",
+			"value": [
+				"001", 
+				"002", 
+				"003"
+			]
+		},
+		{
+			"name": "number-of-rooms",
+			"type": "NUMBER",
+			"value": [
+				"3", 
+				"2", 
+				"3"
+			]
+		},
+		{
+			"name": "max-number-of-guests",
+			"type": "NUMBER",
+			"value": [
+				"3", 
+				"3", 
+				"6"
+			]
+		},
+		{
+			"name": "price",
+			"type": "PRICE",
+			"value": [
+				"490", 
+				"520", 
+				"500"
+			]
+		},
+		{
+			"name": "distance",
+			"type": "NUMBER",
+			"value": [
+				"200", 
+				"250", 
+				"0"
+			]
+		},
+		{
+			"name": "location-properties",
+			"type": "LIST_OF_TEXT",
+			"value": [
+				["ruhige Lage", "Supermarkt in der Nähe"],
+				[],
+				["direkt am Strand", "an der Promenade"]
+			]
+		}
+	],
+	"searchValues": {
+		"promenade": [2],
+		"supermarkt": [0, 1],
+		"ruhig": [0],
+		"villa": [0, 2],
+		"schwimmbad": [0, 1],
+		"spa": [0, 1],
+		"loutraki": [0, 1],
+		"athen": [2]
+	}
+}

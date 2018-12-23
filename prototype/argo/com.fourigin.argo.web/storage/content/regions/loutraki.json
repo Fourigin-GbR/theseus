@@ -1,345 +1,326 @@
 {
-  "id": "home",
-  "metaData": {
-    "title": "GreekEstate homepage",
-    "attributes": {
-      "key-1": "value-1",
-      "key-2": "value-2",
-      "key-3": "value-3"
-    }
-  },
-  "content": [
-    {
-      "name": "stage",
-      "type": "list",
-      "elements": [
-        {
-          "type": "list-group",
-          "elements": [
-            {
-              "name": "image",
-              "type": "object",
-              "referenceId": "1234567",
-              "mimeType": "png",
-              "alternateText": "Image one",
-              "source": "/images/image1.png"
-            },
-            {
-              "name": "tag",
-              "type": "text",
-              "content": "Exclusiv!"
-            },
-            {
-              "name": "headline",
-              "type": "link",
-              "url": "sales/123.html",
-              "elements": [
-                {
-                  "name": "copy",
-                  "type": "text",
-                  "content": "Villa am Meer"
-                }
-              ]
-            },
-            {
-              "name": "description",
-              "type": "list",
-              "elements": [
-                {
-                  "type": "list-text",
-                  "content": "Sofort bezugsfertig, auf Wunsch möbliert"
-                },
-                {
-                  "type": "list-text",
-                  "content": "Freier Blick aufs Meer"
-                },
-                {
-                  "type": "list-text",
-                  "content": "3 Schlafzimmern"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "name": "price",
-              "content": "175.000,00 €"
-            }
-          ]
-        },
-        {
-          "type": "list-group",
-          "elements": [
-            {
-              "name": "image",
-              "type": "object",
-              "referenceId": "1234567",
-              "mimeType": "png",
-              "alternateText": "Image one",
-              "source": "/images/image1.png"
-            },
-            {
-              "name": "tag",
-              "type": "text",
-              "content": "Sehr günstig - TIPP!"
-            },
-            {
-              "name": "headline",
-              "type": "link",
-              "url": "rents/234.html",
-              "elements": [
-                {
-                  "name": "copy",
-                  "type": "text",
-                  "content": "Apartment mit Pool"
-                }
-              ]
-            },
-            {
-              "name": "description",
-              "type": "list",
-              "elements": [
-                {
-                  "type": "list-text",
-                  "content": "Stadt-Lage"
-                },
-                {
-                  "type": "list-text",
-                  "content": "Top Verkehrsanbindung"
-                },
-                {
-                  "type": "list-text",
-                  "content": "450 m<sub>2</sub>"
-                },
-                {
-                  "type": "list-text",
-                  "content": "Eigener Dienstservice"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "name": "price",
-              "content": "83.500,00 €"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "headline",
-      "type": "text",
-      "content": "Unser Angebot und Service"
-    },
-    {
-      "name": "body",
-      "type": "text",
-      "content": "Wir haben und haben dies uns das und haben und haben alles und jedes."
-    },
-    {
-      "name": "offers",
-      "type": "group",
-      "elements": [
-        {
-          "name": "headline",
-          "type": "text",
-          "content": "Besondere Angebote"
-        },
-        {
-          "name": "objects",
-          "type": "list",
-          "elements": [
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "name": "image",
-                  "type": "object",
-                  "referenceId": "1234567",
-                  "mimeType": "png",
-                  "alternateText": "Image one",
-                  "source": "/images/image1.png"
-                },
-                {
-                  "name": "headline",
-                  "type": "text",
-                  "content": "Objekt ABC"
-                },
-                {
-                  "name": "description",
-                  "type": "text",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "175.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "name": "image",
-                  "type": "object",
-                  "referenceId": "1234567",
-                  "mimeType": "png",
-                  "alternateText": "Image one",
-                  "source": "/images/image1.png"
-                },
-                {
-                  "name": "headline",
-                  "type": "text",
-                  "content": "Apartment groß"
-                },
-                {
-                  "name": "description",
-                  "type": "text",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "15.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "name": "image",
-                  "type": "object",
-                  "referenceId": "1234567",
-                  "mimeType": "png",
-                  "alternateText": "Image one",
-                  "source": "/images/image1.png"
-                },
-                {
-                  "name": "headline",
-                  "type": "text",
-                  "content": "Gewerbefläche"
-                },
-                {
-                  "name": "description",
-                  "type": "text",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "50.750,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "name": "image",
-                  "type": "object",
-                  "referenceId": "1234567",
-                  "mimeType": "png",
-                  "alternateText": "Image one",
-                  "source": "/images/image1.png"
-                },
-                {
-                  "name": "headline",
-                  "type": "text",
-                  "content": "Seeplatz"
-                },
-                {
-                  "name": "description",
-                  "type": "text",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "175.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "name": "image",
-                  "type": "object",
-                  "referenceId": "1234567",
-                  "mimeType": "png",
-                  "alternateText": "Image one",
-                  "source": "/images/image1.png"
-                },
-                {
-                  "name": "headline",
-                  "type": "text",
-                  "content": "Hütte"
-                },
-                {
-                  "name": "description",
-                  "type": "text",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "15.000,00 €"
-                }
-              ]
-            },
-            {
-              "type": "list-group",
-              "elements": [
-                {
-                  "name": "image",
-                  "type": "object",
-                  "referenceId": "1234567",
-                  "mimeType": "png",
-                  "alternateText": "Image one",
-                  "source": "/images/image1.png"
-                },
-                {
-                  "name": "headline",
-                  "type": "text",
-                  "content": "Hausboot"
-                },
-                {
-                  "name": "description",
-                  "type": "text",
-                  "content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-                },
-                {
-                  "type": "text",
-                  "name": "price",
-                  "content": "15.000,00 €"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "dataSourceContents": [
-    {
-      "name": "timestamp",
-      "identifier": {
-        "type": "TIMESTAMP",
-        "checksum": ""
-      },
-      "content": null
-    },
-    {
-      "name": "site-structure",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-        	"INFO_PATH": "/"
-        },
-        "checksum": ""
-      },
-      "content": null
-    }
-  ]
+	"id": "home",
+	"metaData": {
+		"title": "GreekEstate homepage",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"name": "stage",
+			"type": "list",
+			"elements": [
+				{
+					"type": "list-group",
+					"elements": [
+						{
+							"name": "image",
+							"type": "object",
+							"referenceId": "1234567",
+							"mimeType": "png",
+							"alternateText": "Image one",
+							"source": "/images/image1.png"
+						},
+						{
+							"name": "tag",
+							"type": "text",
+							"content": "Exclusiv!"
+						},
+						{
+							"name": "headline",
+							"type": "link",
+							"url": "sales/123.html",
+							"elements": [
+								{
+									"name": "copy",
+									"type": "text",
+									"content": "Villa am Meer"
+								}
+							]
+						},
+						{
+							"name": "description",
+							"type": "list",
+							"elements": [
+								{
+									"type": "list-text",
+									"content": "Sofort bezugsfertig, auf Wunsch möbliert"
+								},
+								{
+									"type": "list-text",
+									"content": "Freier Blick aufs Meer"
+								},
+								{
+									"type": "list-text",
+									"content": "3 Schlafzimmern"
+								}
+							]
+						},
+						{
+							"type": "text",
+							"name": "price",
+							"content": "175.000,00 €"
+						}
+					]
+				},
+				{
+					"type": "list-group",
+					"elements": [
+						{
+							"name": "image",
+							"type": "object",
+							"referenceId": "1234567",
+							"mimeType": "png",
+							"alternateText": "Image one",
+							"source": "/images/image1.png"
+						},
+						{
+							"name": "tag",
+							"type": "text",
+							"content": "Sehr günstig - TIPP!"
+						},
+						{
+							"name": "headline",
+							"type": "link",
+							"url": "rents/234.html",
+							"elements": [
+								{
+									"name": "copy",
+									"type": "text",
+									"content": "Apartment mit Pool"
+								}
+							]
+						},
+						{
+							"name": "description",
+							"type": "list",
+							"elements": [
+								{
+									"type": "list-text",
+									"content": "Stadt-Lage"
+								},
+								{
+									"type": "list-text",
+									"content": "Top Verkehrsanbindung"
+								},
+								{
+									"type": "list-text",
+									"content": "450 m<sub>2</sub>"
+								},
+								{
+									"type": "list-text",
+									"content": "Eigener Dienstservice"
+								}
+							]
+						},
+						{
+							"type": "text",
+							"name": "price",
+							"content": "83.500,00 €"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "headline",
+			"type": "text",
+			"content": "Unser Angebot und Service"
+		},
+		{
+			"name": "body",
+			"type": "text",
+			"content": "Wir haben und haben dies uns das und haben und haben alles und jedes."
+		},
+		{
+			"name": "offers",
+			"type": "group",
+			"elements": [
+				{
+					"name": "headline",
+					"type": "text",
+					"content": "Besondere Angebote"
+				},
+				{
+					"name": "objects",
+					"type": "list",
+					"elements": [
+						{
+							"type": "list-group",
+							"elements": [
+								{
+									"name": "image",
+									"type": "object",
+									"referenceId": "1234567",
+									"mimeType": "png",
+									"alternateText": "Image one",
+									"source": "/images/image1.png"
+								},
+								{
+									"name": "headline",
+									"type": "text",
+									"content": "Objekt ABC"
+								},
+								{
+									"name": "description",
+									"type": "text",
+									"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								},
+								{
+									"type": "text",
+									"name": "price",
+									"content": "175.000,00 €"
+								}
+							]
+						},
+						{
+							"type": "list-group",
+							"elements": [
+								{
+									"name": "image",
+									"type": "object",
+									"referenceId": "1234567",
+									"mimeType": "png",
+									"alternateText": "Image one",
+									"source": "/images/image1.png"
+								},
+								{
+									"name": "headline",
+									"type": "text",
+									"content": "Apartment groß"
+								},
+								{
+									"name": "description",
+									"type": "text",
+									"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								},
+								{
+									"type": "text",
+									"name": "price",
+									"content": "15.000,00 €"
+								}
+							]
+						},
+						{
+							"type": "list-group",
+							"elements": [
+								{
+									"name": "image",
+									"type": "object",
+									"referenceId": "1234567",
+									"mimeType": "png",
+									"alternateText": "Image one",
+									"source": "/images/image1.png"
+								},
+								{
+									"name": "headline",
+									"type": "text",
+									"content": "Gewerbefläche"
+								},
+								{
+									"name": "description",
+									"type": "text",
+									"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								},
+								{
+									"type": "text",
+									"name": "price",
+									"content": "50.750,00 €"
+								}
+							]
+						},
+						{
+							"type": "list-group",
+							"elements": [
+								{
+									"name": "image",
+									"type": "object",
+									"referenceId": "1234567",
+									"mimeType": "png",
+									"alternateText": "Image one",
+									"source": "/images/image1.png"
+								},
+								{
+									"name": "headline",
+									"type": "text",
+									"content": "Seeplatz"
+								},
+								{
+									"name": "description",
+									"type": "text",
+									"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								},
+								{
+									"type": "text",
+									"name": "price",
+									"content": "175.000,00 €"
+								}
+							]
+						},
+						{
+							"type": "list-group",
+							"elements": [
+								{
+									"name": "image",
+									"type": "object",
+									"referenceId": "1234567",
+									"mimeType": "png",
+									"alternateText": "Image one",
+									"source": "/images/image1.png"
+								},
+								{
+									"name": "headline",
+									"type": "text",
+									"content": "Hütte"
+								},
+								{
+									"name": "description",
+									"type": "text",
+									"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								},
+								{
+									"type": "text",
+									"name": "price",
+									"content": "15.000,00 €"
+								}
+							]
+						},
+						{
+							"type": "list-group",
+							"elements": [
+								{
+									"name": "image",
+									"type": "object",
+									"referenceId": "1234567",
+									"mimeType": "png",
+									"alternateText": "Image one",
+									"source": "/images/image1.png"
+								},
+								{
+									"name": "headline",
+									"type": "text",
+									"content": "Hausboot"
+								},
+								{
+									"name": "description",
+									"type": "text",
+									"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								},
+								{
+									"type": "text",
+									"name": "price",
+									"content": "15.000,00 €"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"dataSourceContents": [
+	]
 }

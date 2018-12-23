@@ -1,0 +1,10 @@
+{
+	"name": "main",
+	"settings": {
+		"blah": "123",
+		"blubb": {
+			"blubb-1": "foo",
+			"blubb-2": "bar"
+		}
+	}
+}

@@ -1,5 +1,5 @@
 {
-  "id": "home",
+  "id": "001",
   "metaData": {
     "title": "GreekEstate - Rent Object 001",
     "attributes": {
@@ -12,13 +12,88 @@
     {
       "name": "headline",
       "type": "text",
-      "content": "Mietobjekt #001"
+      "content": "Villa mit Luxuspool"
     },
     {
-      "name": "body",
+      "name": "short-description",
       "type": "text",
-      "content": "Lorem ipsum ..."
-    }
+      "content": "Edle Lage, Neubau, Top Ausstattung! Meerblick von allen Fenstern, 3 Terrassen mit Marmor-Ambiente."
+    },
+	{
+		"name": "properties",
+		"type": "group",
+		"elements": [
+		    {
+		      "name": "code",
+		      "type": "text",
+		      "content": "1324"
+		    },
+		    {
+		      "name": "number-of-rooms",
+		      "type": "text",
+		      "content": "3"
+		    },
+		    {
+		      "name": "region",
+		      "type": "text",
+		      "content": "loutraki"
+		    },
+		    {
+		      "name": "area",
+		      "type": "text",
+		      "content": "123"
+		    },
+		    {
+		      "name": "floor",
+		      "type": "text",
+		      "content": "3"
+		    },
+		    {
+		      "name": "distance-to-sea",
+		      "type": "text",
+		      "content": "100"
+		    },
+		    {
+		      "name": "price",
+		      "type": "text",
+		      "content": "100000"
+		    }
+		]
+	},
+    {
+      "name": "long-description",
+      "type": "text",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dolor vitae hendrerit rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec convallis metus quis massa eleifend, vel sollicitudin nunc volutpat. In hac habitasse platea dictumst. Fusce consequat porta dolor id egestas. Suspendisse molestie pharetra bibendum. Aenean nunc turpis, auctor vitae odio non, convallis blandit risus. Vestibulum ut pellentesque dolor. Praesent eleifend lacinia nulla quis molestie. Sed ut enim id diam ullamcorper vestibulum eu vitae purus. Vivamus nisi magna, vehicula eu tincidunt in, semper id ipsum. Nulla tincidunt lorem ac magna vulputate, non dapibus nulla aliquam. Sed a posuere mauris. Nunc nisl augue, bibendum non augue at, vestibulum pulvinar erat. In suscipit, orci at interdum consequat, est neque interdum arcu, id facilisis arcu ante sed nunc. Quisque auctor molestie urna non aliquam. Morbi tincidunt rhoncus nisl, in auctor tortor feugiat eu. Aliquam sit amet libero consectetur, aliquam nulla eget, feugiat sapien. 
+	  
+	  Aliquam posuere nulla a tincidunt viverra. Phasellus eget semper nibh. Pellentesque mollis lacus vitae dignissim ullamcorper. Praesent maximus faucibus egestas. Mauris accumsan elit nec magna mollis vulputate. Aenean porttitor imperdiet augue ut pulvinar. Sed elementum vehicula ante, cursus bibendum dolor consectetur quis. Etiam eget sagittis justo. Sed bibendum efficitur elit ac consequat. Fusce iaculis aliquam bibendum. Pellentesque justo massa, rutrum non dictum sit amet, dignissim quis ligula. Etiam molestie lobortis urna, nec facilisis quam. Duis rutrum lacus ut maximus efficitur. Cras porta mauris sit amet leo mollis, et volutpat enim auctor. Etiam at neque lobortis, cursus velit in, tempus diam. Nam ut orci nec tellus congue accumsan. Morbi sem nibh, placerat ac varius eu, dapibus vel nisi. Nullam elementum a lectus at placerat. Aenean euismod a nunc vitae lacinia. Proin ac scelerisque lacus. Cras nec ligula est. Curabitur sagittis sagittis ante, ut interdum tellus convallis sit amet. Donec varius venenatis neque in accumsan. Nam a ante eros. Sed euismod metus ante, vel sodales lectus consectetur vel. Nam molestie augue in lacus lobortis mollis. Fusce scelerisque tortor sit amet imperdiet ullamcorper. Vivamus feugiat lacus sit amet felis feugiat, nec porta mi sagittis. Nunc placerat ligula in ex tincidunt, quis ullamcorper erat pretium. Suspendisse vel fringilla ex. Aenean pulvinar mi ut risus commodo mollis. Proin lacinia, orci at condimentum venenatis, nisi eros iaculis nisl, at luctus eros odio ut ipsum. Praesent luctus eros sed ex sagittis hendrerit. Mauris scelerisque, turpis vel feugiat ultricies, arcu sapien convallis quam, eu fermentum orci lacus vitae erat. Nunc scelerisque leo libero, eu vulputate lorem faucibus id. Suspendisse non lorem magna. Integer volutpat pellentesque mi vel viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In tempus tortor eu sapien pharetra, vel faucibus elit rhoncus. Integer posuere metus odio. Suspendisse quis ipsum sit amet massa aliquet viverra ac quis arcu. Maecenas blandit dictum justo quis iaculis. Fusce sollicitudin ullamcorper sapien finibus tempor. Pellentesque eleifend tempor quam ac consectetur. Nam sed mollis odio. Ut facilisis augue nulla."
+    },
+	{
+		"name": "images",
+		"type": "list",
+		"elements": [
+			{
+			    "type": "list-object",
+			    "referenceId": "123456701",
+			    "source": "/images/image1.png",
+			    "alternateText": "Image one",
+			    "mimeType": "png"
+			},			
+			{
+			    "type": "list-object",
+			    "referenceId": "123456702",
+			    "source": "/images/image2.png",
+			    "alternateText": "Image two",
+			    "mimeType": "png"
+			},
+			{
+			    "type": "list-object",
+			    "referenceId": "123456703",
+			    "source": "/images/image3.png",
+			    "alternateText": "Image three",
+			    "mimeType": "png"
+			}
+		]
+	}
   ],
   "dataSourceContents": [
     {
@@ -26,19 +101,7 @@
       "identifier": {
         "type": "TIMESTAMP",
         "checksum": ""
-      },
-      "content": null
-    },
-    {
-      "name": "site-structure",
-      "identifier": {
-        "type": "SITE",
-        "query": {
-        	"INFO_PATH": "/"
-        },
-        "checksum": ""
-      },
-      "content": null
+      }
     }
   ]
 }

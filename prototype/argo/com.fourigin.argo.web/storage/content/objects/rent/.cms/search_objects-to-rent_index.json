@@ -1,0 +1,70 @@
+{
+	"name": "objects-to-rent",
+	"references": [
+		"object_002",
+		"object_001",
+		"object_004"
+	],
+	"targets": [
+		"/objects/rent/object_002",
+		"/objects/rent/object_001",
+		"/objects/rent/object_004"
+	],
+	"categories": {
+		"region": {
+			"athen": [
+				2
+			],
+			"loutraki": [
+				0,
+				1
+			]
+		}
+	},
+	"fields": [
+		{
+			"name": "price",
+			"path": "/properties/price",
+			"type": "PRICE",
+			"value": [
+				"150000",
+				"100000",
+				"200000"
+			]
+		},
+		{
+			"name": "distance",
+			"path": "/properties/distance-to-sea",
+			"type": "NUMBER",
+			"value": [
+				"250",
+				"100",
+				"20"
+			]
+		},
+		{
+			"name": "number-of-rooms",
+			"path": "/properties/number-of-rooms",
+			"type": "NUMBER",
+			"value": [
+				"4",
+				"3",
+				"2"
+			]
+		}
+	],
+	"searchValues": {
+		"athen": [
+			2
+		],
+		"villa": [
+			0,
+			1,
+			2
+		],
+		"loutraki": [
+			0,
+			1
+		]
+	}
+}
