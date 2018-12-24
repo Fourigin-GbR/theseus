@@ -1,0 +1,146 @@
+{
+	"contentPrototype": {
+		"id": "#id",
+		"metaData": {
+			"title": "#title",
+			"attributes": {
+				"key-1": "value-1",
+				"key-2": "value-2",
+				"key-3": "value-3"
+			}
+		},
+		"content": [
+			{
+				"name": "stage",
+				"type": "list",
+				"typeProperties": {
+					"mandatory": true,
+					"list-size-min": 1,
+					"list-size-max": 3,
+					"list-reorder-enabled": true
+				},
+				"elements": [
+					{
+						"type": "list-group",
+						"elements": [
+							{
+								"name": "image",
+								"type": "object",
+								"typeProperties": {
+									"mandatory": false,
+									"image-mime-types": "image/png,image/jpeg,image/gif"
+								},
+								"referenceId": "1234567",
+								"mimeType": "png",
+								"alternateText": "Image one",
+								"source": "/images/image1.png"
+							},
+							{
+								"name": "teaser",
+								"type": "text",
+								"typeProperties": {
+									"mandatory": false,
+									"text-length-min": 5,
+									"text-length-max": 20
+								},
+								"content": "Exclusiv!"
+							}
+						]
+					}
+				]
+			},
+			{
+				"name": "headline",
+				"type": "text",
+				"typeProperties": {
+					"mandatory": false,
+					"text-length-min": 5,
+					"text-length-max": 20
+				},
+				"content": "Unser Angebot und Service"
+			},
+			{
+				"name": "body",
+				"type": "text",
+				"content": "Wir haben und haben dies uns das und haben und haben alles und jedes."
+			}
+		],
+		"dataSourceContents": [
+			{
+				"name": "timestamp",
+				"identifier": {
+					"type": "TIMESTAMP",
+					"checksum": ""
+				},
+				"content": null
+			},
+			{
+				"name": "allNodes",
+				"identifier": {
+					"type": "SITE",
+					"query": {
+						"INFO_PATH": "/"
+					},
+					"checksum": ""
+				},
+				"content": null
+			},
+			{
+				"name": "objectNodes",
+				"identifier": {
+					"type": "SITE",
+					"query": {
+						"INFO_PATH": "/objects",
+						"VERBOSE": true
+					},
+					"checksum": ""
+				},
+				"content": null
+			}
+		]
+	},
+	"hotspots": {
+		"/headline": {
+			"title": "Headline",
+			"description": "Headline"
+		},
+		"/body": {
+			"title": "Body",
+			"description": "Article body"
+		},
+		"/stage": {
+			"title": "Stage",
+			"description": "Main stage gallery",
+			"elements": {
+				"[first]": {
+					"elements": {
+						"teaser": {
+							"title": "Title row tag",
+							"description": ""
+						}
+					}
+				},
+				"[last]": {
+					"elements": {
+						"teaser": {
+							"title": "Footer row tag",
+							"description": ""
+						}
+					}
+				},
+				"[]": {
+					"elements": {
+						"image": {
+							"title": "Hauptbild, wichtig!",
+							"description": ""
+						},
+						"teaser": {
+							"title": "Tag",
+							"description": ""
+						}
+					}
+				}
+			}
+		}
+	}
+}

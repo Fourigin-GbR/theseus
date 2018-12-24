@@ -1,0 +1,77 @@
+{
+	"contentPrototype": {
+		"id": "#id",
+		"metaData": {
+			"title": "#title",
+			"attributes": {
+				"key-1": "value-1",
+				"key-2": "value-2",
+				"key-3": "value-3"
+			}
+		},
+		"content": [
+			{
+				"name": "headline",
+				"type": "text",
+				"typeProperties": {
+					"mandatory": false,
+					"text-length-min": 5,
+					"text-length-max": 20
+				},
+				"content": "<Headline>"
+			},
+			{
+				"name": "body",
+				"type": "text",
+				"content": "<article>"
+			}
+		],
+		"dataSourceContents": [
+			{
+				"name": "timestamp",
+				"identifier": {
+					"type": "TIMESTAMP",
+					"checksum": ""
+				},
+				"content": null
+			},
+			{
+				"name": "allNodes",
+				"identifier": {
+					"type": "SITE",
+					"query": {
+						"INFO_PATH": "/regions/"
+					},
+					"checksum": ""
+				},
+				"content": null
+			},
+			{
+				"name": "objectNodes",
+				"identifier": {
+					"type": "SITE",
+					"query": {
+						"INFO_PATH": "/objects",
+						"VERBOSE": true
+					},
+					"checksum": ""
+				},
+				"content": null
+			}
+		]
+	},
+	"hotspots": {
+		"/headline": {
+			"title": "Headline",
+			"description": "Headline"
+		},
+		"/body": {
+			"title": "Body",
+			"description": "Article body"
+		},
+		"/hero-images": {
+			"title": "Images",
+			"description": "Hero images"
+		}
+	}
+}

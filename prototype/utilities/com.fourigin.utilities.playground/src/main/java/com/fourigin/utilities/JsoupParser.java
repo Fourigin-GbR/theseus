@@ -102,7 +102,7 @@ public class JsoupParser {
 
         Map<String, ParsedObjectDetails> fixedObjects = fixObjects(parsedObjects);
 
-        convertObjects(objectIds, fixedObjects);
+//        convertObjects(objectIds, fixedObjects);
     }
 
     private static void convertObjects(List<String> objectIds, Map<String, ParsedObjectDetails> fixedObjects) {
@@ -212,7 +212,7 @@ public class JsoupParser {
                 .build();
             System.out.print(" page");
 
-            switch (object.getOfferType()){
+            switch (object.getOfferType()) {
                 case RENT:
                     rentPages.add(page);
                     System.out.println(" --> rent");
@@ -253,11 +253,30 @@ public class JsoupParser {
     }
 
     private static Map<String, ParsedObjectDetails> fixObjects(Map<String, ParsedObjectDetails> parsedObjects) {
-        // TODO
-        return parsedObjects;
+        System.out.println("Validating & fixing " + parsedObjects.size() + " objects ...");
+
+        Map<String, ParsedObjectDetails> fixedObjects = new HashMap<>();
+
+        for (Map.Entry<String, ParsedObjectDetails> entry : parsedObjects.entrySet()) {
+            String id = entry.getKey();
+            ParsedObjectDetails object = entry.getValue();
+
+            System.out.print('.');
+
+            Map<String, String> properties = object.getProperties();
+            if (properties.get("price") == null) {
+                throw new IllegalStateException("Object '" + id + "' doesn't have a price!");
+            }
+
+            fixedObjects.put(id, object);
+        }
+
+        System.out.println();
+
+        return fixedObjects;
     }
 
-    private static void createBackup(){
+    private static void createBackup() {
         System.out.println("Creating backup of static pages ...");
         for (String link : ORIGINAL_LINKS) {
             try {
@@ -296,7 +315,7 @@ public class JsoupParser {
         }
     }
 
-    private static List<String> readObjects(){
+    private static List<String> readObjects() {
         List<String> objectIds;
         try {
             File objectIdsFile = new File("storage/1-original/ids.json");
@@ -338,11 +357,11 @@ public class JsoupParser {
         }
 
         System.out.println();
-        
+
         return objectIds;
     }
 
-    private static Map<String, ParsedObjectDetails> parseObjects(List<String> objectIds){
+    private static Map<String, ParsedObjectDetails> parseObjects(List<String> objectIds) {
         Map<String, ParsedObjectDetails> parsedObjects = new HashMap<>();
 
         int left = objectIds.size();
@@ -612,8 +631,8 @@ public class JsoupParser {
         return parsedObjects;
     }
 
-    private static Map<String, String> extractLocalizedValues(LocalizedText localizedText){
-        if(localizedText == null){
+    private static Map<String, String> extractLocalizedValues(LocalizedText localizedText) {
+        if (localizedText == null) {
             return Collections.emptyMap();
         }
 

@@ -17,19 +17,29 @@
     <script src="/assets/greekestate/assets/scripts/slider.js"></script>
 </head>
 <body>
+<!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
+<!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
+
 <header th:replace="greekestate/base :: header">
 
 </header>
+
 <div class="body">
 
     <nav th:replace="greekestate/base :: breadcrumb">
 
     </nav>
 
-    <article th:replace="greekestate/base :: article-headline-body(${argo.contentElementUtility.getContent('/headline')}, ${argo.contentElementUtility.getContent('/body')})">
+    <article th:replace="greekestate/sub-templates/slider :: article-product-slider(${argo.contentElementUtility.getElement('/stage').elements})">
 
     </article>
+
+    <article th:replace="greekestate/base :: article-h1-block()">
+
+    </article>
+
 </div>
+
 <footer th:replace="greekestate/base :: footer">
 
 </footer>

@@ -45,7 +45,7 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
 
 //    private String assetsDomain;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(32);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(8); // 32?
     private final CompletionService<FileCopyResult> completionService = new ExecutorCompletionService<>(executorService);
 
     private final Logger logger = LoggerFactory.getLogger(AssetsContentPageProcessor.class);
@@ -84,6 +84,9 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
         if (logger.isDebugEnabled()) logger.debug("customer specific configuration: {}", customerSpecificConfiguration);
 
         String assetsDomain = customerSpecificConfiguration.getAssetsDomain().get(customer);
+        if(!assetsDomain.endsWith("/")){
+            assetsDomain += "/";
+        }
 
         Map<String, Asset> assets = assetResolver.retrieveAssets(base, assetIds);
         Map<String, String> resolvedAssetPaths = new HashMap<>();

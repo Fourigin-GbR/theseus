@@ -74,11 +74,10 @@ public final class ContentPageManager {
 
         if ("/".equals(path)) {
             // special case, return all root level elements, packed in a new pseudo group
-            ContentGroup group = new ContentGroup();
-            group.setName("");
-            group.setTitle("");
-            group.setElements(contentPage.getContent());
-            return group;
+            return new ContentGroup.Builder()
+                .withName("")
+                .withElements(contentPage.getContent())
+                .build();
         }
 
         if (path.startsWith("@")) {
@@ -101,6 +100,19 @@ public final class ContentPageManager {
                 }
 
                 path = path.substring(pos + 1);
+
+                if ("/".equals(path)) {
+                    // special case, return all root level elements, packed in a new pseudo group
+                    return new ContentGroup.Builder()
+                        .withName("")
+                        .withElements(match.getContent())
+                        .build();
+//                    group.setName("");
+//                    group.setTitle("");
+//                    group.setElements(match.getContent());
+//                    return group;
+                }
+
                 return resolve(path, match.getContent());
             }
         }
@@ -206,14 +218,17 @@ public final class ContentPageManager {
     public static ContentElement resolveOptional(String path, List<ContentElement> elements) {
         try {
             return resolve(path, elements);
-        }
-        catch (UnresolvableContentPathException ex){
+        } catch (UnresolvableContentPathException ex) {
             return null;
         }
     }
 
     public static ContentElement resolve(String path, List<ContentElement> elements) {
         ContentElement current = null;
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Resolving path '{}' in {}", path, elements);
+        }
 
         StringTokenizer tok = new StringTokenizer(path, "/");
         while (tok.hasMoreTokens()) {
@@ -307,13 +322,12 @@ public final class ContentPageManager {
         }
     }
 
-    private static <T> void checkSubContainer(Class<T> iface, Object element, List<T> result){
+    private static <T> void checkSubContainer(Class<T> iface, Object element, List<T> result) {
         if (element instanceof ContentList) {
             //noinspection unchecked
             List<? extends ContentListElement> subChildren = ((ContentList) element).getElements();
             collectListChildren(iface, subChildren, result);
-        }
-        else if (element instanceof ContentElementsContainer) {
+        } else if (element instanceof ContentElementsContainer) {
             //noinspection unchecked
             List<? extends ContentElement> subChildren = ((ContentElementsContainer) element).getElements();
             collectChildren(iface, subChildren, result);

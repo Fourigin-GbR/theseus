@@ -23,49 +23,19 @@
 
 </header>
 <div class="body">
-    <article class="productStageSlider">
-        <div class="slider heroStageOffers">
-            <input class="sliderPageStorage" value="1" type="hidden">
-            <div class="sliderWrapper">
-                <ul>
-                    <li>
-                        <div class="heroStageOffer">
-                            <div class="image">
-                                <img src="/assets/greekestate/assets/images/start-loutraki.JPG"/>
-                                <div class="teaser">Über 220 Angebote direkt<br/>in Loutraki</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="heroStageOffer">
-                            <div class="image">
-                                <img src="/assets/greekestate/assets/images/start-loutraki-2.JPG"/>
-                                <div class="teaser">Wir vermitteln Immobilien zum Kaufen, Mieten und für Gewerbe</div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="sliderSlideLeft"></div>
-            <div class="sliderSlideRight"></div>
-        </div>
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                new Slider(
-                    jQuery(".slider.heroStageOffers"),
-                    {
-                        "slideItemsAmountPerPage": [
-                            {
-                                "min": "0px",
-                                "max": null,
-                                "slideItems": 1
-                            }
-                        ]
-                    }
-                );
-            });
-        </script>
+
+    <article th:replace="greekestate/sub-templates/slider :: article-product-slider(${argo.contentElementUtility.getElement('/stage').elements})">
+
     </article>
+
+	<!-- Reference to a configuration module: -->
+	<span th:remove="tag" 
+		  th:utext="|&lt;!-- argo.contentElementUtility.getConfig('main'): ${argo.contentElementUtility.getConfig('main')} --&gt;|">...</span>
+
+	<!-- Reference to a data-source module (prefixed with '@' + data source name): -->
+	<span th:remove="tag" 
+		  th:utext="|&lt;!-- argo.contentElementUtility.getElement('@objectNodes/object_003'): ${argo.contentElementUtility.getElement('@objectNodes:/object_003')} --&gt;|">...</span>
+		
     <article class="contextHighlights">
         <div class="links">
             <a href="immobilie-kaufen.html">Immobilie kaufen</a>
@@ -82,11 +52,9 @@
             </form>
         </div>
     </article>
-    <article>
-        <h1 th:text="${argo.contentElementUtility.getContent('/headline')}">#headline</h1>
-        <p  th:text="${argo.contentElementUtility.getContent('/body')}">
-            #body
-        </p>
+
+    <article th:replace="greekestate/base :: article-h1-block()">
+
     </article>
 
     <article>
@@ -102,21 +70,21 @@
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object1/slide1.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object1/slide2.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object1/slide3.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
@@ -146,21 +114,21 @@
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object2/slide1.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object2/slide2.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object2/slide3.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
@@ -190,14 +158,14 @@
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object3/slide1.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object3/slide2.jpg"/>
+                                            <img src="/nothing.jpg"/>
                                         </div>
                                     </div>
                                 </li>
