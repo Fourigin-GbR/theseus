@@ -643,10 +643,14 @@ ul.smallItemGalleryList li .category {
 ul.smallItemGalleryList li .image {
     border-radius: 0 0 10px 0;
     overflow: hidden;
+    background-color: #ccc;
+    height: 230px;
 }
 ul.smallItemGalleryList li img {
-    width: 100%;
+    width: auto;
+    height: 100%;
     display: block;
+    margin: 0 auto;
 }
 ul.smallItemGalleryList li .price {
     font-weight: bold;
