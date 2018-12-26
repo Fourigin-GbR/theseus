@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greece - Details</title>
+    <link rel="stylesheet" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="assets/styles/slider.css">
+    <link rel="stylesheet" href="assets/styles/greek.css"/>
+    <link rel="stylesheet" href="assets/styles/basic-layout.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="assets/scripts/slider.js"></script>
+</head>
+<body>
+<header>
+    <a class="logo" href="index.html"><img src="assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
+    <div class="meta">
+        <div class="contacts">
+            <div class="telephone">
+                <i class="fa fa-phone linkTypeIcon" aria-hidden="true"></i>
+                30 27 41 02 46 22
+            </div>
+            <div class="languages">
+                <select>
+                    <option>deutsch</option>
+                    <option>griechisch</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="text.html">Über uns</a></li>
+            <li><a href="regionen.html">Griechische Regionen</a></li>
+            <li><a href="text.html">Kontakt</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="body">
+
+    <nav class="breadcrumb">
+        <div class="wrapper">
+            <div class="breadcrumbPath">
+                <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
+                <ul class="folderList">
+                    <li>
+                        <a href="index.html">Start</a>
+                    </li>
+                    <li>
+                        <a href="feriendomizil-suchen.html">Feriendomizil suchen</a>
+                    </li>
+                    <li>
+                        Details: Haus am Meer, Objekt 1354816
+                    </li>
+                </ul>
+            </div>
+            <div class="contextHighlights">
+                <div class="links">
+                    <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+                    <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+                </div>
+                <div class="searchAndGo">
+                    <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
+                    <form action="#">
+                        <label>
+                            <span>Objekt-ID</span>
+                            <input name="objectId" type="text" />
+                        </label>
+                        <input class="cta" type="submit" value="Suchen"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <article>
+        <div class="ctaHighlightWrapper">
+            <a class="ctaHighlight" href="feriendomizil-suchen.html">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <span>Zurück zur Suche</span>
+            </a>
+        </div>
+    </article>
+
+    <h1>Haus am Meer</h1>
+    <article class="productDetails">
+        <div class="content">
+            <div class="slider productDetailsSlider">
+                <input class="sliderPageStorage" value="1" type="hidden">
+                <div class="sliderWrapper">
+                    <ul>
+                        <li>
+                            <div class="detailSlide">
+                                <div class="image">
+                                    <img src="http://www.images.bestgreekestate.com/31/c0107b981085a889cc19e8fe1e16afbe936e65/77529659_900x675.jpeg"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="detailSlide">
+                                <div class="image">
+                                    <img src="assets/images/objects/object-details2.jpg"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="detailSlide">
+                                <div class="image">
+                                    <img src="assets/images/objects/object-details3.jpg"/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sliderSlideLeft"></div>
+                <div class="sliderSlideRight"></div>
+                <div class="sliderPagination"><ul></ul></div>
+            </div>
+            <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    new Slider(
+                        jQuery(".slider.productDetailsSlider"),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            </script>
+            <div class="description">
+                <p>Direkte Lage, super Dinge, alles sauber, alles da! Wunderbar und herrlich schön, nichts ist unmöglich alles ist machtbart.</p>
+                <ul class="highlights">
+                    <li>Code: #3546</li>
+                    <li>Zimmeranzahl: 3</li>
+                    <li>Gesamtfläche: 144qm</li>
+                    <li>Stockwerk: 3</li>
+                    <li>Entfernung zum Meer: 150m</li>
+                </ul>
+                <div class="priceBox">
+                    255.000,00 €
+                </div>
+                <div class="transfer">
+                    <a class="cta" href="text.html">Anfragen</a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article>
+        <h2>Beschreibung</h2>
+        <p>
+            Where position: relative; ensures correct positioning of the fix. And white-space: pre; makes you not having to add any content - like a white space - to the fix. And height: 0px;width: 0px;overflow: hidden; makes sure you'll never see the fix.
+            You might need to add line-height: 0px; or max-height: 0px; to ensure the height is actually zero in ancient IE browsers (I'm unsure). And optionally you could add <!--dummy--> to it in old IE browsers, if it does not work.
+            In short, you can do all this with only CSS (which removes the need to add an actual child to the HTML DOM-tree).
+        </p>
+    </article>
+
+    <article>
+        <h2>Karte</h2>
+        <p>
+            ## API-Key von Google benötigt für den Einbau##
+        </p>
+    </article>
+</div>
+<footer>
+    <div class="content">
+        <div class="logo">
+            <img src="assets/images/greek-estate-logo.jpg" />
+        </div>
+        <div class="company">
+            <div>
+                <h3>Inhaber</h3>
+                <p>Georgios Tzafis</p>
+            </div>
+            <div>
+                <h3>Telefon</h3>
+                <p>+30 698 741 9624</p>
+            </div>
+        </div>
+        <div class="links">
+            <div>
+                <h3><a href="index.html">Start</a></h3>
+            </div>
+            <div>
+                <h3><a href="feriendomizil-suchen.html">Feriendomizil suchen</a></h3>
+                <h3><a href="immobilie-kaufen.html">Immobilie kaufen</a></h3>
+            </div>
+            <div>
+                <h3><a href="regionen.html">Griechische Regionen</a></h3>
+                <div><a href="region.html">Loutraki</a></div>
+                <div><a href="region.html">Kreta</a></div>
+                <div><a href="region.html">Athen</a></div>
+            </div>
+            <div>
+                <h3><a href="text.html">Über uns</a></h3>
+                <div><a href="text.html">Kontakt</a></div>
+                <div><a href="text.html">Impressum</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

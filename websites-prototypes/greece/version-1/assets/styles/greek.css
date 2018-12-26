@@ -264,6 +264,9 @@ nav a {
     font-size: 36px;
     font-weight: 500;
 }
+.body h1 {
+    clear: both;
+}
 .body h2 {
     font-size: 29px;
     margin-bottom: 15px;
