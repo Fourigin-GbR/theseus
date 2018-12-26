@@ -14,6 +14,7 @@ import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.template.engine.IncompatibleContentElementException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ContentElementUtility implements ContentPageAwareThymeleafTemplateUtility {
@@ -221,6 +222,6 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     @Override
     public void setCompilerBase(String compilerBase) {
-        this.compilerBase = compilerBase;
+        this.compilerBase = compilerBase.toLowerCase(Locale.US);
     }
 }
