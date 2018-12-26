@@ -149,7 +149,7 @@
                     images = ${argo.contentElementUtility.getElement(link, '/images')},
                     type = ${argo.contentElementUtility.getElement(properties, '/type')},
                     price = ${argo.contentElementUtility.getElement(properties, '/price')},
-                    href = ${link.target}
+                    href = ${argo.pagePropertiesUtility.getPath(link.target)}
             ">
                 <span th:text="${link.name}"/>
                 <span th:utext="|&lt;!-- ${link} --&gt;|"></span>

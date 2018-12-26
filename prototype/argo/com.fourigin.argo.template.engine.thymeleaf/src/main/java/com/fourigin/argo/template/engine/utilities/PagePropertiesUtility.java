@@ -8,11 +8,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTemplateUtility {
+public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTemplateUtility, ProcessingModeAwareThymeleafTemplateUtility {
 
     private String compilerBase;
 
     private Map<String, String> siteAttributes;
+
+    private ProcessingMode processingMode;
 
     private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
 
@@ -22,7 +24,7 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
 
     private final Logger logger = LoggerFactory.getLogger(PagePropertiesUtility.class);
 
-    public String getPath(String nodePath, ProcessingMode processingMode){
+    public String getPath(String nodePath){
         String baseUrlAttributeName = BASE_URL_PREFIX + processingMode.name();
         if (logger.isDebugEnabled()) logger.debug("Searching for site-attribute '{}'.", baseUrlAttributeName);
 
@@ -44,6 +46,11 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
     @Override
     public void setSiteAttributes(Map<String, String> siteAttributes) {
         this.siteAttributes = siteAttributes;
+    }
+
+    @Override
+    public void setProcessingMode(ProcessingMode processingMode) {
+        this.processingMode = processingMode;
     }
 
     public void setInternalLinkResolutionStrategy(InternalLinkResolutionStrategy internalLinkResolutionStrategy) {

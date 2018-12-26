@@ -55,6 +55,10 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
         clone.setThymeleafInternalTemplateEngine(thymeleafInternalTemplateEngine);
         clone.setTemplateUtilityFactories(templateUtilityFactories);
+        clone.setBase(base);
+        clone.setPath(path);
+        clone.setPageInfo(pageInfo);
+        clone.setSiteAttributes(siteAttributes);
         clone.setUtilitiesPrefix(utilitiesPrefix);
         clone.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies);
 
@@ -80,6 +84,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
             .withPath(path)
             .withContentPage(contentPage)
             .withPageInfo(pageInfo)
+            .withProcessingMode(processingMode)
             .withSiteAttributes(siteAttributes)
             .withInternalLinkResolutionStrategy(internalLinkResolutionStrategies.get(processingMode))
             .build()

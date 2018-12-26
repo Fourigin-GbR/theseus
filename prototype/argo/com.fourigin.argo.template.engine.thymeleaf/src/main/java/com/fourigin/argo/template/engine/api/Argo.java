@@ -2,6 +2,7 @@ package com.fourigin.argo.template.engine.api;
 
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentElementUtility;
 import com.fourigin.argo.template.engine.utilities.PagePropertiesUtility;
@@ -16,6 +17,7 @@ public class Argo {
     private String path;
     private ContentPage contentPage;
     private PageInfo pageInfo;
+    private ProcessingMode processingMode;
     private Map<String, String> siteAttributes;
 
     private ContentElementUtility contentElementUtility;
@@ -54,6 +56,14 @@ public class Argo {
 
     public void setPageInfo(PageInfo pageInfo) {
         this.pageInfo = pageInfo;
+    }
+
+    public ProcessingMode getProcessingMode() {
+        return processingMode;
+    }
+
+    public void setProcessingMode(ProcessingMode processingMode) {
+        this.processingMode = processingMode;
     }
 
     public Map<String, String> getSiteAttributes() {
@@ -107,6 +117,7 @@ public class Argo {
         private String path;
         private ContentPage contentPage;
         private PageInfo pageInfo;
+        private ProcessingMode processingMode;
         private Map<String, String> siteAttributes;
         private Map<String, ThymeleafTemplateUtility> customUtilities = new HashMap<>();
         private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
@@ -131,6 +142,11 @@ public class Argo {
             return this;
         }
 
+        public Builder withProcessingMode(ProcessingMode processingMode){
+            this.processingMode = processingMode;
+            return this;
+        }
+
         public Builder withSiteAttributes(Map<String, String> siteAttributes){
             this.siteAttributes = siteAttributes;
             return this;
@@ -151,6 +167,7 @@ public class Argo {
             argo.setBase(base);
             argo.setPath(path);
             argo.setContentPage(contentPage);
+            argo.setProcessingMode(processingMode);
             argo.setPageInfo(pageInfo);
             argo.setSiteAttributes(siteAttributes);
 
@@ -162,6 +179,7 @@ public class Argo {
             PagePropertiesUtility pagePropertiesUtility = new PagePropertiesUtility();
             pagePropertiesUtility.setCompilerBase(base);
             pagePropertiesUtility.setSiteAttributes(siteAttributes);
+            pagePropertiesUtility.setProcessingMode(processingMode);
             pagePropertiesUtility.setInternalLinkResolutionStrategy(internalLinkResolutionStrategy);
             argo.setPagePropertiesUtility(pagePropertiesUtility);
 
