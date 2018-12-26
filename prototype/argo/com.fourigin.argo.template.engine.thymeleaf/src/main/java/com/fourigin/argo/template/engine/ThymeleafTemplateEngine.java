@@ -91,9 +91,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         );
 
         addUtilities(templateUtilityFactories, context, base, processingMode);
-
-        if (logger.isDebugEnabled()) logger.debug("Content before transforming: {}", contentPage);
-
+        
         try (Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
             thymeleafInternalTemplateEngine.process(templateName, context, writer);
         } catch (Exception ex) {
@@ -176,5 +174,18 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     public void setInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies) {
         this.internalLinkResolutionStrategies = internalLinkResolutionStrategies;
+    }
+
+    @Override
+    public String toString() {
+        return "ThymeleafTemplateEngine{" +
+            "templateUtilityFactories=" + templateUtilityFactories +
+            ", utilitiesPrefix='" + utilitiesPrefix + '\'' +
+            ", base='" + base + '\'' +
+            ", path='" + path + '\'' +
+            ", pageInfo=" + pageInfo +
+            ", siteAttributes=" + siteAttributes +
+            ", internalLinkResolutionStrategies=" + internalLinkResolutionStrategies +
+            '}';
     }
 }

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class ImageAsset implements Asset {
@@ -118,5 +119,35 @@ public class ImageAsset implements Asset {
 
     public void setSize(int width, int height){
         this.size = new Dimension(width, height);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ImageAsset)) return false;
+        ImageAsset that = (ImageAsset) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(mimeType, that.mimeType) &&
+            Objects.equals(tags, that.tags) &&
+            Objects.equals(attributes, that.attributes) &&
+            Objects.equals(size, that.size);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, mimeType, tags, attributes, size);
+    }
+
+    @Override
+    public String toString() {
+        return "ImageAsset{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", mimeType='" + mimeType + '\'' +
+            ", tags=" + tags +
+            ", attributes=" + attributes +
+            ", size=" + size +
+            '}';
     }
 }
