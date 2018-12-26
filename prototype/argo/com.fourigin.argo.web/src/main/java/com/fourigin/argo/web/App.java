@@ -3,6 +3,7 @@ package com.fourigin.argo.web;
 import com.fourigin.argo.assets.processor.AssetsContentPageProcessor;
 import com.fourigin.argo.assets.repository.AssetResolver;
 import com.fourigin.argo.compiler.DefaultPageCompilerFactory;
+import com.fourigin.argo.compiler.datasource.CommonContentDataSource;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
@@ -197,7 +198,8 @@ public class App {
 
         resolver.setDataSources(Arrays.asList(
             new TimestampDataSource(),
-            new SiteStructureDataSource()
+            new SiteStructureDataSource(),
+            new CommonContentDataSource()
         ));
 
         return resolver;

@@ -1,5 +1,7 @@
 package com.fourigin.argo.compiler;
 
+import com.fourigin.argo.compiler.datasource.CommonContentDataSource;
+import com.fourigin.argo.compiler.datasource.CommonContentDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.EmptyDataSourceQuery;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
@@ -55,6 +57,7 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
         Map<String, DataSourceQueryBuilder> queryBuilders = new HashMap<>();
         queryBuilders.put(TimestampDataSource.TYPE, new DataSourceQueryBuilder(EmptyDataSourceQuery.class));
         queryBuilders.put(SiteStructureDataSource.TYPE, new DataSourceQueryBuilder(SiteStructureDataSourceQuery.class));
+        queryBuilders.put(CommonContentDataSource.TYPE, new DataSourceQueryBuilder(CommonContentDataSourceQuery.class));
         DataSourceQueryFactory.setBuilders(queryBuilders);
 
         DefaultPageCompiler compiler = new DefaultPageCompiler(customer, base);
