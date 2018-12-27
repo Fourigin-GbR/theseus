@@ -37,14 +37,14 @@ public class DefaultCompilerInterceptor implements CompilerInterceptor {
     }
 
     @Override
-    public void afterPrepareContent(String path, PageInfo pageInfo, ProcessingMode processingMode, ContentPage contentPage) {
+    public void afterPrepareContent(String base, String path, PageInfo pageInfo, ProcessingMode processingMode, ContentPage contentPage) {
 //        if(processingMode != ProcessingMode.STAGE) {
 //            // only write prepared content in STAGE mode
 //            return;
 //        }
 
-        String folderPath = preparedContentFilenameStrategy.getFolder(pageInfo);
-        String filename = preparedContentFilenameStrategy.getFilename(pageInfo);
+        String folderPath = preparedContentFilenameStrategy.getFolder(base, pageInfo);
+        String filename = preparedContentFilenameStrategy.getFilename(base, pageInfo);
 
         File folder = new File(baseDir, folderPath);
         if(!folder.exists()){

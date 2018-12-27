@@ -14,6 +14,7 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
     private static final String VERBOSE = "VERBOSE";
     private static final String IGNORE_OWNER_PAGE = "IGNORE_OWNER_PAGE";
     private static final String INCLUDE_CONTENT = "INCLUDE_CONTENT";
+    private static final String NON_RECURSIVE = "NON_RECURSIVE";
 
     private String path;
 
@@ -22,6 +23,8 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
     private boolean ignoreOwnerPage = false;
 
     private List<String> contentReferences;
+
+    private boolean nonRecursive = false;
 
     @Override
     public void buildFromMap(Map<String, Object> values) {
@@ -39,6 +42,8 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
         this.verbose = Boolean.parseBoolean(String.valueOf(values.get(VERBOSE)));
 
         this.ignoreOwnerPage = Boolean.parseBoolean(String.valueOf(values.get(IGNORE_OWNER_PAGE)));
+
+        this.nonRecursive = Boolean.parseBoolean(String.valueOf(values.get(NON_RECURSIVE)));
 
         Object contentToInclude = values.get(INCLUDE_CONTENT);
         if (contentToInclude != null) {
@@ -67,6 +72,10 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
         return contentReferences;
     }
 
+    public boolean isNonRecursive() {
+        return nonRecursive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,13 +83,14 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
         SiteStructureDataSourceQuery that = (SiteStructureDataSourceQuery) o;
         return verbose == that.verbose &&
             ignoreOwnerPage == that.ignoreOwnerPage &&
+            nonRecursive == that.nonRecursive &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentReferences, that.contentReferences);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(path, verbose, ignoreOwnerPage, contentReferences);
+        return Objects.hash(path, verbose, ignoreOwnerPage, contentReferences, nonRecursive);
     }
 
     @Override
@@ -90,6 +100,7 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
             ", verbose=" + verbose +
             ", ignoreOwnerPage=" + ignoreOwnerPage +
             ", contentReferences=" + contentReferences +
+            ", nonRecursive=" + nonRecursive +
             '}';
     }
 }

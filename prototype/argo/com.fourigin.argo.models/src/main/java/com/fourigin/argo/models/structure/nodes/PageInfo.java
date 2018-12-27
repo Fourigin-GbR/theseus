@@ -2,13 +2,14 @@ package com.fourigin.argo.models.structure.nodes;
 
 import com.fourigin.argo.models.template.TemplateReference;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class PageInfo implements SiteNodeInfo {
     private String path;
     private String name;
-    private String localizedName;
-    private String displayName;
+    private Map<String, String> localizedName;
+    private Map<String, String> displayName;
     private String description;
     private SiteNodeContainerInfo parent;
 
@@ -35,22 +36,22 @@ public class PageInfo implements SiteNodeInfo {
     }
 
     @Override
-    public String getLocalizedName() {
+    public Map<String, String> getLocalizedName() {
         return localizedName;
     }
 
     @Override
-    public void setLocalizedName(String localizedName) {
+    public void setLocalizedName(Map<String, String> localizedName) {
         this.localizedName = localizedName;
     }
 
     @Override
-    public String getDisplayName() {
+    public Map<String, String> getDisplayName() {
         return displayName;
     }
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(Map<String, String> displayName) {
         this.displayName = displayName;
     }
 
@@ -72,15 +73,6 @@ public class PageInfo implements SiteNodeInfo {
     @Override
     public void setParent(SiteNodeContainerInfo parent) {
         this.parent = parent;
-    }
-
-    public String getReference() {
-        StringBuilder builder = new StringBuilder(path);
-        if (!path.endsWith("/")) {
-            builder.append('/');
-        }
-        builder.append(name);
-        return builder.toString();
     }
 
     public ContentPageReference getContentPageReference() {
@@ -213,8 +205,8 @@ public class PageInfo implements SiteNodeInfo {
     public static class Builder {
         private String path;
         private String name;
-        private String localizedName;
-        private String displayName;
+        private Map<String, String> localizedName;
+        private Map<String, String> displayName;
         private String description;
         private SiteNodeContainerInfo parent;
 
@@ -230,12 +222,12 @@ public class PageInfo implements SiteNodeInfo {
             return this;
         }
 
-        public Builder withLocalizedName(String localizedName) {
+        public Builder withLocalizedName(Map<String, String> localizedName) {
             this.localizedName = localizedName;
             return this;
         }
 
-        public Builder withDisplayName(String displayName) {
+        public Builder withDisplayName(Map<String, String> displayName) {
             this.displayName = displayName;
             return this;
         }

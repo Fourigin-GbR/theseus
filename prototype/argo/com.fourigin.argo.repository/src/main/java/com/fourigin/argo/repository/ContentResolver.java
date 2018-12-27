@@ -7,6 +7,7 @@ import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
+import com.fourigin.argo.repository.strategies.TraversingStrategy;
 
 import java.io.Flushable;
 import java.util.Collection;
@@ -25,6 +26,7 @@ public interface ContentResolver extends Flushable {
     Collection<PageInfo> resolveInfos(String path, PageInfoTraversingStrategy traversingStrategy);
     Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path);
     Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path, PageInfoTraversingStrategy traversingStrategy);
+    Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy);
 
     ContentPage retrieve(PageInfo info);
 

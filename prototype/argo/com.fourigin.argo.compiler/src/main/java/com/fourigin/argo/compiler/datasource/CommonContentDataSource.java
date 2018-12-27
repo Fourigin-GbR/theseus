@@ -11,6 +11,7 @@ import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentResolver;
 import org.slf4j.Logger;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.fourigin.argo.compiler.datasource.DataSourcesResolver.CTX_BASE;
 
 public class CommonContentDataSource implements
     DataSource<CommonContentDataSourceQuery>,
@@ -42,6 +45,8 @@ public class CommonContentDataSource implements
         Map<String, Object> context
     ) {
         ContentResolver contentResolver = (ContentResolver) context.get(CTX_CONTENT_RESOLVER);
+//        String customer = (String) context.get(CTX_CUSTOMER);
+        String base = (String) context.get(CTX_BASE);
 
         String path = "/common";
 
@@ -59,7 +64,7 @@ public class CommonContentDataSource implements
 
             TextContentElement.Builder textBuilder = new TextContentElement.Builder()
                 .withName("display-name")
-                .withContent(commonInfo.getDisplayName());
+                .withContent(SiteNodes.resolveContent(base, commonInfo.getDisplayName()));
 
             if (query.isVerbose()) {
                 CompileState compileState = state.getCompileState();
@@ -68,7 +73,7 @@ public class CommonContentDataSource implements
 
                 textBuilder
                     .withAttribute("info.description", commonInfo.getDescription())
-                    .withAttribute("info.localizedName", commonInfo.getLocalizedName())
+                    .withAttribute("info.localizedName", SiteNodes.resolveContent(base, commonInfo.getLocalizedName()))
                     .withAttribute("info.state.staged", String.valueOf(state.isStaged()))
                     .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
                     .withAttribute("info.state.revision", state.getRevision());

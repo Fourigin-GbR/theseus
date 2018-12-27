@@ -17,6 +17,7 @@ import com.fourigin.argo.repository.model.JsonFileInfo;
 import com.fourigin.argo.repository.model.JsonInfo;
 import com.fourigin.argo.repository.model.JsonInfoList;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
+import com.fourigin.argo.repository.strategies.TraversingStrategy;
 import com.fourigin.utilities.core.FileBasedRepository;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -159,6 +160,29 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
         ensureInit();
 
         SiteStructurePath pathPointer = SiteStructurePath.forPath(path, parent);
+        SiteNodeInfo info = pathPointer.getNodeInfo();
+
+        if (pathPointer.isDirectory()) {
+            SiteNodeContainerInfo dirInfo = (SiteNodeContainerInfo) pathPointer.getNodeInfo();
+            return traversingStrategy.collect(dirInfo);
+        }
+
+        if (pathPointer.isPage()) {
+            PageInfo pageInfo = (PageInfo) pathPointer.getNodeInfo();
+            return Collections.singletonList(pageInfo);
+        }
+
+        throw new UnsupportedNodeTypeException(info.getClass());
+    }
+
+    @Override
+    public Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy) {
+        Objects.requireNonNull(path, "Path must not be null!");
+        Objects.requireNonNull(traversingStrategy, "Traversing strategy must not be null!");
+
+        ensureInit();
+
+        SiteStructurePath pathPointer = SiteStructurePath.forPath(path, root);
         SiteNodeInfo info = pathPointer.getNodeInfo();
 
         if (pathPointer.isDirectory()) {

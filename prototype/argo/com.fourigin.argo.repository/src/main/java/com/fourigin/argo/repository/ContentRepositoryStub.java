@@ -8,6 +8,7 @@ import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.repository.strategies.DefaultPageInfoTraversingStrategy;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
+import com.fourigin.argo.repository.strategies.TraversingStrategy;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -104,6 +105,12 @@ public class ContentRepositoryStub implements ContentRepository {
     public Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path, PageInfoTraversingStrategy traversingStrategy) {
         String fullPath = parent.getPath() + path;
         return resolveInfos(fullPath, traversingStrategy);
+    }
+
+    @Override
+    public Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy) {
+        // TODO: implement me!
+        return null;
     }
 
     @Override

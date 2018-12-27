@@ -2,13 +2,14 @@ package com.fourigin.argo.models.structure.nodes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     private String path;
     private String name;
-    private String localizedName;
-    private String displayName;
+    private Map<String, String> localizedName;
+    private Map<String, String> displayName;
     private String description;
     private SiteNodeContainerInfo parent;
 
@@ -16,7 +17,7 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
 
     @Override
     public SiteNodeInfo getDefaultTarget() {
-        if(nodes == null || nodes.isEmpty()){
+        if (nodes == null || nodes.isEmpty()) {
             return null;
         }
 
@@ -44,22 +45,22 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     }
 
     @Override
-    public String getLocalizedName() {
+    public Map<String, String> getLocalizedName() {
         return localizedName;
     }
 
     @Override
-    public void setLocalizedName(String localizedName) {
+    public void setLocalizedName(Map<String, String> localizedName) {
         this.localizedName = localizedName;
     }
 
     @Override
-    public String getDisplayName() {
+    public Map<String, String> getDisplayName() {
         return displayName;
     }
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(Map<String, String> displayName) {
         this.displayName = displayName;
     }
 
@@ -125,45 +126,41 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     public String toTreeString(int depth) {
         StringBuilder builder = new StringBuilder();
 
-        for(int i=0; i<depth; i++){
+        for (int i = 0; i < depth; i++) {
             builder.append('\t');
         }
 
         String indent = builder.toString();
 
         builder.append("DirectoryInfo{");
-        if(path == null) {
+        if (path == null) {
             builder.append(" path=<null>");
-        }
-        else {
+        } else {
             builder.append(" path='").append(path).append('\'');
         }
 
-        if(name == null) {
+        if (name == null) {
             builder.append(", name=<null>");
-        }
-        else {
+        } else {
             builder.append(", name='").append(name).append('\'');
         }
 
-        if(localizedName == null){
+        if (localizedName == null) {
             builder.append(", localizedName=<null>");
-        }
-        else {
+        } else {
             builder.append(", localizedName='").append(localizedName).append('\'');
         }
 
-        if(displayName == null){
+        if (displayName == null) {
             builder.append(", displayName=<null>");
-        }
-        else {
+        } else {
             builder.append(", displayName='").append(displayName).append('\'');
         }
 
-        if(nodes != null && !nodes.isEmpty()) {
+        if (nodes != null && !nodes.isEmpty()) {
             builder.append(", nodes=[");
             for (SiteNodeInfo node : nodes) {
-                builder.append('\n').append(node.toTreeString(depth+1));
+                builder.append('\n').append(node.toTreeString(depth + 1));
             }
             builder.append('\n').append(indent).append(']');
         }
@@ -176,49 +173,49 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
     public static class Builder {
         private String path;
         private String name;
-        private String localizedName;
-        private String displayName;
+        private Map<String, String> localizedName;
+        private Map<String, String> displayName;
         private String description;
         private SiteNodeContainerInfo parent;
 
         private List<SiteNodeInfo> nodes;
 
-        public Builder withPath(String path){
+        public Builder withPath(String path) {
             this.path = path;
             return this;
         }
 
-        public Builder withName(String name){
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withLocalizedName(String localizedName){
+        public Builder withLocalizedName(Map<String, String> localizedName) {
             this.localizedName = localizedName;
             return this;
         }
 
-        public Builder withDisplayName(String displayName){
+        public Builder withDisplayName(Map<String, String> displayName) {
             this.displayName = displayName;
             return this;
         }
 
-        public Builder withDescription(String description){
+        public Builder withDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public Builder withParent(SiteNodeContainerInfo parent){
+        public Builder withParent(SiteNodeContainerInfo parent) {
             this.parent = parent;
             return this;
         }
 
-        public Builder withNodes(List<SiteNodeInfo> nodes){
+        public Builder withNodes(List<SiteNodeInfo> nodes) {
             this.nodes = new ArrayList<>(nodes);
             return this;
         }
 
-        public DirectoryInfo build(){
+        public DirectoryInfo build() {
             DirectoryInfo instance = new DirectoryInfo();
             instance.setPath(path);
             instance.setName(name);

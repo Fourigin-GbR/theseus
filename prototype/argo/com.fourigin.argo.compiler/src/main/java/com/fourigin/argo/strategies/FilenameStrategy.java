@@ -10,12 +10,12 @@ public interface FilenameStrategy
 	 * @param info the node info.
 	 * @return the filename for the given node info.
 	 */
-	String getFilename(SiteNodeInfo info);
+	String getFilename(String base, SiteNodeInfo info);
 
 	/**
 	 * Returns the folder. The folder does not include the filename.
 	 * @param info the node info.
 	 * @return  the folder for the given node info.
 	 */
-	String getFolder(SiteNodeInfo info);
+	String getFolder(String base, SiteNodeInfo info);
 }

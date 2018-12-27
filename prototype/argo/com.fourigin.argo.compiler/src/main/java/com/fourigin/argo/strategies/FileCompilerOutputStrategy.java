@@ -32,7 +32,7 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
     }
 
     public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String customer, String base) {
-        String filename = filenameStrategy.getFilename(info);
+        String filename = filenameStrategy.getFilename(base, info);
         if (logger.isDebugEnabled()) logger.debug("filename (from strategy): '{}'", filename);
 
         if (filenamePostfix != null && !"".equals(filenamePostfix)) {
@@ -41,7 +41,7 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
         filename = filename + extension;
         if (logger.isDebugEnabled()) logger.debug("filename (after modifications): '{}'", filename);
 
-        String folder = filenameStrategy.getFolder(info);
+        String folder = filenameStrategy.getFolder(base, info);
         if (logger.isDebugEnabled()) logger.debug("Folder (from strategy): '{}'", folder);
 
         String docRoot = documentRootResolverStrategy.resolveDocumentRoot(customer, base);

@@ -29,7 +29,7 @@ public class DefaultPageInfoTraversingStrategy implements PageInfoTraversingStra
 
         for (SiteNodeInfo node : container.getNodes()) {
             if(node instanceof SiteNodeContainerInfo){
-                processContainer((SiteNodeContainerInfo) node, result);
+                SiteNodeContainerInfo subContainer = (SiteNodeContainerInfo) node;
                 continue;
             }
 

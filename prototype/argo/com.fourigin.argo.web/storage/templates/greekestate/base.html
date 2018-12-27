@@ -21,7 +21,10 @@
 
 </a>
 
-<header th:fragment="header">
+<header th:fragment="header" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
     <a class="logo" target="_top" th:href="'http://argo.greekestate.fourigin.com/cms/view/?base=DE&path=/home'" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
     <div class="meta">
         <div class="contacts">
@@ -32,24 +35,23 @@
             <div class="languages">
                 <select>
                     <option>deutsch</option>
-                    <!--<option>griechisch</option>-->
+                    <option>english</option>
+                    <option>русский</option>
                 </select>
             </div>
         </div>
     </div>
     <nav>
         <ul>
-            <!--
-            <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=/about', 'Über uns')" href="#">Über uns</a>
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/about')}">
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="#">Über uns</a>
             </li>
-            <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=/regions/index', 'Griechische Regionen')" href="#">Griechische Regionen</a>
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/regions')}">
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/regions')}" href="#">Griechische Regionen</a>
             </li>
-
-            <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=/contact', 'Kontakt')" href="#">Kontakt</a>
-            </li>-->
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -312,12 +314,11 @@
                             <div><a href="region.html">Athen</a></div>
                         </div>-->
             <div>
-<!--                <h3><a href="text.html">Über uns</a></h3>
+<!--                <h3><a href="text.html">Über uns</a></h3>-->
                 <div><a href="text.html">Kontakt</a></div>
                 <div>
                     <a th:replace="this :: simpleLink('?base=DE&path=/impressum', 'Impressum')" href="index.html">Impressum</a>
                 </div>
-                -->
             </div>
         </div>
     </div>

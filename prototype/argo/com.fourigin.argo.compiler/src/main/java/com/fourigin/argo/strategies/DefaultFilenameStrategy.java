@@ -4,6 +4,7 @@ import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +21,12 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         this.replacingDefaultTargetWithIndex = replacingDefaultTargetWithIndex;
     }
 
-    public String getFilename(SiteNodeInfo info) {
+    public String getFilename(String base, SiteNodeInfo info) {
         if (logger.isDebugEnabled()) logger.debug("Resolving filename of {}", info);
 
         if (info instanceof PageInfo) {
             PageInfo page = (PageInfo) info;
-            return resolvePageFilename(page);
+            return resolvePageFilename(base, page);
         }
 
         // TODO: implement reference nodes
@@ -34,13 +35,13 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
 //        }
 
         if (info instanceof DirectoryInfo) {
-            return info.getLocalizedName();
+            return SiteNodes.resolveContent(base, info.getLocalizedName());
         }
 
         return null;
     }
 
-    private String resolvePageFilename(PageInfo page) {
+    private String resolvePageFilename(String base, PageInfo page) {
 //      virtual directory logic
 //        List<String> stack = new ArrayList<>();
 //
@@ -88,18 +89,18 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         }
 
         if (logger.isDebugEnabled()) logger.debug("Returning localized name of page '{}'.", page);
-        return page.getLocalizedName();
+        return SiteNodes.resolveContent(base, page.getLocalizedName());
     }
 
-    public String getFolder(SiteNodeInfo info) {
+    public String getFolder(String base, SiteNodeInfo info) {
         if (logger.isDebugEnabled()) logger.debug("Resolving folder of {}", info);
 
         if (info instanceof PageInfo) {
-            return resolvePageFolder((PageInfo) info);
+            return resolvePageFolder(base, (PageInfo) info);
         }
 
         if (info instanceof DirectoryInfo) {
-            return resolveDirectoryFolder(info.getParent());
+            return resolveDirectoryFolder(base, info.getParent());
         }
 
         // TODO: implement reference nodes
@@ -110,7 +111,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         return null;
     }
 
-    private String getInternalFolderPath(SiteNodeContainerInfo container) {
+    private String getInternalFolderPath(String base, SiteNodeContainerInfo container) {
         if(container == null) {
             // root
             return "/";
@@ -126,7 +127,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         }
 
         SiteNodeContainerInfo parent = container.getParent();
-        String path = container.getLocalizedName();
+        String path = SiteNodes.resolveContent(base, container.getLocalizedName());
 
 //        DirectoryInfo directory = (DirectoryInfo) node;
 //        if (directory.isVirtual()) {
@@ -134,14 +135,14 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
 //        }
 
         if(path == null) {
-            return getInternalFolderPath(parent);
+            return getInternalFolderPath(base, parent);
         }
         
-        return getInternalFolderPath(parent) + path + "/";
+        return getInternalFolderPath(base, parent) + path + "/";
     }
 
-    private String resolveDirectoryFolder(SiteNodeContainerInfo container) {
-        String result = getInternalFolderPath(container);
+    private String resolveDirectoryFolder(String base, SiteNodeContainerInfo container) {
+        String result = getInternalFolderPath(base, container);
         if (logger.isDebugEnabled())
             logger.debug("folder path is '{}'.", result);
 
@@ -169,14 +170,14 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         return result;
     }
 
-    private String resolvePageFolder(PageInfo page) {
+    private String resolvePageFolder(String base, PageInfo page) {
         SiteNodeContainerInfo parent = page.getParent();
 
         if (parent == null) {
             return "/";
         }
 
-        return resolveDirectoryFolder(parent);
+        return resolveDirectoryFolder(base, parent);
     }
 
 //    private String resolveSitePath(SiteNodeInfo node) {

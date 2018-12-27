@@ -2,12 +2,13 @@ package com.fourigin.argo.repository.model;
 
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
     private String name;
-    private String localizedName;
-    private String displayName;
+    private Map<String, String> localizedName;
+    private Map<String, String> displayName;
     private String description;
 
     public JsonDirectoryInfo() {
@@ -43,22 +44,22 @@ public class JsonDirectoryInfo implements JsonInfo<DirectoryInfo> {
     }
 
     @Override
-    public String getLocalizedName() {
+    public Map<String, String> getLocalizedName() {
         return localizedName;
     }
 
     @Override
-    public void setLocalizedName(String localizedName) {
+    public void setLocalizedName(Map<String, String> localizedName) {
         this.localizedName = localizedName;
     }
 
     @Override
-    public String getDisplayName() {
+    public Map<String, String> getDisplayName() {
         return displayName;
     }
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(Map<String, String> displayName) {
         this.displayName = displayName;
     }
 

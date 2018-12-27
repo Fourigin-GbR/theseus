@@ -16,9 +16,13 @@ import com.fourigin.argo.models.datasource.index.IndexAwareDataSource;
 import com.fourigin.argo.models.datasource.index.IndexDefinition;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
+import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentResolver;
+import com.fourigin.argo.repository.strategies.NonRecursiveSiteNodeTraversingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +34,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import static com.fourigin.argo.compiler.datasource.DataSourcesResolver.CTX_BASE;
 
 public class SiteStructureDataSource implements
     DataSource<SiteStructureDataSourceQuery>,
@@ -49,6 +55,9 @@ public class SiteStructureDataSource implements
     public List<ContentElement> generateContent(PageInfo ownerPage, DataSourceIdentifier id, SiteStructureDataSourceQuery query, Map<String, Object> context) {
         ContentResolver contentResolver = (ContentResolver) context.get(CTX_CONTENT_RESOLVER);
 
+//        String customer = (String) context.get(CTX_CUSTOMER);
+        String base = (String) context.get(CTX_BASE);
+
         String path = query.getPath();
 
         Map<String, String> revisions = id.getRevisions();
@@ -58,85 +67,116 @@ public class SiteStructureDataSource implements
 
         List<ContentElement> result = new ArrayList<>();
 
-        Collection<PageInfo> infos = contentResolver.resolveInfos(path);
+        Collection<? extends SiteNodeInfo> infos;
+        if (query.isNonRecursive()) {
+            infos = contentResolver.resolveNodeInfos(path, new NonRecursiveSiteNodeTraversingStrategy());
+            if (logger.isDebugEnabled()) logger.debug("Resolved (non-recursive) {} nodes", infos.size());
+        } else {
+            infos = contentResolver.resolveInfos(path);
+            if (logger.isDebugEnabled()) logger.debug("Resolved (recursive) {} nodes", infos.size());
+        }
+
         if (infos != null && !infos.isEmpty()) {
-            for (PageInfo info : infos) {
+            for (SiteNodeInfo info : infos) {
                 if (query.isIgnoreOwnerPage() && info.equals(ownerPage)) {
                     continue;
                 }
 
-                PageState state = contentResolver.resolvePageState(info);
-                revisions.put(info.getReference(), state.getRevision());
+                if (PageInfo.class.isAssignableFrom(info.getClass())) {
+                    PageInfo pageInfo = (PageInfo) info;
 
-                TextContentElement.Builder textBuilder = new TextContentElement.Builder()
-                    .withName("display-name")
-                    .withContent(info.getDisplayName());
+                    PageState state = contentResolver.resolvePageState(pageInfo);
+                    revisions.put(pageInfo.getReference(), state.getRevision());
 
-                if (query.isVerbose()) {
-                    CompileState compileState = state.getCompileState();
-                    TemplateReference templateReference = info.getTemplateReference();
-                    PageInfo.ContentPageReference contentReference = info.getContentPageReference();
+                    TextContentElement.Builder textBuilder = new TextContentElement.Builder()
+                        .withName("display-name")
+                        .withContent(SiteNodes.resolveContent(base, info.getDisplayName()));
 
-                    textBuilder
-                        .withAttribute("info.description", info.getDescription())
-                        .withAttribute("info.localizedName", info.getLocalizedName())
-                        .withAttribute("info.state.staged", String.valueOf(state.isStaged()))
-                        .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
-                        .withAttribute("info.state.revision", state.getRevision());
+                    if (query.isVerbose()) {
+                        CompileState compileState = state.getCompileState();
+                        TemplateReference templateReference = pageInfo.getTemplateReference();
+                        PageInfo.ContentPageReference contentReference = pageInfo.getContentPageReference();
 
-                    if (templateReference != null) {
                         textBuilder
-                            .withAttribute("info.template.templateId", templateReference.getTemplateId())
-                            .withAttribute("info.template.variationId", templateReference.getVariationId())
-                            .withAttribute("info.template.revision", templateReference.getRevision());
+                            .withAttribute("info.description", info.getDescription())
+                            .withAttribute("info.localizedName", SiteNodes.resolveContent(base, info.getLocalizedName()))
+                            .withAttribute("info.state.staged", String.valueOf(state.isStaged()))
+                            .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
+                            .withAttribute("info.state.revision", state.getRevision());
+
+                        if (templateReference != null) {
+                            textBuilder
+                                .withAttribute("info.template.templateId", templateReference.getTemplateId())
+                                .withAttribute("info.template.variationId", templateReference.getVariationId())
+                                .withAttribute("info.template.revision", templateReference.getRevision());
+                        }
+
+                        if (contentReference != null) {
+                            textBuilder
+                                .withAttribute("info.content.parent", contentReference.getParentPath())
+                                .withAttribute("info.content.id", contentReference.getContentId());
+                        }
+
+                        if (compileState != null) {
+                            textBuilder
+                                .withAttribute("info.state.compileState.checksum", compileState.getChecksum())
+                                .withAttribute("info.state.compileState.compiled", String.valueOf(compileState.isCompiled()))
+                                .withAttribute("info.state.compileState.timestamp", String.valueOf(compileState.getTimestamp()))
+                                .withAttribute("info.state.compileState.message", compileState.getMessage());
+                        }
                     }
 
-                    if (contentReference != null) {
-                        textBuilder
-                            .withAttribute("info.content.parent", contentReference.getParentPath())
-                            .withAttribute("info.content.id", contentReference.getContentId());
-                    }
+                    LinkElement.Builder linkBuilder = new LinkElement.Builder()
+                        .withTarget(pageInfo.getReference())
+                        .withName(info.getName())
+                        .withElement(textBuilder.build());
 
-                    if (compileState != null) {
-                        textBuilder
-                            .withAttribute("info.state.compileState.checksum", compileState.getChecksum())
-                            .withAttribute("info.state.compileState.compiled", String.valueOf(compileState.isCompiled()))
-                            .withAttribute("info.state.compileState.timestamp", String.valueOf(compileState.getTimestamp()))
-                            .withAttribute("info.state.compileState.message", compileState.getMessage());
-                    }
-                }
+                    List<String> contentReferences = query.getContentReferences();
+                    if (contentReferences != null && !contentReferences.isEmpty()) {
+                        ContentPage contentPage = contentResolver.retrieve(pageInfo);
 
-                LinkElement.Builder linkBuilder = new LinkElement.Builder()
-                    .withTarget(info.getReference())
-                    .withName(info.getName())
-                    .withElement(textBuilder.build());
-
-                List<String> contentReferences = query.getContentReferences();
-                if (contentReferences != null && !contentReferences.isEmpty()) {
-                    ContentPage contentPage = contentResolver.retrieve(info);
-
-                    for (String reference : contentReferences) {
-                        ContentElement resolved;
-                        try {
-                            resolved = ContentPageManager.resolve(contentPage, reference);
-                            if (resolved == null) {
+                        for (String reference : contentReferences) {
+                            ContentElement resolved;
+                            try {
+                                resolved = ContentPageManager.resolve(contentPage, reference);
+                                if (resolved == null) {
+                                    if (logger.isWarnEnabled())
+                                        logger.warn("Unable to resolve content reference {} for {}", reference, info);
+                                    continue;
+                                }
+                            } catch (UnresolvableContentPathException ex) {
                                 if (logger.isWarnEnabled())
                                     logger.warn("Unable to resolve content reference {} for {}", reference, info);
                                 continue;
                             }
-                        } catch (UnresolvableContentPathException ex) {
-                            if (logger.isWarnEnabled())
-                                logger.warn("Unable to resolve content reference {} for {}", reference, info);
-                            continue;
+
+                            if (logger.isInfoEnabled())
+                                logger.info("Adding resolved content element for reference {} from {}", reference, info);
+                            linkBuilder.withElement(resolved);
                         }
-
-                        if (logger.isInfoEnabled())
-                            logger.info("Adding resolved content element for reference {} from {}", reference, info);
-                        linkBuilder.withElement(resolved);
                     }
-                }
 
-                result.add(linkBuilder.build());
+                    result.add(linkBuilder.build());
+                } else if (DirectoryInfo.class.isAssignableFrom(info.getClass())) {
+                    TextContentElement.Builder textBuilder = new TextContentElement.Builder()
+                        .withName("display-name")
+                        .withContent(SiteNodes.resolveContent(base, info.getDisplayName()));
+
+                    if (query.isVerbose()) {
+                        textBuilder
+                            .withAttribute("info.description", info.getDescription())
+                            .withAttribute("info.localizedName", SiteNodes.resolveContent(base, info.getLocalizedName()));
+                    }
+
+                    LinkElement.Builder linkBuilder = new LinkElement.Builder()
+                        .withTarget(info.getReference())
+                        .withName(info.getName())
+                        .withElement(textBuilder.build());
+
+                    result.add(linkBuilder.build());
+                } else {
+                    throw new IllegalStateException("Unsupported node type '" + info.getClass().getName() + "'!");
+                }
             }
         }
 

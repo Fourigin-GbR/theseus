@@ -86,7 +86,7 @@ public class DefaultPageCompiler implements PageCompiler {
         // resolve all data sources
         if (dataSourcesResolver != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
-            result = dataSourcesResolver.resolve(pageInfo, contentRepository, contentPage);
+            result = dataSourcesResolver.resolve(pageInfo, contentRepository, contentPage, customer, compilerBase);
             maybeChanged = true;
         }
 
@@ -207,7 +207,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (compilerInterceptors != null) {
             for (CompilerInterceptor compilerInterceptor : compilerInterceptors) {
-                compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, contentPage);
+                compilerInterceptor.afterPrepareContent(compilerBase, path, pageInfo, processingMode, contentPage);
             }
         }
 
@@ -282,7 +282,7 @@ public class DefaultPageCompiler implements PageCompiler {
 
         if (compilerInterceptors != null) {
             for (CompilerInterceptor compilerInterceptor : compilerInterceptors) {
-                compilerInterceptor.afterPrepareContent(path, pageInfo, processingMode, preparedContentPage);
+                compilerInterceptor.afterPrepareContent(compilerBase, path, pageInfo, processingMode, preparedContentPage);
             }
         }
 
