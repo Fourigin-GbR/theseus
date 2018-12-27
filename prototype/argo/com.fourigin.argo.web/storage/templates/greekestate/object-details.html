@@ -22,8 +22,13 @@
 </header>
 <div class="body" th:with="
     c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
     images = ${c.getElement('/images')},
-    properties = ${c.getElement('/properties')}
+    properties = ${c.getElement('/properties')},
+    longDescriptionContent = ${c.getContent('/long-description')},
+    geoPosition = ${c.getElement('/geo-position')},
+    latitude = ${c.getContent(geoPosition, 'latitude')},
+    longitude = ${c.getContent(geoPosition, 'longitude')},
 ">
 
     <nav th:replace="greekestate/base :: breadcrumb">
@@ -32,9 +37,9 @@
 
     <article>
         <div class="ctaHighlightWrapper">
-            <a class="ctaHighlight" href="feriendomizil-suchen.html">
+            <a class="ctaHighlight" href="javascript:history.back()">
                 <i class="fa fa-search" aria-hidden="true"></i>
-                <span>Zurück zur Suche</span>
+                <span th:text="${c.getContent('@common-content:common/links-and-ctas/back-to-search-result')}">Zurück zur Suche</span>
             </a>
         </div>
     </article>
@@ -90,23 +95,23 @@
                     255.000,00 €
                 </div>
                 <div class="transfer">
-                    <a class="cta" href="text.html">Anfragen</a>
+                    <a class="cta" href="text.html" th:text="${c.getContent('@common-content:common/links-and-ctas/contact-request')}">Anfragen</a>
                 </div>
             </div>
         </div>
     </article>
 
-    <article>
-        <h2>Beschreibung</h2>
-        <p th:utext="${c.getContent('/long-description')}">
+    <article th:if="${longDescriptionContent}">
+        <h2 th:text="${c.getContent('@common-content:common/general-headlines/description')}">Beschreibung</h2>
+        <p th:utext="${longDescriptionContent}">
             Where position: relative; ensures correct positioning of the fix. And white-space: pre; makes you not having to add any content - like a white space - to the fix. And height: 0px;width: 0px;overflow: hidden; makes sure you'll never see the fix.
             You might need to add line-height: 0px; or max-height: 0px; to ensure the height is actually zero in ancient IE browsers (I'm unsure). And optionally you could add <!--dummy--> to it in old IE browsers, if it does not work.
             In short, you can do all this with only CSS (which removes the need to add an actual child to the HTML DOM-tree).
         </p>
     </article>
 
-    <article th:with="geoPosition = ${c.getElement('/geo-position')}">
-        <h2>Karte</h2>
+    <article th:if="${not #strings.equals(latitude, '0.0') and not #strings.equals(longitude, '0.0')}">
+        <h2 th:text="${c.getContent('@common-content:common/general-headlines/map')}">Karte</h2>
         <p>
             <span th:utext="|&lt;!-- latitude: ${c.getContent(geoPosition, 'latitude')}, longitude: ${c.getContent(geoPosition, 'longitude')} --&gt;|"></span>
             ## Nice-to-have: OpenMaps ##

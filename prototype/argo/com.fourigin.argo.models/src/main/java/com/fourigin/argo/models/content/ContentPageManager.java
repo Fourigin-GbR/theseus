@@ -249,7 +249,7 @@ public final class ContentPageManager {
                 throw new UnresolvableContentPathException("No element found for part '" + token + "'!", path);
             }
 
-            if (!ContentGroup.class.isAssignableFrom(current.getClass())) {
+            if (!ContentElementsContainer.class.isAssignableFrom(current.getClass())) {
                 if (tok.hasMoreTokens()) {
                     if (LOGGER.isInfoEnabled())
                         LOGGER.info("Unable to resolve content path '{}'! Reached the end of the element hierarchy at '{}'!", path, token);
@@ -259,8 +259,8 @@ public final class ContentPageManager {
                 return current;
             }
 
-            ContentGroup currentGroup = ContentGroup.class.cast(current);
-            elements = currentGroup.getElements();
+            ContentElementsContainer currentContainer = ContentElementsContainer.class.cast(current);
+            elements = currentContainer.getElements();
         }
 
         return current;
