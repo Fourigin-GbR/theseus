@@ -15,6 +15,7 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
     <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/object-search.js"></script>
 </head>
 <body>
 
@@ -98,13 +99,13 @@
     <article class="search">
         <h2>Suchen</h2>
         <div class="searchFilter">
-            <form>
+            <form id="searchObjects">
                 <div class="region">
                     <h3>Suche in der Region</h3>
-                    <select>
-                        <option>Loutraki</option>
-                        <option>Kreta</option>
-                        <option>Athen</option>
+                    <select name="region">
+                        <option value="loutraki">Loutraki</option>
+                        <option value="kreta">Kreta</option>
+                        <option value="athen">Athen</option>
                     </select>
                 </div>
 
@@ -129,6 +130,7 @@
                 <span class="amount" th:text="${objects.elements.size()}">73</span>
                 <span>Immobilien gefunden.</span>
             </div>
+            <!--
             <div class="sorting">
                 <label>
                     <i class="fa fa-bar-chart" aria-hidden="true"></i>
@@ -142,9 +144,10 @@
                     </select>
                 </label>
             </div>
+            -->
         </div>
         <ul class="smallItemGalleryList">
-            <li th:each="link : ${objects.elements}"
+            <li class="hidden" th:each="link : ${objects.elements}"
                 th:with="
                     properties = ${argo.contentElementUtility.getElement(link, '/properties')},
                     description = ${argo.contentElementUtility.getElement(link, '/headline')},
@@ -152,7 +155,7 @@
                     type = ${argo.contentElementUtility.getElement(properties, '/type')},
                     price = ${argo.contentElementUtility.getElement(properties, '/price')},
                     href = ${argo.pagePropertiesUtility.getPath(link.target)}
-            ">
+            " data-object-id="1234" th:attr="data-object-id=${link.name}">
                 <span th:text="${link.name}"/>
                 <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
                 <div class="image">
@@ -163,7 +166,7 @@
                                 <li th:each="image : ${images.elements}">
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img th:src="${image.source}" src="assets/images/objects/object1/slide1.jpg"/>
+                                            <img th:attr="data-image-src=${image.source}" />
                                         </div>
                                     </div>
                                 </li>
@@ -457,6 +460,16 @@
                 });
             });
         </script>
+
+        <div class="overlay overlayError">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <p>Entschuldigung, es sind intern Probleme aufgetreten.</p>
+            <p>Bitte verändern Sie die Filtereinstellungen oder versuchen Sie es später erneut.</p>
+        </div>
+        <div class="overlay overlayNoResult">
+            <i class="fa fa-meh-o" aria-hidden="true"></i>
+            <p>Zu diesen Filtereinstellungen konnten keine Ergebnisse gefunden werden.</p>
+        </div>
     </article>
 
 </div>
