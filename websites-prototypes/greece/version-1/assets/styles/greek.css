@@ -51,13 +51,19 @@ header {
     height: 110px;
 }
 header .logo {
-    left: 60px;
-    top: 0;
-    position: absolute;
+    left: 2%;
+    bottom: 5px;
     height: 100px;
+    top: auto;
+    position: absolute;
 }
 header .logo img {
     height: 100%;
+}
+@media (max-width: 700px) {
+    header .logo {
+        height: 60px;
+    }
 }
 header .meta {
     display: flex;
@@ -135,7 +141,11 @@ nav a {
     min-height: 200px;
     padding: 40px;
 }
-
+@media (max-width: 700px) {
+    .body article.productStageSlider {
+        padding: 0;
+    }
+}
 .body article.contextHighlights {
     background-color: #33669B;
     padding: 20px;
@@ -304,6 +314,11 @@ nav a {
 .slider.heroStageImages {
     padding: 0 40px;
 }
+@media (max-width: 600px) {
+    .slider.heroStageOffers {
+        padding: 0;
+    }
+}
 .slider.heroStageOffers .sliderSlideLeft::after,
 .slider.heroStageImages .sliderSlideLeft::after,
 .slider.heroStageOffers .sliderSlideRight::after,
@@ -338,6 +353,14 @@ nav a {
     font-size: 24px;
     font-weight: bold;
     line-height: 1;
+}
+@media (max-width: 700px){
+    .slider.heroStageOffers li .heroStageOffer .teaser {
+        display: block;
+        position: relative;
+        bottom: 0;
+        right: 0;
+    }
 }
 .slider.heroStageOffers li .heroStageOffer h2 {
     font-size: 30px;
@@ -636,7 +659,11 @@ ul.smallItemGalleryList li {
     width: calc(36% - 55px);
     margin-bottom: 40px;
 }
-
+@media (max-width: 700px) {
+    ul.smallItemGalleryList li {
+        width: 49%;
+    }
+}
 @media (max-width: 330px) {
     ul.smallItemGalleryList li {
         width: 90%;
