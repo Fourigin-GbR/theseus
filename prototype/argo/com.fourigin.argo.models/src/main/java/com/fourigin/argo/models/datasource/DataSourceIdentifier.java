@@ -3,6 +3,7 @@ package com.fourigin.argo.models.datasource;
 import com.fourigin.argo.models.datasource.index.IndexDefinition;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -87,5 +88,75 @@ public class DataSourceIdentifier implements Serializable, Comparable<DataSource
             ", index=" + index +
             ", checksum='" + checksum + '\'' +
             '}';
+    }
+
+    public static class Builder {
+        private String type;
+        private Map<String, String> revisions;
+        private Map<String, Object> query;
+        private IndexDefinition index;
+        private String checksum;
+
+        public Builder withType(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder withRevisions(Map<String, String> revisions) {
+            this.revisions = revisions;
+            return this;
+        }
+
+        public Builder withQuery(Map<String, Object> query) {
+            this.query = query;
+            return this;
+        }
+
+        public Builder withQueryProperty(String key, Object value) {
+            Objects.requireNonNull(key, "key must not be null!");
+
+            if (query == null) {
+                query = new HashMap<>();
+            }
+
+            query.put(key, value);
+            return this;
+        }
+
+        public Builder withIndex(IndexDefinition index) {
+            this.index = index;
+            return this;
+        }
+
+        public Builder withChecksum(String checksum) {
+            this.checksum = checksum;
+            return this;
+        }
+
+        public DataSourceIdentifier build() {
+            DataSourceIdentifier result = new DataSourceIdentifier();
+
+            Objects.requireNonNull(type, "type must not be null!");
+
+            result.setType(type);
+
+            if (query != null) {
+                result.setQuery(query);
+            }
+
+            if (revisions != null) {
+                result.setRevisions(revisions);
+            }
+
+            if (index != null) {
+                result.setIndex(index);
+            }
+
+            if (checksum != null) {
+                result.setChecksum(checksum);
+            }
+
+            return result;
+        }
     }
 }

@@ -61,4 +61,41 @@ public class DataSourceContent implements Serializable {
             ", content=" + content +
             '}';
     }
+
+    public static class Builder {
+        private String name;
+        private DataSourceIdentifier identifier;
+        private List<ContentElement> content;
+
+        public Builder withName(String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder withIdentifier(DataSourceIdentifier identifier){
+            this.identifier = identifier;
+            return this;
+        }
+
+        public Builder withContent(List<ContentElement> content){
+            this.content = content;
+            return this;
+        }
+
+        public DataSourceContent build(){
+            DataSourceContent result = new DataSourceContent();
+
+            Objects.requireNonNull(name, "name must not be null!");
+            Objects.requireNonNull(identifier, "identifier must not be null!");
+
+            result.setName(name);
+            result.setIdentifier(identifier);
+
+            if(content != null){
+                result.setContent(content);
+            }
+
+            return result;
+        }
+    }
 }

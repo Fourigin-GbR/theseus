@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageMetaData;
+import com.fourigin.argo.models.content.DataSourceContent;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentGroup;
 import com.fourigin.argo.models.content.elements.ContentList;
@@ -12,7 +13,9 @@ import com.fourigin.argo.models.content.elements.ContentListElement;
 import com.fourigin.argo.models.content.elements.ObjectContentListElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
+import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,11 +23,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -102,217 +109,7 @@ public class JsoupParser {
 
         Map<String, ParsedObjectDetails> fixedObjects = fixObjects(parsedObjects);
 
-//        convertObjects(objectIds, fixedObjects);
-    }
-
-    private static void convertObjects(List<String> objectIds, Map<String, ParsedObjectDetails> fixedObjects) {
-        System.out.println("Converting fixed objects ...");
-
-        List<ContentPage> rentPages = new ArrayList<>();
-        List<ContentPage> salePages = new ArrayList<>();
-
-        Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        for (String id : objectIds) {
-            ParsedObjectDetails object = fixedObjects.get(id);
-
-            System.out.print(id + ":");
-
-            OfferType offerType = object.getOfferType();
-
-            ContentPageMetaData metaData = new ContentPageMetaData.Builder()
-                .withTitle("BestGreekEstate - " + offerType.name() + " object " + id)
-                .withAttribute("converted on", dateFormat.format(now))
-                .build();
-            System.out.print(" meta");
-
-            List<ContentElement> propertyElements = new ArrayList<>();
-            propertyElements.add(new TextContentElement.Builder()
-                .withName("code")
-                .withContent(object.getCode())
-                .build()
-            );
-            for (Map.Entry<String, String> entry : object.getProperties().entrySet()) {
-                String name = entry.getKey();
-                String value = entry.getValue();
-                propertyElements.add(new TextContentElement.Builder()
-                    .withName(name)
-                    .withContent(value)
-                    .build()
-                );
-            }
-            System.out.print(" properties");
-
-            List<ContentListElement> imageElements = new ArrayList<>();
-            for (ImageDetails imageDetails : object.getImages()) {
-                imageElements.add(new ObjectContentListElement.Builder()
-                    .withReferenceId(imageDetails.getId())
-                    .withAlternateText(imageDetails.getAlternateText())
-                    .build());
-            }
-            System.out.print(" images");
-
-            Map<String, String> headline = extractLocalizedValues(object.getHeadline());
-            Map<String, String> shortDescription = extractLocalizedValues(object.getShortDescription());
-            Map<String, String> longDescription = extractLocalizedValues(object.getLongDescription());
-
-            List<ContentElement> content = Arrays.asList(
-                // headline
-                new TextContentElement.Builder()
-                    .withName("headline")
-                    .withContent(headline.get("en"))
-                    .withContextSpecificContent("de", headline.get("de"))
-                    .withContextSpecificContent("ru", headline.get("ru"))
-                    .build(),
-                // short-description
-                new TextContentElement.Builder()
-                    .withName("short-description")
-                    .withContent(shortDescription.get("en"))
-                    .withContextSpecificContent("de", shortDescription.get("de"))
-                    .withContextSpecificContent("ru", shortDescription.get("ru"))
-                    .build(),
-                // properties
-                new ContentGroup.Builder()
-                    .withName("properties")
-                    .withElements(propertyElements)
-                    .build(),
-                // short-description
-                new TextContentElement.Builder()
-                    .withName("long-description")
-                    .withContent(longDescription.get("en"))
-                    .withContextSpecificContent("de", longDescription.get("de"))
-                    .withContextSpecificContent("ru", longDescription.get("ru"))
-                    .build(),
-                // images
-                new ContentList.Builder()
-                    .withName("images")
-                    .withElements(imageElements)
-                    .build(),
-                // geo-position
-                new ContentGroup.Builder()
-                    .withName("geo-position")
-                    .withElements(
-                        new TextContentElement.Builder()
-                            .withName("latitude")
-                            .withContent(String.valueOf(object.getLatitude()))
-                            .build(),
-                        new TextContentElement.Builder()
-                            .withName("longitude")
-                            .withContent(String.valueOf(object.getLongitude()))
-                            .build()
-                    )
-                    .build()
-            );
-
-            ContentPage page = new ContentPage.Builder()
-                .withId(id)
-                .withMetaData(metaData)
-                .withContent(content)
-                .build();
-            System.out.print(" page");
-
-            switch (object.getOfferType()) {
-                case RENT:
-                    rentPages.add(page);
-                    System.out.println(" --> rent");
-                    break;
-                case SALE:
-                    salePages.add(page);
-                    System.out.println(" --> sale");
-                    break;
-                default:
-                    throw new IllegalStateException("Unsupported offer type '" + object.getOfferType() + "'!");
-            }
-        }
-
-        // Storing pages
-        System.out.print("Writing sale files ...");
-
-        for (ContentPage page : salePages) {
-            File file = new File("storage/4-converted/sale/object_" + page.getId() + ".json");
-            try {
-                OBJECT_MAPPER.writeValue(file, page);
-            } catch (IOException ex) {
-                throw new IllegalStateException("Unable to write converted object to file '" + file.getAbsolutePath() + "'!", ex);
-            }
-        }
-
-        System.out.print("\nWriting rent files ...");
-
-        for (ContentPage page : rentPages) {
-            File file = new File("storage/4-converted/rent/object_" + page.getId() + ".json");
-            try {
-                OBJECT_MAPPER.writeValue(file, page);
-            } catch (IOException ex) {
-                throw new IllegalStateException("Unable to write converted object to file '" + file.getAbsolutePath() + "'!", ex);
-            }
-        }
-
-        System.out.print("\nDONE");
-    }
-
-    private static Map<String, ParsedObjectDetails> fixObjects(Map<String, ParsedObjectDetails> parsedObjects) {
-        System.out.println("Validating & fixing " + parsedObjects.size() + " objects ...");
-
-        Map<String, ParsedObjectDetails> fixedObjects = new HashMap<>();
-
-        for (Map.Entry<String, ParsedObjectDetails> entry : parsedObjects.entrySet()) {
-            String id = entry.getKey();
-            ParsedObjectDetails object = entry.getValue();
-
-            System.out.print('.');
-
-            Map<String, String> properties = object.getProperties();
-            if (properties.get("price") == null) {
-                throw new IllegalStateException("Object '" + id + "' doesn't have a price!");
-            }
-
-            fixedObjects.put(id, object);
-        }
-
-        System.out.println();
-
-        return fixedObjects;
-    }
-
-    private static void createBackup() {
-        System.out.println("Creating backup of static pages ...");
-        for (String link : ORIGINAL_LINKS) {
-            try {
-                Document doc = getDocument(link);
-                String name = extractFilename(link);
-                System.out.println("\t'" + name + "'");
-                File file = new File("storage/1-original/" + name + ".html");
-                FileUtils.writeStringToFile(file, doc.outerHtml(), "UTF-8");
-            } catch (IOException ex) {
-                throw new IllegalStateException("Unable to write original file!", ex);
-            }
-        }
-
-        System.out.println("Reading object IDs ...");
-        List<String> objectIds = new ArrayList<>();
-        for (String page : SEARCH_INDEX) {
-            Document doc = getDocument(page);
-
-            Elements list = doc.select("a.listing-item-body");
-            if (list != null && !list.isEmpty()) {
-                for (Element element : list) {
-                    String href = element.attr("href");
-                    String id = href.substring(href.lastIndexOf('/') + 1);
-                    objectIds.add(id);
-                }
-            }
-        }
-
-        System.out.println("Found " + objectIds.size() + " objects:\n" + objectIds);
-
-        try {
-            File objectIdsFile = new File("storage/1-original/ids.json");
-            OBJECT_MAPPER.writeValue(objectIdsFile, objectIds);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Unable to write object IDs!", ex);
-        }
+        convertObjects(objectIds, fixedObjects);
     }
 
     private static List<String> readObjects() {
@@ -629,6 +426,330 @@ public class JsoupParser {
         }
 
         return parsedObjects;
+    }
+
+    private static Map<String, ParsedObjectDetails> fixObjects(Map<String, ParsedObjectDetails> parsedObjects) {
+        System.out.println("Validating & fixing " + parsedObjects.size() + " objects ...");
+
+        Map<String, ParsedObjectDetails> fixedObjects = new HashMap<>();
+
+        for (Map.Entry<String, ParsedObjectDetails> entry : parsedObjects.entrySet()) {
+            String id = entry.getKey();
+            ParsedObjectDetails object = entry.getValue();
+
+            System.out.print('.');
+
+            Map<String, String> properties = object.getProperties();
+            if (properties.get("price") == null) {
+                throw new IllegalStateException("Object '" + id + "' doesn't have a price!");
+            }
+
+            fixedObjects.put(id, object);
+        }
+
+        System.out.println();
+
+        return fixedObjects;
+    }
+
+    private static void convertObjects(List<String> objectIds, Map<String, ParsedObjectDetails> fixedObjects) {
+        System.out.println("Converting fixed objects ...");
+
+        List<ContentPage> rentPages = new ArrayList<>();
+        List<ContentPage> salePages = new ArrayList<>();
+
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        for (String id : objectIds) {
+            ParsedObjectDetails object = fixedObjects.get(id);
+
+            System.out.print(id + ":");
+
+            OfferType offerType = object.getOfferType();
+
+            ContentPageMetaData metaData = new ContentPageMetaData.Builder()
+                .withTitle("BestGreekEstate - " + offerType.name() + " object " + id)
+                .withAttribute("converted on", dateFormat.format(now))
+                .build();
+            System.out.print(" meta");
+
+            List<ContentElement> propertyElements = new ArrayList<>();
+            propertyElements.add(new TextContentElement.Builder()
+                .withName("code")
+                .withContent(object.getCode())
+                .build()
+            );
+            for (Map.Entry<String, String> entry : object.getProperties().entrySet()) {
+                String name = entry.getKey();
+                String value = entry.getValue();
+                propertyElements.add(new TextContentElement.Builder()
+                    .withName(name)
+                    .withContent(value)
+                    .build()
+                );
+            }
+            System.out.print(" properties");
+
+            List<ContentListElement> imageElements = new ArrayList<>();
+            for (ImageDetails imageDetails : object.getImages()) {
+                imageElements.add(new ObjectContentListElement.Builder()
+                    .withReferenceId(imageDetails.getId())
+                    .withAlternateText(imageDetails.getAlternateText())
+                    .build());
+            }
+            System.out.print(" images");
+
+            Map<String, String> headline = extractLocalizedValues(object.getHeadline());
+            Map<String, String> shortDescription = extractLocalizedValues(object.getShortDescription());
+            Map<String, String> longDescription = extractLocalizedValues(object.getLongDescription());
+
+            List<ContentElement> content = Arrays.asList(
+                // headline
+                new TextContentElement.Builder()
+                    .withName("headline")
+                    .withContent(headline.get("en"))
+                    .withContextSpecificContent("de", headline.get("de"))
+                    .withContextSpecificContent("ru", headline.get("ru"))
+                    .build(),
+                // short-description
+                new TextContentElement.Builder()
+                    .withName("short-description")
+                    .withContent(shortDescription.get("en"))
+                    .withContextSpecificContent("de", shortDescription.get("de"))
+                    .withContextSpecificContent("ru", shortDescription.get("ru"))
+                    .build(),
+                // properties
+                new ContentGroup.Builder()
+                    .withName("properties")
+                    .withElements(propertyElements)
+                    .build(),
+                // short-description
+                new TextContentElement.Builder()
+                    .withName("long-description")
+                    .withContent(longDescription.get("en"))
+                    .withContextSpecificContent("de", longDescription.get("de"))
+                    .withContextSpecificContent("ru", longDescription.get("ru"))
+                    .build(),
+                // images
+                new ContentList.Builder()
+                    .withName("images")
+                    .withElements(imageElements)
+                    .build(),
+                // geo-position
+                new ContentGroup.Builder()
+                    .withName("geo-position")
+                    .withElements(
+                        new TextContentElement.Builder()
+                            .withName("latitude")
+                            .withContent(String.valueOf(object.getLatitude()))
+                            .build(),
+                        new TextContentElement.Builder()
+                            .withName("longitude")
+                            .withContent(String.valueOf(object.getLongitude()))
+                            .build()
+                    )
+                    .build()
+            );
+
+            Collection<DataSourceContent> dataSources = Arrays.asList(
+                new DataSourceContent.Builder()
+                    .withName("timestamp")
+                    .withIdentifier(new DataSourceIdentifier.Builder()
+                        .withType("TIMESTAMP")
+                        .build())
+                    .build(),
+                new DataSourceContent.Builder()
+                    .withName("top-level-navigation")
+                    .withIdentifier(new DataSourceIdentifier.Builder()
+                        .withType("SITE")
+                        .withQueryProperty("INFO_PATH", "/")
+                        .withQueryProperty("NON_RECURSIVE", true)
+                        .withQueryProperty("VERBOSE", true)
+                        .build())
+                    .build(),
+                new DataSourceContent.Builder()
+                    .withName("common-content")
+                    .withIdentifier(new DataSourceIdentifier.Builder()
+                        .withType("COMMON-CONTENT")
+                        .withQueryProperty("INCLUDE_CONTENT", "/general-headlines, /links-and-ctas")
+                        .build())
+                    .build()
+            );
+
+            ContentPage page = new ContentPage.Builder()
+                .withId(id)
+                .withMetaData(metaData)
+                .withContent(content)
+                .withDataSourceContents(dataSources)
+                .build();
+            System.out.print(" page");
+
+            switch (object.getOfferType()) {
+                case RENT:
+                    rentPages.add(page);
+                    System.out.println(" --> rent");
+                    break;
+                case SALE:
+                    salePages.add(page);
+                    System.out.println(" --> sale");
+                    break;
+                default:
+                    throw new IllegalStateException("Unsupported offer type '" + object.getOfferType() + "'!");
+            }
+        }
+
+        // Storing pages
+        System.out.print("Writing sale files ...");
+
+        StringBuilder saleInfoBuilder = new StringBuilder();
+        saleInfoBuilder.append("{\n");
+        saleInfoBuilder.append("\t\"path\": \"/objects/sale\",\n");
+        saleInfoBuilder.append("\t\"children\": [\n");
+        saleInfoBuilder.append("\t\t{\n");
+        saleInfoBuilder.append("\t\t\t\"type\": \"file\",\n");
+        saleInfoBuilder.append("\t\t\t\"name\": \"search\",\n");
+        saleInfoBuilder.append("\t\t\t\"localizedName\": {\n");
+        saleInfoBuilder.append("\t\t\t\t\"\": \"search\",\n");
+        saleInfoBuilder.append("\t\t\t\t\"de\": \"suche\",\n");
+        saleInfoBuilder.append("\t\t\t\t\"ru\": \"poisk\"\n");
+        saleInfoBuilder.append("\t\t\t},\n");
+        saleInfoBuilder.append("\t\t\t\"templateReference\": {\n");
+        saleInfoBuilder.append("\t\t\t\t\"templateId\": \"greekestate.object-search\",\n");
+        saleInfoBuilder.append("\t\t\t\t\"variationId\": \"default\",\n");
+        saleInfoBuilder.append("\t\t\t\t\"revision\": \"\"\n");
+        saleInfoBuilder.append("\t\t\t}\n");
+        saleInfoBuilder.append("\t\t}");
+
+        for (ContentPage page : salePages) {
+            String id = page.getId();
+            File file = new File("storage/4-converted/sale/object_" + id + ".json");
+            try {
+                OBJECT_MAPPER.writeValue(file, page);
+            } catch (IOException ex) {
+                throw new IllegalStateException("Unable to write converted object to file '" + file.getAbsolutePath() + "'!", ex);
+            }
+
+            saleInfoBuilder.append(",\n\t\t{\n");
+            saleInfoBuilder.append("\t\t\t\"type\": \"file\",\n");
+            saleInfoBuilder.append("\t\t\t\"name\": \"object_").append(id).append("\",\n");
+            saleInfoBuilder.append("\t\t\t\"localizedName\": {\n");
+            saleInfoBuilder.append("\t\t\t\t\"\": \"object_").append(id).append("\",\n");
+            saleInfoBuilder.append("\t\t\t\t\"de\": \"objekt_").append(id).append("\",\n");
+            saleInfoBuilder.append("\t\t\t\t\"ru\": \"objekt_").append(id).append("\"\n");
+            saleInfoBuilder.append("\t\t\t},\n");
+            saleInfoBuilder.append("\t\t\t\"templateReference\": {\n");
+            saleInfoBuilder.append("\t\t\t\t\"templateId\": \"greekestate.object-details\",\n");
+            saleInfoBuilder.append("\t\t\t\t\"variationId\": \"default\",\n");
+            saleInfoBuilder.append("\t\t\t\t\"revision\": \"\"\n");
+            saleInfoBuilder.append("\t\t\t}\n");
+            saleInfoBuilder.append("\t\t}");
+        }
+        saleInfoBuilder.append("\n\t]\n");
+        saleInfoBuilder.append("}\n");
+
+        File saleInfoFile = new File("storage/4-converted/sale/.cms/.info");
+        try (OutputStream os = new FileOutputStream(saleInfoFile)) {
+            IOUtils.write(saleInfoBuilder.toString(), os, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Unable to write sales info file '" + saleInfoFile.getAbsolutePath() + "'!", ex);
+        }
+
+        System.out.print("\nWriting rent files ...");
+
+        StringBuilder rentInfoBuilder = new StringBuilder();
+        rentInfoBuilder.append("{\n");
+        rentInfoBuilder.append("\t\"path\": \"/objects/rent\",\n");
+        rentInfoBuilder.append("\t\"children\": [\n");
+        rentInfoBuilder.append("\t\t{\n");
+        rentInfoBuilder.append("\t\t\t\"type\": \"file\",\n");
+        rentInfoBuilder.append("\t\t\t\"name\": \"search\",\n");
+        rentInfoBuilder.append("\t\t\t\"localizedName\": {\n");
+        rentInfoBuilder.append("\t\t\t\t\"\": \"search\",\n");
+        rentInfoBuilder.append("\t\t\t\t\"de\": \"suche\",\n");
+        rentInfoBuilder.append("\t\t\t\t\"ru\": \"poisk\"\n");
+        rentInfoBuilder.append("\t\t\t},\n");
+        rentInfoBuilder.append("\t\t\t\"templateReference\": {\n");
+        rentInfoBuilder.append("\t\t\t\t\"templateId\": \"greekestate.object-search\",\n");
+        rentInfoBuilder.append("\t\t\t\t\"variationId\": \"default\",\n");
+        rentInfoBuilder.append("\t\t\t\t\"revision\": \"\"\n");
+        rentInfoBuilder.append("\t\t\t}\n");
+        rentInfoBuilder.append("\t\t}");
+
+        for (ContentPage page : rentPages) {
+            String id = page.getId();
+            File file = new File("storage/4-converted/rent/object_" + id + ".json");
+            try {
+                OBJECT_MAPPER.writeValue(file, page);
+            } catch (IOException ex) {
+                throw new IllegalStateException("Unable to write converted object to file '" + file.getAbsolutePath() + "'!", ex);
+            }
+
+            rentInfoBuilder.append(",\n\t\t{\n");
+            rentInfoBuilder.append("\t\t\t\"type\": \"file\",\n");
+            rentInfoBuilder.append("\t\t\t\"name\": \"object_").append(id).append("\",\n");
+            rentInfoBuilder.append("\t\t\t\"localizedName\": {\n");
+            rentInfoBuilder.append("\t\t\t\t\"\": \"object_").append(id).append("\",\n");
+            rentInfoBuilder.append("\t\t\t\t\"de\": \"objekt_").append(id).append("\",\n");
+            rentInfoBuilder.append("\t\t\t\t\"ru\": \"objekt_").append(id).append("\"\n");
+            rentInfoBuilder.append("\t\t\t},\n");
+            rentInfoBuilder.append("\t\t\t\"templateReference\": {\n");
+            rentInfoBuilder.append("\t\t\t\t\"templateId\": \"greekestate.object-details\",\n");
+            rentInfoBuilder.append("\t\t\t\t\"variationId\": \"default\",\n");
+            rentInfoBuilder.append("\t\t\t\t\"revision\": \"\"\n");
+            rentInfoBuilder.append("\t\t\t}\n");
+            rentInfoBuilder.append("\t\t}");
+        }
+        rentInfoBuilder.append("\n\t]\n");
+        rentInfoBuilder.append("}\n");
+
+        File rentInfoFile = new File("storage/4-converted/rent/.cms/.info");
+        try (OutputStream os = new FileOutputStream(rentInfoFile)) {
+            IOUtils.write(rentInfoBuilder.toString(), os, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Unable to write rent info file '" + rentInfoFile.getAbsolutePath() + "'!", ex);
+        }
+
+        System.out.print("\nDONE");
+    }
+    
+    private static void createBackup() {
+        System.out.println("Creating backup of static pages ...");
+        for (String link : ORIGINAL_LINKS) {
+            try {
+                Document doc = getDocument(link);
+                String name = extractFilename(link);
+                System.out.println("\t'" + name + "'");
+                File file = new File("storage/1-original/" + name + ".html");
+                FileUtils.writeStringToFile(file, doc.outerHtml(), "UTF-8");
+            } catch (IOException ex) {
+                throw new IllegalStateException("Unable to write original file!", ex);
+            }
+        }
+
+        System.out.println("Reading object IDs ...");
+        List<String> objectIds = new ArrayList<>();
+        for (String page : SEARCH_INDEX) {
+            Document doc = getDocument(page);
+
+            Elements list = doc.select("a.listing-item-body");
+            if (list != null && !list.isEmpty()) {
+                for (Element element : list) {
+                    String href = element.attr("href");
+                    String id = href.substring(href.lastIndexOf('/') + 1);
+                    objectIds.add(id);
+                }
+            }
+        }
+
+        System.out.println("Found " + objectIds.size() + " objects:\n" + objectIds);
+
+        try {
+            File objectIdsFile = new File("storage/1-original/ids.json");
+            OBJECT_MAPPER.writeValue(objectIdsFile, objectIds);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Unable to write object IDs!", ex);
+        }
     }
 
     private static Map<String, String> extractLocalizedValues(LocalizedText localizedText) {
