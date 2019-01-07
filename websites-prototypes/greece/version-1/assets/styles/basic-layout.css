@@ -134,7 +134,7 @@ nav.breadcrumb .contextHighlights form input[type=submit] {
 
 
 .ctaHighlightWrapper {
-    float: left;
+    display: flex;
     margin-top: 20px;
 }
 .ctaHighlight {

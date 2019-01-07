@@ -25,38 +25,8 @@
 
 <div class="body">
 
-    <nav class="breadcrumb">
-        <div class="wrapper">
-            <div class="breadcrumbPath">
-                <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
-                <ul class="folderList">
-                    <li>
-                        <a href="index.html">Start</a>
-                    </li>
-                    <li>
-                        Immobilie kaufen
-                    </li>
-                </ul>
-            </div>
-            <div class="contextHighlights">
-                <div class="links">
-                    <a href="immobilie-kaufen.html">Immobilie kaufen</a>
-                    <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
-                </div>
-                <!--
-                <div class="searchAndGo">
-                    <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
-                    <form action="#">
-                        <label>
-                            <span>Objekt-ID</span>
-                            <input name="objectId" type="text" />
-                        </label>
-                        <input class="cta" type="submit" value="Suchen"/>
-                    </form>
-                </div>
-                -->
-            </div>
-        </div>
+    <nav class="breadcrumb" th:insert="greekestate/base :: breadcrumb">
+
     </nav>
 
     <article>

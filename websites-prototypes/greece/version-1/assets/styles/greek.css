@@ -117,11 +117,14 @@ nav a {
 .body article {
     margin-top: 30px;
     margin-bottom: 20px;
-    padding: 0;
+    padding: 0 5px;
     box-sizing: border-box;
 }
 .body article:first-of-type {
     margin-top: 0;
+}
+.body article > h1 {
+    margin-top: 30px;
 }
 .body article.productStageSlider {
     margin: 0;
@@ -632,6 +635,12 @@ ul.smallItemGalleryList {
 ul.smallItemGalleryList li {
     width: calc(36% - 55px);
     margin-bottom: 40px;
+}
+
+@media (max-width: 330px) {
+    ul.smallItemGalleryList li {
+        width: 90%;
+    }
 }
 ul.smallItemGalleryList li.hidden {
     display: none;

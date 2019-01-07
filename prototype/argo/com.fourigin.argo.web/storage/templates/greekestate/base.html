@@ -44,12 +44,15 @@
     <nav>
         <ul>
             <li th:with="ref = ${c.getElement('@top-level-navigation:/about')}">
+                <!--<a th:replace="this :: simpleLink('?base=DE&path=/about', 'Über uns')" href="#">Über uns</a>-->
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="#">Über uns</a>
             </li>
             <li th:with="ref = ${c.getElement('@top-level-navigation:/regions')}">
+                <!--<a th:replace="this :: simpleLink('?base=DE&path=/regions/index', 'Griechische Regionen')" href="#">Griechische Regionen</a>-->
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/regions')}" href="#">Griechische Regionen</a>
             </li>
             <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
+                <!--<a th:replace="this :: simpleLink('?base=DE&path=/contact', 'Kontakt')" href="#">Kontakt</a>-->
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
             </li>
         </ul>
@@ -58,21 +61,21 @@
 
 <div class="body">
 
-    <nav th:fragment="breadcrumb" class="breadcrumb">
+    <nav th:fragment="breadcrumb" class="breadcrumb" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+    ">
         <div class="wrapper">
             <div class="breadcrumbPath">
                 <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
                 <ul class="folderList">
-                    <li>
-                        <a href="index.html">Start</a>
-                    </li>
-                    <li>
-                        Regionen
+                    <li th:with="ref = ${c.getElement('@top-level-navigation:/home')}">
+                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="index.html">Start</a>
                     </li>
                 </ul>
             </div>
             <div class="contextHighlights">
-                <div class="links">
+                <div class="links" th:with="ref1 = ${c.getElement('@top-level-navigation:/')}, ref2 = ${c.getElement('@top-level-navigation:/')}">
                     <a href="immobilie-kaufen.html">Immobilie kaufen</a>
                     <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
                 </div>
