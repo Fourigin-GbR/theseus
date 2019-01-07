@@ -5,11 +5,10 @@ var objectSearch = function() {
     objectSearch.prototype.getMatchingObjectsRequest = function() {
         var self = this,
             requestData = {
-                "index": "objects-to-rent",
+                "index": "objects-to-sale",
                 "categories": {
                     "region": []
-                },
-                "fields": {}
+                }
             };
 
         var formularData = self.jForm.serializeArray();
@@ -35,7 +34,7 @@ var objectSearch = function() {
             contentType: "application/json; charset=utf-8",
             method: "post",
             processData: false,
-            url: "http://argo.greekestate.fourigin.com/cms/search/?base=DE&path=objects/rent/search",
+            url: "http://argo.greekestate.fourigin.com/cms/search/?base=DE&path=objects/sale/search",
             data: JSON.stringify(requestData), //self.jForm.serialize(),
             success: function(data){
                 self.showMatchingObjects(data);
@@ -62,16 +61,21 @@ var objectSearch = function() {
     };
 
     objectSearch.prototype.deactivateAllObjects = function() {
+        var self = this;
         this.jObjects.each(function() {
-            jQuery(this).addClass("hidden");
+            self.hideObject(jQuery(this));
         });
     };
 
-    objectSearch.prototype.showMatchingObjects = function(objectsList2) {
+    objectSearch.prototype.hideObject = function(jObject) {
+        jObject.addClass("hidden").removeClass("active");
+    };
+    objectSearch.prototype.showObject = function(jObject) {
+        jObject.addClass("active").removeClass("hidden");
+    };
+
+    objectSearch.prototype.showMatchingObjects = function(objectsList) {
         var self = this;
-
-        var objectsList = ["object_3813300"];
-
         //console.info("Show matching objects...:", self.jObjects);
         self.jObjects.each(function() {
             var jThis =  jQuery(this),
@@ -79,11 +83,11 @@ var objectSearch = function() {
             //
             //console.info("Show matching objects...: Handle ", currentObjectId, " --> ", objectsList.indexOf(currentObjectId));
             if(objectsList.indexOf(currentObjectId) > -1) {
-                jThis.removeClass("hidden");
+                self.showObject(jThis);
                 self.enableImages(jThis);
             }
             else {
-                jThis.addClass("hidden");
+                self.hideObject(jThis);
             }
         });
 
@@ -94,10 +98,10 @@ var objectSearch = function() {
 
     objectSearch.prototype.enableImages = function(jObject) {
         var jUnAbledImages = jObject.find("img[data-image-src]");
-        console.info("Found this images: ", jObject, jUnAbledImages);
+        //console.info("Found this images: ", jObject, jUnAbledImages);
         jUnAbledImages.each(function() {
             var jThis = jQuery(this);
-            console.info("Handle this image, get src: ", jThis, jThis.attr("src"), !jThis.attr("src"));
+            //console.info("Handle this image, get src: ", jThis, jThis.attr("src"), !jThis.attr("src"));
             if(undefined === jThis.attr("src")) {
                 jThis.attr("src", (jThis.attr("data-image-src")));
             }

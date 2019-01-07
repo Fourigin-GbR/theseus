@@ -623,18 +623,16 @@ ul.smallItemGalleryList {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 ul.smallItemGalleryList li {
     width: calc(36% - 55px);
-    margin-right: 30px;
     margin-bottom: 40px;
 }
 ul.smallItemGalleryList li.hidden {
     display: none;
 }
-ul.smallItemGalleryList li:nth-of-type(3n) {
-    margin-right: 0;
-}
+
 ul.smallItemGalleryList li .slider {
     padding: 0;
 }
