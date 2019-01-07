@@ -211,11 +211,15 @@ nav a {
 }
 .body article.productDetails .productDetailsSlider .detailSlide .image {
     position: relative;
+    overflow: hidden;
+    background-color: #ccc;
+    height: 460px;
 }
 .body article.productDetails .productDetailsSlider .detailSlide .image img {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    width: auto;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
 }
 .body article.productDetails .productDetailsSlider .sliderSlideLeft:after,
 .body article.productDetails .productDetailsSlider .sliderSlideRight:after {
@@ -646,7 +650,6 @@ ul.smallItemGalleryList li .category {
     color: #414040;
 }
 ul.smallItemGalleryList li .image {
-    border-radius: 0 0 10px 0;
     overflow: hidden;
     background-color: #ccc;
     height: 230px;
