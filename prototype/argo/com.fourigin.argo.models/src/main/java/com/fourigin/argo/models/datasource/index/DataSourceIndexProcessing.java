@@ -4,20 +4,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public final class DataSourceIndexProcessing {
-    private DataSourceIndexProcessing(){
+    private DataSourceIndexProcessing() {
     }
 
     public static List<String> resolveMatchingIndexTargets(
         DataSourceIndex index,
         Map<String, Set<String>> filterCategories,
         Map<String, FieldValueComparator> fieldComparators
-    ){
+    ) {
         Logger logger = LoggerFactory.getLogger(DataSourceIndexProcessing.class);
 
         List<String> references = index.getReferences();
@@ -32,6 +33,9 @@ public final class DataSourceIndexProcessing {
         // categories
         if (filterCategories != null && !filterCategories.isEmpty()) {
             if (logger.isDebugEnabled()) logger.debug("Filtering by categories ...");
+
+            Set<Integer> matchingReferenceNumbers = null;
+
             for (Map.Entry<String, Set<String>> entry : filterCategories.entrySet()) {
                 String categoryName = entry.getKey();
                 if (logger.isDebugEnabled()) logger.debug("Verifying category '{}'", categoryName);
@@ -49,24 +53,31 @@ public final class DataSourceIndexProcessing {
                 Set<String> categoryValues = entry.getValue();
                 if (logger.isDebugEnabled()) logger.debug("Requested category values: {}", categoryValues);
 
+                Set<Integer> categoryMatches = new HashSet<>();
+
                 for (String categoryValue : categoryValues) {
                     if (logger.isDebugEnabled()) logger.debug("Verifying category value '{}'", categoryValue);
-                    List<Integer> matchingReferenceNumbers = matchingCategory.get(categoryValue);
-                    if (matchingReferenceNumbers != null && !matchingReferenceNumbers.isEmpty()) {
-                        if (logger.isDebugEnabled()) logger.debug("Found matches: {}", matchingReferenceNumbers);
-                        for (Integer referenceNumber : matchingReferenceNumbers) {
-                            flagMatchingReference(referenceNumber, references, matchingFlags, "category: " + categoryName + ":" + categoryValue);
-//                            String reference = references.get(referenceNumber);
-//                            Boolean previousFlag = matchingFlags.get(reference);
-//                            if(previousFlag == null || !previousFlag) {
-//                                if (logger.isDebugEnabled()) logger.debug("Reference '{}' is matching the category '{}:{}'", reference, categoryName, categoryValue);
-//                                matchingFlags.put(reference, true);
-//                            }
-                        }
+                    List<Integer> matchingCategoryReferenceNumbers = matchingCategory.get(categoryValue);
+                    if (matchingCategoryReferenceNumbers != null && !matchingCategoryReferenceNumbers.isEmpty()) {
+                        if (logger.isDebugEnabled())
+                            logger.debug("Found matches: {}", matchingCategoryReferenceNumbers);
+                        categoryMatches.addAll(matchingCategoryReferenceNumbers);
                     } else {
                         if (logger.isDebugEnabled())
                             logger.debug("No matches found for category value '{}'", categoryValue);
                     }
+                }
+
+                if (matchingReferenceNumbers == null) {
+                    matchingReferenceNumbers = new HashSet<>(categoryMatches);
+                } else {
+                    matchingReferenceNumbers.retainAll(categoryMatches);
+                }
+            }
+
+            if (matchingReferenceNumbers != null) {
+                for (Integer referenceNumber : matchingReferenceNumbers) {
+                    flagMatchingReference(referenceNumber, references, matchingFlags, "categories");
                 }
             }
         }
@@ -80,6 +91,7 @@ public final class DataSourceIndexProcessing {
             for (FieldValue field : fields) {
                 mappedFields.put(field.getName(), field);
             }
+            if (logger.isDebugEnabled()) logger.debug("Mapped fields: {}", mappedFields);
 
             for (Map.Entry<String, FieldValueComparator> entry : fieldComparators.entrySet()) {
                 String fieldName = entry.getKey();
@@ -88,6 +100,10 @@ public final class DataSourceIndexProcessing {
                     logger.debug("Verifying comparator for field '{}': {}", fieldName, fieldComparator);
 
                 FieldValue fieldValue = mappedFields.get(fieldName);
+                if (fieldValue == null) {
+                    throw new IllegalArgumentException("No field '" + fieldName + "' defined in the index!");
+                }
+
                 if (logger.isDebugEnabled()) logger.debug("Comparing with {}", fieldValue);
 
                 int referenceNumber = 0;
@@ -127,25 +143,32 @@ public final class DataSourceIndexProcessing {
 
         switch (comparatorType) {
             case EQUAL:
-                if (logger.isDebugEnabled()) logger.debug("IS EQUAL: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS EQUAL: {}, {} with type {}", value, comparatorValue, type);
                 return isValueEqual(type, value, comparatorValue);
             case LESS_THEN:
-                if (logger.isDebugEnabled()) logger.debug("IS LESS THEN: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS LESS THEN: {}, {} with type {}", value, comparatorValue, type);
                 return isValueLessThen(type, value, comparatorValue);
             case LESS_THEN_OR_EQUAL:
-                if (logger.isDebugEnabled()) logger.debug("IS LESS THEN OR EQUAL: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS LESS THEN OR EQUAL: {}, {} with type {}", value, comparatorValue, type);
                 return isValueLessThenOrEqual(type, value, comparatorValue);
             case GREATER_THEN:
-                if (logger.isDebugEnabled()) logger.debug("IS GREATER THEN: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS GREATER THEN: {}, {} with type {}", value, comparatorValue, type);
                 return isValueGreaterThen(type, value, comparatorValue);
             case GREATER_THEN_OR_EQUAL:
-                if (logger.isDebugEnabled()) logger.debug("IS GREATER THEN OR EQUAL: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS GREATER THEN OR EQUAL: {}, {} with type {}", value, comparatorValue, type);
                 return isValueGreaterThenOrEqual(type, value, comparatorValue);
             case BETWEEN:
-                if (logger.isDebugEnabled()) logger.debug("IS IN BETWEEN: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS IN BETWEEN: {}, {} with type {}", value, comparatorValue, type);
                 return isValueInBetween(type, value, comparatorValue);
             case NOT_EQUAL:
-                if (logger.isDebugEnabled()) logger.debug("IS NOT EQUAL: {}, {} with type {}", value, comparatorValue, type);
+                if (logger.isDebugEnabled())
+                    logger.debug("IS NOT EQUAL: {}, {} with type {}", value, comparatorValue, type);
                 return isValueNotEqual(type, value, comparatorValue);
             default:
                 throw new UnsupportedOperationException("Unable to perform the matching check for unknown comparator type '" + comparatorType + "'!");
@@ -242,7 +265,7 @@ public final class DataSourceIndexProcessing {
 
     private static boolean isValueInBetween(FieldType type, String fieldValue, String comparatorValue) {
         String[] parts = comparatorValue.split(",");
-        if(parts.length != 2){
+        if (parts.length != 2) {
             throw new IllegalArgumentException("Comparator value '" + comparatorValue + "' can't be used as an inbetween value! Required is a value like <from>:<to>, e.g. \"1, 5\"");
         }
 
@@ -266,7 +289,8 @@ public final class DataSourceIndexProcessing {
     private static void flagMatchingReference(int referenceNumber, List<String> references, Map<String, Boolean> matchingFlags, String criteria) {
         Logger logger = LoggerFactory.getLogger(DataSourceIndexProcessing.class);
 
-        if (logger.isDebugEnabled()) logger.debug("Trying to flag reference #{} with criteria {}", referenceNumber, criteria);
+        if (logger.isDebugEnabled())
+            logger.debug("Trying to flag reference #{} with criteria {}", referenceNumber, criteria);
 
         String reference = references.get(referenceNumber);
         Boolean previousFlag = matchingFlags.get(reference);
@@ -275,8 +299,7 @@ public final class DataSourceIndexProcessing {
             if (logger.isDebugEnabled())
                 logger.debug("Flag the reference '{}' as matching the search criteria '{}'", reference, criteria);
             matchingFlags.put(reference, true);
-        }
-        else if(previousFlag && logger.isDebugEnabled()){
+        } else if (previousFlag && logger.isDebugEnabled()) {
             logger.debug("The reference '{}' is matching the search criteria '{}' but is already flagged.", reference, criteria);
         }
     }
@@ -284,7 +307,8 @@ public final class DataSourceIndexProcessing {
     private static void flagNotMatchingReference(int referenceNumber, List<String> references, Map<String, Boolean> matchingFlags, String criteria) {
         Logger logger = LoggerFactory.getLogger(DataSourceIndexProcessing.class);
 
-        if (logger.isDebugEnabled()) logger.debug("Flag not matching reference #{} with criteria {}", referenceNumber, criteria);
+        if (logger.isDebugEnabled())
+            logger.debug("Flag not matching reference #{} with criteria {}", referenceNumber, criteria);
 
         String reference = references.get(referenceNumber);
         matchingFlags.put(reference, false);
