@@ -76,19 +76,53 @@
                     <h3>Suche in der Region</h3>
                     <select name="region">
                         <option value="loutraki">Loutraki</option>
-                        <option value="kreta">Kreta</option>
-                        <option value="athen">Athen</option>
+                        <option value="assos">assos</option>
+                        <option value="patisia">patisia</option>
+                        <option value="lechaio">lechaio</option>
+                        <option value="kalamia">kalamia</option>
+                        <option value="center">center</option>
+                        <option value="korinthos">korinthos</option>
+                        <option value="sikiona">sikiona</option>
+                        <option value="limni vouliagmenis">limni vouliagmenis</option>
+                        <option value="soligeia">soligeia</option>
+                        <option value="nea penteli">nea penteli</option>
+                        <option value="glika nera">glika nera</option>
+                        <option value="marousi">marousi</option>
+                        <option value="velo">velo</option>
+                        <option value="xilokastro">xilokastro</option>
+                        <option value="vocha">vocha</option>
+                        <option value="poseidonia">poseidonia</option>
+                        <option value="agia paraskevi">agia paraskevi</option>
+                        <option value="agioi theodoroi">agioi theodoroi</option>
+                        <option value="xilokeriza">xilokeriza</option>
+                        <option value="voula">voula</option>
+                        <option value="saronikos">saronikos</option>
+                        <option value="evrostini">evrostini</option>
+                        <option value="kato almiri">kato almiri</option>
+                        <option value="batharistra">batharistra</option>
+                        <option value="archaio limani">archaio limani</option>
+                        <option value="akadimia">akadimia</option>
+                        <option value="agios georgios">agios georgios</option>
                     </select>
                 </div>
 
                 <div class="filterCategory">
                     <h3>Typ des Objekts</h3>
                     <fieldset>
-                        <label><input type="checkbox" name="type" value="appartement"><span>Wohnung</span></label>
-                        <label><input type="checkbox" name="type" value="house"><span>Haus</span></label>
-                        <label><input type="checkbox" name="type" value="commercial"><span>Gewerbefläche</span></label>
-                        <label><input type="checkbox" name="type" value="base"><span>Grundstücke</span></label>
-                        <label><input type="checkbox" name="type" value="other"><span>Andere</span></label>
+                        <label><input type="checkbox" name="type" value="apartment"><span>Wohnung</span></label>
+                        <label><input type="checkbox" name="type" value="land-plot"><span>#land-plot</span></label>
+                        <label><input type="checkbox" name="type" value="building"><span>#building</span></label>
+                        <label><input type="checkbox" name="type" value="hotel"><span>#hotel</span></label>
+                        <label><input type="checkbox" name="type" value="villa"><span>#villa</span></label>
+                        <label><input type="checkbox" name="type" value="detached house"><span>#detached house</span></label>
+                        <label><input type="checkbox" name="type" value="office"><span>#office</span></label>
+                        <label><input type="checkbox" name="type" value="farm parcel"><span>#farm parcel</span></label>
+                        <label><input type="checkbox" name="type" value="store"><span>#store</span></label>
+                        <label><input type="checkbox" name="type" value="business building"><span>#business building</span></label>
+                        <label><input type="checkbox" name="type" value="various other property"><span>#various other property</span></label>
+                        <label><input type="checkbox" name="type" value="parking"><span>#parking</span></label>
+                        <label><input type="checkbox" name="type" value="other land property"><span>#other land property</span></label>
+                        <label><input type="checkbox" name="type" value="maisonette"><span>#maisonette</span></label>
                     </fieldset>
                 </div>
             </form>
@@ -99,7 +133,7 @@
         <div class="legend">
             <div class="resultAmount">
                 <i class="fa fa-list-ol" aria-hidden="true"></i>
-                <span class="amount" th:text="${objects.elements.size()}">73</span>
+                <span class="amount" data-content="result-amount" th:text="${objects.elements.size()}">73</span>
                 <span>Immobilien gefunden.</span>
             </div>
             <!--
@@ -118,6 +152,13 @@
             </div>
             -->
         </div>
+
+        <div class="box boxLoading">
+            <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+            <p>Suche nach Objekten...</p>
+        </div>
+
+
         <ul class="smallItemGalleryList">
             <li class="hidden" th:each="link : ${objects.elements}"
                 th:with="
@@ -159,259 +200,6 @@
                     <a th:href="${href}" href="details.html" class="cta">Zum Angebot</a>
                 </div>
             </li>
-<!--
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        500.500 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Feriendomizil</div>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        465.000 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3><a href="details.html">Restaurant im Touristen-Zentrum</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        2.500 € Pacht
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Feriendomizil</div>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        465.000 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3><a href="details.html">Restaurant im Touristen-Zentrum</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        2.500 € Pacht
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3>Gewerbegebiet mit bester Anbindung</h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        500.500 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
--->
         </ul>
 
         <script type="text/javascript">

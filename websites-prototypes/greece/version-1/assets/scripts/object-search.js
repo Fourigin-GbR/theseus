@@ -1,6 +1,8 @@
 var objectSearch = function() {
     this.jForm = jQuery("form#searchObjects");
     this.jObjects = jQuery("ul.smallItemGalleryList > li");
+    this.jResultAmount = jQuery("[data-content='result-amount']");
+    this.hideLoaderTimeoutId = null;
 
     objectSearch.prototype.getMatchingObjectsRequest = function() {
         var self = this,
@@ -11,19 +13,18 @@ var objectSearch = function() {
                 }
             };
 
+        self.showLoadingBox();
+
         var formularData = self.jForm.serializeArray();
         for(var i=0, il= formularData.length; i<il; i++) {
             if(formularData[i].name === "region"){
                 requestData.categories.region.push(formularData[i].value);
             }
-
             if(formularData[i].name === "type"){
-                requestData.fields = {
-                    "type": {
-                        "comparator": "EQUAL",
-                        "value": formularData[i].value
-                    }
+                if("undefined" === typeof requestData.categories.type) {
+                    requestData.categories["type"] = [];
                 }
+                requestData.categories.type.push(formularData[i].value);
             }
         }
 
@@ -37,9 +38,11 @@ var objectSearch = function() {
             url: "http://argo.greekestate.fourigin.com/cms/search/?base=DE&path=objects/sale/search",
             data: JSON.stringify(requestData), //self.jForm.serialize(),
             success: function(data){
+                self.hideLoadingBox();
                 self.showMatchingObjects(data);
             },
             error: function() {
+                self.hideLoadingBox();
                 self.deactivateAllObjects();
                 self.showErrorOverlay();
             }
@@ -54,6 +57,21 @@ var objectSearch = function() {
     objectSearch.prototype.showNoResultsOverlay = function() {
         jQuery(".overlay").removeClass("active");
         jQuery(".overlay.overlayNoResult").addClass("active");
+    };
+
+    objectSearch.prototype.showLoadingBox = function() {
+        if(this.hideLoaderTimeoutId) {
+            window.clearTimeout(this.hideLoaderTimeoutId);
+        }
+        jQuery(".box.boxLoading").addClass("active");
+    };
+    objectSearch.prototype.hideLoadingBox = function() {
+        if(this.hideLoaderTimeoutId) {
+            window.clearTimeout(this.hideLoaderTimeoutId);
+        }
+        this.hideLoaderTimeoutId = window.setTimeout(function(){
+            jQuery(".box.boxLoading").removeClass("active");
+        }, 800);
     };
 
     objectSearch.prototype.deactivateAllOverlays = function() {
@@ -77,6 +95,7 @@ var objectSearch = function() {
     objectSearch.prototype.showMatchingObjects = function(objectsList) {
         var self = this;
         //console.info("Show matching objects...:", self.jObjects);
+        self.jResultAmount.html(objectsList.length);
         self.jObjects.each(function() {
             var jThis =  jQuery(this),
                 currentObjectId = jThis.attr("data-object-id");
@@ -97,7 +116,7 @@ var objectSearch = function() {
     };
 
     objectSearch.prototype.enableImages = function(jObject) {
-        var jUnAbledImages = jObject.find("img[data-image-src]");
+        var jUnAbledImages = jObject.find("img[data-image-src]:first");
         //console.info("Found this images: ", jObject, jUnAbledImages);
         jUnAbledImages.each(function() {
             var jThis = jQuery(this);

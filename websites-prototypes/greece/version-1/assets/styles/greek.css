@@ -99,7 +99,11 @@ header .telephone i {
 header nav {
     text-align: right;
 }
-
+@media (max-width: 460px) {
+    header nav {
+        display: none;
+    }
+}
 nav ul {
     list-style-type: none;
     margin: 30px 10px 5px 5px;
@@ -439,6 +443,8 @@ article.search form label {
     background-color: #fff;
     padding: 0 10px;
     border-radius: 2px;
+    margin-bottom: 5px;
+    display: inline-block;
 }
 article.search form label input {
     display: none;
@@ -454,9 +460,6 @@ article.search form label input ~ span:before {
 }
 article.search form label input:checked ~ span:before {
     content: "\f14a";
-}
-article.search form label {
-    margin-left: 20px;
 }
 article.search form label:first-of-type {
     margin-left: 0;
@@ -528,16 +531,30 @@ article.searchResults .legend span.amount {
 article.searchResults .legend span {
     font-size: 14px;
 }
-article.searchResults .overlay {
+article.searchResults .overlay,
+article.searchResults .box {
     text-align: center;
     display: none;
 }
-article.searchResults .overlay.active {
+article.searchResults .overlay.active,
+article.searchResults .box.active {
     display: block;
 }
-article.searchResults .overlay i {
+article.searchResults .overlay i,
+article.searchResults .box i {
     font-size: 30px;
     color: #33669B;
+}
+
+article.searchResults .box {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height 1s ease;
+}
+article.searchResults .box.active {
+    display: block;
+    height: 100px;
 }
 
 article .linksImageTeaserWrapper {
@@ -664,7 +681,7 @@ ul.smallItemGalleryList li {
         width: 49%;
     }
 }
-@media (max-width: 330px) {
+@media (max-width: 460px) {
     ul.smallItemGalleryList li {
         width: 90%;
     }
