@@ -550,7 +550,7 @@ article.searchResults .box {
     display: block;
     height: 0;
     overflow: hidden;
-    transition: height 1s ease;
+    transition: height .7s ease;
 }
 article.searchResults .box.active {
     display: block;
