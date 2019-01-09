@@ -27,59 +27,66 @@
         <div class="contacts">
             <div class="telephone">
                 <i class="fa fa-phone linkTypeIcon" aria-hidden="true"></i>
-                <span>0123456789</span>
+                <span>302741024622</span>
             </div>
             <div class="languages">
                 <select>
                     <option>deutsch</option>
-                    <option>griechisch</option>
+                    <option>english</option>
+                    <option>русский</option>
                 </select>
             </div>
         </div>
     </div>
-    <nav>
+    <nav th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
         <ul>
-            <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=/about', 'Über uns')" href="#">Über uns</a>
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/about')}">
+                <!--<a th:replace="this :: simpleLink('?base=DE&path=/about', 'Über uns')" href="#">Über uns</a>-->
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="#">Über uns</a>
             </li>
-            <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=/regions/index', 'Griechische Regionen')" href="#">Griechische Regionen</a>
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/regions')}">
+                <!--<a th:replace="this :: simpleLink('?base=DE&path=/regions/index', 'Griechische Regionen')" href="#">Griechische Regionen</a>-->
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/regions')}" href="#">Griechische Regionen</a>
             </li>
-            <li>
-                <a th:replace="this :: simpleLink('?base=DE&path=/contact', 'Kontakt')" href="#">Kontakt</a>
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
+                <!--<a th:replace="this :: simpleLink('?base=DE&path=/contact', 'Kontakt')" href="#">Kontakt</a>-->
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
             </li>
         </ul>
     </nav>
 </header>
 
-<div class="body">
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
 
     <nav th:fragment="breadcrumb" class="breadcrumb">
         <div class="wrapper">
             <div class="breadcrumbPath">
                 <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
                 <ul class="folderList">
-                    <li>
-                        <a href="index.html">Start</a>
-                    </li>
-                    <li>
-                        Regionen
+                    <li th:with="ref = ${c.getElement('@top-level-navigation:/home')}">
+                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="index.html">Start</a>
                     </li>
                 </ul>
             </div>
             <div class="contextHighlights">
-                <div class="links">
-                    <a href="immobilie-kaufen.html">Immobilie kaufen</a>
-                    <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+                <div class="links" th:with="ref1 = ${c.getElement('@top-level-navigation:/')}, ref2 = ${c.getElement('@top-level-navigation:/')}">
+                    <a href="immobilie-kaufen.html" th:text="${c.getContent('@common-content:common/links-and-ctas/bill-property')}">Immobilie kaufen</a>
+                    <a href="feriendomizil-suchen.html" th:text="${c.getContent('@common-content:common/links-and-ctas/rent-property')}">Feriendomizil mieten</a>
                 </div>
                 <div class="searchAndGo">
                     <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
                     <form action="#">
                         <label>
-                            <span>Objekt-ID</span>
+                            <span th:text="${c.getContent('@common-content:common/properties/code')}">Objekt-ID</span>
                             <input name="objectId" type="text" />
                         </label>
-                        <input class="cta" type="submit" value="Suchen"/>
+                        <input class="cta" type="submit" value="Suchen" th:value="${c.getContent('@common-content:common/links-and-ctas/search')}"/>
                     </form>
                 </div>
             </div>
@@ -88,8 +95,8 @@
 
 
     <article th:fragment="article-h1-block()">
-        <h1 th:utext="${argo.contentElementUtility.getElement('/headline').content}">#headline</h1>
-        <p  th:utext="${argo.contentElementUtility.getElement('/body').content}">
+        <h1 th:utext="${c.getContent('/headline')}">#headline</h1>
+        <p  th:utext="${c.getContent('/body')}">
             #body
         </p>
     </article>
@@ -270,47 +277,62 @@
         </script>
     </article>
 
+    <!--
     <article class="forwardings">
         <a href="immobilie-kaufen.html">Immobilie kaufen</a>
         <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
         <a href="region.html">Informationen über Loutraki</a>
     </article>
+    -->
 </div>
-<footer>
+<footer th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
     <div class="content">
         <div class="logo">
             <img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" />
         </div>
         <div class="company">
             <div>
-                <h3>Inhaber</h3>
+                <h3 th:text="${c.getContent('@common-content:common/properties/owner')}">Inhaber</h3>
                 <p>Georgios Tzafis</p>
             </div>
             <div>
-                <h3>Telefon</h3>
-                <p>+30 698 741 9624</p>
+                <h3 th:text="${c.getContent('@common-content:common/properties/phone')}">Telefon</h3>
+                <p>302741024622</p>
+                <h3 th:text="${c.getContent('@common-content:common/properties/email')}">Mail</h3>
+                <p>greekestate2@gmail.com</p>
             </div>
         </div>
         <div class="links">
+            <!--             <div>
+                            <h3><a th:replace="this :: simpleLink('?base=DE&path=/home', 'Start')" href="index.html">Start</a></h3>
+                        </div>
+                       <div>
+                            <h3><a href="feriendomizil-suchen.html">Feriendomizil suchen</a></h3>
+                            <h3><a href="immobilie-kaufen.html">Immobilie kaufen</a></h3>
+                        </div>
+                        <div>
+                            <h3><a href="regionen.html">Griechische Regionen</a></h3>
+                            <div><a href="region.html">Loutraki</a></div>
+                            <div><a href="region.html">Kreta</a></div>
+                            <div><a href="region.html">Athen</a></div>
+                        </div>-->
             <div>
-                <h3><a th:replace="this :: simpleLink('?base=DE&path=/home', 'Start')" href="index.html">Start</a></h3>
-            </div>
-<!--            <div>
-                <h3><a href="feriendomizil-suchen.html">Feriendomizil suchen</a></h3>
-                <h3><a href="immobilie-kaufen.html">Immobilie kaufen</a></h3>
-            </div>
-            <div>
-                <h3><a href="regionen.html">Griechische Regionen</a></h3>
-                <div><a href="region.html">Loutraki</a></div>
-                <div><a href="region.html">Kreta</a></div>
-                <div><a href="region.html">Athen</a></div>
-            </div>-->
-            <div>
-<!--                <h3><a href="text.html">Über uns</a></h3>
-                <div><a href="text.html">Kontakt</a></div>-->
-                <div>
-                    <a th:replace="this :: simpleLink('?base=DE&path=/impressum', 'Impressum')" href="index.html">Impressum</a>
-                </div>
+<!--                <h3><a href="text.html">Über uns</a></h3>-->
+                <ul>
+                    <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
+                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
+                    </li>
+                    <li th:with="ref = ${c.getElement('@top-level-navigation:/impressum')}">
+                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/impressum')}" href="#">Über uns</a>
+                    </li>
+                </ul>
+                <!--<div><a href="text.html">Kontakt</a></div>-->
+                <!--<div>-->
+                    <!--<a th:replace="this :: simpleLink('?base=DE&path=/impressum', 'Impressum')" href="index.html">Impressum</a>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
