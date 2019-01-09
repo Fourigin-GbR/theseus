@@ -26,6 +26,7 @@
 
 <div class="body" th:with="
     c = ${argo.contentElementUtility},
+    f = ${argo.formatterUtility},
     p = ${argo.pagePropertiesUtility}
 ">
 
@@ -197,7 +198,7 @@
                     <h3><a th:href="${href}" href="details.html" th:text="${description.getContextSpecificContent('de', true)}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
-                    <span class="price" th:text="${price.content}">
+                    <span class="price" th:text="${f.formatPrice(price.content)}">
                         500.500 €
                     </span>
                     <a th:href="${href}" href="details.html" class="cta">Zum Angebot</a>

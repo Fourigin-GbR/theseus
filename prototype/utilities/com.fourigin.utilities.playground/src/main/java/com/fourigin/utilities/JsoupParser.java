@@ -445,7 +445,10 @@ public class JsoupParser {
             {
                 String value = properties.get("area");
                 if (value != null) {
-                    value = value.replaceAll("m2", "m<sup>2</sup>");
+                    value = value.replaceAll("m2", "");
+                    value = value.replaceAll("\\.", "");
+                    value = value.replaceAll(",", "");
+                    value = value.trim();
                     properties.put("area", value);
                 }
             }

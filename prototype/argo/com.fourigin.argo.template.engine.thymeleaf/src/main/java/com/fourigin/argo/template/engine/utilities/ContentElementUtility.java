@@ -121,6 +121,26 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return textElement.getContextSpecificContent(compilerBase, true);
     }
 
+    public String getOptionalContent(String path, String fallback) {
+        try {
+            TextAwareContentElement textElement = getTextAwareElement(path);
+            return textElement.getContextSpecificContent(compilerBase, true);
+        }
+        catch(Throwable ex){
+            return fallback;
+        }
+    }
+
+    public String getOptionalContent(ContentElementsContainer container, String path, String fallback) {
+        try {
+            TextAwareContentElement textElement = getTextAwareElement(container, path);
+            return textElement.getContextSpecificContent(compilerBase, true);
+        }
+        catch(Throwable ex){
+            return fallback;
+        }
+    }
+
     public List<ContentListElement> listElements(String path) {
         ContentList list = getContentListElement(path);
         return list.getElements();

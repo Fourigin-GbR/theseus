@@ -14,19 +14,32 @@ public class FormatterUtility implements ThymeleafTemplateUtility {
 
     private final Logger logger = LoggerFactory.getLogger(FormatterUtility.class);
 
-    public String formatPrice(String unformattedPrice){
+    public String formatPrice(String unformattedValue){
         if (logger.isDebugEnabled()) logger.debug("Using compiler base '{}'", compilerBase);
 
         try {
-            double value = Double.parseDouble(unformattedPrice);
+            double value = Double.parseDouble(unformattedValue);
             return formatter.format(value);
         }
         catch(NumberFormatException ex){
-            if (logger.isErrorEnabled()) logger.error("Unable to parse price value '" + unformattedPrice + "'!", ex);
-            return unformattedPrice;
+            if (logger.isErrorEnabled()) logger.error("Unable to parse price value '" + unformattedValue + "'!", ex);
+            return unformattedValue;
         }
     }
 
+    public String formatNumber(String unformattedValue, String unit){
+        if (logger.isDebugEnabled()) logger.debug("Using compiler base '{}'", compilerBase);
+
+        try {
+            Double.parseDouble(unformattedValue);
+            return unformattedValue + " " + unit;
+        }
+        catch(NumberFormatException ex){
+            if (logger.isErrorEnabled()) logger.error("Unable to parse number value '" + unformattedValue + "'!", ex);
+            return unformattedValue;
+        }
+    }
+    
     @Override
     public void setCompilerBase(String compilerBase) {
         this.compilerBase = compilerBase.toLowerCase(Locale.US);

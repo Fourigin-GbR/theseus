@@ -87,13 +87,21 @@
             </script>
             <div class="description">
                 <p th:utext="${c.getContent('/short-description')}">Direkte Lage, super Dinge, alles sauber, alles da! Wunderbar und herrlich schön, nichts ist unmöglich alles ist machtbart.</p>
-                <ul class="highlights">
-                    <li><span th:text="${c.getContent('@common-content:common/properties/code')}">Code</span>: #<span th:text="${c.getContent(properties, 'code')}">3546</span></li>
-                    <li th:each="property : ${properties.elements}">
-                        <span th:if="${property.name != 'code' and property.name != 'price'}">
-                            <span th:text="${c.getContent('@common-content:common/properties/' + property.name)}">Code</span>: <span th:utext="${property.getContextSpecificContent(#strings.toLowerCase(argo.base), true)}">3546</span>
-                        </span>
-                    </li>
+                <ul class="highlights" th:with="
+                    code = ${c.getContent(properties, 'code')},
+                    type = ${c.getContent(properties, 'type')},
+                    area = ${c.getContent(properties, 'area')},
+                    region = ${c.getContent(properties, 'region')}
+                ">
+                    <li><span th:text="${c.getContent('@common-content:common/properties/code')}">Code</span>: #<span th:text="${code}">3546</span></li>
+                    <li><span th:text="${c.getContent('@common-content:common/properties/type')}">Type</span>: <span th:utext="${c.getOptionalContent('@common-content:common/properties/type:' + type, type)}">3546</span></li>
+                    <li><span th:text="${c.getContent('@common-content:common/properties/area')}">Area</span>: <span th:utext="${f.formatNumber(area, ' m<sup>2</sup>')}">3546</span></li>
+                    <li><span th:text="${c.getContent('@common-content:common/properties/region')}">Region</span>: <span th:utext="${region}">3546</span></li>
+                    <!--<li th:each="property : ${properties.elements}">-->
+                        <!--<span th:if="${property.name != 'code' and property.name != 'price'}">-->
+                            <!--<span th:text="${c.getContent('@common-content:common/properties/' + property.name)}">Code</span>: <span th:utext="${property.getContextSpecificContent(#strings.toLowerCase(argo.base), true)}">3546</span>-->
+                        <!--</span>-->
+                    <!--</li>-->
                 </ul>
                 <div class="priceBox" th:text="${f.formatPrice(c.getContent(properties, 'price'))}">
                     255.000,00 €
