@@ -5,6 +5,7 @@ import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentElementUtility;
+import com.fourigin.argo.template.engine.utilities.FormatterUtility;
 import com.fourigin.argo.template.engine.utilities.PagePropertiesUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtility;
 
@@ -23,6 +24,8 @@ public class Argo {
     private ContentElementUtility contentElementUtility;
 
     private PagePropertiesUtility pagePropertiesUtility;
+
+    private FormatterUtility formatterUtility;
 
     private Map<String, ThymeleafTemplateUtility> customUtilities;
 
@@ -88,6 +91,14 @@ public class Argo {
 
     public void setPagePropertiesUtility(PagePropertiesUtility pagePropertiesUtility) {
         this.pagePropertiesUtility = pagePropertiesUtility;
+    }
+
+    public FormatterUtility getFormatterUtility() {
+        return formatterUtility;
+    }
+
+    public void setFormatterUtility(FormatterUtility formatterUtility) {
+        this.formatterUtility = formatterUtility;
     }
 
     public Map<String, ThymeleafTemplateUtility> getCustomUtilities() {
@@ -182,6 +193,10 @@ public class Argo {
             pagePropertiesUtility.setProcessingMode(processingMode);
             pagePropertiesUtility.setInternalLinkResolutionStrategy(internalLinkResolutionStrategy);
             argo.setPagePropertiesUtility(pagePropertiesUtility);
+
+            FormatterUtility formatterUtility = new FormatterUtility();
+            formatterUtility.setCompilerBase(base);
+            argo.setFormatterUtility(formatterUtility);
 
             if(!customUtilities.isEmpty()){
                 argo.setCustomUtilities(customUtilities);
