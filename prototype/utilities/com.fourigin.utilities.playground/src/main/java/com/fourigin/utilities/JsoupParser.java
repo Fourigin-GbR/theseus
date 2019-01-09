@@ -572,7 +572,7 @@ public class JsoupParser {
                     .withName("common-content")
                     .withIdentifier(new DataSourceIdentifier.Builder()
                         .withType("COMMON-CONTENT")
-                        .withQueryProperty("INCLUDE_CONTENT", "/general-headlines, /links-and-ctas")
+                        .withQueryProperty("INCLUDE_CONTENT", "/general-headlines, /links-and-ctas, /properties")
                         .build())
                     .build()
             );
