@@ -76,8 +76,8 @@
             </div>
             <div class="contextHighlights">
                 <div class="links" th:with="ref1 = ${c.getElement('@top-level-navigation:/')}, ref2 = ${c.getElement('@top-level-navigation:/')}">
-                    <a href="immobilie-kaufen.html" th:text="${c.getContent('@common-content:common/links-and-ctas/bill-property')}">Immobilie kaufen</a>
-                    <a href="feriendomizil-suchen.html" th:text="${c.getContent('@common-content:common/links-and-ctas/rent-property')}">Feriendomizil mieten</a>
+                    <a href="immobilie-kaufen.html" th:href="${p.getPath('/objects/sale/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/bill-property')}">Immobilie kaufen</a>
+                    <a href="feriendomizil-suchen.html" th:href="${p.getPath('/objects/rent/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/rent-property')}">Feriendomizil mieten</a>
                 </div>
                 <div class="searchAndGo">
                     <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>

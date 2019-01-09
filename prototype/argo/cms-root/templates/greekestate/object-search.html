@@ -2,11 +2,12 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Greece</title>
-    <link rel="stylesheet" href="/assets/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/assets/greekestate/assets/styles/basic-layout.css"/>
-    <link rel="stylesheet" href="/assets/greekestate/assets/styles/slider.css">
-    <link rel="stylesheet" href="/assets/greekestate/assets/styles/greek.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css?family=News+Cycle');
     </style>
@@ -14,52 +15,28 @@
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-    <script src="/assets/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/object-search.js"></script>
 </head>
 <body>
-<!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
-<!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
 
 <header th:replace="greekestate/base :: header">
 
 </header>
 
-<div class="body">
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
 
-    <nav class="breadcrumb">
-        <div class="wrapper">
-            <div class="breadcrumbPath">
-                <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
-                <ul class="folderList">
-                    <li>
-                        <a href="index.html">Start</a>
-                    </li>
-                    <li>
-                        Immobilie kaufen
-                    </li>
-                </ul>
-            </div>
-            <div class="contextHighlights">
-                <div class="links">
-                    <a href="immobilie-kaufen.html">Immobilie kaufen</a>
-                    <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
-                </div>
-                <div class="searchAndGo">
-                    <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
-                    <form action="#">
-                        <label>
-                            <span>Objekt-ID</span>
-                            <input name="objectId" type="text" />
-                        </label>
-                        <input class="cta" type="submit" value="Suchen"/>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <nav class="breadcrumb" th:insert="greekestate/base :: breadcrumb">
+
     </nav>
 
-    <h1>Immobilie kaufen</h1>
-
+    <article>
+        <h1>Immobilie kaufen</h1>
+    </article>
+    <!--
     <article class="linksImageTeaser">
         <h2>Informationen zu den Regionen</h2>
         <div class="linksImageTeaserWrapper">
@@ -92,41 +69,77 @@
             </div>
         </div>
     </article>
+    -->
 
     <article class="search">
         <h2>Suchen</h2>
         <div class="searchFilter">
-            <form>
+            <form id="searchObjects">
                 <div class="region">
                     <h3>Suche in der Region</h3>
-                    <select>
-                        <option>Loutraki</option>
-                        <option>Kreta</option>
-                        <option>Athen</option>
+                    <select name="region">
+                        <option value="loutraki">Loutraki</option>
+                        <option value="assos">assos</option>
+                        <option value="patisia">patisia</option>
+                        <option value="lechaio">lechaio</option>
+                        <option value="kalamia">kalamia</option>
+                        <option value="center">center</option>
+                        <option value="korinthos">korinthos</option>
+                        <option value="sikiona">sikiona</option>
+                        <option value="limni vouliagmenis">limni vouliagmenis</option>
+                        <option value="soligeia">soligeia</option>
+                        <option value="nea penteli">nea penteli</option>
+                        <option value="glika nera">glika nera</option>
+                        <option value="marousi">marousi</option>
+                        <option value="velo">velo</option>
+                        <option value="xilokastro">xilokastro</option>
+                        <option value="vocha">vocha</option>
+                        <option value="poseidonia">poseidonia</option>
+                        <option value="agia paraskevi">agia paraskevi</option>
+                        <option value="agioi theodoroi">agioi theodoroi</option>
+                        <option value="xilokeriza">xilokeriza</option>
+                        <option value="voula">voula</option>
+                        <option value="saronikos">saronikos</option>
+                        <option value="evrostini">evrostini</option>
+                        <option value="kato almiri">kato almiri</option>
+                        <option value="batharistra">batharistra</option>
+                        <option value="archaio limani">archaio limani</option>
+                        <option value="akadimia">akadimia</option>
+                        <option value="agios georgios">agios georgios</option>
                     </select>
                 </div>
 
                 <div class="filterCategory">
                     <h3>Typ des Objekts</h3>
                     <fieldset>
-                        <label><input type="checkbox" name="type" value="appartement"><span>Wohnung (24)</span></label>
-                        <label><input type="checkbox" name="type" value="house"><span>Haus (811)</span></label>
-                        <label><input type="checkbox" name="type" value="commercial"><span>Gewerbefläche (150)</span></label>
-                        <label><input type="checkbox" name="type" value="base"><span>Grundstücke (2)</span></label>
-                        <label><input type="checkbox" name="type" value="other"><span>Andere (1)</span></label>
+                        <label><input type="checkbox" name="type" value="apartment"><span>Wohnung</span></label>
+                        <label><input type="checkbox" name="type" value="land-plot"><span>#land-plot</span></label>
+                        <label><input type="checkbox" name="type" value="building"><span>#building</span></label>
+                        <label><input type="checkbox" name="type" value="hotel"><span>#hotel</span></label>
+                        <label><input type="checkbox" name="type" value="villa"><span>#villa</span></label>
+                        <label><input type="checkbox" name="type" value="detached house"><span>#detached house</span></label>
+                        <label><input type="checkbox" name="type" value="office"><span>#office</span></label>
+                        <label><input type="checkbox" name="type" value="farm parcel"><span>#farm parcel</span></label>
+                        <label><input type="checkbox" name="type" value="store"><span>#store</span></label>
+                        <label><input type="checkbox" name="type" value="business building"><span>#business building</span></label>
+                        <label><input type="checkbox" name="type" value="various other property"><span>#various other property</span></label>
+                        <label><input type="checkbox" name="type" value="parking"><span>#parking</span></label>
+                        <label><input type="checkbox" name="type" value="other land property"><span>#other land property</span></label>
+                        <label><input type="checkbox" name="type" value="maisonette"><span>#maisonette</span></label>
                     </fieldset>
                 </div>
             </form>
         </div>
     </article>
 
-    <article class="searchResults">
+    <article class="searchResults" th:with="objects = ${c.getElement('@site-structure:/')}">
         <div class="legend">
             <div class="resultAmount">
                 <i class="fa fa-list-ol" aria-hidden="true"></i>
-                <span class="amount">73</span>
+                <span class="amount" data-content="result-amount" th:text="${objects.elements.size()}">73</span>
                 <span>Immobilien gefunden.</span>
             </div>
+            <!--
             <div class="sorting">
                 <label>
                     <i class="fa fa-bar-chart" aria-hidden="true"></i>
@@ -140,158 +153,36 @@
                     </select>
                 </label>
             </div>
+            -->
         </div>
-        <ul class="smallItemGalleryList">
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        500.500 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Feriendomizil</div>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        465.000 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3><a href="details.html">Restaurant im Touristen-Zentrum</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        2.500 € Pacht
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
 
-            <li>
+        <div class="box boxLoading">
+            <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+            <p>Suche nach Objekten...</p>
+        </div>
+
+
+        <ul class="smallItemGalleryList">
+            <li class="hidden" th:each="link : ${objects.elements}"
+                th:with="
+                    properties = ${c.getElement(link, '/properties')},
+                    description = ${c.getElement(link, '/headline')},
+                    images = ${c.getElement(link, '/images')},
+                    type = ${c.getElement(properties, '/type')},
+                    price = ${c.getElement(properties, '/price')},
+                    href = ${p.getPath(link.target)}
+            " data-object-id="1234" th:attr="data-object-id=${link.name}">
+                <span th:text="${link.name}"/>
+                <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
                 <div class="image">
                     <div class="slider">
                         <input class="sliderPageStorage" value="1" type="hidden">
                         <div class="sliderWrapper">
                             <ul>
-                                <li>
+                                <li th:each="image : ${images.elements}">
                                     <div class="detailSlide">
                                         <div class="image">
-                                            <img src="assets/images/objects/object2/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object2/slide3.jpg"/>
+                                            <img th:attr="data-image-src=${image.source}" />
                                         </div>
                                     </div>
                                 </li>
@@ -302,95 +193,14 @@
                     </div>
                 </div>
                 <div class="description">
-                    <div class="category">Feriendomizil</div>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <div class="category" th:text="${type.content}">Gewerbe</div>
+                    <h3><a th:href="${href}" href="details.html" th:text="${description.getContextSpecificContent('de', true)}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
-                    <span class="price">
-                        465.000 €
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object3/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3><a href="details.html">Restaurant im Touristen-Zentrum</a></h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
-                        2.500 € Pacht
-                    </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
-                </div>
-            </li>
-            <li>
-                <div class="image">
-                    <div class="slider">
-                        <input class="sliderPageStorage" value="1" type="hidden">
-                        <div class="sliderWrapper">
-                            <ul>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide1.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide2.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="detailSlide">
-                                        <div class="image">
-                                            <img src="assets/images/objects/object1/slide3.jpg"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sliderSlideLeft"></div>
-                        <div class="sliderSlideRight"></div>
-                    </div>
-                </div>
-                <div class="description">
-                    <div class="category">Gewerbe</div>
-                    <h3>Gewerbegebiet mit bester Anbindung</h3>
-                </div>
-                <div class="priceAndCta">
-                    <span class="price">
+                    <span class="price" th:text="${price.content}">
                         500.500 €
                     </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
+                    <a th:href="${href}" href="details.html" class="cta">Zum Angebot</a>
                 </div>
             </li>
         </ul>
@@ -413,6 +223,16 @@
                 });
             });
         </script>
+
+        <div class="overlay overlayError">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <p>Entschuldigung, es sind intern Probleme aufgetreten.</p>
+            <p>Bitte verändern Sie die Filtereinstellungen oder versuchen Sie es später erneut.</p>
+        </div>
+        <div class="overlay overlayNoResult">
+            <i class="fa fa-meh-o" aria-hidden="true"></i>
+            <p>Zu diesen Filtereinstellungen konnten keine Ergebnisse gefunden werden.</p>
+        </div>
     </article>
 
 </div>
