@@ -437,12 +437,36 @@ public class JsoupParser {
             String id = entry.getKey();
             ParsedObjectDetails object = entry.getValue();
 
-            System.out.print('.');
-
             Map<String, String> properties = object.getProperties();
             if (properties.get("price") == null) {
                 throw new IllegalStateException("Object '" + id + "' doesn't have a price!");
             }
+
+            {
+                String value = properties.get("area");
+                if (value != null) {
+                    value = value.replaceAll("m2", "m<sup>2</sup>");
+                    properties.put("area", value);
+                }
+            }
+            {
+                String value = properties.get("price");
+                if (value != null) {
+                    value = value.replaceAll("€", "");
+                    value = value.replaceAll("\\.", "");
+                    value = value.replaceAll(",", "");
+                    value = value.trim();
+                    properties.put("price", value);
+                }
+            }
+
+            object.setProperties(properties);
+
+            fixLocalizedText(object.getHeadline());
+            fixLocalizedText(object.getShortDescription());
+            fixLocalizedText(object.getLongDescription());
+
+            System.out.print('.');
 
             fixedObjects.put(id, object);
         }
@@ -749,6 +773,60 @@ public class JsoupParser {
             OBJECT_MAPPER.writeValue(objectIdsFile, objectIds);
         } catch (IOException ex) {
             throw new IllegalStateException("Unable to write object IDs!", ex);
+        }
+    }
+
+    private static void fixLocalizedText(LocalizedText description){
+        if(description == null){
+            return;
+        }
+
+        Map<String, String> values = description.getValues();
+        if (values == null) {
+            return;
+        }
+
+        {
+            String value = values.get("de");
+            if (value == null) {
+                return;
+            }
+
+            String result = value.replaceAll("\n", "");
+            result = result.replaceAll("&auml;", "ä");
+            result = result.replaceAll("&ouml;", "ö");
+            result = result.replaceAll("&uuml;", "ü");
+            result = result.replaceAll("&Auml;", "Ä");
+            result = result.replaceAll("&Ouml;", "Ö");
+            result = result.replaceAll("&Uuml;", "Ü");
+            result = result.replaceAll("&szlig;", "ß");
+            result = result.replaceAll("qm", "m<sup>2</sup>");
+
+            values.put("de", result);
+        }
+
+        {
+            String value = values.get("ru");
+            if (value == null) {
+                return;
+            }
+
+            String result = value.replaceAll("\n", "");
+            result = result.replaceAll("кв\\.м\\.", "м<sup>2</sup>");
+
+            values.put("ru", result);
+        }
+
+        {
+            String value = values.get("en");
+            if (value == null) {
+                return;
+            }
+
+            String result = value.replaceAll("\n", "");
+            result = result.replaceAll("sq m", "m<sup>2</sup>");
+
+            values.put("en", result);
         }
     }
 
