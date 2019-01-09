@@ -24,6 +24,7 @@
 <div class="body" th:with="
     c = ${argo.contentElementUtility},
     p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility},
     images = ${c.getElement('/images')},
     properties = ${c.getElement('/properties')},
     longDescriptionContent = ${c.getContent('/long-description')},
@@ -94,7 +95,7 @@
                         </span>
                     </li>
                 </ul>
-                <div class="priceBox" th:text="${c.getContent(properties, 'price')}">
+                <div class="priceBox" th:text="${f.formatPrice(c.getContent(properties, 'price'))}">
                     255.000,00 €
                 </div>
                 <div class="transfer">
