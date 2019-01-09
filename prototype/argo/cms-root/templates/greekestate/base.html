@@ -59,12 +59,12 @@
     </nav>
 </header>
 
-<div class="body" th:with="
+<div class="body">
+
+    <nav th:fragment="breadcrumb" class="breadcrumb" th:with="
     c = ${argo.contentElementUtility},
     p = ${argo.pagePropertiesUtility}
 ">
-
-    <nav th:fragment="breadcrumb" class="breadcrumb">
         <div class="wrapper">
             <div class="breadcrumbPath">
                 <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
