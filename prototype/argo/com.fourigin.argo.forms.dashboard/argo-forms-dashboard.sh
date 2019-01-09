@@ -1,8 +1,8 @@
 #!/bin/bash
-APPName="argo-forms-dashboard"
+APPName="forms-dashboard"
 APPVersion="1.0-SNAPSHOT"
 JARFile="$APPName-$APPVersion.jar"
-PIDFile="dashboard.pid"
+PIDFile="$APPName.pid"
 SPRING_OPTS="-DLOG_FILE=$APPName.log -Xms16M -Xmx256M"
 
 function check_if_pid_file_exists {

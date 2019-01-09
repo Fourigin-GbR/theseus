@@ -44,7 +44,7 @@ import java.util.Set;
 @ComponentScan("com.fourigin.argo.forms.config")
 public class NettyServer {
 
-    private static final String APP_NAME = "argo-forms";
+    private static final String APP_NAME = "forms";
 
     private int port;
 

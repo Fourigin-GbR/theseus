@@ -395,9 +395,9 @@ project(':argo') {
 
         version = argoVersion
 
-        archivesBaseName = 'argo-forms'
+        archivesBaseName = 'forms'
         jar {
-            baseName = "argo-forms"
+            baseName = "forms"
         }
 
         dependencies {
@@ -429,9 +429,9 @@ project(':argo') {
 
         version = argoVersion
 
-        archivesBaseName = 'argo-forms-dashboard'
+        archivesBaseName = 'forms-dashboard'
         jar {
-            baseName = "argo-forms-dashboard"
+            baseName = "forms-dashboard"
         }
 
         dependencies {

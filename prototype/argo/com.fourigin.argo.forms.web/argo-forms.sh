@@ -1,5 +1,5 @@
 #!/bin/bash
-APPName="argo-forms"
+APPName="forms"
 APPVersion="1.0-SNAPSHOT"
 JARFile="$APPName-$APPVersion.jar"
 PIDFile="$APPName.pid"
