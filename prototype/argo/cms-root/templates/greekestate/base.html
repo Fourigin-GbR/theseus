@@ -21,8 +21,12 @@
 
 </a>
 
-<header th:fragment="header">
-    <a class="logo" target="_top" th:href="'http://argo.greekestate.fourigin.com/cms/view/?base=DE&path=/home'" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
+<header th:fragment="header" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
+    <!--<a class="logo" target="_top" th:href="'http://argo.greekestate.fourigin.com/cms/view/?base=DE&path=/home'" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>-->
+    <a class="logo" target="_top" th:href="${p.getPath('/home')}" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
     <div class="meta">
         <div class="contacts">
             <div class="telephone">
@@ -30,6 +34,15 @@
                 <span>302741024622</span>
             </div>
             <div class="languages">
+                <span th:utext="|&lt;!--
+                    [ base: ${argo.base} ],
+                    [ path: ${argo.path} ],
+                    [ current scope link: ${p.getPath(argo.path)} ],
+                    [ link (DE): ${p.getPath(argo.path, 'DE')} ],
+                    [ link (RU): ${p.getPath(argo.path, 'RU')} ],
+                    [ link (EN): ${p.getPath(argo.path, 'EN')} ]
+                --&gt;|"></span>
+
                 <select>
                     <option>deutsch</option>
                     <option>english</option>
@@ -39,20 +52,17 @@
         </div>
     </div>
     <nav th:with="
-    c = ${argo.contentElementUtility},
-    p = ${argo.pagePropertiesUtility}
-">
+        c = ${argo.contentElementUtility},
+        p = ${argo.pagePropertiesUtility}
+    ">
         <ul>
             <li th:with="ref = ${c.getElement('@top-level-navigation:/about')}">
-                <!--<a th:replace="this :: simpleLink('?base=DE&path=/about', 'Über uns')" href="#">Über uns</a>-->
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="#">Über uns</a>
             </li>
             <li th:with="ref = ${c.getElement('@top-level-navigation:/regions')}">
-                <!--<a th:replace="this :: simpleLink('?base=DE&path=/regions/index', 'Griechische Regionen')" href="#">Griechische Regionen</a>-->
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/regions')}" href="#">Griechische Regionen</a>
             </li>
             <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
-                <!--<a th:replace="this :: simpleLink('?base=DE&path=/contact', 'Kontakt')" href="#">Kontakt</a>-->
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
             </li>
         </ul>
@@ -62,9 +72,9 @@
 <div class="body">
 
     <nav th:fragment="breadcrumb" class="breadcrumb" th:with="
-    c = ${argo.contentElementUtility},
-    p = ${argo.pagePropertiesUtility}
-">
+        c = ${argo.contentElementUtility},
+        p = ${argo.pagePropertiesUtility}
+    ">
         <div class="wrapper">
             <div class="breadcrumbPath">
                 <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
@@ -96,9 +106,7 @@
 
     <article th:fragment="article-h1-block()">
         <h1 th:utext="${c.getContent('/headline')}">#headline</h1>
-        <p  th:utext="${c.getContent('/body')}">
-            #body
-        </p>
+        <p  th:utext="${c.getContent('/body')}">#body</p>
     </article>
 
 
@@ -121,9 +129,7 @@
 
     <article th:fragment="article-headline-body(headline, body)">
         <h1 th:text="${headline}">#headline</h1>
-        <p  th:utext="${body}">
-            #body
-        </p>
+        <p  th:utext="${body}">#body</p>
     </article>
 
     <article>

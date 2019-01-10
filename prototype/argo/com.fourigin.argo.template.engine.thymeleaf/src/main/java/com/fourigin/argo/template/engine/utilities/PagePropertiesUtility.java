@@ -25,15 +25,19 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
     private final Logger logger = LoggerFactory.getLogger(PagePropertiesUtility.class);
 
     public String getPath(String nodePath){
+        return getPath(nodePath, compilerBase);
+    }
+
+    public String getPath(String nodePath, String externalCompilerBase){
         String baseUrlAttributeName = BASE_URL_PREFIX + processingMode.name();
         if (logger.isDebugEnabled()) logger.debug("Searching for site-attribute '{}'.", baseUrlAttributeName);
 
         String baseUrl = siteAttributes.get(baseUrlAttributeName);
         if (logger.isDebugEnabled()) logger.debug("Value of site-attribute '{}': '{}'.", baseUrlAttributeName, baseUrl);
 
-        String linkPath = internalLinkResolutionStrategy.resolveLink(nodePath, compilerBase);
+        String linkPath = internalLinkResolutionStrategy.resolveLink(nodePath, externalCompilerBase);
 
-        return propertiesReplacement.process(baseUrl + linkPath, "base", compilerBase);
+        return propertiesReplacement.process(baseUrl + linkPath, "base", externalCompilerBase);
     }
 
     // *** getters / setters ***
