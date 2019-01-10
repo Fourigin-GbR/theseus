@@ -230,21 +230,21 @@ public class JsoupParser {
             } else if (enHeader.startsWith("Villa")) {
                 details.setProperty("type", "villa");
             } else if (enHeader.startsWith("Detached House")) {
-                details.setProperty("type", "detached house");
+                details.setProperty("type", "detached-house");
             } else if (enHeader.startsWith("Office")) {
                 details.setProperty("type", "office");
             } else if (enHeader.startsWith("Farm parcel")) {
-                details.setProperty("type", "farm parcel");
+                details.setProperty("type", "farm-parcel");
             } else if (enHeader.startsWith("Store")) {
                 details.setProperty("type", "store");
             } else if (enHeader.startsWith("Business building")) {
-                details.setProperty("type", "business building");
+                details.setProperty("type", "business-building");
             } else if (enHeader.startsWith("Various Other Property")) {
-                details.setProperty("type", "various other property");
+                details.setProperty("type", "various-other-property");
             } else if (enHeader.startsWith("Parking")) {
                 details.setProperty("type", "parking");
             } else if (enHeader.startsWith("Other Land property")) {
-                details.setProperty("type", "other land property");
+                details.setProperty("type", "other-land-property");
             } else if (enHeader.startsWith("Maisonette")) {
                 details.setProperty("type", "maisonette");
             } else {
@@ -462,12 +462,22 @@ public class JsoupParser {
                     properties.put("price", value);
                 }
             }
+            {
+                String value = properties.get("type");
+                if (value != null) {
+                    value = value.replaceAll("\\ ", "-");
+                    value = value.trim();
+                    properties.put("type", value);
+                }
+            }
 
             object.setProperties(properties);
 
             fixLocalizedText(object.getHeadline());
             fixLocalizedText(object.getShortDescription());
             fixLocalizedText(object.getLongDescription());
+
+            fixHeadline(object.getHeadline());
 
             System.out.print('.');
 
@@ -779,12 +789,12 @@ public class JsoupParser {
         }
     }
 
-    private static void fixLocalizedText(LocalizedText description){
-        if(description == null){
+    private static void fixLocalizedText(LocalizedText text){
+        if(text == null){
             return;
         }
 
-        Map<String, String> values = description.getValues();
+        Map<String, String> values = text.getValues();
         if (values == null) {
             return;
         }
@@ -828,6 +838,56 @@ public class JsoupParser {
 
             String result = value.replaceAll("\n", "");
             result = result.replaceAll("sq m", "m<sup>2</sup>");
+
+            values.put("en", result);
+        }
+    }
+
+    private static void fixHeadline(LocalizedText headline){
+        if(headline == null){
+            return;
+        }
+
+        Map<String, String> values = headline.getValues();
+        if (values == null) {
+            return;
+        }
+
+        {
+            String value = values.get("de");
+            if (value == null) {
+                return;
+            }
+
+            String result = value.replaceAll(" zu verkaufen ", " in ");
+            result = result.replaceAll(" zu vermieten ", " in ");
+            result = result.trim();
+
+            values.put("de", result);
+        }
+
+        {
+            String value = values.get("ru");
+            if (value == null) {
+                return;
+            }
+
+            String result = value.replaceAll(" Продажа ", " в ");
+            result = result.replaceAll(" Аренда ", " в ");
+            result = result.trim();
+
+            values.put("ru", result);
+        }
+
+        {
+            String value = values.get("en");
+            if (value == null) {
+                return;
+            }
+
+            String result = value.replaceAll(" for sale ", " in ");
+            result = result.replaceAll(" to rent ", " in ");
+            result = result.trim();
 
             values.put("en", result);
         }
