@@ -24,14 +24,18 @@
 
 </header>
 
-<div class="body">
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    f = ${argo.formatterUtility},
+    p = ${argo.pagePropertiesUtility}
+">
 
     <nav class="breadcrumb" th:insert="greekestate/base :: breadcrumb">
 
     </nav>
 
     <article>
-        <h1>Immobilie kaufen</h1>
+        <h1 th:text="${c.getContent('/headline')}">Immobilie kaufen</h1>
     </article>
     <!--
     <article class="linksImageTeaser">
@@ -69,72 +73,93 @@
     -->
 
     <article class="search">
-        <h2>Suchen</h2>
+        <h2 th:text="${c.getContent('@common-content:common/general-headlines/search')}">Suchen</h2>
         <div class="searchFilter">
             <form id="searchObjects">
                 <div class="region">
-                    <h3>Suche in der Region</h3>
+                    <h3 th:text="${c.getContent('@common-content:common/general-headlines/search-in-region')}">Suche in der Region</h3>
                     <select name="region">
                         <option value="loutraki">Loutraki</option>
-                        <option value="assos">assos</option>
-                        <option value="patisia">patisia</option>
-                        <option value="lechaio">lechaio</option>
-                        <option value="kalamia">kalamia</option>
-                        <option value="center">center</option>
-                        <option value="korinthos">korinthos</option>
-                        <option value="sikiona">sikiona</option>
-                        <option value="limni vouliagmenis">limni vouliagmenis</option>
-                        <option value="soligeia">soligeia</option>
-                        <option value="nea penteli">nea penteli</option>
-                        <option value="glika nera">glika nera</option>
-                        <option value="marousi">marousi</option>
-                        <option value="velo">velo</option>
-                        <option value="xilokastro">xilokastro</option>
-                        <option value="vocha">vocha</option>
-                        <option value="poseidonia">poseidonia</option>
-                        <option value="agia paraskevi">agia paraskevi</option>
-                        <option value="agioi theodoroi">agioi theodoroi</option>
-                        <option value="xilokeriza">xilokeriza</option>
-                        <option value="voula">voula</option>
-                        <option value="saronikos">saronikos</option>
-                        <option value="evrostini">evrostini</option>
-                        <option value="kato almiri">kato almiri</option>
-                        <option value="batharistra">batharistra</option>
-                        <option value="archaio limani">archaio limani</option>
-                        <option value="akadimia">akadimia</option>
-                        <option value="agios georgios">agios georgios</option>
+
+                        <option value="agia paraskevi">Agia Paraskevi</option>
+                        <option value="agioi theodoroi">Agioi Theodoroi</option>
+                        <option value="agios georgios">Agios Georgios</option>
+                        <option value="akadimia">Akadimia</option>
+                        <option value="archaio limani">Archaio Limani</option>
+                        <option value="assos">Assos</option>
+
+                        <option value="batharistra">Batharistra</option>
+
+                        <option value="center">Center</option>
+
+                        <option value="evrostini">Evrostini</option>
+
+                        <option value="glika nera">Glika nera</option>
+
+                        <option value="kalamia">Kalamia</option>
+                        <option value="kato almiri">Kato Almiri</option>
+                        <option value="korinthos">Korinthos</option>
+
+                        <option value="lechaio">Lechaio</option>
+                        <option value="limni vouliagmenis">Limni Vouliagmenis</option>
+
+                        <option value="marousi">Marousi</option>
+
+                        <option value="nea penteli">Nea Penteli</option>
+
+                        <option value="patisia">Patisia</option>
+                        <option value="poseidonia">Poseidonia</option>
+
+                        <option value="saronikos">Saronikos</option>
+                        <option value="sikiona">Sikiona</option>
+                        <option value="soligeia">Soligeia</option>
+
+                        <option value="velo">Velo</option>
+                        <option value="vocha">Vocha</option>
+                        <option value="voula">Voula</option>
+
+                        <option value="xilokastro">Xilokastro</option>
+                        <option value="xilokeriza">Xilokeriza</option>
                     </select>
                 </div>
 
                 <div class="filterCategory">
-                    <h3>Typ des Objekts</h3>
+                    <h3 th:text="${c.getContent('@common-content:common/general-headlines/object-type')}">Typ des Objekts</h3>
                     <fieldset>
-                        <label><input type="checkbox" name="type" value="apartment"><span>Wohnung</span></label>
-                        <label><input type="checkbox" name="type" value="land-plot"><span>#land-plot</span></label>
-                        <label><input type="checkbox" name="type" value="building"><span>#building</span></label>
-                        <label><input type="checkbox" name="type" value="hotel"><span>#hotel</span></label>
-                        <label><input type="checkbox" name="type" value="villa"><span>#villa</span></label>
-                        <label><input type="checkbox" name="type" value="detached house"><span>#detached house</span></label>
-                        <label><input type="checkbox" name="type" value="office"><span>#office</span></label>
-                        <label><input type="checkbox" name="type" value="farm parcel"><span>#farm parcel</span></label>
-                        <label><input type="checkbox" name="type" value="store"><span>#store</span></label>
-                        <label><input type="checkbox" name="type" value="business building"><span>#business building</span></label>
-                        <label><input type="checkbox" name="type" value="various other property"><span>#various other property</span></label>
-                        <label><input type="checkbox" name="type" value="parking"><span>#parking</span></label>
-                        <label><input type="checkbox" name="type" value="other land property"><span>#other land property</span></label>
-                        <label><input type="checkbox" name="type" value="maisonette"><span>#maisonette</span></label>
+                        <label th:each="validType : ${c.getElement('/valid-object-types').elements}" th:with="typeValue = ${validType.content}"><input type="checkbox" name="type" value="apartment" th:value="${typeValue}"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + typeValue)}">Wohnung</span></label>
                     </fieldset>
+                    <!--<fieldset>-->
+                        <!--<label><input type="checkbox" name="type" value="apartment"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:apartment')}">#apartment</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="maisonette"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:maisonette')}">#maisonette</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="detached-house"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:detached-house')}">#detached house</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="villa"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:villa')}">#villa</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="building"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:building')}">#building</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="hotel"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:hotel')}">#hotel</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="office"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:office')}">#office</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="parking"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:parking')}">#parking</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="store"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:store')}">#store</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="business-building"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:business-building')}">#business building</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="various-other-property"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:various-other-property')}">#various other property</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="land-plot"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:land-plot')}">#land-plot</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="farm-parcel"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:farm-parcel')}">#farm parcel</span></label>-->
+                        <!--<label><input type="checkbox" name="type" value="other-land-property"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:other-land-property')}">#other land property</span></label>-->
+                    <!--</fieldset>-->
                 </div>
             </form>
         </div>
     </article>
 
-    <article class="searchResults" th:with="objects = ${argo.contentElementUtility.getElement('@site-structure:/')}">
+    <article class="searchResults" th:with="objects = ${c.getElement('@site-structure:/')}">
         <div class="legend">
-            <div class="resultAmount">
+            <div class="resultAmount" th:with="
+                pattern = ${c.getContent('@common-content:common/general-headlines/matching-objects-found')},
+                value = '<span class=\'amount\' data-content=\'result-amount\'>__${objects.elements.size()}__</span>',
+                formatted = ${f.formatString(pattern, value)}
+            ">
                 <i class="fa fa-list-ol" aria-hidden="true"></i>
-                <span class="amount" data-content="result-amount" th:text="${objects.elements.size()}">73</span>
-                <span>Immobilien gefunden.</span>
+                <!--<span class="amount" data-content="result-amount" th:text="${objects.elements.size()}"></span>-->
+                <!--<span th:text="${c.getContent('@common-content:common/general-headlines/matching-objects-found')}">Immobilien gefunden.</span>-->
+                <span th:utext="${formatted}">Immobilien gefunden.</span>
             </div>
             <!--
             <div class="sorting">
@@ -162,14 +187,14 @@
         <ul class="smallItemGalleryList">
             <li class="hidden" th:each="link : ${objects.elements}"
                 th:with="
-                    properties = ${argo.contentElementUtility.getElement(link, '/properties')},
-                    description = ${argo.contentElementUtility.getElement(link, '/headline')},
-                    images = ${argo.contentElementUtility.getElement(link, '/images')},
-                    type = ${argo.contentElementUtility.getElement(properties, '/type')},
-                    price = ${argo.contentElementUtility.getElement(properties, '/price')},
-                    href = ${argo.pagePropertiesUtility.getPath(link.target)}
+                    properties = ${c.getElement(link, '/properties')},
+                    images = ${c.getElement(link, '/images')},
+                    type = ${c.getElement(properties, '/type')},
+                    code = ${c.getElement(properties, '/code')},
+                    price = ${c.getElement(properties, '/price')},
+                    href = ${p.getPath(link.target)}
             " data-object-id="1234" th:attr="data-object-id=${link.name}">
-                <span th:text="${link.name}"/>
+                <span th:text="${code.content}">#code</span>
                 <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
                 <div class="image">
                     <div class="slider">
@@ -190,14 +215,12 @@
                     </div>
                 </div>
                 <div class="description">
-                    <div class="category" th:text="${type.content}">Gewerbe</div>
-                    <h3><a th:href="${href}" href="details.html" th:text="${description.getContextSpecificContent('de', true)}">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <div class="category" th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + type.content)}">Gewerbe</div>
+                    <h3><a th:href="${href}" href="details.html" th:text="${c.getContent(link, '/headline')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
-                    <span class="price" th:text="${price.content}">
-                        500.500 €
-                    </span>
-                    <a th:href="${href}" href="details.html" class="cta">Zum Angebot</a>
+                    <span class="price" th:text="${f.formatPrice(price.content)}">500.500 €</span>
+                    <a th:href="${href}" href="details.html" class="cta" th:text="${c.getContent('@common-content:common/links-and-ctas/go-to-offer')}">Zum Angebot</a>
                 </div>
             </li>
         </ul>
