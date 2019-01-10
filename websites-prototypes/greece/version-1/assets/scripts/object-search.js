@@ -7,7 +7,7 @@ var objectSearch = function() {
     objectSearch.prototype.getMatchingObjectsRequest = function() {
         var self = this,
             requestData = {
-                "index": "objects-to-sale",
+                "index": self.jForm.attr("data-form-index"),
                 "categories": {
                     "region": []
                 }
@@ -15,7 +15,8 @@ var objectSearch = function() {
 
         self.showLoadingBox();
 
-        var formularData = self.jForm.serializeArray();
+        var formularData = self.jForm.serializeArray(),
+            formAction = self.jForm.attr("action");
         for(var i=0, il= formularData.length; i<il; i++) {
             if(formularData[i].name === "region"){
                 requestData.categories.region.push(formularData[i].value);
@@ -35,7 +36,7 @@ var objectSearch = function() {
             contentType: "application/json; charset=utf-8",
             method: "post",
             processData: false,
-            url: "http://argo.greekestate.fourigin.com/cms/search/?base=DE&path=objects/sale/search",
+            url: formAction,
             data: JSON.stringify(requestData), //self.jForm.serialize(),
             success: function(data){
                 self.hideLoadingBox();

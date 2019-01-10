@@ -74,8 +74,11 @@
 
     <article class="search">
         <h2 th:text="${c.getContent('@common-content:common/general-headlines/search')}">Suchen</h2>
-        <div class="searchFilter">
-            <form id="searchObjects">
+        <div class="searchFilter" th:with="p = ${argo.pagePropertiesUtility}">
+            <form
+                    th:action="'http://argo.greekestate.fourigin.com/cms/search/?base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"
+                    th:data-form-index="${argo.path} == '/objects/sale/search' ? 'objects-to-sale' : 'objects-to-rent'"
+            >
                 <div class="region">
                     <h3 th:text="${c.getContent('@common-content:common/general-headlines/search-in-region')}">Suche in der Region</h3>
                     <select name="region">
