@@ -74,10 +74,27 @@ Slider.prototype.slideToPage = function(page) {
     //
     this.slideHandler[0].style.left = newLeftPosition + "%";
     this.setCurrentPage(page);
+    this.loadSlideImageIfNotActivated();
     //
     this.updateVisibleStatusOfSlideButtons();
     this.setCurrentPageActiveInPagination();
 };
+//
+Slider.prototype.loadSlideImageIfNotActivated = function() {
+    // If the item has not yet the attribute 'src' on the img-tag, look for data-attribute 'data-image-src' and write it to the attribute 'src'
+    var currentPage = this.getCurrentPage(),
+        jCurrentSlide = jQuery(this.slideItems[currentPage-1]),
+        jCurrentSlideImage = jCurrentSlide.find("img");
+    //
+    if(0 === jCurrentSlideImage.length) {
+        return;
+    }
+
+    if(!jCurrentSlideImage[0].hasAttribute("src") && jCurrentSlideImage[0].hasAttribute("data-image-src")) {
+        jCurrentSlideImage.attr("src", jCurrentSlideImage.attr("data-image-src"));
+    }
+};
+//
 //
 Slider.prototype.getAndApplyAmountOfSlides = function () {
     var self = this;

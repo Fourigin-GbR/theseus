@@ -460,7 +460,8 @@ article.search form label {
     background-color: #fff;
     padding: 0 10px;
     border-radius: 2px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
     display: inline-block;
 }
 article.search form label input {
