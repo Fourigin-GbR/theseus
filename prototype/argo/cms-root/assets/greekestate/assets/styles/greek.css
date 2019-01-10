@@ -48,15 +48,22 @@ footer .content {
 
 header {
     z-index: 2;
+    height: 110px;
 }
 header .logo {
-    left: 60px;
-    top: 0;
-    position: absolute;
+    left: 2%;
+    bottom: 5px;
     height: 100px;
+    top: auto;
+    position: absolute;
 }
 header .logo img {
     height: 100%;
+}
+@media (max-width: 700px) {
+    header .logo {
+        height: 60px;
+    }
 }
 header .meta {
     display: flex;
@@ -92,7 +99,11 @@ header .telephone i {
 header nav {
     text-align: right;
 }
-
+@media (max-width: 460px) {
+    header nav {
+        display: none;
+    }
+}
 nav ul {
     list-style-type: none;
     margin: 30px 10px 5px 5px;
@@ -116,22 +127,29 @@ nav a {
 .body article {
     margin-top: 30px;
     margin-bottom: 20px;
-    padding: 0;
+    padding: 0 5px;
     box-sizing: border-box;
 }
 .body article:first-of-type {
     margin-top: 0;
 }
+.body article > h1 {
+    margin-top: 30px;
+}
 .body article.productStageSlider {
     margin: 0;
     max-width: none;
-    background-image: url("../images/griechenland-panorama-meer.jpg");
+    background-image: url("../images/stage/background-loutraki.jpg");
     background-repeat: no-repeat;
     background-position: top center;
     min-height: 200px;
     padding: 40px;
 }
-
+@media (max-width: 700px) {
+    .body article.productStageSlider {
+        padding: 0;
+    }
+}
 .body article.contextHighlights {
     background-color: #33669B;
     padding: 20px;
@@ -202,19 +220,23 @@ nav a {
 .body article.productDetails .content {
     overflow: hidden;
     position: relative;
+    display: flex;
 }
 .body article.productDetails .productDetailsSlider {
-    width: 100%;
+    width: 60%;
     padding: 0;
 }
 .body article.productDetails .productDetailsSlider .detailSlide .image {
     position: relative;
+    overflow: hidden;
+    background-color: #ccc;
+    height: 460px;
 }
 .body article.productDetails .productDetailsSlider .detailSlide .image img {
-
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    width: auto;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
 }
 .body article.productDetails .productDetailsSlider .sliderSlideLeft:after,
 .body article.productDetails .productDetailsSlider .sliderSlideRight:after {
@@ -232,18 +254,8 @@ nav a {
     width: 40%;
     padding: 0 40px 40px 40px;
     box-sizing: border-box;
-    position: absolute;
-    bottom: 80px;
     background-color: rgba(255,255,255,.8);
     border-radius: 0 0 30px 0;
-    transform: translateY(0);
-    right: 5%;
-    transition: opacity .8s ease-in, transform 1s ease;
-    transition-delay: .4s;
-}
-.body article.productDetails .productDetailsSlider:hover ~ .description {
-    opacity: .1;
-    transform: translateY(80%);
 }
 .body article.productDetails .description .highlights {
     color: #33669B;
@@ -272,6 +284,9 @@ nav a {
     margin: 0;
     font-size: 36px;
     font-weight: 500;
+}
+.body h1 {
+    clear: both;
 }
 .body h2 {
     font-size: 29px;
@@ -302,6 +317,11 @@ nav a {
 .slider.heroStageOffers,
 .slider.heroStageImages {
     padding: 0 40px;
+}
+@media (max-width: 600px) {
+    .slider.heroStageOffers {
+        padding: 0;
+    }
 }
 .slider.heroStageOffers .sliderSlideLeft::after,
 .slider.heroStageImages .sliderSlideLeft::after,
@@ -337,6 +357,14 @@ nav a {
     font-size: 24px;
     font-weight: bold;
     line-height: 1;
+}
+@media (max-width: 700px){
+    .slider.heroStageOffers li .heroStageOffer .teaser {
+        display: block;
+        position: relative;
+        bottom: 0;
+        right: 0;
+    }
 }
 .slider.heroStageOffers li .heroStageOffer h2 {
     font-size: 30px;
@@ -415,6 +443,8 @@ article.search form label {
     background-color: #fff;
     padding: 0 10px;
     border-radius: 2px;
+    margin-bottom: 5px;
+    display: inline-block;
 }
 article.search form label input {
     display: none;
@@ -430,9 +460,6 @@ article.search form label input ~ span:before {
 }
 article.search form label input:checked ~ span:before {
     content: "\f14a";
-}
-article.search form label {
-    margin-left: 20px;
 }
 article.search form label:first-of-type {
     margin-left: 0;
@@ -504,7 +531,31 @@ article.searchResults .legend span.amount {
 article.searchResults .legend span {
     font-size: 14px;
 }
+article.searchResults .overlay,
+article.searchResults .box {
+    text-align: center;
+    display: none;
+}
+article.searchResults .overlay.active,
+article.searchResults .box.active {
+    display: block;
+}
+article.searchResults .overlay i,
+article.searchResults .box i {
+    font-size: 30px;
+    color: #33669B;
+}
 
+article.searchResults .box {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height .7s ease;
+}
+article.searchResults .box.active {
+    display: block;
+    height: 100px;
+}
 
 article .linksImageTeaserWrapper {
     display: flex;
@@ -619,15 +670,26 @@ ul.smallItemGalleryList {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 ul.smallItemGalleryList li {
     width: calc(36% - 55px);
-    margin-right: 30px;
     margin-bottom: 40px;
 }
-ul.smallItemGalleryList li:nth-of-type(3n) {
-    margin-right: 0;
+@media (max-width: 700px) {
+    ul.smallItemGalleryList li {
+        width: 49%;
+    }
 }
+@media (max-width: 460px) {
+    ul.smallItemGalleryList li {
+        width: 90%;
+    }
+}
+ul.smallItemGalleryList li.hidden {
+    display: none;
+}
+
 ul.smallItemGalleryList li .slider {
     padding: 0;
 }
@@ -641,12 +703,15 @@ ul.smallItemGalleryList li .category {
     color: #414040;
 }
 ul.smallItemGalleryList li .image {
-    border-radius: 0 0 10px 0;
     overflow: hidden;
+    background-color: #ccc;
+    height: 230px;
 }
 ul.smallItemGalleryList li img {
-    width: 100%;
+    width: auto;
+    height: 100%;
     display: block;
+    margin: 0 auto;
 }
 ul.smallItemGalleryList li .price {
     font-weight: bold;
@@ -660,4 +725,11 @@ ul.smallItemGalleryList li h3 a {
 }
 ul.smallItemGalleryList li h3:hover a {
     text-decoration: underline;
+}
+
+/**
+Sorry, richtig platzieren bitte ...
+ */
+div.filterCategory label {
+    margin-right: 5px;
 }

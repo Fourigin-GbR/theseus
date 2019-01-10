@@ -3,7 +3,7 @@
 }
 .body::before {
     content: "";
-    background-image: url("../images/griechenland-panorama-meer.jpg");
+    background-image: url("../images/stage/IMG_5233.jpg");
     background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;
@@ -134,7 +134,7 @@ nav.breadcrumb .contextHighlights form input[type=submit] {
 
 
 .ctaHighlightWrapper {
-    float: left;
+    display: flex;
     margin-top: 20px;
 }
 .ctaHighlight {
