@@ -84,14 +84,19 @@ Slider.prototype.loadSlideImageIfNotActivated = function() {
     // If the item has not yet the attribute 'src' on the img-tag, look for data-attribute 'data-image-src' and write it to the attribute 'src'
     var currentPage = this.getCurrentPage(),
         jCurrentSlide = jQuery(this.slideItems[currentPage-1]),
-        jCurrentSlideImage = jCurrentSlide.find("img");
+        jCurrentSlideImage = jCurrentSlide.find("img"),
+        jLoader = jCurrentSlide.find(".loader");
     //
     if(0 === jCurrentSlideImage.length) {
         return;
     }
 
     if(!jCurrentSlideImage[0].hasAttribute("src") && jCurrentSlideImage[0].hasAttribute("data-image-src")) {
+        jLoader.addClass("active");
         jCurrentSlideImage.attr("src", jCurrentSlideImage.attr("data-image-src"));
+        jCurrentSlideImage.on("load", function() {
+            jLoader.removeClass("active");
+        });
     }
 };
 //

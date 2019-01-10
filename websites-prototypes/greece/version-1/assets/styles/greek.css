@@ -679,10 +679,21 @@ ul.imageArticleList li .copy {
     padding: 0 0 0 40px;
 }
 
-ul.imageArticleList li .slider.imageSlider .detailSlide .image {
-    width: 100%;
+.slider li .image {
+    position: relative;
 }
-
+.slider li .loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 18px;
+    color: #fff;
+    transform: translateX(-50%) translateY(-50%);
+    display: none;
+}
+.slider li .loader.active {
+    display: block;
+}
 
 ul.smallItemGalleryList {
     list-style-type: none;
