@@ -85,7 +85,8 @@ Slider.prototype.loadSlideImageIfNotActivated = function() {
     var currentPage = this.getCurrentPage(),
         jCurrentSlide = jQuery(this.slideItems[currentPage-1]),
         jCurrentSlideImage = jCurrentSlide.find("img"),
-        jLoader = jCurrentSlide.find(".loader");
+        jLoader = jCurrentSlide.find(".loader"),
+        jError = jCurrentSlide.find(".error");
     //
     if(0 === jCurrentSlideImage.length) {
         return;
@@ -96,6 +97,10 @@ Slider.prototype.loadSlideImageIfNotActivated = function() {
         jCurrentSlideImage.attr("src", jCurrentSlideImage.attr("data-image-src"));
         jCurrentSlideImage.on("load", function() {
             jLoader.removeClass("active");
+        });
+        jCurrentSlideImage.on("error", function() {
+            jLoader.removeClass("active");
+            jError.addClass("active");
         });
     }
 };

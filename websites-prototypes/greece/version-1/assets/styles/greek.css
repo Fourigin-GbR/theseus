@@ -682,7 +682,8 @@ ul.imageArticleList li .copy {
 .slider li .image {
     position: relative;
 }
-.slider li .loader {
+.slider li .loader,
+.slider li .error {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -691,7 +692,8 @@ ul.imageArticleList li .copy {
     transform: translateX(-50%) translateY(-50%);
     display: none;
 }
-.slider li .loader.active {
+.slider li .loader.active,
+.slider li .error.active {
     display: block;
 }
 
