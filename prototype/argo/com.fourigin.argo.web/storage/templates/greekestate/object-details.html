@@ -51,7 +51,10 @@
     </article>
     <article class="productDetails">
         <div class="content">
-            <div class="slider productDetailsSlider">
+            <div th:if="${images.elements.size() == 0}" class="noImagesInformation">
+                <i class="fa fa-building" aria-hidden="true"></i>
+            </div>
+            <div th:unless="${images.elements.size() == 0}" class="slider productDetailsSlider">
                 <input class="sliderPageStorage" value="1" type="hidden">
                 <span th:utext="|&lt;!-- ${images} --&gt;|"></span>
                 <div class="sliderWrapper">

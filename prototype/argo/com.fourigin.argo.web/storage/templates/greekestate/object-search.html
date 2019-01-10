@@ -197,7 +197,10 @@
                 <span th:text="${code.content}">#code</span>
                 <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
                 <div class="image">
-                    <div class="slider">
+                    <div th:if="${images.elements.size() == 0}" class="noImagesInformation">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </div>
+                    <div th:unless="${images.elements.size() == 0}" class="slider">
                         <input class="sliderPageStorage" value="1" type="hidden">
                         <div class="sliderWrapper">
                             <ul>
