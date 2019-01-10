@@ -94,7 +94,7 @@
                     region = ${c.getContent(properties, 'region')}
                 ">
                     <li><span th:text="${c.getContent('@common-content:common/properties/code')}">Code</span>: #<span th:text="${code}">3546</span></li>
-                    <li><span th:text="${c.getContent('@common-content:common/properties/type')}">Type</span>: <span th:utext="${c.getOptionalContent('@common-content:common/properties/type:' + type, type)}">3546</span></li>
+                    <li><span th:text="${c.getContent('@common-content:common/properties/type')}">Type</span>: <span th:utext="${c.getOptionalContent('@common-content:common/general-headlines/object-type:' + type, type)}">3546</span></li>
                     <li><span th:text="${c.getContent('@common-content:common/properties/area')}">Area</span>: <span th:utext="${f.formatNumber(area, ' m<sup>2</sup>')}">3546</span></li>
                     <li><span th:text="${c.getContent('@common-content:common/properties/region')}">Region</span>: <span th:utext="${region}">3546</span></li>
                     <!--<li th:each="property : ${properties.elements}">-->

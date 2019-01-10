@@ -21,13 +21,16 @@
 <header th:replace="greekestate/base :: header">
 
 </header>
-<div class="body">
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
 
     <nav th:replace="greekestate/base :: breadcrumb">
 
     </nav>
 
-    <article th:replace="greekestate/base :: article-headline-body(${argo.contentElementUtility.getContent('/headline')}, ${argo.contentElementUtility.getContent('/body')})">
+    <article th:replace="greekestate/base :: article-headline-body(${c.getContent('/headline')}, ${c.getContent('/body')})">
 
     </article>
 </div>
