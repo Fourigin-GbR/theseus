@@ -1,9 +1,9 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:with="c = ${argo.contentElementUtility}">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greece</title>
+    <title th:text="${c.getPageTitle()}">Greece</title>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
@@ -143,7 +143,12 @@
         </div>
     </article>
 
-    <article class="searchResults" th:with="objects = ${c.getElement('@site-structure:/')}">
+    <article class="searchResults" th:with="
+        c = ${argo.contentElementUtility},
+        f = ${argo.formatterUtility},
+        p = ${argo.pagePropertiesUtility},
+        objects = ${c.getElement('@site-structure:/')}
+    ">
         <div class="legend">
             <div class="resultAmount" th:with="
                 pattern = ${c.getContent('@common-content:common/general-headlines/matching-objects-found')},
@@ -151,8 +156,6 @@
                 formatted = ${f.formatString(pattern, value)}
             ">
                 <i class="fa fa-list-ol" aria-hidden="true"></i>
-                <!--<span class="amount" data-content="result-amount" th:text="${objects.elements.size()}"></span>-->
-                <!--<span th:text="${c.getContent('@common-content:common/general-headlines/matching-objects-found')}">Immobilien gefunden.</span>-->
                 <span th:utext="${formatted}">Immobilien gefunden.</span>
             </div>
             <!--
@@ -179,7 +182,7 @@
 
 
         <ul class="smallItemGalleryList">
-            <li class="hidden" th:each="link : ${objects.elements}"
+            <li class="hidden" th:each="link : ${objects.elements}" data-object-id="1234" th:attr="data-object-id=${link.name}"
                 th:with="
                     properties = ${c.getElement(link, '/properties')},
                     images = ${c.getElement(link, '/images')},
@@ -187,7 +190,7 @@
                     code = ${c.getElement(properties, '/code')},
                     price = ${c.getElement(properties, '/price')},
                     href = ${p.getPath(link.target)}
-            " data-object-id="1234" th:attr="data-object-id=${link.name}">
+            ">
                 <span th:text="${code.content}">#code</span>
                 <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
                 <div class="image">

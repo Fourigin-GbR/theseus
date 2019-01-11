@@ -1,9 +1,9 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:with="c = ${argo.contentElementUtility}">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greece</title>
+    <title th:text="${c.getPageTitle()}">Greece</title>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
@@ -22,13 +22,17 @@
 <header th:replace="greekestate/base :: header">
 
 </header>
-<div class="body">
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+">
 
     <nav th:replace="greekestate/base :: breadcrumb">
 
     </nav>
 
-    <article th:replace="greekestate/base :: article-headline-body(${argo.contentElementUtility.getContent('/headline')}, ${argo.contentElementUtility.getContent('/body')})">
+    <article th:replace="greekestate/base :: article-headline-body(${c.getContent('/headline')}, ${c.getContent('/body')})">
 
     </article>
 </div>
