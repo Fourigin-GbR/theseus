@@ -27,13 +27,7 @@
 <div class="body" th:with="
     c = ${argo.contentElementUtility},
     p = ${argo.pagePropertiesUtility},
-    f = ${argo.formatterUtility},
-    images = ${c.getElement('/images')},
-    properties = ${c.getElement('/properties')},
-    longDescriptionContent = ${c.getContent('/long-description')},
-    geoPosition = ${c.getElement('/geo-position')},
-    latitude = ${c.getContent(geoPosition, 'latitude')},
-    longitude = ${c.getContent(geoPosition, 'longitude')},
+    f = ${argo.formatterUtility}
 ">
 
     <nav th:replace="greekestate/base :: breadcrumb">
