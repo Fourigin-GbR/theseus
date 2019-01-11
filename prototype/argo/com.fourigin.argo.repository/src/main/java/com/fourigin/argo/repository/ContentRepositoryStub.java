@@ -48,6 +48,11 @@ public class ContentRepositoryStub implements ContentRepository {
     }
 
     @Override
+    public TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> getDefaultTraversingStrategy() {
+        return defaultTraversingStrategy;
+    }
+
+    @Override
     public Map<String, String> resolveSiteAttributes() {
         return siteAttributes;
     }
@@ -108,7 +113,7 @@ public class ContentRepositoryStub implements ContentRepository {
     }
 
     @Override
-    public Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy) {
+    public Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy) {
         // TODO: implement me!
         return null;
     }

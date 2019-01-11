@@ -70,8 +70,12 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
 
     private PageInfoTraversingStrategy defaultTraversingStrategy;
 
+    @Override
+    public TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> getDefaultTraversingStrategy() {
+        return defaultTraversingStrategy;
+    }
 
-    //******* SITE methods *******//
+//******* SITE methods *******//
 
     @Override
     public Map<String, String> resolveSiteAttributes() {
@@ -176,7 +180,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
     }
 
     @Override
-    public Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy) {
+    public Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy) {
         Objects.requireNonNull(path, "Path must not be null!");
         Objects.requireNonNull(traversingStrategy, "Traversing strategy must not be null!");
 
@@ -187,7 +191,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
 
         if (pathPointer.isDirectory()) {
             SiteNodeContainerInfo dirInfo = (SiteNodeContainerInfo) pathPointer.getNodeInfo();
-            return traversingStrategy.collect(dirInfo);
+            return (Collection<SiteNodeInfo>) traversingStrategy.collect(dirInfo);
         }
 
         if (pathPointer.isPage()) {

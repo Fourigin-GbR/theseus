@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ContentResolver extends Flushable {
+    TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> getDefaultTraversingStrategy();
+
     Map<String, String> resolveSiteAttributes();
 
     <T extends SiteNodeInfo> T resolveInfo(Class<T> type, String path);
@@ -26,7 +28,7 @@ public interface ContentResolver extends Flushable {
     Collection<PageInfo> resolveInfos(String path, PageInfoTraversingStrategy traversingStrategy);
     Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path);
     Collection<PageInfo> resolveInfos(SiteNodeContainerInfo parent, String path, PageInfoTraversingStrategy traversingStrategy);
-    Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy);
+    Collection<SiteNodeInfo> resolveNodeInfos(String path, TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy);
 
     ContentPage retrieve(PageInfo info);
 
