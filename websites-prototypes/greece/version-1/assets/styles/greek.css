@@ -529,23 +529,28 @@ article.search form .imageList img {
 article.searchResults {
     margin-top: 0;
 }
+.pagesList .legend,
 article.searchResults .legend {
     margin-bottom: 10px;
     text-align: right;
     display: flex;
     justify-content: space-between;
 }
+.pagesList .legend label,
 article.searchResults .legend label {
     background-color: #fff;
     padding: 5px 10px;
 }
+.pagesList .legend i,
 article.searchResults .legend i {
     color: #33669B;
 }
+.pagesList .legend span.amount,
 article.searchResults .legend span.amount {
     font-weight: bold;
     margin-left: 5px;
 }
+.pagesList .legend span,
 article.searchResults .legend span {
     font-size: 14px;
 }
@@ -772,4 +777,39 @@ ul.smallItemGalleryList li h3 a {
 }
 ul.smallItemGalleryList li h3:hover a {
     text-decoration: underline;
+}
+
+
+/* Object search page */
+.pagesList .legend {
+    margin-bottom: 25px;
+}
+.pagesList ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.pagePreview {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+}
+.pagePreview__description {
+    display: flex;
+}
+.pagePreview__image {
+    width: 120px;
+    position: relative;
+}
+.pagePreview__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.pagePreview__information {
+    width: calc(100% - 120px);
+    padding-left: 20px;
+}
+.pagePreview__information h2 a {
+    text-decoration: none;
 }
