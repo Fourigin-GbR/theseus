@@ -107,10 +107,6 @@ public final class ContentPageManager {
                         .withName("")
                         .withElements(match.getContent())
                         .build();
-//                    group.setName("");
-//                    group.setTitle("");
-//                    group.setElements(match.getContent());
-//                    return group;
                 }
 
                 return resolve(path, match.getContent());
