@@ -17,6 +17,7 @@
             crossorigin="anonymous"></script>
     <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
     <script src="/assets/shared/greekestate/assets/scripts/object-search.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
 </head>
 <body>
 
@@ -74,11 +75,14 @@
 
     <article class="search">
         <h2 th:text="${c.getContent('@common-content:common/general-headlines/search')}">Suchen</h2>
-        <div class="searchFilter" th:with="p = ${argo.pagePropertiesUtility}">
+        <div class="searchFilter" th:with="
+            dataSourceId = ${c.getDataSourceIdentifier('site-structure')}
+        ">
             <form
                     th:action="'http://argo.greekestate.fourigin.com/cms/search/?base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"
-                    th:data-form-index="${argo.path} == '/objects/sale/search' ? 'objects-to-sale' : 'objects-to-rent'"
+                    th:data-form-index="${dataSourceId.index.name}"
             >
+                <!--th:data-form-index="${argo.path} == '/objects/sale/search' ? 'objects-to-sale' : 'objects-to-rent'"-->
                 <div class="region">
                     <h3 th:text="${c.getContent('@common-content:common/general-headlines/search-in-region')}">Suche in der Region</h3>
                     <select name="region">

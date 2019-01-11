@@ -43,10 +43,10 @@
                     [ link (EN): ${p.getPath(argo.path, 'EN')} ]
                 --&gt;|"></span>
 
-                <select>
-                    <option>deutsch</option>
-                    <option>english</option>
-                    <option>русский</option>
+                <select name="siteLanguageSwitch" id="siteLanguageSwitch">
+                    <option th:selected="${p.getPath(argo.path)} == ${p.getPath(argo.path, 'DE')} ? 'selected' : 'false'" th:value="${p.getPath(argo.path, 'DE')}" value="#">deutsch</option>
+                    <option th:selected="${p.getPath(argo.path)} == ${p.getPath(argo.path, 'EN')} ? 'selected' : 'false'" th:value="${p.getPath(argo.path, 'EN')}" value="#">english</option>
+                    <option th:selected="${p.getPath(argo.path)} == ${p.getPath(argo.path, 'RU')} ? 'selected' : 'false'" th:value="${p.getPath(argo.path, 'RU')}" value="#">русский</option>
                 </select>
             </div>
         </div>
