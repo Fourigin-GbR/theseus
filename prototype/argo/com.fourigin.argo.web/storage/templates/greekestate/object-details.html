@@ -1,9 +1,11 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:with="
+    c = ${argo.contentElementUtility}
+">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greece</title>
+    <title th:text="${c.getPageTitle()}">Greece</title>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
     <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css"/>
@@ -89,17 +91,17 @@
                 });
             </script>
             <div class="description">
-                <p th:utext="${c.getContent('/short-description')}">Direkte Lage, super Dinge, alles sauber, alles da! Wunderbar und herrlich schön, nichts ist unmöglich alles ist machtbart.</p>
+                <p class="shortTeaserCopy" th:utext="${c.getContent('/short-description')}">Direkte Lage, super Dinge, alles sauber, alles da! Wunderbar und herrlich schön, nichts ist unmöglich alles ist machtbart.</p>
                 <ul class="highlights" th:with="
                     code = ${c.getContent(properties, 'code')},
                     type = ${c.getContent(properties, 'type')},
                     area = ${c.getContent(properties, 'area')},
                     region = ${c.getContent(properties, 'region')}
                 ">
-                    <li><span th:text="${c.getContent('@common-content:common/properties/code')}">Code</span>: #<span th:text="${code}">3546</span></li>
-                    <li><span th:text="${c.getContent('@common-content:common/properties/type')}">Type</span>: <span th:utext="${c.getOptionalContent('@common-content:common/general-headlines/object-type:' + type, type)}">3546</span></li>
-                    <li><span th:text="${c.getContent('@common-content:common/properties/area')}">Area</span>: <span th:utext="${f.formatNumber(area, ' m<sup>2</sup>')}">3546</span></li>
-                    <li><span th:text="${c.getContent('@common-content:common/properties/region')}">Region</span>: <span th:utext="${region}">3546</span></li>
+                    <li class="highlights__item"><i class="highlights__icon fa fa-id-card-o" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/code')}">Code:</span>#<span class="highlights__value" th:text="${code}">3546</span></li>
+                    <li class="highlights__item"><i class="highlights__icon fa fa-tag" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/type')}">Type:</span><span class="highlights__value" th:utext="${c.getOptionalContent('@common-content:common/general-headlines/object-type:' + type, type)}">3546</span></li>
+                    <li class="highlights__item"><i class="highlights__icon fa fa-map-o" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/area')}">Area:</span><span class="highlights__value" th:utext="${f.formatNumber(area, ' m<sup>2</sup>')}">3546</span></li>
+                    <li class="highlights__item"><i class="highlights__icon fa fa-map-marker" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/region')}">Region:</span><span class="highlights__value" th:utext="${region}">3546</span></li>
                     <!--<li th:each="property : ${properties.elements}">-->
                         <!--<span th:if="${property.name != 'code' and property.name != 'price'}">-->
                             <!--<span th:text="${c.getContent('@common-content:common/properties/' + property.name)}">Code</span>: <span th:utext="${property.getContextSpecificContent(#strings.toLowerCase(argo.base), true)}">3546</span>-->

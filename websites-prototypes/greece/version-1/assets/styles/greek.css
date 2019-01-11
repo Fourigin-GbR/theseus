@@ -274,11 +274,36 @@ nav a {
     background-color: rgba(255,255,255,.8);
     border-radius: 0 0 30px 0;
 }
-.body article.productDetails .description .highlights {
-    color: #33669B;
-    list-style-type: none;
-    margin: 0;
+.body article.productDetails .description .shortTeaserCopy {
+    margin: 0 0 15px 0;
     padding: 0;
+    font-size: 30px;
+}
+.body article.productDetails .description .highlights {
+    list-style-type: none;
+    margin: 0 0 50px 0;
+    padding: 0;
+}
+.highlights__icon {
+    width: 30px;
+    line-height: 1;
+    font-size: 17px;
+    color: #ccc;
+}
+.highlights__icon::before {
+    top: 20%;
+    position: relative;
+}
+.highlights__item {
+    display: flex;
+}
+.highlights__type {
+    width: 150px;
+    font-size: 18px;
+    color: #33669B;
+}
+.highlights__value {
+    font-size: 18px;
 }
 .body article.productDetails .transfer {
     text-align: right;
