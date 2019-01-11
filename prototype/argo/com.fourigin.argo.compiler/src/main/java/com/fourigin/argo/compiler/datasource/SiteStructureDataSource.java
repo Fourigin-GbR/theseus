@@ -18,11 +18,14 @@ import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.repository.strategies.NonRecursiveSiteNodeTraversingStrategy;
+import com.fourigin.argo.repository.strategies.PatternMatchingSiteNodeTraversingStrategy;
+import com.fourigin.argo.repository.strategies.TraversingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,14 +70,26 @@ public class SiteStructureDataSource implements
 
         List<ContentElement> result = new ArrayList<>();
 
-        Collection<? extends SiteNodeInfo> infos;
-        if (query.isNonRecursive()) {
-            infos = contentResolver.resolveNodeInfos(path, new NonRecursiveSiteNodeTraversingStrategy());
-            if (logger.isDebugEnabled()) logger.debug("Resolved (non-recursive) {} nodes", infos.size());
+        String nodePattern = query.getNodePattern();
+
+        TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> traversingStrategy;
+
+        if (nodePattern == null) {
+            if (query.isNonRecursive()) {
+                traversingStrategy = new NonRecursiveSiteNodeTraversingStrategy();
+                if (logger.isDebugEnabled()) logger.debug("Resolving nodes with non-recursive traversing strategy");
+            } else {
+                traversingStrategy = contentResolver.getDefaultTraversingStrategy();
+                if (logger.isDebugEnabled()) logger.debug("Resolving nodes with default traversing strategy");
+            }
         } else {
-            infos = contentResolver.resolveInfos(path);
-            if (logger.isDebugEnabled()) logger.debug("Resolved (recursive) {} nodes", infos.size());
+            traversingStrategy = new PatternMatchingSiteNodeTraversingStrategy(nodePattern, !query.isNonRecursive());
+            if (logger.isDebugEnabled())
+                logger.debug("Resolving nodes with pattern-matching traversing strategy for pattern '{}' (non-recursive: {})", nodePattern, query.isNonRecursive());
         }
+
+        Collection<? extends SiteNodeInfo> infos = contentResolver.resolveNodeInfos(path, traversingStrategy);
+        if (logger.isDebugEnabled()) logger.debug("Resolved {} nodes", infos.size());
 
         if (infos != null && !infos.isEmpty()) {
             for (SiteNodeInfo info : infos) {

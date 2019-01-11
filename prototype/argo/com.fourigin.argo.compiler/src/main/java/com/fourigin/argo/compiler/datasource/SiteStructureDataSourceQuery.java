@@ -11,12 +11,15 @@ import java.util.Objects;
 public class SiteStructureDataSourceQuery implements DataSourceQuery {
 
     private static final String INFO_PATH = "INFO_PATH";
+    private static final String NODE_PATTERN = "NODE_PATTERN";
     private static final String VERBOSE = "VERBOSE";
     private static final String IGNORE_OWNER_PAGE = "IGNORE_OWNER_PAGE";
     private static final String INCLUDE_CONTENT = "INCLUDE_CONTENT";
     private static final String NON_RECURSIVE = "NON_RECURSIVE";
 
     private String path;
+
+    private String nodePattern;
 
     private boolean verbose = true;
 
@@ -39,6 +42,11 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
 
         this.path = String.valueOf(pathValue);
 
+        Object nodePatternValue = values.get(NODE_PATTERN);
+        if (nodePatternValue != null) {
+            this.nodePattern = String.valueOf(nodePatternValue);
+        }
+
         this.verbose = Boolean.parseBoolean(String.valueOf(values.get(VERBOSE)));
 
         this.ignoreOwnerPage = Boolean.parseBoolean(String.valueOf(values.get(IGNORE_OWNER_PAGE)));
@@ -58,6 +66,10 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
 
     public String getPath() {
         return path;
+    }
+
+    public String getNodePattern() {
+        return nodePattern;
     }
 
     public boolean isVerbose() {
@@ -85,18 +97,20 @@ public class SiteStructureDataSourceQuery implements DataSourceQuery {
             ignoreOwnerPage == that.ignoreOwnerPage &&
             nonRecursive == that.nonRecursive &&
             Objects.equals(path, that.path) &&
+            Objects.equals(nodePattern, that.nodePattern) &&
             Objects.equals(contentReferences, that.contentReferences);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(path, verbose, ignoreOwnerPage, contentReferences, nonRecursive);
+        return Objects.hash(path, nodePattern, verbose, ignoreOwnerPage, contentReferences, nonRecursive);
     }
 
     @Override
     public String toString() {
         return "SiteStructureDataSourceQuery{" +
             "path='" + path + '\'' +
+            ", nodePattern=" + nodePattern +
             ", verbose=" + verbose +
             ", ignoreOwnerPage=" + ignoreOwnerPage +
             ", contentReferences=" + contentReferences +
