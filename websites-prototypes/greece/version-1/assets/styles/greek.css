@@ -456,29 +456,41 @@ nav a {
 }
 
 
-article.search .searchFilter{
+article.search .searchFilter {
     padding: 20px;
     margin-bottom: 0;
     background-color: #e1eaf0;
 }
-article.search .region {
-    display: flex;
-    align-items: center;
+
+.searchFilter .searchFilter__filterItem {
+    display: block;
+    margin-top: 15px;
+    padding-top: 10px;
 }
-article.search .region h3 {
-    margin: 0;
-    padding: 0;
+.searchFilter .searchFilter__filterItem:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
 }
+.searchFilter .searchFilter__filterItemLabel {
+    font-size: 18px;
+    padding: 0 0 0 0;
+    margin: 0 0 20px 0;
+    border-bottom: 1px solid #33669B;
+}
+.searchFilter .searchFilter__filterItemOptions {
+
+}
+
 article.search .region select {
     border: 0;
     font-size: 16px;
     color: #fff;
     background-color: #33669B;
-    margin-left: 10px;
     padding: 5px 15px 2px 15px;
 }
 article.search form fieldset {
     border: 0;
+    padding: 0;
 }
 article.search form label {
     cursor: pointer;
@@ -507,14 +519,6 @@ article.search form label input:checked ~ span:before {
 article.search form label:first-of-type {
     margin-left: 0;
 }
-article.search form .filterCategory {
-    display: flex;
-    margin-top: 10px;
-}
-article.search form .filterCategory h3 {
-    padding-right: 20px;
-}
-
 
 article.search form .imageList {
     display: flex;
