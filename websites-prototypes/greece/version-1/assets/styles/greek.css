@@ -796,6 +796,7 @@ ul.smallItemGalleryList li h3:hover a {
 }
 .pagePreview__description {
     display: flex;
+    margin-bottom: 15px;
 }
 .pagePreview__image {
     width: 120px;
