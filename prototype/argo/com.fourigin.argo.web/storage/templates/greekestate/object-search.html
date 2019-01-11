@@ -82,7 +82,6 @@
                     th:action="'http://argo.greekestate.fourigin.com/cms/search/?base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"
                     th:data-form-index="${dataSourceId.index.name}"
             >
-                <!--th:data-form-index="${argo.path} == '/objects/sale/search' ? 'objects-to-sale' : 'objects-to-rent'"-->
                 <div class="region">
                     <h3 th:text="${c.getContent('@common-content:common/general-headlines/search-in-region')}">Suche in der Region</h3>
                     <select name="region">
@@ -128,29 +127,16 @@
                         <option value="xilokastro">Xilokastro</option>
                         <option value="xilokeriza">Xilokeriza</option>
                     </select>
+                    </div>
                 </div>
 
-                <div class="filterCategory">
-                    <h3 th:text="${c.getContent('@common-content:common/general-headlines/object-type')}">Typ des Objekts</h3>
-                    <fieldset>
-                        <label th:each="validType : ${c.getElement('/valid-object-types').elements}" th:with="typeValue = ${validType.content}"><input type="checkbox" name="type" value="apartment" th:value="${typeValue}"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + typeValue)}">Wohnung</span></label>
-                    </fieldset>
-                    <!--<fieldset>-->
-                        <!--<label><input type="checkbox" name="type" value="apartment"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:apartment')}">#apartment</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="maisonette"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:maisonette')}">#maisonette</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="detached-house"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:detached-house')}">#detached house</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="villa"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:villa')}">#villa</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="building"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:building')}">#building</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="hotel"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:hotel')}">#hotel</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="office"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:office')}">#office</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="parking"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:parking')}">#parking</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="store"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:store')}">#store</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="business-building"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:business-building')}">#business building</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="various-other-property"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:various-other-property')}">#various other property</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="land-plot"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:land-plot')}">#land-plot</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="farm-parcel"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:farm-parcel')}">#farm parcel</span></label>-->
-                        <!--<label><input type="checkbox" name="type" value="other-land-property"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:other-land-property')}">#other land property</span></label>-->
-                    <!--</fieldset>-->
+                <div class="searchFilter__filterItem filterCategory">
+                    <h3 class="searchFilter__filterItemLabel" th:text="${c.getContent('@common-content:common/general-headlines/object-type')}">Typ des Objekts</h3>
+                    <div class="searchFilter__filterItemOptions">
+                        <fieldset>
+                            <label th:each="validType : ${c.getElement('/valid-object-types').elements}" th:with="typeValue = ${validType.content}"><input type="checkbox" name="type" value="apartment" th:value="${typeValue}"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + typeValue)}">Wohnung</span></label>
+                        </fieldset>
+                    </div>
                 </div>
             </form>
         </div>
