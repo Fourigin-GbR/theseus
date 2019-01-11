@@ -1,0 +1,127 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:with="
+    c = ${argo.contentElementUtility}
+">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${c.getPageTitle()}">Greece</title>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+</head>
+<body>
+<header th:replace="greekestate/base :: header">
+
+</header>
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility},
+    images = ${c.getElement('/images')},
+    properties = ${c.getElement('/properties')},
+    longDescriptionContent = ${c.getContent('/long-description')},
+    geoPosition = ${c.getElement('/geo-position')},
+    latitude = ${c.getContent(geoPosition, 'latitude')},
+    longitude = ${c.getContent(geoPosition, 'longitude')},
+">
+
+    <nav th:replace="greekestate/base :: breadcrumb">
+
+    </nav>
+
+    <article>
+        <div class="ctaHighlightWrapper">
+            <a class="ctaHighlight" href="javascript:history.back()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <span th:text="${c.getContent('@common-content:common/links-and-ctas/back-to-search-result')}">Zurück zur Suche</span>
+            </a>
+        </div>
+    </article>
+
+    <article>
+        <h1 th:text="${c.getContent('/headline')}">Regionen</h1>
+    </article>
+
+    <!-- REGION -->
+
+    <article class="productDetails">
+        <div class="content">
+            <div th:if="${images.elements.size() == 0}" class="noImagesInformation">
+                <i class="fa fa-building" aria-hidden="true"></i>
+            </div>
+            <div th:unless="${images.elements.size() == 0}" class="slider productDetailsSlider">
+                <input class="sliderPageStorage" value="1" type="hidden">
+                <span th:utext="|&lt;!-- ${images} --&gt;|"></span>
+                <div class="sliderWrapper">
+                    <ul>
+                        <li th:each="image : ${images.elements}">
+                            <div class="detailSlide">
+                                <div class="image">
+                                    <img th:src="${image.source}" src="assets/images/objects/object-details1.jpg"/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sliderSlideLeft"></div>
+                <div class="sliderSlideRight"></div>
+                <div class="sliderPagination"><ul></ul></div>
+            </div>
+            <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    new Slider(
+                        jQuery(".slider.productDetailsSlider"),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            </script>
+            <div class="description">
+                <p class="shortTeaserCopy" th:utext="${c.getContent('/short-description')}">REGION 1</p>
+                <p>
+                    INFOS INFOS INFOS
+                </p>
+                <div class="transfer">
+                    <a class="cta" href="text.html" th:text="${c.getContent('@common-content:common/links-and-ctas/contact-request')}">Anfragen</a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article th:if="${longDescriptionContent}">
+        <h2 th:text="${c.getContent('@common-content:common/general-headlines/description')}">REGION 1</h2>
+        <p th:utext="${longDescriptionContent}">
+            Where position: relative; ensures correct positioning of the fix. And white-space: pre; makes you not having to add any content - like a white space - to the fix. And height: 0px;width: 0px;overflow: hidden; makes sure you'll never see the fix.
+            You might need to add line-height: 0px; or max-height: 0px; to ensure the height is actually zero in ancient IE browsers (I'm unsure). And optionally you could add <!--dummy--> to it in old IE browsers, if it does not work.
+            In short, you can do all this with only CSS (which removes the need to add an actual child to the HTML DOM-tree).
+        </p>
+    </article>
+
+    <!---->
+
+
+
+</div>
+<footer th:replace="greekestate/base :: footer">
+
+</footer>
+</body>
+</html>
