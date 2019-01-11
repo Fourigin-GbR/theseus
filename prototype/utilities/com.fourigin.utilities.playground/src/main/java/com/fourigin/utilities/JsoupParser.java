@@ -505,8 +505,30 @@ public class JsoupParser {
 
             OfferType offerType = object.getOfferType();
 
+            String objectCode = object.getCode();
+
+            String enTitle;
+            String deTitle;
+            String ruTitle;
+            switch (offerType) {
+                case SALE:
+                    enTitle = "Sale object #" + objectCode + " - BestGreekEstate";
+                    deTitle = "Verkaufsobjekt #" + objectCode + " - BestGreekEstate";
+                    ruTitle = "Объект #" + objectCode + " на продажу - BestGreekEstate";
+                    break;
+                case RENT:
+                    enTitle = "Rent object #" + objectCode + " - BestGreekEstate";
+                    deTitle = "Mietobjekt #" + objectCode + " - BestGreekEstate";
+                    ruTitle = "Объект #" + objectCode + " для аренды - BestGreekEstate";
+                    break;
+                default:
+                    throw new IllegalStateException("Unsupported offer type " + offerType + "!");
+            }
+
             ContentPageMetaData metaData = new ContentPageMetaData.Builder()
-                .withTitle("BestGreekEstate - " + offerType.name() + " object " + id)
+                .withTitle(enTitle)
+                .withContextSpecificTitle("de", deTitle)
+                .withContextSpecificTitle("ru", ruTitle)
                 .withAttribute("converted on", dateFormat.format(now))
                 .build();
             System.out.print(" meta");
@@ -514,7 +536,7 @@ public class JsoupParser {
             List<ContentElement> propertyElements = new ArrayList<>();
             propertyElements.add(new TextContentElement.Builder()
                 .withName("code")
-                .withContent(object.getCode())
+                .withContent(objectCode)
                 .build()
             );
             for (Map.Entry<String, String> entry : object.getProperties().entrySet()) {
@@ -749,7 +771,7 @@ public class JsoupParser {
 
         System.out.print("\nDONE");
     }
-    
+
     private static void createBackup() {
         System.out.println("Creating backup of static pages ...");
         for (String link : ORIGINAL_LINKS) {
@@ -789,8 +811,8 @@ public class JsoupParser {
         }
     }
 
-    private static void fixLocalizedText(LocalizedText text){
-        if(text == null){
+    private static void fixLocalizedText(LocalizedText text) {
+        if (text == null) {
             return;
         }
 
@@ -843,8 +865,8 @@ public class JsoupParser {
         }
     }
 
-    private static void fixHeadline(LocalizedText headline){
-        if(headline == null){
+    private static void fixHeadline(LocalizedText headline) {
+        if (headline == null) {
             return;
         }
 
