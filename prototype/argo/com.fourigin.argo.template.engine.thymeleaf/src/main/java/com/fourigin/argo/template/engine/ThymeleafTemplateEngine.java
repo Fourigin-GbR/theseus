@@ -7,6 +7,7 @@ import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.template.engine.api.Argo;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentPageAwareThymeleafTemplateUtility;
+import com.fourigin.argo.template.engine.utilities.CustomerAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.PageInfoAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ProcessingModeAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.SiteAttributesAwareThymeleafTemplateUtility;
@@ -29,6 +30,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private String utilitiesPrefix;
 
+    private String customer;
+
     private String base;
 
     private String path;
@@ -41,13 +44,6 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private static final String DEFAULT_UTILITIES_PREFIX = "util_";
 
-//    private static Map<String, ThymeleafTemplateUtilityFactory> __standardTemplateUtilityFactories = new HashMap<>();
-//
-//    static {
-//        standardTemplateUtilityFactories.put("__content", con);
-//        standardTemplateUtilityFactories.put("__page", new PagePropertiesUtilityFactory(internalLinkResolutionStrategies));
-//    }
-
     private final Logger logger = LoggerFactory.getLogger(ThymeleafTemplateEngine.class);
 
     public ThymeleafTemplateEngine duplicate() {
@@ -55,6 +51,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
         clone.setThymeleafInternalTemplateEngine(thymeleafInternalTemplateEngine);
         clone.setTemplateUtilityFactories(templateUtilityFactories);
+        clone.setCustomer(customer);
         clone.setBase(base);
         clone.setPath(path);
         clone.setPageInfo(pageInfo);
@@ -80,6 +77,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
         Context context = new Context();
         context.setVariable("argo", new Argo.Builder()
+            .withCustomer(customer)
             .withBase(base)
             .withPath(path)
             .withContentPage(contentPage)
@@ -121,6 +119,10 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     PageInfoAwareThymeleafTemplateUtility pageInfoUtility = PageInfoAwareThymeleafTemplateUtility.class.cast(utility);
                     pageInfoUtility.setPageInfo(pageInfo);
                 }
+                if (CustomerAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
+                    CustomerAwareThymeleafTemplateUtility customerUtility = CustomerAwareThymeleafTemplateUtility.class.cast(utility);
+                    customerUtility.setCustomer(customer);
+                }
                 if (SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
                     siteAttributesUtility.setCompilerBase(base);
@@ -152,6 +154,10 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         this.utilitiesPrefix = utilitiesPrefix;
     }
 
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
     @Override
     public void setBase(String base) {
         this.base = base;
@@ -181,6 +187,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         return "ThymeleafTemplateEngine{" +
             "templateUtilityFactories=" + templateUtilityFactories +
             ", utilitiesPrefix='" + utilitiesPrefix + '\'' +
+            ", customer='" + customer + '\'' +
             ", base='" + base + '\'' +
             ", path='" + path + '\'' +
             ", pageInfo=" + pageInfo +

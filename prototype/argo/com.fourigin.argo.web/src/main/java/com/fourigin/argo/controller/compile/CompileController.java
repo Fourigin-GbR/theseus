@@ -9,6 +9,7 @@ import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
+import com.fourigin.argo.repository.strategies.DefaultPageInfoTraversingStrategy;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.strategies.BufferedCompilerOutputStrategy;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.Collection;
 
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
 
@@ -127,57 +130,134 @@ public class CompileController {
         @PathVariable String customer,
         @RequestParam(RequestParameters.BASE) String base,
         @RequestParam(RequestParameters.PATH) String path,
-        @RequestParam(value = "mode", required = false, defaultValue = "STAGE") ProcessingMode mode
+        @RequestParam(value = "mode", required = false, defaultValue = "STAGE") ProcessingMode mode,
+        @RequestParam(value = "recursive", required = false, defaultValue = "false") boolean recursive
     ) {
         MDC.put("customer", customer);
         MDC.put("base", base);
         try {
-            if (logger.isDebugEnabled())
-                logger.debug("Processing write-output request for base '{}' & path '{}' with processing-mode {}.", base, path, mode);
-            
-            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
-
-            PageInfo pageInfo = aggregation.getPageInfo();
-            PageState pageState = aggregation.getPageState();
-
-            CompileState compileState = pageState.getCompileState();
-            if (compileState == null) {
-                compileState = new CompileState();
-            }
-
-            if (!compileState.isCompiled()) {
-                return new ResponseEntity<>(
-                    new CompileResult(mode, false, "Page must have a successful compiled-state!"),
-                    HttpStatus.BAD_REQUEST
-                );
-            }
-
-            PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
-
-            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
 
             long startTimestamp = System.currentTimeMillis();
-            try {
-                pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
-                storageCompilerOutputStrategy.finish();
-            } catch (Throwable ex) {
-                storageCompilerOutputStrategy.reset();
-                return new ResponseEntity<>(
-                    new CompileResult(mode, false).withAttribute("cause", ex),
-                    HttpStatus.BAD_REQUEST
-                );
+            if (!recursive) {
+                try {
+                    writePageOutput(customer, base, path, mode);
+                } catch (Throwable ex) {
+                    return new ResponseEntity<>(
+                        new CompileResult(mode, false).withAttribute("cause", ex),
+                        HttpStatus.BAD_REQUEST
+                    );
+                }
+            } else {
+                CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+                PageInfo info = aggregation.getPageInfo();
+
+                DefaultPageInfoTraversingStrategy traversingStrategy = new DefaultPageInfoTraversingStrategy();
+                Collection<PageInfo> nodes = traversingStrategy.collect(info.getParent());
+                for (PageInfo node : nodes) {
+                    String nodePath = node.getPath() + '/' + node.getName();
+                    try {
+                        writePageOutput(customer, base, nodePath, mode);
+                    }
+                    catch (Throwable ex){
+                        return new ResponseEntity<>(
+                            new CompileResult(mode, false).withAttribute("cause", ex),
+                            HttpStatus.BAD_REQUEST
+                        );
+                    }
+                }
             }
 
             long duration = System.currentTimeMillis() - startTimestamp;
-
             return new ResponseEntity<>(
                 new CompileResult(mode, true).withAttribute("duration", duration),
                 HttpStatus.OK
             );
+
+
+//            if (logger.isDebugEnabled())
+//                logger.debug("Processing write-output request for base '{}' & path '{}' with processing-mode {}.", base, path, mode);
+//
+//            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+//
+//            PageInfo pageInfo = aggregation.getPageInfo();
+//            PageState pageState = aggregation.getPageState();
+//
+//            CompileState compileState = pageState.getCompileState();
+//            if (compileState == null) {
+//                compileState = new CompileState();
+//            }
+//
+//            if (!compileState.isCompiled()) {
+//                return new ResponseEntity<>(
+//                    new CompileResult(mode, false, "Page must have a successful compiled-state!"),
+//                    HttpStatus.BAD_REQUEST
+//                );
+//            }
+//
+//            PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+//
+//            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
+//
+//            long startTimestamp = System.currentTimeMillis();
+//            try {
+//                pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
+//                storageCompilerOutputStrategy.finish();
+//            } catch (Throwable ex) {
+//                storageCompilerOutputStrategy.reset();
+//                return new ResponseEntity<>(
+//                    new CompileResult(mode, false).withAttribute("cause", ex),
+//                    HttpStatus.BAD_REQUEST
+//                );
+//            }
+//
+//            long duration = System.currentTimeMillis() - startTimestamp;
+//
+//            return new ResponseEntity<>(
+//                new CompileResult(mode, true).withAttribute("duration", duration),
+//                HttpStatus.OK
+//            );
         } finally {
             MDC.remove("customer");
             MDC.remove("base");
         }
+    }
+
+    private void writePageOutput(String customer, String base, String path, ProcessingMode mode) {
+        if (logger.isDebugEnabled())
+            logger.debug("Processing write-output request for base '{}' & path '{}' with processing-mode {}.", base, path, mode);
+
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+
+        PageInfo pageInfo = aggregation.getPageInfo();
+//        PageState pageState = aggregation.getPageState();
+//
+//        CompileState compileState = pageState.getCompileState();
+//        if (compileState == null) {
+//            compileState = new CompileState();
+//        }
+//
+//        if (!compileState.isCompiled()) {
+//            return new ResponseEntity<>(
+//                new CompileResult(mode, false, "Page must have a successful compiled-state!"),
+//                HttpStatus.BAD_REQUEST
+//            );
+//        }
+
+        PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+
+        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
+
+        try {
+            pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
+            storageCompilerOutputStrategy.finish();
+        } catch (Throwable ex) {
+            storageCompilerOutputStrategy.reset();
+//            return new ResponseEntity<>(
+//                new CompileResult(mode, false).withAttribute("cause", ex),
+//                HttpStatus.BAD_REQUEST
+//            );
+        }
+
     }
 
     @ResponseBody
@@ -199,8 +279,7 @@ public class CompileController {
             PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
 
             return pageCompiler.prepareContent(aggregation.getPageInfo(), CMS);
-        }
-        finally {
+        } finally {
             MDC.remove("customer");
             MDC.remove("base");
         }

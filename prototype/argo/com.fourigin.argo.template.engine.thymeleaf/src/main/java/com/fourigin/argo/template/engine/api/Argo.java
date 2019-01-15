@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Argo {
+    private String customer;
     private String base;
     private String path;
     private ContentPage contentPage;
@@ -28,6 +29,14 @@ public class Argo {
     private FormatterUtility formatterUtility;
 
     private Map<String, ThymeleafTemplateUtility> customUtilities;
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
 
     public String getBase() {
         return base;
@@ -124,6 +133,7 @@ public class Argo {
     }
 
     public static class Builder {
+        private String customer;
         private String base;
         private String path;
         private ContentPage contentPage;
@@ -132,6 +142,11 @@ public class Argo {
         private Map<String, String> siteAttributes;
         private Map<String, ThymeleafTemplateUtility> customUtilities = new HashMap<>();
         private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
+
+        public Builder withCustomer(String customer){
+            this.customer = customer;
+            return this;
+        }
 
         public Builder withBase(String base){
             this.base = base;
@@ -175,6 +190,7 @@ public class Argo {
 
         public Argo build(){
             Argo argo = new Argo();
+            argo.setCustomer(customer);
             argo.setBase(base);
             argo.setPath(path);
             argo.setContentPage(contentPage);

@@ -13,6 +13,8 @@ public interface TemplateEngine {
 
     TemplateEngine duplicate();
 
+    void setCustomer(String customer);
+
     void setBase(String base);
 
     void setPath(String path);

@@ -27,9 +27,9 @@ import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.TemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
 import com.fourigin.argo.template.engine.ThymeleafTemplateEngine;
-import com.fourigin.argo.template.engine.strategies.CmsInternalLinkResolutionStrategy;
+import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
-import com.fourigin.argo.template.engine.strategies.StagingInternalLinkResolutionStrategy;
+import com.fourigin.argo.strategies.StagingInternalLinkResolutionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -160,8 +160,8 @@ public class App {
         Map<ProcessingMode, InternalLinkResolutionStrategy> result = new HashMap<>();
 
         result.put(ProcessingMode.CMS, new CmsInternalLinkResolutionStrategy());
-        result.put(ProcessingMode.STAGE, new StagingInternalLinkResolutionStrategy());
-        result.put(ProcessingMode.LIVE, new StagingInternalLinkResolutionStrategy()); // TODO: verify!
+        result.put(ProcessingMode.STAGE, new StagingInternalLinkResolutionStrategy(contentRepositoryFactory));
+        result.put(ProcessingMode.LIVE, new StagingInternalLinkResolutionStrategy(contentRepositoryFactory)); // TODO: verify!
 
         return result;
     }

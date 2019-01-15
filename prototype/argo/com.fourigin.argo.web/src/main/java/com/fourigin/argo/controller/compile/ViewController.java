@@ -74,6 +74,7 @@ public class ViewController {
 //        modelAndView.addObject("__content", contentUtility);
 
         modelAndView.addObject("argo", new Argo.Builder()
+            .withCustomer(customer)
             .withBase(base)
             .withPath(path)
             .withContentPage(aggregation.getContentPage())
