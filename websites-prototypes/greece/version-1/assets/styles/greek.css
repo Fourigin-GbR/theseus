@@ -668,7 +668,7 @@ footer .content {
     display: flex;
 }
 footer .logo {
-    width: 10%;
+    width: 120px;
     margin: 0 40px 0 0;
 }
 footer .logo img {
@@ -680,7 +680,11 @@ footer .metaInformationList span.label{
     display: inline-block;
 }
 
-
+@media (max-width: 670px) {
+    footer .content {
+        display: block;
+    }
+}
 
 .metaInformationList {
     display: flex;
@@ -703,6 +707,23 @@ footer .metaInformationList span.label{
 .metaInformationList .metaInformationList__section .metaInformationList__sectionEntry {
     margin: 0 0 5px 0;
     padding: 0;
+}
+
+@media (max-width: 670px) {
+    .metaInformationList .metaInformationList__section {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 380px) {
+    .metaInformationList {
+        display: block;
+    }
+
+    .metaInformationList .metaInformationList__section {
+        padding-right: 10px;
+        margin-right: 0;
+    }
 }
 /**
 ULis
