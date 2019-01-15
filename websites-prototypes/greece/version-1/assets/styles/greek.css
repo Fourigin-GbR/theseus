@@ -674,20 +674,36 @@ footer .logo {
 footer .logo img {
     width: 100%;
 }
-footer .company {
-    width: 20%;
-    margin: 0 20px;
-}
-footer .links {
-    display: flex;
-}
-footer .links > div {
-    margin-right: 20px;
-}
-footer .links h3 {
-    margin-bottom: 2px;
+footer .metaInformationList span.label{
+    min-width: 50px;
+    padding-right: 5px;
+    display: inline-block;
 }
 
+
+
+.metaInformationList {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 10px 0 20px 0;
+}
+.metaInformationList .metaInformationList__section {
+    padding-right: 80px;
+    margin-right: 40px;
+    box-sizing: border-box;
+}
+.metaInformationList .metaInformationList__section .metaInformationList__sectionHeadline {
+    margin: 0 0 15px 0;
+    padding: 0 0 2px 0;
+    font-weight: normal;
+    border-bottom: 1px solid #535151;
+    display: inline-block;
+}
+.metaInformationList .metaInformationList__section .metaInformationList__sectionEntry {
+    margin: 0 0 5px 0;
+    padding: 0;
+}
 /**
 ULis
  */
