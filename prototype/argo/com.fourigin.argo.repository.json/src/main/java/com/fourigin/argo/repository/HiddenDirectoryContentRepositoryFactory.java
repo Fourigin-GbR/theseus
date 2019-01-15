@@ -34,6 +34,7 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
             return repository;
         }
 
+        if (logger.isDebugEnabled()) logger.debug("Resolving content root path from pattern '{}' with '{}'='{}' and customer='{}'", basePath, keyName, key, customer);
         String path = propertiesReplacement.process(basePath, "customer", customer, keyName, key);
 
         if (logger.isDebugEnabled()) logger.debug("Instantiating a new ContentRepository instance for key '{}' and path '{}'.", key, path);

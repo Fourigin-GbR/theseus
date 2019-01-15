@@ -141,7 +141,7 @@ public class Argo {
         private ProcessingMode processingMode;
         private Map<String, String> siteAttributes;
         private Map<String, ThymeleafTemplateUtility> customUtilities = new HashMap<>();
-        private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
+        private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
 
         public Builder withCustomer(String customer){
             this.customer = customer;
@@ -178,8 +178,8 @@ public class Argo {
             return this;
         }
 
-        public Builder withInternalLinkResolutionStrategy(InternalLinkResolutionStrategy strategy){
-            this.internalLinkResolutionStrategy = strategy;
+        public Builder withInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> strategies){
+            this.internalLinkResolutionStrategies = strategies;
             return this;
         }
 
@@ -204,10 +204,11 @@ public class Argo {
             argo.setContentElementUtility(contentUtility);
 
             PagePropertiesUtility pagePropertiesUtility = new PagePropertiesUtility();
+            pagePropertiesUtility.setCustomer(customer);
             pagePropertiesUtility.setCompilerBase(base);
             pagePropertiesUtility.setSiteAttributes(siteAttributes);
             pagePropertiesUtility.setProcessingMode(processingMode);
-            pagePropertiesUtility.setInternalLinkResolutionStrategy(internalLinkResolutionStrategy);
+            pagePropertiesUtility.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies);
             argo.setPagePropertiesUtility(pagePropertiesUtility);
 
             FormatterUtility formatterUtility = new FormatterUtility();

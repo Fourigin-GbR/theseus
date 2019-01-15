@@ -22,7 +22,7 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
 
     private ProcessingMode processingMode;
 
-    private InternalLinkResolutionStrategy internalLinkResolutionStrategy;
+    private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
 
     private PropertiesReplacement propertiesReplacement = new PropertiesReplacement();
 
@@ -47,7 +47,9 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         String baseUrl = siteAttributes.get(baseUrlAttributeName);
         if (logger.isDebugEnabled()) logger.debug("Value of site-attribute '{}': '{}'.", baseUrlAttributeName, baseUrl);
 
-        String linkPath = internalLinkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
+        InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(externalProcessingMode));
+        String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
+        if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
 
         return propertiesReplacement.process(baseUrl + linkPath, "base", externalCompilerBase);
     }
@@ -113,7 +115,7 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         this.processingMode = processingMode;
     }
 
-    public void setInternalLinkResolutionStrategy(InternalLinkResolutionStrategy internalLinkResolutionStrategy) {
-        this.internalLinkResolutionStrategy = internalLinkResolutionStrategy;
+    public void setInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies) {
+        this.internalLinkResolutionStrategies = internalLinkResolutionStrategies;
     }
 }

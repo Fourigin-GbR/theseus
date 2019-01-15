@@ -23,6 +23,6 @@ public class StagingInternalLinkResolutionStrategy implements InternalLinkResolu
         String folder = filenameStrategy.getFolder(base, info);
         String file = filenameStrategy.getFilename(base, info);
 
-        return folder + '/' + file;
+        return folder + '/' + file + ".html";
     }
 }

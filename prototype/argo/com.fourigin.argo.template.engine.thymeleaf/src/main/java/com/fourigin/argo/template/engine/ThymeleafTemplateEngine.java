@@ -84,7 +84,7 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
             .withPageInfo(pageInfo)
             .withProcessingMode(processingMode)
             .withSiteAttributes(siteAttributes)
-            .withInternalLinkResolutionStrategy(internalLinkResolutionStrategies.get(processingMode))
+            .withInternalLinkResolutionStrategies(internalLinkResolutionStrategies)
             .build()
         );
 
