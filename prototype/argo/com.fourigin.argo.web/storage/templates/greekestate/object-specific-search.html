@@ -72,7 +72,7 @@
                         <i class="fa fa-building" aria-hidden="true"></i>
                     </div>
                     <div th:unless="${images.elements.size() == 0}" class="pagePreview__image">
-                        <a href="#" th:href="${href}"><img th:src="${images.elements[0].source}" src="http://www.images.bestgreekestate.com/36/437ce9d95e4384a6317e414074b623b450fdd5/123637576_900x675.jpeg" th:alt="${images.elements[0].alternateText}" alt="haus mit straße" /></a>
+                        <a href="#" th:href="${href}"><img th:attr="data-image-src=${images.elements[0].source}" th:alt="${images.elements[0].alternateText}" alt="haus mit straße" /></a>
                     </div>
                     <div class="pagePreview__information">
                         <h2><a href="#" th:href="${href}" th:text="${c.getContent(link, '/headline')}">Haus mit Maus und Pferd im Herd</a></h2>

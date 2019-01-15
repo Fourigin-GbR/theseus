@@ -63,9 +63,11 @@
             <li th:with="ref = ${c.getElement('@top-level-navigation:/about')}">
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="#">Über uns</a>
             </li>
+            <!--
             <li th:with="ref = ${c.getElement('@top-level-navigation:/regions')}">
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/regions')}" href="#">Griechische Regionen</a>
             </li>
+            -->
             <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
                 <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
             </li>
@@ -84,7 +86,7 @@
                 <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
                 <ul class="folderList">
                     <li th:with="ref = ${c.getElement('@top-level-navigation:/home')}">
-                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="index.html">Start</a>
+                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/home')}" href="index.html">Start</a>
                     </li>
                 </ul>
             </div>
@@ -100,9 +102,9 @@
                     <form method="get" th:action="${p.getPath('/objects/search')}" action="#">
                         <label>
                             <span th:text="${c.getContent('@common-content:common/properties/code')}">Objekt-ID</span>
-                            <input name="objectId" type="text" />
+                            <input name="object-id" type="text" />
                             <input name="base" type="hidden" th:value="${argo.base}" />
-                            <input name="path" type="hidden" th:value="${argo.path}" />
+                            <input name="path" type="hidden" value="/objects/search" />
                         </label>
                         <input class="cta" type="submit" value="Suchen" th:value="${c.getContent('@common-content:common/links-and-ctas/search')}"/>
                     </form>

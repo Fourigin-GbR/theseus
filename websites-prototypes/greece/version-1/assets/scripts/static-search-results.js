@@ -63,21 +63,22 @@ var staticSearchResult = function() {
     staticSearchResult.prototype.showMatchingObjects = function(objectIds) {
         var self = this,
             counterMatchingObjects = 0;
-        //console.info("Show matching objects...:", self.jObjects);
-        self.jPageResultEntries.each(function() {
-            var jThis =  jQuery(this),
-                currentObjectId = jThis.attr("data-object-id");
-            //
 
-            if(objectIds.indexOf(currentObjectId) > -1) {
-                self.showObject(jThis);
-                self.enableImages(jThis);
-                counterMatchingObjects++;
-            }
-            else {
-                self.hideObject(jThis);
-            }
-        });
+        if(objectIds) {
+            self.jPageResultEntries.each(function () {
+                var jThis = jQuery(this),
+                    currentObjectId = jThis.attr("data-object-id");
+                //
+
+                if (objectIds.indexOf(currentObjectId) > -1) {
+                    self.showObject(jThis);
+                    self.enableImages(jThis);
+                    counterMatchingObjects++;
+                } else {
+                    self.hideObject(jThis);
+                }
+            });
+        }
 
         self.jResultAmount.html(counterMatchingObjects);
 
