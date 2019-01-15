@@ -36,11 +36,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.fourigin.utilities.OfferType.SALE;
 
-public class JsoupParser {
+public final class JsoupParser {
 
     private static final ObjectMapper OBJECT_MAPPER;
 
@@ -97,6 +98,8 @@ public class JsoupParser {
     private static final String OBJECT_LINK_PREFIX_DE = "http://www.greekestate.gr/de/ImmobilienDetails/";
     private static final String OBJECT_LINK_PREFIX_RU = "http://www.greekestate.gr/ru/nedvizhimost/";
     private static final String OBJECT_LINK_PREFIX_EN = "http://www.greekestate.gr/en/propertyDetails/";
+
+    private JsoupParser(){}
 
     public static void main(String[] args) {
         if (READ_ORIGINAL_CONTENT) {
@@ -202,8 +205,8 @@ public class JsoupParser {
             Element deH1 = deDoc.select("h1").first();
             Element enH1 = enDoc.select("h1").first();
 
-            String ruHeader = parseHeadline(details, "ru", ruH1);
-            String deHeader = parseHeadline(details, "de", deH1);
+            String ruHeader = parseHeadline(details, "ru", ruH1); // NOPMD
+            String deHeader = parseHeadline(details, "de", deH1); // NOPMD
             String enHeader = parseHeadline(details, "en", enH1);
 
             System.out.print('.');
@@ -496,7 +499,7 @@ public class JsoupParser {
         List<ContentPage> salePages = new ArrayList<>();
 
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
         for (String id : objectIds) {
             ParsedObjectDetails object = fixedObjects.get(id);
