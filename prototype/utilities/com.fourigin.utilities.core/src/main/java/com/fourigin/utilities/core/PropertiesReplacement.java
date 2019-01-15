@@ -13,7 +13,7 @@ public class PropertiesReplacement {
 
     private static final String DEFAULT_REPLACEMENT_PATTERN = "\\$\\{(.+?)\\}";
 
-    public PropertiesReplacement(){
+    public PropertiesReplacement() {
         pattern = Pattern.compile(DEFAULT_REPLACEMENT_PATTERN);
     }
 
@@ -21,24 +21,24 @@ public class PropertiesReplacement {
         pattern = Pattern.compile(replacementPattern);
     }
 
-    public String process(String text, String... properties){
-        if(properties == null || properties.length == 0){
+    public String process(String text, String... properties) {
+        if (properties == null || properties.length == 0) {
             return text;
         }
 
-        if(properties.length % 2 == 1){
+        if (properties.length % 2 == 1) {
             throw new IllegalArgumentException("Invalid number of properties! Required an even number, but found " + properties.length + " !");
         }
 
         Map<String, String> props = new HashMap<>();
-        for(int i=0; i<properties.length / 2; i+=2){
-            props.put(properties[i], properties[i+1]);
+        for (int i = 0; i < properties.length / 2; i += 2) {
+            props.put(properties[i], properties[i + 1]);
         }
 
         return process(text, props);
     }
 
-    public String process(String text, Map<String, String> properties){
+    public String process(String text, Map<String, String> properties) {
         Matcher matcher = pattern.matcher(text);
 
         StringBuilder builder = new StringBuilder();
@@ -48,11 +48,10 @@ public class PropertiesReplacement {
 
             builder.append(text.substring(i, matcher.start()));
             if (replacement == null) {
-                if(keepUnresolved) {
+                if (keepUnresolved) {
                     builder.append(matcher.group(0));
                 }
-            }
-            else {
+            } else {
                 builder.append(replacement);
             }
 
