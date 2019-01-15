@@ -1,6 +1,6 @@
 var objectSearch = function() {
     this.jForm = jQuery("form#searchObjects");
-    this.jObjects = jQuery("ul.smallItemGalleryList > li");
+    this.jPageResultEntries = jQuery("ul.smallItemGalleryList > li");
     this.jResultAmount = jQuery("[data-content='result-amount']");
     this.hideLoaderTimeoutId = null;
 
@@ -81,7 +81,7 @@ var objectSearch = function() {
 
     objectSearch.prototype.deactivateAllObjects = function() {
         var self = this;
-        this.jObjects.each(function() {
+        this.jPageResultEntries.each(function() {
             self.hideObject(jQuery(this));
         });
     };
@@ -97,7 +97,7 @@ var objectSearch = function() {
         var self = this;
         //console.info("Show matching objects...:", self.jObjects);
         self.jResultAmount.html(objectsList.length);
-        self.jObjects.each(function() {
+        self.jPageResultEntries.each(function() {
             var jThis =  jQuery(this),
                 currentObjectId = jThis.attr("data-object-id");
             //

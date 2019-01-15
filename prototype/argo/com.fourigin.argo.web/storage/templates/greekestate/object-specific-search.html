@@ -16,6 +16,7 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
     <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/static-search-results.js"></script>
     <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
 </head>
 <body>
@@ -51,7 +52,12 @@
             </div>
         </div>
 
-        <ul>
+        <div class="box boxLoading">
+            <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+            <p>Suche nach Objekten...</p>
+        </div>
+
+        <ul class="pageSearchResultList">
             <li class="pagePreview" th:each="link : ${objects.elements}" th:attr="data-object-id=${link.name}"
                 th:with="
                     properties = ${c.getElement(link, '/properties')},
@@ -101,6 +107,17 @@
                 <!--</div>-->
             <!--</li>-->
         </ul>
+
+        <div class="overlay overlayError">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <p>Entschuldigung, es sind intern Probleme aufgetreten.</p>
+            <p>Bitte verändern Sie die Filtereinstellungen oder versuchen Sie es später erneut.</p>
+        </div>
+        <div class="overlay overlayNoResult">
+            <i class="fa fa-meh-o" aria-hidden="true"></i>
+            <p>Zu dieser Objekt-ID konnte kein Ergebniss gefunden werden.</p>
+        </div>
+
     </article>
 
 

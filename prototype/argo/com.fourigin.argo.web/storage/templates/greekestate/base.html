@@ -40,7 +40,11 @@
                     [ current scope link: ${p.getPath(argo.path)} ],
                     [ link (DE): ${p.getPath(argo.path, 'DE')} ],
                     [ link (RU): ${p.getPath(argo.path, 'RU')} ],
-                    [ link (EN): ${p.getPath(argo.path, 'EN')} ]
+                    [ link (EN): ${p.getPath(argo.path, 'EN')} ],
+                    [ link (DE, LIVE): ${p.getPath(argo.path, 'DE', 'LIVE')} ],
+                    [ link (RU, LIVE): ${p.getPath(argo.path, 'RU', 'LIVE')} ],
+                    [ link (EN, LIVE): ${p.getPath(argo.path, 'EN', 'LIVE')} ],
+
                 --&gt;|"></span>
 
                 <select name="siteLanguageSwitch" id="siteLanguageSwitch">
@@ -89,12 +93,16 @@
                     <a href="immobilie-kaufen.html" th:href="${p.getPath('/objects/sale/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/bill-property')}">Immobilie kaufen</a>
                     <a href="feriendomizil-suchen.html" th:href="${p.getPath('/objects/rent/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/rent-property')}">Feriendomizil mieten</a>
                 </div>
-                <div class="searchAndGo">
+                <div class="searchAndGo" th:with="
+                        p = ${argo.pagePropertiesUtility}
+                    ">
                     <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
-                    <form action="#">
+                    <form method="get" th:action="${p.getPath('/objects/search')}" action="#">
                         <label>
                             <span th:text="${c.getContent('@common-content:common/properties/code')}">Objekt-ID</span>
                             <input name="objectId" type="text" />
+                            <input name="base" type="hidden" th:value="${argo.base}" />
+                            <input name="path" type="hidden" th:value="${argo.path}" />
                         </label>
                         <input class="cta" type="submit" value="Suchen" th:value="${c.getContent('@common-content:common/links-and-ctas/search')}"/>
                     </form>
@@ -110,17 +118,19 @@
     </article>
 
 
-    <article class="contextHighlights">
+    <article class="contextHighlights" th:with="
+    p = ${argo.pagePropertiesUtility}
+">
         <div class="links">
             <a href="immobilie-kaufen.html">Immobilie kaufen</a>
             <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
         </div>
         <div class="searchAndGo">
             <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
-            <form action="#">
+            <form method="get" th:action="${p.getPath('/objects/search')}" action="#">
                 <label>
                     <span>Objekt-ID</span>
-                    <input name="objectId" type="text" />
+                    <input name="object-id" type="text" />
                 </label>
                 <input class="cta" type="submit" value="Suchen"/>
             </form>
