@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public final class DataSourceIndexProcessing {
@@ -20,6 +21,8 @@ public final class DataSourceIndexProcessing {
         Map<String, FieldValueComparator> fieldComparators
     ) {
         Logger logger = LoggerFactory.getLogger(DataSourceIndexProcessing.class);
+
+        Objects.requireNonNull(index, "index must not be null!");
 
         List<String> references = index.getReferences();
         if (logger.isDebugEnabled()) logger.debug("References: {}", references);

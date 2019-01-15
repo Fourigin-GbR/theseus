@@ -190,6 +190,7 @@ public class DefaultPageCompiler implements PageCompiler {
         }
 
         // initialize the template engine
+        templateEngine.setCustomer(customer);
         templateEngine.setBase(compilerBase);
         templateEngine.setPath(path);
 
@@ -267,6 +268,7 @@ public class DefaultPageCompiler implements PageCompiler {
         }
 
         // initialize the template engine
+        templateEngine.setCustomer(customer);
         templateEngine.setBase(compilerBase);
         templateEngine.setPath(path);
 
@@ -311,7 +313,6 @@ public class DefaultPageCompiler implements PageCompiler {
             if (logger.isErrorEnabled()) logger.error("Error compiling content!", ex);
             throw new IllegalStateException("Error occurred while compiling the page.", ex);
         }
-
     }
 
     private String resolveFileExtension(String outputContentType) {

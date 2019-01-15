@@ -31,67 +31,67 @@ class DefaultFilenameStrategySpec extends Specification {
             .withLocalizedName(null)
             .build()
 
-    static SiteNodeContainerInfo a = new DirectoryInfo.Builder()
+    static SiteNodeContainerInfo d_a = new DirectoryInfo.Builder()
             .withName('A')
             .withPath('/')
             .withParent(root)
-            .withLocalizedName('a')
+            .withLocalizedName(['en': 'd.a'])
             .build()
 
-    static SiteNodeContainerInfo b = new DirectoryInfo.Builder()
+    static SiteNodeContainerInfo d_b = new DirectoryInfo.Builder()
             .withName('B')
             .withPath('/')
             .withParent(root)
-            .withLocalizedName('b')
+            .withLocalizedName(['en': 'd.b'])
             .build()
 
-    static SiteNodeInfo a1 = new PageInfo.Builder()
+    static SiteNodeInfo p_a1 = new PageInfo.Builder()
             .withName('a1')
             .withPath('/a/')
-            .withParent(a)
-            .withLocalizedName('a_1')
+            .withParent(d_a)
+            .withLocalizedName(['en': 'p.a_1'])
             .withTemplateReference(templateReference)
             .build()
 
-    static SiteNodeInfo a2 = new PageInfo.Builder()
+    static SiteNodeInfo p_a2 = new PageInfo.Builder()
             .withName('a2')
             .withPath('/a/')
-            .withParent(a)
-            .withLocalizedName('a_2')
+            .withParent(d_a)
+            .withLocalizedName(['en': 'p.a_2'])
             .withTemplateReference(templateReference)
             .build()
 
-    static SiteNodeInfo b1 = new PageInfo.Builder()
+    static SiteNodeInfo p_b1 = new PageInfo.Builder()
             .withName('b1')
             .withPath('/b/')
-            .withParent(b)
-            .withLocalizedName('b_1')
+            .withParent(d_b)
+            .withLocalizedName(['en': 'p.b_1'])
             .withTemplateReference(templateReference)
             .build()
 
-    static SiteNodeContainerInfo b2 = new DirectoryInfo.Builder()
+    static SiteNodeContainerInfo d_b2 = new DirectoryInfo.Builder()
             .withName('b2')
             .withPath('/b/')
-            .withParent(b)
-            .withLocalizedName('b_2')
+            .withParent(d_b)
+            .withLocalizedName(['en': 'd.b_2'])
             .build()
 
-    static SiteNodeInfo b21 = new PageInfo.Builder()
+    static SiteNodeInfo p_b21 = new PageInfo.Builder()
             .withName('b21')
             .withPath('/b/b2/')
-            .withParent(b2)
-            .withLocalizedName('b_2_1')
+            .withParent(d_b2)
+            .withLocalizedName(['en': 'p.b_2_1'])
             .withTemplateReference(templateReference)
             .build()
 
     static {
-        root.nodes = [a, b]
+        root.nodes = [d_a, d_b]
 
-        a.nodes = [a1, a2]
+        d_a.nodes = [p_a1, p_a2]
 
-        b.nodes = [b1, b2]
+        d_b.nodes = [p_b1, d_b2]
 
-        b2.nodes = [b21]
+        d_b2.nodes = [p_b21]
     }
 
     @Unroll
@@ -103,18 +103,18 @@ class DefaultFilenameStrategySpec extends Specification {
         strategy = new DefaultFilenameStrategy(false)
 
         then:
-        strategy.getFilename(node) == expectedFilename
+        strategy.getFilename('en', node) == expectedFilename
 
         where:
-        node | expectedFilename
-        root | null
-        a    | 'a'
-        a1   | 'a_1'
-        a2   | 'a_2'
-        b    | 'b'
-        b1   | 'b_1'
-        b2   | 'b_2'
-        b21  | 'b_2_1'
+        node   | expectedFilename
+        root   | null
+        d_a    | 'd.a'
+        p_a1   | 'p.a_1'
+        p_a2   | 'p.a_2'
+        d_b    | 'd.b'
+        p_b1   | 'p.b_1'
+        d_b2   | 'd.b_2'
+        p_b21  | 'p.b_2_1'
     }
 
     @Unroll
@@ -126,18 +126,18 @@ class DefaultFilenameStrategySpec extends Specification {
         strategy = new DefaultFilenameStrategy(true)
 
         then:
-        strategy.getFilename(node) == expectedFilename
+        strategy.getFilename('en', node) == expectedFilename
 
         where:
-        node | expectedFilename
-        root | null
-        a    | 'a'
-        a1   | 'index'
-        a2   | 'a_2'
-        b    | 'b'
-        b1   | 'index'
-        b2   | 'b_2'
-        b21  | 'index'
+        node   | expectedFilename
+        root   | null
+        d_a    | 'd.a'
+        p_a1   | 'index'
+        p_a2   | 'p.a_2'
+        d_b    | 'd.b'
+        p_b1   | 'index'
+        d_b2   | 'd.b_2'
+        p_b21  | 'index'
     }
 
     @Unroll
@@ -146,20 +146,28 @@ class DefaultFilenameStrategySpec extends Specification {
         DefaultFilenameStrategy strategy = new DefaultFilenameStrategy()
 
         when:
-        String folder = strategy.getFolder(node)
+        String folder = strategy.getFolder('en', node)
 
         then:
         folder == expectedFolder
 
         where:
-        node | expectedFolder
-        root | '/'
-        a    | '/'
-        a1   | '/a'
-        a2   | '/a'
-        b    | '/'
-        b1   | '/b'
-        b2   | '/b'
-        b21  | '/b/b_2'
+        node   | expectedFolder
+//        d_a    | '/d.a'
+//        p_a1   | '/d.a'
+//        p_a2   | '/d.a'
+//        d_b    | '/d.b'
+//        p_b1   | '/d.b'
+//        d_b2   | '/d.b/d.b_2'
+//        p_b21  | '/d.b/d.b_2'
+
+        root   | '/'
+        d_a    | '/'
+        p_a1   | '/d.a'
+        p_a2   | '/d.a'
+        d_b    | '/'
+        p_b1   | '/d.b'
+        d_b2   | '/d.b'
+        p_b21  | '/d.b/d.b_2'
     }
 }

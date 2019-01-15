@@ -312,7 +312,7 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
                 name: 'dir',
                 parent: null,
                 path: '/',
-                displayName: 'dir'
+                displayName: ['en': 'dir']
         )
         repository.createInfo('/', parent2)
 
@@ -354,9 +354,9 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
                 path: '/',
                 name: 'home',
                 parent: repository.root,
-                description: 'Auto-created directory info. Don\'t forget to specify all properties!',
-                localizedName: 'home',
-                displayName: 'home',
+                description: null,
+                localizedName: ['': 'home', 'de': 'home', 'ru': 'home'],
+                displayName: ['': 'Home', 'de': 'Home', 'ru': 'Главная'],
                 templateReference: new TemplateReference(
                         templateId: 'greekestate.index',
                         variationId: 'default',
@@ -550,8 +550,8 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
 
         info.setName(code + '-name')
         info.setDescription(code + '-description')
-        info.setLocalizedName(code + '-localizedName')
-        info.setDisplayName(code + '-displayName')
+        info.setLocalizedName(['en': code + '-localizedName'])
+        info.setDisplayName(['en': code + '-displayName'])
 
         TemplateReference templateReference = new TemplateReference()
         templateReference.revision = code + 'revision'
@@ -600,8 +600,8 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
 
         if (fullInitialized) {
             builder
-                    .withDisplayName('display-name-' + id)
-                    .withLocalizedName('localized-name-' + id)
+                    .withDisplayName(['en': 'display-name-' + id])
+                    .withLocalizedName(['en': 'localized-name-' + id])
                     .withDescription('description-' + id)
                     .withTemplateReference(
                     new TemplateReference(
@@ -653,14 +653,14 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
 
         if (fullInitialized) {
             builder
-                    .withDisplayName('display-name-' + id)
-                    .withLocalizedName('localized-name-' + id)
+                    .withDisplayName(['en': 'display-name-' + id])
+                    .withLocalizedName(['en': 'localized-name-' + id])
                     .withDescription('description-' + id)
         }
         else {
             builder
-                    .withDisplayName(id)
-                    .withLocalizedName(id)
+                    .withDisplayName(['en': id])
+                    .withLocalizedName(['en': id])
                     .withDescription('Auto-created directory info. Don\'t forget to specify all properties!')
         }
 

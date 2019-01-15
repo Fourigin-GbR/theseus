@@ -1,53 +1,86 @@
 {
 	"path": "/",
 	"children": [
-			{
-    			"type": "file",
-    			"name": "home",
-    			"localizedName": "home",
-    			"displayName": "home",
-    			"description": "Auto-created directory info. Don't forget to specify all properties!",
-    			"templateReference": {
-    				"templateId": "greekestate.index",
-    				"variationId": "default",
-    				"revision": ""
-    			}
-    		},
+		{
+			"type": "file",
+			"name": "home",
+			"localizedName": {
+				"": "home",
+				"de": "home",
+				"ru": "home"
+			},
+			"displayName": {
+				"": "Home",
+				"de": "Home",
+				"ru": "Главная"
+			},
+			"templateReference": {
+				"templateId": "greekestate.index",
+				"variationId": "default",
+				"revision": ""
+			}
+		},
 		{
 			"type": "file",
 			"name": "search",
-			"localizedName": "search",
-			"displayName": "search",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
+			"localizedName": {
+				"": "search",
+				"de": "suche",
+				"ru": "poisk"
+			},
+			"displayName": {
+				"": "Search",
+				"de": "Suche",
+				"ru": "Поиск"
+			},
 			"templateReference": {
-				"templateId": "",
-				"variationId": "",
-				"revision": ""
 			}
 		},
 		{
 			"type": "dir",
 			"name": "regions",
-			"localizedName": "regions",
-			"displayName": "regions",
-			"description": "Auto-created directory info. Don't forget to specify all properties!"
+			"localizedName": {
+				"": "regions",
+				"de": "regionen",
+				"ru": "regioni"
+			},
+			"displayName": {
+				"": "Regions of Greece",
+				"de": "Griechische Regionen",
+				"ru": "Регионы Греции"
+			}
 		},
 		{
 			"type": "dir",
 			"name": "objects",
-			"localizedName": "objects",
-			"displayName": "objects",
-			"description": "Auto-created directory info. Don't forget to specify all properties!"
+			"localizedName": {
+				"": "objects",
+				"de": "objekte",
+				"ru": "objekti"
+			},
+			"displayName": {
+				"": "Objects",
+				"de": "Objekte",
+				"ru": "Объекты"
+			}
 		},
+
 		{
 			"type": "file",
 			"name": "about",
-			"localizedName": "about",
-			"displayName": "about",
-			"description": "Auto-created directory info. Don't forget to specify all properties!",
+			"localizedName": {
+				"": "about",
+				"de": "ueber_uns",
+				"ru": "o_nas"
+			},
+			"displayName": {
+				"": "About us",
+				"de": "Über uns",
+				"ru": "О нас"
+			},
 			"templateReference": {
-				"templateId": "",
-				"variationId": "",
+				"templateId": "greekestate.article-text",
+				"variationId": "default",
 				"revision": ""
 			}
 		}

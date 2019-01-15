@@ -1,6 +1,9 @@
 package com.fourigin.argo.web;
 
-import com.fourigin.argo.controller.search.LiveDataSourceIndexResolver;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.controller.search.LiveDataSourceIndexResolverFactory;
 import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -22,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching
 public class App {
 
-    private static final String APP_NAME = "argo-service";
+    private static final String APP_NAME = "argo-services";
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
@@ -33,13 +36,28 @@ public class App {
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "customer")
-    public CustomerSpecificConfiguration customerSpecificConfiguration(){
-        return new CustomerSpecificConfiguration();
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+
+        return objectMapper;
     }
 
     @Bean
-    public LiveDataSourceIndexResolver dataSourceIndexResolver(){
-        return new LiveDataSourceIndexResolver();
+    public LiveDataSourceIndexResolverFactory dataSourceIndexResolverFactory() {
+        LiveDataSourceIndexResolverFactory factory = new LiveDataSourceIndexResolverFactory();
+
+        factory.setObjectMapper(objectMapper());
+        factory.setCustomerSpecificConfiguration(customerSpecificConfiguration());
+
+        return factory;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "customer")
+    public CustomerSpecificConfiguration customerSpecificConfiguration(){
+        return new CustomerSpecificConfiguration();
     }
 }

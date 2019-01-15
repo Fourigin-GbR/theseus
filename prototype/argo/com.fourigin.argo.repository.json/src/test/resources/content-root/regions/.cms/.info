@@ -4,8 +4,16 @@
 			{
     			"type": "file",
     			"name": "athen",
-    			"localizedName": "athen",
-    			"displayName": "athen",
+                "localizedName" : {
+                  "" : "athen",
+                  "de" : "athen",
+                  "ru" : "athen"
+                },
+                "displayName" : {
+                  "" : "athen",
+                  "de" : "athen",
+                  "ru" : "athen"
+                },
     			"description": "Auto-created directory info. Don't forget to specify all properties!",
     			"templateReference": {
     				"templateId": "",
@@ -16,8 +24,16 @@
 			{
     			"type": "file",
     			"name": "loutraki",
-    			"localizedName": "loutraki",
-    			"displayName": "loutraki",
+                "localizedName" : {
+                  "" : "loutraki",
+                  "de" : "loutraki",
+                  "ru" : "loutraki"
+                },
+                "displayName" : {
+                  "" : "loutraki",
+                  "de" : "loutraki",
+                  "ru" : "loutraki"
+                },
     			"description": "Auto-created directory info. Don't forget to specify all properties!",
     			"templateReference": {
     				"templateId": "",
@@ -28,8 +44,16 @@
 			{
     			"type": "file",
     			"name": "salamina",
-    			"localizedName": "salamina",
-    			"displayName": "salamina",
+                "localizedName" : {
+                  "" : "salamina",
+                  "de" : "salamina",
+                  "ru" : "salamina"
+                },
+                "displayName" : {
+                  "" : "salamina",
+                  "de" : "salamina",
+                  "ru" : "salamina"
+                },
     			"description": "Auto-created directory info. Don't forget to specify all properties!",
     			"templateReference": {
     				"templateId": "",

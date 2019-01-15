@@ -100,7 +100,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         }
 
         if (info instanceof DirectoryInfo) {
-            return resolveDirectoryFolder(base, info.getParent());
+            return resolveDirectoryFolder(base, (DirectoryInfo) info);
         }
 
         // TODO: implement reference nodes
@@ -112,15 +112,12 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
     }
 
     private String getInternalFolderPath(String base, SiteNodeContainerInfo container) {
-        if(container == null) {
+        if (container == null) {
             // root
             return "/";
         }
 
-//        if (container.getParent() == null) {
-//            // root
-//            return "/" + container.getLocalizedName();
-//        }
+        String id = container.getPath() + ">" + container.getName();
 
         if (!(container instanceof DirectoryInfo)) {
             return null;
@@ -128,21 +125,20 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
 
         SiteNodeContainerInfo parent = container.getParent();
         String path = SiteNodes.resolveContent(base, container.getLocalizedName());
+        if(path == null){
+            if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of {}, using node name as fallback!", id);
+            path = container.getName();
+        }
 
-//        DirectoryInfo directory = (DirectoryInfo) node;
-//        if (directory.isVirtual()) {
-//            return getInternalFolderPath(parent) + path + "-";
-//        }
-
-        if(path == null) {
+        if (parent == null || path == null) {
             return getInternalFolderPath(base, parent);
         }
-        
+
         return getInternalFolderPath(base, parent) + path + "/";
     }
 
     private String resolveDirectoryFolder(String base, SiteNodeContainerInfo container) {
-        String result = getInternalFolderPath(base, container);
+        String result = getInternalFolderPath(base, container.getParent());
         if (logger.isDebugEnabled())
             logger.debug("folder path is '{}'.", result);
 
@@ -163,11 +159,20 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
 //        if (logger.isDebugEnabled())
 //            logger.debug("final folder path is '{}'.", result);
 
-        if (result != null && !"/".equals(result) && result.endsWith("/")) {
-            result = result.substring(0, result.length() - 1);
-        }
+        result = cleanup(result);
+//        if (result != null && !"/".equals(result) && result.endsWith("/")) {
+//            result = result.substring(0, result.length() - 1);
+//        }
 
         return result;
+    }
+
+    private String cleanup(String path){
+        if (path != null && !"/".equals(path) && path.endsWith("/")) {
+            return path.substring(0, path.length() - 1);
+        }
+
+        return path;
     }
 
     private String resolvePageFolder(String base, PageInfo page) {
@@ -177,7 +182,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
             return "/";
         }
 
-        return resolveDirectoryFolder(base, parent);
+        return cleanup(getInternalFolderPath(base, parent));
     }
 
 //    private String resolveSitePath(SiteNodeInfo node) {

@@ -22,7 +22,7 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
                 return new OutputContainer();
             }
         };
-    
+
     public void setFilenameStrategy(FilenameStrategy filenameStrategy) {
         this.filenameStrategy = filenameStrategy;
     }
@@ -32,6 +32,15 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
     }
 
     public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String customer, String base) {
+        if (logger.isDebugEnabled()) logger.debug(
+            "Resolving file output stream for {}/{}, postfix {}, extension {} and {}",
+            customer,
+            base,
+            filenamePostfix,
+            extension,
+            info
+        );
+
         String filename = filenameStrategy.getFilename(base, info);
         if (logger.isDebugEnabled()) logger.debug("filename (from strategy): '{}'", filename);
 
@@ -56,10 +65,9 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
         }
 
         File nodeRootFile;
-        if("/".equals(folder)) {
+        if ("/".equals(folder)) {
             nodeRootFile = docRootFile;
-        }
-        else {
+        } else {
             nodeRootFile = new File(docRootFile, folder);
         }
 
@@ -97,7 +105,8 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
         if (outputContainer.outputFile != null
             && outputContainer.outputFile.isFile()
             && !outputContainer.outputFile.delete()) {
-            if (logger.isErrorEnabled()) logger.error("Unable to delete the output file '{}' on reset()!", outputContainer.outputFile.getAbsolutePath()); // NOPMD
+            if (logger.isErrorEnabled()) // NOPMD
+                logger.error("Unable to delete the output file '{}' on reset()!", outputContainer.outputFile.getAbsolutePath()); // NOPMD
         }
 
         OUTPUT_CONTAINER_THREAD_LOCAL.remove();
