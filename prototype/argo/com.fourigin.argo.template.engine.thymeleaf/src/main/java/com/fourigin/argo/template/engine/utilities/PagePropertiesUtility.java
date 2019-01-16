@@ -41,17 +41,36 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
     }
 
     public String getPath(String nodePath, String externalCompilerBase, String externalProcessingMode) {
-        String baseUrlAttributeName = BASE_URL_PREFIX + externalProcessingMode;
-        if (logger.isDebugEnabled()) logger.debug("Searching for site-attribute '{}'.", baseUrlAttributeName);
-
-        String baseUrl = siteAttributes.get(baseUrlAttributeName);
-        if (logger.isDebugEnabled()) logger.debug("Value of site-attribute '{}': '{}'.", baseUrlAttributeName, baseUrl);
+        String baseUrl = getNodePathAttributeValue(externalCompilerBase, externalProcessingMode);
+        if (logger.isDebugEnabled()) logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
 
         InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(externalProcessingMode));
         String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
         if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
 
         return propertiesReplacement.process(baseUrl + linkPath, "base", externalCompilerBase);
+    }
+
+    private String getNodePathAttributeValue(String base, String mode){
+        {
+            String attrName = BASE_URL_PREFIX + base + '.' + mode;
+            if (siteAttributes.containsKey(attrName)) {
+                if (logger.isDebugEnabled())
+                    logger.debug("Returning base & mode specific attribute value for '{}'.", attrName);
+                return siteAttributes.get(attrName);
+            }
+        }
+
+        {
+            String attrName = BASE_URL_PREFIX + mode;
+            if (siteAttributes.containsKey(attrName)) {
+                if (logger.isDebugEnabled())
+                    logger.debug("Returning mode specific attribute value for '{}'.", attrName);
+                return siteAttributes.get(attrName);
+            }
+        }
+
+        throw new IllegalStateException("No base path site attribute found for base '" + base + "' and mode '" + mode + "'!");
     }
 
     public Set<String> getServiceNames() {

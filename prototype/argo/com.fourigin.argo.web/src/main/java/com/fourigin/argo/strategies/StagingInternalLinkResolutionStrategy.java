@@ -21,7 +21,14 @@ public class StagingInternalLinkResolutionStrategy implements InternalLinkResolu
         PageInfo info = contentRepository.resolveInfo(PageInfo.class, nodePath);
 
         String folder = filenameStrategy.getFolder(base, info);
+        if (folder.endsWith("/")) {
+            folder = folder.substring(0, folder.length() - 1);
+        }
+
         String file = filenameStrategy.getFilename(base, info);
+        if (file.startsWith("/")) {
+            file = file.substring(1);
+        }
 
         return folder + '/' + file + ".html";
     }
