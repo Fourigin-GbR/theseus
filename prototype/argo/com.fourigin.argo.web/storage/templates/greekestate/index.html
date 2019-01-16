@@ -17,7 +17,11 @@
     <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
     <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
 </head>
-<body>
+<body th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+">
 <!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
 <!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
 
@@ -94,8 +98,8 @@
 
     </article>
 
-    <article>
-        <h2>Ausgewählte Angebote</h2>
+    <article th:with="objects = ${c.getElement('/offers/objects')}">
+        <h2 th:text="${c.getContent('/offers/headline')}">Ausgewählte Angebote!</h2>
 
         <ul class="smallItemGalleryList">
             <li>
@@ -133,15 +137,15 @@
                 </div>
                 <div class="description">
                     <div class="category">Saronikos</div>
-                    <h3>Einfamilienhaus zu verkaufen</h3>
-                    <p>Object: object_3813104</p>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <h3 th:text="${c.getContent(objects.elements[0], '/headline')}">Einfamilienhaus zu verkaufen</h3>
+                    <p th:text="${c.getContent(objects.elements[0], '/code')}">Object: object_3813104</p>
+                    <h3><a th:href="${c.getContent(objects.elements[0], '/target')}" href="details.html" th:text="${c.getContent(objects.elements[0], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
-                    <span class="price">
+                    <span class="price" th:text="${c.getContent(objects.elements[0], '/price')}">
                         € 240,000
                     </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
+                    <a th:href="${c.getContent(objects.elements[0], '/target')}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[0], '/targetTitle')}">Zum Angebot</a>
                 </div>
             </li>
 
@@ -187,15 +191,15 @@
                 </div>
                 <div class="description">
                     <div class="category">Loutraki</div>
-                    <h3>Apartment zu verkaufen</h3>
-                    <p>Object: object_5350928</p>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <h3 th:text="${c.getContent(objects.elements[1], '/headline')}">Apartment zu verkaufen</h3>
+                    <p th:text="${c.getContent(objects.elements[1], '/code')}">Object: object_5350928</p>
+                    <h3><a th:href="${c.getContent(objects.elements[1], '/target')}" href="details.html" th:text="${c.getContent(objects.elements[1], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
-                    <span class="price">
+                    <span class="price" th:text="${c.getContent(objects.elements[1], '/price')}">
                         € 49,980
                     </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
+                    <a th:href="${c.getContent(objects.elements[1], '/target')}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[1], '/targetTitle')}">Zum Angebot</a>
                 </div>
             </li>
 
@@ -234,15 +238,15 @@
                 </div>
                 <div class="description">
                     <div class="category">Loutraki</div>
-                    <h3>Apartment zu verkaufen</h3>
-                    <p>Object: object_3813336</p>
-                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <h3 th:text="${c.getContent(objects.elements[2], '/headline')}">Apartment zu verkaufen</h3>
+                    <p th:text="${c.getContent(objects.elements[2], '/code')}">Object: object_3813336</p>
+                    <h3><a th:href="${c.getContent(objects.elements[2], '/target')}" href="details.html" th:text="${c.getContent(objects.elements[2], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
-                    <span class="price">
+                    <span class="price" th:text="${c.getContent(objects.elements[2], '/price')}">
                         € 549,990
                     </span>
-                    <a href="details.html" class="cta">Zum Angebot</a>
+                    <a th:href="${c.getContent(objects.elements[2], '/target')}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[2], '/targetTitle')}">Zum Angebot</a>
                 </div>
             </li>
         </ul>
