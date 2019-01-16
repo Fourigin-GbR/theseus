@@ -139,13 +139,13 @@
                     <div class="category">Saronikos</div>
                     <h3 th:text="${c.getContent(objects.elements[0], '/headline')}">Einfamilienhaus zu verkaufen</h3>
                     <p th:text="${c.getContent(objects.elements[0], '/code')}">Object: object_3813104</p>
-                    <h3><a th:href="${c.getContent(objects.elements[0], '/target')}" href="details.html" th:text="${c.getContent(objects.elements[0], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <h3><a th:href="${p.getPath(c.getContent(objects.elements[0], '/target'))}" href="details.html" th:text="${c.getContent(objects.elements[0], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
                     <span class="price" th:text="${c.getContent(objects.elements[0], '/price')}">
                         € 240,000
                     </span>
-                    <a th:href="${c.getContent(objects.elements[0], '/target')}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[0], '/targetTitle')}">Zum Angebot</a>
+                    <a th:href="${p.getPath(c.getContent(objects.elements[0], '/target'))}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[0], '/targetTitle')}">Zum Angebot</a>
                 </div>
             </li>
 
@@ -193,13 +193,13 @@
                     <div class="category">Loutraki</div>
                     <h3 th:text="${c.getContent(objects.elements[1], '/headline')}">Apartment zu verkaufen</h3>
                     <p th:text="${c.getContent(objects.elements[1], '/code')}">Object: object_5350928</p>
-                    <h3><a th:href="${c.getContent(objects.elements[1], '/target')}" href="details.html" th:text="${c.getContent(objects.elements[1], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <h3><a th:href="${p.getPath(c.getContent(objects.elements[1], '/target'))}" href="details.html" th:text="${c.getContent(objects.elements[1], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
                     <span class="price" th:text="${c.getContent(objects.elements[1], '/price')}">
                         € 49,980
                     </span>
-                    <a th:href="${c.getContent(objects.elements[1], '/target')}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[1], '/targetTitle')}">Zum Angebot</a>
+                    <a th:href="${p.getPath(c.getContent(objects.elements[1], '/target'))}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[1], '/targetTitle')}">Zum Angebot</a>
                 </div>
             </li>
 
@@ -240,13 +240,13 @@
                     <div class="category">Loutraki</div>
                     <h3 th:text="${c.getContent(objects.elements[2], '/headline')}">Apartment zu verkaufen</h3>
                     <p th:text="${c.getContent(objects.elements[2], '/code')}">Object: object_3813336</p>
-                    <h3><a th:href="${c.getContent(objects.elements[2], '/target')}" href="details.html" th:text="${c.getContent(objects.elements[2], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
+                    <h3><a th:href="${p.getPath(c.getContent(objects.elements[2], '/target'))}" href="details.html" th:text="${c.getContent(objects.elements[2], '/type')}">Gewerbegebiet mit bester Anbindung</a></h3>
                 </div>
                 <div class="priceAndCta">
                     <span class="price" th:text="${c.getContent(objects.elements[2], '/price')}">
                         € 549,990
                     </span>
-                    <a th:href="${c.getContent(objects.elements[2], '/target')}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[2], '/targetTitle')}">Zum Angebot</a>
+                    <a th:href="${p.getPath(c.getContent(objects.elements[2], '/target'))}" href="details.html" class="cta" th:text="${c.getContent(objects.elements[2], '/targetTitle')}">Zum Angebot</a>
                 </div>
             </li>
         </ul>
