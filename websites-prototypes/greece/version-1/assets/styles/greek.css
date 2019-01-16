@@ -2,6 +2,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'News Cycle', Arial, sans-serif;
+    min-width: 320px;
 }
 
 a {
@@ -52,7 +53,7 @@ nav.breadcrumb {
     background-color: #054e8c;
     color: #fff;
     margin: 0;
-    padding: 10px 20px 5px 20px;
+    padding: 5px 20px;
     box-sizing: border-box;
     font-size: 14px;
     position: sticky;
@@ -61,7 +62,11 @@ nav.breadcrumb {
 }
 nav.breadcrumb .wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+}
+nav.breadcrumb .breadcrumbPath {
+    margin-top: 5px;
 }
 nav.breadcrumb i,
 nav.breadcrumb ul {
@@ -90,6 +95,7 @@ nav.breadcrumb li a {
     color: #fff;
     text-decoration: none;
     padding: 0 5px;
+    white-space: nowrap;
 }
 nav.breadcrumb li a:hover {
     background-color: #3b84c1;
@@ -97,10 +103,11 @@ nav.breadcrumb li a:hover {
 
 nav.breadcrumb .contextHighlights {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
 }
 nav.breadcrumb .contextHighlights .links {
-
+    margin-top: 5px;
 }
 nav.breadcrumb .contextHighlights .links a {
     color: #fff;
@@ -108,6 +115,7 @@ nav.breadcrumb .contextHighlights .links a {
     padding: 3px 15px;
     text-decoration: none;
     font-size: inherit;
+    white-space: nowrap;
 }
 nav.breadcrumb .contextHighlights .links a:after {
     content: "\f105";
@@ -129,6 +137,8 @@ nav.breadcrumb .contextHighlights .searchAndGo {
     display: flex;
     justify-content: end;
     align-items: center;
+    white-space: nowrap;
+    margin-top: 5px;
 }
 
 nav.breadcrumb .contextHighlights form label span {
@@ -151,6 +161,12 @@ nav.breadcrumb .contextHighlights form input[type=submit] {
     font-weight: normal;
 }
 
+@media (max-width: 680px) {
+    nav.breadcrumb .contextHighlights .searchAndGo,
+    nav.breadcrumb .contextHighlights .links {
+        margin-top: 15px;
+    }
+}
 
 
 header {
