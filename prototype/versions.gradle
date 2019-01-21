@@ -229,6 +229,7 @@ registerVersion('org.springframework.boot:spring-boot-starter-tomcat', versionMa
 registerVersion('org.springframework.boot:spring-boot-starter-jdbc', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot-starter-actuator', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot-starter-websocket', versionMap.springboot)
+registerVersion('org.springframework.boot:spring-boot-starter-quartz', versionMap.springboot)
 registerVersion('org.springframework.boot:spring-boot-starter-test', versionMap.springboot)
 registerVersion('org.springframework.security:spring-security-acl', versionMap.springsecurity)
 registerVersion('org.springframework.security:spring-security-cas', versionMap.springsecurity)

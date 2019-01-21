@@ -8,29 +8,36 @@ import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
-import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
 import com.fourigin.argo.controller.assets.ThumbnailDimensions;
 import com.fourigin.argo.controller.assets.ThumbnailResolver;
+import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
+import com.fourigin.argo.scheduling.AutowiringSpringBeanJobFactory;
+import com.fourigin.argo.scheduling.CompileJob;
+import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.strategies.DefaultFilenameStrategy;
 import com.fourigin.argo.strategies.DocumentRootResolverStrategy;
 import com.fourigin.argo.strategies.FileCompilerOutputStrategy;
 import com.fourigin.argo.strategies.FilenameStrategy;
 import com.fourigin.argo.strategies.MappingDocumentRootResolverStrategy;
+import com.fourigin.argo.strategies.StagingInternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.DefaultTemplateEngineFactory;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.TemplateEngine;
 import com.fourigin.argo.template.engine.TemplateEngineFactory;
 import com.fourigin.argo.template.engine.ThymeleafTemplateEngine;
-import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
-import com.fourigin.argo.strategies.StagingInternalLinkResolutionStrategy;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -39,9 +46,15 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
 import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.quartz.JobDetailFactoryBean;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
+import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
@@ -58,6 +71,7 @@ import java.util.Map;
 @ComponentScan({
     "com.fourigin.argo.web",
     "com.fourigin.argo.controller",
+    "com.fourigin.argo.scheduling",
     "com.fourigin.argo.config"
 })
 @SpringBootApplication(
@@ -69,6 +83,9 @@ import java.util.Map;
 public class App {
 
     private static final String APP_NAME = "argo";
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Value("${template.engine.thymeleaf.base}")
     private String templateBasePath;
@@ -112,6 +129,7 @@ public class App {
     }
 
     @Bean
+    @Qualifier("STAGE")
     public CompilerOutputStrategy fileCompilerOutputStrategy() {
         FileCompilerOutputStrategy fileCompilerOutputStrategy = new FileCompilerOutputStrategy();
 
@@ -273,6 +291,49 @@ public class App {
     @ConfigurationProperties(prefix = "customer")
     public CustomerSpecificConfiguration customerSpecificConfiguration(){
         return new CustomerSpecificConfiguration();
+    }
+
+    //******* QUARTZ
+    @Bean
+    public JobDetailFactoryBean jobDetail() {
+        JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
+        jobDetailFactory.setJobClass(CompileJob.class);
+        jobDetailFactory.setDescription("Invoke Sample Job service...");
+        jobDetailFactory.setDurability(true);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("customer", "greekestate");
+        dataMap.put("bases", Arrays.asList("DE", "EN", "RU"));
+        jobDetailFactory.setJobDataMap(new JobDataMap(dataMap));
+
+        return jobDetailFactory;
+    }
+
+    @Bean
+    public SimpleTriggerFactoryBean trigger(JobDetail job) {
+        SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
+        trigger.setJobDetail(job);
+        trigger.setRepeatInterval(30000); // 30 sek.
+        trigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+        return trigger;
+    }
+
+    @Bean
+    public SchedulerFactoryBean scheduler(Trigger trigger, JobDetail job) {
+        SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
+        schedulerFactory.setConfigLocation(new ClassPathResource("quartz.properties"));
+
+        schedulerFactory.setJobFactory(springBeanJobFactory(applicationContext));
+        schedulerFactory.setJobDetails(job);
+        schedulerFactory.setTriggers(trigger);
+        return schedulerFactory;
+    }
+
+    @Bean
+    public SpringBeanJobFactory springBeanJobFactory(ApplicationContext applicationContext) {
+        AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
+        jobFactory.setApplicationContext(applicationContext);
+        return jobFactory;
     }
 
     /*

@@ -265,6 +265,7 @@ project(':argo') {
             compile managedDependency('org.springframework.boot:spring-boot-starter-tomcat')
             compile managedDependency('org.springframework.boot:spring-boot-starter-actuator')
             compile managedDependency('org.springframework.boot:spring-boot-starter-thymeleaf')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-quartz')
 //            compile managedDependency('org.springframework.boot:spring-boot-starter-jdbc')
 
             compile managedDependency('org.springframework:spring-context-support')
