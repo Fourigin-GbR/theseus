@@ -25,7 +25,7 @@ public class ContentPageChecksum {
         this.metaDataValue = metaDataValue;
     }
 
-    public String getContentValue(){
+    public String getContentValue() {
         return contentValue;
     }
 
@@ -33,7 +33,7 @@ public class ContentPageChecksum {
         this.contentValue = contentValue;
     }
 
-    public Map<String, String> getDataSourceValues(){
+    public Map<String, String> getDataSourceValues() {
         return dataSourceValues;
     }
 
@@ -41,10 +41,10 @@ public class ContentPageChecksum {
         this.dataSourceValues = dataSourceValues;
     }
 
-    public String getCombinedValue(){
+    public String getCombinedValue() {
         StringBuilder result = new StringBuilder(metaDataValue + '-' + contentValue);
 
-        if(dataSourceValues != null) {
+        if (dataSourceValues != null) {
             for (String checksum : dataSourceValues.values()) {
                 result.append('-');
                 result.append(checksum);

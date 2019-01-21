@@ -18,6 +18,7 @@ import java.util.TreeMap;
 
 public class PageState {
     private boolean staged;
+    private boolean live;
     private CompileState compileState;
     private ContentPageChecksum checksum;
     private String revision;
@@ -30,6 +31,14 @@ public class PageState {
 
     public void setStaged(boolean staged) {
         this.staged = staged;
+    }
+
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
     }
 
     public CompileState getCompileState() {
@@ -89,6 +98,7 @@ public class PageState {
         if (!(o instanceof PageState)) return false;
         PageState pageState = (PageState) o;
         return staged == pageState.staged &&
+            live == pageState.live &&
             Objects.equals(compileState, pageState.compileState) &&
             Objects.equals(checksum, pageState.checksum) &&
             Objects.equals(revision, pageState.revision);
@@ -96,13 +106,14 @@ public class PageState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(staged, compileState, checksum, revision);
+        return Objects.hash(staged, live, compileState, checksum, revision);
     }
 
     @Override
     public String toString() {
         return "PageState{" +
             "staged=" + staged +
+            ", live=" + live +
             ", compileState=" + compileState +
             ", checksum=" + checksum +
             ", revision='" + revision + '\'' +
@@ -151,6 +162,7 @@ public class PageState {
             PageState state = new PageState();
 
             state.setStaged(staged);
+            state.setLive(false);
 
             if(compileState != null) {
                 state.setCompileState(compileState);

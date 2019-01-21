@@ -140,18 +140,42 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return textElement.getContextSpecificContent(compilerBase, true);
     }
 
+    public int getContentAsInt(String path) {
+        return Integer.parseInt(getContent(path));
+    }
+
+    public float getContentAsFloat(String path) {
+        return Float.parseFloat(getContent(path));
+    }
+
     public String getContent(ContentElementsContainer container, String path) {
         TextAwareContentElement textElement = getTextAwareElement(container, path);
         return textElement.getContextSpecificContent(compilerBase, true);
     }
 
-    public String getOptionalContent(String path, String fallback) {
+    public int getContentAsInt(ContentElementsContainer container, String path) {
+        return Integer.parseInt(getContent(container, path));
+    }
+
+    public float getContentAsFloat(ContentElementsContainer container, String path) {
+        return Float.parseFloat(getContent(container, path));
+    }
+
+    public String getOptionalContent(String path, String defaultValue) {
         try {
             TextAwareContentElement textElement = getTextAwareElement(path);
             return textElement.getContextSpecificContent(compilerBase, true);
         } catch (Throwable ex) {
-            return fallback;
+            return defaultValue;
         }
+    }
+
+    public int getOptionalContentAsInt(String path, int defaultValue) {
+        return Integer.parseInt(getOptionalContent(path, String.valueOf(defaultValue)));
+    }
+
+    public float getOptionalContentAsFloat(String path, float defaultValue) {
+        return Float.parseFloat(getOptionalContent(path, String.valueOf(defaultValue)));
     }
 
     public String getOptionalContent(ContentElementsContainer container, String path, String fallback) {
@@ -161,6 +185,14 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         } catch (Throwable ex) {
             return fallback;
         }
+    }
+
+    public int getOptionalContentAsInt(ContentElementsContainer container, String path, int defaultValue) {
+        return Integer.parseInt(getOptionalContent(container, path, String.valueOf(defaultValue)));
+    }
+
+    public float getOptionalContentAsFloat(ContentElementsContainer container, String path, float defaultValue) {
+        return Float.parseFloat(getOptionalContent(container, path, String.valueOf(defaultValue)));
     }
 
     public List<ContentListElement> listElements(String path) {

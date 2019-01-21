@@ -484,7 +484,8 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
                 .withMetaDataChecksum("")
                 .withContentChecksum("")
                 .withDataSourceChecksum(new TreeMap<>())
-                .withStaged(false).build();
+                .withStaged(false)
+                .build();
         }
 
         return result;

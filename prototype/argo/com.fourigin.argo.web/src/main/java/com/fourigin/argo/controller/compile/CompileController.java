@@ -66,22 +66,42 @@ public class CompileController {
 
         PageInfo pageInfo = aggregation.getPageInfo();
         PageState pageState = aggregation.getPageState();
-        String pageName = pageInfo.getName();
+
+        ContentPage page = aggregation.getContentPage();
+        pageState.buildChecksum(page);
+
+        CompileState compileState = pageState.getCompileState();
+        if (compileState == null) {
+            compileState = new CompileState();
+        }
 
         String pageContentChecksum = pageState.getChecksum().getCombinedValue();
-        CompileState compileState = pageState.getCompileState();
+        if (logger.isDebugEnabled()) logger.debug("Actual page checksum: {}", pageContentChecksum);
+
+        // TODO: move checksum check to method, that writes the output.
+        // It doesn't make sense here to skip compiling, because e need a compiled content for the CMS!
+        // *******
+        /*
+
+        String pageName = pageInfo.getName();
         if (compileState != null) {
             if (logger.isDebugEnabled()) logger.debug("Verifying compile state of the page '{}'.", pageName);
+
             String compileBaseChecksum = compileState.getChecksum();
+            if (logger.isDebugEnabled()) logger.debug("Compile checksum: {}", compileBaseChecksum);
+
             if (compileBaseChecksum.equals(pageContentChecksum)) {
-                if (logger.isInfoEnabled()) logger.info("Would skip compiling page, please implement me ..."); // NOPMD
-                // TODO
-                //                if (logger.isInfoEnabled()) logger.info("Skipping page '{}', checksum unchanged.", pageName);
-                //                return;
+                if (logger.isInfoEnabled()) logger.info("Skipping page '{}', checksum unchanged.", pageName);
+                return;
+            }
+            else {
+                if (logger.isDebugEnabled()) logger.debug("");
             }
         } else {
             compileState = new CompileState();
         }
+        */
+        // *******
 
         PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
 
@@ -157,8 +177,7 @@ public class CompileController {
                     String nodePath = node.getPath() + '/' + node.getName();
                     try {
                         writePageOutput(customer, base, nodePath, mode);
-                    }
-                    catch (Throwable ex){
+                    } catch (Throwable ex) {
                         return new ResponseEntity<>(
                             new CompileResult(mode, false).withAttribute("cause", ex),
                             HttpStatus.BAD_REQUEST
@@ -214,7 +233,7 @@ public class CompileController {
 //
 //            return new ResponseEntity<>(
 //                new CompileResult(mode, true).withAttribute("duration", duration),
-//                HttpStatus.OK
+//                HttpStatus.ok
 //            );
         } finally {
             MDC.remove("customer");

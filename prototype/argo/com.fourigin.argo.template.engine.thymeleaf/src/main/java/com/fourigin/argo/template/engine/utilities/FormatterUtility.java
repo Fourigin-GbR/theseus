@@ -19,6 +19,32 @@ public class FormatterUtility implements ThymeleafTemplateUtility {
 
     private final Logger logger = LoggerFactory.getLogger(FormatterUtility.class);
 
+    public int parseInt(String value){
+        return Integer.parseInt(value);
+    }
+
+    public int parseInt(String value, int fallback){
+        try {
+            return Integer.parseInt(value);
+        }
+        catch(NumberFormatException ex){
+            return fallback;
+        }
+    }
+
+    public float parseFloat(String value){
+        return Float.parseFloat(value);
+    }
+
+    public float parseFloat(String value, float fallback){
+        try {
+            return Float.parseFloat(value);
+        }
+        catch(NumberFormatException ex){
+            return fallback;
+        }
+    }
+    
     public String formatPrice(String unformattedValue) {
         if (logger.isDebugEnabled()) logger.debug("Using compiler base '{}'", compilerBase);
 

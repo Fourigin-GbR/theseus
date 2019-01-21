@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CMS Html Editor</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles/system.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+    <!---->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <!---->
+</head>
+<body>
+
+<header>
+    <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
+</header>
+<div id="system" class="systemContent split left" th:data-base="${system.base}">
+    <div class="customer" th:text="${system.customer}">IBM</div>
+    <div id="jstree"></div>
+</div>
+<div id="details" class="split right">
+    <fieldset>
+        <label>Path</label>
+        <div id="path">
+            &nbsp;
+        </div>
+    </fieldset>
+    <fieldset>
+        <label>State</label>
+        <div id="state">
+            &nbsp;
+        </div>
+        <div id="state_change_message"></div>
+    </fieldset>
+    <fieldset>
+        <label>Actions</label>
+        <div id="actions">
+            <input id="action_stage" type="button" class="draft" name="stage" value="stage content"/>
+            <input id="action_unstage" type="button" class="stage" name="unstage" value="unstage content"/>
+            <input id="action_go_live" type="button" class="stage" name="live" value="go live"/>
+            <input id="action_revoke" type="button" class="live" name="revoke" value="revoke"/>
+        </div>
+    </fieldset>
+    <fieldset>
+        <label>Info</label>
+        <div id="info">
+            <div>
+                <span class="key">Creation date</span>
+                <span class="value">17.02.2018</span>
+            </div>
+            <div>
+                <span class="key">Last change date</span>
+                <span class="value">01.01.2019</span>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script type='text/javascript'>
+    jQuery(document).ready(function () {
+        $('#actions input').hide();
+        $('#action_stage').click(function () {
+            var base = $('#system').attr('data-base');
+            var path = $('#path').text();
+            changeState(base, path, 'STAGED');
+        });
+        $('#action_unstage').click(function () {
+            var base = $('#system').attr('data-base');
+            var path = $('#path').text();
+            changeState(base, path, 'DRAFT');
+        });
+        $('#action_go_live').click(function () {
+            var base = $('#system').attr('data-base');
+            var path = $('#path').text();
+            changeState(base, path, 'LIVE');
+        });
+        $('#action_revoke').click(function () {
+            var base = $('#system').attr('data-base');
+            var path = $('#path').text();
+            changeState(base, path, 'STAGED');
+        });
+
+        var base = $('#system').attr('data-base');
+        $.when(loadTree(base)).done(
+            function (data) {
+                $('#jstree')
+                    .on('changed.jstree', function (e, data) {
+                        var path = data.selected;
+                        updateInfo(base, path);
+                        // $('#event_result').html('Selected: ' + r.join(', '));
+                    }).jstree({
+                    core: {
+                        data: data
+                    }
+                });
+            }
+        );
+    });
+
+    function loadTree(base) {
+        return $.ajax({
+            url: "/cms/system/tree/?base=" + base
+        });
+    }
+
+    function loadTreeNode(base, path) {
+        return $.ajax({
+            url: "/cms/system/treeNode/?base=" + base + "&path=" + path
+        });
+    }
+
+    function updateInfo(base, path) {
+        $('#path').html(path);
+        var stateDiv = $('#state');
+        var draftInputs = $('#actions input.draft');
+        var stageInputs = $('#actions input.stage');
+        var liveInputs = $('#actions input.live');
+        $.ajax({
+            url: "/cms/system/info/?base=" + base + "&path=" + path,
+            success: function (data) {
+                console.log(data);
+                if (!data.pageState.staged) {
+                    // DRAFT
+                    stateDiv.html('DRAFT');
+                    draftInputs.show();
+                    stageInputs.hide();
+                    liveInputs.hide();
+                }
+                else if (!data.pageState.live) {
+                    // STAGED
+                    stateDiv.html('STAGED');
+                    draftInputs.hide();
+                    stageInputs.show();
+                    liveInputs.hide();
+                }
+                else {
+                    // LIVE
+                    stateDiv.html('LIVE');
+                    draftInputs.hide();
+                    stageInputs.hide();
+                    liveInputs.show();
+                }
+            }
+        });
+    }
+
+    function changeState(base, path, state) {
+        alert('Changing state to ' + state);
+        $.ajax({
+            url: "/cms/system/updateState/?base=" + base + "&path=" + path + "&state=" + state,
+            success: function (data) {
+                if (!data.success) {
+                    $('state_change_message').html(data.message);
+                }
+                updateInfo(base, path);
+            }
+        })
+    }
+
+</script>
+</body>
+</html>
