@@ -42,16 +42,49 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
 
     public String getPath(String nodePath, String externalCompilerBase, String externalProcessingMode) {
         String baseUrl = getNodePathAttributeValue(externalCompilerBase, externalProcessingMode);
-        if (logger.isDebugEnabled()) logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
+        if (logger.isDebugEnabled())
+            logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
 
         InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(externalProcessingMode));
         String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
         if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
 
-        return propertiesReplacement.process(baseUrl + linkPath, "base", externalCompilerBase);
+        String pattern;
+        switch (ProcessingMode.valueOf(externalProcessingMode)) {
+            case CMS:
+                pattern = baseUrl + linkPath;
+                break;
+            default:
+                pattern = linkPath;
+                break;
+        }
+
+        return propertiesReplacement.process(pattern, "base", externalCompilerBase);
     }
 
-    private String getNodePathAttributeValue(String base, String mode){
+    public String getAbsolutePath(String nodePath) {
+        return getAbsolutePath(nodePath, compilerBase, processingMode.name());
+    }
+
+    public String getAbsolutePath(String nodePath, String externalCompilerBase) {
+        return getAbsolutePath(nodePath, externalCompilerBase, processingMode.name());
+    }
+
+    public String getAbsolutePath(String nodePath, String externalCompilerBase, String externalProcessingMode) {
+        String baseUrl = getNodePathAttributeValue(externalCompilerBase, externalProcessingMode);
+        if (logger.isDebugEnabled())
+            logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
+
+        InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(externalProcessingMode));
+        String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
+        if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
+
+        String pattern = baseUrl + linkPath;
+
+        return propertiesReplacement.process(pattern, "base", externalCompilerBase);
+    }
+
+    private String getNodePathAttributeValue(String base, String mode) {
         {
             String attrName = BASE_URL_PREFIX + base + '.' + mode;
             if (siteAttributes.containsKey(attrName)) {

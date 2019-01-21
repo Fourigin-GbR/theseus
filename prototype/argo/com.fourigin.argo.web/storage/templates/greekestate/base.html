@@ -47,10 +47,15 @@
 
                 --&gt;|"></span>
 
-                <select name="siteLanguageSwitch" id="siteLanguageSwitch">
-                    <option th:selected="${p.getPath(argo.path)} == ${p.getPath(argo.path, 'DE')} ? 'selected' : 'false'" th:value="${p.getPath(argo.path, 'DE')}" value="#">deutsch</option>
-                    <option th:selected="${p.getPath(argo.path)} == ${p.getPath(argo.path, 'EN')} ? 'selected' : 'false'" th:value="${p.getPath(argo.path, 'EN')}" value="#">english</option>
-                    <option th:selected="${p.getPath(argo.path)} == ${p.getPath(argo.path, 'RU')} ? 'selected' : 'false'" th:value="${p.getPath(argo.path, 'RU')}" value="#">русский</option>
+                <select name="siteLanguageSwitch" id="siteLanguageSwitch" th:with="
+                    currentPath = ${p.getAbsolutePath(argo.path)},
+                    dePath = ${p.getAbsolutePath(argo.path, 'DE')},
+                    enPath = ${p.getAbsolutePath(argo.path, 'EN')},
+                    ruPath = ${p.getAbsolutePath(argo.path, 'RU')}
+                ">
+                    <option th:selected="${currentPath == dePath ? 'selected' : 'false'}" th:value="${dePath}" value="#">deutsch</option>
+                    <option th:selected="${currentPath == enPath ? 'selected' : 'false'}" th:value="${enPath}" value="#">english</option>
+                    <option th:selected="${currentPath == ruPath ? 'selected' : 'false'}" th:value="${ruPath}" value="#">русский</option>
                 </select>
             </div>
         </div>
