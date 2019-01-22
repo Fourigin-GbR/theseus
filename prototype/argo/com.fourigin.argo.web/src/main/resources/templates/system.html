@@ -117,7 +117,7 @@
         });
     }
 
-    function updateInfo(base, path) {
+    function updateInfo(base, path, message) {
         $('#path').html(path);
         var stateDiv = $('#state');
         var draftInputs = $('#actions input.draft');
@@ -127,40 +127,59 @@
             url: "/cms/system/info/?base=" + base + "&path=" + path,
             success: function (data) {
                 console.log(data);
-                if (!data.pageState.staged) {
-                    // DRAFT
-                    stateDiv.html('DRAFT');
-                    draftInputs.show();
-                    stageInputs.hide();
-                    liveInputs.hide();
-                }
-                else if (!data.pageState.live) {
-                    // STAGED
-                    stateDiv.html('STAGED');
+                if(!data.pageState){
+                    stateDiv.html('UNDEFINED');
                     draftInputs.hide();
-                    stageInputs.show();
+                    stageInputs.hide();
                     liveInputs.hide();
                 }
                 else {
-                    // LIVE
-                    stateDiv.html('LIVE');
-                    draftInputs.hide();
-                    stageInputs.hide();
-                    liveInputs.show();
+                    if (!data.pageState.staged) {
+                        // DRAFT
+                        stateDiv.html('DRAFT');
+                        draftInputs.show();
+                        stageInputs.hide();
+                        liveInputs.hide();
+                    }
+                    else if (!data.pageState.live) {
+                        // STAGED
+                        stateDiv.html('STAGED');
+                        draftInputs.hide();
+                        stageInputs.show();
+                        liveInputs.hide();
+                    }
+                    else {
+                        // LIVE
+                        stateDiv.html('LIVE');
+                        draftInputs.hide();
+                        stageInputs.hide();
+                        liveInputs.show();
+                    }
                 }
             }
         });
+
+        var messageDiv = $('#state_change_message');
+        if(message) {
+            messageDiv.html('Error: ' + message);
+        }
+        else {
+            messageDiv.html('');
+        }
     }
 
     function changeState(base, path, state) {
-        alert('Changing state to ' + state);
+        console.log('Changing state to ' + state);
         $.ajax({
             url: "/cms/system/updateState/?base=" + base + "&path=" + path + "&state=" + state,
             success: function (data) {
                 if (!data.success) {
-                    $('state_change_message').html(data.message);
+                    console.log('Error occurred: ' + data.message);
+                    updateInfo(base, path, data.message);
                 }
-                updateInfo(base, path);
+                else {
+                    updateInfo(base, path);
+                }
             }
         })
     }
