@@ -54,6 +54,7 @@ public class CompileJob implements Job {
 
         Map<String, Set<String>> allBases = customerSpecificConfiguration.getBases();
 
+        int count = 0;
         for (Map.Entry<String, Set<String>> entry : allBases.entrySet()) {
             String customer = entry.getKey();
             Set<String> bases = entry.getValue();
@@ -105,10 +106,16 @@ public class CompileJob implements Job {
                             if (logger.isDebugEnabled()) logger.debug("Compile checksum: {}", compileBaseChecksum);
 
                             if (compileBaseChecksum.equals(pageContentChecksum)) {
-                                if (logger.isInfoEnabled())
-                                    logger.info("Skipping page '{}', checksum unchanged.", pageName);
+                                if (logger.isDebugEnabled())
+                                    logger.debug("Skipping page '{}', checksum unchanged.", pageName);
                                 continue;
                             }
+
+                            compileState.setChecksum(pageContentChecksum);
+                        }
+                        else {
+                            compileState = new CompileState();
+                            compileState.setChecksum(pageContentChecksum);
                         }
 
                         if (COMPILE_PAGES) {
@@ -118,9 +125,21 @@ public class CompileJob implements Job {
                             try {
                                 pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
                                 storageCompilerOutputStrategy.finish();
+
+                                compileState.setCompiled(true);
+                                pageState.setCompileState(compileState);
+
+                                count++;
                             } catch (Throwable ex) {
                                 storageCompilerOutputStrategy.reset();
+
+                                compileState.setCompiled(false);
+                                compileState.setMessage(ex.getMessage());
+                                pageState.setCompileState(compileState);
                             }
+
+                            pageState.setCompileState(compileState);
+                            contentRepository.updatePageState(pageInfo, pageState);
                         } else {
                             if (logger.isWarnEnabled()) logger.warn("Compiling of pages is currently disabled!");
                         }
@@ -132,5 +151,7 @@ public class CompileJob implements Job {
                 MDC.remove("path");
             }
         }
+
+        if (logger.isInfoEnabled()) logger.info("Compiled pages (in all bases): {}", count);
     }
 }

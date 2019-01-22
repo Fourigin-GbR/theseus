@@ -11,6 +11,7 @@ public class DataSourceContent implements Serializable {
     private static final long serialVersionUID = 5480644248235587413L;
 
     private String name;
+    private boolean transientContent;
     private DataSourceIdentifier identifier;
     private List<ContentElement> content;
 
@@ -20,6 +21,14 @@ public class DataSourceContent implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isTransientContent() {
+        return transientContent;
+    }
+
+    public void setTransientContent(boolean transientContent) {
+        this.transientContent = transientContent;
     }
 
     public DataSourceIdentifier getIdentifier() {
@@ -43,20 +52,22 @@ public class DataSourceContent implements Serializable {
         if (this == o) return true;
         if (!(o instanceof DataSourceContent)) return false;
         DataSourceContent that = (DataSourceContent) o;
-        return Objects.equals(name, that.name) &&
+        return transientContent == that.transientContent &&
+            Objects.equals(name, that.name) &&
             Objects.equals(identifier, that.identifier) &&
             Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, identifier, content);
+        return Objects.hash(name, transientContent, identifier, content);
     }
 
     @Override
     public String toString() {
         return "DataSourceContent{" +
             "name='" + name + '\'' +
+            ", transientContent=" + transientContent +
             ", identifier=" + identifier +
             ", content=" + content +
             '}';
@@ -64,11 +75,17 @@ public class DataSourceContent implements Serializable {
 
     public static class Builder {
         private String name;
+        private boolean transientContent;
         private DataSourceIdentifier identifier;
         private List<ContentElement> content;
 
         public Builder withName(String name){
             this.name = name;
+            return this;
+        }
+
+        public Builder withTransientContent(boolean transientContent){
+            this.transientContent = transientContent;
             return this;
         }
 
@@ -89,6 +106,7 @@ public class DataSourceContent implements Serializable {
             Objects.requireNonNull(identifier, "identifier must not be null!");
 
             result.setName(name);
+            result.setTransientContent(transientContent);
             result.setIdentifier(identifier);
 
             if(content != null){

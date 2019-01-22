@@ -1,7 +1,11 @@
 package com.fourigin.argo.models.structure;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class ContentPageChecksum {
     private String metaDataValue;
@@ -45,7 +49,11 @@ public class ContentPageChecksum {
         StringBuilder result = new StringBuilder(metaDataValue + '-' + contentValue);
 
         if (dataSourceValues != null) {
-            for (String checksum : dataSourceValues.values()) {
+            Set<String> names = dataSourceValues.keySet();
+            List<String> orderedNames = new ArrayList<>(names);
+            Collections.sort(orderedNames);
+            for (String name : orderedNames) {
+                String checksum = dataSourceValues.get(name);
                 result.append('-');
                 result.append(checksum);
             }

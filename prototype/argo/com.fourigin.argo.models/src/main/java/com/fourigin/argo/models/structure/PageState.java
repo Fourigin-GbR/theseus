@@ -71,21 +71,30 @@ public class PageState {
         Collection<DataSourceContent> dataSources = contentPage.getDataSourceContents();
 
         String metaDataValue = ChecksumGenerator.getChecksum(metaData);
+        if (logger.isDebugEnabled()) logger.debug("meta-data-checksum: {}", metaDataValue);
+
         String contentValue = ChecksumGenerator.getChecksum(content);
+        if (logger.isDebugEnabled()) logger.debug("content-checksum: {}", contentValue);
 
         Map<String, String> dataSourceValues = new HashMap<>();
         if (dataSources != null) {
             for (DataSourceContent dataSource : dataSources) {
                 String name = dataSource.getName();
-                List<ContentElement> dataSourceContent = dataSource.getContent();
-                String dataSourceChecksum = null;
-                if(dataSourceContent != null) {
-                    dataSourceChecksum = ChecksumGenerator.getChecksum(dataSourceContent);
+                if (dataSource.isTransientContent()) {
+                    if (logger.isDebugEnabled()) logger.debug("Ignoring data source '{}' because the content is transient", name);
+                    continue;
                 }
 
-                if (logger.isDebugEnabled())
-                    logger.debug("Put '{}': '{}' data source checksum value", name, dataSourceChecksum);
+                List<ContentElement> dataSourceContent = dataSource.getContent();
+                if (dataSourceContent == null) {
+                    if (logger.isDebugEnabled()) logger.debug("Ignoring data source '{}' because the content is not present", name);
+                    continue;
+                }
+
+                String dataSourceChecksum = ChecksumGenerator.getChecksum(dataSourceContent);
                 dataSourceValues.put(name, dataSourceChecksum);
+                if (logger.isDebugEnabled())
+                    logger.debug("data source checksum of '{}': '{}'", name, dataSourceChecksum);
             }
         }
 
@@ -164,7 +173,7 @@ public class PageState {
             state.setStaged(staged);
             state.setLive(false);
 
-            if(compileState != null) {
+            if (compileState != null) {
                 state.setCompileState(compileState);
             }
 

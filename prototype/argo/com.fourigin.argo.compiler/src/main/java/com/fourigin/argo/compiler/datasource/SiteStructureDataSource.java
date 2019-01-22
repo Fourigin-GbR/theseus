@@ -20,7 +20,6 @@ import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
-import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.repository.strategies.NonRecursiveSiteNodeTraversingStrategy;
@@ -104,8 +103,8 @@ public class SiteStructureDataSource implements
                     revisions.put(pageInfo.getReference(), state.getRevision());
 
                     TextContentElement.Builder textBuilder = new TextContentElement.Builder()
-                        .withName("display-name")
-                        .withContent(SiteNodes.resolveContent(base, info.getDisplayName()));
+                        .withName("display-name");
+                    setContextSpecificValues(info.getDisplayName(), textBuilder);
 
                     if (query.isVerbose()) {
                         CompileState compileState = state.getCompileState();
@@ -114,10 +113,11 @@ public class SiteStructureDataSource implements
 
                         textBuilder
                             .withAttribute("info.description", info.getDescription())
-                            .withAttribute("info.localizedName", SiteNodes.resolveContent(base, info.getLocalizedName()))
                             .withAttribute("info.state.staged", String.valueOf(state.isStaged()))
-                            .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
+//                            .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
                             .withAttribute("info.state.revision", state.getRevision());
+
+                        setContextSpecificAttributeValues(info.getLocalizedName(), "info.localizedName", textBuilder);
 
                         if (templateReference != null) {
                             textBuilder
@@ -134,7 +134,7 @@ public class SiteStructureDataSource implements
 
                         if (compileState != null) {
                             textBuilder
-                                .withAttribute("info.state.compileState.checksum", compileState.getChecksum())
+//                                .withAttribute("info.state.compileState.checksum", compileState.getChecksum())
                                 .withAttribute("info.state.compileState.compiled", String.valueOf(compileState.isCompiled()))
                                 .withAttribute("info.state.compileState.timestamp", String.valueOf(compileState.getTimestamp()))
                                 .withAttribute("info.state.compileState.message", compileState.getMessage());
@@ -174,13 +174,14 @@ public class SiteStructureDataSource implements
                     result.add(linkBuilder.build());
                 } else if (DirectoryInfo.class.isAssignableFrom(info.getClass())) {
                     TextContentElement.Builder textBuilder = new TextContentElement.Builder()
-                        .withName("display-name")
-                        .withContent(SiteNodes.resolveContent(base, info.getDisplayName()));
+                        .withName("display-name");
+                    setContextSpecificValues(info.getDisplayName(), textBuilder);
 
                     if (query.isVerbose()) {
                         textBuilder
-                            .withAttribute("info.description", info.getDescription())
-                            .withAttribute("info.localizedName", SiteNodes.resolveContent(base, info.getLocalizedName()));
+                            .withAttribute("info.description", info.getDescription());
+
+                        setContextSpecificAttributeValues(info.getLocalizedName(), "info.localizedName", textBuilder);
                     }
 
                     LinkElement.Builder linkBuilder = new LinkElement.Builder()
@@ -198,6 +199,22 @@ public class SiteStructureDataSource implements
         id.setRevisions(revisions);
 
         return result;
+    }
+
+    private void setContextSpecificValues(Map<String, String> contextSpecificValues, TextContentElement.Builder textBuilder){
+        if(contextSpecificValues != null) {
+            for (Map.Entry<String, String> entry : contextSpecificValues.entrySet()) {
+                textBuilder.withContextSpecificContent(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+    private void setContextSpecificAttributeValues(Map<String, String> contextSpecificValues, String attributePrefix, TextContentElement.Builder textBuilder){
+        if(contextSpecificValues != null) {
+            for (Map.Entry<String, String> entry : contextSpecificValues.entrySet()) {
+                textBuilder.withAttribute(attributePrefix + "." + entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     @Override
