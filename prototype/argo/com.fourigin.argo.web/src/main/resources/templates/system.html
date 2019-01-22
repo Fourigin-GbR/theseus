@@ -22,7 +22,7 @@
 <header>
     <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
 </header>
-<div id="system" class="systemContent split left" th:data-base="${system.base}">
+<div id="system" class="systemContent split left" th:data-base="${system.base}" th:data-customer="${system.customer}">
     <div class="customer" th:text="${system.customer}">IBM</div>
     <div id="jstree"></div>
 </div>
@@ -55,10 +55,6 @@
             <div>
                 <span class="key">Creation date</span>
                 <span class="value">17.02.2018</span>
-            </div>
-            <div>
-                <span class="key">Last change date</span>
-                <span class="value">01.01.2019</span>
             </div>
         </div>
     </fieldset>
@@ -93,9 +89,8 @@
             function (data) {
                 $('#jstree')
                     .on('changed.jstree', function (e, data) {
-                        var path = data.selected;
-                        updateInfo(base, path);
-                        // $('#event_result').html('Selected: ' + r.join(', '));
+                        $('#system').attr('data-path', data.selected);
+                        updateInfo();
                     }).jstree({
                     core: {
                         data: data
@@ -103,6 +98,9 @@
                 });
             }
         );
+
+        // repeat execution every 5 sek.
+        setInterval(updateInfo, 5000);
     });
 
     function loadTree(base) {
@@ -117,54 +115,99 @@
         });
     }
 
-    function updateInfo(base, path, message) {
+    function updateInfo(message) {
+        console.log('Updating the status ...');
+
+        var systemDiv = $('#system');
+        var base = systemDiv.attr('data-base');
+        var path = systemDiv.attr('data-path');
+
         $('#path').html(path);
-        var stateDiv = $('#state');
-        var draftInputs = $('#actions input.draft');
-        var stageInputs = $('#actions input.stage');
-        var liveInputs = $('#actions input.live');
+
         $.ajax({
             url: "/cms/system/info/?base=" + base + "&path=" + path,
             success: function (data) {
                 console.log(data);
-                if(!data.pageState){
-                    stateDiv.html('UNDEFINED');
-                    draftInputs.hide();
-                    stageInputs.hide();
-                    liveInputs.hide();
+
+                if (!data.pageState) {
+                    updateStateInfo('UNDEFINED', false, false, false);
+                }
+                else if (!data.pageState.staged) {
+                    // DRAFT
+                    updateStateInfo('DRAFT', true, false, false);
+                    updateNodeInfo(data);
+                }
+                else if (!data.pageState.live) {
+                    // STAGED
+                    updateStateInfo('STAGED', false, true, false);
+                    updateNodeInfo(data);
                 }
                 else {
-                    if (!data.pageState.staged) {
-                        // DRAFT
-                        stateDiv.html('DRAFT');
-                        draftInputs.show();
-                        stageInputs.hide();
-                        liveInputs.hide();
-                    }
-                    else if (!data.pageState.live) {
-                        // STAGED
-                        stateDiv.html('STAGED');
-                        draftInputs.hide();
-                        stageInputs.show();
-                        liveInputs.hide();
-                    }
-                    else {
-                        // LIVE
-                        stateDiv.html('LIVE');
-                        draftInputs.hide();
-                        stageInputs.hide();
-                        liveInputs.show();
-                    }
+                    // LIVE
+                    updateStateInfo('LIVE', false, false, true);
+                    updateNodeInfo(data);
                 }
             }
         });
 
         var messageDiv = $('#state_change_message');
-        if(message) {
+        if (message) {
             messageDiv.html('Error: ' + message);
         }
         else {
             messageDiv.html('');
+        }
+    }
+
+    function updateStateInfo(state, isDraft, isStaged, isLive) {
+        $('#state').html(state);
+
+        var draftInputs = $('#actions input.draft');
+        if (isDraft)
+            draftInputs.show();
+        else
+            draftInputs.hide();
+
+        var stageInputs = $('#actions input.stage');
+        if (isStaged)
+            stageInputs.show();
+        else
+            stageInputs.hide();
+
+        var liveInputs = $('#actions input.live');
+        if (isLive)
+            liveInputs.show();
+        else
+            liveInputs.hide();
+    }
+
+    function updateNodeInfo(data) {
+        var infoDiv = $('#info');
+
+        infoDiv.empty();
+
+        var templateRef = data.templateReference;
+        if (templateRef) {
+            infoDiv
+                .append($('<div></div>')
+                    .append($('<span></span>').attr('class', 'key').text('Template: '))
+                    .append($('<span></span>').attr('class', 'value').text(templateRef))
+                );
+        }
+
+        var pageState = data.pageState;
+        if (pageState) {
+            var compileState = pageState.compileState;
+            if (compileState && compileState.compiled) {
+                var compileTimestamp = compileState.timestamp;
+                var timestamp = new Date(compileTimestamp);
+
+                infoDiv
+                    .append($('<div></div>')
+                        .append($('<span></span>').attr('class', 'key').text('Compiled at: '))
+                        .append($('<span></span>').attr('class', 'value').html(formatDate(timestamp)))
+                    )
+            }
         }
     }
 
@@ -175,13 +218,25 @@
             success: function (data) {
                 if (!data.success) {
                     console.log('Error occurred: ' + data.message);
-                    updateInfo(base, path, data.message);
+                    updateInfo(data.message);
                 }
                 else {
-                    updateInfo(base, path);
+                    updateInfo();
                 }
             }
         })
+    }
+
+    function formatDate(date) {
+        var month = date.getMonth() + 1;
+        var y = date.getFullYear();
+        var m = month < 10 ? "0" + month : "" + month;
+        var day = date.getDate();
+        var d = day < 10 ? "0" + day : day;
+        var hh = date.getHours();
+        var minutes = date.getMinutes();
+        var mm = minutes < 10 ? "0" + minutes : minutes;
+        return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
     }
 
 </script>

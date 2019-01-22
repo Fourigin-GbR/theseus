@@ -79,15 +79,17 @@ public class CompileJob implements Job {
                         }
 
                         PageInfo pageInfo = PageInfo.class.cast(infoNode);
+
+                        String path = (pageInfo.getPath() + '/' + pageInfo.getName()).replaceAll("//", "/");
+                        MDC.put("path", path);
+
                         PageState pageState = contentRepository.resolvePageState(pageInfo);
                         CompileState compileState = pageState.getCompileState();
+
 
                         // calculate the current checksum
                         ContentPage page = contentRepository.retrieve(pageInfo);
                         pageState.buildChecksum(page);
-
-                        String path = (pageInfo.getPath() + '/' + pageInfo.getName()).replaceAll("//", "/");
-                        MDC.put("path", path);
 
                         if (!pageState.isStaged()) {
                             if (logger.isDebugEnabled()) logger.debug("Skipping a non staged page");
@@ -127,6 +129,7 @@ public class CompileJob implements Job {
                                 storageCompilerOutputStrategy.finish();
 
                                 compileState.setCompiled(true);
+                                compileState.setTimestamp(System.currentTimeMillis());
                                 pageState.setCompileState(compileState);
 
                                 count++;

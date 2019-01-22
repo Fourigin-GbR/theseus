@@ -126,7 +126,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         SiteNodeContainerInfo parent = container.getParent();
         String path = SiteNodes.resolveContent(base, container.getLocalizedName());
         if(path == null){
-            if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of {}, using node name as fallback!", id);
+            if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of '{}', using node name as fallback!", id);
             path = container.getName();
         }
 

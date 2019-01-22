@@ -136,7 +136,7 @@ public class SiteStructureDataSource implements
                             textBuilder
 //                                .withAttribute("info.state.compileState.checksum", compileState.getChecksum())
                                 .withAttribute("info.state.compileState.compiled", String.valueOf(compileState.isCompiled()))
-                                .withAttribute("info.state.compileState.timestamp", String.valueOf(compileState.getTimestamp()))
+//                                .withAttribute("info.state.compileState.timestamp", String.valueOf(compileState.getTimestamp()))
                                 .withAttribute("info.state.compileState.message", compileState.getMessage());
                         }
                     }
@@ -201,18 +201,25 @@ public class SiteStructureDataSource implements
         return result;
     }
 
-    private void setContextSpecificValues(Map<String, String> contextSpecificValues, TextContentElement.Builder textBuilder){
-        if(contextSpecificValues != null) {
+    private void setContextSpecificValues(Map<String, String> contextSpecificValues, TextContentElement.Builder textBuilder) {
+        if (contextSpecificValues != null) {
             for (Map.Entry<String, String> entry : contextSpecificValues.entrySet()) {
-                textBuilder.withContextSpecificContent(entry.getKey(), entry.getValue());
+                String base = entry.getKey();
+                if ("".equals(base)) {
+                    textBuilder.withContent(entry.getValue());
+                } else {
+                    textBuilder.withContextSpecificContent(base, entry.getValue());
+                }
             }
         }
     }
 
-    private void setContextSpecificAttributeValues(Map<String, String> contextSpecificValues, String attributePrefix, TextContentElement.Builder textBuilder){
-        if(contextSpecificValues != null) {
+    private void setContextSpecificAttributeValues(Map<String, String> contextSpecificValues, String attributePrefix, TextContentElement.Builder textBuilder) {
+        if (contextSpecificValues != null) {
             for (Map.Entry<String, String> entry : contextSpecificValues.entrySet()) {
-                textBuilder.withAttribute(attributePrefix + "." + entry.getKey(), entry.getValue());
+                String base = entry.getKey();
+                String attrName = "".equals(base) ? attributePrefix : attributePrefix + '.' + base;
+                textBuilder.withAttribute(attrName, entry.getValue());
             }
         }
     }
