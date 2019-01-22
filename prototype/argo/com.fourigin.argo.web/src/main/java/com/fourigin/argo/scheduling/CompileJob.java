@@ -33,8 +33,6 @@ import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 public class CompileJob implements Job {
     private final Logger logger = LoggerFactory.getLogger(CompileJob.class);
 
-    private static final boolean COMPILE_PAGES = true;
-
     @Autowired
     private PageCompilerFactory pageCompilerFactory;
 
@@ -54,7 +52,10 @@ public class CompileJob implements Job {
 
         Map<String, Set<String>> allBases = customerSpecificConfiguration.getBases();
 
-        int count = 0;
+        long processingTimestamp = System.currentTimeMillis();
+
+        int countCompiled = 0;
+        int countSwitched = 0;
         for (Map.Entry<String, Set<String>> entry : allBases.entrySet()) {
             String customer = entry.getKey();
             Set<String> bases = entry.getValue();
@@ -84,67 +85,26 @@ public class CompileJob implements Job {
                         MDC.put("path", path);
 
                         PageState pageState = contentRepository.resolvePageState(pageInfo);
-                        CompileState compileState = pageState.getCompileState();
 
+                        // stage compile
+                        if (compileStage(
+                            path,
+                            pageInfo,
+                            pageState,
+                            pageCompiler,
+                            contentRepository,
+                            processingTimestamp
+                        )) {
+                            countCompiled++;
 
-                        // calculate the current checksum
-                        ContentPage page = contentRepository.retrieve(pageInfo);
-                        pageState.buildChecksum(page);
-
-                        if (!pageState.isStaged()) {
-                            if (logger.isDebugEnabled()) logger.debug("Skipping a non staged page");
-                            continue;
-                        }
-
-                        String pageContentChecksum = pageState.getChecksum().getCombinedValue();
-                        if (logger.isDebugEnabled()) logger.debug("Actual page checksum: {}", pageContentChecksum);
-
-                        String pageName = pageInfo.getName();
-                        if (compileState != null) {
-                            if (logger.isDebugEnabled())
-                                logger.debug("Verifying compile state of the page '{}'.", pageName);
-
-                            String compileBaseChecksum = compileState.getChecksum();
-                            if (logger.isDebugEnabled()) logger.debug("Compile checksum: {}", compileBaseChecksum);
-
-                            if (compileBaseChecksum.equals(pageContentChecksum)) {
-                                if (logger.isDebugEnabled())
-                                    logger.debug("Skipping page '{}', checksum unchanged.", pageName);
-                                continue;
-                            }
-
-                            compileState.setChecksum(pageContentChecksum);
-                        }
-                        else {
-                            compileState = new CompileState();
-                            compileState.setChecksum(pageContentChecksum);
-                        }
-
-                        if (COMPILE_PAGES) {
-                            ProcessingMode mode = STAGE;
-                            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
-
-                            try {
-                                pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
-                                storageCompilerOutputStrategy.finish();
-
-                                compileState.setCompiled(true);
-                                compileState.setTimestamp(System.currentTimeMillis());
-                                pageState.setCompileState(compileState);
-
-                                count++;
-                            } catch (Throwable ex) {
-                                storageCompilerOutputStrategy.reset();
-
-                                compileState.setCompiled(false);
-                                compileState.setMessage(ex.getMessage());
-                                pageState.setCompileState(compileState);
-                            }
-
-                            pageState.setCompileState(compileState);
                             contentRepository.updatePageState(pageInfo, pageState);
-                        } else {
-                            if (logger.isWarnEnabled()) logger.warn("Compiling of pages is currently disabled!");
+                        }
+
+                        // live switch
+                        if (switchLive(path, pageState, processingTimestamp)) {
+                            countSwitched++;
+
+                            contentRepository.updatePageState(pageInfo, pageState);
                         }
                     }
                 }
@@ -155,6 +115,85 @@ public class CompileJob implements Job {
             }
         }
 
-        if (logger.isInfoEnabled()) logger.info("Compiled pages (in all bases): {}", count);
+        if (logger.isInfoEnabled()) logger.info("Compiled pages (in all bases): {}", countCompiled);
+        if (logger.isInfoEnabled()) logger.info("Switched pages (in all bases): {}", countSwitched);
+    }
+
+    private boolean compileStage(String path, PageInfo pageInfo, PageState pageState, PageCompiler pageCompiler, ContentRepository contentRepository, long compileTimestamp) {
+        if (!pageState.isStaged()) {
+            if (logger.isDebugEnabled()) logger.debug("Skipping a non staged page");
+            return false;
+        }
+
+        // calculate the current checksum
+        ContentPage page = contentRepository.retrieve(pageInfo);
+        pageState.buildChecksum(page);
+
+        String pageName = pageInfo.getName();
+
+        CompileState compileState = pageState.getCompileState();
+        if (compileState != null) {
+            if (logger.isDebugEnabled())
+                logger.debug("Verifying compile state of the page '{}'.", pageName);
+
+            String pageContentChecksum = pageState.getChecksum().getCombinedValue();
+            String lastCompileChecksum = compileState.getChecksum();
+            if (logger.isDebugEnabled())
+                logger.debug("Page checksum: \n\tactual: {}\n\tlast:   {}", pageContentChecksum, lastCompileChecksum);
+
+            if (pageContentChecksum.equals(lastCompileChecksum)) {
+                if (logger.isDebugEnabled())
+                    logger.debug("Skipping page '{}', checksum unchanged.", pageName);
+                return false;
+            }
+
+            compileState.setChecksum(pageContentChecksum);
+        } else {
+            compileState = new CompileState();
+
+            String pageContentChecksum = pageState.getChecksum().getCombinedValue();
+            compileState.setChecksum(pageContentChecksum);
+        }
+
+        ProcessingMode mode = STAGE;
+        ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
+
+        try {
+            pageCompiler.compile(path, pageInfo, preparedContentPage, mode, storageCompilerOutputStrategy);
+            storageCompilerOutputStrategy.finish();
+
+            compileState.setCompiled(true);
+            compileState.setTimestamp(compileTimestamp); // STAGE compile timestamp
+        } catch (Throwable ex) {
+            storageCompilerOutputStrategy.reset();
+
+            compileState.setCompiled(false);
+            compileState.setTimestamp(-1);
+            compileState.setMessage(ex.getMessage());
+        }
+
+        pageState.setCompileState(compileState);
+
+        return true;
+    }
+
+    private boolean switchLive(String path, PageState pageState, long switchTimestamp) {
+        if (!pageState.isLive()) {
+            if (logger.isDebugEnabled()) logger.debug("Skipping a non live-ready page '{}'", path);
+            return false;
+        }
+
+        long timestampLiveSwitch = pageState.getTimestampLiveSwitch();
+        if (timestampLiveSwitch > 0) {
+            if (logger.isDebugEnabled()) logger.debug("Skipping an already live switched page '{}'", path);
+            return false;
+        }
+
+        if (logger.isDebugEnabled()) logger.debug("Switching live page '{}' ...", path);
+        // TODO: implement live switch!
+
+        pageState.setTimestampLiveSwitch(switchTimestamp);
+            
+        return true;
     }
 }

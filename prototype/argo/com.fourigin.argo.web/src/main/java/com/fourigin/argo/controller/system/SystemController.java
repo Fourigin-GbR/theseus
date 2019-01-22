@@ -169,6 +169,13 @@ public class SystemController {
                 if (pageState.isStaged()) {
                     pageState.setStaged(false);
                     pageState.setLive(false);
+                    pageState.setTimestampLiveSwitch(0);
+                    CompileState compileState = pageState.getCompileState();
+                    if (compileState != null) {
+                        compileState.setTimestamp(0);
+                        compileState.setChecksum(null);
+                        pageState.setCompileState(compileState);
+                    }
                     changed = true;
                 }
                 break;
@@ -182,6 +189,7 @@ public class SystemController {
                     if (pageState.getCompileState().isCompiled()) {
                         pageState.setStaged(true);
                         pageState.setLive(false);
+                        pageState.setTimestampLiveSwitch(0);
                         changed = true;
                     }
                 }

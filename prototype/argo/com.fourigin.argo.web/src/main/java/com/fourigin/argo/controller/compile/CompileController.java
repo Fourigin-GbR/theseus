@@ -125,11 +125,12 @@ public class CompileController {
             bufferedCompilerOutputStrategy.reset();
 
             compileState.setCompiled(false);
+            pageState.setStaged(false);
 
             throw ex;
         } finally {
-            long timestamp = System.currentTimeMillis();
-            compileState.setTimestamp(timestamp);
+//            long timestamp = System.currentTimeMillis();
+//            compileState.setTimestamp(timestamp); // no compile timestamp for CMS mode!
             compileState.setChecksum(pageContentChecksum);
 
             String parentPath = pageInfo.getPath();

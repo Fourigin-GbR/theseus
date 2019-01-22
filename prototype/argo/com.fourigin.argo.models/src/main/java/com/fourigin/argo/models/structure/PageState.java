@@ -19,6 +19,7 @@ import java.util.TreeMap;
 public class PageState {
     private boolean staged;
     private boolean live;
+    private long timestampLiveSwitch;
     private CompileState compileState;
     private ContentPageChecksum checksum;
     private String revision;
@@ -39,6 +40,14 @@ public class PageState {
 
     public void setLive(boolean live) {
         this.live = live;
+    }
+
+    public long getTimestampLiveSwitch() {
+        return timestampLiveSwitch;
+    }
+
+    public void setTimestampLiveSwitch(long timestampLiveSwitch) {
+        this.timestampLiveSwitch = timestampLiveSwitch;
     }
 
     public CompileState getCompileState() {
@@ -108,6 +117,7 @@ public class PageState {
         PageState pageState = (PageState) o;
         return staged == pageState.staged &&
             live == pageState.live &&
+            timestampLiveSwitch == pageState.timestampLiveSwitch &&
             Objects.equals(compileState, pageState.compileState) &&
             Objects.equals(checksum, pageState.checksum) &&
             Objects.equals(revision, pageState.revision);
@@ -115,7 +125,7 @@ public class PageState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(staged, live, compileState, checksum, revision);
+        return Objects.hash(staged, live, timestampLiveSwitch, compileState, checksum, revision);
     }
 
     @Override
@@ -123,6 +133,7 @@ public class PageState {
         return "PageState{" +
             "staged=" + staged +
             ", live=" + live +
+            ", timestampLiveSwitch=" + timestampLiveSwitch +
             ", compileState=" + compileState +
             ", checksum=" + checksum +
             ", revision='" + revision + '\'' +

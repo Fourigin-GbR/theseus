@@ -122,6 +122,10 @@
         var base = systemDiv.attr('data-base');
         var path = systemDiv.attr('data-path');
 
+        if (!path) {
+            return;
+        }
+
         $('#path').html(path);
 
         $.ajax({
@@ -195,17 +199,72 @@
                 );
         }
 
+        var goLiveButton = $('#action_go_live');
         var pageState = data.pageState;
         if (pageState) {
-            var compileState = pageState.compileState;
-            if (compileState && compileState.compiled) {
-                var compileTimestamp = compileState.timestamp;
-                var timestamp = new Date(compileTimestamp);
-
+            if (pageState.staged) {
+                var compileState = pageState.compileState;
+                if (compileState) {
+                    var compileTimestamp = compileState.timestamp;
+                    if (compileTimestamp && compileTimestamp > 0) {
+                        goLiveButton.prop('disabled', false);
+                        var stageTimestampDate = new Date(compileTimestamp);
+                        infoDiv
+                            .append($('<div></div>')
+                                .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
+                                .append($('<span></span>').attr('class', 'value').html('DONE @ ' + formatDate(stageTimestampDate)))
+                            )
+                    }
+                    else {
+                        goLiveButton.prop('disabled', true);
+                        infoDiv
+                            .append($('<div></div>')
+                                .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
+                                .append($('<span></span>').attr('class', 'value').text('WAITING'))
+                            )
+                    }
+                }
+                else {
+                    goLiveButton.prop('disabled', true);
+                    infoDiv
+                        .append($('<div></div>')
+                            .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
+                            .append($('<span></span>').attr('class', 'value').text('WAITING'))
+                        )
+                }
+            }
+            else {
+                goLiveButton.prop('disabled', true);
                 infoDiv
                     .append($('<div></div>')
-                        .append($('<span></span>').attr('class', 'key').text('Compiled at: '))
-                        .append($('<span></span>').attr('class', 'value').html(formatDate(timestamp)))
+                        .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
+                        .append($('<span></span>').attr('class', 'value').text('NOT READY'))
+                    )
+            }
+
+            if (pageState.live) {
+                var liveSwitchTimestamp = pageState.timestampLiveSwitch;
+                if(liveSwitchTimestamp && liveSwitchTimestamp > 0){
+                    var liveSwitchDate = new Date(liveSwitchTimestamp);
+                    infoDiv
+                        .append($('<div></div>')
+                            .append($('<span></span>').attr('class', 'key').text('Live switch: '))
+                            .append($('<span></span>').attr('class', 'value').html('DONE @ ' + formatDate(liveSwitchDate)))
+                    )
+                }
+                else {
+                    infoDiv
+                        .append($('<div></div>')
+                            .append($('<span></span>').attr('class', 'key').text('Live switch: '))
+                            .append($('<span></span>').attr('class', 'value').text('WAITING'))
+                        )
+                }
+            }
+            else {
+                infoDiv
+                    .append($('<div></div>')
+                        .append($('<span></span>').attr('class', 'key').text('Live switch: '))
+                        .append($('<span></span>').attr('class', 'value').text('NOT READY'))
                     )
             }
         }
