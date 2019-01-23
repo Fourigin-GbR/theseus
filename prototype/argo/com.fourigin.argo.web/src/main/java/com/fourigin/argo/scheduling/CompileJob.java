@@ -48,7 +48,7 @@ public class CompileJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) {
-        if (logger.isInfoEnabled()) logger.info("Executing job ...");
+        if (logger.isDebugEnabled()) logger.debug("Executing job ...");
 
         Map<String, Set<String>> allBases = customerSpecificConfiguration.getBases();
 
@@ -115,8 +115,10 @@ public class CompileJob implements Job {
             }
         }
 
-        if (logger.isInfoEnabled()) logger.info("Compiled pages (in all bases): {}", countCompiled);
-        if (logger.isInfoEnabled()) logger.info("Switched pages (in all bases): {}", countSwitched);
+        if (countCompiled > 0 || countSwitched > 0) {
+            if (logger.isInfoEnabled()) // NOPMD
+                logger.info("Execution report:\n\tCompiled pages (in all bases): {}\n\tSwitched pages (in all bases): {}", countCompiled, countSwitched);
+        }
     }
 
     private boolean compileStage(String path, PageInfo pageInfo, PageState pageState, PageCompiler pageCompiler, ContentRepository contentRepository, long compileTimestamp) {
@@ -164,17 +166,36 @@ public class CompileJob implements Job {
 
             compileState.setCompiled(true);
             compileState.setTimestamp(compileTimestamp); // STAGE compile timestamp
+            compileState.setMessage(null);
         } catch (Throwable ex) {
             storageCompilerOutputStrategy.reset();
 
             compileState.setCompiled(false);
+            compileState.setChecksum(null);
             compileState.setTimestamp(-1);
-            compileState.setMessage(ex.getMessage());
+            compileState.setMessage(generateErrorMessage(ex));
         }
 
         pageState.setCompileState(compileState);
 
         return true;
+    }
+
+    private String generateErrorMessage(Throwable th) {
+        if (th == null) {
+            return "Unknown error occurred!";
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        Throwable leaf = th;
+        while (leaf.getCause() != null) {
+            leaf = leaf.getCause();
+        }
+
+        builder.append(leaf.getMessage());
+
+        return builder.toString();
     }
 
     private boolean switchLive(String path, PageState pageState, long switchTimestamp) {
@@ -193,7 +214,7 @@ public class CompileJob implements Job {
         // TODO: implement live switch!
 
         pageState.setTimestampLiveSwitch(switchTimestamp);
-            
+
         return true;
     }
 }

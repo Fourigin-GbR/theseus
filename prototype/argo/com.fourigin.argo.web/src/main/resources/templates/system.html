@@ -50,12 +50,15 @@
         </div>
     </fieldset>
     <fieldset>
-        <label>Info</label>
-        <div id="info">
-            <div>
-                <span class="key">Creation date</span>
-                <span class="value">17.02.2018</span>
-            </div>
+        <label>Compile info</label>
+        <div id="compile_info">
+            &nbsp;
+        </div>
+    </fieldset>
+    <fieldset>
+        <label>Visibility info</label>
+        <div id="live_switch_info">
+            &nbsp;
         </div>
     </fieldset>
 </div>
@@ -186,13 +189,12 @@
     }
 
     function updateNodeInfo(data) {
-        var infoDiv = $('#info');
-
-        infoDiv.empty();
+        var compileInfoDiv = $('#compile_info');
+        compileInfoDiv.empty();
 
         var templateRef = data.templateReference;
         if (templateRef) {
-            infoDiv
+            compileInfoDiv
                 .append($('<div></div>')
                     .append($('<span></span>').attr('class', 'key').text('Template: '))
                     .append($('<span></span>').attr('class', 'value').text(templateRef))
@@ -202,14 +204,15 @@
         var goLiveButton = $('#action_go_live');
         var pageState = data.pageState;
         if (pageState) {
+            var compileState = pageState.compileState;
+
             if (pageState.staged) {
-                var compileState = pageState.compileState;
                 if (compileState) {
                     var compileTimestamp = compileState.timestamp;
                     if (compileTimestamp && compileTimestamp > 0) {
                         goLiveButton.prop('disabled', false);
                         var stageTimestampDate = new Date(compileTimestamp);
-                        infoDiv
+                        compileInfoDiv
                             .append($('<div></div>')
                                 .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
                                 .append($('<span></span>').attr('class', 'value').html('DONE @ ' + formatDate(stageTimestampDate)))
@@ -217,7 +220,7 @@
                     }
                     else {
                         goLiveButton.prop('disabled', true);
-                        infoDiv
+                        compileInfoDiv
                             .append($('<div></div>')
                                 .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
                                 .append($('<span></span>').attr('class', 'value').text('WAITING'))
@@ -226,7 +229,7 @@
                 }
                 else {
                     goLiveButton.prop('disabled', true);
-                    infoDiv
+                    compileInfoDiv
                         .append($('<div></div>')
                             .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
                             .append($('<span></span>').attr('class', 'value').text('WAITING'))
@@ -235,25 +238,37 @@
             }
             else {
                 goLiveButton.prop('disabled', true);
-                infoDiv
+                compileInfoDiv
                     .append($('<div></div>')
                         .append($('<span></span>').attr('class', 'key').text('Stage compile: '))
                         .append($('<span></span>').attr('class', 'value').text('NOT READY'))
                     )
             }
 
+            console.log(compileState);
+            if (compileState && compileState.message) {
+                compileInfoDiv
+                    .append($('<div></div>')
+                        .append($('<span></span>').attr('class', 'key').text('Compiler message: '))
+                        .append($('<span></span>').attr('class', 'value').html("<span class='errorMessage'>" + compileState.message + "</span>"))
+                    )
+            }
+
+            var liveSwitchInfoDiv = $('#live_switch_info');
+            liveSwitchInfoDiv.empty();
+
             if (pageState.live) {
                 var liveSwitchTimestamp = pageState.timestampLiveSwitch;
                 if(liveSwitchTimestamp && liveSwitchTimestamp > 0){
                     var liveSwitchDate = new Date(liveSwitchTimestamp);
-                    infoDiv
+                    liveSwitchInfoDiv
                         .append($('<div></div>')
                             .append($('<span></span>').attr('class', 'key').text('Live switch: '))
                             .append($('<span></span>').attr('class', 'value').html('DONE @ ' + formatDate(liveSwitchDate)))
                     )
                 }
                 else {
-                    infoDiv
+                    liveSwitchInfoDiv
                         .append($('<div></div>')
                             .append($('<span></span>').attr('class', 'key').text('Live switch: '))
                             .append($('<span></span>').attr('class', 'value').text('WAITING'))
@@ -261,7 +276,7 @@
                 }
             }
             else {
-                infoDiv
+                liveSwitchInfoDiv
                     .append($('<div></div>')
                         .append($('<span></span>').attr('class', 'key').text('Live switch: '))
                         .append($('<span></span>').attr('class', 'value').text('NOT READY'))

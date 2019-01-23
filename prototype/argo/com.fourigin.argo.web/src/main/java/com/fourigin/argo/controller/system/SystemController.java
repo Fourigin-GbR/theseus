@@ -181,17 +181,17 @@ public class SystemController {
                 break;
             case "STAGED":
                 if (!pageState.isStaged() || pageState.isLive()) {
-                    CompileState compileState = pageState.getCompileState();
-                    if (compileState == null || !compileState.isCompiled()) {
-                        return UpdateResult.failed("Node '" + path + "' is not in a compiled state!");
-                    }
+//                    CompileState compileState = pageState.getCompileState();
+//                    if (compileState == null || !compileState.isCompiled()) {
+//                        return UpdateResult.failed("Node '" + path + "' is not in a compiled state!");
+//                    }
 
-                    if (pageState.getCompileState().isCompiled()) {
+//                    if (compileState.isCompiled()) {
                         pageState.setStaged(true);
                         pageState.setLive(false);
                         pageState.setTimestampLiveSwitch(0);
                         changed = true;
-                    }
+//                    }
                 }
                 break;
             case "LIVE":
