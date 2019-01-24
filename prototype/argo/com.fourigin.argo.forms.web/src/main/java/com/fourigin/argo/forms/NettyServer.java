@@ -44,8 +44,6 @@ import java.util.Set;
 @ComponentScan("com.fourigin.argo.forms.config")
 public class NettyServer {
 
-    private static final String APP_NAME = "forms";
-
     private int port;
 
     private String contextPath;
@@ -53,7 +51,7 @@ public class NettyServer {
     public static void main(String... args) throws Exception {
         SpringApplication app = new SpringApplication(NettyServer.class);
         app.addListeners(
-            new ApplicationPidFileWriter(APP_NAME + ".pid")
+            new ApplicationPidFileWriter()  // DEFAULT: application.pid
         );
 
         ConfigurableApplicationContext context = app.run(args);

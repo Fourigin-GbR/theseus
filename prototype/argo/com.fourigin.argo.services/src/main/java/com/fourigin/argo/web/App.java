@@ -25,12 +25,13 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching
 public class App {
 
-    private static final String APP_NAME = "argo-services";
+//    private static final String APP_NAME = "argo-services";
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
         app.addListeners(
-            new ApplicationPidFileWriter(APP_NAME + ".pid")
+//            new ApplicationPidFileWriter(APP_NAME + ".pid")
+            new ApplicationPidFileWriter()  // DEFAULT: application.pid
         );
         app.run(args);
     }
