@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="assets/styles/dashboard.css"/>
     <link rel="stylesheet" href="assets/webfonts/line-awesome/css/line-awesome-font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <h1>Auftrag</h1>
@@ -125,8 +129,9 @@
         <div>
             Aktueller Zustand: <span class="status">WAITING</span><br/>
             <span class="status-message">Hello World! I'm a status message!</span><br/>
-            <input type="checkbox"/> ändern ...
+            <input id="state-change-button" name="state-change-button" type="checkbox"/> ändern ...
         </div>
+
         <fieldset id="state-change">
             <form>
                 <br/>
@@ -144,6 +149,29 @@
                 <input type="button" value="ändern ..."/>
             </form>
         </fieldset>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                var jStateChangeButton = jQuery("input#state-change-button"),
+                    jFieldsetStateChange = jQuery("fieldset#state-change");
+                //
+                jStateChangeButton.on("change", function() {
+                    setFieldsetStateChangeVisibility();
+                });
+
+                var setFieldsetStateChangeVisibility = function() {
+                    if(jStateChangeButton.is(":checked")) {
+                        jFieldsetStateChange.slideDown();
+                    }
+                    else {
+                        jFieldsetStateChange.slideUp();
+                    }
+                };
+
+                setFieldsetStateChangeVisibility();
+            });
+        </script>
+
     </div>
     <h3>Status-Tracking</h3>
     <table id="request-history" class="display" style="width:100%">
