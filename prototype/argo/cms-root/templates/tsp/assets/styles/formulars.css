@@ -166,6 +166,7 @@ span.tooltip {
     position: relative;
     display: inline-block;
     margin: 0 !important;
+    line-height: 1 !important;
 }
 .tooltip__icon {
     margin: 0 !important;
