@@ -428,22 +428,59 @@ var handleTooltips = function() {
         jTooltipCopies = jQuery("span.tooltip .tooltip__copy"),
         closeTimeoutHandler = null;
 
-    jTooltipIcons.on("hover mouseover click", function() {
-        deactivateAllTooltips();
-
+    jTooltipIcons.on("hover mouseover click", function(e) {
+        console.info("mouseover", $(this));
+        var jLocalIcon = $(this),
+            jTooltip = jLocalIcon.closest(".tooltip"),
+            jCopy = jTooltip.find(".tooltip__copy");
+        //
         if(closeTimeoutHandler) {
             window.clearTimeout(closeTimeoutHandler);
         }
 
-        var jLocalIcon = $(this),
-            jCopy = jLocalIcon.closest(".tooltip").find(".tooltip__copy");
+        if(jCopy.is(":visible")) {
+            // Is already active
+            return;
+        }
 
+        if($(e.target).is("a")) {
+            // Link inside the tooltip
+            return;
+        }
+
+        deactivateAllTooltips();
         jCopy.show();
-        closeTimeoutHandler = window.setTimeout(function(){jCopy.hide();}, 3000);
-    });
 
-    jTooltipCopies.on("mouseout click", function() {
-        jQuery(this).hide();
+        jCopy.on("mouseout", function(e) {
+            if($.contains(jCopy[0], e.target)) {
+                console.info("mouseout from element inside tooltip", e.target);
+                // Triggered from element inside the tooltip copy
+                return;
+            }
+
+            if(jCopy.is(":hover")) {
+                console.info("Hovered tooltip copy status.");
+                return;
+            }
+
+
+            console.log("mouseout", $(this));
+            closeTimeoutHandler = window.setTimeout(function () {
+                jCopy.hide();
+            }, 1000);
+
+        });
+        jLocalIcon.on("mouseout", function(e) {
+            if(jCopy.is(":hover")) {
+                console.info("Hovered tooltip copy status.");
+                return;
+            }
+
+            console.log("mouseout", $(this));
+            closeTimeoutHandler = window.setTimeout(function () {
+                jCopy.hide();
+            }, 1000);
+        });
     });
 
     var deactivateAllTooltips = function() {
