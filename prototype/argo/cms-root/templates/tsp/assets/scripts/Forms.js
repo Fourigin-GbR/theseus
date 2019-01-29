@@ -422,7 +422,38 @@ var getAllInvalidFieldsAndMarkThem = function (message) {
 };
 
 
+var handleTooltips = function() {
+    var jTooltips = jQuery("span.tooltip"),
+        jTooltipIcons = jQuery("span.tooltip .tooltip__icon"),
+        jTooltipCopies = jQuery("span.tooltip .tooltip__copy"),
+        closeTimeoutHandler = null;
 
+    jTooltipIcons.on("hover mouseover click", function() {
+        deactivateAllTooltips();
+
+        if(closeTimeoutHandler) {
+            window.clearTimeout(closeTimeoutHandler);
+        }
+
+        var jLocalIcon = $(this),
+            jCopy = jLocalIcon.closest(".tooltip").find(".tooltip__copy");
+
+        jCopy.show();
+        closeTimeoutHandler = window.setTimeout(function(){jCopy.hide();}, 3000);
+    });
+
+    jTooltipCopies.on("mouseout click", function() {
+        jQuery(this).hide();
+    });
+
+    var deactivateAllTooltips = function() {
+        jTooltipCopies.each(function() {
+            jQuery(this).hide();
+        });
+    }
+
+
+};
 
 
 
@@ -492,3 +523,7 @@ sendFormEvent();
 
 iterateOverAllBoundInputsAndUpdateStatusOfFieldsets();
 getUrlParameterAndUpdateAndInitForm();
+
+$(document).ready(function() {
+    handleTooltips();
+});

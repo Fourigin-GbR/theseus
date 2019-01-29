@@ -162,6 +162,32 @@ label.Checkbox > p.description {
     color: #504f4f;
 }
 
+span.tooltip {
+    position: relative;
+    display: inline-block;
+    margin: 0 !important;
+}
+.tooltip__icon {
+    margin: 0 !important;
+}
+.tooltip__icon:hover {
+    color: #00b393;
+    cursor: pointer;
+}
+span.tooltip__copy {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #00b393;
+    padding: 10px !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    left: 20px !important;
+    top: 0 !important;
+    width: auto !important;
+    min-width: 150px !important;
+    transform: translateY(-10px);
+    display: none;
+}
 
 input,
 select,
