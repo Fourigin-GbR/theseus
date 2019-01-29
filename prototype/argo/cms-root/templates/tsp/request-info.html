@@ -4,9 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Formulare - Prototypen</title>
-    <link rel="stylesheet" href="assets/styles/dashboard.css"/>
     <link rel="stylesheet" href="assets/webfonts/line-awesome/css/line-awesome-font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="assets/styles/dashboard.css"/>
 </head>
 <body>
 <h1>Auftrag</h1>
@@ -26,24 +27,6 @@
             </tr>
             </thead>
             <tbody>
-<!--
-            <tr>
-                <td class="key">ID</td>
-                <td class="value" colspan="5">1234567890123456789012345678901234567890</td>
-                <td style="display: none;"></td>
-                <td style="display: none;"></td>
-                <td style="display: none;"></td>
-                <td style="display: none;"></td>
-            </tr>
-            <tr>
-                <td class="key">Typ</td>
-                <td class="value">KFZ-Anmeldung</td>
-                <td class="key">Kundennummer</td>
-                <td class="value">1</td>
-                <td class="key">Datum</td>
-                <td class="value">17.02.2018</td>
-            </tr>
--->
             </tbody>
         </table>
     </div>
@@ -56,64 +39,6 @@
             </tr>
             </thead>
             <tbody>
-<!--
-            <tr>
-                <td>vehicle.new-nameplate/nameplate-customer-reservation</td>
-                <td>DA-AB 234</td>
-            </tr>
-            <tr>
-                <td>tax.account/new-account-bankcode</td>
-                <td>DEDB12345</td>
-            </tr>
-            <tr>
-                <td>tax.account/new-account-bankname</td>
-                <td>Deutsche Bank Berlin</td>
-            </tr>
-            <tr>
-                <td>payment.methods</td>
-                <td>paypal</td>
-            </tr>
-            <tr>
-                <td>vehicle-data.vehicle-id</td>
-                <td>123</td>
-            </tr>
-            <tr>
-                <td>handover.options</td>
-                <td>office-delivering</td>
-            </tr>
-            <tr>
-                <td>vehicle-insurance.id</td>
-                <td>1234erttj</td>
-            </tr>
-            <tr>
-                <td>customer.id</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>tax.account/new-account-owner</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>vehicle.existing-nameplate</td>
-                <td>B-AB 123</td>
-            </tr>
-            <tr>
-                <td>tax.account</td>
-                <td>use-new-account</td>
-            </tr>
-            <tr>
-                <td>tax.account/new-account-code</td>
-                <td>DE11&nbsp;2222&nbsp;3333&nbsp;4444&nbsp;5555&nbsp;88</td>
-            </tr>
-            <tr>
-                <td>vehicle.new-nameplate</td>
-                <td>self</td>
-            </tr>
-            <tr>
-                <td>vehicle-data.ident</td>
-                <td>0192837465</td>
-            </tr>
--->
             </tbody>
         </table>
         <button>Eigenschaften ändern</button>
@@ -123,9 +48,13 @@
     <h2>Status</h2>
     <div>
         <div>
-            Aktueller Zustand: <span class="status">WAITING</span><br/>
-            <span class="status-message">Hello World! I'm a status message!</span><br/>
-            <input id="state-change-button" name="state-change-button" type="checkbox"/> ändern ...
+            <div>
+                <span class="status-message">Hello World! I'm a status message!</span>
+            </div>
+            <div>
+                <span class="status">WARTET</span>
+                <label for="state-change-button">ändern ...</label><input id="state-change-button" type="checkbox" />
+            </div>
         </div>
 
         <fieldset id="state-change">
@@ -146,7 +75,7 @@
             </form>
         </fieldset>
     </div>
-    <h3>Status-Tracking</h3>
+    <h3>Status-History</h3>
     <table id="request-history" class="display" style="width:100%">
         <thead>
         <tr>
@@ -156,49 +85,13 @@
         </tr>
         </thead>
         <tbody>
-<!--
-        <tr>
-            <td>1544025983619</td>
-            <td>status/change</td>
-            <td>PROCESSING</td>
-        </tr>
-        <tr>
-            <td>1544025983619</td>
-            <td>processing/start</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1544025985772</td>
-            <td>processing/FULFILL-VEHICLE-REGISTRATION-FORM</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1544025985889</td>
-            <td>processing/FULFILL-TAX-PAYMENT-FORM</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1544025986068</td>
-            <td>processing/FULFILL-INTERNAL_CARD</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1544025986068</td>
-            <td>processing/done</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>1544025986069</td>
-            <td>status/change</td>
-            <td>WAITING</td>
-        </tr>
--->
         </tbody>
     </table>
 </div>
 
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="assets/scripts/request-info.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

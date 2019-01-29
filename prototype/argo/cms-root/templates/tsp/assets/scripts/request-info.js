@@ -140,6 +140,7 @@ function init() {
     //
 
     // event button
+    jStateChangeButton.button();
     jStateChangeButton.on("change", function() {
         setFieldsetStateChangeVisibility();
     });
