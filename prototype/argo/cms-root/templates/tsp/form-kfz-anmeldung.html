@@ -88,7 +88,7 @@
                     <fieldset>
                         <legend>Kennzeichen</legend>
                         <label>
-                            <span>das alte Kennzeichen (nur bei Ummeldungen)
+                            <span>das alte Kennzeichen (falls vorhanden)
                                 <span class="tooltip">
                                     <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
                                     <span class="tooltip__copy">Das muss aber geprüft werden!</span>
@@ -197,7 +197,12 @@
                         <legend>KFZ-Versicherung</legend>
 
                         <label>
-                            <span>eVB-Nummer</span>
+                            <span>eVB-Nummer
+                               <span class="tooltip">
+                                    <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
+                                   <span class="tooltip__copy">Eine elektronische Versicherungsbestätigung (eVB) ist in Deutschland <br/>der Nachweis einer Versicherungsgesellschaft über die gesetzliche Kfz-Haftpflichtversicherung <br/>(„Deckung“) für ein im öffentlichen Raum verkehrendes Kraftfahrzeug. <br/>Die Bestätigung muss der Kraftfahrzeug-Zulassungsbehörde bei Erstzulassung und bei technischen oder personenbezogenen Änderungen des Kraftfahrzeugs vorgelegt werden. <br/>Nur dann kann von der Zulassungsstelle eine Zulassung vergeben werden.<br/>Sollten Sie noch keine Versicherung abgeschloßen haben, so können Sie <a href="https://www.procheck24.de/einsurance/csp/doHomepageEntry.do?cspident=09D0551142A73B77DECE5CADBE06D08B&p=4&sub=1" target="_blank">hier</a> nach einer passenden suchen.</span>
+                                </span>
+                            </span>
                             <input type="text" name="vehicle-insurance.id"/>
                         </label>
                         <div class="FieldValidationMessage" data-input="vehicle-insurance.id" data-element="validation-message"></div>
@@ -298,6 +303,10 @@
                 <fieldset class="checkboxList">
                     <legend>Verfügbare Zahlungsmethoden</legend>
                     <fieldset>
+                        <label class="Radio">
+                            <input type="radio" name="payment.methods" value="cash"/>
+                            <span>Barzahlung</span>
+                        </label>
                         <label class="Radio">
                             <input type="radio" name="payment.methods" value="paypal"/>
                             <span>PayPal</span>
