@@ -87,43 +87,28 @@
                     <legend>Informationen zum Fahrzeug</legend>
                     <fieldset>
                         <legend>Kennzeichen</legend>
+
+                        <!-- old nameplate -->
                         <label>
-                            <span>das alte Kennzeichen (falls vorhanden)
-                                <span class="tooltip">
-                                    <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
-                                    <span class="tooltip__copy">Das muss aber geprüft werden!</span>
-                                </span>
-                            </span>
+                            <span>das alte Kennzeichen (falls vorhanden)</span>
 
                             <input type="text" name="vehicle.existing-nameplate"/>
                         </label>
                         <div class="FieldValidationMessage" data-input="vehicle.existing-nameplate" data-element="validation-message"></div>
 
+                        <!-- new nameplate -->
                         <fieldset name="neues_kennzeichen" class="CheckboxList">
-                            <legend>
-                                das neue Kennzeichen
-                                <span class="tooltip">
-                                    <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
-                                    <span class="tooltip__copy">Das bitte ordentlich machen!! Das Bunte muss in das Große, das Schwarze in das Kleine.</span>
-                                </span>
-                            </legend>
+                            <legend>das neue Kennzeichen</legend>
 
                             <div class="CheckboxList__item DependencyGroup">
                                 <label class="CheckboxList__item__checkbox DependencyGroup__master">
                                     <input checked="checked" type="radio" name="vehicle.new-nameplate" value="portal"
                                            data-activate-fieldset-name="nameplate-customer-requirements-group"/>
-                                    <span>
-                                        soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:
-                                        <span class="tooltip">
-                                            <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
-                                            <span class="tooltip__copy">Was guckst du?</span>
-                                        </span>
-                                    </span>
+                                    <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
                                 </label>
                                 <fieldset class="DependencyGroup__dependant" name="nameplate-customer-requirements-group"
                                           disabled="disabled">
                                     <label>
-                                        <!--<span>Wünsche</span>-->
                                         <input type="text" name="vehicle.new-nameplate/nameplate-customer-requirements"/>
                                     </label>
                                     <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-requirements" data-element="validation-message"></div>
@@ -155,6 +140,44 @@
                             </div>
                         </fieldset>
 
+                        <!-- nameplate type -->
+                        <fieldset name="kennzeichen_typ" class="CheckboxList">
+                            <legend>Typ des Kennzeichens</legend>
+
+                            <div class="CheckboxList__item DependencyGroup">
+                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                    <input checked="checked" type="radio" name="vehicle.nameplate-type" value="normal" />
+                                    <span>normales Kennzeichen</span>
+                                </label>
+                            </div>
+                            <!---->
+                            <div class="CheckboxList__item DependencyGroup">
+                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                    <input type="radio" name="vehicle.nameplate-type" value="season"
+                                           data-activate-fieldset-name="nameplate-type-group"/>
+                                    <span>Saison-Kennzeichen</span>
+                                </label>
+                                <fieldset class="DependencyGroup__dependant" name="nameplate-type-group"
+                                          disabled="disabled">
+                                    <div class="FormularGroup Grid">
+                                        <div class="Grid_Module--50">
+                                            <label>
+                                                von:
+                                                <input type="text" name="vehicle.nameplate-type/season-begin"/>
+                                            </label>
+                                            <div class="FieldValidationMessage" data-input="vehicle.nameplate-type/season-begin" data-element="validation-message"></div>
+                                        </div>
+                                        <div class="Grid_Module--50">
+                                            <label>
+                                                bis:
+                                                <input type="text" name="vehicle.nameplate-type/season-end"/>
+                                            </label>
+                                            <div class="FieldValidationMessage" data-input="vehicle.nameplate-type/season-end" data-element="validation-message"></div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </fieldset>
 
                     </fieldset>
 
@@ -171,12 +194,7 @@
                             </div>
                             <div class="Grid_Module--50">
                                 <label>
-                                    <span>Fahrzeugbrief-Nummer
-                                       <span class="tooltip">
-                                            <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
-                                            <span class="tooltip__copy">Was guckst du hier? Du nix verstehen? Geh zu <a href="www.google.de">Goggel</a></span>
-                                        </span>
-                                    </span>
+                                    <span>Fahrzeugbrief-Nummer</span>
                                     <input type="text" name="vehicle-data.vehicle-id"/>
                                 </label>
                                 <div class="FieldValidationMessage" data-input="vehicle-data.vehicle-id" data-element="validation-message"></div>

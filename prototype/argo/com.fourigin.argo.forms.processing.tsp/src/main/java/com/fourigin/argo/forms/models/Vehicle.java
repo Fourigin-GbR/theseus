@@ -9,6 +9,11 @@ public class Vehicle implements Serializable {
     private String previousNameplate;
     private NameplateRegistrationOption newNameplateOption;
     private String newNameplateAdditionalInfo;
+
+    private NameplateTypeOption nameplateTypeOption;
+    private int seasonStartMonth;
+    private int seasonEndMonth;
+
     private String vehicleIdentNumber;
     private String vehicleId;
     private boolean leasingOrFinancingOption;
@@ -36,6 +41,30 @@ public class Vehicle implements Serializable {
 
     public void setNewNameplateAdditionalInfo(String newNameplateAdditionalInfo) {
         this.newNameplateAdditionalInfo = newNameplateAdditionalInfo;
+    }
+
+    public NameplateTypeOption getNameplateTypeOption() {
+        return nameplateTypeOption;
+    }
+
+    public void setNameplateTypeOption(NameplateTypeOption nameplateTypeOption) {
+        this.nameplateTypeOption = nameplateTypeOption;
+    }
+
+    public int getSeasonStartMonth() {
+        return seasonStartMonth;
+    }
+
+    public void setSeasonStartMonth(int seasonStartMonth) {
+        this.seasonStartMonth = seasonStartMonth;
+    }
+
+    public int getSeasonEndMonth() {
+        return seasonEndMonth;
+    }
+
+    public void setSeasonEndMonth(int seasonEndMonth) {
+        this.seasonEndMonth = seasonEndMonth;
     }
 
     public String getVehicleIdentNumber() {
@@ -75,10 +104,13 @@ public class Vehicle implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Vehicle)) return false;
         Vehicle vehicle = (Vehicle) o;
-        return leasingOrFinancingOption == vehicle.leasingOrFinancingOption &&
+        return seasonStartMonth == vehicle.seasonStartMonth &&
+            seasonEndMonth == vehicle.seasonEndMonth &&
+            leasingOrFinancingOption == vehicle.leasingOrFinancingOption &&
             Objects.equals(previousNameplate, vehicle.previousNameplate) &&
             newNameplateOption == vehicle.newNameplateOption &&
             Objects.equals(newNameplateAdditionalInfo, vehicle.newNameplateAdditionalInfo) &&
+            nameplateTypeOption == vehicle.nameplateTypeOption &&
             Objects.equals(vehicleIdentNumber, vehicle.vehicleIdentNumber) &&
             Objects.equals(vehicleId, vehicle.vehicleId) &&
             Objects.equals(insuranceId, vehicle.insuranceId);
@@ -86,7 +118,7 @@ public class Vehicle implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(previousNameplate, newNameplateOption, newNameplateAdditionalInfo, vehicleIdentNumber, vehicleId, leasingOrFinancingOption, insuranceId);
+        return Objects.hash(previousNameplate, newNameplateOption, newNameplateAdditionalInfo, nameplateTypeOption, seasonStartMonth, seasonEndMonth, vehicleIdentNumber, vehicleId, leasingOrFinancingOption, insuranceId);
     }
 
     @Override
@@ -95,6 +127,9 @@ public class Vehicle implements Serializable {
             "previousNameplate='" + previousNameplate + '\'' +
             ", newNameplateOption=" + newNameplateOption +
             ", newNameplateAdditionalInfo='" + newNameplateAdditionalInfo + '\'' +
+            ", nameplateTypeOption=" + nameplateTypeOption +
+            ", seasonStartMonth=" + seasonStartMonth +
+            ", seasonEndMonth=" + seasonEndMonth +
             ", vehicleIdentNumber='" + vehicleIdentNumber + '\'' +
             ", vehicleId='" + vehicleId + '\'' +
             ", leasingOrFinancingOption=" + leasingOrFinancingOption +

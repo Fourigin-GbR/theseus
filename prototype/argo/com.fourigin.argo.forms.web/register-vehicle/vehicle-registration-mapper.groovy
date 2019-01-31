@@ -27,17 +27,31 @@ class VehicleMapper {
         def newNameplateOption
         def newNameplateAdditionalInfo
         def newNameplateOptionValue = binding.variables['vehicle.new-nameplate']
-        if(newNameplateOptionValue == 'portal') {
+        if (newNameplateOptionValue == 'portal') {
             newNameplateOption = 'TO_REGISTER_BY_PORTAL'
             newNameplateAdditionalInfo = binding.variables['vehicle.new-nameplate/nameplate-customer-requirements']
-        }
-        else if(newNameplateOptionValue == 'self') {
+        } else if (newNameplateOptionValue == 'self') {
             newNameplateOption = 'ALREADY_REGISTERED_BY_CLIENT'
             newNameplateAdditionalInfo = binding.variables['vehicle.new-nameplate/nameplate-customer-reservation']
-        }
-        else {
+        } else {
             newNameplateOption = 'NOT_REGISTERED'
             newNameplateAdditionalInfo = ''
+        }
+
+        // nameplate type
+        def nameplateTypeOption
+        def nameplateSeasonStartMonth
+        def nameplateSeasonEndMonth
+        def nameplateTypeOptionValue = binding.variables['vehicle.nameplate-type']
+        if (nameplateTypeOptionValue == 'season') {
+            nameplateTypeOption = 'SEASON'
+            nameplateSeasonStartMonth = Integer.parseInt(binding.variables['vehicle.nameplate-type/season-begin'])
+            nameplateSeasonEndMonth = Integer.parseInt(binding.variables['vehicle.nameplate-type/season-end'])
+        }
+        else {
+            nameplateTypeOption = 'NORMAL'
+            nameplateSeasonStartMonth = 0
+            nameplateSeasonEndMonth = 0
         }
 
         // leasing option
@@ -47,26 +61,24 @@ class VehicleMapper {
         // tax account
         BankAccount taxBankAccount
         def taxPaymentOptionValue = binding.variables['tax.account']
-        if(taxPaymentOptionValue == 'use-stored-account'){
+        if (taxPaymentOptionValue == 'use-stored-account') {
             String bankAccountId = binding.variables['tax.account/stored-account']
 
             taxBankAccount = resolveBankAccount(customer, bankAccountId)
-        }
-        else if(taxPaymentOptionValue == 'use-new-account'){
+        } else if (taxPaymentOptionValue == 'use-new-account') {
             taxBankAccount = new BankAccount()
             taxBankAccount.iban = binding.variables['tax.account/new-account-code']
             taxBankAccount.bic = binding.variables['tax.account/new-account-bankcode']
             taxBankAccount.bankName = binding.variables['tax.account/new-account-bankname']
             taxBankAccount.accountHolder = binding.variables['tax.account/new-account-owner']
-            if(taxBankAccount.accountHolder == null || taxBankAccount.accountHolder.isEmpty()){
+            if (taxBankAccount.accountHolder == null || taxBankAccount.accountHolder.isEmpty()) {
                 taxBankAccount.accountHolder = customer.firstname + ' ' + customer.lastname
             }
 
             // add a new bank account
             customer.addBankAccount(taxBankAccount)
             customerRepository.updateCustomer(customer)
-        }
-        else {
+        } else {
             // unsupported account type!
             taxBankAccount = null
         }
@@ -74,36 +86,31 @@ class VehicleMapper {
         // payment method
         def paymentMethod
         def paymentMethodValue = binding.variables['payment.methods']
-        if(paymentMethodValue == 'paypal'){
+        if (paymentMethodValue == 'paypal') {
             paymentMethod = new Paypal()
-        }
-        else if(paymentMethodValue == 'prepayment'){
+        } else if (paymentMethodValue == 'prepayment') {
             paymentMethod = new Prepayment()
-        }
-        else if(paymentMethodValue == 'sofort'){
+        } else if (paymentMethodValue == 'sofort') {
             paymentMethod = new Sofort()
-        }
-        else if(paymentMethodValue == 'debit-from-existing-account'){
+        } else if (paymentMethodValue == 'debit-from-existing-account') {
             String bankAccountId = binding.variables['payment.methods/stored-account']
 
             paymentMethod = resolveBankAccount(customer, bankAccountId)
 
-        }
-        else if(paymentMethodValue == 'debit-from-new-account'){
+        } else if (paymentMethodValue == 'debit-from-new-account') {
             paymentMethod = new BankAccount()
             paymentMethod.iban = binding.variables['payment.methods/new-account-code']
             paymentMethod.bic = binding.variables['payment.methods/new-account-bankcode']
             paymentMethod.bankName = binding.variables['payment.methods/new-account-bankname']
             paymentMethod.accountHolder = binding.variables['payment.methods/new-account-owner']
-            if(paymentMethod.accountHolder == null || paymentMethod.accountHolder.isEmpty()){
+            if (paymentMethod.accountHolder == null || paymentMethod.accountHolder.isEmpty()) {
                 paymentMethod.accountHolder = customer.firstname + ' ' + customer.lastname
             }
 
             // add a new bank account
             customer.addBankAccount(paymentMethod)
             customerRepository.updateCustomer(customer)
-        }
-        else {
+        } else {
             // unsupported account type!
             paymentMethod = null
         }
@@ -111,17 +118,19 @@ class VehicleMapper {
         // handover option
         def handoverOption
         def handoverOptionValue = binding.variables['handover.options']
-        if(handoverOptionValue == 'office-delivering'){
+        if (handoverOptionValue == 'office-delivering') {
             handoverOption = 'OFFICE_DELIVERING'
-        }
-        else {
+        } else {
             handoverOption = 'PICKUP'
         }
 
-        Vehicle vehicle = new Vehicle (
+        Vehicle vehicle = new Vehicle(
                 previousNameplate: binding.variables['vehicle.existing-nameplate'],
                 newNameplateOption: newNameplateOption,
                 newNameplateAdditionalInfo: newNameplateAdditionalInfo,
+                nameplateTypeOption: nameplateTypeOption,
+                seasonStartMonth: nameplateSeasonStartMonth,
+                seasonEndMonth: nameplateSeasonEndMonth,
                 vehicleIdentNumber: binding.variables['vehicle-data.ident'],
                 vehicleId: binding.variables['vehicle-data.vehicle-id'],
                 leasingOrFinancingOption: leasingOption,
@@ -138,9 +147,9 @@ class VehicleMapper {
         )
     }
 
-    static BankAccount resolveBankAccount(Customer customer, String bankAccountId){
-        for(BankAccount bankAccount : customer.bankAccounts) {
-            if(bankAccount.name == bankAccountId){
+    static BankAccount resolveBankAccount(Customer customer, String bankAccountId) {
+        for (BankAccount bankAccount : customer.bankAccounts) {
+            if (bankAccount.name == bankAccountId) {
                 return bankAccount
             }
         }

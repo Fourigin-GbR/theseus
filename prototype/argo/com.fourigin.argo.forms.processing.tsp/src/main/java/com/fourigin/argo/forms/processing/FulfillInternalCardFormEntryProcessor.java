@@ -7,6 +7,7 @@ import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.CustomerAddress;
 import com.fourigin.argo.forms.customer.payment.BankAccount;
 import com.fourigin.argo.forms.models.HandoverOption;
+import com.fourigin.argo.forms.models.NameplateTypeOption;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import com.fourigin.utilities.pdfbox.PdfDocument;
@@ -133,6 +134,15 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
 
         PDTextField zbField = doc.getTextField("FzBriefNR");
         zbField.setValue(vehicle.getVehicleId());
+
+        // season nameplates
+        if (vehicle.getNameplateTypeOption() == NameplateTypeOption.SEASON) {
+            PDTextField seasonStartMonth = doc.getTextField("saison_from");
+            seasonStartMonth.setValue(String.valueOf(vehicle.getSeasonStartMonth()));
+
+            PDTextField seasonEndMonth = doc.getTextField("saison_to");
+            seasonEndMonth.setValue(String.valueOf(vehicle.getSeasonEndMonth()));
+        }
 
         // insurance-id
         PDTextField insuranceIdField = doc.getTextField("eVBNummer");

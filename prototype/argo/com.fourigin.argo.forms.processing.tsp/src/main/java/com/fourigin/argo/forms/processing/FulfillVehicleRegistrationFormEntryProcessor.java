@@ -5,6 +5,7 @@ import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.CustomerAddress;
+import com.fourigin.argo.forms.models.NameplateTypeOption;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import com.fourigin.utilities.pdfbox.PdfDocument;
@@ -72,6 +73,15 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
         String nameplateValue = resolveNameplateToUse(vehicle);
         if(nameplateValue != null){
             newNameplateField.setValue(nameplateValue);
+        }
+
+        // nameplate type / season nameplates
+        if (vehicle.getNameplateTypeOption() == NameplateTypeOption.SEASON) {
+            PDTextField seasonStartMonth = doc.getTextField("Saison von");
+            seasonStartMonth.setValue(String.valueOf(vehicle.getSeasonStartMonth()));
+
+            PDTextField seasonEndMonth = doc.getTextField("Saison bis");
+            seasonEndMonth.setValue(String.valueOf(vehicle.getSeasonEndMonth()));
         }
 
         // person
