@@ -1,6 +1,7 @@
 import com.fourigin.argo.forms.models.Vehicle
 import com.fourigin.argo.forms.models.VehicleRegistration
 import com.fourigin.argo.forms.customer.Customer
+import com.fourigin.argo.forms.customer.Address
 import com.fourigin.argo.forms.customer.payment.BankAccount
 import com.fourigin.argo.forms.customer.payment.Paypal
 import com.fourigin.argo.forms.customer.payment.Prepayment
@@ -47,8 +48,7 @@ class VehicleMapper {
             nameplateTypeOption = 'SEASON'
             nameplateSeasonStartMonth = Integer.parseInt(binding.variables['vehicle.nameplate-type/season-begin'])
             nameplateSeasonEndMonth = Integer.parseInt(binding.variables['vehicle.nameplate-type/season-end'])
-        }
-        else {
+        } else {
             nameplateTypeOption = 'NORMAL'
             nameplateSeasonStartMonth = 0
             nameplateSeasonEndMonth = 0
@@ -70,10 +70,32 @@ class VehicleMapper {
             taxBankAccount.iban = binding.variables['tax.account/new-account-code']
             taxBankAccount.bic = binding.variables['tax.account/new-account-bankcode']
             taxBankAccount.bankName = binding.variables['tax.account/new-account-bankname']
-            taxBankAccount.accountHolder = binding.variables['tax.account/new-account-owner']
-            if (taxBankAccount.accountHolder == null || taxBankAccount.accountHolder.isEmpty()) {
-                taxBankAccount.accountHolder = customer.firstname + ' ' + customer.lastname
-            }
+
+            // applicant or other
+            parseBankAccountHoldersData(taxBankAccount, 'tax.account', binding, customer)
+//            def bankAccountHolderType = binding.variables['tax.account/new-account-owner']
+//            switch (bankAccountHolderType) {
+//                case 'applicant':
+//                    taxBankAccount.accountHolder = customer.firstname + ' ' + customer.lastname
+//                    taxBankAccount.accountHolderAddress = customer.mainAddress
+//                    break
+//                case 'other':
+//                    taxBankAccount.accountHolder = binding.variables['tax.account/new-account-owner/name']
+//                    taxBankAccount.accountHolderAddress = new Address(
+//                            street: binding.variables['tax.account/new-account-owner/address.street'],
+//                            houseNumber: binding.variables['tax.account/new-account-owner/address.house-number'],
+//                            additionalInfo: binding.variables['tax.account/new-account-owner/address.additional-info'],
+//                            zipCode: binding.variables['tax.account/new-account-owner/address.zip-code'],
+//                            city: binding.variables['tax.account/new-account-owner/address.city'],
+//                            country: 'DE'
+//                    )
+//                    break
+//            }
+
+//            taxBankAccount.accountHolder = binding.variables['tax.account/new-account-owner']
+//            if (taxBankAccount.accountHolder == null || taxBankAccount.accountHolder.isEmpty()) {
+//                taxBankAccount.accountHolder = customer.firstname + ' ' + customer.lastname
+//            }
 
             // add a new bank account
             customer.addBankAccount(taxBankAccount)
@@ -102,10 +124,14 @@ class VehicleMapper {
             paymentMethod.iban = binding.variables['payment.methods/new-account-code']
             paymentMethod.bic = binding.variables['payment.methods/new-account-bankcode']
             paymentMethod.bankName = binding.variables['payment.methods/new-account-bankname']
-            paymentMethod.accountHolder = binding.variables['payment.methods/new-account-owner']
-            if (paymentMethod.accountHolder == null || paymentMethod.accountHolder.isEmpty()) {
-                paymentMethod.accountHolder = customer.firstname + ' ' + customer.lastname
-            }
+
+            // applicant or other
+            parseBankAccountHoldersData(taxBankAccount, 'payment.methods', binding, customer)
+
+//            paymentMethod.accountHolder = binding.variables['payment.methods/new-account-owner']
+//            if (paymentMethod.accountHolder == null || paymentMethod.accountHolder.isEmpty()) {
+//                paymentMethod.accountHolder = customer.firstname + ' ' + customer.lastname
+//            }
 
             // add a new bank account
             customer.addBankAccount(paymentMethod)
@@ -155,6 +181,27 @@ class VehicleMapper {
         }
 
         return null
+    }
+
+    static void parseBankAccountHoldersData(BankAccount bankAccount, String fieldPrefix, def binding, Customer customer) {
+        def bankAccountHolderType = binding.variables[fieldPrefix + '/new-account-owner']
+        switch (bankAccountHolderType) {
+            case 'applicant':
+                bankAccount.accountHolder = customer.firstname + ' ' + customer.lastname
+                bankAccount.accountHolderAddress = customer.mainAddress
+                break
+            case 'other':
+                bankAccount.accountHolder = binding.variables[fieldPrefix + '/new-account-owner/name']
+                bankAccount.accountHolderAddress = new Address(
+                        street: binding.variables[fieldPrefix + '/new-account-owner/address.street'],
+                        houseNumber: binding.variables[fieldPrefix + '/new-account-owner/address.house-number'],
+                        additionalInfo: binding.variables[fieldPrefix + '/new-account-owner/address.additional-info'],
+                        zipCode: binding.variables[fieldPrefix + '/new-account-owner/address.zip-code'],
+                        city: binding.variables[fieldPrefix + '/new-account-owner/address.city'],
+                        country: 'DE'
+                )
+                break
+        }
     }
 }
 

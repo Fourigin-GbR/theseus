@@ -1,5 +1,7 @@
 package com.fourigin.argo.forms.customer.payment;
 
+import com.fourigin.argo.forms.customer.Address;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class BankAccount implements PaymentMethod, Serializable {
     private String bic;
     private String bankName;
     private String accountHolder;
+    private Address accountHolderAddress;
 
     @Override
     public String getName() {
@@ -53,6 +56,14 @@ public class BankAccount implements PaymentMethod, Serializable {
         this.accountHolder = accountHolder;
     }
 
+    public Address getAccountHolderAddress() {
+        return accountHolderAddress;
+    }
+
+    public void setAccountHolderAddress(Address accountHolderAddress) {
+        this.accountHolderAddress = accountHolderAddress;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,12 +73,13 @@ public class BankAccount implements PaymentMethod, Serializable {
             Objects.equals(iban, that.iban) &&
             Objects.equals(bic, that.bic) &&
             Objects.equals(bankName, that.bankName) &&
-            Objects.equals(accountHolder, that.accountHolder);
+            Objects.equals(accountHolder, that.accountHolder) &&
+            Objects.equals(accountHolderAddress, that.accountHolderAddress);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, iban, bic, bankName, accountHolder);
+        return Objects.hash(name, iban, bic, bankName, accountHolder, accountHolderAddress);
     }
 
     @Override
@@ -78,6 +90,7 @@ public class BankAccount implements PaymentMethod, Serializable {
             ", bic='" + bic + '\'' +
             ", bankName='" + bankName + '\'' +
             ", accountHolder='" + accountHolder + '\'' +
+            ", accountHolderAddress='" + accountHolderAddress + '\'' +
             '}';
     }
 }

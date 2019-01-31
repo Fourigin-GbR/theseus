@@ -3,7 +3,7 @@ package com.fourigin.argo.forms.customer;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CustomerAddress implements Serializable {
+public class Address implements Serializable {
     private static final long serialVersionUID = 9208383441929829487L;
 
     private String street;
@@ -64,8 +64,8 @@ public class CustomerAddress implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CustomerAddress)) return false;
-        CustomerAddress that = (CustomerAddress) o;
+        if (!(o instanceof Address)) return false;
+        Address that = (Address) o;
         return Objects.equals(street, that.street) &&
             Objects.equals(houseNumber, that.houseNumber) &&
             Objects.equals(additionalInfo, that.additionalInfo) &&

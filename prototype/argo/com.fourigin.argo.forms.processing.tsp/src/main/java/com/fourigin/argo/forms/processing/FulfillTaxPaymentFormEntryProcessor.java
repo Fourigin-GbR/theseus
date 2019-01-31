@@ -4,7 +4,7 @@ import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
-import com.fourigin.argo.forms.customer.CustomerAddress;
+import com.fourigin.argo.forms.customer.Address;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import com.fourigin.argo.forms.customer.payment.BankAccount;
@@ -57,7 +57,7 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
         PDTextField nameField = doc.getTextField("Vorname / Nachname Zahler");
         nameField.setValue(account.getAccountHolder());
 
-        CustomerAddress address = customer.getMainAddress();
+        Address address = account.getAccountHolderAddress();
 
         // street + house number
         PDTextField streetHouseField = doc.getTextField("Straße / Hausnummer Zahler");

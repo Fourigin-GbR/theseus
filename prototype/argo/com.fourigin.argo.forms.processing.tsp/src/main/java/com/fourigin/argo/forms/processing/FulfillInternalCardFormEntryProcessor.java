@@ -4,7 +4,7 @@ import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
-import com.fourigin.argo.forms.customer.CustomerAddress;
+import com.fourigin.argo.forms.customer.Address;
 import com.fourigin.argo.forms.customer.payment.BankAccount;
 import com.fourigin.argo.forms.models.HandoverOption;
 import com.fourigin.argo.forms.models.NameplateTypeOption;
@@ -117,7 +117,7 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
         cityOfBornField.setValue(customer.getCityOfBorn());
 
         // address
-        CustomerAddress mainAddress = customer.getMainAddress();
+        Address mainAddress = customer.getMainAddress();
 
         PDTextField cityField = doc.getTextField("Postleitzahl");
         cityField.setValue(mainAddress.getZipCode());

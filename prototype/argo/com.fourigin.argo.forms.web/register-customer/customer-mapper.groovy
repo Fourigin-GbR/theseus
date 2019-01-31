@@ -1,5 +1,5 @@
 import com.fourigin.argo.forms.customer.Customer
-import com.fourigin.argo.forms.customer.CustomerAddress
+import com.fourigin.argo.forms.customer.Address
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -27,7 +27,7 @@ class CustomerMapper {
         }
 
         // address
-        CustomerAddress mainAddress = new CustomerAddress(
+        Address mainAddress = new Address(
                 street: binding.variables['street'],
                 houseNumber: binding.variables['house-number'],
                 additionalInfo: binding.variables['additional-info'],
@@ -36,13 +36,14 @@ class CustomerMapper {
                 country: 'DE'
         )
 
-        def nationalityOption
-        def nationalityOptionValue = binding.variables['nationality']
-        if (nationalityOptionValue == 'german') {
-            nationalityOption = 'DE'
-        } else {
-            nationalityOption = binding.variables['nationality/country']
-        }
+        def nationalityOption = 'DE'
+//        def nationalityOption
+//        def nationalityOptionValue = binding.variables['nationality']
+//        if (nationalityOptionValue == 'german') {
+//            nationalityOption = 'DE'
+//        } else {
+//            nationalityOption = binding.variables['nationality/country']
+//        }
 
         return new Customer(
                 gender: genderOption,

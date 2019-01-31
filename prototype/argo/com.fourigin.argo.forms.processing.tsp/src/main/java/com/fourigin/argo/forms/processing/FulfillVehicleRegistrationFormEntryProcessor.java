@@ -4,7 +4,7 @@ import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
-import com.fourigin.argo.forms.customer.CustomerAddress;
+import com.fourigin.argo.forms.customer.Address;
 import com.fourigin.argo.forms.models.NameplateTypeOption;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
@@ -121,7 +121,7 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
         cityOfBornField.setValue(customer.getCityOfBorn());
 
         // address
-        CustomerAddress mainAddress = customer.getMainAddress();
+        Address mainAddress = customer.getMainAddress();
 
         PDTextField cityField = doc.getTextField("PLZ  Ort");
         cityField.setValue(mainAddress.getZipCode() + " " + mainAddress.getCity());

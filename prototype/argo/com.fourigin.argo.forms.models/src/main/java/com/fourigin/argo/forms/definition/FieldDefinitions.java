@@ -1,5 +1,8 @@
 package com.fourigin.argo.forms.definition;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 public final class FieldDefinitions {
@@ -8,18 +11,27 @@ public final class FieldDefinitions {
 
     public static FieldDefinition findFieldDefinition(
         Map<String, FieldDefinition> fieldDefinitions,
+        String baseName,
         String fieldName,
         Map<String, String> validateFields,
         Map<String, String> stateFields
     ) {
+        Logger logger = LoggerFactory.getLogger(FieldDefinitions.class);
+
+        if (logger.isDebugEnabled()) logger.debug("Searching for field definition of '{}' inside of {}", fieldName, fieldDefinitions);
+        if (logger.isDebugEnabled()) logger.debug("validateFields: {}", validateFields);
+
         FieldDefinition result = resolveSingleFieldReference(fieldDefinitions, fieldName);
-        if (result != null) return result;
+        if (result != null)
+            return result;
 
         // field chain reference, search inside of value contexts
 
         int pos = fieldName.indexOf('/');
         String parentFieldName = fieldName.substring(0, pos);
         String childFieldName = fieldName.substring(pos + 1);
+
+        if (logger.isDebugEnabled()) logger.debug("parent name: '{}', child name: '{}'", parentFieldName, childFieldName);
 
         FieldDefinition parentField = fieldDefinitions.get(parentFieldName);
         if (parentField == null) {
@@ -31,7 +43,8 @@ public final class FieldDefinitions {
             throw new IllegalArgumentException("No field values found!");
         }
 
-        String parentFieldValue = getFieldValue(validateFields, stateFields, parentFieldName);
+        String subBase = baseName == null ? parentFieldName : baseName + '/' + parentFieldName;
+        String parentFieldValue = getFieldValue(validateFields, stateFields, subBase);
         if (parentFieldValue == null) {
             throw new IllegalArgumentException("No field value found for the parent reference '" + parentFieldName + "'!");
         }
@@ -41,7 +54,7 @@ public final class FieldDefinitions {
             throw new IllegalArgumentException("No value context found for field value '" + parentFieldValue + "'!");
         }
 
-        return findFieldDefinition(valueContext, childFieldName, validateFields, stateFields);
+        return findFieldDefinition(valueContext, subBase, childFieldName, validateFields, stateFields);
     }
 
     public static FieldDefinition findFieldDefinition(
@@ -92,6 +105,7 @@ public final class FieldDefinitions {
         if (result == null) {
             throw new IllegalArgumentException("No field definition found for the reference '" + fieldName + "'!");
         }
+        
         return result;
     }
 

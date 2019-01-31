@@ -18,8 +18,8 @@ public class Customer implements Serializable {
     private String birthname;
     private Date birthdate;
     private String cityOfBorn;
-    private CustomerAddress mainAddress;
-    private Set<CustomerAddress> additionalAddresses;
+    private Address mainAddress;
+    private Set<Address> additionalAddresses;
     private Set<BankAccount> bankAccounts;
     private String nationality;
     private String email;
@@ -118,19 +118,19 @@ public class Customer implements Serializable {
         this.bankAccounts = bankAccounts;
     }
 
-    public CustomerAddress getMainAddress() {
+    public Address getMainAddress() {
         return mainAddress;
     }
 
-    public void setMainAddress(CustomerAddress mainAddress) {
+    public void setMainAddress(Address mainAddress) {
         this.mainAddress = mainAddress;
     }
 
-    public Set<CustomerAddress> getAdditionalAddresses() {
+    public Set<Address> getAdditionalAddresses() {
         return additionalAddresses;
     }
 
-    public void setAdditionalAddresses(Set<CustomerAddress> additionalAddresses) {
+    public void setAdditionalAddresses(Set<Address> additionalAddresses) {
         this.additionalAddresses = additionalAddresses;
     }
 

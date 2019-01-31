@@ -305,11 +305,67 @@
                                 </div>
                             </div>
 
-                            <label>
-                                <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
-                                <input type="text" name="tax.account/new-account-owner"/>
-                            </label>
-                            <div class="FieldValidationMessage" data-input="tax.account/new-account-owner" data-element="validation-message"></div>
+                            <fieldset>
+                                <legend>Kontoinhaber</legend>
+                                <label class="Radio">
+                                    <input checked="checked" type="radio" name="tax.account/new-account-owner" value="applicant"/>
+                                    <span>Antragsteller selbst</span>
+                                </label>
+                                <div class="DependencyGroup">
+                                    <label class="Radio DependencyGroup__master">
+                                        <input type="radio" name="tax.account/new-account-owner" value="other"
+                                               data-activate-fieldset-name="tax.account/new-account-owner_wrapper"/>
+                                        <span>eine andere Person</span>
+                                    </label>
+                                    <fieldset class="DependencyGroup__dependant" name="tax.account/new-account-owner_wrapper">
+                                        <label>
+                                            <span>Name:</span>
+                                            <input type="text" name="tax.account/new-account-owner/name"/>
+                                        </label>
+                                        <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/name" data-element="validation-message"></div>
+
+                                        <div class="FormularGroup Grid">
+                                            <div class="Grid_Module--80">
+                                                <label>
+                                                    <span>Straße:</span>
+                                                    <input type="text" name="tax.account/new-account-owner/address.street"/>
+                                                </label>
+                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.street" data-element="validation-message"></div>
+                                            </div>
+                                            <div class="Grid_Module--20">
+                                                <label>
+                                                    <span>Hausnummer:</span>
+                                                    <input type="text" name="tax.account/new-account-owner/address.house-number"/>
+                                                </label>
+                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.house-number" data-element="validation-message"></div>
+                                            </div>
+                                        </div>
+
+                                        <label>
+                                            <span>Zusatzangaben:</span>
+                                            <input type="text" name="tax.account/new-account-owner/address.additional-info"/>
+                                        </label>
+                                        <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.additional-info" data-element="validation-message"></div>
+
+                                        <div class="FormularGroup Grid">
+                                            <div class="Grid_Module--30">
+                                                <label>
+                                                    <span>PLZ:</span>
+                                                    <input type="text" name="tax.account/new-account-owner/address.zip-code"/>
+                                                </label>
+                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.zip-code" data-element="validation-message"></div>
+                                            </div>
+                                            <div class="Grid_Module--80">
+                                                <label>
+                                                    <span>Ort:</span>
+                                                    <input type="text" name="tax.account/new-account-owner/address.city"/>
+                                                </label>
+                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.city" data-element="validation-message"></div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </fieldset>
 
                         </fieldset>
                     </div>
@@ -396,11 +452,67 @@
                                     </div>
                                 </div>
 
-                                <label>
-                                    <span>Kontoinhaber (falls abweichend vom Antragsteller):</span>
-                                    <input type="text" name="payment.methods/new-account-owner"/>
-                                </label>
-                                <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner" data-element="validation-message"></div>
+                                <fieldset>
+                                    <legend>Kontoinhaber</legend>
+                                    <label class="Radio">
+                                        <input checked="checked" type="radio" name="payment.methods/new-account-owner" value="applicant"/>
+                                        <span>Antragsteller selbst</span>
+                                    </label>
+                                    <div class="DependencyGroup">
+                                        <label class="Radio DependencyGroup__master">
+                                            <input type="radio" name="payment.methods/new-account-owner" value="other"
+                                                   data-activate-fieldset-name="payment.methods/new-account-owner_wrapper"/>
+                                            <span>eine andere Person</span>
+                                        </label>
+                                        <fieldset class="DependencyGroup__dependant" name="payment.methods/new-account-owner_wrapper">
+                                            <label>
+                                                <span>Name:</span>
+                                                <input type="text" name="payment.methods/new-account-owner/name"/>
+                                            </label>
+                                            <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/name" data-element="validation-message"></div>
+
+                                            <div class="FormularGroup Grid">
+                                                <div class="Grid_Module--80">
+                                                    <label>
+                                                        <span>Straße:</span>
+                                                        <input type="text" name="payment.methods/new-account-owner/address.street"/>
+                                                    </label>
+                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.street" data-element="validation-message"></div>
+                                                </div>
+                                                <div class="Grid_Module--20">
+                                                    <label>
+                                                        <span>Hausnummer:</span>
+                                                        <input type="text" name="payment.methods/new-account-owner/address.house-number"/>
+                                                    </label>
+                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.house-number" data-element="validation-message"></div>
+                                                </div>
+                                            </div>
+
+                                            <label>
+                                                <span>Zusatzangaben:</span>
+                                                <input type="text" name="payment.methods/new-account-owner/address.additional-info"/>
+                                            </label>
+                                            <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.additional-info" data-element="validation-message"></div>
+
+                                            <div class="FormularGroup Grid">
+                                                <div class="Grid_Module--30">
+                                                    <label>
+                                                        <span>PLZ:</span>
+                                                        <input type="text" name="payment.methods/new-account-owner/address.zip-code"/>
+                                                    </label>
+                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.zip-code" data-element="validation-message"></div>
+                                                </div>
+                                                <div class="Grid_Module--80">
+                                                    <label>
+                                                        <span>Ort:</span>
+                                                        <input type="text" name="payment.methods/new-account-owner/address.city"/>
+                                                    </label>
+                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.city" data-element="validation-message"></div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </fieldset>
                             </fieldset>
                         </div>
                     </fieldset>

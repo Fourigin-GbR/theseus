@@ -3,7 +3,7 @@ package com.fourigin.argo.forms.processing
 import com.fourigin.argo.forms.CustomerRepository
 import com.fourigin.argo.forms.FormsStoreRepository
 import com.fourigin.argo.forms.customer.Customer
-import com.fourigin.argo.forms.customer.CustomerAddress
+import com.fourigin.argo.forms.customer.Address
 import com.fourigin.argo.forms.customer.Gender
 import com.fourigin.argo.forms.models.HandoverOption
 import com.fourigin.argo.forms.models.NameplateRegistrationOption
@@ -63,7 +63,7 @@ final class PdfBoxPlayground {
                 birthname: 'Otto-Wagner',
                 birthdate: format.parse("19750414"),
                 cityOfBorn: 'Kharkov / Ukraine',
-                mainAddress: new CustomerAddress(
+                mainAddress: new Address(
                         street: 'Hauptstraße',
                         houseNumber: 17,
                         zipCode: 12345,

@@ -83,6 +83,7 @@ public final class FormsValidator {
             try {
                 fieldDefinition = FieldDefinitions.findFieldDefinition(
                     fieldDefinitions,
+                    null,
                     fieldName,
                     data.getValidateFields(),
                     data.getStateFields()
@@ -103,6 +104,7 @@ public final class FormsValidator {
                     continue;
                 }
             } catch (Exception ex) {
+                if (logger.isDebugEnabled()) logger.debug("Validation failed!", ex);
                 if (logger.isInfoEnabled())
                     logger.info("No field definition found for field '{}', validation failed", fieldName);
                 failure(result, fieldName, fieldValue, new FailureReason.Builder()
@@ -165,6 +167,7 @@ public final class FormsValidator {
             try {
                 fieldDefinition = FieldDefinitions.findFieldDefinition(
                     fieldDefinitions,
+                    null,
                     fieldName,
                     data.getValidateFields(),
                     data.getStateFields()
