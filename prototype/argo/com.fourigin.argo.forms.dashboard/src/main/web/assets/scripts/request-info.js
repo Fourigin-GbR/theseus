@@ -131,6 +131,50 @@ function init() {
             $("div.toolbar").html('<h4>Eigenschaften des Auftrages</h4>');
         }
     );
+
+    //
+
+    var jStateChangeButton = $("input#state-change-button"),
+        jFieldsetStateChange = $("fieldset#state-change"),
+        jStateChangeForm = jFieldsetStateChange.find("form#state-change-form");
+    //
+
+    // event button
+    jStateChangeButton.button();
+    jStateChangeButton.on("change", function() {
+        setFieldsetStateChangeVisibility();
+    });
+
+    // slide
+    var setFieldsetStateChangeVisibility = function() {
+        if(jStateChangeButton.is(":checked")) {
+            jFieldsetStateChange.slideDown();
+        }
+        else {
+            jFieldsetStateChange.slideUp();
+        }
+    };
+
+    // ajax
+    jStateChangeForm.on("submit", function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            method: "POST",
+            url: jStateChangeForm.attr("action"),
+            data: jStateChangeForm.serializeArray()
+        })
+            .done(function( msg ) {
+                loadRequestInfo(entryId);
+            })
+            .fail(function( msg ) {
+                alert( "There was an error: " + msg );
+            });
+    });
+
+    // init
+    setFieldsetStateChangeVisibility();
+
 }
 
 function loadRequestInfo(entryId) {
@@ -185,3 +229,4 @@ function formatDate(date, showSeconds) {
         return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
     }
 }
+

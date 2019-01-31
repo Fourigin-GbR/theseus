@@ -227,16 +227,16 @@ function initRequestsTable(){
                 var divId = "attachment-" + req.id;
                 var div = $('<div></div>').prop('id', divId);
                 var h3 = $('<h3></h3>').append('Auftrag ' + req.id);
-                var divStatus = $('<div></div>')
+                var spanStatus = $('<div></div>')
                     .prop('class', 'status')
                     .append(processingState.state);
-                var divMessage = $('<div></div>')
+                var spanMessage = $('<div></div>')
                     .prop('class', 'message')
                     .append(processingState.currentStatusMessage);
                 var fieldsetStatus = $('<fieldset></fieldset>')
                     .prop('class', 'status-container')
-                    .append(divStatus)
-                    .append(divMessage);
+                    .append(spanStatus)
+                    .append(spanMessage);
                 
                 var h4 = $('<h4></h4>').append('Anhänge:');
                 var ul = $('<ul></ul>');
