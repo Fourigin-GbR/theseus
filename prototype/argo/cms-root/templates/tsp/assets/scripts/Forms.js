@@ -214,7 +214,7 @@ var setFormFieldTextareaValues = function(formField, dataObject) {
 
 var initializeFormWithRequestData = function(customerId, entryId) {
     if(!customerId) {
-        alert("Internal error. Please change your request and try again!");
+        console.info("Configuration parameter 'customerId' is missing. Do not pre-fill form.");
         return;
     }
     var self = this,
