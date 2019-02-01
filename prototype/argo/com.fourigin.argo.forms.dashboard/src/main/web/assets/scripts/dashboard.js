@@ -231,15 +231,29 @@ function initRequestsTable() {
                 if(processingState.state === 'WAITING'){
                     var approveForm = $('<form></form>')
                         .prop('class', 'ajax')
-                        .prop('action', 'machwas.html');
+                        .prop('action', '/forms-dashboard/change-state');
                     var approveIdField = $('<input></input>')
                         .prop('type', 'hidden')
-                        .prop('name', 'id')
+                        .prop('name', 'entryId')
                         .prop('value', req.id);
+                    var approveCustomerIdField = $('<input></input>')
+                        .prop('type', 'hidden')
+                        .prop('name', 'customerId')
+                        .prop('value', req.customer);
+                    var approveStateField = $('<input></input>')
+                        .prop('type', 'hidden')
+                        .prop('name', 'processingState')
+                        .prop('value', 'DONE');
+                    var approveMessageField = $('<input></input>')
+                        .prop('type', 'hidden')
+                        .prop('name', 'comment');
                     var approveButton = $('<input></input>')
                         .prop('id', 'approveButton-' + req.id)
                         .prop('type', 'submit')
                         .prop('value', 'Bearbeitung abschliessen');
+                    approveForm.append(approveCustomerIdField);
+                    approveForm.append(approveMessageField);
+                    approveForm.append(approveStateField);
                     approveForm.append(approveIdField);
                     approveForm.append(approveButton);
 
