@@ -152,7 +152,9 @@ function init() {
             jFieldsetStateChange.slideDown();
         }
         else {
-            jFieldsetStateChange.slideUp();
+            if(jFieldsetStateChange.is(':visible')) {
+                jFieldsetStateChange.slideUp();
+            }
         }
     };
 
@@ -174,6 +176,7 @@ function init() {
     });
 
     // init
+    jFieldsetStateChange.hide();
     setFieldsetStateChangeVisibility();
 
 }
