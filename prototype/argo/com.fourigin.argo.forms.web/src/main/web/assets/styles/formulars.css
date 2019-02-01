@@ -317,6 +317,7 @@ a.hint:hover {
 .DependencyGroup .DependencyGroup__dependant[disabled="disabled"] {
     opacity: 0;
     height: 0;
+    pointer-events: none;
 }
 
 
