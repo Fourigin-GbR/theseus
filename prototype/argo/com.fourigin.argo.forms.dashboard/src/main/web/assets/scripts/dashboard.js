@@ -229,13 +229,21 @@ function initRequestsTable() {
                 var div = $('<div></div>').prop('id', divId);
 
                 if(processingState.state === 'WAITING'){
+                    var approveForm = $('<form></form>')
+                        .prop('class', 'ajax')
+                        .prop('action', 'machwas.html');
+                    var approveIdField = $('<input></input>')
+                        .prop('type', 'hidden')
+                        .prop('name', 'id')
+                        .prop('value', req.id);
                     var approveButton = $('<input></input>')
                         .prop('id', 'approveButton-' + req.id)
-                        .prop('type', 'button')
+                        .prop('type', 'submit')
                         .prop('value', 'Bearbeitung abschliessen');
+                    approveForm.append(approveIdField);
+                    approveForm.append(approveButton);
 
-
-                    div.append(approveButton);
+                    div.append(approveForm);
                 }
 
                 var infoButton = $('<input></input>')
@@ -336,3 +344,46 @@ function formatDate(date) {
     var mm = minutes < 10 ? "0" + minutes : minutes;
     return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
 }
+
+var processAjaxForms = function() {
+    $('body').on('submit', function(e) {
+        if(!$(e.target).hasClass('ajax') && e.target.nodeName !== "FORM") {
+            return;
+        }
+
+        var jForm = $(e.target);
+
+        function ConvertFormToJSON(jForm){
+            var array = jForm.serializeArray();
+            var json = {};
+
+            $.each(array, function() {
+                json[this.name] = this.value || '';
+            });
+
+            return json;
+        }
+
+
+        e.preventDefault();
+
+        console.log("send form:", jForm, "->", jForm.serializeArray(), " -- ", ConvertFormToJSON(jForm));
+
+        $.ajax({
+            url: jForm.attr('action'),
+            type : "POST",
+            dataType : 'json',
+            data: ConvertFormToJSON(jForm),
+            success : function(result) {
+                console.log(result);
+            },
+            error: function(xhr, resp, text) {
+                console.error(xhr, resp, text);
+            }
+        })
+    });
+};
+
+$(document).ready(function(){
+    processAjaxForms();
+});
