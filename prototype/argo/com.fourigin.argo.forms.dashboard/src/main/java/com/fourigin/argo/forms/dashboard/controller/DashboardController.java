@@ -101,7 +101,7 @@ public class DashboardController {
         return convertEntry(entryInfo);
     }
 
-    private FormRequestInfo convertEntry(FormsStoreEntryInfo entryInfo){
+    private FormRequestInfo convertEntry(FormsStoreEntryInfo entryInfo) {
         FormsEntryHeader header = entryInfo.getHeader();
         String customerId = header.getCustomer();
 
@@ -115,14 +115,14 @@ public class DashboardController {
         info.setCreationTimestamp(entryInfo.getCreationTimestamp());
         info.setAttachments(attachments);
         info.setProcessingState(entryInfo.getProcessingState());
-        
+
         return info;
     }
 
     @RequestMapping("/data")
     public SortedMap<String, String> data(
         @RequestParam String entryId
-    ){
+    ) {
         Objects.requireNonNull(entryId, "entryId must not bei null!");
 
         FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
@@ -131,7 +131,7 @@ public class DashboardController {
         }
 
         Map<String, String> data = entry.getData();
-        if(data == null){
+        if (data == null) {
             return null;
         }
 
@@ -181,27 +181,36 @@ public class DashboardController {
     public void changeState(
         @RequestParam String customerId,
         @RequestParam String entryId,
-        @RequestParam String stateKey,
         @RequestParam ProcessingState processingState,
         @RequestParam String comment
     ) {
         Objects.requireNonNull(customerId, "customerId must not bei null!");
         Objects.requireNonNull(entryId, "entryId must not bei null!");
-        Objects.requireNonNull(stateKey, "stateKey must not bei null!");
         Objects.requireNonNull(processingState, "state must not bei null!");
 
         FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
         FormsDataProcessingState state = info.getProcessingState();
 
-        state.setState(processingState);
-
-        if(comment != null && !comment.isEmpty()) {
+        boolean changed = false;
+        if (comment != null && !comment.isEmpty()) {
             state.setCurrentStatusMessage(comment);
 
             state.addHistoryRecord(ProcessingHistoryRecord.KEY_MESSAGE, comment);
-        }
-        state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, processingState.name());
 
-        formsStoreRepository.updateEntryInfo(info);
+            changed = true;
+        } else {
+            state.setCurrentStatusMessage(null);
+        }
+
+        if (state.getState() != processingState) {
+            state.setState(processingState);
+            state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, processingState.name());
+
+            changed = true;
+        }
+
+        if (changed) {
+            formsStoreRepository.updateEntryInfo(info);
+        }
     }
 }

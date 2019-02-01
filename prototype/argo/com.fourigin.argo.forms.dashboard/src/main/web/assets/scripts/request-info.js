@@ -11,27 +11,8 @@ function init() {
             console.log("info:");
             console.log(data);
 
+            // request data
             var keysTable = $('#request-keys');
-
-            /*
-                        <tr>
-                            <td class="key">ID</td>
-                            <td class="value" colspan="5">1234567890123456789012345678901234567890</td>
-                            <td style="display: none;"></td>
-                            <td style="display: none;"></td>
-                            <td style="display: none;"></td>
-                            <td style="display: none;"></td>
-                        </tr>
-                        <tr>
-                            <td class="key">Typ</td>
-                            <td class="value">KFZ-Anmeldung</td>
-                            <td class="key">Kundennummer</td>
-                            <td class="value">1</td>
-                            <td class="key">Datum</td>
-                            <td class="value">17.02.2018</td>
-                        </tr>
-
-             */
 
             var keysBody = keysTable.find('tbody');
             keysBody.empty();
@@ -53,7 +34,7 @@ function init() {
                     .append($('<td></td>').attr('class', 'key').text('Kundennummer'))
                     .append($('<td></td>').attr('class', 'value').text(data.customer))
                     .append($('<td></td>').attr('class', 'key').text('Datum'))
-                    .append($('<td></td>').attr('class', 'value').html(formatDate(creationDate, false)))
+                    .append($('<td></td>').attr('class', 'value').html(formatDate(creationDate, true)))
                 );
 
             keysDataTable = keysTable.DataTable({
@@ -63,34 +44,54 @@ function init() {
                 "info": false
             });
 
+            // current status
+            var processingState = data.processingState;
+
+            var currentStateDiv = $('#current-state');
+            var stateMessageSpan = $(currentStateDiv).find('.state-message')
+                .empty();
+
+            var message = processingState.currentStatusMessage;
+            if (message) {
+                stateMessageSpan.append(message)
+            }
+
+            $(currentStateDiv).find('.state-value')
+                .empty()
+                .append(processingState.state);
+
+            // form
+            $('select#new-state').val(processingState.state);
+            $('input#form-customerId').prop('value', data.customer);
+            $('input#form-entryId').prop('value', entryId);
+
+            // status history
             var historyTable = $('#request-history');
 
             var historyBody = historyTable.find('tbody');
             historyBody.empty();
 
-            var processingState = data.processingState;
             var historyData = processingState.history;
 
-            historyData.sort(sortByTimestamp);
-
             $.each(historyData, function (index, historyEntry) {
-                var row;
-
-                var date = new Date(parseInt(historyEntry.timestamp));
+                var date = new Date(historyEntry.timestamp);
 
                 if (historyEntry.value) {
-                    row = $('<tr></tr>')
-                        .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
-                        .append($('<td></td>').attr('class', 'state').append(historyEntry.key))
-                        .append($('<td></td>').attr('class', 'message').append(historyEntry.value));
+                    historyBody.prepend(
+                        $('<tr></tr>')
+                            .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
+                            .append($('<td></td>').attr('class', 'state').append(historyEntry.key))
+                            .append($('<td></td>').attr('class', 'message').append(historyEntry.value))
+                    );
                 }
                 else {
-                    row = $('<tr></tr>')
-                        .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
-                        .append($('<td></td>').attr('colspan', 2).attr('class', 'state').append(historyEntry.key))
-                        .append($('<td></td>').attr('style', 'display: none;'));
+                    historyBody.prepend(
+                        $('<tr></tr>')
+                            .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
+                            .append($('<td></td>').attr('colspan', 2).attr('class', 'state').append(historyEntry.key))
+                            .append($('<td></td>').attr('style', 'display: none;'))
+                    );
                 }
-                historyBody.append(row);
             });
 
             historyDataTable = historyTable.DataTable({
@@ -141,13 +142,13 @@ function init() {
 
     // event button
     jStateChangeButton.button();
-    jStateChangeButton.on("change", function() {
+    jStateChangeButton.on("change", function () {
         setFieldsetStateChangeVisibility();
     });
 
     // slide
-    var setFieldsetStateChangeVisibility = function() {
-        if(jStateChangeButton.is(":checked")) {
+    var setFieldsetStateChangeVisibility = function () {
+        if (jStateChangeButton.is(":checked")) {
             jFieldsetStateChange.slideDown();
         }
         else {
@@ -156,7 +157,7 @@ function init() {
     };
 
     // ajax
-    jStateChangeForm.on("submit", function(e) {
+    jStateChangeForm.on("submit", function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -164,11 +165,11 @@ function init() {
             url: jStateChangeForm.attr("action"),
             data: jStateChangeForm.serializeArray()
         })
-            .done(function( msg ) {
-                loadRequestInfo(entryId);
+            .done(function (msg) {
+                location.reload();
             })
-            .fail(function( msg ) {
-                alert( "There was an error: " + msg );
+            .fail(function (msg) {
+                alert("There was an error: " + msg);
             });
     });
 
@@ -204,29 +205,33 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-function sortByTimestamp(a, b) {
-    var ts1 = parseInt(a.timestamp);
-    var ts2 = parseInt(b.timestamp);
-    return ((ts2 < ts1) ? -1 : ((ts2 > ts1) ? 1 : 0));
-
-}
-
-function formatDate(date, showSeconds) {
+function formatDate(date, short) {
     var month = date.getMonth() + 1;
-    var y = date.getFullYear();
     var m = month < 10 ? "0" + month : "" + month;
+
     var day = date.getDate();
     var d = day < 10 ? "0" + day : day;
+
     var hh = date.getHours();
+
     var minutes = date.getMinutes();
     var mm = minutes < 10 ? "0" + minutes : minutes;
-    if (showSeconds) {
+
+    if (!short) {
+        var y = date.getFullYear();
         var seconds = date.getSeconds();
         var ss = seconds < 10 ? "0" + seconds : seconds;
         return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm + ":" + ss;
     }
     else {
-        return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+        var dateYear = date.getYear();
+        if (dateYear === new Date().getYear()) {
+            return d + "." + m + "&nbsp;" + hh + ":" + mm;
+        }
+        else {
+            var y = date.getYear() > 100 ? date.getYear() - 100 : date.getYear();
+            return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+        }
     }
 }
 

@@ -1,8 +1,9 @@
+var admin = false;
 var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
 
-function init(){
+function init() {
     translationBundle = resolveLanguageBundle('de');
 
     initUsersTable();
@@ -11,12 +12,12 @@ function init(){
     var languageDE = $('#language-de');
     var languageEN = $('#language-en');
 
-    languageDE.click(function (){
+    languageDE.click(function () {
         selectLanguage('de');
         languageDE.prop('disabled', true);
         languageEN.prop('disabled', false);
     });
-    languageEN.click(function (){
+    languageEN.click(function () {
         selectLanguage('en');
         languageEN.prop('disabled', true);
         languageDE.prop('disabled', false);
@@ -25,30 +26,30 @@ function init(){
     languageDE.prop('disabled', true);
 }
 
-function loadCustomers(){
+function loadCustomers() {
     return $.ajax({
         url: "/forms-dashboard/customers"
     });
 }
 
-function loadRequests(){
+function loadRequests() {
     return $.ajax({
         url: "/forms-dashboard/requests"
     });
 }
 
-function deleteUser(userId){
+function deleteUser(userId) {
     $.ajax({
         url: "forms-dashboard/delete-customer?customerId=" + userId
     });
 }
 
-function resolveLanguageBundle(language){
-    if(language === 'en'){
+function resolveLanguageBundle(language) {
+    if (language === 'en') {
         return "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json";
     }
 
-    if(language === 'de'){
+    if (language === 'de') {
         return "//cdn.datatables.net/plug-ins/1.10.19/i18n/German.json";
     }
 
@@ -66,7 +67,7 @@ function selectLanguage(lang) {
     initRequestsTable();
 }
 
-function internalInitUsersTable(data){
+function internalInitUsersTable(data) {
     var table = $('#users');
 
     usersDataTable = table.DataTable({
@@ -98,10 +99,10 @@ function internalInitRequestsTable(data) {
             {
                 "data": "formDefinition",
                 "render": function (data) {
-                    if("register-vehicle" === data){
+                    if ("register-vehicle" === data) {
                         return "KFZ-Anmeldung";
                     }
-                    if("register-customer" === data){
+                    if ("register-customer" === data) {
                         return "Registrierung";
                     }
 
@@ -138,7 +139,7 @@ function internalInitRequestsTable(data) {
 
 function initUsersTable() {
     $.when(loadCustomers()).done(
-        function(data){
+        function (data) {
             console.log(data);
 
             var table = $('#users');
@@ -173,33 +174,33 @@ function initUsersTable() {
     requestControls.hide();
     deleteUserButton.prop('disabled', true);
 
-    deleteUserButton.off().click( function () {
+    deleteUserButton.off().click(function () {
         var rowId = usersDataTable.row($('tr.selected')).id();
-        if(confirm("Sind Sie sicher, dass der Kunde " + rowId + " gelöscht werden soll?")){
+        if (confirm("Sind Sie sicher, dass der Kunde " + rowId + " gelöscht werden soll?")) {
             deleteUser(rowId);
             usersDataTable.destroy();
             initUsersTable();
         }
-        else{
+        else {
             return false;
         }
     });
 
-    addUserButton.off().click( function () {
+    addUserButton.off().click(function () {
         window.open('form-benutzer-anlegen.html', '_blank'); // TODO: fix it!
     });
 }
 
-function initRequestsTable(){
+function initRequestsTable() {
     var dataTable = null;
 
     $.when(loadRequests()).done(
-        function(data) {
+        function (data) {
             console.log(data);
 
             var table = $('#requests');
 
-            internalInitRequestsTable(data)
+            internalInitRequestsTable(data);
 
             var requestDetails = $('#request-details');
 
@@ -221,74 +222,103 @@ function initRequestsTable(){
             var attachments = $('#attachments');
             attachments.empty();
 
-            for(pos in data){
+            for (pos in data) {
                 var req = data[pos];
                 var processingState = req.processingState;
                 var divId = "attachment-" + req.id;
                 var div = $('<div></div>').prop('id', divId);
-                var h3 = $('<h3></h3>').append('Auftrag ' + req.id);
-                var spanStatus = $('<div></div>')
-                    .prop('class', 'status')
-                    .append(processingState.state);
-                var spanMessage = $('<div></div>')
-                    .prop('class', 'message')
-                    .append(processingState.currentStatusMessage);
-                var fieldsetStatus = $('<fieldset></fieldset>')
-                    .prop('class', 'status-container')
-                    .append(spanStatus)
-                    .append(spanMessage);
-                
-                var h4 = $('<h4></h4>').append('Anhänge:');
-                var ul = $('<ul></ul>');
-                var infoLink = $('<a></a>')
-                    .prop('href', '/request-info.html?entryId=' + req.id)
-                    .prop('target', '_blank')
-                    .append('info');
 
-                for(n in req.attachments){
-                    var attachment = req.attachments[n];
-                    var faType = resolveFAType(attachment.mimeType);
+                if(processingState.state === 'WAITING'){
+                    var approveButton = $('<input></input>')
+                        .prop('id', 'approveButton-' + req.id)
+                        .prop('type', 'button')
+                        .prop('value', 'Bearbeitung abschliessen');
 
-                    var span = $('<span></span>')
-                        .prop('class', 'fa fa-lg ' + faType)
-                        .append('&nbsp;');
 
-                    var a = $('<a></a>')
-                        .prop('href', '/forms-dashboard/attachment?entryId=' + req.id + '&attachmentName=' + attachment.name + '&mimeType=' + attachment.mimeType)
-                        .prop('target', '_blank')
-                        .append(attachment.filename);
-
-                    var li = $('<li></li>')
-                        .data('mime', attachment.mimeType)
-                        .append(span)
-                        .append(a);
-
-                    ul.append(li);
+                    div.append(approveButton);
                 }
 
-                div
-                    .append(h3)
-                    .append(fieldsetStatus)
-                    .append(h4)
-                    .append(ul)
-                    .append(infoLink);
+                var infoButton = $('<input></input>')
+                    .prop('id', 'infoButton-' + req.id)
+                    .prop('type', 'submit')
+                    .prop('value', 'Auftragsdetails ...');
+
+                var reqIdHidden = $('<input></input>')
+                    .prop('name', 'entryId')
+                    .prop('value', req.id)
+                    .prop('type', 'hidden');
+
+                var form = $('<form></form>')
+                    .prop('action', '/request-info.html')
+                    .prop('target', '_blank')
+                    .append(infoButton)
+                    .append(reqIdHidden);
+
+                var ul = $('<ul></ul>');
+
+                var visibleAttachmentsCount = 0;
+                for (n in req.attachments) {
+                    var attachment = req.attachments[n];
+                    if (admin || attachment.mimeType === 'application/pdf') {
+                        visibleAttachmentsCount++;
+                        var faType = resolveFAType(attachment.mimeType);
+
+                        var span = $('<span></span>')
+                            .prop('class', 'fa fa-lg ' + faType)
+                            .append('&nbsp;');
+
+                        var a = $('<a></a>')
+                            .prop('href', '/forms-dashboard/attachment?entryId=' + req.id + '&attachmentName=' + attachment.name + '&mimeType=' + attachment.mimeType)
+                            .prop('target', '_blank')
+                            .append(attachment.filename);
+
+                        var li = $('<li></li>')
+                            .data('mime', attachment.mimeType)
+                            .append(span)
+                            .append(a);
+
+                        ul.append(li);
+                    }
+                }
+
+                if (processingState.currentStatusMessage) {
+                    var spanMessage = $('<div></div>')
+                        .prop('class', 'message')
+                        .append(processingState.currentStatusMessage);
+
+                    div.append(spanMessage);
+                }
+
+                div.append(form);
+
+                if (visibleAttachmentsCount > 0) {
+                    var h4 = $('<h4></h4>')
+                        .append('Anhänge (' + visibleAttachmentsCount + '):');
+
+                    div
+                        .append(h4)
+                        .append(ul);
+                }
 
                 attachments
                     .append(div);
             }
-
         });
-    
+
     var requestDetails = $('#request-details');
-    
+
     requestDetails.hide();
     $('#attachments').hide();
 
     return dataTable;
 }
 
-function resolveFAType(mimeType){
-    if("application/pdf" === mimeType){
+function approveEntry(entryId){
+    alert('Approving entry ' + entryId);
+}
+
+function resolveFAType(mimeType) {
+    if ("application/pdf" === mimeType) {
         return "fa-file-pdf-o";
     }
 

@@ -35,6 +35,7 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
         String formDefinitionId = info.getHeader().getFormDefinition();
 
         boolean success = true;
+        ProcessingState newState = ProcessingState.PENDING;
 
         FormsDataProcessingState state = info.getProcessingState();
         if (state == null) {
@@ -51,7 +52,7 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
             for (String processorName : processorNames) {
                 try {
                     FormsEntryProcessor processor = processorFactory.getInstance(processorName);
-                    processor.processEntry(entryId, registry);
+                    newState = processor.processEntry(entryId, registry);
                     state.addHistoryRecord(ProcessingHistoryRecord.KEYPREFIX_PROCESSING + processorName);
                 } catch (Throwable th) {
                     success = false;
@@ -66,8 +67,8 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
 
         // set state
         if (success) {
-            state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, ProcessingState.WAITING.name());
-            state.setState(ProcessingState.WAITING);
+            state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, newState.name());
+            state.setState(newState);
         } else {
             state.setState(ProcessingState.FAILED);
         }

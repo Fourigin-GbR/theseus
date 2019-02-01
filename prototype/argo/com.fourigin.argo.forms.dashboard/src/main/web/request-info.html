@@ -47,29 +47,31 @@
 <div class="split right">
     <h2>Status</h2>
     <div>
-        <div>
+        <div id="current-state">
             <div>
-                <span class="status-message">Hello World! I'm a status message!</span>
+                <span class="state-message">Hello World! I'm a status message!</span>
             </div>
             <div>
-                <span class="status">WAITING</span>
+                <span class="state-value">WAITING</span>
                 <label for="state-change-button">ändern ...</label><input id="state-change-button" type="checkbox" />
             </div>
         </div>
 
         <fieldset id="state-change">
-            <form id="state-change-form">
+            <form id="state-change-form" action="/forms-dashboard/change-state">
+                <input id="form-customerId" name="customerId" type="hidden" />
+                <input id="form-entryId" name="entryId" type="hidden" />
                 <br/>
                 <label for="new-state">Neuer Zustand:</label>
-                <select id="new-state">
+                <select id="new-state" name="processingState">
                     <option value="-">Bitte wählen Sie</option>
-                    <option value="DONE">ERLEDIGT</option>
-                    <option value="REJECTED">ZURÜCKGEWIESEN</option>
-                    <option value="WAITING">WARTET</option>
+                    <option value="DONE">DONE</option>
+                    <option value="REJECTED">REJECTED</option>
+                    <option value="WAITING">WAITING</option>
                 </select>
                 <br/>
                 <label for="message">Ihr Kommentar:</label>
-                <textarea id="message" cols="60" rows="5"></textarea>
+                <textarea id="message" name="comment" cols="60" rows="5"></textarea>
                 <br/>
                 <input type="submit" value="Absenden..."/>
             </form>
@@ -91,7 +93,7 @@
 
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="assets/scripts/request-info.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
