@@ -246,7 +246,8 @@ function initRequestsTable() {
                         .prop('value', 'DONE');
                     var approveMessageField = $('<input></input>')
                         .prop('type', 'hidden')
-                        .prop('name', 'comment');
+                        .prop('name', 'comment')
+                        .prop('value', '');
                     var approveButton = $('<input></input>')
                         .prop('id', 'approveButton-' + req.id)
                         .prop('type', 'submit')
