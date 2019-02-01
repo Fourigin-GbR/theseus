@@ -361,8 +361,11 @@ function formatDate(date) {
 
 var processAjaxForms = function() {
     $('body').on('submit', function(e) {
-        if(!$(e.target).hasClass('ajax') && e.target.nodeName !== "FORM") {
-            return;
+        if( e.target.nodeName !== "FORM") {
+            return true;
+        }
+        if(!$(e.target).hasClass('ajax')) {
+            return true;
         }
 
         var jForm = $(e.target);
