@@ -1013,3 +1013,50 @@ ul.smallItemGalleryList li h3:hover a {
 .pagePreview__information h2 a {
     text-decoration: none;
 }
+
+
+.overviewListImageBoxes {
+    display: flex;
+    flex-wrap: wrap;
+}
+.overviewListImageBoxesItem {
+    width: calc(50% - 20px);
+    padding-right: 20px;
+}
+@media (max-width: 600px){
+    .overviewListImageBoxesItem {
+        width: 100%;
+    }
+}
+.overviewListImageBoxesItem__headline {
+    border-bottom: 1px solid #cce7ff;
+    margin-bottom: 20px;
+}
+.overviewListImageBoxesItem__headline h2 {
+    margin: 0;
+    padding: 0;
+}
+.overviewListImageBoxesItem__content {
+    display: flex;
+    height: 160px;
+}
+.overviewListImageBoxesItem__image {
+    flex-grow: 1;
+    flex-basis: 50%;
+    background-size: cover;
+}
+.overviewListImageBoxesItem__copy {
+    flex-grow: 1;
+    flex-basis: 50%;
+    padding: 10px 20px;
+    background-color: #e4f2ff;
+    color: #3b84c1;
+}
+.overviewListImageBoxesItem__copy p:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+}
+.overviewListImageBoxesItem__link {
+    padding: 10px 0;
+    text-align: right;
+}
