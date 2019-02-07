@@ -1,0 +1,366 @@
+{
+	"id": "contact",
+	"metaData": {
+		"title": "GreekEstate Kontakt",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"type": "group",
+			"name": "general-headlines",
+			"elements": [
+				{
+					"type": "text",
+					"name": "description",
+					"content": "Description",
+					"contextSpecificContent": {
+						"de": "Beschreibung",
+						"ru": "Описание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "map",
+					"content": "Map",
+					"contextSpecificContent": {
+						"de": "Karte",
+						"ru": "Карта"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search",
+					"content": "Search",
+					"contextSpecificContent": {
+						"de": "Suchen",
+						"ru": "Поиск"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search-in-region",
+					"content": "Search in the region",
+					"contextSpecificContent": {
+						"de": "Suche in der Region",
+						"ru": "Поиск в регионе"
+					}
+				},
+				{
+					"type": "text",
+					"name": "matching-objects-found",
+					"content": "{0} properties found.",
+					"contextSpecificContent": {
+						"de": "{0} Immobilien gefunden.",
+						"ru": "Объектов найдено: {0}"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type",
+					"content": "Object type",
+					"contextSpecificContent": {
+						"de": "Typ des Objektes",
+						"ru": "Тип объекта"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:apartment",
+					"content": "Apartment",
+					"contextSpecificContent": {
+						"de": "Wohnung",
+						"ru": "Квартира"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:land-plot",
+					"content": "Land plot",
+					"contextSpecificContent": {
+						"de": "Grundstück",
+						"ru": "Земельный участок"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:building",
+					"content": "Building",
+					"contextSpecificContent": {
+						"de": "Gebäude",
+						"ru": "Здание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:hotel",
+					"content": "Hotel",
+					"contextSpecificContent": {
+						"de": "Hotel",
+						"ru": "Гостиница"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:villa",
+					"content": "Villa",
+					"contextSpecificContent": {
+						"de": "Villa",
+						"ru": "Вилла"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:detached-house",
+					"content": "Detached house",
+					"contextSpecificContent": {
+						"de": "Freistehendes Haus",
+						"ru": "Дом"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:office",
+					"content": "Office",
+					"contextSpecificContent": {
+						"de": "Büro",
+						"ru": "Офис"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:farm-parcel",
+					"content": "Farm parcel",
+					"contextSpecificContent": {
+						"de": "Landparzelle",
+						"ru": "Сельскохозяйственный участок"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:store",
+					"content": "Store",
+					"contextSpecificContent": {
+						"de": "Geschäft",
+						"ru": "Магазин"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:business-building",
+					"content": "Business building",
+					"contextSpecificContent": {
+						"de": "Industriegebäude",
+						"ru": "Индустриальное здание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:various-other-property",
+					"content": "Various other property",
+					"contextSpecificContent": {
+						"de": "Sonstige Immobilie",
+						"ru": "Прочая недвижимость"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:parking",
+					"content": "Parking",
+					"contextSpecificContent": {
+						"de": "Parkplatz",
+						"ru": "Парковка"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:other-land-property",
+					"content": "Other land property",
+					"contextSpecificContent": {
+						"de": "Sonstige Grundstücke",
+						"ru": "Прочие земельные участки"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:maisonette",
+					"content": "Maisonette",
+					"contextSpecificContent": {
+						"de": "Maisonette",
+						"ru": "Двухуровневая квартира"
+					}
+				}
+			]
+		},
+		{
+			"type": "group",
+			"name": "properties",
+			"elements": [
+				{
+					"type": "text",
+					"name": "code",
+					"content": "Code",
+					"contextSpecificContent": {
+						"de": "Code",
+						"ru": "Код"
+					}
+				},
+				{
+					"type": "text",
+					"name": "area",
+					"content": "Area",
+					"contextSpecificContent": {
+						"de": "Fläche",
+						"ru": "Площадь"
+					}
+				},
+				{
+					"type": "text",
+					"name": "type",
+					"content": "Type",
+					"contextSpecificContent": {
+						"de": "Typ",
+						"ru": "Тип"
+					}
+				},
+				{
+					"type": "text",
+					"name": "region",
+					"content": "Region",
+					"contextSpecificContent": {
+						"de": "Region",
+						"ru": "Регион"
+					}
+				},
+				{
+					"type": "text",
+					"name": "owner",
+					"content": "Owner",
+					"contextSpecificContent": {
+						"de": "Inhaber",
+						"ru": "Владелец"
+					}
+				},
+				{
+					"type": "text",
+					"name": "contact",
+					"content": "Contact",
+					"contextSpecificContent": {
+						"de": "Kontakt",
+						"ru": "Контакт"
+					}
+				},
+				{
+					"type": "text",
+					"name": "pages",
+					"content": "Pages",
+					"contextSpecificContent": {
+						"de": "Seiten",
+						"ru": "Ссылки"
+					}
+				},
+				{
+					"type": "text",
+					"name": "phone",
+					"content": "Phone",
+					"contextSpecificContent": {
+						"de": "Telefon",
+						"ru": "Тел."
+					}
+				},
+				{
+					"type": "text",
+					"name": "mobile",
+					"content": "Mobile",
+					"contextSpecificContent": {
+						"de": "Mobil",
+						"ru": "Моб."
+					}
+				},
+				{
+					"type": "text",
+					"name": "fax",
+					"content": "Fax",
+					"contextSpecificContent": {
+						"de": "Fax",
+						"ru": "Факс"
+					}
+				},
+				{
+					"type": "text",
+					"name": "email",
+					"content": "E-Mail",
+					"contextSpecificContent": {
+						"de": "E-Mail",
+						"ru": "Эл. почта"
+					}
+				}
+			]
+		},
+		{
+			"type": "group",
+			"name": "links-and-ctas",
+			"elements": [
+				{
+					"type": "text",
+					"name": "go-to-offer",
+					"content": "To the offer",
+					"contextSpecificContent": {
+						"de": "Zum Angebot",
+						"ru": "К предложению"
+					}
+				},
+				{
+					"type": "text",
+					"name": "contact-request",
+					"content": "Request",
+					"contextSpecificContent": {
+						"de": "Anfragen",
+						"ru": "Запросить"
+					}
+				},
+				{
+					"type": "text",
+					"name": "back-to-search-result",
+					"content": "Back to search result",
+					"contextSpecificContent": {
+						"de": "Zurück zu Suchergebnissen",
+						"ru": "Обратно к результатам поиска"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search",
+					"content": "Search",
+					"contextSpecificContent": {
+						"de": "Suchen",
+						"ru": "Искать"
+					}
+				},
+				{
+					"type": "text",
+					"name": "bill-property",
+					"content": "Bill a property",
+					"contextSpecificContent": {
+						"de": "Immobilie kaufen",
+						"ru": "Купить недвижимость"
+					}
+				},
+				{
+					"type": "text",
+					"name": "rent-property",
+					"content": "Rent a property",
+					"contextSpecificContent": {
+						"de": "Feriendomizil mieten",
+						"ru": "Арендовать"
+					}
+				}
+			]
+		}
+	],
+	"dataSourceContents": [
+	]
+}

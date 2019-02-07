@@ -1,0 +1,729 @@
+{
+  "id" : "loutraki",
+  "metaData" : {
+    "title" : "GreekEstate homepage",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "list",
+    "name" : "stage",
+    "elements" : [ {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "/images/image1.png",
+        "alternateText" : "Image one",
+        "mimeType" : "png"
+      }, {
+        "type" : "text",
+        "name" : "tag",
+        "content" : "Exclusiv!"
+      }, {
+        "type" : "link",
+        "name" : "headline",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "copy",
+          "content" : "Villa am Meer"
+        } ],
+        "url" : "sales/123.html"
+      }, {
+        "type" : "list",
+        "name" : "description",
+        "elements" : [ {
+          "type" : "list-text",
+          "content" : "Sofort bezugsfertig, auf Wunsch möbliert"
+        }, {
+          "type" : "list-text",
+          "content" : "Freier Blick aufs Meer"
+        }, {
+          "type" : "list-text",
+          "content" : "3 Schlafzimmern"
+        } ]
+      }, {
+        "type" : "text",
+        "name" : "price",
+        "content" : "175.000,00 €"
+      } ]
+    }, {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "source" : "/images/image1.png",
+        "alternateText" : "Image one",
+        "mimeType" : "png"
+      }, {
+        "type" : "text",
+        "name" : "tag",
+        "content" : "Sehr günstig - TIPP!"
+      }, {
+        "type" : "link",
+        "name" : "headline",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "copy",
+          "content" : "Apartment mit Pool"
+        } ],
+        "url" : "rents/234.html"
+      }, {
+        "type" : "list",
+        "name" : "description",
+        "elements" : [ {
+          "type" : "list-text",
+          "content" : "Stadt-Lage"
+        }, {
+          "type" : "list-text",
+          "content" : "Top Verkehrsanbindung"
+        }, {
+          "type" : "list-text",
+          "content" : "450 m<sub>2</sub>"
+        }, {
+          "type" : "list-text",
+          "content" : "Eigener Dienstservice"
+        } ]
+      }, {
+        "type" : "text",
+        "name" : "price",
+        "content" : "83.500,00 €"
+      } ]
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "Unser Angebot und Service"
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "Wir haben und haben dies uns das und haben und haben alles und jedes."
+  }, {
+    "type" : "group",
+    "name" : "offers",
+    "elements" : [ {
+      "type" : "text",
+      "name" : "headline",
+      "content" : "Besondere Angebote"
+    }, {
+      "type" : "list",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Objekt ABC"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "175.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Apartment groß"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "15.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Gewerbefläche"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "50.750,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Seeplatz"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "175.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Hütte"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "15.000,00 €"
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "object",
+          "name" : "image",
+          "referenceId" : "1234567",
+          "source" : "/images/image1.png",
+          "alternateText" : "Image one",
+          "mimeType" : "png"
+        }, {
+          "type" : "text",
+          "name" : "headline",
+          "content" : "Hausboot"
+        }, {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        }, {
+          "type" : "text",
+          "name" : "price",
+          "content" : "15.000,00 €"
+        } ]
+      } ]
+    } ]
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "8474B8433117792A1897179B2D7DAC95"
+    },
+    "content" : [ {
+      "type" : "text",
+      "name" : "processedOn",
+      "content" : "2019.01.13 20:57:26 +0000"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/about" : "1",
+        "/search" : "1",
+        "/home" : "1",
+        "/impressum" : "1",
+        "/common" : "1",
+        "/contact" : "1"
+      },
+      "query" : {
+        "NON_RECURSIVE" : true,
+        "INFO_PATH" : "/",
+        "VERBOSE" : true
+      },
+      "checksum" : "0668B4119818FAFFAD2C6450C4C54E23"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "home",
+          "info.content.parent" : "/",
+          "info.state.compileState.checksum" : "-",
+          "info.state.compileState.timestamp" : "1547409326174",
+          "info.state.compileState.compiled" : "true",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Home"
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.localizedName" : "suche",
+          "info.content.parent" : "/",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name",
+        "content" : "Suche"
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : "Griechische Regionen"
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : "Objekte"
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "kontake",
+          "info.content.parent" : "/",
+          "info.state.compileState.checksum" : "-",
+          "info.state.compileState.timestamp" : "1547412748682",
+          "info.state.compileState.compiled" : "true",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Kontakt"
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "ueber_uns",
+          "info.content.parent" : "/",
+          "info.state.compileState.checksum" : "-",
+          "info.state.compileState.timestamp" : "1547412742394",
+          "info.state.compileState.compiled" : "true",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Über uns"
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.localizedName" : "common content",
+          "info.content.parent" : "/",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1"
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "impressum",
+          "info.content.parent" : "/",
+          "info.state.compileState.checksum" : "-",
+          "info.state.compileState.timestamp" : "1547220644708",
+          "info.state.compileState.compiled" : "true",
+          "info.state.checksum" : "-",
+          "info.state.revision" : "1",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Impressum"
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/general-headlines, /links-and-ctas, /properties"
+      },
+      "checksum" : "B4FAC87BFBEC1B856F036A5D01C4CD03"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "group",
+        "name" : "general-headlines",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Description",
+          "contextSpecificContent" : {
+            "de" : "Beschreibung",
+            "ru" : "Описание"
+          }
+        }, {
+          "type" : "text",
+          "name" : "map",
+          "content" : "Map",
+          "contextSpecificContent" : {
+            "de" : "Karte",
+            "ru" : "Карта"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : "Search",
+          "contextSpecificContent" : {
+            "de" : "Suchen",
+            "ru" : "Поиск"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search-in-region",
+          "content" : "Search in the region",
+          "contextSpecificContent" : {
+            "de" : "Suche in der Region",
+            "ru" : "Поиск в регионе"
+          }
+        }, {
+          "type" : "text",
+          "name" : "matching-objects-found",
+          "content" : "{0} properties found.",
+          "contextSpecificContent" : {
+            "de" : "{0} Immobilien gefunden.",
+            "ru" : "Объектов найдено: {0}"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type",
+          "content" : "Object type",
+          "contextSpecificContent" : {
+            "de" : "Typ des Objektes",
+            "ru" : "Тип объекта"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:apartment",
+          "content" : "Apartment",
+          "contextSpecificContent" : {
+            "de" : "Wohnung",
+            "ru" : "Квартира"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:land-plot",
+          "content" : "Land plot",
+          "contextSpecificContent" : {
+            "de" : "Grundstück",
+            "ru" : "Земельный участок"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:building",
+          "content" : "Building",
+          "contextSpecificContent" : {
+            "de" : "Gebäude",
+            "ru" : "Здание"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:hotel",
+          "content" : "Hotel",
+          "contextSpecificContent" : {
+            "de" : "Hotel",
+            "ru" : "Гостиница"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:villa",
+          "content" : "Villa",
+          "contextSpecificContent" : {
+            "de" : "Villa",
+            "ru" : "Вилла"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:detached-house",
+          "content" : "Detached house",
+          "contextSpecificContent" : {
+            "de" : "Freistehendes Haus",
+            "ru" : "Дом"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:office",
+          "content" : "Office",
+          "contextSpecificContent" : {
+            "de" : "Büro",
+            "ru" : "Офис"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:farm-parcel",
+          "content" : "Farm parcel",
+          "contextSpecificContent" : {
+            "de" : "Landparzelle",
+            "ru" : "Сельскохозяйственный участок"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:store",
+          "content" : "Store",
+          "contextSpecificContent" : {
+            "de" : "Geschäft",
+            "ru" : "Магазин"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:business-building",
+          "content" : "Business building",
+          "contextSpecificContent" : {
+            "de" : "Industriegebäude",
+            "ru" : "Индустриальное здание"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:various-other-property",
+          "content" : "Various other property",
+          "contextSpecificContent" : {
+            "de" : "Sonstige Immobilie",
+            "ru" : "Прочая недвижимость"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:parking",
+          "content" : "Parking",
+          "contextSpecificContent" : {
+            "de" : "Parkplatz",
+            "ru" : "Парковка"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:other-land-property",
+          "content" : "Other land property",
+          "contextSpecificContent" : {
+            "de" : "Sonstige Grundstücke",
+            "ru" : "Прочие земельные участки"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:maisonette",
+          "content" : "Maisonette",
+          "contextSpecificContent" : {
+            "de" : "Maisonette",
+            "ru" : "Двухуровневая квартира"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : "To the offer",
+          "contextSpecificContent" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : "Request",
+          "contextSpecificContent" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : "Back to search result",
+          "contextSpecificContent" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : "Search",
+          "contextSpecificContent" : {
+            "de" : "Suchen",
+            "ru" : "Искать"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : "Bill a property",
+          "contextSpecificContent" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : "Rent a property",
+          "contextSpecificContent" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "Code",
+          "contextSpecificContent" : {
+            "de" : "Code",
+            "ru" : "Код"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "Area",
+          "contextSpecificContent" : {
+            "de" : "Fläche",
+            "ru" : "Площадь"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : "Type",
+          "contextSpecificContent" : {
+            "de" : "Typ",
+            "ru" : "Тип"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "Region",
+          "contextSpecificContent" : {
+            "de" : "Region",
+            "ru" : "Регион"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : "Owner",
+          "contextSpecificContent" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : "Phone",
+          "contextSpecificContent" : {
+            "de" : "Telefon",
+            "ru" : "Телефон"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : "E-Mail",
+          "contextSpecificContent" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

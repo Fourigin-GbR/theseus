@@ -1,49 +1,134 @@
 {
-  "path" : "/",
-  "children" : [ {
-    "type" : "file",
-    "name" : "home",
-    "localizedName" : "home",
-    "templateReference" : {
-      "templateId" : "greekestate.index",
-      "variationId" : "default",
-      "revision" : ""
+  "path": "/",
+  "children": [
+    {
+      "type": "file",
+      "name": "home",
+      "localizedName": {
+        "": "home",
+        "de": "home",
+        "ru": "home"
+      },
+      "displayName": {
+        "": "Home",
+        "de": "Home",
+        "ru": "Главная"
+      },
+      "templateReference": {
+        "templateId": "greekestate.index",
+        "variationId": "default",
+        "revision": ""
+      }
+    },
+    {
+      "type": "file",
+      "name": "search",
+      "localizedName": {
+        "": "search",
+        "de": "suche",
+        "ru": "poisk"
+      },
+      "displayName": {
+        "": "Search",
+        "de": "Suche",
+        "ru": "Поиск"
+      },
+      "templateReference": {}
+    },
+    {
+      "type": "dir",
+      "name": "regions",
+      "localizedName": {
+        "": "regions",
+        "de": "regionen",
+        "ru": "regioni"
+      },
+      "displayName": {
+        "": "Regions of Greece",
+        "de": "Griechische Regionen",
+        "ru": "Регионы Греции"
+      }
+    },
+    {
+      "type": "dir",
+      "name": "objects",
+      "localizedName": {
+        "": "objects",
+        "de": "objekte",
+        "ru": "objekti"
+      },
+      "displayName": {
+        "": "Objects",
+        "de": "Objekte",
+        "ru": "Объекты"
+      }
+    },
+    {
+      "type": "file",
+      "name": "contact",
+      "localizedName": {
+        "": "contact",
+        "de": "kontake",
+        "ru": "kontakti"
+      },
+      "displayName": {
+        "": "Contact",
+        "de": "Kontakt",
+        "ru": "Контакт"
+      },
+      "templateReference": {
+        "templateId": "greekestate.article-text",
+        "variationId": "default",
+        "revision": ""
+      }
+    },
+    {
+      "type": "file",
+      "name": "about",
+      "localizedName": {
+        "": "about",
+        "de": "ueber_uns",
+        "ru": "o_nas"
+      },
+      "displayName": {
+        "": "About us",
+        "de": "Über uns",
+        "ru": "О нас"
+      },
+      "templateReference": {
+        "templateId": "greekestate.article-text",
+        "variationId": "default",
+        "revision": ""
+      }
+    },
+    {
+      "type": "file",
+      "name": "common",
+      "localizedName": {
+        "": "common content",
+        "de": "common content",
+        "ru": "common content"
+      },
+      "templateReference": {}
+    },
+    {
+      "type": "file",
+      "name": "impressum",
+      "localizedName": {
+        "": "impressum",
+        "de": "impressum",
+        "ru": "impressum"
+      },
+      "displayName": {
+        "": "Impressum",
+        "de": "Impressum",
+        "ru": "Импрессум"
+      },
+      "templateReference": {
+        "templateId": "greekestate.article-text",
+        "variationId": "default",
+        "revision": ""
+      }
     }
-  }, {
-    "type" : "file",
-    "name" : "search",
-    "localizedName" : "search",
-    "templateReference" : { }
-  }, {
-    "type" : "dir",
-    "name" : "regions",
-    "localizedName" : "regions"
-  }, {
-    "type" : "dir",
-    "name" : "objects",
-    "localizedName" : "objects"
-  }, {
-    "type" : "file",
-    "name" : "contact",
-    "localizedName" : "contact",
-    "templateReference" : {
-      "templateId" : "greekestate.article-text",
-      "variationId" : "default",
-      "revision" : ""
-    }
-  }, {
-    "type" : "file",
-    "name" : "about",
-    "localizedName" : "about",
-    "templateReference" : { }
-  }, {
-    "type" : "file",
-    "name" : "impressum",
-    "localizedName" : "impressum",
-    "templateReference" : {
-      "templateId" : "greekestate.article-text",
-      "variationId" : "default",
-      "revision" : ""
-    }
-  } ]
+  ]
 }

@@ -1,70 +1,47 @@
 {
-	"name": "objects-to-rent",
-	"references": [
-		"object_002",
-		"object_001",
-		"object_004"
-	],
-	"targets": [
-		"/objects/rent/object_002",
-		"/objects/rent/object_001",
-		"/objects/rent/object_004"
-	],
-	"categories": {
-		"region": {
-			"athen": [
-				2
-			],
-			"loutraki": [
-				0,
-				1
-			]
-		}
-	},
-	"fields": [
-		{
-			"name": "price",
-			"path": "/properties/price",
-			"type": "PRICE",
-			"value": [
-				"150000",
-				"100000",
-				"200000"
-			]
-		},
-		{
-			"name": "distance",
-			"path": "/properties/distance-to-sea",
-			"type": "NUMBER",
-			"value": [
-				"250",
-				"100",
-				"20"
-			]
-		},
-		{
-			"name": "number-of-rooms",
-			"path": "/properties/number-of-rooms",
-			"type": "NUMBER",
-			"value": [
-				"4",
-				"3",
-				"2"
-			]
-		}
-	],
-	"searchValues": {
-		"athen": [
-			2
-		],
-		"villa": [
-			0,
-			1,
-			2
-		],
-		"loutraki": [
-			0,
-			1
-		]
-	}
+  "name" : "objects-to-rent",
+  "references" : [ "object_5821557", "object_4264170", "object_5377461", "object_5258351", "object_4818128", "object_4264195", "object_6071136", "object_4810959", "object_3813068", "object_5241303", "object_5570426", "object_3813326", "object_5498563", "object_4264101", "object_4509458", "object_4507076", "object_4508203", "object_4264240", "object_4264230", "object_5182805", "object_4156691", "object_4654786", "object_4258025", "object_3813389", "object_5255415", "object_5245597", "object_3813164", "object_3813156", "object_3813291", "object_3813312", "object_3813170", "object_4365141", "object_4365056", "object_4378402", "object_4365100", "object_4264249", "object_4975710", "object_4263923", "object_3813331", "object_4906387", "object_5016263", "object_4997503", "object_4264077", "object_5126418", "object_4351773", "object_5210967" ],
+  "targets" : [ "/objects/rent/object_5821557", "/objects/rent/object_4264170", "/objects/rent/object_5377461", "/objects/rent/object_5258351", "/objects/rent/object_4818128", "/objects/rent/object_4264195", "/objects/rent/object_6071136", "/objects/rent/object_4810959", "/objects/rent/object_3813068", "/objects/rent/object_5241303", "/objects/rent/object_5570426", "/objects/rent/object_3813326", "/objects/rent/object_5498563", "/objects/rent/object_4264101", "/objects/rent/object_4509458", "/objects/rent/object_4507076", "/objects/rent/object_4508203", "/objects/rent/object_4264240", "/objects/rent/object_4264230", "/objects/rent/object_5182805", "/objects/rent/object_4156691", "/objects/rent/object_4654786", "/objects/rent/object_4258025", "/objects/rent/object_3813389", "/objects/rent/object_5255415", "/objects/rent/object_5245597", "/objects/rent/object_3813164", "/objects/rent/object_3813156", "/objects/rent/object_3813291", "/objects/rent/object_3813312", "/objects/rent/object_3813170", "/objects/rent/object_4365141", "/objects/rent/object_4365056", "/objects/rent/object_4378402", "/objects/rent/object_4365100", "/objects/rent/object_4264249", "/objects/rent/object_4975710", "/objects/rent/object_4263923", "/objects/rent/object_3813331", "/objects/rent/object_4906387", "/objects/rent/object_5016263", "/objects/rent/object_4997503", "/objects/rent/object_4264077", "/objects/rent/object_5126418", "/objects/rent/object_4351773", "/objects/rent/object_5210967" ],
+  "categories" : {
+    "region" : {
+      "center" : [ 19 ],
+      "lechaio" : [ 31, 32 ],
+      "kalamia" : [ 18 ],
+      "kato almiri" : [ 30 ],
+      "akadimia" : [ 33 ],
+      "loutraki" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 ],
+      "korinthos" : [ 28, 29 ]
+    },
+    "type" : {
+      "detached-house" : [ 17, 25, 42 ],
+      "business-building" : [ 28 ],
+      "store" : [ 26, 27, 29 ],
+      "office" : [ 33 ],
+      "apartment" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45 ],
+      "villa" : [ 11 ]
+    }
+  },
+  "fields" : [ {
+    "name" : "number-of-rooms",
+    "path" : "/properties/number-of-rooms",
+    "type" : "NUMBER",
+    "value" : [ ]
+  }, {
+    "name" : "distance",
+    "path" : "/properties/distance-to-sea",
+    "type" : "NUMBER",
+    "value" : [ ]
+  }, {
+    "name" : "price",
+    "path" : "/properties/price",
+    "type" : "PRICE",
+    "value" : [ "50", "50", "50", "50", "60", "50", "20", "40", "110", "40", "40", "130", "80", "40", "70", "55", "55", "45", "25", "20", "70", "40", "80 meters from the sea", "30", "50", "20", "500", "420", "600", "2500", "20", "50", "80", "200", "20", "45", "500", "15", "50", "40", "60", "40", "20", "35", "40", "40" ]
+  } ],
+  "searchValues" : {
+    "athen" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45 ],
+    "promenade" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45 ],
+    "spa" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 ],
+    "loutraki" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 ],
+    "villa" : [ 1, 34, 3, 35, 38, 23, 42, 11 ]
+  }
 }

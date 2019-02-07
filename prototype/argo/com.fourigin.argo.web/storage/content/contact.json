@@ -1,25 +1,407 @@
 {
-	"id": "contact",
-	"metaData": {
-		"title": "GreekEstate Kontakt",
-		"attributes": {
-			"key-1": "value-1",
-			"key-2": "value-2",
-			"key-3": "value-3"
-		}
-	},
-	"content": [
-		{
-			"type": "text",
-			"name": "headline",
-			"content": "Kontakt"
-		},
-		{
-			"type": "text",
-			"name": "body",
-			"content": "Kontakt zu uns<form action=\"senden.html\" id=\"person\"><label class=\"h2\" form=\"person\">Namenseingabe</label><label for=\"vorname\">Vorname</label><input type=\"text\" name=\"vorname\" id=\"vorname\" maxlength=\"30\"><label for=\"zuname\">Zuname</label><input type=\"text\" name=\"zuname\" id=\"zuname\" maxlength=\"40\"><button type=\"reset\">Eingaben zurücksetzen</button><button type=\"submit\">Eingaben absenden</button></form>"
-		}
-	],
-	"dataSourceContents": [
-	]
+  "id" : "contact",
+  "metaData" : {
+    "title" : "GreekEstate Kontakt",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "Contact",
+    "contextSpecificContent" : {
+      "de" : "Kontakt",
+      "ru" : "Контактная форма"
+    }
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "\n\t\t\t<ul style='list-style-type: none;' class=\"footer-contact\">\n\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-user fa-stack-1x fa-inverse\"></i> </span> <span>Georgios Tzafis</span> </li>\n\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-phone fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;27410-76506</span> (greek, english, german)</li>\n\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-mobile fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;6987-419624</span> (russian, german)</li>\n\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-mobile fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;6946-003222</span> (greek, english, german)</li>\n\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i> </span> <span><a href=\"mailto:greekestate2@gmail.com\">greekestate2@gmail.com</a></span></li>\n\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-map-marker fa-stack-1x fa-inverse\"></i> </span> <span>Notara 42, Pref. Korinthias, 20100 Korinthos, Greece</span></li>\n\t\t\t</ul>\n\t\t\t",
+    "contextSpecificContent" : {
+      "de" : "\n\t\t\t\t<ul style='list-style-type: none;' class=\"footer-contact\">\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-user fa-stack-1x fa-inverse\"></i> </span> <span>Georgios Tzafis</span> </li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-phone fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;27410-76506</span> (griechisch, englisch, deutsch)</li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-mobile fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;6987-419624</span> (russisch, deutsch)</li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-mobile fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;6946-003222</span> (griechisch, englisch, deutsch)</li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i> </span> <span><a href=\"mailto:greekestate2@gmail.com\">greekestate2@gmail.com</a></span></li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-map-marker fa-stack-1x fa-inverse\"></i> </span> <span>Notara 42, Pref. Korinthias, 20100 Korinthos, Greece</span></li>\n\t\t\t\t</ul>\n\t\t\t",
+      "ru" : "\n\t\t\t\t<ul style='list-style-type: none;' class=\"footer-contact\">\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-user fa-stack-1x fa-inverse\"></i> </span> <span>Georgios Tzafis</span> </li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-phone fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;27410-76506</span> (греческий, английский, немецкий)</li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-mobile fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;6987-419624</span> (русский, немецкий)</li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-mobile fa-stack-1x fa-inverse\"></i> </span> <span>(+30)&nbsp;6946-003222</span> (греческий, английский, немецкий)</li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i> </span> <span><a href=\"mailto:greekestate2@gmail.com\">greekestate2@gmail.com</a></span></li>\n\t\t\t\t\t<li> <span class=\"fa-stack fa-lg\"> <i class=\"fa fa-circle fa-stack-2x\"></i> <i class=\"fa fa-map-marker fa-stack-1x fa-inverse\"></i> </span> <span>Notara 42, Pref. Korinthias, 20100 Korinthos, Greece</span></li>\n\t\t\t\t</ul>\n\t\t\t"
+    }
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "3AD9B7B2F5A7D9AF4B9A6A5969E9F0FE"
+    },
+    "content" : [ {
+      "type" : "text",
+      "name" : "processedOn",
+      "content" : "2019.01.22 22:50:41 +0000"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/home" : "1",
+        "/search" : "1",
+        "/contact" : "1",
+        "/about" : "1",
+        "/common" : "1",
+        "/impressum" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/",
+        "NON_RECURSIVE" : true,
+        "VERBOSE" : true
+      },
+      "checksum" : "0CC186EF6169E64CCA41E556C06DE058"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "greekestate.index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "home",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "home",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Home",
+        "contextSpecificContent" : {
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.localizedName" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : "Search",
+        "contextSpecificContent" : {
+          "de" : "Suche",
+          "ru" : "Поиск"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : "Regions of Greece",
+        "contextSpecificContent" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : "Objects",
+        "contextSpecificContent" : {
+          "de" : "Objekte",
+          "ru" : "Объекты"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "contact",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Contact",
+        "contextSpecificContent" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "about",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "About us",
+        "contextSpecificContent" : {
+          "de" : "Über uns",
+          "ru" : "О нас"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.localizedName" : "common content",
+          "info.content.parent" : "/",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "impressum",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Impressum",
+        "contextSpecificContent" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/links-and-ctas, /properties"
+      },
+      "checksum" : "FAB06E847625A641203370497BBA8A0B"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : "To the offer",
+          "contextSpecificContent" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : "Request",
+          "contextSpecificContent" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : "Back to search result",
+          "contextSpecificContent" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : "Search",
+          "contextSpecificContent" : {
+            "de" : "Suchen",
+            "ru" : "Искать"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : "Bill a property",
+          "contextSpecificContent" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : "Rent a property",
+          "contextSpecificContent" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "Code",
+          "contextSpecificContent" : {
+            "de" : "Code",
+            "ru" : "Код"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "Area",
+          "contextSpecificContent" : {
+            "de" : "Fläche",
+            "ru" : "Площадь"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : "Type",
+          "contextSpecificContent" : {
+            "de" : "Typ",
+            "ru" : "Тип"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "Region",
+          "contextSpecificContent" : {
+            "de" : "Region",
+            "ru" : "Регион"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : "Owner",
+          "contextSpecificContent" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : "Contact",
+          "contextSpecificContent" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : "Pages",
+          "contextSpecificContent" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : "Phone",
+          "contextSpecificContent" : {
+            "de" : "Telefon",
+            "ru" : "Тел."
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : "Mobile",
+          "contextSpecificContent" : {
+            "de" : "Mobil",
+            "ru" : "Моб."
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : "Fax",
+          "contextSpecificContent" : {
+            "de" : "Fax",
+            "ru" : "Факс"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : "E-Mail",
+          "contextSpecificContent" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
 }

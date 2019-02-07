@@ -1,0 +1,781 @@
+{
+	"id": "way_airport_loutraki",
+	"metaData": {
+		"title": "From airport to Loutraki - BestGreekEstate",
+		"contextSpecificTitles": {
+			"de": "Vom Flughaven nach Loutraki - BestGreekEstate",
+			"ru": "От аэропорта до Лутраки - BestGreekEstate"
+		},
+		"attributes": {
+			"converted on": "2019-01-11 12:32:00"
+		}
+	},
+	"content": [
+		{
+			"type": "text",
+			"name": "headline",
+			"content": "From airport to Loutraki",
+			"contextSpecificContent": {
+				"de": "Vom Flughaven nach Loutraki",
+				"ru": "От аэропорта до Лутраки"
+			}
+		},
+		{
+			"type": "text",
+			"name": "short-description",
+			"content": "",
+			"contextSpecificContent": {
+				"de": "",
+				"ru": ""
+			}
+		},
+		{
+			"type": "text",
+			"name": "long-description",
+			"content": "How to get from Athens airport to Loutraki <br /> <br /> <br /> There are 4 possible of arrival from the airport to the resort of Loutraki <br /> <br /> 1. By express train (Proastiako) <br /> Movement direction: Kiato <br /> Destination: train station &laquo;K&oacute;rinthos&raquo; <br /> Travel time: 1 hour 22 minutes <br /> Interval of trains: 1 hour (the first at 5:44, the last at 21:44) <br /> The ticket price: <br /> • for one adult 12 € (when buying a ticket &laquo;back and forth&raquo; - 18 €) <br /> • for passengers from 6 to 18 years old and older than 65 years: 6 € <br /> • for children up to 6 years old: free travel <br /> <br /> From the train station &laquo;K&oacute;rinthos&raquo; to Loutraki is possible reached only by taxi <br /> Depending on the time of a day the price: 15~18 € <br /> <br /> <br /> 2. On express bus &laquo;Х93&raquo; <br /> Movement direction: bus station KTEL Kifisou (Kifisu – accent on the letter &laquo;u&raquo;) <br /> Departure time: 00:10; 00:55; 01:45; 02:35; 03:35; 04:15; 05:15; 06:05; 06:35; 07:05; 07:30; 08:00; 08:30; 09:00; 09:30; 09:55; 10:25; 10:55; 11:25; 11:55; 12:25; 12:50; 13:20; 13:50; 14:20; 14:50; 15:20; 15:50; 16:15; 16:45; 17:15; 17:50; 18:25; 19:00; 19:35; 20:05; 20:35; 21:05; 21:40; 22:15; 22:50; 23:30 <br /> Travel time: 1 hour <br /> The ticket price: <br /> • for one adult: 6 € <br /> • for passengers from 6 to 18 years old and older than 65 years: 3 € <br /> • for children up to 6 years old: free travel <br /> <br /> From the bus station KTEL Kifisou (from terminal &laquo;А&raquo;) to Loutraki there is a bus route <br /> Departure time: 7:30; 8:30; 9:30; 10:30; 12:30; 14:30; 16:30; 18:10; 19:30; 21:00 <br /> Travel time: 1 hour 15 minutes <br /> The ticket price: <br /> • for one adult 9,30 € (when buying a ticket &laquo;back and forth&raquo; - 16,50 €) <br /> • for passengers from 6 to 18 years old and older than 65 years: 4 € <br /> • for children up to 6 years old: free travel <br /> <br /> <br /> 3. By taxi <br /> Travel time: 1 hour <br /> Depending on the time of a day the price: 130~150 € <br /> If you wish, we can send a car for you <br /> <br /> <br /> 4. On leased car <br /> Movement direction: K&oacute;rinthos <br /> Distance along the toll speed road from the airport to the exit &laquo;Loutraki&raquo;: 110 km <br /> Fare: 6.70 € <br /> The distance from the exit of the highway &laquo;Loutraki&raquo; to the center of the city Loutraki: 10 km <br /> <br /> It is best to book the car online at Athens Airport. The car can be very useful for sightseeing and historical monuments of ancient Greece. <br /> <br /> <br /> Urban public transport <br /> In the city center there is a bus station. From the bus station you can drive to the cities of Athens, Corinth, various villages, Casino Loutraki and to the central bus station. The central bus station is located near from the bridge over the Corinth Canal (near are souvenir shops, a children's water park and a large supermarket). <br /> Bus departs every half hour (the first at 6:00, the last at 21:00) <br /> Travel time: 10 minutes <br /> Price of travel: 1,90 € <br /> From the central bus station can be reached in all cities of Greece <br /> <br /> Rent an apartment in Loutraki <br /> <br /> Buy an apartment or house in Loutraki <br /> <br /> Distances from the resort of Loutraki to the main historical monuments of ancient Greece",
+			"contextSpecificContent": {
+				"de": "Wie kann man von Flughafen Athen nach Loutraki gelangen <br /> <br /> <br /> Es gibt 4 Möglichkeiten der Ankunft vom Flughafen nach Kurort Loutraki. <br /> <br /> <br /> 1. mit dem S-Bahn (Proastiako) <br /> Die Richtung: Kiato. <br /> Reiseziel: Bahnhaltestelle &laquo;K&oacute;rinthos&raquo;. <br /> Fahrzeit: 1. Std. 22 Min. <br /> Der Zug fährt mit einem Intervall von 1 Stunde (der erster um 5:44; der letzter um 21:44) <br /> Der Ticketpreis: <br /> • für einen Erwachsenen: 12 € (beim Kauf einer Fahrkarte &laquo;hin und her&raquo;: 18 €) <br /> • für Passagiere von 6 bis 18 Jahren alt und über 65 Jahre alt: 6 € <br /> • für Kinder bis 6 Jahre alt: kostenlose Fahrt <br /> <br /> Von der Bahnhaltestelle &laquo;K&oacute;rinthos&raquo; nach Loutraki gibt es nur mit dem Taxi fahren. <br /> Fahrpreis je nach Tageszeit: 15~18 € <br /> <br /> <br /> 2. mit dem Express-Bus &laquo;Х93&raquo; <br /> Reiseziel: Busbahnhof KTEL Kifisou (Kifisu – Akzent auf dem Buchstabe &laquo;u&raquo;) <br /> Abfahrtszeit: 00:10; 00:55; 01:45; 02:35; 03:35; 04:15; 05:15; 06:05; 06:35; 07:05; 07:30; 08:00; 08:30; 09:00; 09:30; 09:55; 10:25; 10:55; 11:25; 11:55; 12:25; 12:50; 13:20; 13:50; 14:20; 14:50; 15:20; 15:50; 16:15; 16:45; 17:15; 17:50; 18:25; 19:00; 19:35; 20:05; 20:35; 21:05; 21:40; 22:15; 22:50; 23:30 <br /> Fahrzeit: 1 Std. <br /> Der Ticketpreis: <br /> • für einen Erwachsenen: 6 € <br /> • für Passagiere von 6 bis 18 Jahren alt und über 65 Jahre alt: 3 € <br /> • für Kinder bis 6 Jahre alt: kostenlose Fahrt <br /> <br /> Vom Busbahnhof KTEL Kifisou (vom Terminal &laquo;А&raquo;) nach Loutraki gibt es ein Bus Route <br /> Abfahrtszeit: 7:30; 8:30; 9:30; 10:30; 12:30; 14:30; 16:30; 18:10; 19:30; 21:00 <br /> Fahrzeit: 1 Std. 15 Min. <br /> Der Ticketpreis: <br /> • für einen Erwachsenen: 9,30 € (beim Kauf einer Fahrkarte &laquo;hin und her&raquo;: 16,50 €) <br /> • für Passagiere von 6 bis 18 Jahren alt und über 65 Jahre alt: 4 € <br /> • für Kinder bis 6 Jahre alt: kostenlose Fahrt <br /> <br /> <br /> 3. mit dem Taxi&raquo; <br /> Fahrzeit: 1 Stunde <br /> Je nach Tageszeit kostet Reise 130~150 € <br /> <br /> Bei wünsch, können wir ein Auto für Sie schicken <br /> Dienstleistungskosten: 100 € <br /> <br /> <br /> 4. mit einem Mietwagen <br /> Bewegungsrichtung: K&oacute;rinthos <br /> Die Entfernung (auf Autobahn) von Flughafen bis Ausfahrt &laquo;Loutraki&raquo;: 110 km <br /> Autobahngebühren: 6,70 € <br /> Die Entfernung von Autobahnausfahrt &laquo;Loutraki&raquo; bis Zentrum des Kurorts Loutraki: 10 km <br /> <br /> Es ist am besten, das Auto online im Flughafen Athen zu buchen. <br /> Das Auto kann sehr nützlich für die Besichtigungen der Sehenswürdigkeiten und historische Denkmäler des antiken Griechenlands sein. <br /> <br /> <br /> Städtische öffentliche Verkehrsmittel <br /> Im Stadtzentrum gibt es Busbahnhof. Von dort aus kann man in die Städte Athen, Korinth, verschiedene Dörfer, &laquo;Casino Loutraki&raquo; und zum Hauptbusbahnhof fahren. Der Hauptbusbahnhof liegt in der Nähe der Brücke über dem &laquo;Kanal von Korinth&raquo; (in der Nähe sind Souvenirläden, Kinderwasserpark und ein großer Supermarkt). <br /> Bus fährt jede halbe Stunde ab (der erster um 6:00; der letzter um 21:00). <br /> Fahrzeit: 10 Min. <br /> Fahrpreis: 1,90 €. <br /> Vom Hauptbusbahnhof aus kann man in alle Städte von Griechenland fahren. <br /> <br /> <br /> Mieten eine Wohnung in Loutraki <br /> <br /> Kaufen eine Wohnung oder ein Haus in Loutraki",
+				"ru": "Как добраться из аэропорта Афины в Лутраки <br /> <br /> Существует 4 возможности приезда из аэропорта Афины в курортный город Лутраки. <br /> <br /> 1. на пригородной электричке (греч. &laquo;проастиако&raquo;) <br /> Направление движения: Kiato <br /> Пункт назначения: железнодорожная станция &laquo;K&oacute;rinthos&raquo; (К&oacute;ринтос) <br /> Время в пути: 1 час 22 минуты <br /> Интервал движения поездов: 1 час (первый в 5:44; последний в 21:44) <br /> Цена билета: <br /> • для одного взрослого 12 евро (при покупке билета &laquo;туда-обратно&raquo; – 18 евро) <br /> • для пассажиров в возрасте от 6 до 18 лет и старше 65 лет: 6 евро <br /> • для детей в возрасте до 6-ти лет: проезд бесплатный <br /> <br /> От станции &laquo;K&oacute;rinthos&raquo; в Лутраки можно доехать только на такси <br /> В зависимости от времени суток стоимость проезда: 15~18 евро <br /> <br /> <br /> 2. на круглосуточном автобусном экспрессе &laquo;Х93&raquo; <br /> Пункт назначения: автовокзал KTEL Kifisou (Кифису – ударение на букву &laquo;у&raquo;) <br /> Время отправления: 00:10; 00:55; 01:45; 02:35; 03:35; 04:15; 05:15; 06:05; 06:35; 07:05; 07:30; 08:00; 08:30; 09:00; 09:30; 09:55; 10:25; 10:55; 11:25; 11:55; 12:25; 12:50; 13:20; 13:50; 14:20; 14:50; 15:20; 15:50; 16:15; 16:45; 17:15; 17:50; 18:25; 19:00; 19:35; 20:05; 20:35; 21:05; 21:40; 22:15; 22:50; 23:30 <br /> Время в пути: 1 час <br /> Цена билета на проезд: <br /> • для одного взрослого: 6 евро <br /> • для пассажиров в возрасте от 6 до 18 лет и старше 65 лет: 3 евро <br /> • для детей в возрасте до 6-ти лет: проезд бесплатный <br /> <br /> С автовокзала KTEL Кифису, с терминала &laquo;А&raquo; в Лутраки ходит маршрутный автобус <br /> Время отправления: 7:30; 8:30; 9:30; 10:30; 12:30; 14:30; 16:30; 18:10; 19:30; 21:00 <br /> Время в пути: 1 час 15 минут <br /> Цена билета на проезд: <br /> • для одного взрослого: 9,30 евро (при покупке билета &laquo;туда-обратно&raquo; – 16,50 евро) <br /> • для пассажиров в возрасте от 6 до 18 лет и старше 65 лет: 4 евро <br /> • для детей в возрасте до 6-ти лет: проезд бесплатный <br /> <br /> <br /> 3. на такси <br /> Продолжительность поездки: 1 час <br /> В зависимости от времени суток стоимость проезда: 130~150 евро <br /> <br /> При желании, мы можем прислать автомобиль с русскоговорящим водителем <br /> Стоимость услуги: 100 евро <br /> <br /> <br /> 4. на арендованном автомобиле <br /> Направление движения: K&oacute;rinthos <br /> Расстояние по платной скоростной дороге до съезда &laquo;Лутраки&raquo;: 110 км <br /> Плата за проезд: 6,70 евро <br /> Расстояние от съезда &laquo;Лутраки&raquo; до центра города Лутраки: 10 км <br /> <br /> Арендовать автомобиль лучше в аэропорту Афины, сделав это заранее из дома по Интернету. <br /> В дальнейшем автомобиль очень пригодится для осмотра окрестных достопримечательностей и основных исторических памятников античной Греции. <br /> <br /> <br /> Городской общественный транспорт <br /> В центре города есть автостанция, с которой можно доехать в города Афины, Коринф, близлежащие деревушки, &laquo;Казино Лутраки&raquo; и к центральному автовокзалу, который находится около моста через Кори́нфский кана́л (рядом - сувенирные магазины, детский аквапарк и большой супермаркет). <br /> Интервал движения автобусов: 30 мин. (первый в 6:00; последний в 21:00). <br /> Время в пути: 10 мин. <br /> Стоимость проезда: 1,90 €. <br /> С центрального автовокзала можно доехать до всех городов Греции. <br /> <br /> <br /> Арендовать квартиру в Лутраки <br /> <br /> Купить квартиру или дом в Лутраки"
+			}
+		},
+		{
+			"type": "list",
+			"name": "images",
+			"elements": [
+				{
+					"type": "list-object",
+					"referenceId": "c2f6ccce6722c262b0e2d0b92a62523b27f517c4",
+					"source": "//images.bestgreekestate.com/c2/f6ccce6722c262b0e2d0b92a62523b27f517c4/97959342_900x675.jpeg",
+					"alternateText": "Photo 98139895",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "4ce94ba9f6d0476910e3bfd3301b3c37d5239336",
+					"source": "//images.bestgreekestate.com/4c/e94ba9f6d0476910e3bfd3301b3c37d5239336/97959344_900x675.jpeg",
+					"alternateText": "Photo 98139897",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "2993cd6ebeb97bcfbc4f1f6b14d25032b35976aa",
+					"source": "//images.bestgreekestate.com/29/93cd6ebeb97bcfbc4f1f6b14d25032b35976aa/97959335_900x675.jpeg",
+					"alternateText": "Photo 98139892",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "0fd19217e4aa2a75b33676a43965ad1bb540f9b0",
+					"source": "//images.bestgreekestate.com/0f/d19217e4aa2a75b33676a43965ad1bb540f9b0/97959337_900x675.jpeg",
+					"alternateText": "Photo 98139894",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "f08e20a2e18929be0d0ae9abb29ba4653b9cf39b",
+					"source": "//images.bestgreekestate.com/f0/8e20a2e18929be0d0ae9abb29ba4653b9cf39b/97959347_900x675.jpeg",
+					"alternateText": "Photo 98139899",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "2097e2e2314a6c7bf986ec39c521ffe842d9c346",
+					"source": "//images.bestgreekestate.com/20/97e2e2314a6c7bf986ec39c521ffe842d9c346/97959348_900x675.jpeg",
+					"alternateText": "Photo 98139901",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "42a846c52147a6c2cc2611a9f24ca95b10a3f1a1",
+					"source": "//images.bestgreekestate.com/42/a846c52147a6c2cc2611a9f24ca95b10a3f1a1/97959351_900x675.jpeg",
+					"alternateText": "Photo 98139903",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "d48c6e1e07d7244dabcd3f50536f73216642284f",
+					"source": "//images.bestgreekestate.com/d4/8c6e1e07d7244dabcd3f50536f73216642284f/97959354_900x675.jpeg",
+					"alternateText": "Photo 98139904",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "a59d747e3c1e5dc60b1f76f7f59b3c512c00338d",
+					"source": "//images.bestgreekestate.com/a5/9d747e3c1e5dc60b1f76f7f59b3c512c00338d/97959357_900x675.jpeg",
+					"alternateText": "Photo 98139906",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "fdfb36edd6cf335e5578c175a68490b705e52f13",
+					"source": "//images.bestgreekestate.com/fd/fb36edd6cf335e5578c175a68490b705e52f13/97959361_900x675.jpeg",
+					"alternateText": "Photo 98139908",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "72a6b16dc89c6b9e2ec9d08c767c2c050302c017",
+					"source": "//images.bestgreekestate.com/72/a6b16dc89c6b9e2ec9d08c767c2c050302c017/97959362_900x675.jpeg",
+					"alternateText": "Photo 98139909",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "9eeb07bca47107eebd580b55f6adefa623b042f3",
+					"source": "//images.bestgreekestate.com/9e/eb07bca47107eebd580b55f6adefa623b042f3/98960604_900x675.jpeg",
+					"alternateText": "Photo 98139910",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "d56ebd75993e60a12a46fa802fbad4f3cf669fd5",
+					"source": "//images.bestgreekestate.com/d5/6ebd75993e60a12a46fa802fbad4f3cf669fd5/98960607_900x675.jpeg",
+					"alternateText": "Photo 98139912",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "78a6e5e3445508c903690a597ed7f66f2b36ea36",
+					"source": "//images.bestgreekestate.com/78/a6e5e3445508c903690a597ed7f66f2b36ea36/97959366_900x675.jpeg",
+					"alternateText": "Photo 98139913",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "feebac0efce257f347377a376a3c5a2b68d658b8",
+					"source": "//images.bestgreekestate.com/fe/ebac0efce257f347377a376a3c5a2b68d658b8/97959369_900x675.jpeg",
+					"alternateText": "Photo 98139915",
+					"mimeType": "image/jpeg"
+				},
+				{
+					"type": "list-object",
+					"referenceId": "d593f8fa2a26f1626a8e9c0fcd093fe5652c96fe",
+					"source": "//images.bestgreekestate.com/d5/93f8fa2a26f1626a8e9c0fcd093fe5652c96fe/97959372_900x675.jpeg",
+					"alternateText": "Photo 98139917",
+					"mimeType": "image/jpeg"
+				}
+			]
+		}
+	],
+	"dataSourceContents": [
+		{
+			"name": "timestamp",
+			"transientContent": false,
+			"identifier": {
+				"type": "TIMESTAMP",
+				"checksum": "9E906BA6E1913B4B98608E77076494BF"
+			},
+			"content": [
+				{
+					"type": "text",
+					"name": "processedOn",
+					"content": "2019.01.22 17:33:03 +0000"
+				}
+			]
+		},
+		{
+			"name": "top-level-navigation",
+			"transientContent": false,
+			"identifier": {
+				"type": "SITE",
+				"revisions": {
+					"/about": "1",
+					"/search": "1",
+					"/home": "1",
+					"/impressum": "1",
+					"/common": "1",
+					"/contact": "1"
+				},
+				"query": {
+					"NON_RECURSIVE": true,
+					"INFO_PATH": "/",
+					"VERBOSE": true
+				},
+				"checksum": "58B175CD77E3DD393AFDFCA586B43406"
+			},
+			"content": [
+				{
+					"type": "link",
+					"name": "home",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.index",
+								"info.content.id": "home",
+								"info.template.variationId": "default",
+								"info.localizedName": "home",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "home",
+								"info.state.revision": "1",
+								"info.localizedName.de": "home",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "Home",
+							"contextSpecificContent": {
+								"de": "Home",
+								"ru": "Главная"
+							}
+						}
+					],
+					"target": "/home"
+				},
+				{
+					"type": "link",
+					"name": "search",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "false",
+								"info.content.id": "search",
+								"info.localizedName": "search",
+								"info.content.parent": "/",
+								"info.localizedName.ru": "poisk",
+								"info.state.revision": "1",
+								"info.localizedName.de": "suche"
+							},
+							"name": "display-name",
+							"content": "Search",
+							"contextSpecificContent": {
+								"de": "Suche",
+								"ru": "Поиск"
+							}
+						}
+					],
+					"target": "/search"
+				},
+				{
+					"type": "link",
+					"name": "regions",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.localizedName": "regions",
+								"info.localizedName.ru": "regioni",
+								"info.localizedName.de": "regionen"
+							},
+							"name": "display-name",
+							"content": "Regions of Greece",
+							"contextSpecificContent": {
+								"de": "Griechische Regionen",
+								"ru": "Регионы Греции"
+							}
+						}
+					],
+					"target": "/regions"
+				},
+				{
+					"type": "link",
+					"name": "objects",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.localizedName": "objects",
+								"info.localizedName.ru": "objekti",
+								"info.localizedName.de": "objekte"
+							},
+							"name": "display-name",
+							"content": "Objects",
+							"contextSpecificContent": {
+								"de": "Objekte",
+								"ru": "Объекты"
+							}
+						}
+					],
+					"target": "/objects"
+				},
+				{
+					"type": "link",
+					"name": "contact",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.article-text",
+								"info.content.id": "contact",
+								"info.template.variationId": "default",
+								"info.localizedName": "contact",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "kontakti",
+								"info.state.revision": "1",
+								"info.localizedName.de": "kontake",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "Contact",
+							"contextSpecificContent": {
+								"de": "Kontakt",
+								"ru": "Контакт"
+							}
+						}
+					],
+					"target": "/contact"
+				},
+				{
+					"type": "link",
+					"name": "about",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.article-text",
+								"info.content.id": "about",
+								"info.template.variationId": "default",
+								"info.localizedName": "about",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "o_nas",
+								"info.state.revision": "1",
+								"info.localizedName.de": "ueber_uns",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "About us",
+							"contextSpecificContent": {
+								"de": "Über uns",
+								"ru": "О нас"
+							}
+						}
+					],
+					"target": "/about"
+				},
+				{
+					"type": "link",
+					"name": "common",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "false",
+								"info.content.id": "common",
+								"info.localizedName": "common content",
+								"info.content.parent": "/",
+								"info.localizedName.ru": "common content",
+								"info.state.revision": "1",
+								"info.localizedName.de": "common content"
+							},
+							"name": "display-name"
+						}
+					],
+					"target": "/common"
+				},
+				{
+					"type": "link",
+					"name": "impressum",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "false",
+								"info.template.templateId": "greekestate.article-text",
+								"info.content.id": "impressum",
+								"info.template.variationId": "default",
+								"info.localizedName": "impressum",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "impressum",
+								"info.state.revision": "1",
+								"info.localizedName.de": "impressum",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "Impressum",
+							"contextSpecificContent": {
+								"de": "Impressum",
+								"ru": "Импрессум"
+							}
+						}
+					],
+					"target": "/impressum"
+				}
+			]
+		},
+		{
+			"name": "common-content",
+			"transientContent": false,
+			"identifier": {
+				"type": "COMMON-CONTENT",
+				"revisions": {
+					"/common": "1"
+				},
+				"query": {
+					"INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties"
+				},
+				"checksum": "C1321A1B562C709477024FE48F759158"
+			},
+			"content": [
+				{
+					"type": "link",
+					"name": "common",
+					"elements": [
+						{
+							"type": "text",
+							"name": "display-name"
+						},
+						{
+							"type": "group",
+							"name": "general-headlines",
+							"elements": [
+								{
+									"type": "text",
+									"name": "description",
+									"content": "Description",
+									"contextSpecificContent": {
+										"de": "Beschreibung",
+										"ru": "Описание"
+									}
+								},
+								{
+									"type": "text",
+									"name": "map",
+									"content": "Map",
+									"contextSpecificContent": {
+										"de": "Karte",
+										"ru": "Карта"
+									}
+								},
+								{
+									"type": "text",
+									"name": "search",
+									"content": "Search",
+									"contextSpecificContent": {
+										"de": "Suchen",
+										"ru": "Поиск"
+									}
+								},
+								{
+									"type": "text",
+									"name": "search-in-region",
+									"content": "Search in the region",
+									"contextSpecificContent": {
+										"de": "Suche in der Region",
+										"ru": "Поиск в регионе"
+									}
+								},
+								{
+									"type": "text",
+									"name": "matching-objects-found",
+									"content": "{0} properties found.",
+									"contextSpecificContent": {
+										"de": "{0} Immobilien gefunden.",
+										"ru": "Объектов найдено: {0}"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type",
+									"content": "Object type",
+									"contextSpecificContent": {
+										"de": "Typ des Objektes",
+										"ru": "Тип объекта"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:apartment",
+									"content": "Apartment",
+									"contextSpecificContent": {
+										"de": "Wohnung",
+										"ru": "Квартира"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:land-plot",
+									"content": "Land plot",
+									"contextSpecificContent": {
+										"de": "Grundstück",
+										"ru": "Земельный участок"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:building",
+									"content": "Building",
+									"contextSpecificContent": {
+										"de": "Gebäude",
+										"ru": "Здание"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:hotel",
+									"content": "Hotel",
+									"contextSpecificContent": {
+										"de": "Hotel",
+										"ru": "Гостиница"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:villa",
+									"content": "Villa",
+									"contextSpecificContent": {
+										"de": "Villa",
+										"ru": "Вилла"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:detached-house",
+									"content": "Detached house",
+									"contextSpecificContent": {
+										"de": "Freistehendes Haus",
+										"ru": "Дом"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:office",
+									"content": "Office",
+									"contextSpecificContent": {
+										"de": "Büro",
+										"ru": "Офис"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:farm-parcel",
+									"content": "Farm parcel",
+									"contextSpecificContent": {
+										"de": "Landparzelle",
+										"ru": "Сельскохозяйственный участок"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:store",
+									"content": "Store",
+									"contextSpecificContent": {
+										"de": "Geschäft",
+										"ru": "Магазин"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:business-building",
+									"content": "Business building",
+									"contextSpecificContent": {
+										"de": "Industriegebäude",
+										"ru": "Индустриальное здание"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:various-other-property",
+									"content": "Various other property",
+									"contextSpecificContent": {
+										"de": "Sonstige Immobilie",
+										"ru": "Прочая недвижимость"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:parking",
+									"content": "Parking",
+									"contextSpecificContent": {
+										"de": "Parkplatz",
+										"ru": "Парковка"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:other-land-property",
+									"content": "Other land property",
+									"contextSpecificContent": {
+										"de": "Sonstige Grundstücke",
+										"ru": "Прочие земельные участки"
+									}
+								},
+								{
+									"type": "text",
+									"name": "object-type:maisonette",
+									"content": "Maisonette",
+									"contextSpecificContent": {
+										"de": "Maisonette",
+										"ru": "Двухуровневая квартира"
+									}
+								}
+							]
+						},
+						{
+							"type": "group",
+							"name": "links-and-ctas",
+							"elements": [
+								{
+									"type": "text",
+									"name": "go-to-offer",
+									"content": "To the offer",
+									"contextSpecificContent": {
+										"de": "Zum Angebot",
+										"ru": "К предложению"
+									}
+								},
+								{
+									"type": "text",
+									"name": "contact-request",
+									"content": "Request",
+									"contextSpecificContent": {
+										"de": "Anfragen",
+										"ru": "Запросить"
+									}
+								},
+								{
+									"type": "text",
+									"name": "back-to-search-result",
+									"content": "Back to search result",
+									"contextSpecificContent": {
+										"de": "Zurück zu Suchergebnissen",
+										"ru": "Обратно к результатам поиска"
+									}
+								},
+								{
+									"type": "text",
+									"name": "search",
+									"content": "Search",
+									"contextSpecificContent": {
+										"de": "Suchen",
+										"ru": "Искать"
+									}
+								},
+								{
+									"type": "text",
+									"name": "bill-property",
+									"content": "Bill a property",
+									"contextSpecificContent": {
+										"de": "Immobilie kaufen",
+										"ru": "Купить недвижимость"
+									}
+								},
+								{
+									"type": "text",
+									"name": "rent-property",
+									"content": "Rent a property",
+									"contextSpecificContent": {
+										"de": "Feriendomizil mieten",
+										"ru": "Арендовать"
+									}
+								}
+							]
+						},
+						{
+							"type": "group",
+							"name": "properties",
+							"elements": [
+								{
+									"type": "text",
+									"name": "code",
+									"content": "Code",
+									"contextSpecificContent": {
+										"de": "Code",
+										"ru": "Код"
+									}
+								},
+								{
+									"type": "text",
+									"name": "area",
+									"content": "Area",
+									"contextSpecificContent": {
+										"de": "Fläche",
+										"ru": "Площадь"
+									}
+								},
+								{
+									"type": "text",
+									"name": "type",
+									"content": "Type",
+									"contextSpecificContent": {
+										"de": "Typ",
+										"ru": "Тип"
+									}
+								},
+								{
+									"type": "text",
+									"name": "region",
+									"content": "Region",
+									"contextSpecificContent": {
+										"de": "Region",
+										"ru": "Регион"
+									}
+								},
+								{
+									"type": "text",
+									"name": "owner",
+									"content": "Owner",
+									"contextSpecificContent": {
+										"de": "Inhaber",
+										"ru": "Владелец"
+									}
+								},
+								{
+									"type": "text",
+									"name": "contact",
+									"content": "Contact",
+									"contextSpecificContent": {
+										"de": "Kontakt",
+										"ru": "Контакт"
+									}
+								},
+								{
+									"type": "text",
+									"name": "pages",
+									"content": "Pages",
+									"contextSpecificContent": {
+										"de": "Seiten",
+										"ru": "Ссылки"
+									}
+								},
+								{
+									"type": "text",
+									"name": "phone",
+									"content": "Phone",
+									"contextSpecificContent": {
+										"de": "Telefon",
+										"ru": "Тел."
+									}
+								},
+								{
+									"type": "text",
+									"name": "mobile",
+									"content": "Mobile",
+									"contextSpecificContent": {
+										"de": "Mobil",
+										"ru": "Моб."
+									}
+								},
+								{
+									"type": "text",
+									"name": "fax",
+									"content": "Fax",
+									"contextSpecificContent": {
+										"de": "Fax",
+										"ru": "Факс"
+									}
+								},
+								{
+									"type": "text",
+									"name": "email",
+									"content": "E-Mail",
+									"contextSpecificContent": {
+										"de": "E-Mail",
+										"ru": "Эл. почта"
+									}
+								}
+							]
+						}
+					],
+					"target": "/common"
+				}
+			]
+		}
+	]
+}

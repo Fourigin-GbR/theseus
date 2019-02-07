@@ -1,0 +1,379 @@
+{
+	"id": "index",
+	"metaData": {
+		"title": "GreekEstate - Regions",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"type": "text",
+			"name": "headline",
+			"content": "Regions of Greece",
+			"contextSpecificContent": {
+				"de": "Griechische Regionen",
+				"ru": "Регионы Греции"
+			}
+		},
+		{
+			"type": "text",
+			"name": "body",
+			"content": "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten. Damit man möglichst viel von der Vielfalt.",
+			"contextSpecificContent": {
+				"de": "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten.",
+				"ru": "Города и регионы Греции предлагают все - от мегаполисов до маленьких уютных рыбацких поселков. Каждый шаг по улицам и переулкам открывает что-то новое, а прогулка в портовой зоне или по окраинам городов показывает настоящую греческую жизнь. Стоить обязательно посетить рестораны и кафе, ожидающие посетителей в маленьких заспанных деревнях Греции."
+			}
+		},
+		{
+			"type": "list",
+			"name": "stage-images",
+			"elements": [
+				{
+					"type": "list-group",
+					"elements": [
+						{
+							"type": "object",
+							"name": "image",
+							"referenceId": "1234567",
+							"alternateText": "Image one",
+							"mimeType": "jpg"
+						},
+						{
+							"type": "object",
+							"name": "image",
+							"referenceId": "1234567",
+							"alternateText": "Image two",
+							"mimeType": "jpg"
+						},
+						{
+							"type": "object",
+							"name": "image",
+							"referenceId": "1234567",
+							"alternateText": "Image three",
+							"mimeType": "jpg"
+						}
+					]
+				}
+			]
+		}
+	],
+	"dataSourceContents": [
+		{
+			"name": "timestamp",
+			"transientContent": false,
+			"identifier": {
+				"type": "TIMESTAMP",
+				"checksum": "5FAC648BDB9E96C5EB7653B422A000F7"
+			},
+			"content": [
+				{
+					"type": "text",
+					"name": "processedOn",
+					"content": "2019.01.24 10:18:35 +0000"
+				}
+			]
+		},
+		{
+			"name": "top-level-navigation",
+			"transientContent": false,
+			"identifier": {
+				"type": "SITE",
+				"revisions": {
+					"/home": "1",
+					"/search": "1",
+					"/contact": "1",
+					"/about": "1",
+					"/common": "1",
+					"/impressum": "1"
+				},
+				"query": {
+					"INFO_PATH": "/",
+					"NON_RECURSIVE": true,
+					"VERBOSE": true
+				},
+				"checksum": "C8C3A68CA3C6079BB483AD345B61903D"
+			},
+			"content": [
+				{
+					"type": "link",
+					"name": "home",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.index",
+								"info.content.id": "home",
+								"info.template.variationId": "default",
+								"info.localizedName": "home",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "home",
+								"info.state.revision": "1",
+								"info.localizedName.de": "home",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "Home",
+							"contextSpecificContent": {
+								"de": "Home",
+								"ru": "Главная"
+							}
+						}
+					],
+					"target": "/home"
+				},
+				{
+					"type": "link",
+					"name": "search",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "false",
+								"info.content.id": "search",
+								"info.localizedName": "search",
+								"info.content.parent": "/",
+								"info.localizedName.ru": "poisk",
+								"info.state.revision": "1",
+								"info.localizedName.de": "suche"
+							},
+							"name": "display-name",
+							"content": "Search",
+							"contextSpecificContent": {
+								"de": "Suche",
+								"ru": "Поиск"
+							}
+						}
+					],
+					"target": "/search"
+				},
+				{
+					"type": "link",
+					"name": "regions",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.localizedName": "regions",
+								"info.localizedName.ru": "regioni",
+								"info.localizedName.de": "regionen"
+							},
+							"name": "display-name",
+							"content": "Regions of Greece",
+							"contextSpecificContent": {
+								"de": "Griechische Regionen",
+								"ru": "Регионы Греции"
+							}
+						}
+					],
+					"target": "/regions"
+				},
+				{
+					"type": "link",
+					"name": "objects",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.localizedName": "objects",
+								"info.localizedName.ru": "objekti",
+								"info.localizedName.de": "objekte"
+							},
+							"name": "display-name",
+							"content": "Objects",
+							"contextSpecificContent": {
+								"de": "Objekte",
+								"ru": "Объекты"
+							}
+						}
+					],
+					"target": "/objects"
+				},
+				{
+					"type": "link",
+					"name": "contact",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.article-text",
+								"info.content.id": "contact",
+								"info.template.variationId": "default",
+								"info.localizedName": "contact",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "kontakti",
+								"info.state.revision": "1",
+								"info.localizedName.de": "kontake",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "Contact",
+							"contextSpecificContent": {
+								"de": "Kontakt",
+								"ru": "Контакт"
+							}
+						}
+					],
+					"target": "/contact"
+				},
+				{
+					"type": "link",
+					"name": "about",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.article-text",
+								"info.content.id": "about",
+								"info.template.variationId": "default",
+								"info.localizedName": "about",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "o_nas",
+								"info.state.revision": "1",
+								"info.localizedName.de": "ueber_uns",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "About us",
+							"contextSpecificContent": {
+								"de": "Über uns",
+								"ru": "О нас"
+							}
+						}
+					],
+					"target": "/about"
+				},
+				{
+					"type": "link",
+					"name": "common",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "false",
+								"info.content.id": "common",
+								"info.localizedName": "common content",
+								"info.content.parent": "/",
+								"info.localizedName.ru": "common content",
+								"info.state.revision": "1",
+								"info.localizedName.de": "common content"
+							},
+							"name": "display-name"
+						}
+					],
+					"target": "/common"
+				},
+				{
+					"type": "link",
+					"name": "impressum",
+					"elements": [
+						{
+							"type": "text",
+							"attributes": {
+								"info.state.staged": "true",
+								"info.template.templateId": "greekestate.article-text",
+								"info.content.id": "impressum",
+								"info.template.variationId": "default",
+								"info.localizedName": "impressum",
+								"info.content.parent": "/",
+								"info.state.compileState.compiled": "true",
+								"info.localizedName.ru": "impressum",
+								"info.state.revision": "1",
+								"info.localizedName.de": "impressum",
+								"info.template.revision": ""
+							},
+							"name": "display-name",
+							"content": "Impressum",
+							"contextSpecificContent": {
+								"de": "Impressum",
+								"ru": "Импрессум"
+							}
+						}
+					],
+					"target": "/impressum"
+				}
+			]
+		},
+		{
+			"name": "site-structure",
+			"transientContent": false,
+			"identifier": {
+				"type": "SITE",
+				"revisions": {},
+				"query": {
+					"INFO_PATH": "/regions",
+					"IGNORE_OWNER_PAGE": "true",
+					"INCLUDE_CONTENT": "/headline, /short-description, /long-description, /properties, /images"
+				},
+				"index": {
+					"name": "objects-to-sale",
+					"categories": {
+						"region": "/properties/region",
+						"type": "/properties/type"
+					},
+					"fields": [
+						{
+							"name": "distance",
+							"path": "/properties/distance-to-sea",
+							"type": "NUMBER"
+						},
+						{
+							"name": "number-of-rooms",
+							"path": "/properties/number-of-rooms",
+							"type": "NUMBER"
+						},
+						{
+							"name": "code",
+							"path": "/properties/code",
+							"type": "TEXT"
+						},
+						{
+							"name": "price",
+							"path": "/properties/price",
+							"type": "PRICE"
+						}
+					],
+					"fullTextSearch": [
+						"/short-description",
+						"/headline",
+						"/long-description",
+						"/properties/region"
+					],
+					"keywords": [
+						"athen",
+						"promenade",
+						"spa",
+						"ruhig",
+						"villa",
+						"loutraki",
+						"supermarkt",
+						"schwimmbad"
+					]
+				},
+				"checksum": ""
+			},
+			"content": []
+		},
+		{
+			"name": "common-content",
+			"transientContent": false,
+			"identifier": {
+				"type": "COMMON-CONTENT",
+				"revisions": {},
+				"query": {
+					"INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties"
+				},
+				"checksum": ""
+			},
+			"content": []
+		}
+	]
+}

@@ -1,14 +1,20 @@
 {
-  "staged" : false,
+  "staged" : true,
+  "live" : false,
+  "timestampLiveSwitch" : 0,
   "compileState" : {
-    "checksum" : "-",
+    "checksum" : "4EDAE15E8292C8A356ACD5EE5675074E-469D53C0AE6940ECC6E0584177ACAF48-6E706629F838E5C36D78B3C07CEA8774-6AADFC3351F5042F21BF20F1D8EE55A9-6426A91A9E201FC0A6B743304042902B",
     "compiled" : true,
-    "timestamp" : 1545522392806
+    "timestamp" : 1548672681600
   },
   "checksum" : {
-    "metaDataValue" : "",
-    "contentValue" : "",
-    "dataSourceValues" : { }
+    "metaDataValue" : "4EDAE15E8292C8A356ACD5EE5675074E",
+    "contentValue" : "469D53C0AE6940ECC6E0584177ACAF48",
+    "dataSourceValues" : {
+      "top-level-navigation" : "6426A91A9E201FC0A6B743304042902B",
+      "site-structure" : "6AADFC3351F5042F21BF20F1D8EE55A9",
+      "common-content" : "6E706629F838E5C36D78B3C07CEA8774"
+    }
   },
   "revision" : "1"
 }

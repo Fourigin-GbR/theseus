@@ -1,0 +1,19 @@
+{
+  "staged" : false,
+  "live" : false,
+  "compileState" : {
+    "checksum" : "240645C166BC6C2CFACC2F77DC03891F-BBDB17194E6326A589BEBEF597759AF7-C1321A1B562C709477024FE48F759158-D64AD814511FC0DB855A479AA62D613D-8F470EB2E4B52E45BC1ED6C73D8BCDB3",
+    "compiled" : true,
+    "timestamp" : 1548178301444
+  },
+  "checksum" : {
+    "metaDataValue" : "240645C166BC6C2CFACC2F77DC03891F",
+    "contentValue" : "BBDB17194E6326A589BEBEF597759AF7",
+    "dataSourceValues" : {
+      "top-level-navigation" : "8F470EB2E4B52E45BC1ED6C73D8BCDB3",
+      "common-content" : "C1321A1B562C709477024FE48F759158",
+      "timestamp" : "D64AD814511FC0DB855A479AA62D613D"
+    }
+  },
+  "revision" : "1"
+}

@@ -1,1 +1,12 @@
-{ }
+{
+	"base_url.CMS": "http://argo.greekestate.fourigin.com/cms/compile/?",
+	"base_url.STAGE": "//www.bestgreekestate.com",
+	"base_url.LIVE": "//www.bestgreekestate.com",
+	"base_url.DE.STAGE": "//www.de.bestgreekestate.com",
+	"base_url.DE.LIVE": "//www.de.bestgreekestate.com",
+	"base_url.RU.STAGE": "//www.ru.bestgreekestate.com",
+	"base_url.RU.LIVE": "//www.ru.bestgreekestate.com",
+	"service_url.search.CMS": "http://argo.greekestate.fourigin.com/cms/search/?",
+	"service_url.search.STAGE": "/argo-services/greekestate/search/?",
+	"service_url.search.LIVE": "/argo-services/greekestate/search/?"
+}

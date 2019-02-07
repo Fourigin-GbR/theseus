@@ -1,0 +1,59 @@
+{
+	"path": "/regions",
+	"children": [
+		{
+			"type": "file",
+			"name": "overview",
+			"templateReference": {
+				"templateId": "greekestate.overview-article-gallery",
+				"variationId": "default",
+				"revision": "unspecified"
+			}
+		},
+		{
+			"type": "file",
+			"name": "about_casino_loutraki",
+			"templateReference": {
+				"templateId": "greekestate.stage-article-text",
+				"variationId": "default",
+				"revision": "unspecified"
+			}
+		},
+		{
+			"type": "file",
+			"name": "about_corinth_canal",
+			"templateReference": {
+				"templateId": "greekestate.stage-article-text",
+				"variationId": "default",
+				"revision": "unspecified"
+			}
+		},
+		{
+			"type": "file",
+			"name": "about_thermal_spa_loutraki",
+			"templateReference": {
+				"templateId": "greekestate.stage-article-text",
+				"variationId": "default",
+				"revision": "unspecified"
+			}
+		},
+		{
+			"type": "file",
+			"name": "distances_loutraki_historical_monuments",
+			"templateReference": {
+				"templateId": "greekestate.stage-article-text",
+				"variationId": "default",
+				"revision": "unspecified"
+			}
+		},
+		{
+			"type": "file",
+			"name": "way_airport_loutraki",
+			"templateReference": {
+				"templateId": "greekestate.stage-article-text",
+				"variationId": "default",
+				"revision": "unspecified"
+			}
+		}
+	]
+}

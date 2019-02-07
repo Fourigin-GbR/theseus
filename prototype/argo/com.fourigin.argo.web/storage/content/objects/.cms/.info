@@ -1,10 +1,37 @@
 {
-  "path" : "/objects",
-  "children" : [ {
-    "type" : "dir",
-    "name" : "sale"
-  }, {
-    "type" : "dir",
-    "name" : "rent"
-  } ]
+  "path": "/objects",
+  "children": [
+    {
+      "type": "file",
+      "name": "search",
+      "localizedName": {
+        "": "search",
+        "de": "suche",
+        "ru": "poisk"
+      },
+      "templateReference": {
+        "templateId": "greekestate.object-specific-search",
+        "variationId": "default",
+        "revision": ""
+      }
+    },
+    {
+      "type": "dir",
+      "name": "sale",
+      "localizedName": {
+        "": "sale",
+        "de": "verkauf",
+        "ru": "prodazha"
+      }
+    },
+    {
+      "type": "dir",
+      "name": "rent",
+      "localizedName": {
+        "": "rent",
+        "de": "miete",
+        "ru": "arenda"
+      }
+    }
+  ]
 }

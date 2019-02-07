@@ -3,22 +3,1536 @@
   "children" : [ {
     "type" : "file",
     "name" : "search",
-    "templateReference" : { 
-    "templateId" : "object-search",
-    "variationId" : "default",
-    "revision" : ""
-	}
+    "localizedName" : {
+      "" : "search",
+      "de" : "suche",
+      "ru" : "poisk"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-search",
+      "variationId" : "default",
+      "revision" : ""
+    }
   }, {
     "type" : "file",
-    "name" : "object_003",
-    "templateReference" : { }
+    "name" : "object_6671859",
+    "localizedName" : {
+      "" : "object_6671859",
+      "de" : "objekt_6671859",
+      "ru" : "objekt_6671859"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
   }, {
     "type" : "file",
-    "name" : "object_004",
-    "templateReference" : { }
+    "name" : "object_6049179",
+    "localizedName" : {
+      "" : "object_6049179",
+      "de" : "objekt_6049179",
+      "ru" : "objekt_6049179"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
   }, {
     "type" : "file",
-    "name" : "object_005",
-    "templateReference" : { }
+    "name" : "object_6408177",
+    "localizedName" : {
+      "" : "object_6408177",
+      "de" : "objekt_6408177",
+      "ru" : "objekt_6408177"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6269085",
+    "localizedName" : {
+      "" : "object_6269085",
+      "de" : "objekt_6269085",
+      "ru" : "objekt_6269085"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813362",
+    "localizedName" : {
+      "" : "object_3813362",
+      "de" : "objekt_3813362",
+      "ru" : "objekt_3813362"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813161",
+    "localizedName" : {
+      "" : "object_3813161",
+      "de" : "objekt_3813161",
+      "ru" : "objekt_3813161"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813250",
+    "localizedName" : {
+      "" : "object_3813250",
+      "de" : "objekt_3813250",
+      "ru" : "objekt_3813250"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4743717",
+    "localizedName" : {
+      "" : "object_4743717",
+      "de" : "objekt_4743717",
+      "ru" : "objekt_4743717"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6206477",
+    "localizedName" : {
+      "" : "object_6206477",
+      "de" : "objekt_6206477",
+      "ru" : "objekt_6206477"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813336",
+    "localizedName" : {
+      "" : "object_3813336",
+      "de" : "objekt_3813336",
+      "ru" : "objekt_3813336"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6250728",
+    "localizedName" : {
+      "" : "object_6250728",
+      "de" : "objekt_6250728",
+      "ru" : "objekt_6250728"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5964668",
+    "localizedName" : {
+      "" : "object_5964668",
+      "de" : "objekt_5964668",
+      "ru" : "objekt_5964668"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6171631",
+    "localizedName" : {
+      "" : "object_6171631",
+      "de" : "objekt_6171631",
+      "ru" : "objekt_6171631"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6169045",
+    "localizedName" : {
+      "" : "object_6169045",
+      "de" : "objekt_6169045",
+      "ru" : "objekt_6169045"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4893686",
+    "localizedName" : {
+      "" : "object_4893686",
+      "de" : "objekt_4893686",
+      "ru" : "objekt_4893686"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813084",
+    "localizedName" : {
+      "" : "object_3813084",
+      "de" : "objekt_3813084",
+      "ru" : "objekt_3813084"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813368",
+    "localizedName" : {
+      "" : "object_3813368",
+      "de" : "objekt_3813368",
+      "ru" : "objekt_3813368"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5010256",
+    "localizedName" : {
+      "" : "object_5010256",
+      "de" : "objekt_5010256",
+      "ru" : "objekt_5010256"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813122",
+    "localizedName" : {
+      "" : "object_3813122",
+      "de" : "objekt_3813122",
+      "ru" : "objekt_3813122"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6064641",
+    "localizedName" : {
+      "" : "object_6064641",
+      "de" : "objekt_6064641",
+      "ru" : "objekt_6064641"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4586222",
+    "localizedName" : {
+      "" : "object_4586222",
+      "de" : "objekt_4586222",
+      "ru" : "objekt_4586222"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4989846",
+    "localizedName" : {
+      "" : "object_4989846",
+      "de" : "objekt_4989846",
+      "ru" : "objekt_4989846"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813202",
+    "localizedName" : {
+      "" : "object_3813202",
+      "de" : "objekt_3813202",
+      "ru" : "objekt_3813202"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813270",
+    "localizedName" : {
+      "" : "object_3813270",
+      "de" : "objekt_3813270",
+      "ru" : "objekt_3813270"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813395",
+    "localizedName" : {
+      "" : "object_3813395",
+      "de" : "objekt_3813395",
+      "ru" : "objekt_3813395"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4851281",
+    "localizedName" : {
+      "" : "object_4851281",
+      "de" : "objekt_4851281",
+      "ru" : "objekt_4851281"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5437094",
+    "localizedName" : {
+      "" : "object_5437094",
+      "de" : "objekt_5437094",
+      "ru" : "objekt_5437094"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5289014",
+    "localizedName" : {
+      "" : "object_5289014",
+      "de" : "objekt_5289014",
+      "ru" : "objekt_5289014"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813356",
+    "localizedName" : {
+      "" : "object_3813356",
+      "de" : "objekt_3813356",
+      "ru" : "objekt_3813356"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5341566",
+    "localizedName" : {
+      "" : "object_5341566",
+      "de" : "objekt_5341566",
+      "ru" : "objekt_5341566"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813185",
+    "localizedName" : {
+      "" : "object_3813185",
+      "de" : "objekt_3813185",
+      "ru" : "objekt_3813185"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5350928",
+    "localizedName" : {
+      "" : "object_5350928",
+      "de" : "objekt_5350928",
+      "ru" : "objekt_5350928"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4627885",
+    "localizedName" : {
+      "" : "object_4627885",
+      "de" : "objekt_4627885",
+      "ru" : "objekt_4627885"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4904306",
+    "localizedName" : {
+      "" : "object_4904306",
+      "de" : "objekt_4904306",
+      "ru" : "objekt_4904306"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4884255",
+    "localizedName" : {
+      "" : "object_4884255",
+      "de" : "objekt_4884255",
+      "ru" : "objekt_4884255"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4888990",
+    "localizedName" : {
+      "" : "object_4888990",
+      "de" : "objekt_4888990",
+      "ru" : "objekt_4888990"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813126",
+    "localizedName" : {
+      "" : "object_3813126",
+      "de" : "objekt_3813126",
+      "ru" : "objekt_3813126"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813114",
+    "localizedName" : {
+      "" : "object_3813114",
+      "de" : "objekt_3813114",
+      "ru" : "objekt_3813114"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813150",
+    "localizedName" : {
+      "" : "object_3813150",
+      "de" : "objekt_3813150",
+      "ru" : "objekt_3813150"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5459508",
+    "localizedName" : {
+      "" : "object_5459508",
+      "de" : "objekt_5459508",
+      "ru" : "objekt_5459508"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5550049",
+    "localizedName" : {
+      "" : "object_5550049",
+      "de" : "objekt_5550049",
+      "ru" : "objekt_5550049"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5444696",
+    "localizedName" : {
+      "" : "object_5444696",
+      "de" : "objekt_5444696",
+      "ru" : "objekt_5444696"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813279",
+    "localizedName" : {
+      "" : "object_3813279",
+      "de" : "objekt_3813279",
+      "ru" : "objekt_3813279"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813256",
+    "localizedName" : {
+      "" : "object_3813256",
+      "de" : "objekt_3813256",
+      "ru" : "objekt_3813256"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813203",
+    "localizedName" : {
+      "" : "object_3813203",
+      "de" : "objekt_3813203",
+      "ru" : "objekt_3813203"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4498581",
+    "localizedName" : {
+      "" : "object_4498581",
+      "de" : "objekt_4498581",
+      "ru" : "objekt_4498581"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813381",
+    "localizedName" : {
+      "" : "object_3813381",
+      "de" : "objekt_3813381",
+      "ru" : "objekt_3813381"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813372",
+    "localizedName" : {
+      "" : "object_3813372",
+      "de" : "objekt_3813372",
+      "ru" : "objekt_3813372"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813155",
+    "localizedName" : {
+      "" : "object_3813155",
+      "de" : "objekt_3813155",
+      "ru" : "objekt_3813155"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813349",
+    "localizedName" : {
+      "" : "object_3813349",
+      "de" : "objekt_3813349",
+      "ru" : "objekt_3813349"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813216",
+    "localizedName" : {
+      "" : "object_3813216",
+      "de" : "objekt_3813216",
+      "ru" : "objekt_3813216"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813213",
+    "localizedName" : {
+      "" : "object_3813213",
+      "de" : "objekt_3813213",
+      "ru" : "objekt_3813213"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813211",
+    "localizedName" : {
+      "" : "object_3813211",
+      "de" : "objekt_3813211",
+      "ru" : "objekt_3813211"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813210",
+    "localizedName" : {
+      "" : "object_3813210",
+      "de" : "objekt_3813210",
+      "ru" : "objekt_3813210"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813296",
+    "localizedName" : {
+      "" : "object_3813296",
+      "de" : "objekt_3813296",
+      "ru" : "objekt_3813296"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813241",
+    "localizedName" : {
+      "" : "object_3813241",
+      "de" : "objekt_3813241",
+      "ru" : "objekt_3813241"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813377",
+    "localizedName" : {
+      "" : "object_3813377",
+      "de" : "objekt_3813377",
+      "ru" : "objekt_3813377"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813359",
+    "localizedName" : {
+      "" : "object_3813359",
+      "de" : "objekt_3813359",
+      "ru" : "objekt_3813359"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813231",
+    "localizedName" : {
+      "" : "object_3813231",
+      "de" : "objekt_3813231",
+      "ru" : "objekt_3813231"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813201",
+    "localizedName" : {
+      "" : "object_3813201",
+      "de" : "objekt_3813201",
+      "ru" : "objekt_3813201"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813200",
+    "localizedName" : {
+      "" : "object_3813200",
+      "de" : "objekt_3813200",
+      "ru" : "objekt_3813200"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813304",
+    "localizedName" : {
+      "" : "object_3813304",
+      "de" : "objekt_3813304",
+      "ru" : "objekt_3813304"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813176",
+    "localizedName" : {
+      "" : "object_3813176",
+      "de" : "objekt_3813176",
+      "ru" : "objekt_3813176"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813135",
+    "localizedName" : {
+      "" : "object_3813135",
+      "de" : "objekt_3813135",
+      "ru" : "objekt_3813135"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813379",
+    "localizedName" : {
+      "" : "object_3813379",
+      "de" : "objekt_3813379",
+      "ru" : "objekt_3813379"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813348",
+    "localizedName" : {
+      "" : "object_3813348",
+      "de" : "objekt_3813348",
+      "ru" : "objekt_3813348"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813340",
+    "localizedName" : {
+      "" : "object_3813340",
+      "de" : "objekt_3813340",
+      "ru" : "objekt_3813340"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813314",
+    "localizedName" : {
+      "" : "object_3813314",
+      "de" : "objekt_3813314",
+      "ru" : "objekt_3813314"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813292",
+    "localizedName" : {
+      "" : "object_3813292",
+      "de" : "objekt_3813292",
+      "ru" : "objekt_3813292"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813387",
+    "localizedName" : {
+      "" : "object_3813387",
+      "de" : "objekt_3813387",
+      "ru" : "objekt_3813387"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813337",
+    "localizedName" : {
+      "" : "object_3813337",
+      "de" : "objekt_3813337",
+      "ru" : "objekt_3813337"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813233",
+    "localizedName" : {
+      "" : "object_3813233",
+      "de" : "objekt_3813233",
+      "ru" : "objekt_3813233"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813328",
+    "localizedName" : {
+      "" : "object_3813328",
+      "de" : "objekt_3813328",
+      "ru" : "objekt_3813328"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813227",
+    "localizedName" : {
+      "" : "object_3813227",
+      "de" : "objekt_3813227",
+      "ru" : "objekt_3813227"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813207",
+    "localizedName" : {
+      "" : "object_3813207",
+      "de" : "objekt_3813207",
+      "ru" : "objekt_3813207"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813151",
+    "localizedName" : {
+      "" : "object_3813151",
+      "de" : "objekt_3813151",
+      "ru" : "objekt_3813151"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813344",
+    "localizedName" : {
+      "" : "object_3813344",
+      "de" : "objekt_3813344",
+      "ru" : "objekt_3813344"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813300",
+    "localizedName" : {
+      "" : "object_3813300",
+      "de" : "objekt_3813300",
+      "ru" : "objekt_3813300"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813236",
+    "localizedName" : {
+      "" : "object_3813236",
+      "de" : "objekt_3813236",
+      "ru" : "objekt_3813236"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813204",
+    "localizedName" : {
+      "" : "object_3813204",
+      "de" : "objekt_3813204",
+      "ru" : "objekt_3813204"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813258",
+    "localizedName" : {
+      "" : "object_3813258",
+      "de" : "objekt_3813258",
+      "ru" : "objekt_3813258"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813230",
+    "localizedName" : {
+      "" : "object_3813230",
+      "de" : "objekt_3813230",
+      "ru" : "objekt_3813230"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813223",
+    "localizedName" : {
+      "" : "object_3813223",
+      "de" : "objekt_3813223",
+      "ru" : "objekt_3813223"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813209",
+    "localizedName" : {
+      "" : "object_3813209",
+      "de" : "objekt_3813209",
+      "ru" : "objekt_3813209"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813353",
+    "localizedName" : {
+      "" : "object_3813353",
+      "de" : "objekt_3813353",
+      "ru" : "objekt_3813353"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813293",
+    "localizedName" : {
+      "" : "object_3813293",
+      "de" : "objekt_3813293",
+      "ru" : "objekt_3813293"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813152",
+    "localizedName" : {
+      "" : "object_3813152",
+      "de" : "objekt_3813152",
+      "ru" : "objekt_3813152"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813089",
+    "localizedName" : {
+      "" : "object_3813089",
+      "de" : "objekt_3813089",
+      "ru" : "objekt_3813089"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813357",
+    "localizedName" : {
+      "" : "object_3813357",
+      "de" : "objekt_3813357",
+      "ru" : "objekt_3813357"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813115",
+    "localizedName" : {
+      "" : "object_3813115",
+      "de" : "objekt_3813115",
+      "ru" : "objekt_3813115"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813093",
+    "localizedName" : {
+      "" : "object_3813093",
+      "de" : "objekt_3813093",
+      "ru" : "objekt_3813093"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813289",
+    "localizedName" : {
+      "" : "object_3813289",
+      "de" : "objekt_3813289",
+      "ru" : "objekt_3813289"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813128",
+    "localizedName" : {
+      "" : "object_3813128",
+      "de" : "objekt_3813128",
+      "ru" : "objekt_3813128"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813228",
+    "localizedName" : {
+      "" : "object_3813228",
+      "de" : "objekt_3813228",
+      "ru" : "objekt_3813228"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813196",
+    "localizedName" : {
+      "" : "object_3813196",
+      "de" : "objekt_3813196",
+      "ru" : "objekt_3813196"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813104",
+    "localizedName" : {
+      "" : "object_3813104",
+      "de" : "objekt_3813104",
+      "ru" : "objekt_3813104"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813263",
+    "localizedName" : {
+      "" : "object_3813263",
+      "de" : "objekt_3813263",
+      "ru" : "objekt_3813263"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813187",
+    "localizedName" : {
+      "" : "object_3813187",
+      "de" : "objekt_3813187",
+      "ru" : "objekt_3813187"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813101",
+    "localizedName" : {
+      "" : "object_3813101",
+      "de" : "objekt_3813101",
+      "ru" : "objekt_3813101"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813388",
+    "localizedName" : {
+      "" : "object_3813388",
+      "de" : "objekt_3813388",
+      "ru" : "objekt_3813388"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813364",
+    "localizedName" : {
+      "" : "object_3813364",
+      "de" : "objekt_3813364",
+      "ru" : "objekt_3813364"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813205",
+    "localizedName" : {
+      "" : "object_3813205",
+      "de" : "objekt_3813205",
+      "ru" : "objekt_3813205"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813194",
+    "localizedName" : {
+      "" : "object_3813194",
+      "de" : "objekt_3813194",
+      "ru" : "objekt_3813194"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813097",
+    "localizedName" : {
+      "" : "object_3813097",
+      "de" : "objekt_3813097",
+      "ru" : "objekt_3813097"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4498435",
+    "localizedName" : {
+      "" : "object_4498435",
+      "de" : "objekt_4498435",
+      "ru" : "objekt_4498435"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4498514",
+    "localizedName" : {
+      "" : "object_4498514",
+      "de" : "objekt_4498514",
+      "ru" : "objekt_4498514"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813197",
+    "localizedName" : {
+      "" : "object_3813197",
+      "de" : "objekt_3813197",
+      "ru" : "objekt_3813197"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813177",
+    "localizedName" : {
+      "" : "object_3813177",
+      "de" : "objekt_3813177",
+      "ru" : "objekt_3813177"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4537108",
+    "localizedName" : {
+      "" : "object_4537108",
+      "de" : "objekt_4537108",
+      "ru" : "objekt_4537108"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813365",
+    "localizedName" : {
+      "" : "object_3813365",
+      "de" : "objekt_3813365",
+      "ru" : "objekt_3813365"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4867874",
+    "localizedName" : {
+      "" : "object_4867874",
+      "de" : "objekt_4867874",
+      "ru" : "objekt_4867874"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813297",
+    "localizedName" : {
+      "" : "object_3813297",
+      "de" : "objekt_3813297",
+      "ru" : "objekt_3813297"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813106",
+    "localizedName" : {
+      "" : "object_3813106",
+      "de" : "objekt_3813106",
+      "ru" : "objekt_3813106"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5043382",
+    "localizedName" : {
+      "" : "object_5043382",
+      "de" : "objekt_5043382",
+      "ru" : "objekt_5043382"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813154",
+    "localizedName" : {
+      "" : "object_3813154",
+      "de" : "objekt_3813154",
+      "ru" : "objekt_3813154"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813290",
+    "localizedName" : {
+      "" : "object_3813290",
+      "de" : "objekt_3813290",
+      "ru" : "objekt_3813290"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4761179",
+    "localizedName" : {
+      "" : "object_4761179",
+      "de" : "objekt_4761179",
+      "ru" : "objekt_4761179"
+    },
+    "templateReference" : {
+      "templateId" : "greekestate.object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
   } ]
 }
