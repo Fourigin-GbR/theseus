@@ -33,24 +33,23 @@
     <nav th:replace="greekestate/base :: breadcrumb"></nav>
 
     <article>
-        <h1 th:text="${c.getContent('/headline')}">Regionen</h1>
+        <h1 th:text="${c.getContent('/headline')}">Region</h1>
         <p th:text="${c.getContent('/body')}"></p>
     </article>
 
 
-    <article class="overviewListImageBoxes" th:with="regions = ${c.getElement('@regions-site-structure:/')}">
+    <article class="overviewListImageBoxes" th:with="regions = ${c.getElement('@region-site-structure:/')}">
         <!-- REGION -->
         <div class="overviewListImageBoxesItem" th:each="region : ${regions.elements}" th:with="
                 headline = ${c.getElement(region, '/headline')},
                 shortDescription = ${c.getElement(region, '/short-description')},
-                image = ${c.getElement(region, '/region-image')},
                 href = ${p.getPath(region.target)}
             ">
             <div class="overviewListImageBoxesItem__headline">
                 <h2 th:text="${headline.content}">Kreta</h2>
             </div>
             <div class="overviewListImageBoxesItem__content">
-                <div class="overviewListImageBoxesItem__image" style="background-image: url('assets/images/regions/loutraki-1.jpg')" th:style="'background-image: url(' + ${image.source} + ')'">
+                <div class="overviewListImageBoxesItem__image" style="background-image: url('assets/images/regions/loutraki-1.jpg')">
                 </div>
                 <div class="overviewListImageBoxesItem__copy" th:utext="${shortDescription.content}">
                     <p>Die tollste Insel.</p>
