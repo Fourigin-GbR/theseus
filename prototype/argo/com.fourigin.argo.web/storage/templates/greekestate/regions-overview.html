@@ -30,86 +30,38 @@
     f = ${argo.formatterUtility}
 ">
 
-    <nav th:replace="greekestate/base :: breadcrumb">
-
-    </nav>
-
-    <article>
-        <div class="ctaHighlightWrapper">
-            <a class="ctaHighlight" href="javascript:history.back()">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <span th:text="${c.getContent('@common-content:common/links-and-ctas/back-to-search-result')}">Zurück zur Suche</span>
-            </a>
-        </div>
-    </article>
+    <nav th:replace="greekestate/base :: breadcrumb"></nav>
 
     <article>
         <h1 th:text="${c.getContent('/headline')}">Regionen</h1>
+        <p th:text="${c.getContent('/body')}"></p>
     </article>
 
-    <!-- REGION -->
 
-    <article class="productDetails">
-        <div class="content">
-            <div th:if="${images.elements.size() == 0}" class="noImagesInformation">
-                <i class="fa fa-building" aria-hidden="true"></i>
+    <article class="overviewListImageBoxes" th:with="regions = ${c.getElement('@regions-site-structure:/')}">
+        <!-- REGION -->
+        <div class="overviewListImageBoxesItem" th:each="region : ${regions.elements}" th:with="
+                headline = ${c.getElement(region, '/headline')},
+                image = ${c.getElement(region, '/region-image')}
+            ">
+            <div class="overviewListImageBoxesItem__headline">
+                <h2 th:text="${headline.content}">Kreta</h2>
             </div>
-            <div th:unless="${images.elements.size() == 0}" class="slider productDetailsSlider">
-                <input class="sliderPageStorage" value="1" type="hidden">
-                <span th:utext="|&lt;!-- ${images} --&gt;|"></span>
-                <div class="sliderWrapper">
-                    <ul>
-                        <li th:each="image : ${images.elements}">
-                            <div class="detailSlide">
-                                <div class="image">
-                                    <img th:src="${image.source}" src="assets/images/objects/object-details1.jpg"/>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+            <div class="overviewListImageBoxesItem__content">
+                <div class="overviewListImageBoxesItem__image" style="background-image: url('assets/images/regions/loutraki-1.jpg')" th:style="'background-image: url(' + ${image.source} + ')'">
                 </div>
-                <div class="sliderSlideLeft"></div>
-                <div class="sliderSlideRight"></div>
-                <div class="sliderPagination"><ul></ul></div>
+                <div class="overviewListImageBoxesItem__copy">
+                    <p>Die tollste Insel.</p>
+                    <p>Wunderschöne Strände.</p>
+                    <p>Auch Frauen sind willkommen.</p>
+                </div>
             </div>
-            <script type="text/javascript">
-                jQuery(document).ready(function () {
-                    new Slider(
-                        jQuery(".slider.productDetailsSlider"),
-                        {
-                            "slideItemsAmountPerPage": [
-                                {
-                                    "min": "0px",
-                                    "max": null,
-                                    "slideItems": 1
-                                }
-                            ]
-                        }
-                    );
-                });
-            </script>
-            <div class="description">
-                <p class="shortTeaserCopy" th:utext="${c.getContent('/short-description')}">REGION 1</p>
-                <p>
-                    INFOS INFOS INFOS
-                </p>
-                <div class="transfer">
-                    <a class="cta" href="text.html" th:text="${c.getContent('@common-content:common/links-and-ctas/contact-request')}">Anfragen</a>
-                </div>
+            <div class="overviewListImageBoxesItem__link">
+                <a href="#" class="cta">Mehr</a>
             </div>
         </div>
+        <!---->
     </article>
-
-    <article th:if="${longDescriptionContent}">
-        <h2 th:text="${c.getContent('@common-content:common/general-headlines/description')}">REGION 1</h2>
-        <p th:utext="${longDescriptionContent}">
-            Where position: relative; ensures correct positioning of the fix. And white-space: pre; makes you not having to add any content - like a white space - to the fix. And height: 0px;width: 0px;overflow: hidden; makes sure you'll never see the fix.
-            You might need to add line-height: 0px; or max-height: 0px; to ensure the height is actually zero in ancient IE browsers (I'm unsure). And optionally you could add <!--dummy--> to it in old IE browsers, if it does not work.
-            In short, you can do all this with only CSS (which removes the need to add an actual child to the HTML DOM-tree).
-        </p>
-    </article>
-
-    <!---->
 
 
 
