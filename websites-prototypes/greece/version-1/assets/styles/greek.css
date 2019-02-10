@@ -268,11 +268,47 @@ nav a {
     min-height: 200px;
     padding: 40px;
 }
+.body article.productStageSlider--small {
+    background: none;
+    padding: 0;
+}
+.body article.productStageSlider--small .slider {
+    width: 60%;
+}
+.body article.productStageSlider--small .heroStageOffers .heroStageOffer {
+    padding: 0;
+    background-color: aliceblue;
+}
+.body article.productStageSlider--small .heroStageOffers .heroStageOffer .teaser {
+    font-size: 20px;
+    font-weight: normal;
+    right: 20px;
+    bottom: 20px;
+}
+.body article.productStageSlider--small .image {
+    height: 460px;
+    text-align: center;
+}
+.body article.productStageSlider--small .image img {
+    height: 100%;
+    width: auto;
+}
+.body article.productStageSlider--small .sliderSlideLeft::after,
+.body article.productStageSlider--small .sliderSlideRight::after {
+    background-color: #054e8c;
+    color: #fff;
+}
 @media (max-width: 700px) {
     .body article.productStageSlider {
         padding: 0;
     }
 }
+@media (max-width: 1000px) {
+    .body article.productStageSlider--small .slider {
+        width: 90%;
+    }
+}
+
 .body article.contextHighlights {
     background-color: #33669B;
     padding: 20px;
