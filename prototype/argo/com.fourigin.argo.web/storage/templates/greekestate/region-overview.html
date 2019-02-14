@@ -32,6 +32,15 @@
 
     <nav th:replace="greekestate/base :: breadcrumb"></nav>
 
+    <article th:with="ancestors = ${p.getAncestors(argo.path)}">
+        <ul>
+            <li th:each="ancestor: ${ancestors}">
+                <span th:text="${'Name: ' + ancestor.name}"></span>&nbsp;&nbsp;&nbsp;
+                <span th:text="${'Path: ' + ancestor.path}"></span>
+            </li>
+        </ul>
+    </article>
+
     <article>
         <h1 th:text="${c.getContent('/headline')}">Region</h1>
         <p th:text="${c.getContent('/body')}"></p>

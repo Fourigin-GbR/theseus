@@ -4,6 +4,8 @@ import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentRepository;
@@ -32,16 +34,20 @@ public  class CmsRequestAggregationResolver {
     public CmsRequestAggregation resolveAggregation(String customer, String base, String path){
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
 
-        PageInfo pageInfo = contentRepository.resolveInfo(PageInfo.class, path);
+        SiteNodeInfo nodeInfo = contentRepository.resolveInfo(SiteNodeInfo.class, path);
+        String targetPath = SiteNodes.getDefaultTarget(nodeInfo);
+        if (logger.isDebugEnabled()) logger.debug("Using target path '{}'", targetPath);
+
+        PageInfo pageInfo = contentRepository.resolveInfo(PageInfo.class, targetPath);
         if(pageInfo == null){
-            throw new IllegalStateException("No PageInfo found for path '" + path + "'! Is this path valid?");
+            throw new IllegalStateException("No PageInfo found for path '" + targetPath + "'! Is this path valid?");
         }
 
-        if (logger.isDebugEnabled()) logger.debug("pageInfo for path '{}': {}", path, pageInfo);
+        if (logger.isDebugEnabled()) logger.debug("pageInfo for path '{}': {}", targetPath, pageInfo);
 
         PageState pageState = contentRepository.resolvePageState(pageInfo);
         if(pageState == null){
-            if (logger.isDebugEnabled()) logger.debug("No PageState found for page '{}'. Returning a new PageState", path);
+            if (logger.isDebugEnabled()) logger.debug("No PageState found for page '{}'. Returning a new PageState", targetPath);
             pageState = new PageState.Builder()
                 .withStaged(false)
                 .build();

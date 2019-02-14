@@ -60,6 +60,8 @@ public class CompileController {
 
         if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
 
+
+
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
 
         ContentRepository contentRepository = aggregation.getContentRepository();

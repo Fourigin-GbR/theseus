@@ -2,6 +2,7 @@ package com.fourigin.argo.template.engine;
 
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.template.engine.api.Argo;
@@ -10,6 +11,7 @@ import com.fourigin.argo.template.engine.utilities.ContentPageAwareThymeleafTemp
 import com.fourigin.argo.template.engine.utilities.CustomerAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.PageInfoAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ProcessingModeAwareThymeleafTemplateUtility;
+import com.fourigin.argo.template.engine.utilities.RootSiteNodeAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.SiteAttributesAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtilityFactory;
@@ -85,11 +87,12 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
             .withProcessingMode(processingMode)
             .withSiteAttributes(siteAttributes)
             .withInternalLinkResolutionStrategies(internalLinkResolutionStrategies)
+            .withRootNodeInfo(resolveRoot())
             .build()
         );
 
         addUtilities(templateUtilityFactories, context, base, processingMode);
-        
+
         try (Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
             thymeleafInternalTemplateEngine.process(templateName, context, writer);
         } catch (Exception ex) {
@@ -128,9 +131,13 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     siteAttributesUtility.setCompilerBase(base);
                     siteAttributesUtility.setSiteAttributes(siteAttributes);
                 }
-                if(ProcessingModeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())){
+                if (ProcessingModeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     ProcessingModeAwareThymeleafTemplateUtility processingModeUtility = (ProcessingModeAwareThymeleafTemplateUtility) utility;
                     processingModeUtility.setProcessingMode(processingMode);
+                }
+                if (RootSiteNodeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
+                    RootSiteNodeAwareThymeleafTemplateUtility rootNodeUtility = (RootSiteNodeAwareThymeleafTemplateUtility) utility;
+                    rootNodeUtility.setRootSiteNode(resolveRoot());
                 }
 
                 if (logger.isDebugEnabled())
@@ -140,6 +147,19 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                 argo.addCustomUtility(utilityName, utility);
             }
         }
+    }
+
+    private SiteNodeContainerInfo resolveRoot() {
+        SiteNodeContainerInfo root = pageInfo.getParent();
+        if (root == null) {
+            return (SiteNodeContainerInfo) pageInfo;
+        }
+
+        while (root.getParent() != null) {
+            root = root.getParent();
+        }
+
+        return root;
     }
 
     public void setThymeleafInternalTemplateEngine(org.thymeleaf.TemplateEngine thymeleafInternalTemplateEngine) {

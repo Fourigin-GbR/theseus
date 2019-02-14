@@ -182,7 +182,7 @@ public class DashboardController {
         @RequestParam String customerId,
         @RequestParam String entryId,
         @RequestParam ProcessingState processingState,
-        @RequestParam String comment
+        @RequestParam(required = false) String comment
     ) {
         Objects.requireNonNull(customerId, "customerId must not bei null!");
         Objects.requireNonNull(entryId, "entryId must not bei null!");

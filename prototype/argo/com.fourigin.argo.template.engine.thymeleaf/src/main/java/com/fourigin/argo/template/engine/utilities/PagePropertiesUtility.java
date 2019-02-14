@@ -1,16 +1,26 @@
 package com.fourigin.argo.template.engine.utilities;
 
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.utilities.core.PropertiesReplacement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTemplateUtility, ProcessingModeAwareThymeleafTemplateUtility, CustomerAwareThymeleafTemplateUtility {
+public class PagePropertiesUtility implements
+    SiteAttributesAwareThymeleafTemplateUtility,
+    ProcessingModeAwareThymeleafTemplateUtility,
+    CustomerAwareThymeleafTemplateUtility,
+    RootSiteNodeAwareThymeleafTemplateUtility {
 
     private String customer;
 
@@ -21,6 +31,8 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
     private Set<String> serviceNames;
 
     private ProcessingMode processingMode;
+
+    private SiteNodeContainerInfo rootSiteNodeContainer;
 
     private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
 
@@ -45,7 +57,10 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         if (logger.isDebugEnabled())
             logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
 
-        InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(externalProcessingMode));
+        InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(
+            ProcessingMode.valueOf(externalProcessingMode)
+        );
+
         String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
         if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
 
@@ -82,6 +97,57 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
         String pattern = baseUrl + linkPath;
 
         return propertiesReplacement.process(pattern, "base", externalCompilerBase);
+    }
+
+    public List<NodeDescriptor> getAncestors(String nodePath) {
+        return getAncestors(nodePath, compilerBase);
+    }
+
+    public List<NodeDescriptor> getAncestors(String nodePath, String externalCompilerBase) {
+        List<NodeDescriptor> result = new ArrayList<>();
+
+        SiteNodeContainerInfo currentNodeInfo = rootSiteNodeContainer;
+
+        if (nodePath.startsWith("/")) {
+            nodePath = nodePath.substring(1);
+        }
+        if (nodePath.endsWith("/")) {
+            nodePath = nodePath.substring(0, nodePath.length() - 1);
+        }
+
+        List<String> foundNodeNames = new ArrayList<>();
+        String[] pathSteps = nodePath.split("/");
+        for (int i = 0; i < pathSteps.length - 1; i++) {
+            String pathStep = pathSteps[i];
+            List<SiteNodeInfo> nodes = currentNodeInfo.getNodes();
+            SiteNodeInfo matchingNode = null;
+            for (SiteNodeInfo node : nodes) {
+                String name = node.getName();
+                foundNodeNames.add(name);
+                if (pathStep.equals(name)) {
+                    matchingNode = node;
+                    break;
+                }
+            }
+
+            if (matchingNode == null) {
+                Collections.sort(foundNodeNames);
+                throw new IllegalArgumentException("Unable to fine node for name '" + pathStep + "'! Candidates are: " + foundNodeNames);
+            }
+
+            NodeDescriptor nodeDescriptor = new NodeDescriptor();
+            nodeDescriptor.setName(SiteNodes.resolveContent(externalCompilerBase, matchingNode.getDisplayName()));
+            nodeDescriptor.setPath(SiteNodes.getDefaultTarget(matchingNode));
+            result.add(nodeDescriptor);
+
+            if (!SiteNodeContainerInfo.class.isAssignableFrom(matchingNode.getClass())) {
+                throw new IllegalArgumentException("Unable to resolve ancestors! Expecting a directory but found a page for name '" + matchingNode.getName() + "'!");
+            }
+
+            currentNodeInfo = (SiteNodeContainerInfo) matchingNode;
+        }
+
+        return result;
     }
 
     private String getNodePathAttributeValue(String base, String mode) {
@@ -169,5 +235,10 @@ public class PagePropertiesUtility implements SiteAttributesAwareThymeleafTempla
 
     public void setInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies) {
         this.internalLinkResolutionStrategies = internalLinkResolutionStrategies;
+    }
+
+    @Override
+    public void setRootSiteNode(SiteNodeContainerInfo root) {
+        this.rootSiteNodeContainer = root;
     }
 }

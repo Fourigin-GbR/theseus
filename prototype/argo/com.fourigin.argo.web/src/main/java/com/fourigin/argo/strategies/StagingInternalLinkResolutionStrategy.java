@@ -1,6 +1,8 @@
 package com.fourigin.argo.strategies;
 
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodes;
 import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
@@ -18,7 +20,9 @@ public class StagingInternalLinkResolutionStrategy implements InternalLinkResolu
     @Override
     public String resolveLink(String customer, String base, String nodePath) {
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
-        PageInfo info = contentRepository.resolveInfo(PageInfo.class, nodePath);
+        SiteNodeInfo nodeInfo = contentRepository.resolveInfo(SiteNodeInfo.class, nodePath);
+        String targetPath = SiteNodes.getDefaultTarget(nodeInfo);
+        PageInfo info = contentRepository.resolveInfo(PageInfo.class, targetPath);
 
         String folder = filenameStrategy.getFolder(base, info);
         if (folder.endsWith("/")) {

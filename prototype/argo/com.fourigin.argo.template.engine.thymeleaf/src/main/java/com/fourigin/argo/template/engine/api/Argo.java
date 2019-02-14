@@ -2,6 +2,7 @@ package com.fourigin.argo.template.engine.api;
 
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentElementUtility;
@@ -142,6 +143,7 @@ public class Argo {
         private Map<String, String> siteAttributes;
         private Map<String, ThymeleafTemplateUtility> customUtilities = new HashMap<>();
         private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
+        private SiteNodeContainerInfo root;
 
         public Builder withCustomer(String customer){
             this.customer = customer;
@@ -188,6 +190,11 @@ public class Argo {
             return this;
         }
 
+        public Builder withRootNodeInfo(SiteNodeContainerInfo root){
+            this.root = root;
+            return this;
+        }
+
         public Argo build(){
             Argo argo = new Argo();
             argo.setCustomer(customer);
@@ -209,6 +216,7 @@ public class Argo {
             pagePropertiesUtility.setSiteAttributes(siteAttributes);
             pagePropertiesUtility.setProcessingMode(processingMode);
             pagePropertiesUtility.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies);
+            pagePropertiesUtility.setRootSiteNode(root);
             argo.setPagePropertiesUtility(pagePropertiesUtility);
 
             FormatterUtility formatterUtility = new FormatterUtility();

@@ -89,7 +89,14 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         }
 
         if (logger.isDebugEnabled()) logger.debug("Returning localized name of page '{}'.", page);
-        return SiteNodes.resolveContent(base, page.getLocalizedName());
+        String fileName = SiteNodes.resolveContent(base, page.getLocalizedName());
+        if(fileName == null){
+            String id = page.getPath() + ">" + page.getName();
+            if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of '{}', using node name as fallback!", id);
+            fileName = page.getName();
+        }
+
+        return fileName;
     }
 
     public String getFolder(String base, SiteNodeInfo info) {
