@@ -89,9 +89,14 @@
         <div class="wrapper">
             <div class="breadcrumbPath">
                 <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
-                <ul class="folderList">
+
+                <ul th:with="ancestors = ${p.getAncestors(argo.path)}" class="folderList">
                     <li th:with="ref = ${c.getElement('@top-level-navigation:/home')}">
                         <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/home')}" href="index.html">Start</a>
+                    </li>
+
+                    <li th:each="ancestor: ${ancestors}">
+                        <a th:text="${ancestor.name}" th:href="${p.getPath(ancestor.path)}" href="index.html">Start</a>
                     </li>
                 </ul>
             </div>

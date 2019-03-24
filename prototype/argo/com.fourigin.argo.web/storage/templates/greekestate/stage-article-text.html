@@ -35,15 +35,6 @@
 
     </nav>
 
-    <article th:with="ancestors = ${p.getAncestors(argo.path)}">
-        <ul>
-            <li th:each="ancestor: ${ancestors}">
-                <span th:text="${'Name: ' + ancestor.name}"></span>&nbsp;&nbsp;&nbsp;
-                <span th:text="${'Path: ' + ancestor.path}"></span>
-            </li>
-        </ul>
-    </article>
-
     <article th:replace="greekestate/sub-templates/slider :: article-product-slider-small(${c.getElement('/stage').elements})">
 
     </article>
