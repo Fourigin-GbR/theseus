@@ -17,6 +17,12 @@
     line-height: 1.5em;
     letter-spacing: 0.3px;
     color: #444;
+    box-sizing: border-box;
+}
+
+.tabbed h2 {
+    padding: 0;
+    margin: 10px 0 30px 0;
 }
 
 #tab1:checked ~ figure .tab1,
@@ -28,12 +34,13 @@ nav label {
     padding: 15px 15px;
     border-top: 1px solid silver;
     border-right: 1px solid silver;
-    background: hsl(210,50%,50%);
-    color: #eee;
+    background: #ddd;
+    color: #747474;
+    cursor: pointer;
 }
 
 nav label:nth-child(1) { border-left: 1px solid silver; }
-nav label:hover { background: hsl(210,50%,40%); }
+nav label:hover { background: #ccc; }
 nav label:active { background: #ffffff; }
 
 #tab1:checked ~ nav label[for="tab1"],

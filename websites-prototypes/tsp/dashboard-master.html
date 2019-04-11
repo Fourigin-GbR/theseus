@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TSP Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="tabbed">
+    <input checked="checked" id="tab1" type="radio" name="tabs" />
+    <input id="tab2" type="radio" name="tabs" />
+    <input id="tab3" type="radio" name="tabs" />
+
+    <nav>
+        <label for="tab1">Tab 1</label>
+        <label for="tab2">Tab 2</label>
+        <label for="tab3">Noch was?</label>
+    </nav>
+
+    <figure>
+        <div class="tab1"> Liste 1 </div>
+        <div class="tab2">
+
+        <ul class="sectionList">
+            <li>
+                <header>Sektion 1</header>
+                <section>
+                    <ul>
+                        <li>
+                            Inhalt eins
+                        </li>
+                        <li>
+                            Inhalt zwei
+                        </li>
+                    </ul>
+                </section>
+            </li>
+            <li>
+                <header>Sektion 2</header>
+                <section>
+                    <ul>
+                        <li>
+                            Inhalt eins
+                        </li>
+                        <li>
+                            Inhalt zwei
+                        </li>
+                        <li>
+                            Inhalt drei
+                        </li>
+                        <li>
+                            Inhalt vier
+                        </li>
+                    </ul>
+                </section>
+            </li>
+        </ul>
+
+        </div>
+        <div class="tab3"> Noch was? </div>
+    </figure>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery(".sectionList header").on("click", function() {
+            jQuery(this).closest("li").find("section:first").toggle();
+        })
+    });
+</script>
+
+</body>
+</html>
