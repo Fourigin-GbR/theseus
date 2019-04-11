@@ -93,7 +93,11 @@ table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.o
     background-color: #00b393 !important;
     color: #fff !important;
 }
-
+table.dataTable tr.group td {
+    border-bottom: 2px solid #aaa;
+    padding-top: 40px;
+    font-weight: bold;
+}
 .ui-button  {
     padding: .05em .5em;
 }

@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Formulare - Prototypen</title>
     <link rel="stylesheet" href="assets/styles/dashboard.css"/>
+    <link rel="stylesheet" href="assets/styles/dashboard-tabs.css"/>
     <link rel="stylesheet" href="assets/webfonts/line-awesome/css/line-awesome-font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
 </head>
@@ -13,57 +14,87 @@
 <div id="languageControls">
     <input type="button" id="language-en" value="en"/>&nbsp;<input type="button" id="language-de" value="de"/>
 </div>
-<div class="split left">
-    <div>
-        <h2>Kunden</h2>
-        <table id="users" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>Kd-Nr.</th>
-                <th>Vorname</th>
-                <th>Nachname</th>
-                <th>Email</th>
-            </tr>
-            </thead>
-        </table>
-        <div id="user-controls">
-            <input type="button" id="add-user-button" name="add-user" value="Hinzufügen"/>
-            <input type="button" id="delete-user-button" name="delete-user" value="Entfernen"/>
-        </div>
-        <div id="request-controls">
-            <form action="form-kfz-anmeldung.html" target="_blank">
-                einen neuen Auftrag erstellen:
-                <select name="request-type">
-                    <option selected="selected">... bitte wählen ...</option>
-                    <option name="register-vehicle">KFZ-Anmeldung</option>
-                </select>
-                <input type="hidden" name="customer.id" id="selectedClient"/>
-                <input type="submit" name="start-request" value="Starten"/>
-            </form>
-        </div>
-    </div>
-</div>
 
-<div class="split right">
-    <div>
-        <h2>Aufträge</h2>
-        <table id="requests" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>Typ</th>
-                <th>Kd-Nr.</th>
-                <th>Datum</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-        </table>
-        <div id="request-details">
-            <ul>
-            </ul>
+
+<div class="tabbed">
+    <input checked="checked" id="tab1" type="radio" name="tabs" />
+    <input id="tab2" type="radio" name="tabs" />
+    <input id="tab3" type="radio" name="tabs" />
+
+    <nav>
+        <label for="tab1">Kunden</label>
+        <label for="tab2">Aufträge</label>
+    </nav>
+
+    <figure>
+        <div class="tab1">
+
+
+                <div>
+                    <h2>Kunden</h2>
+                    <table id="users" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Kd-Nr.</th>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div id="user-controls">
+                        <input type="button" id="add-user-button" name="add-user" value="Hinzufügen"/>
+                        <input type="button" id="delete-user-button" name="delete-user" value="Entfernen"/>
+                    </div>
+                    <div id="request-controls">
+                        <form action="form-kfz-anmeldung.html" target="_blank">
+                            einen neuen Auftrag erstellen:
+                            <select name="request-type">
+                                <option selected="selected">... bitte wählen ...</option>
+                                <option name="register-vehicle">KFZ-Anmeldung</option>
+                            </select>
+                            <input type="hidden" name="customer.id" id="selectedClient"/>
+                            <input type="submit" name="start-request" value="Starten"/>
+                        </form>
+                    </div>
+                </div>
+
+
         </div>
-        <div id="attachments">
+        <div class="tab2">
+
+
+                <div>
+                    <h2>Aufträge</h2>
+
+                    <div class="tableContainer">
+
+                    </div>
+
+                    <table id="requests" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Typ</th>
+                            <th>Kd-Nr.</th>
+                            <th>Datum</th>
+                            <th>Datum Sortierung</th>
+                            <th>Datum Gruppierung</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div id="request-details">
+                        <ul>
+                        </ul>
+                    </div>
+                    <div id="attachments">
+                    </div>
+                </div>
+
+
         </div>
-    </div>
+
+    </figure>
 </div>
 
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
@@ -74,6 +105,12 @@
         init();
     });
 </script>
-
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery(".sectionList header").on("click", function() {
+            jQuery(this).closest("li").find("section:first").toggle();
+        })
+    });
+</script>
 </body>
 </html>

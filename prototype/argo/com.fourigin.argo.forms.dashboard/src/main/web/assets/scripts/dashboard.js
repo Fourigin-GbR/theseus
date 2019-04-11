@@ -95,6 +95,28 @@ function internalInitRequestsTable(data) {
         "rowId": function (data) {
             return data.id;
         },
+        "order": [[ 3, 'desc' ]],
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+
+            api.column(4, {page:'current'} ).data().each( function ( group, i ) {
+                var parseTimestampToDate = function (group) {
+                    var date = new Date(group);
+                     return formatDateForGrouping(date);
+                };
+                var parsedDate = parseTimestampToDate(group);
+
+                if ( last !== parsedDate ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="4">'+parsedDate+'</td></tr>'
+                    );
+
+                    last = parsedDate;
+                }
+            } );
+        },
         "columns": [
             {
                 "data": "formDefinition",
@@ -118,6 +140,22 @@ function internalInitRequestsTable(data) {
                     var date = new Date(data);
                     return formatDate(date);
                 }
+            },
+            {
+                "data": "creationTimestamp",
+                "render": function (data) {
+                    var date = new Date(data);
+                    return formatDateForSorting(date);
+                },
+                "visible": false
+            },
+            {
+                "data": "creationTimestamp",
+                "render": function (data) {
+                    var date = new Date(data);
+                    return formatDateForGrouping(date);
+                },
+                "visible": false
             },
             {
                 "data": "state"
@@ -204,14 +242,16 @@ function initRequestsTable() {
 
             var requestDetails = $('#request-details');
 
+            // Events for show selected row status and showing details on: row click.
             table.find('tbody').off().on('click', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
+                var jThis = $(this);
+                if (jThis.hasClass('selected')) {
+                    jThis.removeClass('selected');
                     requestDetails.hide();
                 }
                 else {
                     table.find('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
+                    jThis.addClass('selected');
                     var rowId = requestsDataTable.row(this).id();
                     var content = $('#attachment-' + rowId).clone();
                     requestDetails.html(content);
@@ -222,6 +262,7 @@ function initRequestsTable() {
             var attachments = $('#attachments');
             attachments.empty();
 
+            // Generate processing state information.
             for (pos in data) {
                 var req = data[pos];
                 var processingState = req.processingState;
@@ -358,6 +399,27 @@ function formatDate(date) {
     var minutes = date.getMinutes();
     var mm = minutes < 10 ? "0" + minutes : minutes;
     return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+}
+
+function formatDateForSorting(date) {
+    var month = date.getMonth() + 1;
+    var y = date.getFullYear();
+    var m = month < 10 ? "0" + month : "" + month;
+    var day = date.getDate();
+    var d = day < 10 ? "0" + day : day;
+    var hh = date.getHours();
+    var minutes = date.getMinutes();
+    var mm = minutes < 10 ? "0" + minutes : minutes;
+    return y + "-" + m + "-" + d + " " + hh + ":" + mm;
+}
+
+function formatDateForGrouping(date) {
+    var month = date.getMonth() + 1;
+    var y = date.getFullYear();
+    var m = month < 10 ? "0" + month : "" + month;
+    var day = date.getDate();
+    var d = day < 10 ? "0" + day : day;
+    return y + "-" + m + "-" + d;
 }
 
 var processAjaxForms = function() {
