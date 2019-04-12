@@ -138,7 +138,7 @@ function internalInitRequestsTable(data) {
                 "data": "creationTimestamp",
                 "render": function (data) {
                     var date = new Date(data);
-                    return formatDate(date);
+                    return formatDateForGroupedView(date);
                 }
             },
             {
@@ -243,7 +243,7 @@ function initRequestsTable() {
             var requestDetails = $('#request-details');
 
             // Events for show selected row status and showing details on: row click.
-            table.find('tbody').off().on('click', 'tr', function () {
+            table.find('tbody').off().on('click', 'tr:not(.group)', function () {
                 var jThis = $(this);
                 if (jThis.hasClass('selected')) {
                     jThis.removeClass('selected');
@@ -399,6 +399,13 @@ function formatDate(date) {
     var minutes = date.getMinutes();
     var mm = minutes < 10 ? "0" + minutes : minutes;
     return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
+}
+
+function formatDateForGroupedView(date) {
+    var hh = date.getHours();
+    var minutes = date.getMinutes();
+    var mm = minutes < 10 ? "0" + minutes : minutes;
+    return hh + ":" + mm;
 }
 
 function formatDateForSorting(date) {
