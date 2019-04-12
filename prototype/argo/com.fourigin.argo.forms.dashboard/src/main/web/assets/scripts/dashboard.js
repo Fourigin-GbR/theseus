@@ -24,6 +24,10 @@ function init() {
     });
 
     languageDE.prop('disabled', true);
+
+    jQuery('#dataTableFilter').on('change',
+        function () { requestsDataTable.search( this.value ).draw();
+        });
 }
 
 function loadCustomers() {
@@ -109,8 +113,10 @@ function internalInitRequestsTable(data) {
                 var parsedDate = parseTimestampToDate(group);
 
                 if ( last !== parsedDate ) {
+                    var date = new Date(group);
+                    var viewDateFormatted = window.formatDateForGroupingView(date);
                     $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="4">'+parsedDate+'</td></tr>'
+                        '<tr class="group"><td colspan="4">' + viewDateFormatted + '</td></tr>'
                     );
 
                     last = parsedDate;
@@ -264,6 +270,11 @@ function initRequestsTable() {
                 }
             });
 
+            table.find('tbody').on('click', 'tr.group', function () {
+                var jThis = $(this);
+                jThis.nextUntil('tr.group').toggle();
+            });
+
             var attachments = $('#attachments');
             attachments.empty();
 
@@ -380,6 +391,8 @@ function initRequestsTable() {
     $('#attachments').hide();
 
     return dataTable;
+
+
 }
 
 function approveEntry(entryId){
@@ -432,6 +445,15 @@ function formatDateForGrouping(date) {
     var day = date.getDate();
     var d = day < 10 ? "0" + day : day;
     return y + "-" + m + "-" + d;
+}
+
+function formatDateForGroupingView(date) {
+    var month = date.getMonth() + 1;
+    var y = date.getFullYear();
+    var m = month < 10 ? "0" + month : "" + month;
+    var day = date.getDate();
+    var d = day < 10 ? "0" + day : day;
+    return d + "." + m + "." + y;
 }
 
 var processAjaxForms = function() {

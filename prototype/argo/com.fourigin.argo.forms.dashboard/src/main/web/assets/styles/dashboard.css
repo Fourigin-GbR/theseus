@@ -91,6 +91,10 @@ table.display {
     font-size: 24px;
 }
 
+.dataTableFilter {
+    margin: 20px 0;
+}
+
 #request-details .close {
     font-size: 40px;
     color: #00b393;
@@ -140,7 +144,6 @@ table.dataTable tr.group td {
     border-bottom: 2px solid #aaa;
     padding-top: 40px;
     font-weight: bold;
-    cursor: auto;
 }
 .ui-button  {
     padding: .05em .5em;
