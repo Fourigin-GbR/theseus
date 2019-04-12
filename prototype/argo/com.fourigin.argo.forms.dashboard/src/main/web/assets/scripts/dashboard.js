@@ -272,7 +272,15 @@ function initRequestsTable() {
 
             table.find('tbody').on('click', 'tr.group', function () {
                 var jThis = $(this);
-                jThis.nextUntil('tr.group').toggle();
+                if(jThis.hasClass('closed')) {
+                    jThis.removeClass('closed');
+                    jThis.nextUntil('tr.group').show();
+                }
+                else {
+                    jThis.addClass('closed');
+                    jThis.nextUntil('tr.group').hide();
+                }
+
             });
 
             var attachments = $('#attachments');

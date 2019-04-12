@@ -142,9 +142,24 @@ table.dataTable tbody tr td:first-of-type {
 
 table.dataTable tr.group td {
     border-bottom: 2px solid #aaa;
-    padding-top: 40px;
+    padding-top: 10px;
     font-weight: bold;
+    background-color: #ccc;
 }
+
+table.dataTable tr.group td:first-of-type::before {
+    content: "-";
+    display: inline-block;
+    width: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00b393;
+}
+
+table.dataTable tr.group.closed td:first-of-type::before {
+    content: "+";
+}
+
 .ui-button  {
     padding: .05em .5em;
 }
