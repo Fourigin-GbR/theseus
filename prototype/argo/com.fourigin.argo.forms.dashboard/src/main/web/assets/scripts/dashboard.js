@@ -242,6 +242,11 @@ function initRequestsTable() {
 
             var requestDetails = $('#request-details');
 
+            requestDetails.on('click', '.close', function() {
+                requestDetails.hide();
+                table.find('tbody tr.selected').removeClass('selected');
+            });
+
             // Events for show selected row status and showing details on: row click.
             table.find('tbody').off().on('click', 'tr:not(.group)', function () {
                 var jThis = $(this);
@@ -254,7 +259,7 @@ function initRequestsTable() {
                     jThis.addClass('selected');
                     var rowId = requestsDataTable.row(this).id();
                     var content = $('#attachment-' + rowId).clone();
-                    requestDetails.html(content);
+                    requestDetails.find(".requestDetails__content").html(content);
                     requestDetails.show();
                 }
             });
@@ -328,7 +333,7 @@ function initRequestsTable() {
                         var faType = resolveFAType(attachment.mimeType);
 
                         var span = $('<span></span>')
-                            .prop('class', 'fa fa-lg ' + faType)
+                            .prop('class', 'fileIcon fa fa-lg ' + faType)
                             .append('&nbsp;');
 
                         var a = $('<a></a>')
