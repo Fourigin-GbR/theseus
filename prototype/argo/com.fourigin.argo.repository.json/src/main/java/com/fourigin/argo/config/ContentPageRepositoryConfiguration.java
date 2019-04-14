@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver;
 import com.fourigin.argo.repository.FileBasedRuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.HiddenDirectoryContentRepositoryFactory;
@@ -18,17 +19,22 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ContentPageRepositoryConfiguration {
-    
+
+    private ProjectSpecificPathResolver pathResolver;
+
+    public ContentPageRepositoryConfiguration(ProjectSpecificPathResolver pathResolver) {
+        this.pathResolver = pathResolver;
+    }
+
     @Bean
     public HiddenDirectoryContentRepositoryFactory contentRepositoryFactory(
         @Value("${content-page-repository.root-path}") String basePath,
-        @Value("${content-page-repository.key-name}") String keyName,
         @Autowired PageInfoTraversingStrategy defaultTraversingStrategy
     ) {
         HiddenDirectoryContentRepositoryFactory factory = new HiddenDirectoryContentRepositoryFactory();
 
         factory.setBasePath(basePath);
-        factory.setKeyName(keyName);
+        factory.setPathResolver(pathResolver);
         factory.setDefaultTraversingStrategy(defaultTraversingStrategy);
         factory.setObjectMapper(objectMapper());
 
@@ -66,7 +72,7 @@ public class ContentPageRepositoryConfiguration {
     public TemplateResolver templateResolver(
         @Value("${template.engine.thymeleaf.base}") String templateBasePath
     ) {
-        return new DirectoryContentBasedTemplateResolver(templateBasePath, objectMapper());
+        return new DirectoryContentBasedTemplateResolver(templateBasePath, objectMapper(), pathResolver);
     }
 
     @Bean

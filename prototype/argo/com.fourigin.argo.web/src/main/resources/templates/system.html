@@ -22,8 +22,8 @@
 <header>
     <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
 </header>
-<div id="system" class="systemContent split left" th:data-base="${system.base}" th:data-customer="${system.customer}">
-    <div class="customer" th:text="${system.customer}">IBM</div>
+<div id="system" class="systemContent split left" th:data-l="${system.language}" th:data-project="${system.project}">
+    <div class="project" th:text="${system.project}">IBM</div>
     <div id="jstree"></div>
 </div>
 <div id="details" class="split right">
@@ -67,28 +67,28 @@
     jQuery(document).ready(function () {
         $('#actions input').hide();
         $('#action_stage').click(function () {
-            var base = $('#system').attr('data-base');
+            var language = $('#system').attr('data-language');
             var path = $('#path').text();
-            changeState(base, path, 'STAGED');
+            changeState(language, path, 'STAGED');
         });
         $('#action_unstage').click(function () {
-            var base = $('#system').attr('data-base');
+            var language = $('#system').attr('data-language');
             var path = $('#path').text();
-            changeState(base, path, 'DRAFT');
+            changeState(language, path, 'DRAFT');
         });
         $('#action_go_live').click(function () {
-            var base = $('#system').attr('data-base');
+            var language = $('#system').attr('data-language');
             var path = $('#path').text();
-            changeState(base, path, 'LIVE');
+            changeState(language, path, 'LIVE');
         });
         $('#action_revoke').click(function () {
-            var base = $('#system').attr('data-base');
+            var language = $('#system').attr('data-language');
             var path = $('#path').text();
-            changeState(base, path, 'STAGED');
+            changeState(language, path, 'STAGED');
         });
 
-        var base = $('#system').attr('data-base');
-        $.when(loadTree(base)).done(
+        var language = $('#system').attr('data-language');
+        $.when(loadTree(language)).done(
             function (data) {
                 $('#jstree')
                     .on('changed.jstree', function (e, data) {
@@ -106,15 +106,15 @@
         setInterval(updateInfo, 5000);
     });
 
-    function loadTree(base) {
+    function loadTree(language) {
         return $.ajax({
-            url: "/cms/system/tree/?base=" + base
+            url: "/cms/system/tree/?l=" + language
         });
     }
 
-    function loadTreeNode(base, path) {
+    function loadTreeNode(language, path) {
         return $.ajax({
-            url: "/cms/system/treeNode/?base=" + base + "&path=" + path
+            url: "/cms/system/treeNode/?l=" + language + "&path=" + path
         });
     }
 
@@ -122,7 +122,7 @@
         console.log('Updating the status ...');
 
         var systemDiv = $('#system');
-        var base = systemDiv.attr('data-base');
+        var language = systemDiv.attr('data-language');
         var path = systemDiv.attr('data-path');
 
         if (!path) {
@@ -132,7 +132,7 @@
         $('#path').html(path);
 
         $.ajax({
-            url: "/cms/system/info/?base=" + base + "&path=" + path,
+            url: "/cms/system/info/?l=" + language + "&path=" + path,
             success: function (data) {
                 console.log(data);
 
@@ -285,10 +285,10 @@
         }
     }
 
-    function changeState(base, path, state) {
+    function changeState(language, path, state) {
         console.log('Changing state to ' + state);
         $.ajax({
-            url: "/cms/system/updateState/?base=" + base + "&path=" + path + "&state=" + state,
+            url: "/cms/system/updateState/?l=" + language + "&path=" + path + "&state=" + state,
             success: function (data) {
                 if (!data.success) {
                     console.log('Error occurred: ' + data.message);

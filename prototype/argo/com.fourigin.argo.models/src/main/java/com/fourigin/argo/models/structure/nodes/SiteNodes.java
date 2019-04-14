@@ -8,12 +8,12 @@ public final class SiteNodes {
     private SiteNodes() {
     }
 
-    public static String resolveContent(String base, Map<String, String> data) {
+    public static String resolveContent(String locale, Map<String, String> data) {
         if (data == null) {
             return null;
         }
 
-        String result = data.get(base.toLowerCase(Locale.US));
+        String result = data.get(locale.toLowerCase(Locale.US));
         if (result == null) {
             result = data.get("");
         }

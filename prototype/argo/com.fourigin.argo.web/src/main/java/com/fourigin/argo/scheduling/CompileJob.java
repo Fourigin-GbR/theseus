@@ -3,7 +3,7 @@ package com.fourigin.argo.scheduling;
 
 import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
-import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.forms.config.ProjectSpecificConfiguration;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
@@ -33,45 +33,44 @@ import static com.fourigin.argo.template.engine.ProcessingMode.STAGE;
 public class CompileJob implements Job {
     private final Logger logger = LoggerFactory.getLogger(CompileJob.class);
 
-    @Autowired
     private PageCompilerFactory pageCompilerFactory;
 
-    @Autowired
     private ContentRepositoryFactory contentRepositoryFactory;
 
-    @Autowired
-    @Qualifier("STAGE")
     private CompilerOutputStrategy storageCompilerOutputStrategy;
 
-    @Autowired
-    private CustomerSpecificConfiguration customerSpecificConfiguration;
+    private ProjectSpecificConfiguration projectSpecificConfiguration;
 
     @Override
     public void execute(JobExecutionContext context) {
         if (logger.isDebugEnabled()) logger.debug("Executing job ...");
 
-        Map<String, Set<String>> allBases = customerSpecificConfiguration.getBases();
+        Map<String, Set<String>> allBases = projectSpecificConfiguration.getBases();
+        if (allBases == null) {
+            if (logger.isWarnEnabled()) logger.warn("No base project configurations found at all!");
+            return;
+        }
 
         long processingTimestamp = System.currentTimeMillis();
 
         int countCompiled = 0;
         int countSwitched = 0;
         for (Map.Entry<String, Set<String>> entry : allBases.entrySet()) {
-            String customer = entry.getKey();
-            Set<String> bases = entry.getValue();
+            String project = entry.getKey();
+            Set<String> languages = entry.getValue();
 
             try {
-                MDC.put("customer", customer);
+                MDC.put("project", project);
 
-                if (logger.isDebugEnabled()) logger.debug("Processing customer '{}'", customer);
+                if (logger.isDebugEnabled()) logger.debug("Processing project '{}'", project);
 
-                for (String base : bases) {
-                    if (logger.isDebugEnabled()) logger.debug("Processing base '{}'", base);
+                for (String language : languages) {
+                    if (logger.isDebugEnabled()) logger.debug("Processing language '{}'", language);
 
-                    MDC.put("base", base);
+                    MDC.put("language", language);
 
-                    PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
-                    ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+                    PageCompiler pageCompiler = pageCompilerFactory.getInstance(project, language);
+                    ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
 
                     Collection<SiteNodeInfo> infoNodes = contentRepository.resolveNodeInfos("/", new DefaultPageInfoTraversingStrategy());
                     for (SiteNodeInfo infoNode : infoNodes) {
@@ -109,8 +108,8 @@ public class CompileJob implements Job {
                     }
                 }
             } finally {
-                MDC.remove("customer");
-                MDC.remove("base");
+                MDC.remove("project");
+                MDC.remove("language");
                 MDC.remove("path");
             }
         }
@@ -216,5 +215,26 @@ public class CompileJob implements Job {
         pageState.setTimestampLiveSwitch(switchTimestamp);
 
         return true;
+    }
+
+    @Autowired
+    public void setPageCompilerFactory(PageCompilerFactory pageCompilerFactory) {
+        this.pageCompilerFactory = pageCompilerFactory;
+    }
+
+    @Autowired
+    public void setContentRepositoryFactory(ContentRepositoryFactory contentRepositoryFactory) {
+        this.contentRepositoryFactory = contentRepositoryFactory;
+    }
+
+    @Autowired
+    @Qualifier("STAGE")
+    public void setStorageCompilerOutputStrategy(CompilerOutputStrategy storageCompilerOutputStrategy) {
+        this.storageCompilerOutputStrategy = storageCompilerOutputStrategy;
+    }
+
+    @Autowired
+    public void setProjectSpecificConfiguration(ProjectSpecificConfiguration projectSpecificConfiguration) {
+        this.projectSpecificConfiguration = projectSpecificConfiguration;
     }
 }

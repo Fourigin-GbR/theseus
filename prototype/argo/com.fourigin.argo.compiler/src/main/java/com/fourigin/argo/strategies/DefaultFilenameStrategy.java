@@ -21,12 +21,12 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         this.replacingDefaultTargetWithIndex = replacingDefaultTargetWithIndex;
     }
 
-    public String getFilename(String base, SiteNodeInfo info) {
+    public String getFilename(String language, SiteNodeInfo info) {
         if (logger.isDebugEnabled()) logger.debug("Resolving filename of {}", info);
 
         if (info instanceof PageInfo) {
             PageInfo page = (PageInfo) info;
-            return resolvePageFilename(base, page);
+            return resolvePageFilename(language, page);
         }
 
         // TODO: implement reference nodes
@@ -35,13 +35,13 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
 //        }
 
         if (info instanceof DirectoryInfo) {
-            return SiteNodes.resolveContent(base, info.getLocalizedName());
+            return SiteNodes.resolveContent(language, info.getLocalizedName());
         }
 
         return null;
     }
 
-    private String resolvePageFilename(String base, PageInfo page) {
+    private String resolvePageFilename(String language, PageInfo page) {
 //      virtual directory logic
 //        List<String> stack = new ArrayList<>();
 //
@@ -89,7 +89,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         }
 
         if (logger.isDebugEnabled()) logger.debug("Returning localized name of page '{}'.", page);
-        String fileName = SiteNodes.resolveContent(base, page.getLocalizedName());
+        String fileName = SiteNodes.resolveContent(language, page.getLocalizedName());
         if(fileName == null){
             String id = page.getPath() + ">" + page.getName();
             if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of '{}', using node name as fallback!", id);
@@ -99,15 +99,15 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         return fileName;
     }
 
-    public String getFolder(String base, SiteNodeInfo info) {
+    public String getFolder(String language, SiteNodeInfo info) {
         if (logger.isDebugEnabled()) logger.debug("Resolving folder of {}", info);
 
         if (info instanceof PageInfo) {
-            return resolvePageFolder(base, (PageInfo) info);
+            return resolvePageFolder(language, (PageInfo) info);
         }
 
         if (info instanceof DirectoryInfo) {
-            return resolveDirectoryFolder(base, (DirectoryInfo) info);
+            return resolveDirectoryFolder(language, (DirectoryInfo) info);
         }
 
         // TODO: implement reference nodes
@@ -118,7 +118,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         return null;
     }
 
-    private String getInternalFolderPath(String base, SiteNodeContainerInfo container) {
+    private String getInternalFolderPath(String language, SiteNodeContainerInfo container) {
         if (container == null) {
             // root
             return "/";
@@ -131,21 +131,21 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         }
 
         SiteNodeContainerInfo parent = container.getParent();
-        String path = SiteNodes.resolveContent(base, container.getLocalizedName());
+        String path = SiteNodes.resolveContent(language, container.getLocalizedName());
         if(path == null){
             if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of '{}', using node name as fallback!", id);
             path = container.getName();
         }
 
         if (parent == null || path == null) {
-            return getInternalFolderPath(base, parent);
+            return getInternalFolderPath(language, parent);
         }
 
-        return getInternalFolderPath(base, parent) + path + "/";
+        return getInternalFolderPath(language, parent) + path + "/";
     }
 
-    private String resolveDirectoryFolder(String base, SiteNodeContainerInfo container) {
-        String result = getInternalFolderPath(base, container.getParent());
+    private String resolveDirectoryFolder(String language, SiteNodeContainerInfo container) {
+        String result = getInternalFolderPath(language, container.getParent());
         if (logger.isDebugEnabled())
             logger.debug("folder path is '{}'.", result);
 
@@ -182,14 +182,14 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         return path;
     }
 
-    private String resolvePageFolder(String base, PageInfo page) {
+    private String resolvePageFolder(String language, PageInfo page) {
         SiteNodeContainerInfo parent = page.getParent();
 
         if (parent == null) {
             return "/";
         }
 
-        return cleanup(getInternalFolderPath(base, parent));
+        return cleanup(getInternalFolderPath(language, parent));
     }
 
 //    private String resolveSitePath(SiteNodeInfo node) {

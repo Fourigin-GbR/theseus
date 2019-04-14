@@ -6,19 +6,19 @@ import java.util.Objects;
 public class UpToDateRequest extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
     private static final long serialVersionUID = -1532883135997976347L;
 
-    private String base;
+    private String language;
     private String path;
     private String contentPath;
     private String checksum;
 
     @Override
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String locale) {
+        this.language = locale;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class UpToDateRequest extends AbstractContentElementPointer implements Se
         if (this == o) return true;
         if (!(o instanceof UpToDateRequest)) return false;
         UpToDateRequest that = (UpToDateRequest) o;
-        return Objects.equals(base, that.base) &&
+        return Objects.equals(language, that.language) &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentPath, that.contentPath) &&
             Objects.equals(checksum, that.checksum);
@@ -62,13 +62,13 @@ public class UpToDateRequest extends AbstractContentElementPointer implements Se
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, path, contentPath, checksum);
+        return Objects.hash(language, path, contentPath, checksum);
     }
 
     @Override
     public String toString() {
         return "UpToDateRequest{" +
-            "base='" + base + '\'' +
+            "language='" + language + '\'' +
             ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             ", checksum='" + checksum + '\'' +

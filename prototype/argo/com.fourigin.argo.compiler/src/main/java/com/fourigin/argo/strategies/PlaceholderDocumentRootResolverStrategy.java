@@ -16,7 +16,7 @@ public class PlaceholderDocumentRootResolverStrategy implements DocumentRootReso
     }
 
     @Override
-    public String resolveDocumentRoot(String customer, String base) {
-        return propertiesReplacement.process(basePath, "base", base, "customer", customer);
+    public String resolveDocumentRoot(String project, String language) {
+        return propertiesReplacement.process(basePath, "language", language, "project", project);
     }
 }

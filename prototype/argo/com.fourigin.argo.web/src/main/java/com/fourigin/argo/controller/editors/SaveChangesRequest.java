@@ -8,20 +8,20 @@ import java.util.Objects;
 public class SaveChangesRequest extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
     private static final long serialVersionUID = -5738688677326787541L;
 
-    private String base;
+    private String language;
     private String path;
     private String contentPath;
     private String originalChecksum;
     private ContentElement modifiedContentElement;
 
     @Override
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String locale) {
+        this.language = locale;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class SaveChangesRequest extends AbstractContentElementPointer implements
         if (this == o) return true;
         if (!(o instanceof SaveChangesRequest)) return false;
         SaveChangesRequest that = (SaveChangesRequest) o;
-        return Objects.equals(base, that.base) &&
+        return Objects.equals(language, that.language) &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentPath, that.contentPath) &&
             Objects.equals(originalChecksum, that.originalChecksum) &&
@@ -74,13 +74,13 @@ public class SaveChangesRequest extends AbstractContentElementPointer implements
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, path, contentPath, originalChecksum, modifiedContentElement);
+        return Objects.hash(language, path, contentPath, originalChecksum, modifiedContentElement);
     }
 
     @Override
     public String toString() {
         return "SaveChangesRequest{" +
-            "base='" + base + '\'' +
+            "language='" + language + '\'' +
             ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             ", originalChecksum='" + originalChecksum + '\'' +

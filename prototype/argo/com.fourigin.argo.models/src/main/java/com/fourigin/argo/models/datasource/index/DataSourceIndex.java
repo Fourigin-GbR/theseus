@@ -1,6 +1,7 @@
 package com.fourigin.argo.models.datasource.index;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -99,6 +100,7 @@ public class DataSourceIndex implements Serializable {
         ]
      */
     private List<FieldValue> fields;
+    private Map<String, List<FieldValue>> languageFields;
 
     /*
         "searchValues": {
@@ -112,7 +114,8 @@ public class DataSourceIndex implements Serializable {
             "athen": [2]
         }
      */
-    private Map<String, Set<Integer>> searchValues;
+    // language -> values
+    private Map<String, Map<String, Set<Integer>>> searchValues;
 
     public String getName() {
         return name;
@@ -154,11 +157,32 @@ public class DataSourceIndex implements Serializable {
         this.fields = fields;
     }
 
-    public Map<String, Set<Integer>> getSearchValues() {
+    public Map<String, List<FieldValue>> getLanguageFields() {
+        return languageFields;
+    }
+
+    public void setLanguageFields(Map<String, List<FieldValue>> languageFields) {
+        this.languageFields = languageFields;
+    }
+
+    public List<FieldValue> getMergedFields(String language) {
+        List<FieldValue> result = new ArrayList<>();
+
+        if (fields != null) {
+            result.addAll(fields);
+        }
+        if (languageFields.containsKey(language)) {
+            result.addAll(languageFields.get(language));
+        }
+
+        return result;
+    }
+
+    public Map<String, Map<String, Set<Integer>>> getSearchValues() {
         return searchValues;
     }
 
-    public void setSearchValues(Map<String, Set<Integer>> searchValues) {
+    public void setSearchValues(Map<String, Map<String, Set<Integer>>> searchValues) {
         this.searchValues = searchValues;
     }
 
@@ -172,12 +196,13 @@ public class DataSourceIndex implements Serializable {
             Objects.equals(targets, that.targets) &&
             Objects.equals(categories, that.categories) &&
             Objects.equals(fields, that.fields) &&
+            Objects.equals(languageFields, that.languageFields) &&
             Objects.equals(searchValues, that.searchValues);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, references, targets, categories, fields, searchValues);
+        return Objects.hash(name, references, targets, categories, fields, languageFields, searchValues);
     }
 
     @Override
@@ -188,6 +213,7 @@ public class DataSourceIndex implements Serializable {
             ", targets=" + targets +
             ", categories=" + categories +
             ", fields=" + fields +
+            ", languageFields=" + languageFields +
             ", searchValues=" + searchValues +
             '}';
     }

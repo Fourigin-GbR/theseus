@@ -1,24 +1,27 @@
 package com.fourigin.argo.strategies;
 
-import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
-
-import java.util.Map;
-import java.util.Objects;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 
 public class MappingDocumentRootResolverStrategy implements DocumentRootResolverStrategy {
-    private CustomerSpecificConfiguration customerSpecificConfiguration;
 
-    public MappingDocumentRootResolverStrategy(CustomerSpecificConfiguration customerSpecificConfiguration) {
-        this.customerSpecificConfiguration = customerSpecificConfiguration;
+    private ProjectSpecificPathResolver pathResolver;
+
+    private String documentRootBasePath;
+
+    public MappingDocumentRootResolverStrategy(ProjectSpecificPathResolver pathResolver, String documentRootBasePath) {
+        this.pathResolver = pathResolver;
+        this.documentRootBasePath = documentRootBasePath;
     }
 
     @Override
-    public String resolveDocumentRoot(String customer, String base) {
-        Map<String, Map<String, String>> docRoots = customerSpecificConfiguration.getDocumentRoots();
+    public String resolveDocumentRoot(String projectId, String language) {
+        return pathResolver.resolvePath(documentRootBasePath, projectId, language);
 
-        Map<String, String> customerRoots = docRoots.get(customer);
-        Objects.requireNonNull(customerRoots, "No customer specific document root specified for '" + customer + "'!");
-
-        return customerRoots.get(base);
+//        Map<String, Map<String, String>> docRoots = projectSpecificConfiguration.getDocumentRoots();
+//
+//        Map<String, String> projectRoots = docRoots.get(projectId);
+//        Objects.requireNonNull(projectRoots, "No project specific document root specified for '" + projectId + "'!");
+//
+//        return projectRoots.get(language);
     }
 }

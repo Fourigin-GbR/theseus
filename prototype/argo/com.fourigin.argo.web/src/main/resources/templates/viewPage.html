@@ -1,259 +1,768 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>CMS Html Editor</title>
-    <link rel="stylesheet" type="text/css" href="/assets/styles/argo.css"/>
-    <!---->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
-    <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-    <!---->
+    <meta charset="UTF-8">
+    <title>argo - cms-page-editor</title>
+    <link rel="stylesheet" href="/assets/styles/cms-page-editor.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Dosis|Economica|Roboto+Condensed|Saira+Condensed"/>
+    <link rel="stylesheet" href="/assets/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
+    <link rel="stylesheet" href="/assets/libraries/animate-css/animate.min.css"/>
+
+    <script src="/assets/libraries/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/assets/scripts/argo.js"></script>
+    <script src="/assets/libraries/tinymce/js/tinymce/tinymce.min.js"></script>
 </head>
 <body>
-    <!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
-
-    <header>
-        <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
-        <nav>
-            <ul>
-                <li>
-                    <a href="#">
-                        Übersicht
-                    </a>
-                </li>
-                <li class="selected">
-                    <a href="#">
-                        Inhalte
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Seitenstruktur
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Bilder
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Abmelden
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div class="content">
-        <div class="toolbar">
-            <img src="/assets/greekestate/assets/images/greekestate-logo.png" class="siteLogo" />
-            <div class="tools">
-                <div class="tools__item">
-                    <span>Aktuelle Seite:</span>
-                    <span class="graphicTextBox">#Seitentitel</span>
-                </div>
-                <div class="tools__item">
-                    <span><i class="far fa-folder-open"></i></span>
-                    <span class="graphicTextBox">
-                        <ul class="graphicTextBox__content graphicTextBox__content--path">
-                            <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
-                                <a href="#" th:href="@{/compile/(base=${argo.base},path=${pathToken})}" th:text="${pathToken}"></a>
-                            </li>
-                        </ul>
-                    </span>
+<div class="argoCmsPageEditorHeader">
+    <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeader__section--header">
+        <div class="argoCmsPageEditorHeader__sectionContent">
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                argo
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <a href="#" class="linkButton">
+                    <i class="linkButton__icon fas fa-angle-left"></i>
+                </a>
+                <h1 class="argoCmsPageEditorHeader__title">
+                    Edit Website Pages Content
+                </h1>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <div class="userIconMenu">
+                    <div class="userIconMenu__userImage"
+                         style="background-image: url('assets/images/karsten-konzert-2012-dbg.jpg')"></div>
+                    <div class="userIconMenu__userName">kschaefer</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="iFrameContent">
-        <!---->
-        <aside>
-            <ul class="asideTabBar">
-                <li>
-                    <span class="asideTabBar__tab" data-target-layer-id="1">Seiten-Inhalte</span>
-                    <!---->
-<!--                    <div class="layer">
-                        <h4>Inhalts-Element bearbeiten</h4>
-                        <form>
-                            <input type="text" value="..." />
-                            <button class="submit">Speichern</button>
-                        </form>
-                    </div>-->
-                </li>
-            </ul>
-        </aside>
-        <!---->
-        <div class="layerContainer">
-            <div data-layer-id="1" class="layer">
-                <h4>Seiteninhalte</h4>
-                <ul class="listItemsAsFlyoutTargets" id="contentList">
-                    <li th:each="hotspot_item : ${data_hotspots}">
-                        <div class="listItemsAsFlyoutTargets__wrapper layoutTrigger">
-                            <div class="listItemsAsFlyoutTargets__title" th:text="${hotspot_item.value.title}">Inhalt</div>
-                            <i class="listItemsAsFlyoutTargets__arrow fas fa-angle-right"></i>
+    <div class="argoCmsPageEditorHeader__section">
+        <div class="argoCmsPageEditorHeader__sectionContent siteMainActions">
+            <div class="argoCmsPageEditorHeader__sectionBlock siteCustomerBrand">
+                <div class="siteCustomerBrand__logo">
+                    <img src="assets/images/examples/tagesschau.png" alt="Tagesschau Logo"/>
+                </div>
+                <div class="siteCustomerBrand__name">
+                    Tagesschau ARD
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock sitePath">
+
+                <div class="editContentBox editContentBox--big">
+                    <div class="editContentBox__contentBoxWrapper">
+                        <div class="editContentBox__contentBox">
+                            <ul class="pathStructureLinkList">
+                                <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
+                                    <a th:href="@{/view/(l=${argo.language},p=${argo.path})}" href="#">child-1</a>
+                                </li>
+                            </ul>
                         </div>
-                        <!---->
-                        <div class="layer">
-                            <h4>Editieren</h4>
-                            <!--<span th:utext="${hotspot_item}"></span>-->
-                            <h5 th:text="${hotspot_item.value.title}">#Hotspot name</h5>
-                            <div class="layer__form">
-
-                                <form action="#" method="POST" th:with="
-                                        path = ${hotspot_item.key},
-                                        el = ${argo.contentElementUtility.getElement(path)},
-                                        elType = ${argo.contentElementUtility.getElementType(el)}">
-                                    <!---->
-                                    <input type="hidden" name="base" value="DE"/>
-                                    <input type="hidden" name="path" value="home"/>
-                                    <input type="hidden" name="contentPath" th:value="${path}" value="/"/>
-                                    <input type="hidden" name="originalChecksum" th:value="${argo.pageInfo.checksum.combinedValue}" value="xxx"/>
-                                    <!--<span th:utext="${el}"></span>-->
-                                    <span th:utext="${elType}"></span>
-                                    <th:block th:switch="${elType.name()}">
-                                        <th:block th:case="'TEXT'">
-                                            <th:block th:replace="templates/view-page-editors :: editorFieldTypeText(${el})"/>
-                                        </th:block>
-                                        <th:block th:case="'LIST'">
-                                            <th:block th:replace="templates/view-page-editors :: editorFieldTypeList(el = ${el}, path = ${path})"/>
-                                        </th:block>
-                                    </th:block>
-                                    <!---->
-                                    <button type="submit">Speichern</button>
-                                    <!---->
-
-                                    <!---->
-
-                                </form>
+                        <div class="tooltip" data-tooltip-target-id="tt2">
+                            <i class="tooltip__icon fas fa-question"></i>
+                        </div>
+                    </div>
+                    <div class="editContentBox__label">
+                        Current page path
+                    </div>
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock pageMeta">
+                <div class="editContentGroups">
+<!--                    <div class="editContentGroup">
+                        <h3 class="editContentGroup__title">Meta</h3>
+                        <div class="editContentGroup_items">
+                            <div class="editContentBox editContentGroup__item">
+                                <div class="editContentBox__contentBoxWrapper">
+                                    <div class="editContentBox__contentBox">
+                                        <input id="a1" type="text" disabled="disabled" name="author" value="kschaefer"/>
+                                    </div>
+                                </div>
+                                <div class="editContentBox__label">
+                                    <label for="a1">Author</label>
+                                </div>
+                            </div>
+                            <div class="editContentBox editContentGroup__item">
+                                <div class="editContentBox__contentBoxWrapper">
+                                    <div class="editContentBox__contentBox">
+                                        <input id="a2" type="text" disabled="disabled" name="author"
+                                               value="vsatanowski"/>
+                                    </div>
+                                </div>
+                                <div class="editContentBox__label">
+                                    <label for="a2">Last change</label>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>-->
+
+                    <div class="editContentGroup">
+                        <h3 class="editContentGroup__title">State</h3>
+                        <div class="editContentGroup_items">
+                            <div class="editContentBox editContentGroup__item">
+                                <div class="editContentBox__contentBoxWrapper">
+                                    <div class="editContentBox__contentBox pageStateStatusButtons">
+                                        <label for="b1">
+                                            <input id="b1" checked="checked" type="radio" name="level" value="edit"/>
+                                            <span class="pageStateStatusButtons__button">
+                                                <i class="fas fa-edit"></i>
+                                                Edit
+                                            </span>
+                                        </label>
+                                        <i class="pageStateStatusButtons__separator fas fa-long-arrow-alt-right"></i>
+                                        <label for="b2">
+                                            <input id="b2" type="radio" name="level" value="stage"/>
+                                            <span class="pageStateStatusButtons__button">
+                                                <i class="fas fa-user-check"></i>
+                                                Stage
+                                            </span>
+                                        </label>
+                                        <i class="pageStateStatusButtons__separator fas fa-long-arrow-alt-right"></i>
+                                        <label for="b3">
+                                            <input id="b3" type="radio" name="level" value="live"/>
+                                            <span class="pageStateStatusButtons__button">
+                                                <i class="fas fa-globe"></i>
+                                                Live
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="tooltip" data-tooltip-target-id="tt_state">
+                                        <i class="tooltip__icon fas fa-question"></i>
+                                    </div>
+                                </div>
+                                <div class="editContentBox__label">
+                                    Level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </div>
+    <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeaderToolbar">
+        <div class="argoCmsPageEditorHeader__sectionContent">
+            <div class="argoCmsPageEditorHeader__sectionBlock argoCmsPageEditorHeaderToolbar__body">
+                <div class="preferredActionsSection">
+                    <div class="preferredActionsSection__item">
+                        <button data-overlay-target-id="olContentEditor" class="button button--preferredAction">
+                            <span class="button__icon">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                            <span class="button__copy">
+                                Edit content
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeaderToolbar">
+        <div class="argoCmsPageEditorHeader__sectionContent">
+            <div class="argoCmsPageEditorHeader__sectionBlock argoCmsPageEditorHeaderToolbar__header">
+                <div class="argoCmsPageEditorHeader__sectionBlockTitle">
+                    Edit content
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock argoCmsPageEditorHeaderToolbar__body">
+                <div class="editContentGroups">
+                    <div class="editContentGroup">
+                        <h3 class="editContentGroup__title">Actions</h3>
+                        <div class="editContentGroup_items">
+                            <div class="editContentBox editContentGroup__item">
+                                <button data-overlay-target-id="olContentEditor" class="button"><i class="fas fa-edit"></i> Edit content</button>
+                            </div>
+                        </div>
+                    </div>
 
-        <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
-            th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
+
+                    <div class="editContentGroup">
+                        <h3 class="editContentGroup__title">Favorites</h3>
+                        <div class="editContentGroup_items">
+                            <div class="editContentBox editContentGroup__item">
+                                <ul class="tagsList">
+                                    <li class="tagsList__tag">headline</li>
+                                    <li class="tagsList__tag">body</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock argoCmsPageEditorHeaderToolbar__footer">
+                <div class="editContentBox editContentGroup__item">
+                    <div class="editContentBox__contentBoxWrapper">
+                        <div class="editContentBox__contentBox editContentBox__contentBox--checkBoxRadio">
+                            <div class="editContentBox__contentBoxCheckBoxRadio">
+                                <input autocomplete="off" id="favs" type="checkbox" name="favs" value="true"/>
+                                <label for="favs">Show favorites</label>
+                            </div>
+                        </div>
+                        <div class="tooltip" data-tooltip-target-id="tt1">
+                            <i class="tooltip__icon fas fa-question"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+</div>
+
+<div class="overlays">
+    <div data-overlay-id="olContentEditor" class="overlay overlayContentEditor">
+        <div class="overlay__header">
+            <div class="overlay__content">
+                <h3 class="overlay__title">Edit content</h3>
+                <div class="overlay__closeButton">
+                    <div class="iconButton iconButton--close">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay__body">
+            <div class="overlay__content">
+                <div class="sideBaredContent">
+                    <div class="sideBaredContent__sidebar">
+                        <div class="sideBaredContent__sidebarContent">
+                            <h4>Overview</h4>
+                            <ul>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sideBaredContent__content">
+                        <div class="sideBaredContent__contentHeader">
+                            <h4>Edit page contents</h4>
+
+                            <div class="subMenu">
+                                <div class="subMenu__button">
+                                    <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
+                                </div>
+                                <div class="subMenu__overlay">
+                                    <div class="subMenu__entry" data-action="showAllLanguageContents">
+                                        <div class="checkBox checkBox--light">
+                                            <input autocomplete="off" id="showAllLanguageContents" type="checkbox" name="showAllLanguageContents" value="false">
+                                            <label class="subMenu__entryLabel" for="showAllLanguageContents">
+                                                <span class="checkBox__icon"><i class="far fa-flag"></i></span>
+                                                Show all language contents
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="overlayContentTarget">
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tooltips">
+    <div class="tooltipOverlay" data-tooltip-id="tt1">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Show favorites</h3>
+                <p>You can enable / disable to show the favorite content fields of the current page/template.</p>
+                <p>The favorites are defined by the template settings.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt2">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Page path query</h3>
+                <p>Here you see the full page of the current page inside the whole site-structure.</p>
+                <p><strong>It is not using the display-names (page-names), as you see it in a opage-navigation!</strong>
+                </p>
+                <p>You can click here also on every folder and directly will jump to that folder, in there to the first
+                    page.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt_state">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Change state</h3>
+                <p>Every page has a state: It can be live, in editing or not staged.</p>
+                <p>
+                    <img src="assets/images/tooltips/state.jpg" height="92" width="290"/>
+                </p>
+                <p>Only persons with the matching permissions can change the state.</p>
+                <p>If you make changes on a page, they have to chnaged the status to live.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<iframe id="renderedSitePage" src="https://www.tagesschau.de/ausland/tony-mendez-103.html"></iframe>
+
+
+<div style="display: none;" data-argo-items="content-editor-prototypes">
+    <!-- content editor base construct -->
+    <div data-prototype="base-content-editor" class="contentEditor">
+        <div class="contentEditor__title">
+            <div class="copy"><span data-element="contentEditorTitle"></span></div>
+            <div class="contentEditor__status">
+                <div data-status-type="nonSavedChanges" class="status animated">
+                    <div class="status__icon">
+                        <i class="far fa-edit"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contentEditor_messages">
+            <div class="contentEditor_errorMessage" data-message-type="argoContentElementInvalid">
+                <div class="contentEditor_messageIcon">
+                    <i class="far fa-frown-open"></i>
+                </div>
+                <div class="contentEditor_messageCopy">
+                    The content-element is not valid. Please ask your administrator or check the page-content-document!
+                </div>
+            </div>
+            <div class="contentEditor_errorMessage" data-message-type="argoContentElementPrototypeMissing">
+                <div class="contentEditor_messageIcon">
+                    <i class="far fa-clone"></i>
+                </div>
+                <div class="contentEditor_messageCopy">
+                    The content-element has no content-prototype defined. This content can not be edited. Please ask your administrator or check the page-content-prototype-document!
+                </div>
+            </div>
+        </div>
+        <form action="/takemeout/" data-type="editor-fields">
+            <div class="contentEditor__editorFields">
+
+            </div>
+            <div class="contentEditor__formButtons">
+                <button class="button button--cta" type="submit">Save</button>
+            </div>
+        </form>
     </div>
 
-    <script type='text/javascript'>
+    <!-- text editor -->
+    <div class="contentEditor__editorField" data-editor-type="text">
+        <fieldset data-type="text">
+            <input type="hidden" name="type" value="text"/>
+            <input type="hidden" name="name" value=""/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <fieldset name="content">
+                    <div class="contentEditor__contentItems">
+                        <div data-element="multiLanguages" class="contentItemMultiLanguage">
+                            <div class="contentItemMultiLanguage__fieldName"></div>
+                            <div class="contentItemMultiLanguage__items">
+                                <div data-prototype="contentItem" class="contentEditor__contentItem contentItemMultiLanguage__item">
+                                    <label>
+                                        <span class="contentEditor__fieldName">
+                                            <i class="contentItemMultiLanguage__languageFlag contentEditor__fieldNameIcon far fa-flag"></i>
+                                            <span class="contentEditor__fieldNameContent"></span>
+                                        </span>
+                                        <textarea autocomplete="off" class="html" name="de"></textarea>
+                                        <span class="contentEditor__label">html</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+    </div>
 
-        jQuery(function(){
+    <!-- object editor -->
+    <div class="contentEditor__editorField" data-editor-type="object">
+        <fieldset data-type="object">
+            <input type="hidden" name="type" value="object"/>
+            <input type="hidden" name="name" value=""/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <div class="contentEditor__imageWrapper">
+                    <img src="" alt="Preview"/>
+                </div>
+                <label class="contentEditor__field">
+                    <span class="contentEditor__fieldTitle">Source</span>
+                    <input type="text" name="source" value="" />
+                    <span class="contentEditor__label">text</span>
+                </label>
 
-            var iFrames = jQuery('iframe');
+                <div class="moreOptions">
+                    <a class="button moreOptions__button" href="#">
+                                            <span class="moreOptions__buttonCopy moreOptions__buttonCopy--more">
+                                                <span class="button_icon"><i class="fas fa-plus"></i></span>
+                                                Weitere Optionen...
+                                            </span>
+                        <span class="moreOptions__buttonCopy moreOptions__buttonCopy--less">
+                                                <span class="button_icon"><i class="fas fa-minus"></i></span>
+                                                Weniger Optionen...
+                                            </span>
+                    </a>
+                    <div class="moreOptions__content">
+                        <label class="contentEditor__field">
+                            <span class="contentEditor__fieldTitle">Reference id</span>
+                            <input type="text" name="referenceId" value="" />
+                            <span class="contentEditor__label">text</span>
+                        </label>
+                        <label class="contentEditor__field">
+                            <span class="contentEditor__fieldTitle">Alternative text</span>
+                            <input type="text" name="alternativeText" value="" />
+                            <span class="contentEditor__label">text</span>
+                        </label>
+                        <label class="contentEditor__field">
+                            <span class="contentEditor__fieldTitle">mime type</span>
+                            <input type="text" name="mimeType" value="" />
+                            <span class="contentEditor__label">text</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
 
-            function iResize() {
+    <!-- list editor -->
+    <div class="contentEditor__editorField contentEditorTypeList" data-editor-type="list">
+        <fieldset data-type="list">
+            <input type="hidden" name="type" value="list"/>
+            <input type="hidden" name="name" value=""/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <fieldset>
+                    <div class="addItem">
+                        <div class="addItem__button localIconButton" data-action="addListTop">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <ul class="contentEditorList" data-element-type="listItems">
 
-                for (var i = 0, j = iFrames.length; i < j; i++) {
-                    iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight + 'px';}
-            }
+                        <li data-prototype="listItem" class="contentEditorListItem">
+                            <div data-action="openCloseListItem" class="contentEditorListItem__openCloseButton">
+                                <span class="button__icon"><i class="fas fa-angle-right"></i></span>
+                            </div>
 
-            iFrames.on("load", function() {
-                this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
-            });
+                            <div class="contentEditorListItem__content">
+                                <div class="contentEditorListItem__previewItems">
+                                    <div data-element-type="editorFieldsPreview" class="contentEditorListItem__previewItems__wrapper">
+                                        <div data-prototype="previewImage" class="contentEditorListItem__previewItem--image">
+                                            <div class="placeholder placeholder--image">
+                                                <i class="far fa-image"></i>
+                                            </div>
+                                            <img src=""/>
+                                        </div>
+                                        <div data-prototype="previewText" class="contentEditorListItem__previewItem--text">
 
-            $.fn.serializeObject = function()
-            {
-                var o = {};
-                var a = this.serializeArray();
-                $.each(a, function() {
-                    if (o[this.name]) {
-                        if (!o[this.name].push) {
-                            o[this.name] = [o[this.name]];
-                        }
-                        o[this.name].push(this.value || '');
-                    } else {
-                        o[this.name] = this.value || '';
-                    }
-                });
-                return o;
-            };
+                                        </div>
+                                        <div data-prototype="previewSublist" class="contentEditorListItem__previewItem--sublist">
+                                            <div class="editorItemTag">
+                                                <div class="editorItemTag__icon"><i class="fas fa-list-alt"></i></div>
+                                                <div class="editorItemTag__number">
+                                                </div>
+                                                <div class="editorItemTag__copy">
+                                                    <div class="previewSublist__abstractContentSymbol">
+                                                        <i class="fas fa-cubes"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-            jQuery("form").on("submit", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                //
-                var jData = $(this).serializeObject();
-                console.log("for mdata as json: ", jData);
-                jData.modifiedContentElement = {
-                    "type": "text",
-                    "name": "headline",
-                    "content": jData['content']
-                };
-                delete jData['content'];
+                                <div data-element-type="listItemFieldEditors" class="contentEditorListItem__contentEditors">
 
-                var request = $.ajax({
-                    url: "http://argo.greekestate.fourigin.com/cms/editors/save",
-                    method: "POST",
-                    data: JSON.stringify(jData),
-                    contentType: "application/json"
-                });
+                                </div>
 
-                request.done(function( msg ) {
-                    alert("Erfolg");
-                });
+                            </div>
 
-                request.fail(function( jqXHR, textStatus ) {
-                    alert( "Request failed: " + textStatus );
-                });
-            });
+                            <div class="contentEditorListItem__controls subMenu">
+                                <div class="subMenu__button">
+                                    <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
+                                </div>
+                                <div class="subMenu__overlay">
+                                    <!--<div class="subMenu__entry">
+                                        <span class="subMenu__entryIcon"><i class="far fa-eye-slash"></i></span>
+                                        <span class="subMenu__entryLabel">Ausblenden</span>
+                                    </div>-->
+                                    <!--<div class="subMenu__entry" data-action="duplicate">
+                                        <span class="subMenu__entryIcon"><i class="far fa-clone"></i></span>
+                                        <span class="subMenu__entryLabel">Duplizieren</span>
+                                    </div>-->
+                                    <div class="subMenu__entry" data-action="addBelow">
+                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                        <span class="subMenu__entryLabel">Add</span>
+                                    </div>
+                                    <div class="subMenu__entry" data-action="delete">
+                                        <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
+                                        <span class="subMenu__entryLabel">Remove</span>
+                                    </div>
+                                </div>
+                            </div>
 
-        });
-
-
-
-
-        var openLayer = function(jLayer) {
-            jLayer.addClass("active");
-        };
-        var closeLayer = function(jLayer) {
-            jLayer.removeClass("active");
-            jLayer.find(".layer").removeClass("active");
-        };
-
-        var toggleNextLayer = function(jLayoutTrigger) {
-            var jNextChildLayer = jLayoutTrigger.siblings(".layer:first");
-            //
-            // Hide all other layer from this level first:
-            jLayoutTrigger.closest(".layer").find(".layer").removeClass("active");
-            jNextChildLayer.toggleClass("active");
-            // TODO: Close ALL others on the same level
-            if(!jNextChildLayer.hasClass("active")) {
-                /* Close ALL child layers */
-                jNextChildLayer.find(".layer").removeClass("active");
-            }
-        };
-
-        jQuery("[data-target-layer-id]").each(function(){
-            jQuery(this).on("click", function() {
-                var jThis = jQuery(this);
-                // get target layer:
-                var sId = jThis.attr("data-target-layer-id");
-                var jTargetLayer = jQuery("[data-layer-id='" + sId + "']");
-                //
-                if(jThis.hasClass("active")) {
-                    jThis.removeClass("active");
-                    closeLayer(jTargetLayer);
-                }
-                else {
-                    jThis.addClass("active");
-                    openLayer(jTargetLayer);
-                }
-            });
-        });
-
-        jQuery(".layoutTrigger").each(function () {
-            jQuery(this).on("click", function() {
-                toggleNextLayer(jQuery(this));
-            });
-        });
+                        </li>
 
 
+                    </ul>
+                    <div class="addItem addItem--bottom">
+                        <div class="addItem__button localIconButton" data-action="addListBottom">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
 
-    </script>
+    </div>
+
+    <!-- list-sublist editor -->
+    <div class="contentEditor__editorField contentEditorTypeList" data-editor-type="listSublist">
+        <fieldset data-type="listSublist">
+            <input type="hidden" name="type" value="list-sublist"/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <fieldset>
+                    <div class="addItem">
+                        <div class="addItem__button localIconButton" data-action="addListTop">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <ul class="contentEditorList" data-element-type="listItems">
+
+                        <li data-prototype="listItem" class="contentEditorListItem">
+                            <div data-action="openCloseListItem" class="contentEditorListItem__openCloseButton">
+                                <span class="button__icon"><i class="fas fa-angle-right"></i></span>
+                            </div>
+
+                            <div class="contentEditorListItem__content">
+                                <div class="contentEditorListItem__previewItems">
+                                    <div data-element-type="editorFieldsPreview" class="contentEditorListItem__previewItems__wrapper">
+                                        <div data-prototype="previewImage" class="contentEditorListItem__previewItem--image">
+                                            <div class="placeholder placeholder--image">
+                                                <i class="far fa-image"></i>
+                                            </div>
+                                            <img src=""/>
+                                        </div>
+                                        <div data-prototype="previewText" class="contentEditorListItem__previewItem--text">
+
+                                        </div>
+                                        <div data-prototype="previewSublist" class="contentEditorListItem__previewItem--sublist">
+                                            <div class="editorItemTag">
+                                                <div class="editorItemTag__icon"><i class="fas fa-list-alt"></i></div>
+                                                <div class="editorItemTag__number">
+                                                </div>
+                                                <div class="editorItemTag__copy">
+                                                    <div class="previewSublist__abstractContentSymbol">
+                                                        <i class="fas fa-cubes"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div data-element-type="listItemFieldEditors" class="contentEditorListItem__contentEditors">
+
+                                </div>
+
+                            </div>
+
+                            <div class="contentEditorListItem__controls subMenu">
+                                <div class="subMenu__button">
+                                    <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
+                                </div>
+                                <div class="subMenu__overlay">
+                                    <!--<div class="subMenu__entry">
+                                        <span class="subMenu__entryIcon"><i class="far fa-eye-slash"></i></span>
+                                        <span class="subMenu__entryLabel">Ausblenden</span>
+                                    </div>-->
+                                    <!--<div class="subMenu__entry" data-action="duplicate">
+                                        <span class="subMenu__entryIcon"><i class="far fa-clone"></i></span>
+                                        <span class="subMenu__entryLabel">Duplizieren</span>
+                                    </div>-->
+                                    <div class="subMenu__entry" data-action="addBelow">
+                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                        <span class="subMenu__entryLabel">Add</span>
+                                    </div>
+                                    <div class="subMenu__entry" data-action="delete">
+                                        <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
+                                        <span class="subMenu__entryLabel">Remove</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </li>
+
+
+                    </ul>
+                    <div class="addItem addItem--bottom">
+                        <div class="addItem__button localIconButton" data-action="addListBottom">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+
+    </div>
+
+    <!-- list-group editor -->
+    <div class="contentEditor__editorField" data-editor-type="listGroup">
+        <fieldset data-type="listGroup">
+            <input type="hidden" name="type" value="list-group"/>
+            <fieldset>
+
+            </fieldset>
+        </fieldset>
+    </div>
+
+    <!-- group editor -->
+    <div class="contentEditor__editorField" data-editor-type="group">
+        <fieldset data-type="group">
+            <input type="hidden" name="type" value="group"/>
+            <input type="hidden" name="name" value=""/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <fieldset>
+
+                </fieldset>
+            </div>
+        </fieldset>
+    </div>
+
+</div>
+
+<div class="messages" data-argo-items="messages">
+
+</div>
+
+<div style="display: none;" data-argo-items="messages-prototypes">
+    <div data-prototype="messageError" class="message message--error">
+        <div class="message__header">
+            <div class="message__title"><i class="fas fa-exclamation-circle"></i> <span>Error</span></div>
+            <div class="message__closeButton">
+                <div class="iconButton iconButton--close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="message__headline"></div>
+        <div class="message__descriptionTeaser">
+
+        </div>
+        <div class="message__description">
+
+        </div>
+    </div>
+
+    <div data-prototype="messageWarning" class="message message--warning">
+        <div class="message__header">
+            <div class="message__title"><i class="far fa-bell"></i> <span>Warning</span></div>
+            <div class="message__closeButton">
+                <div class="iconButton iconButton--close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="message__headline"></div>
+        <div class="message__descriptionTeaser">
+
+        </div>
+        <div class="message__description">
+
+        </div>
+    </div>
+
+    <div data-prototype="messageInfo" class="message message--info">
+        <div class="message__header">
+            <div class="message__title"><i class="fas fa-info"></i> <span>Info</span></div>
+            <div class="message__closeButton">
+                <div class="iconButton iconButton--close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="message__headline"></div>
+        <div class="message__descriptionTeaser">
+
+        </div>
+        <div class="message__description">
+
+        </div>
+    </div>
+</div>
+
+<!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
+
+<script type="text/javascript" th:inline="javascript">
+    var blah = "blubb1";
+    var argoMessages = new com.fourigin.argo.Messages();
+    var hotspots = "[# th:utext='${data_hotspots}'/]";
+    var argoPageEditor = new com.fourigin.argo.PageEditor(
+        {
+            "base": [[${argo.language}]],
+            "path": [[${argo.path}]],
+            "hotspots": hotspots,
+            "urlLoadContent": "/cms/compile/prepare-content?l=[[${argo.language}]]&p=[[${argo.path}]]&verbose=true",
+            "urlLoadContentPrototype": "/cms/editors/prototype?l=[[${argo.language}]]&p=[[${argo.path}]]&verbose=true"
+        }
+    );
+
+    jQuery(document).ready(function() {
+        argoPageEditor.init();
+    });
+
+</script>
+
+<script src="assets/scripts/tooltips.js"></script>
+<script src="assets/scripts/overlays.js"></script>
+<script src="assets/scripts/overlay-submenus.js"></script>
+<script src="assets/scripts/page-content-editor-globals.js"></script>
+
+<script type="text/javascript">
+    var iFrame = jQuery('iframe#renderedSitePage');
+
+    function iResize() {
+
+        for (var i = 0, j = iFrame.length; i < j; i++) {
+            iFrame[i].style.height = iFrame[i].contentWindow.document.body.offsetHeight + 'px';
+        }
+    }
+
+    iFrame.on("load", function () {
+        this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+    });
+</script>
 
 </body>
 </html>

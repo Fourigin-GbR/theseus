@@ -1,6 +1,6 @@
 package com.fourigin.argo.controller.compile;
 
-import com.fourigin.argo.ContextKeys;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.models.content.ContentPagePrototype;
 import com.fourigin.argo.models.content.hotspots.ElementsEditorProperties;
 import com.fourigin.argo.models.template.Template;
@@ -22,22 +22,22 @@ import java.util.Collections;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/view")
+@RequestMapping("/{project}/view")
 public class ViewController {
 
     private CmsRequestAggregationResolver cmsRequestAggregationResolver;
 
     private final Logger logger = LoggerFactory.getLogger(ViewController.class);
 
-    @RequestMapping(value = "/{customer}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView view(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing view request for base {} & path {}.", base, path);
+        if (logger.isDebugEnabled()) logger.debug("Processing view request for language {} & path {}.", language, path);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
 
         Template template = aggregation.getTemplate();
 
@@ -54,32 +54,18 @@ public class ViewController {
 
         ContentResolver contentResolver = aggregation.getContentResolver();
 
-        Map<String, String> siteAttributes = contentResolver.resolveSiteAttributes();
-
-//        // prepare thymeleaf utilities
-//        ContentElementUtility contentUtility = new ContentElementUtility();
-//        contentUtility.setCompilerBase(base);
-//        contentUtility.setContentPage(aggregation.getContentPage());
-
         // create result
         ModelAndView modelAndView = new ModelAndView("viewPage");
 
-//        modelAndView.addObject(ContextKeys.BASE, base);
-//        modelAndView.addObject(ContextKeys.PATH, path);
-//        modelAndView.addObject(ContextKeys.CONTENT_PAGE, aggregation.getContentPage());
-//        modelAndView.addObject(ContextKeys.PAGE_INFO, aggregation.getPageInfo());
-//        modelAndView.addObject(ContextKeys.SITE_ATTRIBUTES, siteAttributes);
-        modelAndView.addObject(ContextKeys.HOTSPOTS, hotspots);
-//
-//        modelAndView.addObject("__content", contentUtility);
+        modelAndView.addObject("data_hotspots", hotspots);
 
         modelAndView.addObject("argo", new Argo.Builder()
-            .withCustomer(customer)
-            .withBase(base)
+            .withProject(project)
+            .withLanguage(language)
             .withPath(path)
             .withContentPage(aggregation.getContentPage())
             .withPageInfo(aggregation.getPageInfo())
-            .withSiteAttributes(siteAttributes)
+            .withSiteAttributes(contentResolver.resolveSiteAttributes())
             .build()
         );
 

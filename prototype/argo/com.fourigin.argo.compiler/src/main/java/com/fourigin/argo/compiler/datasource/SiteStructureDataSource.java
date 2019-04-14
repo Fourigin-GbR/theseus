@@ -4,6 +4,8 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.UnresolvableContentPathException;
 import com.fourigin.argo.models.content.elements.ContentElement;
+import com.fourigin.argo.models.content.elements.DataAwareContentElement;
+import com.fourigin.argo.models.content.elements.LanguageContent;
 import com.fourigin.argo.models.content.elements.LinkElement;
 import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
@@ -37,8 +39,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static com.fourigin.argo.compiler.datasource.DataSourcesResolver.CTX_BASE;
-
 public class SiteStructureDataSource implements
     DataSource<SiteStructureDataSourceQuery>,
     IndexAwareDataSource<SiteStructureDataSourceQuery>,
@@ -54,11 +54,16 @@ public class SiteStructureDataSource implements
     }
 
     @Override
-    public List<ContentElement> generateContent(PageInfo ownerPage, DataSourceIdentifier id, SiteStructureDataSourceQuery query, Map<String, Object> context) {
+    public List<ContentElement> generateContent(
+        PageInfo ownerPage,
+        DataSourceIdentifier id,
+        SiteStructureDataSourceQuery query,
+        Map<String, Object> context
+    ) {
         ContentResolver contentResolver = (ContentResolver) context.get(CTX_CONTENT_RESOLVER);
 
-//        String customer = (String) context.get(CTX_CUSTOMER);
-        String base = (String) context.get(CTX_BASE);
+//        String customer = (String) context.get(CTX_PROJECT);
+//        String language = (String) context.get(CTX_LANGUAGE);
 
         String path = query.getPath();
 
@@ -204,12 +209,8 @@ public class SiteStructureDataSource implements
     private void setContextSpecificValues(Map<String, String> contextSpecificValues, TextContentElement.Builder textBuilder) {
         if (contextSpecificValues != null) {
             for (Map.Entry<String, String> entry : contextSpecificValues.entrySet()) {
-                String base = entry.getKey();
-                if ("".equals(base)) {
-                    textBuilder.withContent(entry.getValue());
-                } else {
-                    textBuilder.withContextSpecificContent(base, entry.getValue());
-                }
+                String language = entry.getKey();
+                textBuilder.withContent(language, entry.getValue());
             }
         }
     }
@@ -217,8 +218,8 @@ public class SiteStructureDataSource implements
     private void setContextSpecificAttributeValues(Map<String, String> contextSpecificValues, String attributePrefix, TextContentElement.Builder textBuilder) {
         if (contextSpecificValues != null) {
             for (Map.Entry<String, String> entry : contextSpecificValues.entrySet()) {
-                String base = entry.getKey();
-                String attrName = "".equals(base) ? attributePrefix : attributePrefix + '.' + base;
+                String language = entry.getKey();
+                String attrName = attributePrefix + '.' + language;
                 textBuilder.withAttribute(attrName, entry.getValue());
             }
         }
@@ -242,7 +243,7 @@ public class SiteStructureDataSource implements
         Map<String, String> categoryDefinitions = indexDefinition.getCategories();
         Set<FieldDefinition> fieldDefinitions = indexDefinition.getFields();
         Set<String> fullTextSearch = indexDefinition.getFullTextSearch();
-        Set<String> keywords = indexDefinition.getKeywords();
+        Map<String, Set<String>> keywords = indexDefinition.getKeywords();
 
         if (generatedContent != null && !generatedContent.isEmpty()) {
 
@@ -261,7 +262,7 @@ public class SiteStructureDataSource implements
                 fields.add(fieldValue);
             }
 
-            Map<String, Set<Integer>> searchValues = new HashMap<>();
+            Map<String, Map<String, Set<Integer>>> searchValues = new HashMap<>();
 
             int referenceNumber = 0;
             for (ContentElement referenceElement : generatedContent) {
@@ -315,31 +316,54 @@ public class SiteStructureDataSource implements
                 if (keywords != null && !keywords.isEmpty()) {
                     if (logger.isDebugEnabled()) logger.debug("Indexing keywords {}", keywords);
 
-                    StringBuilder builder = new StringBuilder();
+                    Set<String> languages = keywords.keySet();
+                    Map<String, StringBuilder> builders = new HashMap<>();
+
+                    for (String language : languages) {
+                        StringBuilder builder = new StringBuilder();
+                        builders.put(language, builder);
+                    }
+
                     for (String path : fullTextSearch) {
-                        ContentElement textSearchElement = ContentPageManager.resolveOptional(path, elements);
-                        if (textSearchElement == null) {
+                        ContentElement searchElement = ContentPageManager.resolveOptional(path, elements);
+                        if (searchElement == null) {
                             continue;
                         }
 
-                        String value = getSearchValue(textSearchElement);
-                        if (value != null) {
-                            builder.append(value.toLowerCase(Locale.US)).append(';');
+                        LanguageContent value = getSearchValue(searchElement);
+
+                        for (String language : languages) {
+                            StringBuilder builder = builders.get(language);
+                            String languageValue = value.get(language);
+                            if (languageValue != null) {
+                                builder.append(languageValue.toLowerCase(Locale.US)).append(';');
+                            }
                         }
                     }
 
-                    String textForSearch = builder.toString();
-                    if (logger.isDebugEnabled()) logger.debug("Collected text: {}", textForSearch);
+                    for (String language : languages) {
+                        StringBuilder builder = builders.get(language);
 
-                    for (String keyword : keywords) {
-                        if (textForSearch.contains(keyword)) {
-                            if (logger.isDebugEnabled()) logger.debug("Found a match '{}'", keyword);
-                            Set<Integer> matches = searchValues.get(keyword);
-                            if (matches == null) {
-                                matches = new HashSet<>();
-                                searchValues.put(keyword, matches);
+                        String textForSearch = builder.toString();
+                        if (logger.isDebugEnabled()) logger.debug("Collected text: {}", textForSearch);
+
+                        Set<String> languageKeywords = keywords.get(language);
+                        for (String keyword : languageKeywords) {
+                            if (textForSearch.contains(keyword)) {
+                                if (logger.isDebugEnabled()) logger.debug("Found a match '{}'", keyword);
+                                Map<String, Set<Integer>> languageSearchValues = searchValues.get(language);
+                                if (languageSearchValues == null) {
+                                    languageSearchValues = new HashMap<>();
+                                    searchValues.put(language, languageSearchValues);
+                                }
+
+                                Set<Integer> matches = languageSearchValues.get(keyword);
+                                if (matches == null) {
+                                    matches = new HashSet<>();
+                                    languageSearchValues.put(keyword, matches);
+                                }
+                                matches.add(referenceNumber);
                             }
-                            matches.add(referenceNumber);
                         }
                     }
                 }
@@ -358,7 +382,7 @@ public class SiteStructureDataSource implements
         return index;
     }
 
-    private String getSearchValue(ContentElement element) {
+    private LanguageContent getSearchValue(ContentElement element) {
         if (element instanceof TextAwareContentElement) {
             return ((TextAwareContentElement) element).getContent();
         }
@@ -366,18 +390,17 @@ public class SiteStructureDataSource implements
         return null;
     }
 
-    //    private String getFieldValue(ContentElement element, FieldType type) {
     private String getFieldValue(ContentElement element) {
-        if (element instanceof TextAwareContentElement) {
-            return ((TextAwareContentElement) element).getContent();
+        if (element instanceof DataAwareContentElement) {
+            return ((DataAwareContentElement) element).getContent();
         }
 
         return null;
     }
 
     private String getCategoryValue(ContentElement element) {
-        if (element instanceof TextAwareContentElement) {
-            return ((TextAwareContentElement) element).getContent();
+        if (element instanceof DataAwareContentElement) {
+            return ((DataAwareContentElement) element).getContent();
         }
 
         return null;

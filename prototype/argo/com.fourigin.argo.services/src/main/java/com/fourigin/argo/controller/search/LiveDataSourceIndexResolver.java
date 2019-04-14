@@ -31,7 +31,7 @@ public class LiveDataSourceIndexResolver implements DataSourceIndexResolver {
     }
 
     @Override
-    public DataSourceIndex resolveIndex(String base, String path, String indexName) {
+    public DataSourceIndex resolveIndex(String path, String indexName) {
         File hiddenDir = new File(getContentRoot(), ".index");
         if (!hiddenDir.exists()) { // NOPMD
             if (!hiddenDir.mkdirs()) { // NOPMD

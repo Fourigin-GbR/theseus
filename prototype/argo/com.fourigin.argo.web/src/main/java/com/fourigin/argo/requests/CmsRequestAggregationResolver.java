@@ -31,8 +31,8 @@ public  class CmsRequestAggregationResolver {
     }
 
     @Cacheable("aggregations")
-    public CmsRequestAggregation resolveAggregation(String customer, String base, String path){
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+    public CmsRequestAggregation resolveAggregation(String project, String language, String path){
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
 
         SiteNodeInfo nodeInfo = contentRepository.resolveInfo(SiteNodeInfo.class, path);
         String targetPath = SiteNodes.getDefaultTarget(nodeInfo);
@@ -64,7 +64,7 @@ public  class CmsRequestAggregationResolver {
             throw new IllegalStateException("The defined TemplateReference does not include a template-id for " + pageInfo);
         }
 
-        Template template = templateResolver.retrieve(templateId);
+        Template template = templateResolver.retrieve(project, templateId);
         if(template == null){
             throw new IllegalStateException("No template found for id '" + templateId + "'!");
         }

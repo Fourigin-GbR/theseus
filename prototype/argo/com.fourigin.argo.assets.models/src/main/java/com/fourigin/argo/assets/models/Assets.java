@@ -168,8 +168,8 @@ public final class Assets {
         return firstBlobPart + "/" + remainingBlobPart;
     }
 
-    public static String resolveAssetFileName(String base, Asset asset){
-        if (LOGGER.isDebugEnabled()) LOGGER.debug("Resolving localized filename for base {} and {}", base, asset);
+    public static String resolveAssetFileName(String locale, Asset asset){
+        if (LOGGER.isDebugEnabled()) LOGGER.debug("Resolving localized filename for locale {} and {}", locale, asset);
 
         String mimeType = asset.getMimeType();
         String fileEnding = MimeTypes.resolveFileExtension(mimeType);

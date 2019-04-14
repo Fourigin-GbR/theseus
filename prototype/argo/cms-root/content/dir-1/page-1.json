@@ -21,15 +21,17 @@
         {
           "name": "headline",
           "type": "text",
-          "markupAllowed": "false",
           "title": "Headline's title",
-          "content": "Hello World!"
+          "content": {
+            "de":"Hello World!"
+          }
         },
         {
           "name": "link",
           "type": "text-link",
-          "markupAllowed": "true",
-          "content": "This is text with <b>markup</b>",
+          "content": {
+            "de": "This is text with <b>markup</b>"
+          },
           "url": "http://google.de"
         },
         {
@@ -55,15 +57,21 @@
           "elements": [
             {
               "type": "list-text",
-              "content": "Item A"
+              "content": {
+                "de": "Item A"
+              }
             },
             {
               "type": "list-text",
-              "content": "Item B"
+              "content": {
+                "de": "Item B"
+              }
             },
             {
               "type": "list-text",
-              "content": "Item C"
+              "content": {
+                "de": "Item C"
+              }
             }
           ]
         }

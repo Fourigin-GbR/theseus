@@ -6,12 +6,12 @@ import java.io.InputStream;
 import java.util.Collection;
 
 public interface AssetRepository extends AssetResolver {
-    <T extends Asset> T searchOrCreateAsset(Class<T> clazz, String base, InputStream inputStream);
-    String createAsset(String base, Asset asset, InputStream inputStream);
+    <T extends Asset> T searchOrCreateAsset(Class<T> clazz, String locale, InputStream inputStream);
+    String createAsset(String locale, Asset asset, InputStream inputStream);
 
-    void updateAsset(String base, Asset asset);
-    void updateAssets(String base, Collection<Asset> assets);
+    void updateAsset(String locale, Asset asset);
+    void updateAssets(String locale, Collection<Asset> assets);
 
-    void removeAsset(String base, String assetId);
-    void removeAssets(String base, Collection<String> assetIds);
+    void removeAsset(String locale, String assetId);
+    void removeAssets(String locale, Collection<String> assetIds);
 }

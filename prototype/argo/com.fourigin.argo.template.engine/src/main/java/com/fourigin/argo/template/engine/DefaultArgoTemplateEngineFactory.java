@@ -6,21 +6,21 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class DefaultTemplateEngineFactory implements TemplateEngineFactory {
-    private Map<Type, TemplateEngine> engines;
+public class DefaultArgoTemplateEngineFactory implements ArgoTemplateEngineFactory {
+    private Map<Type, ArgoTemplateEngine> engines;
 
-    private final Logger logger = LoggerFactory.getLogger(DefaultTemplateEngineFactory.class);
+    private final Logger logger = LoggerFactory.getLogger(DefaultArgoTemplateEngineFactory.class);
 
     @Override
-    public TemplateEngine getInstance(Type type) {
-        if(engines == null || engines.isEmpty()){
+    public ArgoTemplateEngine getInstance(Type type) {
+        if (engines == null || engines.isEmpty()) {
             if (logger.isErrorEnabled()) logger.error("No template engines configured!");
             return null;
         }
 
         if (logger.isInfoEnabled()) logger.info("Searching for template engine for type '{}'.", type);
-        TemplateEngine result = engines.get(type);
-        if(result == null){
+        ArgoTemplateEngine result = engines.get(type);
+        if (result == null) {
             if (logger.isErrorEnabled()) logger.error("No template engine found for type '{}'!", type);
             return null;
         }
@@ -28,7 +28,7 @@ public class DefaultTemplateEngineFactory implements TemplateEngineFactory {
         return result.duplicate();
     }
 
-    public void setEngines(Map<Type, TemplateEngine> engines) {
+    public void setEngines(Map<Type, ArgoTemplateEngine> engines) {
         this.engines = engines;
     }
 }

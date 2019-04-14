@@ -1,6 +1,6 @@
 package com.fourigin.argo.controller.search;
 
-import com.fourigin.argo.controller.compile.RequestParameters;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.datasource.index.DataSourceIndexProcessing;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/{customer}/search")
+@RequestMapping("/{project}/search")
 public class SearchController {
     private final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
@@ -32,18 +32,18 @@ public class SearchController {
     @RequestMapping("/")
     @ResponseBody
     public List<String> resolveMatchingIndexTargets(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path,
         @RequestBody SearchRequest request
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", base, path, request);
+        if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", language, path, request);
 
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
         try {
-            ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+            ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
 
             PageInfo info = contentRepository.resolveInfo(PageInfo.class, path);
             if (logger.isDebugEnabled()) logger.debug("Resolved info: {}", info);
@@ -52,7 +52,7 @@ public class SearchController {
             DataSourceIndex index = contentRepository.resolveIndex(info, indexName);
             if (logger.isDebugEnabled()) logger.debug("Resolved index: {}", index);
 
-            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields());
+            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields(), language);
             if (logger.isDebugEnabled()) logger.debug("References: {}", references);
 
 //            List<String> references = index.getReferences();
@@ -82,7 +82,7 @@ public class SearchController {
 //                        continue;
 //                    }
 //
-//                    Set<String> categoryValues = entry.getValue();
+//                    Set<String> categoryValues = entry.getContent();
 //                    if (logger.isDebugEnabled()) logger.debug("Requested category values: {}", categoryValues);
 //
 //                    for (String categoryValue : categoryValues) {
@@ -120,7 +120,7 @@ public class SearchController {
 //
 //                for (Map.Entry<String, FieldValueComparator> entry : fieldComparators.entrySet()) {
 //                    String fieldName = entry.getKey();
-//                    FieldValueComparator fieldComparator = entry.getValue();
+//                    FieldValueComparator fieldComparator = entry.getContent();
 //                    if (logger.isDebugEnabled())
 //                        logger.debug("Verifying comparator for field '{}': {}", fieldName, fieldComparator);
 //
@@ -128,7 +128,7 @@ public class SearchController {
 //                    if (logger.isDebugEnabled()) logger.debug("Comparing with {}", fieldValue);
 //
 //                    int referenceNumber = 0;
-//                    for (String value : fieldValue.getValue()) {
+//                    for (String value : fieldValue.getContent()) {
 //                        if (isMatching(fieldComparator, fieldValue.getType(), value)) {
 //                            flagMatchingReference(referenceNumber, references, matchingFlags, "field: " + fieldName + ":" + value);
 //                        } else {
@@ -154,8 +154,8 @@ public class SearchController {
             return references;
         }
         finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("project");
+            MDC.remove("language");
         }
     }
 }

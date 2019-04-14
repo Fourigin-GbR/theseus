@@ -5,7 +5,4 @@ import java.io.Serializable;
 public interface ContentElement extends Serializable, AttributesAwareContentElement {
     String getName();
     void setName(String name);
-
-    String getTitle();
-    void setTitle(String title);
 }

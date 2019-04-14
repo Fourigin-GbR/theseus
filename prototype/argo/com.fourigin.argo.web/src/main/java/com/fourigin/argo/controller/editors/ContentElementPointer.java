@@ -1,9 +1,9 @@
 package com.fourigin.argo.controller.editors;
 
 public interface ContentElementPointer {
-    String getBase();
+    String getLanguage();
 
-    void setBase(String base);
+    void setLanguage(String language);
 
     String getPath();
 

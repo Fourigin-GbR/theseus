@@ -4,7 +4,7 @@ import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.argo.assets.models.ImageAsset;
 import com.fourigin.argo.assets.repository.AssetRepository;
-import com.fourigin.argo.controller.compile.RequestParameters;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.utilities.core.MimeTypes;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/{customer}/assets")
+@RequestMapping("/{project}/assets")
 public class AssetsController {
 
     private final Logger logger = LoggerFactory.getLogger(AssetsController.class);
@@ -74,41 +74,41 @@ public class AssetsController {
 
     @RequestMapping("/info")
     public Asset resolveAsset(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam("id") String assetId
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(RequestParameters.ASSET_ID) String assetId
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing resolveAsset request for base {} and id {}", base, assetId);
+        if (logger.isDebugEnabled()) logger.debug("Processing resolveAsset request for language {} and id {}", language, assetId);
 
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
         try {
-            Asset asset = assetRepository.retrieveAsset(base, assetId);
+            Asset asset = assetRepository.retrieveAsset(language, assetId);
 
             if (logger.isDebugEnabled()) logger.debug("Returning asset {} for id {}", asset, assetId);
 
             return asset;
         }
         finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
     @RequestMapping("/data")
     public void resolveAsset(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam("id") String assetId,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(RequestParameters.ASSET_ID) String assetId,
         HttpServletResponse response
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing resolveAssetData request for base {} and id {}", base, assetId);
+        if (logger.isDebugEnabled()) logger.debug("Processing resolveAssetData request for language {} and id {}", language, assetId);
 
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
-        Asset asset = assetRepository.retrieveAsset(base, assetId);
+        Asset asset = assetRepository.retrieveAsset(language, assetId);
 
         response.setContentType(asset.getMimeType());
 
@@ -121,21 +121,21 @@ public class AssetsController {
             if (logger.isErrorEnabled()) logger.error("Unexpected error occurred!", th);
         }
         finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadAssetsResponse upload(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam("file") MultipartFile multipartFile
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(RequestParameters.ASSET_FILE) MultipartFile multipartFile
     ) {
-        Objects.requireNonNull(base, "base must not be null!");
+        Objects.requireNonNull(language, "language must not be null!");
 
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
         try {
             UploadAssetsResponse result = new UploadAssetsResponse();
@@ -162,7 +162,7 @@ public class AssetsController {
 
             if (tmp != null) {
                 try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
-                    Asset asset = readAsset(base, originalFileName, multipartFile.getSize(), contentType, is);
+                    Asset asset = readAsset(language, originalFileName, multipartFile.getSize(), contentType, is);
 
                     result.registerSuccess(asset);
                 } catch (IOException | IllegalArgumentException ex) {
@@ -175,23 +175,23 @@ public class AssetsController {
             return result;
         }
         finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
     @RequestMapping(value = "/uploadUrl")
     public UploadAssetsResponse uploadUrl(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam("filename") String filename,
-        @RequestParam("contentType") String contentType,
-        @RequestParam("url") String sourceUrl
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(RequestParameters.ASSET_FILENAME) String filename,
+        @RequestParam(RequestParameters.ASSET_CONTENT_TYPE) String contentType,
+        @RequestParam(RequestParameters.ASSET_SOURCE_URL) String sourceUrl
     ) {
-        Objects.requireNonNull(base, "base must not be null!");
+        Objects.requireNonNull(language, "language must not be null!");
 
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
         try {
             UploadAssetsResponse result = new UploadAssetsResponse();
@@ -223,7 +223,7 @@ public class AssetsController {
 
             if (tmp != null) {
                 try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
-                    Asset asset = readAsset(base, filename, tmp.length(), contentType, is);
+                    Asset asset = readAsset(language, filename, tmp.length(), contentType, is);
 
                     result.registerSuccess(asset);
                 } catch (IOException | IllegalArgumentException ex) {
@@ -235,30 +235,30 @@ public class AssetsController {
 
             return result;
         } finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
     @RequestMapping(value = "/thumbnail/{dimension}", method = RequestMethod.GET)
     public void getThumbnail(
-        @PathVariable String customer,
-        @PathVariable("dimension") String dimensionName,
-        @RequestParam(RequestParameters.BASE) String base,
-        @RequestParam("id") String assetId,
+        @PathVariable String project,
+        @PathVariable(RequestParameters.ASSET_DIMENSION) String dimensionName,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(RequestParameters.ASSET_ID) String assetId,
         @RequestHeader(value = RequestResponseConstants.IF_NONE_MATCH_REQUEST_HEADER, required = false) String etag,
         HttpServletResponse response
     ) throws IOException {
 
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
         Dimension desiredDimension = dimensions.get(dimensionName);
         if (desiredDimension == null) {
             throw new IllegalArgumentException("No dimension found for name '" + dimensionName + "'! Available names are: " + dimensions.keySet());
         }
 
-        Asset asset = assetRepository.retrieveAsset(base, assetId);
+        Asset asset = assetRepository.retrieveAsset(language, assetId);
         if (asset == null) {
             throw new IllegalArgumentException("Could not find asset for id '" + assetId + "'!");
         }
@@ -287,12 +287,18 @@ public class AssetsController {
             }
         }
         finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
-    private Asset readAsset(String base, String originalFileName, long fileSize, String contentType, InputStream inputStream) {
+    private Asset readAsset(
+        String language,
+        String originalFileName,
+        long fileSize,
+        String contentType,
+        InputStream inputStream
+    ) {
         String fileName = Assets.resolveSanitizedBasename(originalFileName);
         String mimeType = MimeTypes.resolveMimeType(originalFileName);
         if (logger.isDebugEnabled())
@@ -327,9 +333,9 @@ public class AssetsController {
         }
 
         try {
-            Asset asset = createAsset(base, originalFileName, mimeType, inputStream);
+            Asset asset = createAsset(language, originalFileName, mimeType, inputStream);
 
-            assetRepository.updateAsset(base, asset);
+            assetRepository.updateAsset(language, asset);
 
             return asset;
         } catch (IOException ex) {
@@ -337,8 +343,8 @@ public class AssetsController {
         }
     }
 
-    private Asset createAsset(String base, String fileName, String mimeType, final InputStream inputStream) throws IOException {
-        ImageAsset asset = assetRepository.searchOrCreateAsset(ImageAsset.class, base, inputStream);
+    private Asset createAsset(String language, String fileName, String mimeType, final InputStream inputStream) throws IOException {
+        ImageAsset asset = assetRepository.searchOrCreateAsset(ImageAsset.class, language, inputStream);
 
         String assetId = asset.getId();
         if (logger.isDebugEnabled()) logger.debug("Asset-ID: {}", assetId);

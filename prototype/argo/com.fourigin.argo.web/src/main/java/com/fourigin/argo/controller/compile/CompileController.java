@@ -3,6 +3,7 @@ package com.fourigin.argo.controller.compile;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.compiler.PageCompiler;
 import com.fourigin.argo.compiler.PageCompilerFactory;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
@@ -38,7 +39,7 @@ import java.util.Collection;
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
 
 @Controller
-@RequestMapping("/{customer}/compile")
+@RequestMapping("/{project}/compile")
 public class CompileController {
 
     private final Logger logger = LoggerFactory.getLogger(CompileController.class);
@@ -51,18 +52,16 @@ public class CompileController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public HttpEntity<byte[]> compile(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path
     ) {
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
-        if (logger.isDebugEnabled()) logger.debug("Processing compile request for base '{}' & path '{}'.", base, path);
+        if (logger.isDebugEnabled()) logger.debug("Processing compile request for project '{}', language '{}' & path '{}'.", project, language, path);
 
-
-
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
 
         ContentRepository contentRepository = aggregation.getContentRepository();
 
@@ -81,7 +80,7 @@ public class CompileController {
         if (logger.isDebugEnabled()) logger.debug("Actual page checksum: {}", pageContentChecksum);
 
         // TODO: move checksum check to method, that writes the output.
-        // It doesn't make sense here to skip compiling, because e need a compiled content for the CMS!
+        // It doesn't make sense here to skip compiling, because we need a compiled content for the CMS!
         // *******
         /*
 
@@ -105,7 +104,7 @@ public class CompileController {
         */
         // *******
 
-        PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+        PageCompiler pageCompiler = pageCompilerFactory.getInstance(project, language);
 
         ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, CMS);
 
@@ -141,8 +140,8 @@ public class CompileController {
             pageState.setCompileState(compileState);
             contentRepository.updatePageState(pageInfo, pageState);
 
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
@@ -150,20 +149,20 @@ public class CompileController {
 //    @RequestMapping(value = "/write-output", method = RequestMethod.POST)
     @RequestMapping(value = "/write-output", method = RequestMethod.GET) // TODO: temporary GET for batch processing
     public ResponseEntity<CompileResult> writeOutput(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path,
-        @RequestParam(value = "mode", required = false, defaultValue = "STAGE") ProcessingMode mode,
-        @RequestParam(value = "recursive", required = false, defaultValue = "false") boolean recursive
+        @RequestParam(value = RequestParameters.COMPILE_PROCESSING_MODE, required = false, defaultValue = "STAGE") ProcessingMode mode,
+        @RequestParam(value = RequestParameters.COMPILE_RECURSIVE_PROCESSING, required = false, defaultValue = "false") boolean recursive
     ) {
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
         try {
 
             long startTimestamp = System.currentTimeMillis();
             if (!recursive) {
                 try {
-                    writePageOutput(customer, base, path, mode);
+                    writePageOutput(project, language, path, mode);
                 } catch (Throwable ex) {
                     return new ResponseEntity<>(
                         new CompileResult(mode, false).withAttribute("cause", ex),
@@ -171,7 +170,7 @@ public class CompileController {
                     );
                 }
             } else {
-                CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+                CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
                 PageInfo info = aggregation.getPageInfo();
 
                 DefaultPageInfoTraversingStrategy traversingStrategy = new DefaultPageInfoTraversingStrategy();
@@ -179,7 +178,7 @@ public class CompileController {
                 for (PageInfo node : nodes) {
                     String nodePath = node.getPath() + '/' + node.getName();
                     try {
-                        writePageOutput(customer, base, nodePath, mode);
+                        writePageOutput(project, language, nodePath, mode);
                     } catch (Throwable ex) {
                         return new ResponseEntity<>(
                             new CompileResult(mode, false).withAttribute("cause", ex),
@@ -199,7 +198,7 @@ public class CompileController {
 //            if (logger.isDebugEnabled())
 //                logger.debug("Processing write-output request for base '{}' & path '{}' with processing-mode {}.", base, path, mode);
 //
-//            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+//            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, base, path);
 //
 //            PageInfo pageInfo = aggregation.getPageInfo();
 //            PageState pageState = aggregation.getPageState();
@@ -216,7 +215,7 @@ public class CompileController {
 //                );
 //            }
 //
-//            PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+//            PageCompiler pageCompiler = pageCompilerFactory.getInstance(project, base);
 //
 //            ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
 //
@@ -239,16 +238,16 @@ public class CompileController {
 //                HttpStatus.ok
 //            );
         } finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 
-    private void writePageOutput(String customer, String base, String path, ProcessingMode mode) {
+    private void writePageOutput(String project, String language, String path, ProcessingMode mode) {
         if (logger.isDebugEnabled())
-            logger.debug("Processing write-output request for base '{}' & path '{}' with processing-mode {}.", base, path, mode);
+            logger.debug("Processing write-output request for language '{}' & path '{}' with processing-mode {}.", language, path, mode);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
 
         PageInfo pageInfo = aggregation.getPageInfo();
 //        PageState pageState = aggregation.getPageState();
@@ -265,7 +264,7 @@ public class CompileController {
 //            );
 //        }
 
-        PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+        PageCompiler pageCompiler = pageCompilerFactory.getInstance(project, language);
 
         ContentPage preparedContentPage = pageCompiler.prepareContent(pageInfo, mode);
 
@@ -285,25 +284,25 @@ public class CompileController {
     @ResponseBody
     @RequestMapping(value = "/prepare-content", method = RequestMethod.GET)
     public ContentPage showPreparedContent(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path
     ) {
-        MDC.put("customer", customer);
-        MDC.put("base", base);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
         try {
             if (logger.isDebugEnabled())
-                logger.debug("Processing prepared-content request for base {} & path {}.", base, path);
+                logger.debug("Processing prepared-content request for language {} & path {}.", language, path);
 
-            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+            CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
 
-            PageCompiler pageCompiler = pageCompilerFactory.getInstance(customer, base);
+            PageCompiler pageCompiler = pageCompilerFactory.getInstance(project, language);
 
             return pageCompiler.prepareContent(aggregation.getPageInfo(), CMS);
         } finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("language");
+            MDC.remove("project");
         }
     }
 

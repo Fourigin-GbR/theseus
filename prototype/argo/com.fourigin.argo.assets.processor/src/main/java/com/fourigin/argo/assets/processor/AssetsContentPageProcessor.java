@@ -4,11 +4,12 @@ import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.argo.assets.repository.AssetResolver;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
-import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.forms.config.ProjectSpecificConfiguration;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,11 +40,11 @@ import java.util.concurrent.Future;
 public class AssetsContentPageProcessor implements ContentPageProcessor {
     private AssetResolver assetResolver;
 
-    private CustomerSpecificConfiguration customerSpecificConfiguration;
+    private ProjectSpecificConfiguration projectSpecificConfiguration;
 
-//    private List<File> loadBalancerDocumentRoots;
+    private ProjectSpecificPathResolver pathResolver;
 
-//    private String assetsDomain;
+    private String loadBalancerBasePath;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(8); // 32?
     private final CompletionService<FileCopyResult> completionService = new ExecutorCompletionService<>(executorService);
@@ -51,10 +52,10 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
     private final Logger logger = LoggerFactory.getLogger(AssetsContentPageProcessor.class);
 
     @Override
-    public void process(String customer, String base, PageInfo info, ProcessingMode processingMode, ContentPage page) {
+    public void process(String projectId, String language, PageInfo info, ProcessingMode processingMode, ContentPage page) {
         String pageId = page.getId();
 
-        if (logger.isInfoEnabled()) logger.info("Processing assets of page {}", pageId);
+        if (logger.isInfoEnabled()) logger.info("Processing assets of page {} for project {}", pageId, projectId);
 
         List<ObjectAwareContentElement> objectElements = ContentPageManager.collect(page, ObjectAwareContentElement.class);
         if (objectElements == null) {
@@ -81,14 +82,19 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
             return;
         }
 
-        if (logger.isDebugEnabled()) logger.debug("customer specific configuration: {}", customerSpecificConfiguration);
+        if (logger.isDebugEnabled())
+            logger.debug("project specific configuration: {}", projectSpecificConfiguration);
 
-        String assetsDomain = customerSpecificConfiguration.getAssetsDomain().get(customer);
-        if(!assetsDomain.endsWith("/")){
+        String assetsDomain = projectSpecificConfiguration.getAssetsDomain().get(projectId);
+        if (assetsDomain == null) {
+            throw new IllegalArgumentException("No assets domain configured for project '" + projectId + "'!");
+        }
+
+        if (!assetsDomain.endsWith("/")) {
             assetsDomain += "/";
         }
 
-        Map<String, Asset> assets = assetResolver.retrieveAssets(base, assetIds);
+        Map<String, Asset> assets = assetResolver.retrieveAssets(language, assetIds);
         Map<String, String> resolvedAssetPaths = new HashMap<>();
 
         Set<String> unresolvedIds = new HashSet<>();
@@ -100,7 +106,7 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
                 continue;
             }
 
-            String source = resolveAssetLink(base, asset);
+            String source = resolveAssetLink(language, asset);
             resolvedAssetPaths.put(assetId, source);
 
             // set element properties
@@ -124,28 +130,29 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
                     assetsToTransfer.add(asset);
                 }
             }
-            transferResources(customer, assetsToTransfer, resolvedAssetPaths);
+            transferResources(projectId, assetsToTransfer, resolvedAssetPaths);
         }
     }
 
-    private String resolveAssetLink(String base, Asset asset) {
+    private String resolveAssetLink(String locale, Asset asset) {
         Objects.requireNonNull(asset, "asset must not be null!");
 
         String id = asset.getId();
         String basePath = Assets.resolveAssetBasePath(id);
-        String filename = Assets.resolveAssetFileName(base, asset);
+        String filename = Assets.resolveAssetFileName(locale, asset);
 
         return basePath + "/" + filename;
     }
 
-    private void transferResources(String customer, Collection<Asset> assets, Map<String, String> resourcePathMapping) {
-        String loadBalancerDocumentRootPaths = customerSpecificConfiguration.getAssetsLoadBalancerRoot().get(customer);
-        List<File> loadBalancerDocumentRoots = new ArrayList<>();
-        for(String path : loadBalancerDocumentRootPaths.split(",")){
-            loadBalancerDocumentRoots.add(new File(path.trim()));
+    private void transferResources(String projectId, Collection<Asset> assets, Map<String, String> resourcePathMapping) {
+        String resolvedPath = pathResolver.resolvePath(loadBalancerBasePath, projectId);
+
+        List<File> loadBalancerRoots = new ArrayList<>();
+        for (String path : resolvedPath.split(",")) {
+            loadBalancerRoots.add(new File(path.trim()));
         }
 
-        int maxValue = loadBalancerDocumentRoots.size() * assets.size();
+        int maxValue = loadBalancerRoots.size() * assets.size();
 
         FileCopyResultRunnable runnable = new FileCopyResultRunnable(maxValue);
         Thread t = new Thread(runnable);
@@ -153,16 +160,16 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
 
         if (logger.isDebugEnabled()) logger.debug("Start transferring assets ...");
 
-        for (File documentRoot : loadBalancerDocumentRoots) {
-            String docRootPath = documentRoot.getAbsolutePath();
-            if (documentRoot.mkdirs()) {
-                if (logger.isDebugEnabled()) logger.debug("Created directory '{}'.", docRootPath); // NOPMD
+        for (File root : loadBalancerRoots) {
+            String rootPath = root.getAbsolutePath();
+            if (root.mkdirs()) {
+                if (logger.isDebugEnabled()) logger.debug("Created directory '{}'.", rootPath); // NOPMD
             }
 
             for (Asset asset : assets) {
                 String resourceId = asset.getId();
                 String path = resourcePathMapping.get(resourceId);
-                completionService.submit(new FileCopyCallable(resourceId, docRootPath, path));
+                completionService.submit(new FileCopyCallable(resourceId, rootPath, path));
             }
         }
 
@@ -191,8 +198,16 @@ public class AssetsContentPageProcessor implements ContentPageProcessor {
         this.assetResolver = assetResolver;
     }
 
-    public void setCustomerSpecificConfiguration(CustomerSpecificConfiguration customerSpecificConfiguration) {
-        this.customerSpecificConfiguration = customerSpecificConfiguration;
+    public void setProjectSpecificConfiguration(ProjectSpecificConfiguration customerSpecificConfiguration) {
+        this.projectSpecificConfiguration = customerSpecificConfiguration;
+    }
+
+    public void setPathResolver(ProjectSpecificPathResolver pathResolver) {
+        this.pathResolver = pathResolver;
+    }
+
+    public void setLoadBalancerBasePath(String loadBalancerBasePath) {
+        this.loadBalancerBasePath = loadBalancerBasePath;
     }
 
     private class FileCopyResultRunnable implements Runnable {

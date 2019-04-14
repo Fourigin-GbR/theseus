@@ -18,7 +18,8 @@ public final class DataSourceIndexProcessing {
     public static List<String> resolveMatchingIndexTargets(
         DataSourceIndex index,
         Map<String, Set<String>> filterCategories,
-        Map<String, FieldValueComparator> fieldComparators
+        Map<String, FieldValueComparator> fieldComparators,
+        String language
     ) {
         Logger logger = LoggerFactory.getLogger(DataSourceIndexProcessing.class);
 
@@ -89,7 +90,7 @@ public final class DataSourceIndexProcessing {
         if (fieldComparators != null && !fieldComparators.isEmpty()) {
             if (logger.isDebugEnabled()) logger.debug("Filtering by field comparators ...");
 
-            List<FieldValue> fields = index.getFields();
+            List<FieldValue> fields = index.getMergedFields(language);
             Map<String, FieldValue> mappedFields = new HashMap<>();
             for (FieldValue field : fields) {
                 mappedFields.put(field.getName(), field);

@@ -31,17 +31,17 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
         this.documentRootResolverStrategy = documentRootResolverStrategy;
     }
 
-    public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String customer, String base) {
+    public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String project, String language) {
         if (logger.isDebugEnabled()) logger.debug(
             "Resolving file output stream for {}/{}, postfix {}, extension {} and {}",
-            customer,
-            base,
+            project,
+            language,
             filenamePostfix,
             extension,
             info
         );
 
-        String filename = filenameStrategy.getFilename(base, info);
+        String filename = filenameStrategy.getFilename(language, info);
         if (logger.isDebugEnabled()) logger.debug("filename (from strategy): '{}'", filename);
 
         if (filenamePostfix != null && !"".equals(filenamePostfix)) {
@@ -50,10 +50,10 @@ public class FileCompilerOutputStrategy implements CompilerOutputStrategy {
         filename = filename + extension;
         if (logger.isDebugEnabled()) logger.debug("filename (after modifications): '{}'", filename);
 
-        String folder = filenameStrategy.getFolder(base, info);
+        String folder = filenameStrategy.getFolder(language, info);
         if (logger.isDebugEnabled()) logger.debug("Folder (from strategy): '{}'", folder);
 
-        String docRoot = documentRootResolverStrategy.resolveDocumentRoot(customer, base);
+        String docRoot = documentRootResolverStrategy.resolveDocumentRoot(project, language);
         if (logger.isDebugEnabled()) logger.debug("Document root (from strategy): '{}'", docRoot);
 
         File docRootFile = new File(docRoot);

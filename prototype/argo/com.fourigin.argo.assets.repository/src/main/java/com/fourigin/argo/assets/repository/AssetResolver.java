@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface AssetResolver {
-    Asset retrieveAsset(String base, String assetId);
+    Asset retrieveAsset(String locale, String assetId);
 
-    Map<String, Asset> retrieveAssets(String base, Collection<String> assetIds);
+    Map<String, Asset> retrieveAssets(String locale, Collection<String> assetIds);
 
     InputStream retrieveAssetData(String assetId);
 

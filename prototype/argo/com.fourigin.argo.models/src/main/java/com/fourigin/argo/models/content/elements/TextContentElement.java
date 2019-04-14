@@ -7,53 +7,25 @@ import java.util.Objects;
 public class TextContentElement extends AbstractContentElement implements TextAwareContentElement, ContentElement {
     private static final long serialVersionUID = 5066464546311137699L;
 
-    private String content;
-    private Map<String, String> contextSpecificContent;
+    private LanguageContent title;
+    private LanguageContent content;
 
-    public String getContent() {
+    @Override
+    public LanguageContent getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(LanguageContent title) {
+        this.title = title;
+    }
+
+    public LanguageContent getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(LanguageContent content) {
         this.content = content;
-    }
-
-    public Map<String, String> getContextSpecificContent() {
-        return contextSpecificContent;
-    }
-
-    public void setContextSpecificContent(Map<String, String> content){
-        contextSpecificContent = content;
-    }
-
-    public String getContextSpecificContent(String context, boolean fallback) {
-        if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
-            return fallback ? content : null;
-        }
-
-        if (!contextSpecificContent.containsKey(context)) {
-            return fallback ? content : null;
-        }
-
-        return contextSpecificContent.get(context);
-    }
-
-    public void setContextSpecificContent(String context, String content) {
-        Objects.requireNonNull(context, "context must not be null!");
-
-        if (content == null) {
-            if (contextSpecificContent == null || contextSpecificContent.isEmpty()) {
-                return;
-            }
-
-            contextSpecificContent.remove(context);
-            return;
-        }
-
-        if (contextSpecificContent == null) {
-            contextSpecificContent = new HashMap<>();
-        }
-        contextSpecificContent.put(context, content);
     }
 
     @Override
@@ -62,13 +34,12 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         if (!(o instanceof TextContentElement)) return false;
         if (!super.equals(o)) return false;
         TextContentElement that = (TextContentElement) o;
-        return Objects.equals(content, that.content) &&
-            Objects.equals(contextSpecificContent, that.contextSpecificContent);
+        return Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), content, contextSpecificContent);
+        return Objects.hash(super.hashCode(), content);
     }
 
     @Override
@@ -77,16 +48,12 @@ public class TextContentElement extends AbstractContentElement implements TextAw
 
         builder.append("name='").append(getName()).append('\'');
 
-        String title = getTitle();
-        if(title != null) {
+        LanguageContent title = getTitle();
+        if (title != null) {
             builder.append(", title='").append(title).append('\'');
         }
 
         builder.append(", content='").append(content).append('\'');
-
-        if (contextSpecificContent != null) {
-            builder.append(", contextSpecificContent=").append(contextSpecificContent);
-        }
 
         Map<String, String> attributes = getAttributes();
         if (attributes != null) {
@@ -100,9 +67,8 @@ public class TextContentElement extends AbstractContentElement implements TextAw
 
     public static class Builder {
         private String name;
-        private String title;
-        private String content;
-        private Map<String, String> contextSpecificContent = new HashMap<>();
+        private LanguageContent title = new LanguageContent();
+        private LanguageContent content = new LanguageContent();
         private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name) {
@@ -110,18 +76,13 @@ public class TextContentElement extends AbstractContentElement implements TextAw
             return this;
         }
 
-        public Builder withTitle(String title) {
-            this.title = title;
+        public Builder withTitle(String language, String title) {
+            this.title.put(language, title);
             return this;
         }
 
-        public Builder withContent(String content) {
-            this.content = content;
-            return this;
-        }
-
-        public Builder withContextSpecificContent(String context, String content) {
-            contextSpecificContent.put(context, content);
+        public Builder withContent(String context, String content) {
+            this.content.put(context, content);
             return this;
         }
 
@@ -140,11 +101,10 @@ public class TextContentElement extends AbstractContentElement implements TextAw
         public TextContentElement build() {
             TextContentElement element = new TextContentElement();
             element.setName(name);
-            element.setTitle(title);
-            element.setContent(content);
-            if (!contextSpecificContent.isEmpty()) {
-                element.setContextSpecificContent(contextSpecificContent);
+            if (!title.isEmpty()) {
+                element.setTitle(title);
             }
+            element.setContent(content);
             if (!attributes.isEmpty()) {
                 element.setAttributes(attributes);
             }

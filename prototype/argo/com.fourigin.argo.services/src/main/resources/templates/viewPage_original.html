@@ -32,10 +32,10 @@
         <!--</div>-->
     </div>
 </header>
-<!--/*@thymesVar id="base" type="java.lang.String"*/-->
+<!--/*@thymesVar id="locale" type="java.lang.String"*/-->
 <!--/*@thymesVar id="path" type="java.lang.String"*/-->
-<iframe id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?base=DE&amp;path=/spiegel/article-1"
-        th:src="@{/compile/(base=${base},path=${path})}"></iframe>
+<iframe id="pageContent" height="auto" frameborder="0" width="100%" src="http://fourigin.de/cms/compile/?locale=DE&amp;path=/spiegel/article-1"
+        th:src="@{/compile/(locale=${locale},path=${path})}"></iframe>
 
 </body>
 </html>

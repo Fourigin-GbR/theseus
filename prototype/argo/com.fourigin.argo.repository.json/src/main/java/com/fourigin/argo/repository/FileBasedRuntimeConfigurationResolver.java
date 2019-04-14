@@ -17,7 +17,7 @@ import java.util.Set;
 public class FileBasedRuntimeConfigurationResolver implements RuntimeConfigurationResolver {
     private static final String CONFIG_DIRECTORY_NAME = ".config";
 
-    private String customer;
+    private String project;
 
     private String basePath;
 
@@ -27,8 +27,8 @@ public class FileBasedRuntimeConfigurationResolver implements RuntimeConfigurati
 
     private final Logger logger = LoggerFactory.getLogger(FileBasedRuntimeConfigurationResolver.class);
 
-    public FileBasedRuntimeConfigurationResolver(String customer, String basePath) {
-        this.customer = customer;
+    public FileBasedRuntimeConfigurationResolver(String project, String basePath) {
+        this.project = project;
         this.basePath = basePath;
     }
 
@@ -85,7 +85,7 @@ public class FileBasedRuntimeConfigurationResolver implements RuntimeConfigurati
 
     /* private -> testing */
     File getConfigDirectory() {
-        String resolvedBasePath = propertiesReplacement.process(basePath, "customer", customer);
+        String resolvedBasePath = propertiesReplacement.process(basePath, "project", project);
 
         File rootDirectory = new File(resolvedBasePath);
 

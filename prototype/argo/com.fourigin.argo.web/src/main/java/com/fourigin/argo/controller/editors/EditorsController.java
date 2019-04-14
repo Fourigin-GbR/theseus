@@ -2,7 +2,7 @@ package com.fourigin.argo.controller.editors;
 
 import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
-import com.fourigin.argo.controller.compile.RequestParameters;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.content.ContentPageManager;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/{customer}/editors")
+@RequestMapping("/{project}/editors")
 public class EditorsController {
 
     private final Logger logger = LoggerFactory.getLogger(EditorsController.class);
@@ -39,14 +39,14 @@ public class EditorsController {
 
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public ContentPagePrototype retrievePrototype(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path
     ) {
         if (logger.isDebugEnabled())
-            logger.debug("Processing retrieve prototype request for base {} and sitePath {}", base, path);
+            logger.debug("Processing retrieve prototype request for language {} and sitePath {}", language, path);
 
-        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(customer, base, path);
+        CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
 
         Template template = aggregation.getTemplate();
 
@@ -55,7 +55,7 @@ public class EditorsController {
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
     public ContentElementResponse retrieve(
-        @PathVariable String customer,
+        @PathVariable String project,
         @RequestBody RetrieveContentRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing retrieve request {}.", request);
@@ -64,8 +64,8 @@ public class EditorsController {
         response.copyFrom(request);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
-            customer,
-            request.getBase(),
+            project,
+            request.getLanguage(),
             request.getPath()
         );
 
@@ -79,36 +79,36 @@ public class EditorsController {
 
     @RequestMapping(value = "/retrieveP", method = RequestMethod.GET)
     public ContentElementResponse r(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path,
         @RequestParam("contentPath") String contentPath
     ) {
         RetrieveContentRequest request = new RetrieveContentRequest();
-        request.setBase(base);
+        request.setLanguage(language);
         request.setPath(path);
         request.setContentPath(contentPath);
 
-        return retrieve(customer, request);
+        return retrieve(project, request);
     }
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
     public StatusAwareContentElementResponse isUpToDate(
-        @PathVariable String customer,
+        @PathVariable String project,
         @RequestBody UpToDateRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing up-to-date request {}.", request);
 
-        MDC.put("customer", customer);
-        MDC.put("base", request.getBase());
+        MDC.put("project", project);
+        MDC.put("locale", request.getLanguage());
 
         try {
             StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
             response.copyFrom(request);
 
             CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
-                customer,
-                request.getBase(),
+                project,
+                request.getLanguage(),
                 request.getPath()
             );
 
@@ -128,8 +128,8 @@ public class EditorsController {
             return response;
         }
         finally {
-            MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("project");
+            MDC.remove("locale");
         }
     }
 
@@ -141,7 +141,7 @@ public class EditorsController {
         if (logger.isDebugEnabled()) logger.debug("Processing save request {}.", request);
 
         MDC.put("customer", customer);
-        MDC.put("base", request.getBase());
+        MDC.put("locale", request.getLanguage());
 
         try {
             StatusAwareContentElementResponse response = new StatusAwareContentElementResponse();
@@ -149,7 +149,7 @@ public class EditorsController {
 
             CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
                 customer,
-                request.getBase(),
+                request.getLanguage(),
                 request.getPath()
             );
 
@@ -172,7 +172,7 @@ public class EditorsController {
         }
         finally {
             MDC.remove("customer");
-            MDC.remove("base");
+            MDC.remove("locale");
         }
     }
 

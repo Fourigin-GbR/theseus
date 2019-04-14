@@ -6,16 +6,16 @@ import com.fourigin.argo.models.template.TemplateVariation;
 
 import java.io.OutputStream;
 
-public interface TemplateEngine {
+public interface ArgoTemplateEngine {
     String CONTENT_PAGE = "data_content";
     String PAGE_INFO = "data_page";
     String SITE_ATTRIBUTES = "data_attributes";
 
-    TemplateEngine duplicate();
+    ArgoTemplateEngine duplicate();
 
-    void setCustomer(String customer);
+    void setProject(String project);
 
-    void setBase(String base);
+    void setLanguage(String language);
 
     void setPath(String path);
 

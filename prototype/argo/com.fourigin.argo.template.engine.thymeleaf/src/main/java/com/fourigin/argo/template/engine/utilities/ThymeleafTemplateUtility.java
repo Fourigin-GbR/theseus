@@ -1,5 +1,5 @@
 package com.fourigin.argo.template.engine.utilities;
 
 public interface ThymeleafTemplateUtility {
-    void setCompilerBase(String compilerBase);
+    void setLanguage(String language);
 }

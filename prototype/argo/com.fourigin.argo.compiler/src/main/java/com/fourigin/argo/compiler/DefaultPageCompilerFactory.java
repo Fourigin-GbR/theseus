@@ -10,13 +10,13 @@ import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
 import com.fourigin.argo.models.datasource.DataSourceQueryBuilder;
 import com.fourigin.argo.models.datasource.DataSourceQueryFactory;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.strategies.DefaultFilenameStrategy;
 import com.fourigin.argo.strategies.FilenameStrategy;
-import com.fourigin.argo.template.engine.TemplateEngineFactory;
-import com.fourigin.utilities.core.PropertiesReplacement;
+import com.fourigin.argo.template.engine.ArgoTemplateEngineFactory;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,23 +25,23 @@ import java.util.Map;
 
 public class DefaultPageCompilerFactory implements PageCompilerFactory {
     private ContentRepositoryFactory contentRepositoryFactory;
-    private TemplateEngineFactory templateEngineFactory;
+    private ArgoTemplateEngineFactory templateEngineFactory;
     private TemplateResolver templateResolver;
     private DataSourcesResolver dataSourcesResolver;
     private String preparedContentRoot;
     private RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory;
     private List<ContentPageProcessor> contentPageProcessors;
-
-    private PropertiesReplacement propertiesReplacement = new PropertiesReplacement("\\[(.+?)\\]");
+    private ProjectSpecificPathResolver pathResolver;
 
     public DefaultPageCompilerFactory(
         ContentRepositoryFactory contentRepositoryFactory,
-        TemplateEngineFactory templateEngineFactory,
+        ArgoTemplateEngineFactory templateEngineFactory,
         TemplateResolver templateResolver,
         DataSourcesResolver dataSourcesResolver,
         RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory,
         String preparedContentRoot,
-        List<ContentPageProcessor> contentPageProcessors
+        List<ContentPageProcessor> contentPageProcessors,
+        ProjectSpecificPathResolver pathResolver
     ) {
         this.contentRepositoryFactory = contentRepositoryFactory;
         this.templateEngineFactory = templateEngineFactory;
@@ -50,42 +50,42 @@ public class DefaultPageCompilerFactory implements PageCompilerFactory {
         this.runtimeConfigurationResolverFactory = runtimeConfigurationResolverFactory;
         this.preparedContentRoot = preparedContentRoot;
         this.contentPageProcessors = contentPageProcessors;
+        this.pathResolver = pathResolver;
     }
 
     @Override
-    public PageCompiler getInstance(String customer, String base) {
+    public PageCompiler getInstance(String projectId, String language) {
         Map<String, DataSourceQueryBuilder> queryBuilders = new HashMap<>();
         queryBuilders.put(TimestampDataSource.TYPE, new DataSourceQueryBuilder(EmptyDataSourceQuery.class));
         queryBuilders.put(SiteStructureDataSource.TYPE, new DataSourceQueryBuilder(SiteStructureDataSourceQuery.class));
         queryBuilders.put(CommonContentDataSource.TYPE, new DataSourceQueryBuilder(CommonContentDataSourceQuery.class));
         DataSourceQueryFactory.setBuilders(queryBuilders);
 
-        DefaultPageCompiler compiler = new DefaultPageCompiler(customer, base);
+        DefaultPageCompiler compiler = new DefaultPageCompiler(projectId, language);
 
-        compiler.setContentRepository(contentRepositoryFactory.getInstance(customer, base));
-        compiler.setTemplateEngineFactory(templateEngineFactory);
+        compiler.setContentRepository(contentRepositoryFactory.getInstance(projectId, language));
+        compiler.setArgoTemplateEngineFactory(templateEngineFactory);
         compiler.setTemplateResolver(templateResolver);
         compiler.setDataSourcesResolver(dataSourcesResolver);
 
-        FilenameStrategy preparedContentFilenameStrategy = new DefaultFilenameStrategy(false);
+        FilenameStrategy filenameStrategy = new DefaultFilenameStrategy(false);
 
-        if(contentPageProcessors != null) {
+        if (contentPageProcessors != null) {
             compiler.setContentPageProcessors(contentPageProcessors);
         }
 
-        String preparedContentResolvedPath = propertiesReplacement.process(preparedContentRoot, "customer", customer);
+        String resolvePath = pathResolver.resolvePath(preparedContentRoot, projectId, language);
 
         DefaultCompilerInterceptor compilerInterceptor = new DefaultCompilerInterceptor(
-            preparedContentResolvedPath,
-            base,
-            preparedContentFilenameStrategy
+            resolvePath,
+            filenameStrategy
         );
 
         compiler.setCompilerInterceptors(Collections.singletonList(
             compilerInterceptor
         ));
 
-        compiler.setRuntimeConfigurationResolver(runtimeConfigurationResolverFactory.getInstance(customer, base));
+        compiler.setRuntimeConfigurationResolver(runtimeConfigurationResolverFactory.getInstance(projectId, language));
 
         return compiler;
     }

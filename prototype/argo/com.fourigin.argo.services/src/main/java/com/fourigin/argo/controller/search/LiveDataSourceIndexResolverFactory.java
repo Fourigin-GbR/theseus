@@ -1,37 +1,39 @@
 package com.fourigin.argo.controller.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.DataSourceIndexResolver;
 import com.fourigin.argo.repository.DataSourceIndexResolverFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 public class LiveDataSourceIndexResolverFactory implements DataSourceIndexResolverFactory {
 
     private ObjectMapper objectMapper;
 
-    private CustomerSpecificConfiguration customerSpecificConfiguration;
+    private ProjectSpecificPathResolver pathResolver;
+
+    private String documentRootBasePath;
 
     private final Logger logger = LoggerFactory.getLogger(LiveDataSourceIndexResolverFactory.class);
 
     @Override
-    public DataSourceIndexResolver getInstance(String customer, String base) {
-        Map<String, Map<String, String>> docRoots = customerSpecificConfiguration.getDocumentRoots();
-        Map<String, String> customerDocRoots = docRoots.get(customer);
-        String path = customerDocRoots.get(base);
+    public DataSourceIndexResolver getInstance(String projectId, String language) {
+        String resolvedPath = pathResolver.resolvePath(documentRootBasePath, projectId, language);
 
-        if (logger.isDebugEnabled()) logger.debug("Instantiating a new LiveDataSourceIndexResolver instance for base '{}' and path '{}'.", base, path);
-        return new LiveDataSourceIndexResolver(path, objectMapper);
+        if (logger.isDebugEnabled()) logger.debug("Instantiating a new LiveDataSourceIndexResolver instance for language '{}' and path '{}'.", language, resolvedPath);
+        return new LiveDataSourceIndexResolver(resolvedPath, objectMapper);
     }
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
-    public void setCustomerSpecificConfiguration(CustomerSpecificConfiguration customerSpecificConfiguration) {
-        this.customerSpecificConfiguration = customerSpecificConfiguration;
+    public void setDocumentRootBasePath(String documentRootBasePath) {
+        this.documentRootBasePath = documentRootBasePath;
+    }
+
+    public void setPathResolver(ProjectSpecificPathResolver pathResolver) {
+        this.pathResolver = pathResolver;
     }
 }

@@ -19,12 +19,12 @@ import java.util.Set;
 public class PagePropertiesUtility implements
     SiteAttributesAwareThymeleafTemplateUtility,
     ProcessingModeAwareThymeleafTemplateUtility,
-    CustomerAwareThymeleafTemplateUtility,
+    ProjectAwareThymeleafTemplateUtility,
     RootSiteNodeAwareThymeleafTemplateUtility {
 
-    private String customer;
+    private String project;
 
-    private String compilerBase;
+    private String language;
 
     private Map<String, String> siteAttributes;
 
@@ -45,23 +45,23 @@ public class PagePropertiesUtility implements
     private final Logger logger = LoggerFactory.getLogger(PagePropertiesUtility.class);
 
     public String getPath(String nodePath) {
-        return getPath(nodePath, compilerBase, processingMode.name());
+        return getPath(nodePath, language, processingMode.name());
     }
 
-    public String getPath(String nodePath, String externalCompilerBase) {
-        return getPath(nodePath, externalCompilerBase, processingMode.name());
+    public String getPath(String nodePath, String language) {
+        return getPath(nodePath, language, processingMode.name());
     }
 
-    public String getPath(String nodePath, String externalCompilerBase, String externalProcessingMode) {
-        String baseUrl = getNodePathAttributeValue(externalCompilerBase, externalProcessingMode);
+    public String getPath(String nodePath, String language, String externalProcessingMode) {
+        String baseUrl = getNodePathAttributeValue(language, externalProcessingMode);
         if (logger.isDebugEnabled())
-            logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
+            logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", language, externalProcessingMode, baseUrl);
 
         InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(
             ProcessingMode.valueOf(externalProcessingMode)
         );
 
-        String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
+        String linkPath = linkResolutionStrategy.resolveLink(project, language, nodePath);
         if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
 
         String pattern;
@@ -74,36 +74,36 @@ public class PagePropertiesUtility implements
                 break;
         }
 
-        return propertiesReplacement.process(pattern, "base", externalCompilerBase);
+        return propertiesReplacement.process(pattern, "language", language);
     }
 
     public String getAbsolutePath(String nodePath) {
-        return getAbsolutePath(nodePath, compilerBase, processingMode.name());
+        return getAbsolutePath(nodePath, language, processingMode.name());
     }
 
-    public String getAbsolutePath(String nodePath, String externalCompilerBase) {
-        return getAbsolutePath(nodePath, externalCompilerBase, processingMode.name());
+    public String getAbsolutePath(String nodePath, String language) {
+        return getAbsolutePath(nodePath, language, processingMode.name());
     }
 
-    public String getAbsolutePath(String nodePath, String externalCompilerBase, String externalProcessingMode) {
-        String baseUrl = getNodePathAttributeValue(externalCompilerBase, externalProcessingMode);
+    public String getAbsolutePath(String nodePath, String language, String mode) {
+        String baseUrl = getNodePathAttributeValue(language, mode);
         if (logger.isDebugEnabled())
-            logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", externalCompilerBase, externalProcessingMode, baseUrl);
+            logger.debug("Value of base path site-attribute for '{}'.'{}': '{}'", language, mode, baseUrl);
 
-        InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(externalProcessingMode));
-        String linkPath = linkResolutionStrategy.resolveLink(customer, externalCompilerBase, nodePath);
+        InternalLinkResolutionStrategy linkResolutionStrategy = internalLinkResolutionStrategies.get(ProcessingMode.valueOf(mode));
+        String linkPath = linkResolutionStrategy.resolveLink(project, language, nodePath);
         if (logger.isDebugEnabled()) logger.debug("Resolved internal link for path '{}': '{}'", nodePath, linkPath);
 
         String pattern = baseUrl + linkPath;
 
-        return propertiesReplacement.process(pattern, "base", externalCompilerBase);
+        return propertiesReplacement.process(pattern, "language", language);
     }
 
     public List<NodeDescriptor> getAncestors(String nodePath) {
-        return getAncestors(nodePath, compilerBase);
+        return getAncestors(nodePath, language);
     }
 
-    public List<NodeDescriptor> getAncestors(String nodePath, String externalCompilerBase) {
+    public List<NodeDescriptor> getAncestors(String nodePath, String language) {
         List<NodeDescriptor> result = new ArrayList<>();
 
         SiteNodeContainerInfo currentNodeInfo = rootSiteNodeContainer;
@@ -136,7 +136,7 @@ public class PagePropertiesUtility implements
             }
 
             NodeDescriptor nodeDescriptor = new NodeDescriptor();
-            nodeDescriptor.setName(SiteNodes.resolveContent(externalCompilerBase, matchingNode.getDisplayName()));
+            nodeDescriptor.setName(SiteNodes.resolveContent(language, matchingNode.getDisplayName()));
             nodeDescriptor.setPath(SiteNodes.getDefaultTarget(matchingNode));
             result.add(nodeDescriptor);
 
@@ -150,12 +150,12 @@ public class PagePropertiesUtility implements
         return result;
     }
 
-    private String getNodePathAttributeValue(String base, String mode) {
+    private String getNodePathAttributeValue(String language, String mode) {
         {
-            String attrName = BASE_URL_PREFIX + base + '.' + mode;
+            String attrName = BASE_URL_PREFIX + language + '.' + mode;
             if (siteAttributes.containsKey(attrName)) {
                 if (logger.isDebugEnabled())
-                    logger.debug("Returning base & mode specific attribute value for '{}'.", attrName);
+                    logger.debug("Returning language & mode specific attribute value for '{}'.", attrName);
                 return siteAttributes.get(attrName);
             }
         }
@@ -169,7 +169,7 @@ public class PagePropertiesUtility implements
             }
         }
 
-        throw new IllegalStateException("No base path site attribute found for base '" + base + "' and mode '" + mode + "'!");
+        throw new IllegalStateException("No base path site attribute found for language '" + language + "' and mode '" + mode + "'!");
     }
 
     public Set<String> getServiceNames() {
@@ -177,15 +177,15 @@ public class PagePropertiesUtility implements
     }
 
     public String getServicePath(String serviceName) {
-        return getServicePath(serviceName, compilerBase, processingMode.name());
+        return getServicePath(serviceName, language, processingMode.name());
     }
 
-    public String getServicePath(String serviceName, String externalProcessingMode) {
-        return getServicePath(serviceName, compilerBase, externalProcessingMode);
+    public String getServicePath(String serviceName, String mode) {
+        return getServicePath(serviceName, language, mode);
     }
 
-    public String getServicePath(String serviceName, String externalCompilerBase, String externalProcessingMode) {
-        String baseUrlAttributeName = BASE_SERVICE_URL_PREFIX + serviceName + '.' + externalProcessingMode;
+    public String getServicePath(String serviceName, String language, String mode) {
+        String baseUrlAttributeName = BASE_SERVICE_URL_PREFIX + serviceName + '.' + mode;
         if (logger.isDebugEnabled()) logger.debug("Searching for service site-attribute '{}'.", baseUrlAttributeName);
 
         String serviceUrl = siteAttributes.get(baseUrlAttributeName);
@@ -196,19 +196,19 @@ public class PagePropertiesUtility implements
             return null;
         }
 
-        return propertiesReplacement.process(serviceUrl, "base", externalCompilerBase);
+        return propertiesReplacement.process(serviceUrl, "language", language);
     }
 
     // *** getters / setters ***
 
     @Override
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setProject(String project) {
+        this.project = project;
     }
 
     @Override
-    public void setCompilerBase(String base) {
-        this.compilerBase = base;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @Override

@@ -54,22 +54,22 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
     }
 
     @Override
-    public Asset retrieveAsset(String base, String assetId) {
-        if (logger.isDebugEnabled()) logger.debug("Retrieving asset for base {} and id {}", base, assetId);
+    public Asset retrieveAsset(String locale, String assetId) {
+        if (logger.isDebugEnabled()) logger.debug("Retrieving asset for locale {} and id {}", locale, assetId);
 
-        AssetProperties props = read(AssetProperties.class, assetId, base);
+        AssetProperties props = read(AssetProperties.class, assetId, locale);
 
         return AssetFactory.createFromProperties(props);
     }
 
     @Override
-    public Map<String, Asset> retrieveAssets(String base, Collection<String> assetIds) {
-        if (logger.isDebugEnabled()) logger.debug("Retrieving assets for base {} and ids {}", base, assetIds);
+    public Map<String, Asset> retrieveAssets(String locale, Collection<String> assetIds) {
+        if (logger.isDebugEnabled()) logger.debug("Retrieving assets for locale {} and ids {}", locale, assetIds);
 
         Map<String, Asset> assets = new HashMap<>();
 
         for (String assetId : assetIds) {
-            AssetProperties props = read(AssetProperties.class, assetId, base);
+            AssetProperties props = read(AssetProperties.class, assetId, locale);
             Asset asset = AssetFactory.createFromProperties(props);
 
             if (asset != null) {
@@ -101,8 +101,8 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
     }
 
     @Override
-    public <T extends Asset> T searchOrCreateAsset(Class<T> clazz, String base, InputStream inputStream) {
-        if (logger.isDebugEnabled()) logger.debug("Search or create an asset of class {} for base {} ", clazz, base);
+    public <T extends Asset> T searchOrCreateAsset(Class<T> clazz, String locale, InputStream inputStream) {
+        if (logger.isDebugEnabled()) logger.debug("Search or create an asset of class {} for locale {} ", clazz, locale);
 
         String blobId;
 
@@ -112,7 +112,7 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
             throw new IllegalArgumentException("Error writing data to the blob repository!", ex);
         }
 
-        Asset existingAsset = retrieveAsset(base, blobId);
+        Asset existingAsset = retrieveAsset(locale, blobId);
         if (existingAsset == null) {
             Asset asset = AssetFactory.createEmpty(clazz);
             asset.setId(blobId);
@@ -128,8 +128,8 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
     }
 
     @Override
-    public String createAsset(String base, Asset asset, InputStream inputStream) {
-        if (logger.isDebugEnabled()) logger.debug("Creating asset {} for base {} ", asset, base);
+    public String createAsset(String locale, Asset asset, InputStream inputStream) {
+        if (logger.isDebugEnabled()) logger.debug("Creating asset {} for locale {} ", asset, locale);
 
         String blobId;
 
@@ -142,44 +142,44 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
         asset.setId(blobId);
 
         AssetProperties props = AssetFactory.convertToProperties(asset);
-        write(props, blobId, base);
+        write(props, blobId, locale);
 
         return blobId;
     }
 
     @Override
-    public void updateAsset(String base, Asset asset) {
-        if (logger.isDebugEnabled()) logger.debug("Updating asset {} for base {} ", asset, base);
+    public void updateAsset(String locale, Asset asset) {
+        if (logger.isDebugEnabled()) logger.debug("Updating asset {} for locale {} ", asset, locale);
 
         AssetProperties props = AssetFactory.convertToProperties(asset);
-        write(props, asset.getId(), base);
+        write(props, asset.getId(), locale);
     }
 
     @Override
-    public void updateAssets(String base, Collection<Asset> assets) {
-        if (logger.isDebugEnabled()) logger.debug("Updating assets {} for base {} ", assets, base);
+    public void updateAssets(String locale, Collection<Asset> assets) {
+        if (logger.isDebugEnabled()) logger.debug("Updating assets {} for locale {} ", assets, locale);
 
         for (Asset asset : assets) {
-            updateAsset(base, asset);
+            updateAsset(locale, asset);
         }
     }
 
     @Override
-    public void removeAsset(String base, String assetId) {
-        if (logger.isDebugEnabled()) logger.debug("Removing asset for base {} and id {}", base, assetId);
+    public void removeAsset(String locale, String assetId) {
+        if (logger.isDebugEnabled()) logger.debug("Removing asset for locale {} and id {}", locale, assetId);
 
-        File propsFile = getFile(AssetProperties.class, assetId, base);
+        File propsFile = getFile(AssetProperties.class, assetId, locale);
         if (propsFile.exists() && !propsFile.delete()) {
             throw new IllegalStateException("Unable to delete asset properties file '" + propsFile.getAbsolutePath() + "'!");
         }
     }
 
     @Override
-    public void removeAssets(String base, Collection<String> assetIds) {
-        if (logger.isDebugEnabled()) logger.debug("Removing assets for base {} and ids {}", base, assetIds);
+    public void removeAssets(String locale, Collection<String> assetIds) {
+        if (logger.isDebugEnabled()) logger.debug("Removing assets for locale {} and ids {}", locale, assetIds);
 
         for (String assetId : assetIds) {
-            removeAsset(base, assetId);
+            removeAsset(locale, assetId);
         }
     }
 

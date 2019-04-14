@@ -2,6 +2,6 @@ package com.fourigin.argo.template.engine;
 
 import com.fourigin.argo.models.template.Type;
 
-public interface TemplateEngineFactory {
-    TemplateEngine getInstance(Type type);
+public interface ArgoTemplateEngineFactory {
+    ArgoTemplateEngine getInstance(Type type);
 }

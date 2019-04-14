@@ -5,11 +5,23 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentElement> {
     private static final long serialVersionUID = -6891589536053329842L;
 
+    private LanguageContent title;
     private List<ContentElement> elements;
+
+    @Override
+    public LanguageContent getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(LanguageContent title) {
+        this.title = title;
+    }
 
     public List<ContentElement> getElements() {
         return elements;
@@ -24,17 +36,14 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
         if (this == o) return true;
         if (!(o instanceof ContentGroup)) return false;
         if (!super.equals(o)) return false;
-
         ContentGroup that = (ContentGroup) o;
-
-        return elements != null ? elements.equals(that.elements) : that.elements == null;
+        return Objects.equals(title, that.title) &&
+            Objects.equals(elements, that.elements);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (elements != null ? elements.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), title, elements);
     }
 
     @Override
@@ -43,8 +52,8 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
 
         builder.append("name='").append(getName()).append('\'');
 
-        String title = getTitle();
-        if(title != null){
+        LanguageContent title = getTitle();
+        if (title != null) {
             builder.append(", title='").append(title).append('\'');
         }
 
@@ -60,40 +69,46 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
 
     public static class Builder {
         private String name;
+        private LanguageContent title = new LanguageContent();
         private List<ContentElement> elements = new ArrayList<>();
         private Map<String, String> attributes = new HashMap<>();
 
-        public Builder withName(String name){
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withElement(ContentElement element){
-            if(element != null) {
+        public Builder withTitle(String language, String title) {
+            this.title.put(language, title);
+            return this;
+        }
+
+        public Builder withElement(ContentElement element) {
+            if (element != null) {
                 elements.add(element);
             }
 
             return this;
         }
 
-        public Builder withElements(ContentElement... elements){
-            if(elements != null){
+        public Builder withElements(ContentElement... elements) {
+            if (elements != null) {
                 this.elements.addAll(Arrays.asList(elements));
             }
 
             return this;
         }
 
-        public Builder withElements(List<ContentElement> elements){
-            if(elements != null){
+        public Builder withElements(List<ContentElement> elements) {
+            if (elements != null) {
                 this.elements.addAll(elements);
             }
 
             return this;
         }
 
-        public Builder withAttribute(String key, String value){
-            if(key != null) {
+        public Builder withAttribute(String key, String value) {
+            if (key != null) {
                 if (value == null) {
                     this.attributes.remove(key);
                 } else {
@@ -104,13 +119,16 @@ public class ContentGroup extends AbstractContentElement implements ContentEleme
             return this;
         }
 
-        public ContentGroup build(){
+        public ContentGroup build() {
             ContentGroup group = new ContentGroup();
             group.setName(name);
-            if(!elements.isEmpty()) {
+            if (!title.isEmpty()) {
+                group.setTitle(title);
+            }
+            if (!elements.isEmpty()) {
                 group.setElements(elements);
             }
-            if(!attributes.isEmpty()){
+            if (!attributes.isEmpty()) {
                 group.setAttributes(attributes);
             }
             return group;

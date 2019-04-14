@@ -5,12 +5,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ContentList extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentListElement> {
 
     private static final long serialVersionUID = 1256571424877498311L;
 
+    private LanguageContent title;
     private List<ContentListElement> elements;
+
+    @Override
+    public LanguageContent getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(LanguageContent title) {
+        this.title = title;
+    }
 
     public List<ContentListElement> getElements() {
         return elements;
@@ -25,17 +37,14 @@ public class ContentList extends AbstractContentElement implements ContentElemen
         if (this == o) return true;
         if (!(o instanceof ContentList)) return false;
         if (!super.equals(o)) return false;
-
         ContentList that = (ContentList) o;
-
-        return elements != null ? elements.equals(that.elements) : that.elements == null;
+        return Objects.equals(title, that.title) &&
+            Objects.equals(elements, that.elements);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (elements != null ? elements.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), title, elements);
     }
 
     @Override
@@ -44,8 +53,8 @@ public class ContentList extends AbstractContentElement implements ContentElemen
 
         builder.append("name='").append(getName()).append('\'');
 
-        String title = getTitle();
-        if(title != null){
+        LanguageContent title = getTitle();
+        if (title != null) {
             builder.append(", title='").append(title).append('\'');
         }
 
@@ -61,40 +70,46 @@ public class ContentList extends AbstractContentElement implements ContentElemen
 
     public static class Builder {
         private String name;
+        private LanguageContent title = new LanguageContent();
         private List<ContentListElement> elements = new ArrayList<>();
         private Map<String, String> attributes = new HashMap<>();
 
-        public Builder withName(String name){
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withElement(ContentListElement element){
-            if(element != null) {
+        public Builder withTitle(String language, String title) {
+            this.title.put(language, title);
+            return this;
+        }
+
+        public Builder withElement(ContentListElement element) {
+            if (element != null) {
                 elements.add(element);
             }
 
             return this;
         }
 
-        public Builder withElements(ContentListElement... elements){
-            if(elements != null){
+        public Builder withElements(ContentListElement... elements) {
+            if (elements != null) {
                 this.elements.addAll(Arrays.asList(elements));
             }
 
             return this;
         }
 
-        public Builder withElements(List<ContentListElement> elements){
-            if(elements != null){
+        public Builder withElements(List<ContentListElement> elements) {
+            if (elements != null) {
                 this.elements.addAll(elements);
             }
 
             return this;
         }
 
-        public Builder withAttribute(String key, String value){
-            if(key != null) {
+        public Builder withAttribute(String key, String value) {
+            if (key != null) {
                 if (value == null) {
                     this.attributes.remove(key);
                 } else {
@@ -105,16 +120,17 @@ public class ContentList extends AbstractContentElement implements ContentElemen
             return this;
         }
 
-
-        public ContentList build(){
-            ContentList group = new ContentList();
-            group.setName(name);
-            group.setElements(elements);
-            if(!attributes.isEmpty()){
-                group.setAttributes(attributes);
+        public ContentList build() {
+            ContentList list = new ContentList();
+            list.setName(name);
+            if (!title.isEmpty()) {
+                list.setTitle(title);
             }
-            return group;
+            list.setElements(elements);
+            if (!attributes.isEmpty()) {
+                list.setAttributes(attributes);
+            }
+            return list;
         }
-
     }
 }

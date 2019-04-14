@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/{customer}/search")
+@RequestMapping("/{project}/search")
 public class SearchController {
     private final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
@@ -30,35 +30,35 @@ public class SearchController {
     @RequestMapping("/")
     @ResponseBody
     public List<String> resolveMatchingIndexTargets(
-        @PathVariable("customer") String customer,
-        @RequestParam("base") String base,
+        @PathVariable("project") String project,
+        @RequestParam("locale") String language,
         @RequestParam("path") String path,
         @RequestBody SearchRequest request
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", base, path, request);
+        if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", language, path, request);
 
-        MDC.put("base", base);
+        MDC.put("language", language);
 
         try {
-            DataSourceIndexResolver resolver = dataSourceIndexResolverFactory.getInstance(customer, base);
+            DataSourceIndexResolver resolver = dataSourceIndexResolverFactory.getInstance(project, language);
             if (resolver == null) {
-                throw new IllegalArgumentException("No data-source index resolver found for customer '" + customer + "' and base '" + base + "'!");
+                throw new IllegalArgumentException("No data-source index resolver found for project '" + project + "' and language '" + language + "'!");
             }
 
             String indexName = request.getIndex();
-            DataSourceIndex index = resolver.resolveIndex(base, path, indexName);
+            DataSourceIndex index = resolver.resolveIndex(path, indexName);
             if (index == null) {
-                throw new IllegalArgumentException("No index found for base '" + base + "', path '" + path + "' and name '" + indexName + "'!");
+                throw new IllegalArgumentException("No index found for language '" + language + "', path '" + path + "' and name '" + indexName + "'!");
             }
 
             if (logger.isDebugEnabled()) logger.debug("Resolved index: {}", index);
 
-            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields());
+            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields(), language);
             if (logger.isDebugEnabled()) logger.debug("References: {}", references);
 
             return references;
         } finally {
-            MDC.remove("base");
+            MDC.remove("language");
         }
     }
 }

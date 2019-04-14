@@ -1,7 +1,7 @@
 package com.fourigin.argo.controller.system;
 
 import com.fourigin.argo.ServiceErrorResponse;
-import com.fourigin.argo.controller.compile.RequestParameters;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/{customer}/system")
+@RequestMapping("/{project}/system")
 public class SystemController {
 
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
@@ -43,20 +43,20 @@ public class SystemController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView dashboard(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language
     ) {
         if (logger.isDebugEnabled())
-            logger.debug("Processing system request for customer '{}' and base '{}'.", customer, base);
+            logger.debug("Processing system request for project '{}' and language '{}'.", project, language);
 
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
         SiteNodeContainerInfo root = contentRepository.resolveInfo(SiteNodeContainerInfo.class, "/");
 
         ModelAndView modelAndView = new ModelAndView("system");
 
         modelAndView.addObject("system", new ArgoSystem.Builder()
-            .withCustomer(customer)
-            .withBase(base)
+            .withProject(project)
+            .withLanguage(language)
             .withRoot(root)
             .build()
         );
@@ -67,13 +67,13 @@ public class SystemController {
     @ResponseBody
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     public List<TreeItem> resolveTree(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language
     ) {
         if (logger.isDebugEnabled())
-            logger.debug("Processing tree request for customer '{}' and base '{}'.", customer, base);
+            logger.debug("Processing tree request for project '{}' and language '{}'.", project, language);
 
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
         SiteNodeContainerInfo root = contentRepository.resolveInfo(SiteNodeContainerInfo.class, "/");
         if (root == null) {
             return Collections.emptyList();
@@ -95,20 +95,20 @@ public class SystemController {
     @ResponseBody
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public TreeItemInfo resolveInfo(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path
     ) {
         if (logger.isDebugEnabled())
-            logger.debug("Processing info request for customer '{}', base '{}' and path '{}'.", customer, base, path);
+            logger.debug("Processing info request for project '{}', language '{}' and path '{}'.", project, language, path);
 
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
         SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, path);
 
         TreeItemInfo result = new TreeItemInfo();
         result.setPath(path);
-        result.setLocalizedName(getLocalizedValue(info.getLocalizedName(), base));
-        result.setDisplayName(getLocalizedValue(info.getDisplayName(), base));
+        result.setLocalizedName(getLocalizedValue(info.getLocalizedName(), language));
+        result.setDisplayName(getLocalizedValue(info.getDisplayName(), language));
         result.setDescription(info.getDescription());
 
         if (!SiteNodeContainerInfo.class.isAssignableFrom(info.getClass())) {
@@ -146,15 +146,15 @@ public class SystemController {
     @ResponseBody
     @RequestMapping(value = "/updateState", method = RequestMethod.GET)
     public UpdateResult resolveInfo(
-        @PathVariable String customer,
-        @RequestParam(RequestParameters.BASE) String base,
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.PATH) String path,
         @RequestParam("state") String state
     ) {
         if (logger.isDebugEnabled())
-            logger.debug("Processing updateState request for customer '{}', base '{}' and path '{}'.", customer, base, path);
+            logger.debug("Processing updateState request for project '{}', language '{}' and path '{}'.", project, language, path);
 
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
         SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, path);
         if (!PageInfo.class.isAssignableFrom(info.getClass())) {
             return UpdateResult.failed("Invalid site structure path '" + path + "'! Unable to update state of a non-page node!");
@@ -215,12 +215,12 @@ public class SystemController {
         return UpdateResult.ok();
     }
 
-    private String getLocalizedValue(Map<String, String> values, String base) {
+    private String getLocalizedValue(Map<String, String> values, String language) {
         if (values == null || values.isEmpty()) {
             return null;
         }
 
-        return values.get(base);
+        return values.get(language);
     }
 
     private TreeItem convertNode(SiteNodeInfo info) {

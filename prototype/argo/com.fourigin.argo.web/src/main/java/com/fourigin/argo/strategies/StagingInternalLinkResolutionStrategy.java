@@ -18,18 +18,18 @@ public class StagingInternalLinkResolutionStrategy implements InternalLinkResolu
     }
 
     @Override
-    public String resolveLink(String customer, String base, String nodePath) {
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(customer, base);
+    public String resolveLink(String project, String language, String nodePath) {
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
         SiteNodeInfo nodeInfo = contentRepository.resolveInfo(SiteNodeInfo.class, nodePath);
         String targetPath = SiteNodes.getDefaultTarget(nodeInfo);
         PageInfo info = contentRepository.resolveInfo(PageInfo.class, targetPath);
 
-        String folder = filenameStrategy.getFolder(base, info);
+        String folder = filenameStrategy.getFolder(language, info);
         if (folder.endsWith("/")) {
             folder = folder.substring(0, folder.length() - 1);
         }
 
-        String file = filenameStrategy.getFilename(base, info);
+        String file = filenameStrategy.getFilename(language, info);
         if (file.startsWith("/")) {
             file = file.substring(1);
         }

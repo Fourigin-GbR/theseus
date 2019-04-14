@@ -60,7 +60,7 @@
                     <span class="graphicTextBox">
                         <ul class="graphicTextBox__content graphicTextBox__content--path">
                             <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
-                                <a href="#" th:href="@{/compile/(base=${argo.base},path=${pathToken})}" th:text="${pathToken}"></a>
+                                <a href="#" th:href="@{/compile/(locale=${argo.language},path=${pathToken})}" th:text="${pathToken}"></a>
                             </li>
                         </ul>
                     </span>
@@ -107,7 +107,7 @@
                                         el = ${argo.contentElementUtility.getElement(path)},
                                         elType = ${argo.contentElementUtility.getElementType(el)}">
                                     <!---->
-                                    <input type="hidden" name="base" value="DE"/>
+                                    <input type="hidden" name="locale" value="DE"/>
                                     <input type="hidden" name="path" value="home"/>
                                     <input type="hidden" name="contentPath" th:value="${path}" value="/"/>
                                     <input type="hidden" name="originalChecksum" th:value="${argo.pageInfo.checksum.combinedValue}" value="xxx"/>
@@ -136,7 +136,7 @@
         </div>
 
         <iframe scrolling="no" id="pageContent" height="auto" frameborder="0" width="100%" src="#"
-            th:src="@{/compile/(base=${argo.base},path=${argo.path})}"></iframe>
+            th:src="@{/compile/(locale=${argo.language},path=${argo.path})}"></iframe>
     </div>
 
     <script type='text/javascript'>

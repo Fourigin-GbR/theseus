@@ -6,6 +6,7 @@ import com.fourigin.argo.models.content.ContentPagePrototype;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.models.template.Type;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,20 +28,23 @@ public class DirectoryContentBasedTemplateResolver implements TemplateResolver {
 
     private ObjectMapper objectMapper;
 
+    private ProjectSpecificPathResolver pathResolver;
+
     private final Logger logger = LoggerFactory.getLogger(DirectoryContentBasedTemplateResolver.class);
 
-    public DirectoryContentBasedTemplateResolver(String templateBasePath, ObjectMapper objectMapper) {
+    public DirectoryContentBasedTemplateResolver(String templateBasePath, ObjectMapper objectMapper, ProjectSpecificPathResolver pathResolver) {
         this.templateBasePath = templateBasePath;
         this.objectMapper = objectMapper;
+        this.pathResolver = pathResolver;
     }
 
     @Override
-    public Template retrieve(String id) {
+    public Template retrieve(String projectId, String id) {
         Objects.requireNonNull(id, "Template id must not be null!");
 
-        if (logger.isDebugEnabled()) logger.debug("Retrieving template for '{}' ...", id);
+        if (logger.isDebugEnabled()) logger.debug("Retrieving template for project '{}' and id '{}' ...", projectId, id);
 
-        File baseDir = new File(templateBasePath);
+        File baseDir = new File(pathResolver.resolvePath(templateBasePath, projectId));
         String templateReference = id;
         int pos = templateReference.indexOf('.');
         while(pos >= 0){

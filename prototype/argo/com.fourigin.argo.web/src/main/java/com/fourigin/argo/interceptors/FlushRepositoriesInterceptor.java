@@ -1,6 +1,6 @@
 package com.fourigin.argo.interceptors;
 
-import com.fourigin.argo.controller.compile.RequestParameters;
+import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
@@ -41,29 +41,29 @@ public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
         boolean flushCaches = Boolean.valueOf(request.getParameter(RequestParameters.FLUSH));
 
         if(flushCaches) {
-            String base = request.getParameter(RequestParameters.BASE);
+            String language = request.getParameter(RequestParameters.LANGUAGE);
 
             Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 
             if (logger.isInfoEnabled()) logger.info("path-variables: {}", pathVariables);
 
-            String customer = (String) pathVariables.get("customer");
+            String project = (String) pathVariables.get("project");
 
-            MDC.put("customer", customer);
-            MDC.put("base", base);
+            MDC.put("project", project);
+            MDC.put("language", language);
 
             try {
-                ContentResolver contentResolver = contentRepositoryFactory.getInstance(customer, base);
+                ContentResolver contentResolver = contentRepositoryFactory.getInstance(project, language);
 
-                if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", base);
+                if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", language);
                 contentResolver.flush();
 
-                if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", base);
+                if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", language);
                 cmsRequestAggregationResolver.flush();
             }
             finally {
-                MDC.remove("customer");
-                MDC.remove("base");
+                MDC.remove("project");
+                MDC.remove("language");
             }
         }
     }

@@ -6,18 +6,18 @@ import java.util.Objects;
 public class RetrieveContentRequest extends AbstractContentElementPointer implements Serializable, ContentElementPointer {
     private static final long serialVersionUID = -1532883135997976347L;
 
-    private String base;
+    private String language;
     private String path;
     private String contentPath;
 
     @Override
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getPath() {
@@ -44,20 +44,20 @@ public class RetrieveContentRequest extends AbstractContentElementPointer implem
         if (this == o) return true;
         if (!(o instanceof RetrieveContentRequest)) return false;
         RetrieveContentRequest that = (RetrieveContentRequest) o;
-        return Objects.equals(base, that.base) &&
+        return Objects.equals(language, that.language) &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentPath, that.contentPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, path, contentPath);
+        return Objects.hash(language, path, contentPath);
     }
 
     @Override
     public String toString() {
         return "RetrieveContentRequest{" +
-            "base='" + base + '\'' +
+            "language='" + language + '\'' +
             ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             '}';

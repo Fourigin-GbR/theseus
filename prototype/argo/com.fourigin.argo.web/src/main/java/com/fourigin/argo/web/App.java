@@ -8,9 +8,10 @@ import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
+import com.fourigin.argo.config.ProjectsConfiguration;
 import com.fourigin.argo.controller.assets.ThumbnailDimensions;
 import com.fourigin.argo.controller.assets.ThumbnailResolver;
-import com.fourigin.argo.forms.config.CustomerSpecificConfiguration;
+import com.fourigin.argo.forms.config.ProjectSpecificConfiguration;
 import com.fourigin.argo.models.template.Type;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
@@ -26,11 +27,12 @@ import com.fourigin.argo.strategies.FileCompilerOutputStrategy;
 import com.fourigin.argo.strategies.FilenameStrategy;
 import com.fourigin.argo.strategies.MappingDocumentRootResolverStrategy;
 import com.fourigin.argo.strategies.StagingInternalLinkResolutionStrategy;
-import com.fourigin.argo.template.engine.DefaultTemplateEngineFactory;
+import com.fourigin.argo.template.engine.ArgoTemplateEngine;
+import com.fourigin.argo.template.engine.ArgoTemplateEngineFactory;
+import com.fourigin.argo.template.engine.DefaultArgoTemplateEngineFactory;
+import com.fourigin.argo.template.engine.InternalTemplateEngineFactory;
 import com.fourigin.argo.template.engine.ProcessingMode;
-import com.fourigin.argo.template.engine.TemplateEngine;
-import com.fourigin.argo.template.engine.TemplateEngineFactory;
-import com.fourigin.argo.template.engine.ThymeleafTemplateEngine;
+import com.fourigin.argo.template.engine.ThymeleafArgoTemplateEngine;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -55,11 +57,8 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.awt.Dimension;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -82,8 +81,6 @@ import java.util.Map;
 @EnableCaching
 public class App {
 
-//    private static final String APP_NAME = "argo";
-
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -93,6 +90,12 @@ public class App {
     @Value("${prepared-content.base}")
     private String preparedContentRoot;
 
+    @Value("${document-root.base}")
+    private String documentRootBasePath;
+
+    @Value("${assets.load-balancer-root}")
+    private String loadBalancerBasePath;
+
     @Value("${assets.thumbnails.target}")
     private String thumbnailsDirectory;
 
@@ -100,18 +103,18 @@ public class App {
 
     private RuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory;
 
-    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
-    private TemplateEngineFactory templateEngineFactory;
+    private ArgoTemplateEngineFactory templateEngineFactory;
 
-    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
     private TemplateResolver templateResolver;
 
-    private AssetResolver assetResolver;
+    @Autowired
+    private ProjectsConfiguration projectsConfiguration;
 
+    private AssetResolver assetResolver;
+    
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
         app.addListeners(
-//            new ApplicationPidFileWriter(APP_NAME + ".pid")
             new ApplicationPidFileWriter()  // DEFAULT: application.pid
         );
         app.run(args);
@@ -126,7 +129,7 @@ public class App {
 
     @Bean
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
-        return new MappingDocumentRootResolverStrategy(customerSpecificConfiguration());
+        return new MappingDocumentRootResolverStrategy(projectsConfiguration.pathResolver(), documentRootBasePath);
     }
 
     @Bean
@@ -142,35 +145,45 @@ public class App {
 
     // *** TEMPLATE ***
 
-    private SpringTemplateEngine springTemplateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//    private SpringTemplateEngine springTemplateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//
+//        templateEngine.setTemplateResolver(fileTemplateResolver());
+//
+//        return templateEngine;
+//    }
 
-        templateEngine.setTemplateResolver(fileTemplateResolver());
+//    private FileTemplateResolver fileTemplateResolver() {
+//        FileTemplateResolver templateResolver = new FileTemplateResolver();
+//
+//        String prefix = templateBasePath;
+//        if (!prefix.endsWith("/")) {
+//            prefix += "/";
+//        }
+//        templateResolver.setPrefix(prefix);
+//        templateResolver.setSuffix(".html");
+//        templateResolver.setTemplateMode("HTML");
+//        templateResolver.setCacheable(false);
+//        templateResolver.setCacheTTLMs(1L);
+//        templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//
+//        return templateResolver;
+//    }
 
-        return templateEngine;
-    }
+    @Bean
+    public InternalTemplateEngineFactory internalTemplateEngineFactory(){
+        InternalTemplateEngineFactory factory = new InternalTemplateEngineFactory();
 
-    @SuppressWarnings("Duplicates")
-    private FileTemplateResolver fileTemplateResolver() {
-        FileTemplateResolver templateResolver = new FileTemplateResolver();
-        String prefix = templateBasePath;
-        if (!prefix.endsWith("/")) {
-            prefix += "/";
-        }
-        templateResolver.setPrefix(prefix);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML");
-        templateResolver.setCacheable(false);
-        templateResolver.setCacheTTLMs(1L);
-        templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        factory.setPathResolver(projectsConfiguration.pathResolver());
+        factory.setTemplateBasePath(templateBasePath);
 
-        return templateResolver;
+        return factory;
     }
 
     @Bean
-    public ThymeleafTemplateEngine thymeleafTemplateEngine() {
-        ThymeleafTemplateEngine thymeleafEngine = new ThymeleafTemplateEngine();
-        thymeleafEngine.setThymeleafInternalTemplateEngine(springTemplateEngine());
+    public ThymeleafArgoTemplateEngine thymeleafTemplateEngine() {
+        ThymeleafArgoTemplateEngine thymeleafEngine = new ThymeleafArgoTemplateEngine();
+        thymeleafEngine.setInternalTemplateEngineFactory(internalTemplateEngineFactory());
         thymeleafEngine.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies());
         return thymeleafEngine;
     }
@@ -186,10 +199,10 @@ public class App {
     }
 
     @Bean
-    public DefaultTemplateEngineFactory templateEngineFactory() {
-        DefaultTemplateEngineFactory factory = new DefaultTemplateEngineFactory();
+    public DefaultArgoTemplateEngineFactory defaultTemplateEngineFactory() {
+        DefaultArgoTemplateEngineFactory factory = new DefaultArgoTemplateEngineFactory();
 
-        Map<Type, TemplateEngine> engines = new HashMap<>();
+        Map<Type, ArgoTemplateEngine> engines = new HashMap<>();
 
         engines.put(Type.THYMELEAF, thymeleafTemplateEngine());
 
@@ -208,7 +221,8 @@ public class App {
             dataSourcesResolver(),
             runtimeConfigurationResolverFactory,
             preparedContentRoot,
-            contentPageProcessors()
+            contentPageProcessors(),
+            projectsConfiguration.pathResolver()
         );
     }
 
@@ -228,9 +242,9 @@ public class App {
     public List<ContentPageProcessor> contentPageProcessors(){
         AssetsContentPageProcessor assetsContentPageProcessor = new AssetsContentPageProcessor();
         assetsContentPageProcessor.setAssetResolver(assetResolver);
-        assetsContentPageProcessor.setCustomerSpecificConfiguration(customerSpecificConfiguration());
-//        assetsContentPageProcessor.setAssetsDomain(assetsDomain);
-//        assetsContentPageProcessor.setLoadBalancerDocumentRoots(loadBalancerDocumentRoots);
+        assetsContentPageProcessor.setProjectSpecificConfiguration(projectSpecificConfiguration());
+        assetsContentPageProcessor.setPathResolver(projectsConfiguration.pathResolver());
+        assetsContentPageProcessor.setLoadBalancerBasePath(loadBalancerBasePath);
 
         return Collections.singletonList(
             assetsContentPageProcessor
@@ -269,7 +283,7 @@ public class App {
     }
 
     @Autowired
-    public void setTemplateEngineFactory(TemplateEngineFactory templateEngineFactory) {
+    public void setTemplateEngineFactory(ArgoTemplateEngineFactory templateEngineFactory) {
         this.templateEngineFactory = templateEngineFactory;
     }
 
@@ -289,9 +303,9 @@ public class App {
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "customer")
-    public CustomerSpecificConfiguration customerSpecificConfiguration(){
-        return new CustomerSpecificConfiguration();
+    @ConfigurationProperties(prefix = "project")
+    public ProjectSpecificConfiguration projectSpecificConfiguration(){
+        return new ProjectSpecificConfiguration();
     }
 
     //******* QUARTZ
@@ -303,7 +317,7 @@ public class App {
         jobDetailFactory.setDurability(true);
 
         Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("customer", "greekestate");
+        dataMap.put("project", "greekestate");
         dataMap.put("bases", Arrays.asList("DE", "EN", "RU"));
         jobDetailFactory.setJobDataMap(new JobDataMap(dataMap));
 

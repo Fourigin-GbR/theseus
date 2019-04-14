@@ -8,15 +8,16 @@ import com.fourigin.argo.models.template.TemplateVariation;
 import com.fourigin.argo.template.engine.api.Argo;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import com.fourigin.argo.template.engine.utilities.ContentPageAwareThymeleafTemplateUtility;
-import com.fourigin.argo.template.engine.utilities.CustomerAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.PageInfoAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ProcessingModeAwareThymeleafTemplateUtility;
+import com.fourigin.argo.template.engine.utilities.ProjectAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.RootSiteNodeAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.SiteAttributesAwareThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtility;
 import com.fourigin.argo.template.engine.utilities.ThymeleafTemplateUtilityFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.io.OutputStream;
@@ -25,16 +26,17 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTemplateEngine, SiteAttributesAwareTemplateEngine {
-    private org.thymeleaf.TemplateEngine thymeleafInternalTemplateEngine;
+public class ThymeleafArgoTemplateEngine implements ArgoTemplateEngine, PageInfoAwareTemplateEngine, SiteAttributesAwareTemplateEngine {
+
+    private InternalTemplateEngineFactory internalTemplateEngineFactory;
 
     private Map<String, ThymeleafTemplateUtilityFactory> templateUtilityFactories;
 
     private String utilitiesPrefix;
 
-    private String customer;
+    private String project;
 
-    private String base;
+    private String language;
 
     private String path;
 
@@ -46,15 +48,15 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     private static final String DEFAULT_UTILITIES_PREFIX = "util_";
 
-    private final Logger logger = LoggerFactory.getLogger(ThymeleafTemplateEngine.class);
+    private final Logger logger = LoggerFactory.getLogger(ThymeleafArgoTemplateEngine.class);
 
-    public ThymeleafTemplateEngine duplicate() {
-        ThymeleafTemplateEngine clone = new ThymeleafTemplateEngine();
+    public ThymeleafArgoTemplateEngine duplicate() {
+        ThymeleafArgoTemplateEngine clone = new ThymeleafArgoTemplateEngine();
 
-        clone.setThymeleafInternalTemplateEngine(thymeleafInternalTemplateEngine);
+        clone.setInternalTemplateEngineFactory(internalTemplateEngineFactory);
         clone.setTemplateUtilityFactories(templateUtilityFactories);
-        clone.setCustomer(customer);
-        clone.setBase(base);
+        clone.setProject(project);
+        clone.setLanguage(language);
         clone.setPath(path);
         clone.setPageInfo(pageInfo);
         clone.setSiteAttributes(siteAttributes);
@@ -66,7 +68,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     @Override
     public void process(ContentPage contentPage, Template template, TemplateVariation templateVariation, ProcessingMode processingMode, OutputStream out) {
-        if (thymeleafInternalTemplateEngine == null) {
+        TemplateEngine templateEngine = internalTemplateEngineFactory.getInstance(project);
+        if (templateEngine == null) {
             throw new IllegalStateException("No thymeleaf internal template engine defined!");
         }
 
@@ -79,8 +82,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
         Context context = new Context();
         context.setVariable("argo", new Argo.Builder()
-            .withCustomer(customer)
-            .withBase(base)
+            .withProject(project)
+            .withLanguage(language)
             .withPath(path)
             .withContentPage(contentPage)
             .withPageInfo(pageInfo)
@@ -91,17 +94,17 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
             .build()
         );
 
-        addUtilities(templateUtilityFactories, context, base, processingMode);
+        addUtilities(templateUtilityFactories, context, language, processingMode);
 
         try (Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
-            thymeleafInternalTemplateEngine.process(templateName, context, writer);
+            templateEngine.process(templateName, context, writer);
         } catch (Exception ex) {
             if (logger.isErrorEnabled()) logger.error("Error occurred while compiling content page!", ex);
             throw new ContentPageCompilerException("Error occurred while compiling content page!", ex);
         }
     }
 
-    private void addUtilities(Map<String, ThymeleafTemplateUtilityFactory> utilities, Context context, String base, ProcessingMode processingMode) {
+    private void addUtilities(Map<String, ThymeleafTemplateUtilityFactory> utilities, Context context, String language, ProcessingMode processingMode) {
         if (utilities != null && !utilities.isEmpty()) {
             String prefix = utilitiesPrefix != null ? utilitiesPrefix : DEFAULT_UTILITIES_PREFIX;
 
@@ -116,19 +119,19 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
                     ContentPage contentPage = (ContentPage) context.getVariable(CONTENT_PAGE);
                     ContentPageAwareThymeleafTemplateUtility contentPageUtility = ContentPageAwareThymeleafTemplateUtility.class.cast(utility);
                     contentPageUtility.setContentPage(contentPage);
-                    contentPageUtility.setCompilerBase(base);
+                    contentPageUtility.setLanguage(language);
                 }
                 if (PageInfoAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     PageInfoAwareThymeleafTemplateUtility pageInfoUtility = PageInfoAwareThymeleafTemplateUtility.class.cast(utility);
                     pageInfoUtility.setPageInfo(pageInfo);
                 }
-                if (CustomerAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
-                    CustomerAwareThymeleafTemplateUtility customerUtility = CustomerAwareThymeleafTemplateUtility.class.cast(utility);
-                    customerUtility.setCustomer(customer);
+                if (ProjectAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
+                    ProjectAwareThymeleafTemplateUtility projectAwareUtility = ProjectAwareThymeleafTemplateUtility.class.cast(utility);
+                    projectAwareUtility.setProject(project);
                 }
                 if (SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
                     SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
-                    siteAttributesUtility.setCompilerBase(base);
+                    siteAttributesUtility.setLanguage(language);
                     siteAttributesUtility.setSiteAttributes(siteAttributes);
                 }
                 if (ProcessingModeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
@@ -162,8 +165,8 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         return root;
     }
 
-    public void setThymeleafInternalTemplateEngine(org.thymeleaf.TemplateEngine thymeleafInternalTemplateEngine) {
-        this.thymeleafInternalTemplateEngine = thymeleafInternalTemplateEngine;
+    public void setInternalTemplateEngineFactory(InternalTemplateEngineFactory internalTemplateEngineFactory) {
+        this.internalTemplateEngineFactory = internalTemplateEngineFactory;
     }
 
     public void setTemplateUtilityFactories(Map<String, ThymeleafTemplateUtilityFactory> templateUtilityFactories) {
@@ -174,13 +177,13 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
         this.utilitiesPrefix = utilitiesPrefix;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setProject(String project) {
+        this.project = project;
     }
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @Override
@@ -204,11 +207,12 @@ public class ThymeleafTemplateEngine implements TemplateEngine, PageInfoAwareTem
 
     @Override
     public String toString() {
-        return "ThymeleafTemplateEngine{" +
-            "templateUtilityFactories=" + templateUtilityFactories +
+        return "ThymeleafArgoTemplateEngine{" +
+            "internalTemplateEngineFactory=" + internalTemplateEngineFactory +
+            ", templateUtilityFactories=" + templateUtilityFactories +
             ", utilitiesPrefix='" + utilitiesPrefix + '\'' +
-            ", customer='" + customer + '\'' +
-            ", base='" + base + '\'' +
+            ", project='" + project + '\'' +
+            ", language='" + language + '\'' +
             ", path='" + path + '\'' +
             ", pageInfo=" + pageInfo +
             ", siteAttributes=" + siteAttributes +

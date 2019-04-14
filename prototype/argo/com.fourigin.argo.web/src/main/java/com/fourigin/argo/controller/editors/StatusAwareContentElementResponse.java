@@ -9,7 +9,7 @@ public class StatusAwareContentElementResponse extends AbstractContentElementPoi
 
     private static final long serialVersionUID = -6840096148919100384L;
     
-    private String base;
+    private String language;
     private String path;
     private String contentPath;
     private boolean status;
@@ -17,13 +17,13 @@ public class StatusAwareContentElementResponse extends AbstractContentElementPoi
     private ContentElement currentContentElement;
 
     @Override
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String locale) {
+        this.language = locale;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class StatusAwareContentElementResponse extends AbstractContentElementPoi
         if (!(o instanceof StatusAwareContentElementResponse)) return false;
         StatusAwareContentElementResponse that = (StatusAwareContentElementResponse) o;
         return status == that.status &&
-            Objects.equals(base, that.base) &&
+            Objects.equals(language, that.language) &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentPath, that.contentPath) &&
             Objects.equals(currentChecksum, that.currentChecksum) &&
@@ -85,13 +85,13 @@ public class StatusAwareContentElementResponse extends AbstractContentElementPoi
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, path, contentPath, status, currentChecksum, currentContentElement);
+        return Objects.hash(language, path, contentPath, status, currentChecksum, currentContentElement);
     }
 
     @Override
     public String toString() {
         return "StatusAwareContentElementResponse{" +
-            "base='" + base + '\'' +
+            "language='" + language + '\'' +
             ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             ", status=" + status +

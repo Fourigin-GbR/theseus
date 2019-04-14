@@ -9,10 +9,13 @@ import com.fourigin.argo.models.content.elements.ContentElementsContainer;
 import com.fourigin.argo.models.content.elements.ContentGroup;
 import com.fourigin.argo.models.content.elements.ContentList;
 import com.fourigin.argo.models.content.elements.ContentListElement;
+import com.fourigin.argo.models.content.elements.DataAwareContentElement;
 import com.fourigin.argo.models.content.elements.GroupContentListElement;
+import com.fourigin.argo.models.content.elements.LanguageContent;
 import com.fourigin.argo.models.content.elements.LinkAwareContentElement;
 import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;
 import com.fourigin.argo.models.content.elements.TextAwareContentElement;
+import com.fourigin.argo.models.content.elements.TitleAwareContentElement;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.template.engine.IncompatibleContentElementException;
 
@@ -25,7 +28,7 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     private ContentPage contentPage;
 
-    private String compilerBase;
+    private String language;
 
     public ContentElementType getElementType(ContentElement element) {
         if (TextAwareContentElement.class.isAssignableFrom(element.getClass())) {
@@ -101,7 +104,7 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         }
 
         for (DataSourceContent dataSource : dataSources) {
-            if(dataSourceName.equals(dataSource.getName())){
+            if (dataSourceName.equals(dataSource.getName())) {
                 return dataSource.getIdentifier();
             }
         }
@@ -109,9 +112,9 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         throw new IllegalArgumentException("No data-source found for name '" + dataSourceName + "'!");
     }
 
-    public String getPageTitle(){
+    public String getPageTitle() {
         ContentPageMetaData metaData = contentPage.getMetaData();
-        return metaData.getContextSpecificTitle(compilerBase, true);
+        return metaData.getContextSpecificTitle(language, true);
     }
 
     public String getName(String path) {
@@ -124,20 +127,44 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return element.getName();
     }
 
-    // TODO: allow also context specific titles
     public String getTitle(String path) {
-        ContentElement element = getElement(path);
-        return element.getTitle();
+        TitleAwareContentElement element = getTitleAwareElement(path);
+        LanguageContent title = element.getTitle();
+        if (title != null) {
+            return title.get(language);
+        }
+
+        return null;
     }
 
     public String getTitle(ContentElementsContainer container, String path) {
-        ContentElement element = getElement(container, path);
-        return element.getTitle();
+        TitleAwareContentElement element = getTitleAwareElement(container, path);
+        LanguageContent title = element.getTitle();
+        if (title != null) {
+            return title.get(language);
+        }
+
+        return null;
     }
 
     public String getContent(String path) {
-        TextAwareContentElement textElement = getTextAwareElement(path);
-        return textElement.getContextSpecificContent(compilerBase, true);
+        ContentElement element = getElement(path);
+        Class<? extends ContentElement> elementClass = element.getClass();
+
+        if (TextAwareContentElement.class.isAssignableFrom(elementClass)) {
+            LanguageContent content = ((TextAwareContentElement) element).getContent();
+            if (content != null) {
+                return content.get(language);
+            }
+
+            return null;
+        }
+
+        if (DataAwareContentElement.class.isAssignableFrom(elementClass)) {
+            return ((DataAwareContentElement) element).getContent();
+        }
+
+        return null;
     }
 
     public int getContentAsInt(String path) {
@@ -149,8 +176,23 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
     }
 
     public String getContent(ContentElementsContainer container, String path) {
-        TextAwareContentElement textElement = getTextAwareElement(container, path);
-        return textElement.getContextSpecificContent(compilerBase, true);
+        ContentElement element = getElement(container, path);
+        Class<? extends ContentElement> elementClass = element.getClass();
+
+        if (TextAwareContentElement.class.isAssignableFrom(elementClass)) {
+            LanguageContent content = ((TextAwareContentElement) element).getContent();
+            if (content != null) {
+                return content.get(language);
+            }
+
+            return null;
+        }
+
+        if (DataAwareContentElement.class.isAssignableFrom(elementClass)) {
+            return ((DataAwareContentElement) element).getContent();
+        }
+
+        return null;
     }
 
     public int getContentAsInt(ContentElementsContainer container, String path) {
@@ -162,12 +204,8 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
     }
 
     public String getOptionalContent(String path, String defaultValue) {
-        try {
-            TextAwareContentElement textElement = getTextAwareElement(path);
-            return textElement.getContextSpecificContent(compilerBase, true);
-        } catch (Throwable ex) {
-            return defaultValue;
-        }
+        String content = getContent(path);
+        return content == null ? defaultValue : content;
     }
 
     public int getOptionalContentAsInt(String path, int defaultValue) {
@@ -178,13 +216,9 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return Float.parseFloat(getOptionalContent(path, String.valueOf(defaultValue)));
     }
 
-    public String getOptionalContent(ContentElementsContainer container, String path, String fallback) {
-        try {
-            TextAwareContentElement textElement = getTextAwareElement(container, path);
-            return textElement.getContextSpecificContent(compilerBase, true);
-        } catch (Throwable ex) {
-            return fallback;
-        }
+    public String getOptionalContent(ContentElementsContainer container, String path, String defaultValue) {
+        String content = getContent(container, path);
+        return content == null ? defaultValue : content;
     }
 
     public int getOptionalContentAsInt(ContentElementsContainer container, String path, int defaultValue) {
@@ -227,7 +261,27 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return TextAwareContentElement.class.cast(element);
     }
 
-//    private LinkAwareContentElement getLinkAwareElement(String path){
+    private TitleAwareContentElement getTitleAwareElement(String path) {
+        ContentElement element = getElement(path);
+
+        if (!TitleAwareContentElement.class.isAssignableFrom(element.getClass())) {
+            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a title-aware element!");
+        }
+
+        return TitleAwareContentElement.class.cast(element);
+    }
+
+    private TitleAwareContentElement getTitleAwareElement(ContentElementsContainer container, String path) {
+        ContentElement element = getElement(container, path);
+
+        if (!TitleAwareContentElement.class.isAssignableFrom(element.getClass())) {
+            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a title-aware element!");
+        }
+
+        return TitleAwareContentElement.class.cast(element);
+    }
+
+    //    private LinkAwareContentElement getLinkAwareElement(String path){
 //        ContentElement element = getElement(path);
 //
 //        if(!LinkAwareContentElement.class.isAssignableFrom(element.getClass())){
@@ -295,7 +349,7 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
     }
 
     @Override
-    public void setCompilerBase(String compilerBase) {
-        this.compilerBase = compilerBase.toLowerCase(Locale.US);
+    public void setLanguage(String language) {
+        this.language = language.toLowerCase(Locale.US);
     }
 }

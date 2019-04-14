@@ -9,20 +9,20 @@ public class ContentElementResponse extends AbstractContentElementPointer implem
 
     private static final long serialVersionUID = -4741774244660755370L;
 
-    private String base;
+    private String language;
     private String path;
     private String contentPath;
     private String currentChecksum;
     private ContentElement currentContentElement;
 
     @Override
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
     @Override
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String locale) {
+        this.language = locale;
     }
 
     public String getPath() {
@@ -65,7 +65,7 @@ public class ContentElementResponse extends AbstractContentElementPointer implem
         if (this == o) return true;
         if (!(o instanceof ContentElementResponse)) return false;
         ContentElementResponse that = (ContentElementResponse) o;
-        return Objects.equals(base, that.base) &&
+        return Objects.equals(language, that.language) &&
             Objects.equals(path, that.path) &&
             Objects.equals(contentPath, that.contentPath) &&
             Objects.equals(currentChecksum, that.currentChecksum) &&
@@ -74,13 +74,13 @@ public class ContentElementResponse extends AbstractContentElementPointer implem
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, path, contentPath, currentChecksum, currentContentElement);
+        return Objects.hash(language, path, contentPath, currentChecksum, currentContentElement);
     }
 
     @Override
     public String toString() {
         return "ContentElementResponse{" +
-            "base='" + base + '\'' +
+            "language='" + language + '\'' +
             ", path='" + path + '\'' +
             ", contentPath='" + contentPath + '\'' +
             ", currentChecksum='" + currentChecksum + '\'' +

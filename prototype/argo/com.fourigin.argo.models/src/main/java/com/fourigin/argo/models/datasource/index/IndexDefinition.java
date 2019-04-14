@@ -12,7 +12,7 @@ public class IndexDefinition implements Serializable {
     private Map<String, String> categories;
     private Set<FieldDefinition> fields;
     private Set<String> fullTextSearch;
-    private Set<String> keywords;
+    private Map<String, Set<String>> keywords;
 
     public String getName() {
         return name;
@@ -46,11 +46,11 @@ public class IndexDefinition implements Serializable {
         this.fullTextSearch = fullTextSearch;
     }
 
-    public Set<String> getKeywords() {
+    public Map<String, Set<String>> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(Set<String> keywords) {
+    public void setKeywords(Map<String, Set<String>> keywords) {
         this.keywords = keywords;
     }
 

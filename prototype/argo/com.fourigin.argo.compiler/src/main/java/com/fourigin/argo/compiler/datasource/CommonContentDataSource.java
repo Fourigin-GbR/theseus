@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.fourigin.argo.compiler.datasource.DataSourcesResolver.CTX_BASE;
+import static com.fourigin.argo.compiler.datasource.DataSourcesResolver.CTX_LANGUAGE;
 
 public class CommonContentDataSource implements
     DataSource<CommonContentDataSourceQuery>,
@@ -45,8 +45,8 @@ public class CommonContentDataSource implements
         Map<String, Object> context
     ) {
         ContentResolver contentResolver = (ContentResolver) context.get(CTX_CONTENT_RESOLVER);
-//        String customer = (String) context.get(CTX_CUSTOMER);
-        String base = (String) context.get(CTX_BASE);
+//        String customer = (String) context.get(CTX_PROJECT);
+        String locale = (String) context.get(CTX_LANGUAGE);
 
         String path = "/common";
 
@@ -64,7 +64,7 @@ public class CommonContentDataSource implements
 
             TextContentElement.Builder textBuilder = new TextContentElement.Builder()
                 .withName("display-name")
-                .withContent(SiteNodes.resolveContent(base, commonInfo.getDisplayName()));
+                .withContent(locale, SiteNodes.resolveContent(locale, commonInfo.getDisplayName()));
 
             if (query.isVerbose()) {
                 CompileState compileState = state.getCompileState();
@@ -73,7 +73,7 @@ public class CommonContentDataSource implements
 
                 textBuilder
                     .withAttribute("info.description", commonInfo.getDescription())
-                    .withAttribute("info.localizedName", SiteNodes.resolveContent(base, commonInfo.getLocalizedName()))
+                    .withAttribute("info.localizedName", SiteNodes.resolveContent(locale, commonInfo.getLocalizedName()))
                     .withAttribute("info.state.staged", String.valueOf(state.isStaged()))
                     .withAttribute("info.state.checksum", String.valueOf(state.getChecksum()))
                     .withAttribute("info.state.revision", state.getRevision());

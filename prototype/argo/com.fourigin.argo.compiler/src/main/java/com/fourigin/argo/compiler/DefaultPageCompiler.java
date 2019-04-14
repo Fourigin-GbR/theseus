@@ -18,8 +18,8 @@ import com.fourigin.argo.strategies.CompilerOutputStrategy;
 import com.fourigin.argo.template.engine.PageInfoAwareTemplateEngine;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.SiteAttributesAwareTemplateEngine;
-import com.fourigin.argo.template.engine.TemplateEngine;
-import com.fourigin.argo.template.engine.TemplateEngineFactory;
+import com.fourigin.argo.template.engine.ArgoTemplateEngine;
+import com.fourigin.argo.template.engine.ArgoTemplateEngineFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +33,15 @@ import java.util.Map;
 import java.util.Set;
 
 public class DefaultPageCompiler implements PageCompiler {
-    private String customer;
+    private String project;
 
-    private String compilerBase;
+    private String language;
 
     private ContentRepository contentRepository;
 
     private TemplateResolver templateResolver;
 
-    private TemplateEngineFactory templateEngineFactory;
+    private ArgoTemplateEngineFactory argoTemplateEngineFactory;
 
     private DataSourcesResolver dataSourcesResolver;
 
@@ -59,14 +59,11 @@ public class DefaultPageCompiler implements PageCompiler {
         CONTENT_TYPE_EXTENSION_MAPPING.put("text/html", ".html");
     }
 
-    public DefaultPageCompiler(String customer, String base) {
-        this.customer = customer;
-        this.compilerBase = base;
-    }
+    public DefaultPageCompiler(String project, String language) {
+        this.project = project;
+        this.language = language;
 
-    @Override
-    public String getCompilerBase() {
-        return compilerBase;
+        if (logger.isInfoEnabled()) logger.info("Initializing PageCompiler for project '{}' and language '{}'", project, language);
     }
 
     public ContentPage prepareContent(PageInfo pageInfo, ProcessingMode processingMode) {
@@ -86,7 +83,7 @@ public class DefaultPageCompiler implements PageCompiler {
         // resolve all data sources
         if (dataSourcesResolver != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving data sources of '{}'", pageName);
-            result = dataSourcesResolver.resolve(pageInfo, contentRepository, contentPage, customer, compilerBase);
+            result = dataSourcesResolver.resolve(pageInfo, contentRepository, contentPage, project, language);
             maybeChanged = true;
         }
 
@@ -95,7 +92,7 @@ public class DefaultPageCompiler implements PageCompiler {
             if (logger.isDebugEnabled()) logger.debug("Applying content page processors");
 
             for (ContentPageProcessor contentPageProcessor : contentPageProcessors) {
-                contentPageProcessor.process(customer, compilerBase, pageInfo, processingMode, result);
+                contentPageProcessor.process(project, language, pageInfo, processingMode, result);
             }
 
             maybeChanged = true;
@@ -151,7 +148,7 @@ public class DefaultPageCompiler implements PageCompiler {
         if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
 
         String templateId = templateReference.getTemplateId();
-        Template template = templateResolver.retrieve(templateId);
+        Template template = templateResolver.retrieve(project, templateId);
         if (template == null) {
             throw new IllegalStateException("No template found for id '" + templateId + "'!");
         }
@@ -184,35 +181,35 @@ public class DefaultPageCompiler implements PageCompiler {
         Type templateType = templateVariation.getType();
         if (logger.isDebugEnabled()) logger.debug("Template type: {}", templateType);
 
-        TemplateEngine templateEngine = templateEngineFactory.getInstance(templateType);
-        if (templateEngine == null) {
+        ArgoTemplateEngine argoTemplateEngine = argoTemplateEngineFactory.getInstance(templateType);
+        if (argoTemplateEngine == null) {
             throw new IllegalStateException("Unsupported template engine type '" + templateType + "'!");
         }
-
+        
         // initialize the template engine
-        templateEngine.setCustomer(customer);
-        templateEngine.setBase(compilerBase);
-        templateEngine.setPath(path);
+        argoTemplateEngine.setProject(project);
+        argoTemplateEngine.setLanguage(language);
+        argoTemplateEngine.setPath(path);
 
-        if (PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
-            ((PageInfoAwareTemplateEngine) templateEngine).setPageInfo(pageInfo);
+        if (PageInfoAwareTemplateEngine.class.isAssignableFrom(argoTemplateEngine.getClass())) {
+            ((PageInfoAwareTemplateEngine) argoTemplateEngine).setPageInfo(pageInfo);
         }
-        if (SiteAttributesAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
+        if (SiteAttributesAwareTemplateEngine.class.isAssignableFrom(argoTemplateEngine.getClass())) {
             Map<String, String> siteAttributes = contentRepository.resolveSiteAttributes();
-            ((SiteAttributesAwareTemplateEngine) templateEngine).setSiteAttributes(siteAttributes);
+            ((SiteAttributesAwareTemplateEngine) argoTemplateEngine).setSiteAttributes(siteAttributes);
         }
 
-        if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
+        if (logger.isDebugEnabled()) logger.debug("Template engine: {}", argoTemplateEngine);
 
         ContentPage contentPage = prepareContent(pageInfo, processingMode);
 
         if (compilerInterceptors != null) {
             for (CompilerInterceptor compilerInterceptor : compilerInterceptors) {
-                compilerInterceptor.afterPrepareContent(compilerBase, path, pageInfo, processingMode, contentPage);
+                compilerInterceptor.afterPrepareContent(language, path, pageInfo, processingMode, contentPage);
             }
         }
 
-        applyTemplate(pageInfo, contentPage, processingMode, template, templateVariation, templateEngine, outputStrategy);
+        applyTemplate(pageInfo, contentPage, processingMode, template, templateVariation, argoTemplateEngine, outputStrategy);
 
         return templateVariation.getOutputContentType();
     }
@@ -229,7 +226,7 @@ public class DefaultPageCompiler implements PageCompiler {
         if (logger.isDebugEnabled()) logger.debug("Template reference: {}", templateReference);
 
         String templateId = templateReference.getTemplateId();
-        Template template = templateResolver.retrieve(templateId);
+        Template template = templateResolver.retrieve(project, templateId);
         if (template == null) {
             throw new IllegalStateException("No template found for id '" + templateId + "'!");
         }
@@ -262,33 +259,33 @@ public class DefaultPageCompiler implements PageCompiler {
         Type templateType = templateVariation.getType();
         if (logger.isDebugEnabled()) logger.debug("Template type: {}", templateType);
 
-        TemplateEngine templateEngine = templateEngineFactory.getInstance(templateType);
-        if (templateEngine == null) {
+        ArgoTemplateEngine argoTemplateEngine = argoTemplateEngineFactory.getInstance(templateType);
+        if (argoTemplateEngine == null) {
             throw new IllegalStateException("Unsupported template engine type '" + templateType + "'!");
         }
 
         // initialize the template engine
-        templateEngine.setCustomer(customer);
-        templateEngine.setBase(compilerBase);
-        templateEngine.setPath(path);
+        argoTemplateEngine.setProject(project);
+        argoTemplateEngine.setLanguage(language);
+        argoTemplateEngine.setPath(path);
 
-        if (PageInfoAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
-            ((PageInfoAwareTemplateEngine) templateEngine).setPageInfo(pageInfo);
+        if (PageInfoAwareTemplateEngine.class.isAssignableFrom(argoTemplateEngine.getClass())) {
+            ((PageInfoAwareTemplateEngine) argoTemplateEngine).setPageInfo(pageInfo);
         }
-        if (SiteAttributesAwareTemplateEngine.class.isAssignableFrom(templateEngine.getClass())) {
+        if (SiteAttributesAwareTemplateEngine.class.isAssignableFrom(argoTemplateEngine.getClass())) {
             Map<String, String> siteAttributes = contentRepository.resolveSiteAttributes();
-            ((SiteAttributesAwareTemplateEngine) templateEngine).setSiteAttributes(siteAttributes);
+            ((SiteAttributesAwareTemplateEngine) argoTemplateEngine).setSiteAttributes(siteAttributes);
         }
 
-        if (logger.isDebugEnabled()) logger.debug("Template engine: {}", templateEngine);
+        if (logger.isDebugEnabled()) logger.debug("Template engine: {}", argoTemplateEngine);
 
         if (compilerInterceptors != null) {
             for (CompilerInterceptor compilerInterceptor : compilerInterceptors) {
-                compilerInterceptor.afterPrepareContent(compilerBase, path, pageInfo, processingMode, preparedContentPage);
+                compilerInterceptor.afterPrepareContent(language, path, pageInfo, processingMode, preparedContentPage);
             }
         }
 
-        applyTemplate(pageInfo, preparedContentPage, processingMode, template, templateVariation, templateEngine, outputStrategy);
+        applyTemplate(pageInfo, preparedContentPage, processingMode, template, templateVariation, argoTemplateEngine, outputStrategy);
 
         return templateVariation.getOutputContentType();
     }
@@ -299,15 +296,15 @@ public class DefaultPageCompiler implements PageCompiler {
         ProcessingMode processingMode,
         Template template,
         TemplateVariation templateVariation,
-        TemplateEngine templateEngine,
+        ArgoTemplateEngine argoTemplateEngine,
         CompilerOutputStrategy outputStrategy
     ) {
         // process content page
         String pageName = pageInfo.getName();
 
         String fileExtension = resolveFileExtension(templateVariation.getOutputContentType());
-        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, customer, compilerBase)) {
-            templateEngine.process(preparedContentPage, template, templateVariation, processingMode, out);
+        try (OutputStream out = outputStrategy.getOutputStream(pageInfo, "", fileExtension, project, language)) {
+            argoTemplateEngine.process(preparedContentPage, template, templateVariation, processingMode, out);
             if (logger.isInfoEnabled()) logger.info("Compilation of page '{}' done.", pageName);
         } catch (IOException ex) {
             if (logger.isErrorEnabled()) logger.error("Error compiling content!", ex);
@@ -323,8 +320,8 @@ public class DefaultPageCompiler implements PageCompiler {
         throw new IllegalArgumentException("Unsupported output content type '" + outputContentType + "'!");
     }
 
-    public void setBase(String base) {
-        this.compilerBase = base;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public void setContentRepository(ContentRepository contentRepository) {
@@ -335,8 +332,8 @@ public class DefaultPageCompiler implements PageCompiler {
         this.templateResolver = templateResolver;
     }
 
-    public void setTemplateEngineFactory(TemplateEngineFactory templateEngineFactory) {
-        this.templateEngineFactory = templateEngineFactory;
+    public void setArgoTemplateEngineFactory(ArgoTemplateEngineFactory argoTemplateEngineFactory) {
+        this.argoTemplateEngineFactory = argoTemplateEngineFactory;
     }
 
     public void setDataSourcesResolver(DataSourcesResolver dataSourcesResolver) {

@@ -3,24 +3,24 @@ package com.fourigin.argo.controller.system;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 
 public class ArgoSystem {
-    private String customer;
-    private String base;
+    private String project;
+    private String language;
     private SiteNodeContainerInfo root;
 
-    public String getCustomer() {
-        return customer;
+    public String getProject() {
+        return project;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setProject(String project) {
+        this.project = project;
     }
 
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public SiteNodeContainerInfo getRoot() {
@@ -32,17 +32,17 @@ public class ArgoSystem {
     }
 
     public static class Builder {
-        private String customer;
-        private String base;
+        private String project;
+        private String language;
         private SiteNodeContainerInfo root;
 
-        public Builder withCustomer(String customer){
-            this.customer = customer;
+        public Builder withProject(String project){
+            this.project = project;
             return this;
         }
 
-        public Builder withBase(String base){
-            this.base = base;
+        public Builder withLanguage(String language){
+            this.language = language;
             return this;
         }
 
@@ -54,8 +54,8 @@ public class ArgoSystem {
         public ArgoSystem build(){
             ArgoSystem system = new ArgoSystem();
 
-            system.setCustomer(customer);
-            system.setBase(base);
+            system.setProject(project);
+            system.setLanguage(language);
             system.setRoot(root);
 
             return system;

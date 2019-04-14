@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 public class BufferedCompilerOutputStrategy implements CompilerOutputStrategy {
     private static final ThreadLocal<ByteArrayOutputStream> OUTPUT_CONTAINER_THREAD_LOCAL = new ThreadLocal<>();
 
-    public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String customer, String base) {
+    public OutputStream getOutputStream(SiteNodeInfo info, String filenamePostfix, String extension, String project, String language) {
         ByteArrayOutputStream outputStream = OUTPUT_CONTAINER_THREAD_LOCAL.get();
         if (outputStream == null) {
             outputStream = new ByteArrayOutputStream();

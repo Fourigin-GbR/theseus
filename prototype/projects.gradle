@@ -7,6 +7,7 @@ def argoCore                                = project(':argo:com.fourigin.argo.c
 def argoModels                              = project(':argo:com.fourigin.argo.models')
 def argoRepository                          = project(':argo:com.fourigin.argo.repository')
 def argoRepositoryJson                      = project(':argo:com.fourigin.argo.repository.json')
+def argoProjects                            = project(':argo:com.fourigin.argo.projects')
 def argoAssetsModels                        = project(':argo:com.fourigin.argo.assets.models')
 def argoAssetsRepository                    = project(':argo:com.fourigin.argo.assets.repository')
 def argoAssetsRepositoryJson                = project(':argo:com.fourigin.argo.assets.repository.json')
@@ -116,6 +117,22 @@ project(':argo') {
 
         dependencies {
             compile argoModels
+            compile argoProjects
+        }
+    }
+
+    project('com.fourigin.argo.projects') {
+        version = argoVersion
+
+        dependencies {
+            compile utilitiesCore
+
+            compile managedDependency('com.fasterxml.jackson.core:jackson-annotations')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-core')
+            compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+            compile managedDependency('commons-io:commons-io')
+
+            compile managedDependency('org.springframework:spring-context')
         }
     }
 
@@ -133,8 +150,8 @@ project(':argo') {
             compile managedDependency('commons-io:commons-io')
 
             compile managedDependency('org.springframework:spring-context')
-            compile managedDependency('org.springframework:spring-test')
 
+            compile managedDependency('org.springframework:spring-test')
             testCompile managedDependency('org.spockframework:spock-spring')
         }
     }
@@ -208,6 +225,7 @@ project(':argo') {
         dependencies {
             compile argoModels
             compile argoTemplateEngine
+            compile argoProjects
             compile utilitiesCore
 
             compile thymeleaf
@@ -243,6 +261,7 @@ project(':argo') {
 
         dependencies {
             compile argoModels
+            compile argoProjects
             compile argoRepository
             runtime argoRepositoryJson
             compile argoTemplateEngine

@@ -1,7 +1,8 @@
 package com.fourigin.argo.compiler.datasource;
 
 import com.fourigin.argo.models.content.elements.ContentElement;
-import com.fourigin.argo.models.content.elements.TextContentElement;
+import com.fourigin.argo.models.content.elements.DataContentElement;
+import com.fourigin.argo.models.content.elements.DataType;
 import com.fourigin.argo.models.datasource.DataSource;
 import com.fourigin.argo.models.datasource.DataSourceIdentifier;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
@@ -33,9 +34,9 @@ public class TimestampDataSource implements DataSource<EmptyDataSourceQuery> {
     public List<ContentElement> generateContent(PageInfo ownerPage, DataSourceIdentifier id, EmptyDataSourceQuery query, Map<String, Object> context) {
         String timestamp = FORMAT.format(new Date());
 
-        return Collections.singletonList(new TextContentElement.Builder()
+        return Collections.singletonList(new DataContentElement.Builder()
             .withName("processedOn")
-            .withContent(timestamp)
+            .withContent(timestamp, DataType.DATE)
             .build());
     }
 }

@@ -2,14 +2,26 @@ package com.fourigin.argo.models.content.elements;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ObjectContentElement extends AbstractContentElement implements ObjectAwareContentElement, ContentElement {
     private static final long serialVersionUID = -8071563579520012186L;
 
+    private LanguageContent title;
     private String referenceId;
     private String source;
     private String alternateText;
     private String mimeType;
+
+    @Override
+    public LanguageContent getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(LanguageContent title) {
+        this.title = title;
+    }
 
     public String getReferenceId() {
         return referenceId;
@@ -48,25 +60,17 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
         if (this == o) return true;
         if (!(o instanceof ObjectContentElement)) return false;
         if (!super.equals(o)) return false;
-
         ObjectContentElement that = (ObjectContentElement) o;
-
-        if (referenceId != null ? !referenceId.equals(that.referenceId) : that.referenceId != null) return false;
-        if (source != null ? !source.equals(that.source) : that.source != null) return false;
-        //noinspection SimplifiableIfStatement
-        if (alternateText != null ? !alternateText.equals(that.alternateText) : that.alternateText != null)
-            return false;
-        return mimeType != null ? mimeType.equals(that.mimeType) : that.mimeType == null;
+        return Objects.equals(title, that.title) &&
+            Objects.equals(referenceId, that.referenceId) &&
+            Objects.equals(source, that.source) &&
+            Objects.equals(alternateText, that.alternateText) &&
+            Objects.equals(mimeType, that.mimeType);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (referenceId != null ? referenceId.hashCode() : 0);
-        result = 31 * result + (source != null ? source.hashCode() : 0);
-        result = 31 * result + (alternateText != null ? alternateText.hashCode() : 0);
-        result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), title, referenceId, source, alternateText, mimeType);
     }
 
     @Override
@@ -75,7 +79,7 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
 
         builder.append("name='").append(getName()).append('\'');
 
-        String title = getTitle();
+        LanguageContent title = getTitle();
         if(title != null) {
             builder.append(", title='").append(title).append('\'');
         }
@@ -97,7 +101,7 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
 
     public static class Builder {
         private String name;
-        private String title;
+        private LanguageContent title = new LanguageContent();
         private String referenceId;
         private String source;
         private String alternateText;
@@ -109,8 +113,8 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
             return this;
         }
 
-        public Builder withTitle(String title){
-            this.title = title;
+        public Builder withTitle(String language, String title){
+            this.title.put(language, title);
             return this;
         }
 
@@ -146,11 +150,12 @@ public class ObjectContentElement extends AbstractContentElement implements Obje
             return this;
         }
 
-
         public ObjectContentElement build(){
             ObjectContentElement element = new ObjectContentElement();
             element.setName(name);
-            element.setTitle(title);
+            if (!title.isEmpty()) {
+                element.setTitle(title);
+            }
             element.setReferenceId(referenceId);
             element.setSource(source);
             element.setAlternateText(alternateText);

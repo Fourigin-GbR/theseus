@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Argo {
-    private String customer;
-    private String base;
+    private String project;
+    private String language;
     private String path;
     private ContentPage contentPage;
     private PageInfo pageInfo;
@@ -31,20 +31,20 @@ public class Argo {
 
     private Map<String, ThymeleafTemplateUtility> customUtilities;
 
-    public String getCustomer() {
-        return customer;
+    public String getProject() {
+        return project;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setProject(String project) {
+        this.project = project;
     }
 
-    public String getBase() {
-        return base;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setBase(String base) {
-        this.base = base;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getPath() {
@@ -134,8 +134,8 @@ public class Argo {
     }
 
     public static class Builder {
-        private String customer;
-        private String base;
+        private String project;
+        private String language;
         private String path;
         private ContentPage contentPage;
         private PageInfo pageInfo;
@@ -145,13 +145,13 @@ public class Argo {
         private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
         private SiteNodeContainerInfo root;
 
-        public Builder withCustomer(String customer){
-            this.customer = customer;
+        public Builder withProject(String project){
+            this.project = project;
             return this;
         }
 
-        public Builder withBase(String base){
-            this.base = base;
+        public Builder withLanguage(String language){
+            this.language = language;
             return this;
         }
 
@@ -197,34 +197,34 @@ public class Argo {
 
         public Argo build(){
             Argo argo = new Argo();
-            argo.setCustomer(customer);
-            argo.setBase(base);
-            argo.setPath(path);
-            argo.setContentPage(contentPage);
-            argo.setProcessingMode(processingMode);
-            argo.setPageInfo(pageInfo);
-            argo.setSiteAttributes(siteAttributes);
+            argo.setProject(this.project);
+            argo.setLanguage(this.language);
+            argo.setPath(this.path);
+            argo.setContentPage(this.contentPage);
+            argo.setProcessingMode(this.processingMode);
+            argo.setPageInfo(this.pageInfo);
+            argo.setSiteAttributes(this.siteAttributes);
 
             ContentElementUtility contentUtility = new ContentElementUtility();
-            contentUtility.setCompilerBase(base);
-            contentUtility.setContentPage(contentPage);
+            contentUtility.setLanguage(this.language);
+            contentUtility.setContentPage(this.contentPage);
             argo.setContentElementUtility(contentUtility);
 
             PagePropertiesUtility pagePropertiesUtility = new PagePropertiesUtility();
-            pagePropertiesUtility.setCustomer(customer);
-            pagePropertiesUtility.setCompilerBase(base);
-            pagePropertiesUtility.setSiteAttributes(siteAttributes);
-            pagePropertiesUtility.setProcessingMode(processingMode);
-            pagePropertiesUtility.setInternalLinkResolutionStrategies(internalLinkResolutionStrategies);
-            pagePropertiesUtility.setRootSiteNode(root);
+            pagePropertiesUtility.setProject(this.project);
+            pagePropertiesUtility.setLanguage(this.language);
+            pagePropertiesUtility.setSiteAttributes(this.siteAttributes);
+            pagePropertiesUtility.setProcessingMode(this.processingMode);
+            pagePropertiesUtility.setInternalLinkResolutionStrategies(this.internalLinkResolutionStrategies);
+            pagePropertiesUtility.setRootSiteNode(this.root);
             argo.setPagePropertiesUtility(pagePropertiesUtility);
 
             FormatterUtility formatterUtility = new FormatterUtility();
-            formatterUtility.setCompilerBase(base);
+            formatterUtility.setLanguage(this.language);
             argo.setFormatterUtility(formatterUtility);
 
-            if(!customUtilities.isEmpty()){
-                argo.setCustomUtilities(customUtilities);
+            if(!this.customUtilities.isEmpty()){
+                argo.setCustomUtilities(this.customUtilities);
             }
 
             return argo;

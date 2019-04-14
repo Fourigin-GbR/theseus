@@ -30,11 +30,11 @@ public class DataSourcesResolver {
 
     private final Logger logger = LoggerFactory.getLogger(DataSourcesResolver.class);
 
-    public static final String CTX_BASE = "base";
+    public static final String CTX_LANGUAGE = "language";
 
-    public static final String CTX_CUSTOMER = "customer";
+    public static final String CTX_PROJECT = "project";
 
-    public ContentPage resolve(PageInfo ownerPage, ContentRepository contentRepository, ContentPage contentPage, String customer, String base) {
+    public ContentPage resolve(PageInfo ownerPage, ContentRepository contentRepository, ContentPage contentPage, String project, String language) {
         if (!contentPage.hasDataSourceContents()) {
             if (logger.isDebugEnabled()) logger.debug("No dataSources defined, nothing to resolve.");
             return contentPage;
@@ -77,8 +77,8 @@ public class DataSourcesResolver {
 
             Map<String, Object> context = new HashMap<>();
 
-            context.put(CTX_BASE, base);
-            context.put(CTX_CUSTOMER, customer);
+            context.put(CTX_LANGUAGE, language);
+            context.put(CTX_PROJECT, project);
 
             if(ContentResolverAwareDataSource.class.isAssignableFrom(dataSource.getClass())){
                 context.put(ContentResolverAwareDataSource.CTX_CONTENT_RESOLVER, contentRepository);

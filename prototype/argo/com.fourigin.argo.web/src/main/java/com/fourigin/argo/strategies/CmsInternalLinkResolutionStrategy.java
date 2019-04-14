@@ -4,7 +4,7 @@ import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrate
 
 public class CmsInternalLinkResolutionStrategy implements InternalLinkResolutionStrategy {
     @Override
-    public String resolveLink(String customer, String base, String nodePath) {
-        return "base=" + base + "&path=" + nodePath;
+    public String resolveLink(String project, String language, String nodePath) {
+        return "language=" + language + "&path=" + nodePath;
     }
 }

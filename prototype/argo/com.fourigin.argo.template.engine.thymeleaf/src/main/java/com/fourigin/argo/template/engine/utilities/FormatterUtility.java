@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class FormatterUtility implements ThymeleafTemplateUtility {
 
-    private String compilerBase;
+    private String language;
 
     private NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
 
@@ -46,7 +46,7 @@ public class FormatterUtility implements ThymeleafTemplateUtility {
     }
     
     public String formatPrice(String unformattedValue) {
-        if (logger.isDebugEnabled()) logger.debug("Using compiler base '{}'", compilerBase);
+        if (logger.isDebugEnabled()) logger.debug("Using language '{}'", language);
 
         try {
             double value = Double.parseDouble(unformattedValue);
@@ -58,7 +58,7 @@ public class FormatterUtility implements ThymeleafTemplateUtility {
     }
 
     public String formatNumber(String unformattedValue, String unit) {
-        if (logger.isDebugEnabled()) logger.debug("Using compiler base '{}'", compilerBase);
+        if (logger.isDebugEnabled()) logger.debug("Using language '{}'", language);
 
         try {
             Double.parseDouble(unformattedValue);
@@ -83,23 +83,10 @@ public class FormatterUtility implements ThymeleafTemplateUtility {
     }
 
     @Override
-    public void setCompilerBase(String compilerBase) {
-        this.compilerBase = compilerBase.toLowerCase(Locale.US);
+    public void setLanguage(String language) {
+        this.language = language.toLowerCase(Locale.US);
 
         this.formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         this.formatter.setMaximumFractionDigits(0);
-    }
-
-    public static void main(String[] args){
-        FormatterUtility util = new FormatterUtility();
-//        String unformattedPrice = "279990";
-//        {
-//            util.setCompilerBase("DE");
-//            String formattedPrice = util.formatPrice(unformattedPrice);
-//            System.out.println("unformatted: '" + unformattedPrice + "', formatted: '" + formattedPrice + "'!");
-//        }
-
-        String value = util.formatString("{0} objects found.", "17");
-        System.out.println(value);
     }
 }
