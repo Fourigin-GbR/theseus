@@ -28,9 +28,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching
 public class App {
 
-    @Value("${document-root.base}")
-    private String documentRootBasePath;
-
     @Value("${project-repository.config-path}")
     private String workspacesBasePath;
 

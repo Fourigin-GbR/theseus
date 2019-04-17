@@ -725,9 +725,8 @@
 <!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
 
 <script type="text/javascript" th:inline="javascript">
-    var blah = "blubb1";
     var argoMessages = new com.fourigin.argo.Messages();
-    var hotspots = "[# th:utext='${data_hotspots}'/]";
+    var hotspots = [[${data_hotspots}]];
     var argoPageEditor = new com.fourigin.argo.PageEditor(
         {
             "base": [[${argo.language}]],
