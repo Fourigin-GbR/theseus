@@ -86,17 +86,7 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
 
         // person
         PDTextField titleField = doc.getTextField("Anrede");
-        switch (customer.getGender()) {
-            case MALE:
-                titleField.setValue("Herr");
-                break;
-            case FEMALE:
-                titleField.setValue("Frau");
-                break;
-            default:
-                titleField.setValue(customer.getGender().name());
-                break;
-        }
+        titleField.setValue(resolveTitle(customer.getGender()));
 
         // last name
         PDTextField lastNameField = doc.getTextField("Name / Firma");

@@ -5,6 +5,7 @@ import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
+import com.fourigin.argo.forms.customer.Gender;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 import com.fourigin.argo.forms.models.ProcessingState;
@@ -88,6 +89,17 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
                 return vehicle.getNewNameplateAdditionalInfo();
             default:
                 throw new IllegalStateException("Unsupported nameplate option detected: '" + vehicle.getNewNameplateOption() + "'");
+        }
+    }
+
+    protected String resolveTitle(Gender gender){
+        switch (gender) {
+            case MALE:
+                return "Herr";
+            case FEMALE:
+                return "Frau";
+            default:
+                return gender.name();
         }
     }
 }

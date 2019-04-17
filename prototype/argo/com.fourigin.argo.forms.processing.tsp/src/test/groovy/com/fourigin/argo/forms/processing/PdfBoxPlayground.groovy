@@ -27,13 +27,20 @@ final class PdfBoxPlayground {
         CustomerRepository customerRepository = null
         File form = new File(formIn)
 
-        FulfillVehicleRegistrationFormEntryProcessor processor = new FulfillVehicleRegistrationFormEntryProcessor(
+//        FulfillVehicleRegistrationFormEntryProcessor processor = new FulfillVehicleRegistrationFormEntryProcessor(
+//                formsStoreRepository,
+//                customerRepository,
+//                form
+//        )
+
+        FulfillInternalCardFormEntryProcessor processor = new FulfillInternalCardFormEntryProcessor(
                 formsStoreRepository,
                 customerRepository,
                 form
         )
 
         VehicleRegistration registration = new VehicleRegistration(
+                id: "c3a10d7b61775324245c5ac7656e42e93a2e42fa",
                 customerId: '123',
                 vehicle: new Vehicle(
                         previousNameplate: 'DA NN 747',

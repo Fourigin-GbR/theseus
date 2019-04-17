@@ -3,14 +3,17 @@ package com.fourigin.argo.forms.processing;
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
 import com.fourigin.argo.forms.FormsStoreRepository;
-import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.Address;
+import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.payment.BankAccount;
 import com.fourigin.argo.forms.models.HandoverOption;
 import com.fourigin.argo.forms.models.NameplateTypeOption;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import com.fourigin.utilities.pdfbox.PdfDocument;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
@@ -60,8 +63,13 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
 
         Vehicle vehicle = registration.getVehicle();
 
-        PDTextField idField = doc.getTextField("Auftrag");
-        idField.setValue(registration.getId());
+        String id = registration.getId();
+        if (id != null && !id.isEmpty()) {
+            PDTextField idField = doc.getTextField("Auftrag");
+            int len = id.length();
+            String visibleId = id.substring(0, 10) + "..." + id.substring(len - 10, len);
+            idField.setValue(visibleId.toUpperCase(Locale.US));
+        }
 
         // old nameplate
         String previousNameplate = vehicle.getPreviousNameplate();
@@ -86,17 +94,7 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
 
         // person
         PDTextField titleField = doc.getTextField("Anrede");
-        switch (customer.getGender()) {
-            case MALE:
-                titleField.setValue("Herr");
-                break;
-            case FEMALE:
-                titleField.setValue("Frau");
-                break;
-            default:
-                titleField.setValue(customer.getGender().name());
-                break;
-        }
+        titleField.setValue(resolveTitle(customer.getGender()));
 
         // last name
         PDTextField lastNameField = doc.getTextField("Nachname");
@@ -130,9 +128,11 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
 
         // vehicle id
         PDTextField vehicleIdField = doc.getTextField("Identnummer");
+        applyTextFieldAppearance(vehicleIdField);
         vehicleIdField.setValue(vehicle.getVehicleIdentNumber());
 
         PDTextField zbField = doc.getTextField("FzBriefNR");
+        applyTextFieldAppearance(zbField);
         zbField.setValue(vehicle.getVehicleId());
 
         // season nameplates
@@ -146,26 +146,32 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
 
         // insurance-id
         PDTextField insuranceIdField = doc.getTextField("eVBNummer");
+        applyTextFieldAppearance(insuranceIdField);
         insuranceIdField.setValue(vehicle.getInsuranceId());
 
         BankAccount account = registration.getBankAccountForTaxPayment();
 
         // iban
         PDTextField ibanField = doc.getTextField("IBAN");
+        applyTextFieldAppearance(ibanField);
         ibanField.setValue(account.getIban());
 
         // bic
         PDTextField bicField = doc.getTextField("BIC");
+        applyTextFieldAppearance(bicField);
         bicField.setValue(account.getBic());
 
         // bank name
         PDTextField bankNameField = doc.getTextField("Kreditinstitut");
+        applyTextFieldAppearance(bankNameField);
         bankNameField.setValue(account.getBankName());
 
         PDTextField phoneField = doc.getTextField("Telefonnummer");
+        applyTextFieldAppearance(phoneField);
         phoneField.setValue(customer.getPhone());
 
         PDTextField emailField = doc.getTextField("EMail");
+        applyTextFieldAppearance(emailField);
         emailField.setValue(customer.getEmail());
 
         PDTextField servicePriceField = doc.getTextField("Service");
@@ -192,6 +198,13 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
         doc.getCheckboxField("NICHT TSP").unCheck();
         doc.getCheckboxField("versandt").unCheck();
         doc.getCheckboxField("nicht_versandt").unCheck();
+    }
 
+    private void applyTextFieldAppearance(PDTextField textField){
+        COSDictionary dict = textField.getCOSObject();
+        COSString defaultAppearance = (COSString) dict.getDictionaryObject(COSName.DA);
+        if (defaultAppearance != null) {
+            dict.setString(COSName.DA, "/Helv 9 Tf 0 g");
+        }
     }
 }
