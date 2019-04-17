@@ -2,6 +2,7 @@ package com.fourigin.argo.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fourigin.argo.config.ContentPageRepositoryConfiguration
+import com.fourigin.argo.config.ProjectsConfiguration
 import com.fourigin.argo.models.content.ContentPage
 import com.fourigin.argo.models.content.elements.LinkElement
 import com.fourigin.argo.models.content.elements.ObjectContentElement
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
-@ContextConfiguration(classes=[ContentPageRepositoryConfiguration])
+@ContextConfiguration(classes=[ContentPageRepositoryConfiguration, ProjectsConfiguration])
 class Spec extends Specification {
 
     @Autowired
@@ -24,7 +25,6 @@ class Spec extends Specification {
         expect:
         contentPageRepository != null
         contentPageRepository.contentRoot.absolutePath == '/work/content'
-        contentPageRepository.objectMapper != null
     }
 
     def "test2"() {
@@ -33,17 +33,17 @@ class Spec extends Specification {
             .withContent(Arrays.asList(
                 new TextContentElement.Builder()
                         .withName("text-1")
-                        .withContent("I'm just a text content.")
+                        .withContent('en',"I'm just a text content.")
                         .build(),
                 new TextContentElement.Builder()
                         .withName("text-2")
-                        .withContent("I'm just an another text content.")
+                        .withContent('en',"I'm just an another text content.")
                         .build(),
                 new LinkElement.Builder()
                         .withName("textlink-1")
                         .withElement(new TextContentElement.Builder()
                             .withName("text-link-1-content")
-                            .withContent("I'm a text content with a link.")
+                            .withContent('en',"I'm a text content with a link.")
                             .build()
                         )
                         .withUrl("/link.html")

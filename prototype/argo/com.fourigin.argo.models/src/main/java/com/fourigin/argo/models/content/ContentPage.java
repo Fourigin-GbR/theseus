@@ -13,6 +13,7 @@ public class ContentPage implements Serializable {
     private static final long serialVersionUID = -6314470617724474054L;
 
     private String id;
+    private String contentFormatVersion;
     private ContentPageMetaData metaData;
     private List<ContentElement> content;
     private Collection<DataSourceContent> dataSourceContents;
@@ -38,6 +39,14 @@ public class ContentPage implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getContentFormatVersion() {
+        return contentFormatVersion;
+    }
+
+    public void setContentFormatVersion(String contentFormatVersion) {
+        this.contentFormatVersion = contentFormatVersion;
     }
 
     public ContentPageMetaData getMetaData() {
@@ -134,6 +143,7 @@ public class ContentPage implements Serializable {
 
         public ContentPage build(){
             ContentPage page = new ContentPage();
+            page.setContentFormatVersion("2.0");
             page.setId(id);
             page.setMetaData(metaData);
             page.setContent(content);

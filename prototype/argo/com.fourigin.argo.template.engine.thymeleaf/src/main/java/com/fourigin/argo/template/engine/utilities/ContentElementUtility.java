@@ -241,26 +241,6 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     // *** private methods ***
 
-    private TextAwareContentElement getTextAwareElement(String path) {
-        ContentElement element = getElement(path);
-
-        if (!TextAwareContentElement.class.isAssignableFrom(element.getClass())) {
-            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a text-aware element!");
-        }
-
-        return TextAwareContentElement.class.cast(element);
-    }
-
-    private TextAwareContentElement getTextAwareElement(ContentElementsContainer container, String path) {
-        ContentElement element = getElement(container, path);
-
-        if (!TextAwareContentElement.class.isAssignableFrom(element.getClass())) {
-            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a text-aware element!");
-        }
-
-        return TextAwareContentElement.class.cast(element);
-    }
-
     private TitleAwareContentElement getTitleAwareElement(String path) {
         ContentElement element = getElement(path);
 
@@ -280,46 +260,6 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
         return TitleAwareContentElement.class.cast(element);
     }
-
-    //    private LinkAwareContentElement getLinkAwareElement(String path){
-//        ContentElement element = getElement(path);
-//
-//        if(!LinkAwareContentElement.class.isAssignableFrom(element.getClass())){
-//            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a link-aware element!");
-//        }
-//
-//        return LinkAwareContentElement.class.cast(element);
-//    }
-//
-//    private LinkAwareContentElement getLinkAwareElement(ContentElementsContainer container, String path){
-//        ContentElement element = getElement(container, path);
-//
-//        if(!LinkAwareContentElement.class.isAssignableFrom(element.getClass())){
-//            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a link-aware element!");
-//        }
-//
-//        return LinkAwareContentElement.class.cast(element);
-//    }
-//
-//    private ObjectAwareContentElement getObjectAwareElement(String path){
-//        ContentElement element = getElement(path);
-//
-//        if(!ObjectAwareContentElement.class.isAssignableFrom(element.getClass())){
-//            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a object-aware element!");
-//        }
-//
-//        return ObjectAwareContentElement.class.cast(element);
-//    }
-//
-//    private ObjectAwareContentElement getObjectAwareElement(ContentElementsContainer container, String path){
-//        ContentElement element = getElement(container, path);
-//
-//        if(!ObjectAwareContentElement.class.isAssignableFrom(element.getClass())){
-//            throw new IncompatibleContentElementException("Content element on path '" + path + "' is not a object-aware element!");
-//        }
-//
-//        return ObjectAwareContentElement.class.cast(element);
-//    }
 
     private ContentList getContentListElement(String path) {
         ContentElement element = getElement(path);

@@ -1,5 +1,6 @@
 package com.fourigin.argo.models
 
+import com.fourigin.argo.models.content.elements.LanguageContent
 import com.fourigin.argo.models.content.elements.TextContentElement
 import de.huxhorn.sulky.junit.JUnitTools
 import spock.lang.Specification
@@ -52,10 +53,10 @@ class TextContentElementSpec extends Specification {
     def "setContent work as expected."() {
         given:
         def instance = new TextContentElement()
-        instance.setContent('a content')
+        instance.setContent(LanguageContent.forContent('en', 'a content'))
 
         expect:
-        instance.content == 'a content'
+        instance.content['en'] == 'a content'
     }
 
     def "setContextSpecificContent work as expected."() {
@@ -63,74 +64,34 @@ class TextContentElementSpec extends Specification {
         TextContentElement instance = new TextContentElement()
 
         when:
-        instance.setContent('a content')
-        instance.setContextSpecificContent('ctx-1', null)
+        instance.setContent(LanguageContent.forContent('en', 'a content', "ctx-1", null))
 
         then:
-        instance.contextSpecificContent == null
+        instance.content['ctx-1'] == null
 
         when:
-        instance.setContent('a content')
-        instance.setContextSpecificContent('ctx-1', 'a specific content for ctx-1')
+		instance.setContent(LanguageContent.forContent('en', 'a content', "ctx-1", 'a specific content for ctx-1'))
 
         then:
-        instance.content == 'a content'
-        instance.contextSpecificContent != null
-        !instance.contextSpecificContent.isEmpty()
-        instance.getContextSpecificContent('ctx-1', true) == 'a specific content for ctx-1'
+        instance.content['en'] == 'a content'
+        instance.content['ctx-1'] == 'a specific content for ctx-1'
     }
-
-    def "getContextSpecificContent work as expected."() {
-        given:
-        def instance = new TextContentElement()
-        instance.setContent('a content')
-
-        when:
-        instance.setContextSpecificContent('ctx-1', 'a specific content for ctx-1')
-
-        then:
-        instance.content == 'a content'
-        instance.getContextSpecificContent('ctx-1', true) == 'a specific content for ctx-1'
-        instance.getContextSpecificContent('ctx-1', false) == 'a specific content for ctx-1'
-        instance.getContextSpecificContent('ctx-2', true) == 'a content'
-        instance.getContextSpecificContent('ctx-2', false) == null
-
-        when:
-        instance.setContextSpecificContent('ctx-1', null)
-
-        then:
-        instance.content == 'a content'
-        instance.getContextSpecificContent('ctx-1', true) == 'a content'
-        instance.getContextSpecificContent('ctx-1', false) == null
-        instance.getContextSpecificContent('ctx-2', true) == 'a content'
-        instance.getContextSpecificContent('ctx-2', false) == null
-
-        when:
-        instance.setContextSpecificContent(null)
-
-        then:
-        instance.content == 'a content'
-        instance.getContextSpecificContent('ctx-1', true) == 'a content'
-        instance.getContextSpecificContent('ctx-1', false) == null
-        instance.getContextSpecificContent('ctx-2', true) == 'a content'
-        instance.getContextSpecificContent('ctx-2', false) == null
-    }
-
+    
 	def "equals(), hashCode() and toString() work as expected."() {
 		given:
 		def value = new TextContentElement.Builder()
                 .withName('name')
-                .withContent('content')
+                .withContent('en','content')
                 .withAttribute('attr1', 'value1')
                 .build()
 		def sameValue = new TextContentElement.Builder()
                 .withName('name')
-                .withContent('content')
+                .withContent('en','content')
                 .withAttribute('attr1', 'value1')
                 .build()
 		def differentValue = new TextContentElement.Builder()
                 .withName('name')
-                .withContent('other content')
+                .withContent('en','other content')
                 .withAttribute('attr2', 'value2')
                 .build()
 
@@ -180,9 +141,9 @@ class TextContentElementSpec extends Specification {
 		when:
 		def value = new TextContentElement.Builder()
 				.withName('name')
-				.withTitle('title')
-				.withContent('content')
-				.withContextSpecificContent('DE', 'de specific content')
+				.withTitle('en','title')
+				.withContent('en','content')
+				.withContent('de', 'de specific content')
 				.build()
 
 		then:
