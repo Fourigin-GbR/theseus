@@ -727,13 +727,15 @@
 <script type="text/javascript" th:inline="javascript">
     var argoMessages = new com.fourigin.argo.Messages();
     var hotspots = [[${data_hotspots}]];
+    var language = [[${argo.language}]];
+    var path = [[${argo.path}]];
     var argoPageEditor = new com.fourigin.argo.PageEditor(
         {
             "base": [[${argo.language}]],
             "path": [[${argo.path}]],
             "hotspots": hotspots,
-            "urlLoadContent": "/cms/compile/prepare-content?l=[[${argo.language}]]&p=[[${argo.path}]]&verbose=true",
-            "urlLoadContentPrototype": "/cms/editors/prototype?l=[[${argo.language}]]&p=[[${argo.path}]]&verbose=true"
+            "urlLoadContent": "/cms/compile/prepare-content?l=" + language + "&p=" + path + "&verbose=true",
+            "urlLoadContentPrototype": "/cms/editors/prototype?l=" + language + "&p=" + path + "&verbose=true"
         }
     );
 
