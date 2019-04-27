@@ -135,12 +135,12 @@ public class EditorsController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public StatusAwareContentElementResponse save(
-        @PathVariable String customer,
+        @PathVariable String project,
         @RequestBody SaveChangesRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing save request {}.", request);
 
-        MDC.put("customer", customer);
+        MDC.put("project", project);
         MDC.put("locale", request.getLanguage());
 
         try {
@@ -148,7 +148,7 @@ public class EditorsController {
             response.copyFrom(request);
 
             CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
-                customer,
+                project,
                 request.getLanguage(),
                 request.getPath()
             );
@@ -171,7 +171,7 @@ public class EditorsController {
             return response;
         }
         finally {
-            MDC.remove("customer");
+            MDC.remove("project");
             MDC.remove("locale");
         }
     }
