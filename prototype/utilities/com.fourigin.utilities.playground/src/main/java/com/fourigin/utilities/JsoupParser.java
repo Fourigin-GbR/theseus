@@ -9,7 +9,9 @@ import com.fourigin.argo.models.content.DataSourceContent;
 import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentGroup;
 import com.fourigin.argo.models.content.elements.ContentList;
-import com.fourigin.argo.models.content.elements.ContentListElement;
+import com.fourigin.argo.models.content.elements.ListElement;
+import com.fourigin.argo.models.content.elements.DataContentElement;
+import com.fourigin.argo.models.content.elements.DataType;
 import com.fourigin.argo.models.content.elements.ObjectContentListElement;
 import com.fourigin.argo.models.content.elements.TextContentElement;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
@@ -99,7 +101,8 @@ public final class JsoupParser {
     private static final String OBJECT_LINK_PREFIX_RU = "http://www.greekestate.gr/ru/nedvizhimost/";
     private static final String OBJECT_LINK_PREFIX_EN = "http://www.greekestate.gr/en/propertyDetails/";
 
-    private JsoupParser(){}
+    private JsoupParser() {
+    }
 
     public static void main(String[] args) {
         if (READ_ORIGINAL_CONTENT) {
@@ -537,7 +540,7 @@ public final class JsoupParser {
             System.out.print(" meta");
 
             List<ContentElement> propertyElements = new ArrayList<>();
-            propertyElements.add(new TextContentElement.Builder()
+            propertyElements.add(new DataContentElement.Builder()
                 .withName("code")
                 .withContent(objectCode)
                 .build()
@@ -545,15 +548,29 @@ public final class JsoupParser {
             for (Map.Entry<String, String> entry : object.getProperties().entrySet()) {
                 String name = entry.getKey();
                 String value = entry.getValue();
-                propertyElements.add(new TextContentElement.Builder()
+
+                DataType dataType;
+                switch (name) {
+                    case "area":
+                        dataType = DataType.INTEGER;
+                        break;
+                    case "price":
+                        dataType = DataType.FLOAT;
+                        break;
+                    default:
+                        dataType = DataType.STRING;
+                        break;
+                }
+
+                propertyElements.add(new DataContentElement.Builder()
                     .withName(name)
-                    .withContent(value)
+                    .withContent(value, dataType)
                     .build()
                 );
             }
             System.out.print(" properties");
 
-            List<ContentListElement> imageElements = new ArrayList<>();
+            List<ListElement> imageElements = new ArrayList<>();
             for (ImageDetails imageDetails : object.getImages()) {
                 imageElements.add(new ObjectContentListElement.Builder()
                     .withReferenceId(imageDetails.getId())
@@ -570,16 +587,16 @@ public final class JsoupParser {
                 // headline
                 new TextContentElement.Builder()
                     .withName("headline")
-                    .withContent(headline.get("en"))
-                    .withContextSpecificContent("de", headline.get("de"))
-                    .withContextSpecificContent("ru", headline.get("ru"))
+                    .withContent("en", headline.get("en"))
+                    .withContent("de", headline.get("de"))
+                    .withContent("ru", headline.get("ru"))
                     .build(),
                 // short-description
                 new TextContentElement.Builder()
                     .withName("short-description")
-                    .withContent(shortDescription.get("en"))
-                    .withContextSpecificContent("de", shortDescription.get("de"))
-                    .withContextSpecificContent("ru", shortDescription.get("ru"))
+                    .withContent("en", shortDescription.get("en"))
+                    .withContent("de", shortDescription.get("de"))
+                    .withContent("ru", shortDescription.get("ru"))
                     .build(),
                 // properties
                 new ContentGroup.Builder()
@@ -589,9 +606,9 @@ public final class JsoupParser {
                 // short-description
                 new TextContentElement.Builder()
                     .withName("long-description")
-                    .withContent(longDescription.get("en"))
-                    .withContextSpecificContent("de", longDescription.get("de"))
-                    .withContextSpecificContent("ru", longDescription.get("ru"))
+                    .withContent("en", longDescription.get("en"))
+                    .withContent("de", longDescription.get("de"))
+                    .withContent("ru", longDescription.get("ru"))
                     .build(),
                 // images
                 new ContentList.Builder()
@@ -602,13 +619,13 @@ public final class JsoupParser {
                 new ContentGroup.Builder()
                     .withName("geo-position")
                     .withElements(
-                        new TextContentElement.Builder()
+                        new DataContentElement.Builder()
                             .withName("latitude")
-                            .withContent(String.valueOf(object.getLatitude()))
+                            .withContent(String.valueOf(object.getLatitude()), DataType.FLOAT)
                             .build(),
-                        new TextContentElement.Builder()
+                        new DataContentElement.Builder()
                             .withName("longitude")
-                            .withContent(String.valueOf(object.getLongitude()))
+                            .withContent(String.valueOf(object.getLongitude()), DataType.FLOAT)
                             .build()
                     )
                     .build()
@@ -683,9 +700,12 @@ public final class JsoupParser {
         saleInfoBuilder.append("\t\t\t}\n");
         saleInfoBuilder.append("\t\t}");
 
+        File saleParent = new File("storage/4-converted/sale");
+
         for (ContentPage page : salePages) {
             String id = page.getId();
-            File file = new File("storage/4-converted/sale/object_" + id + ".json");
+            File file = new File(saleParent, "object_" + id + ".json");
+            ensureParentExists(file);
             try {
                 OBJECT_MAPPER.writeValue(file, page);
             } catch (IOException ex) {
@@ -711,6 +731,7 @@ public final class JsoupParser {
         saleInfoBuilder.append("}\n");
 
         File saleInfoFile = new File("storage/4-converted/sale/.cms/.info");
+        ensureParentExists(saleInfoFile);
         try (OutputStream os = new FileOutputStream(saleInfoFile)) {
             IOUtils.write(saleInfoBuilder.toString(), os, StandardCharsets.UTF_8);
         } catch (IOException ex) {
@@ -738,9 +759,12 @@ public final class JsoupParser {
         rentInfoBuilder.append("\t\t\t}\n");
         rentInfoBuilder.append("\t\t}");
 
+        File rentParent = new File("storage/4-converted/rent");
+
         for (ContentPage page : rentPages) {
             String id = page.getId();
-            File file = new File("storage/4-converted/rent/object_" + id + ".json");
+            File file = new File(rentParent, "object_" + id + ".json");
+            ensureParentExists(file);
             try {
                 OBJECT_MAPPER.writeValue(file, page);
             } catch (IOException ex) {
@@ -766,6 +790,7 @@ public final class JsoupParser {
         rentInfoBuilder.append("}\n");
 
         File rentInfoFile = new File("storage/4-converted/rent/.cms/.info");
+        ensureParentExists(rentInfoFile);
         try (OutputStream os = new FileOutputStream(rentInfoFile)) {
             IOUtils.write(rentInfoBuilder.toString(), os, StandardCharsets.UTF_8);
         } catch (IOException ex) {
@@ -773,6 +798,13 @@ public final class JsoupParser {
         }
 
         System.out.print("\nDONE");
+    }
+
+    private static void ensureParentExists(File file) {
+        File parent = file.getParentFile();
+        if (!parent.exists() && !parent.mkdirs()) {
+            throw new IllegalStateException("Unable to create parent dir '" + parent.getAbsolutePath() + "'!");
+        }
     }
 
     private static void createBackup() {
