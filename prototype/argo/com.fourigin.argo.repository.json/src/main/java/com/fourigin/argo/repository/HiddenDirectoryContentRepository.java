@@ -598,7 +598,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
         ensureInit();
 
         if (logger.isDebugEnabled())
-            logger.debug("Updating ContentPage for parent '{}'", info);
+            logger.debug("Updating ContentPage for info '{}'", info);
 
         ReadWriteLock lock = getLock(info.getReference());
         lock.writeLock().lock();
@@ -612,6 +612,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
                 return;
             }
 
+            if (logger.isDebugEnabled()) logger.debug("Writing result to content file '{}': {}", contentFile.getAbsolutePath(), contentPage);
             writeContentPage(info, contentPage, contentFile);
         } finally {
             lock.writeLock().unlock();

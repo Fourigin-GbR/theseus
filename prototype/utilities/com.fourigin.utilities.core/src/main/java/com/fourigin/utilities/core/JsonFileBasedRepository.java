@@ -1,6 +1,8 @@
 package com.fourigin.utilities.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,11 +19,16 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
 
     private File baseDirectory;
 
+    private final Logger logger = LoggerFactory.getLogger(JsonFileBasedRepository.class);
+
     protected abstract <T> File getFile(Class<T> target, String id, String mimeType, String... path);
 
     protected <T> T read(Class<T> target, String id, String... path) {
         File file = getFile(target, id, "application/json", path);
+        if (logger.isDebugEnabled())
+            logger.debug("Trying to read {} data from file {}", target.getName(), file.getAbsolutePath());
         if (!file.exists()) {
+            if (logger.isDebugEnabled()) logger.debug("No file found: {}", file.getAbsolutePath());
             return null;
         }
 
@@ -38,8 +45,10 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
         }
     }
 
-    protected <T> void write(T data, String id,  String... path) {
+    protected <T> void write(T data, String id, String... path) {
         File file = getFile(data.getClass(), id, "application/json", path);
+        if (logger.isDebugEnabled())
+            logger.debug("Writing data to file {}", file.getAbsolutePath());
 
         try (OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(os, data);
@@ -49,8 +58,8 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
         }
     }
 
-    public static String resolveBasePath(String id){
-        String firstBlobPart = id.substring(0,2);
+    public static String resolveBasePath(String id) {
+        String firstBlobPart = id.substring(0, 2);
         String remainingBlobPart = id.substring(2);
         return firstBlobPart + "/" + remainingBlobPart;
     }
