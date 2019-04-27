@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class GroupContentListElement extends AbstractAttributesAwareContentElement implements ContentListElement, ContentElementsContainer<ContentElement> {
+public class GroupContentListElement extends AbstractAttributesAwareContentElement implements ListElement, ContentElementsContainer {
 
     private static final long serialVersionUID = -1026281367445257627L;
 

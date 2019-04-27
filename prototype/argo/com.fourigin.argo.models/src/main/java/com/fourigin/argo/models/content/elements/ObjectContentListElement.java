@@ -2,7 +2,7 @@ package com.fourigin.argo.models.content.elements;
 
 import java.util.Objects;
 
-public class ObjectContentListElement extends AbstractAttributesAwareContentElement implements ObjectAwareContentElement, ContentListElement {
+public class ObjectContentListElement extends AbstractAttributesAwareContentElement implements ObjectAwareContentElement, ListElement {
 
     private static final long serialVersionUID = 3964141627291956922L;
 

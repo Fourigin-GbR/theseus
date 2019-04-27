@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ContentList extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentListElement> {
+public class ContentList extends AbstractContentElement implements NamedElement, ContentListElementsContainer {
 
     private static final long serialVersionUID = 1256571424877498311L;
 
     private LanguageContent title;
-    private List<ContentListElement> elements;
+    private List<ListElement> elements;
 
     @Override
     public LanguageContent getTitle() {
@@ -24,11 +24,11 @@ public class ContentList extends AbstractContentElement implements ContentElemen
         this.title = title;
     }
 
-    public List<ContentListElement> getElements() {
+    public List<ListElement> getElements() {
         return elements;
     }
 
-    public void setElements(List<ContentListElement> elements) {
+    public void setElements(List<ListElement> elements) {
         this.elements = elements;
     }
 
@@ -71,7 +71,7 @@ public class ContentList extends AbstractContentElement implements ContentElemen
     public static class Builder {
         private String name;
         private LanguageContent title = new LanguageContent();
-        private List<ContentListElement> elements = new ArrayList<>();
+        private List<ListElement> elements = new ArrayList<>();
         private Map<String, String> attributes = new HashMap<>();
 
         public Builder withName(String name) {
@@ -84,7 +84,7 @@ public class ContentList extends AbstractContentElement implements ContentElemen
             return this;
         }
 
-        public Builder withElement(ContentListElement element) {
+        public Builder withElement(ListElement element) {
             if (element != null) {
                 elements.add(element);
             }
@@ -92,7 +92,7 @@ public class ContentList extends AbstractContentElement implements ContentElemen
             return this;
         }
 
-        public Builder withElements(ContentListElement... elements) {
+        public Builder withElements(ListElement... elements) {
             if (elements != null) {
                 this.elements.addAll(Arrays.asList(elements));
             }
@@ -100,7 +100,7 @@ public class ContentList extends AbstractContentElement implements ContentElemen
             return this;
         }
 
-        public Builder withElements(List<ContentListElement> elements) {
+        public Builder withElements(List<ListElement> elements) {
             if (elements != null) {
                 this.elements.addAll(elements);
             }

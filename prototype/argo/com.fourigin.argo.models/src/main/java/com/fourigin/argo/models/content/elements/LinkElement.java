@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class LinkElement extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentElement>, LinkAwareContentElement {
+public class LinkElement extends AbstractContentElement implements NamedElement, ContentElementsContainer, LinkAwareContentElement {
 
     private static final long serialVersionUID = -5241678038301475481L;
 

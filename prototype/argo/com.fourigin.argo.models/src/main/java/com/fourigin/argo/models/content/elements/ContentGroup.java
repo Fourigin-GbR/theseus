@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer<ContentElement> {
+public class ContentGroup extends AbstractContentElement implements ContentElement, ContentElementsContainer {
     private static final long serialVersionUID = -6891589536053329842L;
 
     private LanguageContent title;

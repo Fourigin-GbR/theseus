@@ -3,7 +3,7 @@ package com.fourigin.argo.models.content.elements;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataContentListElement extends AbstractAttributesAwareContentElement implements DataAwareContentElement, TitleAwareContentElement, ContentListElement {
+public class DataContentListElement extends AbstractAttributesAwareContentElement implements DataAwareContentElement, TitleAwareContentElement, ListElement {
     private static final long serialVersionUID = 5066464546311137699L;
 
     private LanguageContent title;

@@ -2,8 +2,8 @@ package com.fourigin.argo.models.content.elements;
 
 import java.util.List;
 
-public interface ContentElementsContainer<T> extends AttributesAwareContentElement {
-    List<T> getElements();
+public interface ContentElementsContainer extends AttributesAwareContentElement {
+    List<ContentElement> getElements();
 
-    void setElements(List<T> elements);
+    void setElements(List<ContentElement> elements);
 }

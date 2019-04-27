@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class TextContentListElement extends AbstractAttributesAwareContentElement implements TextAwareContentElement, TitleAwareContentElement, ContentListElement {
+public class TextContentListElement extends AbstractAttributesAwareContentElement implements TextAwareContentElement, TitleAwareContentElement, ListElement {
 
     private static final long serialVersionUID = 4912756036611660964L;
 

@@ -8,11 +8,12 @@ import com.fourigin.argo.models.content.elements.ContentElement;
 import com.fourigin.argo.models.content.elements.ContentElementsContainer;
 import com.fourigin.argo.models.content.elements.ContentGroup;
 import com.fourigin.argo.models.content.elements.ContentList;
-import com.fourigin.argo.models.content.elements.ContentListElement;
+import com.fourigin.argo.models.content.elements.ListElement;
 import com.fourigin.argo.models.content.elements.DataAwareContentElement;
 import com.fourigin.argo.models.content.elements.GroupContentListElement;
 import com.fourigin.argo.models.content.elements.LanguageContent;
 import com.fourigin.argo.models.content.elements.LinkAwareContentElement;
+import com.fourigin.argo.models.content.elements.NamedElement;
 import com.fourigin.argo.models.content.elements.ObjectAwareContentElement;
 import com.fourigin.argo.models.content.elements.TextAwareContentElement;
 import com.fourigin.argo.models.content.elements.TitleAwareContentElement;
@@ -50,7 +51,7 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         throw new UnsupportedOperationException("Unknown content element type '" + element.getClass() + "'!");
     }
 
-    public ContentElementType getElementType(ContentListElement element) {
+    public ContentElementType getElementType(ListElement element) {
         if (TextAwareContentElement.class.isAssignableFrom(element.getClass())) {
             return ContentElementType.TEXT;
         }
@@ -119,12 +120,22 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
 
     public String getName(String path) {
         ContentElement element = getElement(path);
-        return element.getName();
+        if (NamedElement.class.isAssignableFrom(element.getClass())) {
+            return ((NamedElement) element).getName();
+        }
+
+        // TODO: throw an exception?
+        return null;
     }
 
     public String getName(ContentElementsContainer container, String path) {
         ContentElement element = getElement(container, path);
-        return element.getName();
+        if (NamedElement.class.isAssignableFrom(element.getClass())) {
+            return ((NamedElement) element).getName();
+        }
+
+        // TODO: throw an exception?
+        return null;
     }
 
     public String getTitle(String path) {
@@ -229,12 +240,12 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return Float.parseFloat(getOptionalContent(container, path, String.valueOf(defaultValue)));
     }
 
-    public List<ContentListElement> listElements(String path) {
+    public List<ListElement> listElements(String path) {
         ContentList list = getContentListElement(path);
         return list.getElements();
     }
 
-    public List<ContentListElement> listElements(ContentElementsContainer container, String path) {
+    public List<ListElement> listElements(ContentElementsContainer container, String path) {
         ContentList list = getContentListElement(container, path);
         return list.getElements();
     }
