@@ -36,7 +36,6 @@ import com.fourigin.argo.template.engine.ThymeleafArgoTemplateEngine;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -317,7 +316,7 @@ public class App {
         jobDetailFactory.setDurability(true);
 
         Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("project", "greekestate");
+        dataMap.put("project", "ge-web");
         dataMap.put("bases", Arrays.asList("DE", "EN", "RU"));
         jobDetailFactory.setJobDataMap(new JobDataMap(dataMap));
 
@@ -329,7 +328,8 @@ public class App {
         SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
         trigger.setJobDetail(job);
         trigger.setRepeatInterval(30000); // 30 sek.
-        trigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+//        trigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+        trigger.setRepeatCount(0);
         return trigger;
     }
 
