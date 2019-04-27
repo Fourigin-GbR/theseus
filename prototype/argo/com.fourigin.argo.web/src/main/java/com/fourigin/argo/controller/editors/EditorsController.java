@@ -205,7 +205,8 @@ public class EditorsController {
         String contentPath = pointer.getContentPath();
         ContentPage contentPage = aggregation.getContentPage();
 
-        return ContentPageManager.resolve(contentPage, contentPath);
+        // resolve without detaching!
+        return ContentPageManager.resolve(contentPage, contentPath, false);
     }
 
     private void updateContentElement(ContentElementPointer pointer, ContentElement contentElement, CmsRequestAggregation aggregation) {

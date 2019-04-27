@@ -22,6 +22,9 @@ import java.util.StringTokenizer;
 public final class ContentPageManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentPageManager.class);
 
+    @SuppressWarnings("RegExpRedundantEscape")
+    private static final String LIST_REFERENCE_PATTERN = "(.*)\\[(\\d)\\]$";
+
     private ContentPageManager() {
     }
 
@@ -59,6 +62,10 @@ public final class ContentPageManager {
     }
 
     public static ContentElement resolve(ContentPage contentPage, String contentPath) {
+        return resolve(contentPage, contentPath, true);
+    }
+
+    public static ContentElement resolve(ContentPage contentPage, String contentPath, boolean detach) {
         if (contentPage == null) {
             if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to resolve ContentElement based on null-ContentPage!");
             return null;
@@ -69,54 +76,63 @@ public final class ContentPageManager {
             return null;
         }
 
-        String path = contentPath.replace("//", "/").trim();
-
-        // compress path (e.g. "..")
-        path = compressContentPath(path);
+        String path = normalizeContentPath(contentPath);
 
         if ("/".equals(path)) {
             // special case, return all root level elements, packed in a new pseudo group
-            return new ContentGroup.Builder()
-                .withName("")
-                .withElements(contentPage.getContent())
-                .build();
+            if (detach) {
+                return new ContentGroup.Builder()
+                    .withName("")
+                    .withElements(contentPage.getContent())
+                    .build();
+            } else {
+                if (LOGGER.isInfoEnabled()) LOGGER.info("Unable to return the whole ContentPage without detaching!");
+                return null;
+            }
         }
 
         if (path.startsWith("@")) {
-            Collection<DataSourceContent> dataSourceContents = contentPage.getDataSourceContents();
-            if (dataSourceContents != null) {
-                int pos = path.indexOf(":");
-                String dataSourceName = path.substring(1, pos);
+            if (detach) {
+                Collection<DataSourceContent> dataSourceContents = contentPage.getDataSourceContents();
+                if (dataSourceContents != null) {
+                    int pos = path.indexOf(":");
+                    String dataSourceName = path.substring(1, pos);
 
-                DataSourceContent match = null;
-                for (DataSourceContent dataSourceContent : dataSourceContents) {
-                    if (dataSourceName.equals(dataSourceContent.getName())) {
-                        match = dataSourceContent;
-                        break;
+                    DataSourceContent match = null;
+                    for (DataSourceContent dataSourceContent : dataSourceContents) {
+                        if (dataSourceName.equals(dataSourceContent.getName())) {
+                            match = dataSourceContent;
+                            break;
+                        }
                     }
+
+                    if (match == null) {
+                        if (LOGGER.isErrorEnabled())
+                            LOGGER.error("No data source found for name '{}'!", dataSourceName);
+                        return null;
+                    }
+
+                    path = path.substring(pos + 1);
+
+                    if ("/".equals(path)) {
+                        // special case, return all root level elements, packed in a new pseudo group
+                        return new ContentGroup.Builder()
+                            .withName("")
+                            .withElements(match.getContent())
+                            .build();
+                    }
+
+                    return resolveInternal(match.getContent(), path);
                 }
-
-                if (match == null) {
-                    if (LOGGER.isErrorEnabled()) LOGGER.error("No data source found for name '{}'!", dataSourceName);
-                    return null;
-                }
-
-                path = path.substring(pos + 1);
-
-                if ("/".equals(path)) {
-                    // special case, return all root level elements, packed in a new pseudo group
-                    return new ContentGroup.Builder()
-                        .withName("")
-                        .withElements(match.getContent())
-                        .build();
-                }
-
-                return resolve(path, match.getContent());
+            } else {
+                if (LOGGER.isInfoEnabled())
+                    LOGGER.info("Unable to return DataSource related content without detaching!");
+                return null;
             }
         }
 
         List<ContentElement> elements = contentPage.getContent();
-        return resolve(path, elements);
+        return resolveInternal(elements, path);
     }
 
     public static ContentElement resolve(ContentElementsContainer container, String contentPath) {
@@ -133,43 +149,107 @@ public final class ContentPageManager {
         String path = contentPath.replace("//", "/").trim();
 
         List<ContentElement> elements = container.getElements();
-        return resolve(path, elements);
+        return resolveInternal(elements, path);
+    }
+
+    public static ContentElement resolveOptional(String path, List<ContentElement> elements) {
+        try {
+            return resolveInternal(elements, path);
+        } catch (UnresolvableContentPathException ex) {
+            return null;
+        }
     }
 
     public static void update(ContentPage contentPage, String contentPath, ContentElement element) {
-        ContentElement parentElement = resolve(contentPage, contentPath + "/..");
-        if (parentElement == null) {
-            throw new IllegalArgumentException("Unable to find parent element for path '" + contentPath + "'!");
-        }
+        Logger logger = LoggerFactory.getLogger(ContentPageManager.class);
 
-        if (!ContentElementsContainer.class.isAssignableFrom(parentElement.getClass())) {
-            throw new IllegalArgumentException("Parent element is not a container for path '" + contentPath + "'!");
-        }
+        if (logger.isDebugEnabled())
+            logger.debug("Updating element {} at path {} of page {}", element, contentPath, contentPage.getId());
 
-        ContentElementsContainer parent = ContentElementsContainer.class.cast(parentElement);
-        List<ContentElement> elements = parent.getElements();
-        if (elements == null) {
-            elements = new ArrayList<>();
-            elements.add(element);
-            return;
-        }
+        List<ContentElement> elements;
 
-        String name = element.getName();
+        String parentPath = normalizeContentPath(contentPath + "/..");
+        if ("/".equals(parentPath)) {
+            elements = contentPage.getContent();
 
-        ContentElement previousElement = null;
-        for (ContentElement contentElement : elements) {
-            if (name.equals(contentElement.getName())) {
-                previousElement = contentElement;
-                break;
+            if (elements == null) {
+                // new element
+                elements = new ArrayList<>();
+                contentPage.setContent(elements);
+                elements.add(element);
+                return;
+            }
+        } else {
+            ContentElement parentElement = resolve(contentPage, parentPath, false);
+            if (parentElement == null) {
+                throw new IllegalArgumentException("Unable to find parent element for path '" + contentPath + "'!");
+            }
+
+            if (!ContentElementsContainer.class.isAssignableFrom(parentElement.getClass())) {
+                throw new IllegalArgumentException("Parent element is not a container for path '" + contentPath + "'!");
+            }
+
+            ContentElementsContainer parent = ContentElementsContainer.class.cast(parentElement);
+            if (logger.isDebugEnabled()) logger.debug("parent: {}", parent);
+
+            elements = parent.getElements();
+            if (elements == null) {
+                // new element
+                elements = new ArrayList<>();
+                parent.setElements(elements);
+                elements.add(element);
+                return;
             }
         }
 
+        ContentElement previousElement = null;
+        int previousPosition = 0;
+
+        if (NamedElement.class.isAssignableFrom(element.getClass())) {
+            // names content element reference
+            String name = ((NamedElement) element).getName();
+
+            for (ContentElement contentElement : elements) {
+                if (!NamedElement.class.isAssignableFrom(contentElement.getClass())) {
+                    throw new IllegalArgumentException("Required a NamedContentElement, but found '" + contentElement.getClass().getName() + "' at content path '" + contentPath + "'");
+                }
+                if (name.equals(((NamedElement) contentElement).getName())) {
+                    previousElement = contentElement;
+                    break;
+                }
+
+                previousPosition++;
+            }
+        } else {
+            // list content element reference
+
+            // TODO: implement reference by number (".../blah[3]") as a last part of the content path
+
+//            String elementReference = contentPath.substring(contentPath.lastIndexOf('/'));
+//            if (logger.isDebugEnabled()) logger.debug("Element reference: {}", elementReference);
+
+            throw new UnsupportedOperationException("Not implemented yet!");
+        }
+
+        // TODO: check if only list elements may be applied here!
+
         if (previousElement != null) {
             // replace the existing element
+            if (logger.isDebugEnabled()) logger.debug("Replacing existing element {}", previousElement);
             elements.remove(previousElement);
         }
 
-        elements.add(element);
+        if (logger.isDebugEnabled()) logger.debug("Adding a (new/modified) element {}", element);
+        elements.add(previousPosition, element);
+    }
+
+    private static String normalizeContentPath(String path) {
+        if (path == null) {
+            return null;
+        }
+
+        path = path.replace("//", "/").trim();
+        return compressContentPath(path);
     }
 
     private static String compressContentPath(String path) {
@@ -193,10 +273,16 @@ public final class ContentPageManager {
             }
 
             // remove the last part
-            resultParts.remove(count - 1);
+            String previousPart = resultParts.remove(count - 1);
 
-            // step back
-            count--;
+            // check for index reference (for lists)
+            if (previousPart.matches(LIST_REFERENCE_PATTERN)) {
+                previousPart = previousPart.replaceFirst(LIST_REFERENCE_PATTERN, "$1");
+                resultParts.add(count - 1, previousPart);
+            } else {
+                // step back
+                count--;
+            }
         }
 
         StringBuilder builder = new StringBuilder();
@@ -213,15 +299,7 @@ public final class ContentPageManager {
         return builder.toString();
     }
 
-    public static ContentElement resolveOptional(String path, List<ContentElement> elements) {
-        try {
-            return resolve(path, elements);
-        } catch (UnresolvableContentPathException ex) {
-            return null;
-        }
-    }
-
-    public static ContentElement resolve(String path, List<ContentElement> elements) {
+    private static ContentElement resolveInternal(List<ContentElement> elements, String path) {
         ContentElement current = null;
 
         if (LOGGER.isDebugEnabled()) {
@@ -234,10 +312,35 @@ public final class ContentPageManager {
 
             current = null;
 
+            String indexReference = null;
+            if (token.matches(LIST_REFERENCE_PATTERN)) {
+                indexReference = token.replaceFirst(LIST_REFERENCE_PATTERN, "$2");
+                token = token.replaceFirst(LIST_REFERENCE_PATTERN, "$1");
+            }
+
             for (ContentElement element : elements) {
-                if (token.equals(element.getName())) {
-                    current = element;
-                    break;
+                if (NamedElement.class.isAssignableFrom(element.getClass())) {
+                    if (token.equals(((NamedElement) element).getName())) {
+                        if (indexReference != null) {
+                            // get referenced sub-element
+                            int index = Integer.parseInt(indexReference);
+
+                            if (!ContentListElementsContainer.class.isAssignableFrom(element.getClass())) {
+                                throw new UnresolvableContentPathException("Unable to resolve list reference '" + index + "'!", path);
+                            }
+
+                            List<ListElement> listElements = ((ContentListElementsContainer) element).getElements();
+                            if (listElements.size() <= index) {
+                                throw new UnresolvableContentPathException("Index out of range for reference '" + index + "', only " + listElements.size() + " elements available!", path);
+                            }
+
+                            current = listElements.get(index);
+                        } else {
+                            current = element;
+                        }
+
+                        break;
+                    }
                 }
             }
 
@@ -308,9 +411,9 @@ public final class ContentPageManager {
         }
     }
 
-    private static <T> void collectListChildren(Class<T> iface, List<? extends ContentListElement> children, List<T> result) {
+    private static <T> void collectListChildren(Class<T> iface, List<? extends ListElement> children, List<T> result) {
         if (children != null) {
-            for (ContentListElement element : children) {
+            for (ListElement element : children) {
                 if (iface.isInstance(element)) {
                     result.add(iface.cast(element));
                 }
@@ -323,7 +426,7 @@ public final class ContentPageManager {
     private static <T> void checkSubContainer(Class<T> iface, Object element, List<T> result) {
         if (element instanceof ContentList) {
             //noinspection unchecked
-            List<? extends ContentListElement> subChildren = ((ContentList) element).getElements();
+            List<? extends ListElement> subChildren = ((ContentList) element).getElements();
             collectListChildren(iface, subChildren, result);
         } else if (element instanceof ContentElementsContainer) {
             //noinspection unchecked
