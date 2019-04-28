@@ -404,6 +404,36 @@
         </fieldset>
     </div>
 
+
+    <!-- list text editor -->
+    <div class="contentEditor__editorField" data-editor-type="listText">
+        <fieldset data-type="listText">
+            <input type="hidden" name="type" value="list-text"/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <fieldset name="content">
+                    <div class="contentEditor__contentItems">
+                        <div data-element="multiLanguages" class="contentItemMultiLanguage">
+                            <div class="contentItemMultiLanguage__fieldName"></div>
+                            <div class="contentItemMultiLanguage__items">
+                                <div data-prototype="contentItem" class="contentEditor__contentItem contentItemMultiLanguage__item">
+                                    <label>
+                                        <span class="contentEditor__fieldName">
+                                            <i class="contentItemMultiLanguage__languageFlag contentEditor__fieldNameIcon far fa-flag"></i>
+                                            <span class="contentEditor__fieldNameContent"></span>
+                                        </span>
+                                        <textarea autocomplete="off" class="html" name="de"></textarea>
+                                        <span class="contentEditor__label">html</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </fieldset>
+    </div>
+
     <!-- object editor -->
     <div class="contentEditor__editorField" data-editor-type="object">
         <fieldset data-type="object">
