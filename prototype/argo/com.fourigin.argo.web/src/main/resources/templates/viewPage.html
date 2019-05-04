@@ -53,7 +53,7 @@
                         <div class="editContentBox__contentBox">
                             <ul class="pathStructureLinkList">
                                 <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
-                                    <a th:href="@{/view/(l=${argo.language},p=${argo.path})}" href="#">child-1</a>
+                                    <a th:href="@{/view/(l=${argo.language},p=${argo.path})}" href="#" th:text="${pathToken}">#</a>
                                 </li>
                             </ul>
                         </div>
@@ -330,7 +330,10 @@
     </div>
 </div>
 
-<iframe id="renderedSitePage" src="https://www.tagesschau.de/ausland/tony-mendez-103.html"></iframe>
+<iframe id="renderedSitePage" src="#"
+        th:src="@{/compile/(l=${argo.language},p=${argo.path})}"></iframe>
+
+<!-- <iframe id="renderedSitePage" src="https://www.tagesschau.de/ausland/tony-mendez-103.html"></iframe> -->
 
 
 <div style="display: none;" data-argo-items="content-editor-prototypes">
@@ -765,6 +768,7 @@
             "path": [[${argo.path}]],
             "hotspots": hotspots,
             "urlLoadContent": "/cms/compile/prepare-content?l=" + language + "&p=" + path + "&verbose=true",
+            "urlRetrieveContentElement": "/cms/editors/retrieve",
             "urlLoadContentPrototype": "/cms/editors/prototype?l=" + language + "&p=" + path + "&verbose=true",
             "urlSaveEditor": "/cms/editors/save",
             "urlRootHtmlEditorAssets": "/global/styles/libraries/"
@@ -781,21 +785,6 @@
 <script src="/global/scripts/overlays.js"></script>
 <script src="/global/scripts/overlay-submenus.js"></script>
 <script src="/global/scripts/page-content-editor-globals.js"></script>
-
-<script type="text/javascript">
-    var iFrame = jQuery('iframe#renderedSitePage');
-
-    function iResize() {
-
-        for (var i = 0, j = iFrame.length; i < j; i++) {
-            iFrame[i].style.height = iFrame[i].contentWindow.document.body.offsetHeight + 'px';
-        }
-    }
-
-    iFrame.on("load", function () {
-        this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
-    });
-</script>
 
 </body>
 </html>
