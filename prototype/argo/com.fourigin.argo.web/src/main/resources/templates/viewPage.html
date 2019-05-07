@@ -371,8 +371,53 @@
             <div class="contentEditor__editorFields">
 
             </div>
-            <div class="contentEditor__formButtons">
-                <button class="button button--cta" type="submit">Save</button>
+            <div class="contentEditor__editorActions">
+                <div class="contentEditor__formButtons">
+                    <button class="button button--cta" type="submit">Save</button>
+                </div>
+                <div class="contentEditor__saveLogs">
+                    <div class="saveProcessStatus">
+                        <div data-argo-element="saveProcessStatusSaving" class="saveProcessStatus__item">
+                            <div class="saveProcessStatus__statusIcon">
+                                <i class="fas fa-file-upload"></i>
+                            </div>
+                            <div class="saveProcessStatus__statusCopy">
+                                Saving data...
+                            </div>
+                        </div>
+                        <div data-argo-element="saveProcessStatusSaved" class="saveProcessStatus__item">
+                            <div class="saveProcessStatus__statusIcon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="saveProcessStatus__statusCopy">
+                                All changes saved.
+                            </div>
+                        </div>
+                        <div data-argo-element="saveProcessStatusSaveError" class="saveProcessStatus__item">
+                            <div class="saveProcessStatus__statusIcon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="saveProcessStatus__statusCopy">
+                                Could not save changes!
+                            </div>
+                        </div>
+                    </div>
+                    <ul data-argo-element="loggingDataList" class="loggingDataList">
+                        <li data-argo-prototype="saveLog" class="loggingDataList__entry">
+                            <div class="loggingDataList__entryTitle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="loggingDataList__entryStatus">
+                                <div>Saving data...</div>
+                                <div><i class="fas fa-check"></i>All changes saved.</div>
+                                <div>Could not save changes!</div>
+                            </div>
+                            <div class="loggingDataList__entryDateTime">
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </form>
     </div>
