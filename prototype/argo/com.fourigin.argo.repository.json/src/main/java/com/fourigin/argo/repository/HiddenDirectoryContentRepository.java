@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.models.InvalidSiteStructureNodeException;
 import com.fourigin.argo.models.InvalidSiteStructurePathException;
 import com.fourigin.argo.models.UnsupportedNodeTypeException;
 import com.fourigin.argo.models.content.ContentPage;
@@ -135,7 +136,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
         }
 
         if (!type.isAssignableFrom(result.getClass())) {
-            throw new InvalidSiteStructurePathException(path, type, result.getClass());
+            throw new InvalidSiteStructureNodeException(path, type, result.getClass());
         }
 
         return type.cast(result);

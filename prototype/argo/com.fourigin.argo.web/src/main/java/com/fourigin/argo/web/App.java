@@ -70,7 +70,8 @@ import java.util.Map;
     "com.fourigin.argo.web",
     "com.fourigin.argo.controller",
     "com.fourigin.argo.scheduling",
-    "com.fourigin.argo.config"
+    "com.fourigin.argo.config",
+    "com.fourigin.argo.errors"
 })
 @SpringBootApplication(
     exclude = {

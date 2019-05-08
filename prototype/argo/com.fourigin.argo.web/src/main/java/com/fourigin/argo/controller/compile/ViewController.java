@@ -33,7 +33,7 @@ public class ViewController {
     public ModelAndView view(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path
+        @RequestParam(RequestParameters.SITE_PATH) String path
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing view request for language {} & path {}.", language, path);
 

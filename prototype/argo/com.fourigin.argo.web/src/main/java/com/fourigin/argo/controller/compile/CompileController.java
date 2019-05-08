@@ -54,7 +54,7 @@ public class CompileController {
     public HttpEntity<byte[]> compile(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path
+        @RequestParam(RequestParameters.SITE_PATH) String path
     ) {
         MDC.put("project", project);
         MDC.put("language", language);
@@ -151,7 +151,7 @@ public class CompileController {
     public ResponseEntity<CompileResult> writeOutput(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path,
+        @RequestParam(RequestParameters.SITE_PATH) String path,
         @RequestParam(value = RequestParameters.COMPILE_PROCESSING_MODE, required = false, defaultValue = "STAGE") ProcessingMode mode,
         @RequestParam(value = RequestParameters.COMPILE_RECURSIVE_PROCESSING, required = false, defaultValue = "false") boolean recursive
     ) {
@@ -286,7 +286,7 @@ public class CompileController {
     public ContentPage showPreparedContent(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path
+        @RequestParam(RequestParameters.SITE_PATH) String path
     ) {
         MDC.put("project", project);
         MDC.put("language", language);

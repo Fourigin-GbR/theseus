@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Internal server error</h1>
+
+<h2>Cause</h2>
+<ul th:each="cause : ${stack}">
+    <li>
+        <span class="key" th:text="${cause.class}">cause</span>
+    </li>
+</ul>
+
+<h2>Attributes</h2>
+<div th:text="${attributeNames}">Attribute names</div>
+<ul th:each="attr : ${attributes}">
+    <li>
+        <span class="key" th:text="${attr.key}">key</span>
+        (<span class="type" th:text="${attr.value.class}">key</span>)
+        <span class="value" th:text="${attr.value}">value</span>
+    </li>
+</ul>
+</body>
+</html>

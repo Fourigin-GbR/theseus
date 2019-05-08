@@ -97,7 +97,7 @@ public class SystemController {
     public TreeItemInfo resolveInfo(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path
+        @RequestParam(RequestParameters.SITE_PATH) String path
     ) {
         if (logger.isDebugEnabled())
             logger.debug("Processing info request for project '{}', language '{}' and path '{}'.", project, language, path);
@@ -148,7 +148,7 @@ public class SystemController {
     public UpdateResult resolveInfo(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path,
+        @RequestParam(RequestParameters.SITE_PATH) String path,
         @RequestParam("state") String state
     ) {
         if (logger.isDebugEnabled())

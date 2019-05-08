@@ -34,7 +34,7 @@ public class SearchController {
     public List<String> resolveMatchingIndexTargets(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path,
+        @RequestParam(RequestParameters.SITE_PATH) String path,
         @RequestBody SearchRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", language, path, request);

@@ -2,7 +2,8 @@ package com.fourigin.argo.controller;
 
 public interface RequestParameters {
     String LANGUAGE = "l";
-    String PATH = "p";
+    String SITE_PATH = "p";
+    String CONTENT_PATH = "c";
     String FLUSH = "flush";
 
     String COMPILE_PROCESSING_MODE = "mode";

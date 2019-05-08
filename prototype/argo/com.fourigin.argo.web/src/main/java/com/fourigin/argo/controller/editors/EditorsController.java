@@ -41,7 +41,7 @@ public class EditorsController {
     public ContentPagePrototype retrievePrototype(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path
+        @RequestParam(RequestParameters.SITE_PATH) String path
     ) {
         if (logger.isDebugEnabled())
             logger.debug("Processing retrieve prototype request for language {} and sitePath {}", language, path);
@@ -56,40 +56,29 @@ public class EditorsController {
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
     public ContentElementResponse retrieve(
         @PathVariable String project,
-        @RequestBody RetrieveContentRequest request
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(RequestParameters.SITE_PATH) String path,
+        @RequestParam(RequestParameters.CONTENT_PATH) String contentPath
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing retrieve request {}.", request);
+        if (logger.isDebugEnabled()) logger.debug("Processing retrieve request for {}:{}:{}.", language, path, contentPath);
 
         ContentElementResponse response = new ContentElementResponse();
-        response.copyFrom(request);
+        response.setLanguage(language);
+        response.setPath(path);
+        response.setContentPath(contentPath);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
             project,
-            request.getLanguage(),
-            request.getPath()
+            language,
+            path
         );
 
-        ContentElement contentElement = resolveContentElement(request, aggregation);
+        ContentElement contentElement = resolveContentElement(response, aggregation);
         String currentChecksum = buildChecksum(contentElement);
         response.setCurrentContentElement(contentElement);
         response.setCurrentChecksum(currentChecksum);
 
         return response;
-    }
-
-    @RequestMapping(value = "/retrieveP", method = RequestMethod.GET)
-    public ContentElementResponse r(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.PATH) String path,
-        @RequestParam("contentPath") String contentPath
-    ) {
-        RetrieveContentRequest request = new RetrieveContentRequest();
-        request.setLanguage(language);
-        request.setPath(path);
-        request.setContentPath(contentPath);
-
-        return retrieve(project, request);
     }
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
@@ -178,13 +167,22 @@ public class EditorsController {
 
     @ExceptionHandler({
         UnresolvableContentPathException.class,
-        UnresolvableSiteStructurePathException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceErrorResponse unresolvableContentPath(Exception ex) {
         if (logger.isErrorEnabled()) logger.error("Unable to resolve the content path!", ex);
 
         return new ServiceErrorResponse(404, "Unable to resolve the content path!", ex.getMessage());
+    }
+
+    @ExceptionHandler({
+        UnresolvableSiteStructurePathException.class
+    })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ServiceErrorResponse unresolvableSitePath(Exception ex) {
+        if (logger.isErrorEnabled()) logger.error("Unable to resolve the site path!", ex);
+
+        return new ServiceErrorResponse(404, "Unable to resolve the site path!", ex.getMessage());
     }
 
     @ExceptionHandler(InvalidParameterException.class)
