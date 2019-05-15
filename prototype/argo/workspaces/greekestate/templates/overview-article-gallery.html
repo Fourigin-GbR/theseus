@@ -1,0 +1,135 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Greece</title>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+</head>
+<body>
+<!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
+<!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
+
+<header th:replace="greekestate/base :: header">
+
+</header>
+
+<div class="body">
+
+    <nav th:replace="greekestate/base :: breadcrumb">
+
+    </nav>
+
+    <article th:replace="greekestate/sub-templates/slider :: article-stage-image-slider-width-description(${argo.contentElementUtility.getElement('/hero-images').elements})">
+
+    </article>
+
+    <article th:replace="greekestate/base :: article-h1-block()">
+
+    </article>
+
+    <article>
+        <ul class="imageArticleList">
+            <li>
+                <div class="image">
+                    <div class="slider imageSlider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="/assets/greekestate/assets/images/loutraki.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="/assets/greekestate/assets/images/loutraki2.JPG"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+
+                </div>
+                <div class="copy">
+                    <h2>Loutraki</h2>
+                    <p>Informationen...</p>
+                    <a class="cta" href="region.html">Weiter</a>
+                </div>
+            </li>
+            <li>
+                <div class="image">
+                    <div class="slider imageSlider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="/assets/greekestate/assets/images/kreta.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="/assets/greekestate/assets/images/loutraki2.JPG"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="copy">
+                    <h2>Kreta</h2>
+                    <p>Informationen...</p>
+                    <a class="cta" href="region.html">Weiter</a>
+                </div>
+            </li>
+            <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    jQuery(".imageArticleList .slider").each(function(){
+                        new Slider(
+                            jQuery(this),
+                            {
+                                "slideItemsAmountPerPage": [
+                                    {
+                                        "min": "0px",
+                                        "max": null,
+                                        "slideItems": 1
+                                    }
+                                ]
+                            }
+                        );
+                    });
+                });
+            </script>
+        </ul>
+    </article>
+</div>
+
+<footer th:replace="greekestate/base :: footer">
+
+</footer>
+</body>
+</html>

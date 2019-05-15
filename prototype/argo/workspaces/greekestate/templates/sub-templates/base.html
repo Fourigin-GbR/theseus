@@ -1,0 +1,307 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Greece</title>
+    <link rel="stylesheet" href="/assets/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/greekestate/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/greekestate/assets/scripts/slider.js"></script>
+</head>
+<body>
+
+<header th:fragment="header">
+    <a class="logo" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
+    <div class="meta">
+        <div class="contacts">
+            <div class="telephone">
+                <i class="fa fa-phone linkTypeIcon" aria-hidden="true"></i>
+                <span>302741024622</span>
+            </div>
+            <div class="languages">
+                <select>
+                    <option>deutsch</option>
+                    <option>griechisch</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="text.html">Über uns</a></li>
+            <li><a href="regionen.html">Griechische Regionen</a></li>
+            <li><a href="text.html">Kontakt</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="body">
+    <article class="productStageSlider">
+        <div class="slider heroStageOffers">
+            <input class="sliderPageStorage" value="1" type="hidden">
+            <div class="sliderWrapper">
+                <ul>
+                    <li>
+                        <div class="heroStageOffer">
+                            <div class="image">
+                                <img src="/assets/greekestate/assets/images/start-loutraki.JPG"/>
+                                <div class="teaser">Über 220 Angebote direkt<br/>in Loutraki</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="heroStageOffer">
+                            <div class="image">
+                                <img src="/assets/greekestate/assets/images/start-loutraki-2.JPG"/>
+                                <div class="teaser">Wir vermitteln Immobilien zum Kaufen, Mieten und für Gewerbe</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="sliderSlideLeft"></div>
+            <div class="sliderSlideRight"></div>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                new Slider(
+                    jQuery(".slider.heroStageOffers"),
+                    {
+                        "slideItemsAmountPerPage": [
+                            {
+                                "min": "0px",
+                                "max": null,
+                                "slideItems": 1
+                            }
+                        ]
+                    }
+                );
+            });
+        </script>
+    </article>
+    <article class="contextHighlights">
+        <div class="links">
+            <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+            <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+        </div>
+        <div class="searchAndGo">
+            <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
+            <form action="#">
+                <label>
+                    <span>Objekt-ID</span>
+                    <input name="objectId" type="text" />
+                </label>
+                <input class="cta" type="submit" value="Suchen"/>
+            </form>
+        </div>
+    </article>
+    <article>
+        <h1 th:text="${content.getText('/headline')}">#headline</h1>
+        <p  th:text="${content.getText('/body')}">
+            #body
+        </p>
+    </article>
+
+    <article>
+        <h2>Besondere Angebote</h2>
+
+        <ul class="smallItemGalleryList">
+            <li>
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object1/slide1.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object1/slide2.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object1/slide3.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category">Gewerbe</div>
+                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price">
+                        500.500 €
+                    </span>
+                    <a href="details.html" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+            <li>
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object2/slide1.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object2/slide2.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object2/slide3.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category">Feriendomizil</div>
+                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price">
+                        465.000 €
+                    </span>
+                    <a href="details.html" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+            <li>
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object3/slide1.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="assets/images/objects/object3/slide2.jpg"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category">Gewerbe</div>
+                    <h3><a href="details.html">Restaurant im Touristen-Zentrum</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price">
+                        2.500 € Pacht
+                    </span>
+                    <a href="details.html" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery(".smallItemGalleryList .slider").each(function () {
+                    new Slider(
+                        jQuery(this),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            });
+        </script>
+    </article>
+
+    <article class="forwardings">
+        <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+        <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+        <a href="region.html">Informationen über Loutraki</a>
+    </article>
+</div>
+<footer>
+    <div class="content">
+        <div class="logo">
+            <img src="assets/images/greek-estate-logo.jpg" />
+        </div>
+        <div class="company">
+            <div>
+                <h3>Inhaber</h3>
+                <p>Georgios Tzafis</p>
+            </div>
+            <div>
+                <h3>Telefon</h3>
+                <p>302741024622</p>
+            </div>
+        </div>
+        <div class="links">
+            <div>
+                <h3><a href="index.html">Start</a></h3>
+            </div>
+            <div>
+                <h3><a href="feriendomizil-suchen.html">Feriendomizil suchen</a></h3>
+                <h3><a href="immobilie-kaufen.html">Immobilie kaufen</a></h3>
+            </div>
+            <div>
+                <h3><a href="regionen.html">Griechische Regionen</a></h3>
+                <div><a href="region.html">Loutraki</a></div>
+                <div><a href="region.html">Kreta</a></div>
+                <div><a href="region.html">Athen</a></div>
+            </div>
+            <div>
+                <h3><a href="text.html">Über uns</a></h3>
+                <div><a href="text.html">Kontakt</a></div>
+                <div><a href="text.html">Impressum</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

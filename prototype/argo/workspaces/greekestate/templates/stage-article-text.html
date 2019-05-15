@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:with="c = ${argo.contentElementUtility}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${c.getPageTitle()}">Greece</title>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+</head>
+<body>
+<!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
+<!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
+
+<header th:replace="greekestate/locale :: header">
+
+</header>
+
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
+
+    <nav th:replace="greekestate/locale :: breadcrumb">
+
+    </nav>
+
+    <!--<article th:with="ancestors = ${p.getAncestors(argo.path)}">-->
+        <!--<ul>-->
+            <!--<li th:each="ancestor: ${ancestors}">-->
+                <!--<span th:text="${'Name: ' + ancestor.name}"></span>&nbsp;&nbsp;&nbsp;-->
+                <!--<span th:text="${'Path: ' + ancestor.path}"></span>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</article>-->
+
+    <article th:replace="greekestate/sub-templates/slider :: article-product-slider-small(${c.getElement('/stage').elements})">
+
+    </article>
+
+    <article th:replace="greekestate/locale :: article-h1-block()">
+
+    </article>
+
+</div>
+
+<footer th:replace="greekestate/locale :: footer">
+
+</footer>
+</body>
+</html>

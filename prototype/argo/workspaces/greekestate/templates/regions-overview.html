@@ -1,0 +1,75 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:with="
+    c = ${argo.contentElementUtility}
+">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${c.getPageTitle()}">Greece</title>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+</head>
+<body>
+<header th:replace="greekestate/base :: header">
+
+</header>
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+">
+
+    <nav th:replace="greekestate/base :: breadcrumb"></nav>
+
+    <article>
+        <h1 th:text="${c.getContent('/headline')}">Regionen</h1>
+        <p th:text="${c.getContent('/body')}"></p>
+    </article>
+
+
+    <article class="overviewListImageBoxes" th:with="regions = ${c.getElement('@regions-site-structure:/')}">
+        <!-- REGION -->
+        <div class="overviewListImageBoxesItem" th:each="region : ${regions.elements}" th:with="
+                headline = ${c.getElement(region, '/headline')},
+                shortDescription = ${c.getElement(region, '/short-description')},
+                image = ${c.getElement(region, '/region-image')},
+                href = ${p.getPath(region.target)}
+            ">
+            <div class="overviewListImageBoxesItem__headline">
+                <h2 th:text="${headline.content}">Kreta</h2>
+            </div>
+            <div class="overviewListImageBoxesItem__content">
+                <div class="overviewListImageBoxesItem__image" style="background-image: url('assets/images/regions/loutraki-1.jpg')" th:style="'background-image: url(' + ${image.source} + ')'">
+                </div>
+                <div class="overviewListImageBoxesItem__copy" th:utext="${shortDescription.content}">
+                    <p>Die tollste Insel.</p>
+                    <p>Wunderschöne Strände.</p>
+                    <p>Auch Frauen sind willkommen.</p>
+                </div>
+            </div>
+            <div class="overviewListImageBoxesItem__link">
+                <a href="#" th:href="${href}" class="cta">Mehr</a>
+            </div>
+        </div>
+        <!---->
+    </article>
+
+
+
+</div>
+<footer th:replace="greekestate/base :: footer">
+
+</footer>
+</body>
+</html>

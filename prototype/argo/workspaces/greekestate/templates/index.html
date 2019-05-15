@@ -1,0 +1,190 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:with="c = ${argo.contentElementUtility}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${c.getPageTitle()}">Greece</title>
+    <link rel="stylesheet" href="/global/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/styles/slider.css"/>
+    <link rel="stylesheet" href="/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/assets/scripts/slider.js"></script>
+    <script type="text/javascript" src="/assets/scripts/language-switch.js"></script>
+</head>
+<body th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+">
+<!--/*@thymesVar id="__content" type="com.fourigin.argo.template.engine.utilities.ContentElementUtility"*/-->
+<!--/*@thymesVar id="__page" type="com.fourigin.argo.template.engine.utilities.PagePropertiesUtility"*/-->
+
+<header th:replace="base :: header">
+
+</header>
+<div class="body">
+
+    <!--
+    <article th:replace="greekestate/sub-templates/slider :: article-product-slider(${argo.contentElementUtility.getElement('/stage').elements})">
+
+    </article>
+    -->
+    <article class="productStageSlider">
+        <div class="slider heroStageOffers">
+            <input class="sliderPageStorage" value="1" type="hidden">
+            <div class="sliderWrapper">
+                <ul>
+                    <li>
+                        <div class="heroStageOffer">
+                            <div class="image">
+                                <img src="/assets/images/start-loutraki.JPG"/>
+                                <div class="teaser" th:utext="${c.getContent('/headline')}">Wir bieten fast 200 Objekte<br/>direkt in Loutraki!</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="sliderSlideLeft"></div>
+            <div class="sliderSlideRight"></div>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                new Slider(
+                    jQuery(".slider.heroStageOffers"),
+                    {
+                        "slideItemsAmountPerPage": [
+                            {
+                                "min": "0px",
+                                "max": null,
+                                "slideItems": 1
+                            }
+                        ]
+                    }
+                );
+            });
+        </script>
+    </article>
+<!--	 Reference to a configuration module:
+	<span th:remove="tag" 
+		  th:utext="|&lt;!&#45;&#45; argo.contentElementUtility.getConfig('main'): ${argo.contentElementUtility.getConfig('main')} &#45;&#45;&gt;|">...</span>
+
+	&lt;!&ndash; Reference to a data-source module (prefixed with '@' + data source name): &ndash;&gt;
+	<span th:remove="tag" 
+		  th:utext="|&lt;!&#45;&#45; argo.contentElementUtility.getElement('@objectNodes/object_003'): ${argo.contentElementUtility.getElement('@objectNodes:/object_003')} &#45;&#45;&gt;|">...</span>
+	-->
+    <nav th:replace="base :: breadcrumb">
+
+    </nav>
+
+    <!--<article th:replace="greekestate/base :: article-h1-block()">-->
+
+    <!--<article>
+        <h1>Herzlich willkommen!</h1>
+        <p>
+            Unsere Seite befindet sich im Umbau und ist bis Anfang Januar 2019 wieder voll für Sie erreichbar.
+            Sie können gerne bereits in unserer Suche nach interessanten Angeboten suchen!
+        </p>
+        <p>
+            Bei Fragen stehen wir Ihnen jederzeit gerne zur Verfügung.
+        </p>
+    </article>-->
+
+
+    </article>
+
+    <article th:with="
+        references = ${#strings.arraySplit(#strings.replace(c.getContent('/offer-references'), ' ', ''), ',')}
+    ">
+        <h2 th:text="${c.getContent('/special-offers')}">Ausgewählte Angebote!</h2>
+
+        <ul class="smallItemGalleryList">
+            <li th:each="reference : ${references}"
+                th:with="
+                    link = ${c.getElement('@site-structure:/' + reference)},
+                    properties = ${c.getElement(link, '/properties')},
+                    images = ${c.getElement(link, '/images')},
+                    type = ${c.getElement(properties, '/type')},
+                    code = ${c.getElement(properties, '/code')},
+                    price = ${c.getElement(properties, '/price')},
+                    href = ${p.getPath(link.target)}
+            " th:attr="data-object-id=${link.name}" data-object-id="1234">
+                <span th:text="${code.content}">#code</span>
+                <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
+                <div class="image">
+                    <div th:if="${images.elements.size() == 0}" class="noImagesInformation">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </div>
+                    <div th:unless="${images.elements.size() == 0}" class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li th:each="image : ${images.elements}">
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img th:attr="data-image-src=${image.source}" />
+                                            <span class="loader">
+                                                <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+                                            </span>
+                                            <span class="error">
+                                                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category" th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + type.content)}">Gewerbe</div>
+                    <h3><a th:href="${href}" href="details.html" th:text="${c.getContent(link, '/headline')}">Gewerbegebiet mit bester Anbindung</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price" th:text="${f.formatPrice(price.content)}">500.500 €</span>
+                    <a th:href="${href}" href="details.html" class="cta" th:text="${c.getContent('@common-content:common/links-and-ctas/go-to-offer')}">Zum Angebot</a>
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery(".smallItemGalleryList .slider").each(function () {
+                    new Slider(
+                        jQuery(this),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            });
+        </script>
+    </article>
+
+    <!--
+    <article class="forwardings">
+        <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+        <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+        <a href="region.html">Informationen über Loutraki</a>
+    </article>
+    -->
+</div>
+<footer th:replace="base :: footer">
+
+</footer>
+</body>
+</html>

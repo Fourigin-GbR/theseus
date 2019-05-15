@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Content dump</title>
+    <style>
+        #content {
+            font-style: normal;
+            font-weight: bold;
+            padding-left: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: aliceblue;
+        }
+    </style>
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            var data = /*[[${argo.contentPage}]]*/[];
+            var target = $("#content");
+            $("<pre></pre>").text(JSON.stringify(data, null, '  ')).appendTo(target);
+        })
+    </script>
+</head>
+<body>
+<h1>Simple template</h1>
+<div id="content" />
+</body>
+</html>

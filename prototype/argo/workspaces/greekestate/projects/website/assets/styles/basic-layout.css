@@ -1,0 +1,161 @@
+.body {
+    position: relative;
+}
+.body::before {
+    content: "";
+    background-image: url("../images/stage/IMG_5233.jpg");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: none;
+}
+
+.body > h1 {
+    margin: 80px auto 30px auto;
+    max-width: 1300px;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.body article:first-of-type {
+    margin-top: 0;
+}
+
+
+
+nav.breadcrumb {
+    background-color: #054e8c;
+    color: #fff;
+    margin: 0;
+    padding: 10px 20px 5px 20px;
+    box-sizing: border-box;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+nav.breadcrumb .wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+nav.breadcrumb i,
+nav.breadcrumb ul {
+    display: inline-block;
+}
+nav.breadcrumb ul {
+    padding: 0;
+    margin: 0;
+    white-space: initial;
+}
+nav.breadcrumb li {
+    display: inline-block;
+    margin: 0;
+}
+nav.breadcrumb li:after {
+    content: "|";
+    display: inline-block;
+    margin: 0 5px;
+    color: #ccc;
+}
+nav.breadcrumb li:last-of-type:after {
+    content: "";
+}
+nav.breadcrumb li a {
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 5px;
+}
+nav.breadcrumb li a:hover {
+    background-color: #3b84c1;
+}
+
+nav.breadcrumb .contextHighlights {
+    display: flex;
+    align-items: center;
+}
+nav.breadcrumb .contextHighlights .links {
+
+}
+nav.breadcrumb .contextHighlights .links a {
+    color: #fff;
+    margin-right: 20px;
+    padding: 3px 15px;
+    text-decoration: none;
+    font-size: inherit;
+}
+nav.breadcrumb .contextHighlights .links a:after {
+    content: "\f105";
+    font-family: FontAwesome;
+    font-size: 18px;
+    margin-left: 10px;
+    color: #3b84c1;
+}
+nav.breadcrumb .contextHighlights .links a:hover {
+    text-decoration: none;
+    background-color: #3b84c1;
+}
+nav.breadcrumb .contextHighlights .links a:hover:after {
+    color: #fff;
+}
+
+nav.breadcrumb .contextHighlights .searchAndGo {
+    color: #fff;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+nav.breadcrumb .contextHighlights form label span {
+    margin-right: 10px;
+}
+nav.breadcrumb .contextHighlights form input[type=text] {
+    border: 0;
+    margin: 0;
+    height: 100%;
+    padding: 3px 10px;
+    box-sizing: border-box;
+}
+nav.breadcrumb .contextHighlights form input[type=submit] {
+    border: 0;
+    background-color: #3b84c1;
+    margin: 0;
+    box-shadow: none;
+    font-size: inherit;
+    padding: 3px 10px;
+    font-weight: normal;
+}
+
+
+
+.ctaHighlightWrapper {
+    display: flex;
+    margin-top: 20px;
+}
+.ctaHighlight {
+    display: flex;
+    align-items: stretch;
+    padding: 2px 5px;
+    background-color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.ctaHighlight:hover {
+    text-decoration: none;
+    background-color: rgba(161, 213, 254, 0.42);
+}
+.ctaHighlight i {
+    width: 20px;
+    padding: 0;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+}
+.ctaHighlight span {
+    padding: 2px 10px;
+}

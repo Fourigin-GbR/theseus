@@ -1,0 +1,335 @@
+{
+	"contentPrototype": {
+		"id": "#id",
+		"metaData": {
+			"title": "#title",
+			"attributes": {
+				"key-1": "value-1",
+				"key-2": "value-2",
+				"key-3": "value-3"
+			}
+		},
+		"content": [
+			{
+				"name": "stage",
+				"type": "list",
+				"typeProperties": {
+					"mandatory": true,
+					"list-size-min": 1,
+					"list-size-max": 3,
+					"list-reorder-enabled": true
+				},
+				"elements": [
+					{
+						"type": "list-group",
+						"elements": [
+							{
+								"name": "image",
+								"type": "object",
+								"typeProperties": {
+									"mandatory": false,
+									"image-mime-types": "image/png,image/jpeg,image/gif"
+								},
+								"referenceId": "1234567",
+								"mimeType": "png",
+								"alternateText": "Image one",
+								"source": "/images/image1.png"
+							},
+							{
+								"name": "teaser",
+								"type": "text",
+								"typeProperties": {
+									"mandatory": false,
+									"text-length-min": 5,
+									"text-length-max": 20
+								},
+								"content": "Exclusiv!"
+							}
+						]
+					}
+				]
+			},
+			{
+				"name": "headline",
+				"type": "text",
+				"typeProperties": {
+					"mandatory": false,
+					"text-length-min": 5,
+					"text-length-max": 20
+				},
+				"content": "Unser Angebot und Service"
+			},
+			{
+				"name": "body",
+				"type": "text",
+				"content": "Wir haben und haben dies uns das und haben und haben alles und jedes."
+			},
+			{
+				"name": "offers",
+				"type": "group",
+				"elements": [
+					{
+						"name": "headline",
+						"type": "text",
+						"content": "Besondere Angebote"
+                    },
+					{
+						"name": "objects",
+						"type": "list",
+						"elements": [
+							{
+								"type": "list-group",
+								"elements": [
+									{
+										"name": "image",
+										"type": "object",
+										"referenceId": "1234567",
+										"mimeType": "png",
+										"alternateText": "Image one",
+										"source": "/images/image1.png"
+									},
+									{
+										"name": "headline",
+										"type": "text",
+										"content": "Objekt ABC"
+                                    },
+									{
+										"name": "description",
+										"type": "text",
+										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+									},
+									{
+										"type": "text",
+										"name": "price",
+										"content": "175.000,00 €"
+									}
+								]
+							},
+							{
+								"type": "list-group",
+								"elements": [
+									{
+										"name": "image",
+										"type": "object",
+										"referenceId": "1234567",
+										"mimeType": "png",
+										"alternateText": "Image one",
+										"source": "/images/image1.png"
+									},
+									{
+										"name": "headline",
+										"type": "text",
+										"content": "Apartment groß"
+                                    },
+									{
+										"name": "description",
+										"type": "text",
+										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+									},
+									{
+										"type": "text",
+										"name": "price",
+										"content": "15.000,00 €"
+									}
+								]
+							},
+							{
+								"type": "list-group",
+								"elements": [
+									{
+										"name": "image",
+										"type": "object",
+										"referenceId": "1234567",
+										"mimeType": "png",
+										"alternateText": "Image one",
+										"source": "/images/image1.png"
+									},
+									{
+										"name": "headline",
+										"type": "text",
+										"content": "Gewerbefläche"
+                                    },
+									{
+										"name": "description",
+										"type": "text",
+										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+									},
+									{
+										"type": "text",
+										"name": "price",
+										"content": "50.750,00 €"
+									}
+								]
+							},
+							{
+								"type": "list-group",
+								"elements": [
+									{
+										"name": "image",
+										"type": "object",
+										"referenceId": "1234567",
+										"mimeType": "png",
+										"alternateText": "Image one",
+										"source": "/images/image1.png"
+									},
+									{
+										"name": "headline",
+										"type": "text",
+										"content": "Seeplatz"
+                                    },
+									{
+										"name": "description",
+										"type": "text",
+										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+									},
+									{
+										"type": "text",
+										"name": "price",
+										"content": "175.000,00 €"
+									}
+								]
+							},
+							{
+								"type": "list-group",
+								"elements": [
+									{
+										"name": "image",
+										"type": "object",
+										"referenceId": "1234567",
+										"mimeType": "png",
+										"alternateText": "Image one",
+										"source": "/images/image1.png"
+									},
+									{
+										"name": "headline",
+										"type": "text",
+										"content": "Hütte"
+                                    },
+									{
+										"name": "description",
+										"type": "text",
+										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+									},
+									{
+										"type": "text",
+										"name": "price",
+										"content": "15.000,00 €"
+									}
+								]
+							},
+							{
+								"type": "list-group",
+								"elements": [
+									{
+										"name": "image",
+										"type": "object",
+										"referenceId": "1234567",
+										"mimeType": "png",
+										"alternateText": "Image one",
+										"source": "/images/image1.png"
+									},
+									{
+										"name": "headline",
+										"type": "text",
+										"content": "Hausboot"
+                                    },
+									{
+										"name": "description",
+										"type": "text",
+										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+									},
+									{
+										"type": "text",
+										"name": "price",
+										"content": "15.000,00 €"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		],
+		"dataSourceContents": [
+			{
+				"name": "timestamp",
+				"identifier": {
+					"type": "TIMESTAMP",
+					"checksum": ""
+				},
+				"content": null
+			},
+			{
+				"name": "allNodes",
+				"identifier": {
+					"type": "SITE",
+					"query": {
+						"INFO_PATH": "/"
+					},
+					"checksum": ""
+				},
+				"content": null
+			},
+			{
+				"name": "objectNodes",
+				"identifier": {
+					"type": "SITE",
+					"query": {
+						"INFO_PATH": "/objects",
+						"VERBOSE": true
+					},
+					"checksum": ""
+				},
+				"content": null
+			}
+		]
+	},
+	"hotspots": {
+		"/headline": {
+			"title": "Headline",
+			"description": "Top headline, important for SEO. Use significant copy."
+		},
+		"/body": {
+			"title": "Body",
+			"description": "The main article. Make the user interesting for the page."
+		},
+		"/stage": {
+			"title": "Stage",
+			"description": "Main stage gallery",
+			"elements": {
+				"[first]": {
+					"elements": {
+						"teaser": {
+							"title": "Title row tag",
+							"description": ""
+						}
+					}
+				},
+				"[last]": {
+					"elements": {
+						"teaser": {
+							"title": "Footer row tag",
+							"description": ""
+						}
+					}
+				},
+				"[]": {
+					"elements": {
+						"image": {
+							"title": "Hauptbild, wichtig!",
+							"description": ""
+						},
+						"teaser": {
+							"title": "Tag",
+							"description": ""
+						}
+					}
+				}
+			}
+		},
+		"/offers": {
+			"title": "Offers",
+			"description": "Special highlight offers"
+		}
+	}
+}

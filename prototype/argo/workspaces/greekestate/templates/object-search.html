@@ -1,0 +1,272 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:with="c = ${argo.contentElementUtility}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${c.getPageTitle()}">Greece</title>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/object-search.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+</head>
+<body>
+
+<header th:replace="greekestate/base :: header">
+
+</header>
+
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    f = ${argo.formatterUtility},
+    p = ${argo.pagePropertiesUtility}
+">
+
+    <nav class="breadcrumb" th:insert="greekestate/base :: breadcrumb">
+
+    </nav>
+
+    <article>
+        <h1 th:text="${c.getContent('/headline')}">Immobilie kaufen</h1>
+    </article>
+    <!--
+    <article class="linksImageTeaser">
+        <h2>Informationen zu den Regionen</h2>
+        <div class="linksImageTeaserWrapper">
+            <div class="linkImageTeaser">
+                <a href="region.html">
+                    <img src="assets/images/region-loutraki.jpg"/>
+                    <div class="description">
+                        <h2>Loutraki</h2>
+                        <p>Die Perle Griechenlands</p>
+                    </div>
+                </a>
+            </div>
+            <div class="linkImageTeaser">
+                <a href="region.html">
+                    <img src="assets/images/region-kreta.jpg"/>
+                    <div class="description">
+                        <h2>Kreta</h2>
+                        <p>Die Schönheit Griechenlands</p>
+                    </div>
+                </a>
+            </div>
+            <div class="linkImageTeaser">
+                <a href="region.html">
+                    <img src="assets/images/region-athen.jpg"/>
+                    <div class="description">
+                        <h2>Athen</h2>
+                        <p>Die Kultur Griechenlands</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </article>
+    -->
+
+    <article class="search">
+        <h2 th:text="${c.getContent('@common-content:common/general-headlines/search')}">Suchen</h2>
+        <div class="searchFilter" th:with="
+            dataSourceId = ${c.getDataSourceIdentifier('site-structure')},
+            searchServiceUrl = ${p.getServicePath('search')}
+        ">
+            <!--th:action="'http://argo.greekestate.fourigin.com/cms/search/?base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"-->
+            <form
+                    th:action="${searchServiceUrl} + 'base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"
+                    th:data-form-index="${dataSourceId.index.name}"
+            >
+                <div class="searchFilter__filterItem region">
+                    <h3 class="searchFilter__filterItemLabel" th:text="${c.getContent('@common-content:common/general-headlines/search-in-region')}">Suche in der Region</h3>
+                    <div class="searchFilter__filterItemOptions">
+                        <select name="region">
+                        <option value="loutraki">Loutraki</option>
+
+                        <option value="agia paraskevi">Agia Paraskevi</option>
+                        <option value="agioi theodoroi">Agioi Theodoroi</option>
+                        <option value="agios georgios">Agios Georgios</option>
+                        <option value="akadimia">Akadimia</option>
+                        <option value="archaio limani">Archaio Limani</option>
+                        <option value="assos">Assos</option>
+
+                        <option value="batharistra">Batharistra</option>
+
+                        <option value="center">Center</option>
+
+                        <option value="evrostini">Evrostini</option>
+
+                        <option value="glika nera">Glika nera</option>
+
+                        <option value="kalamia">Kalamia</option>
+                        <option value="kato almiri">Kato Almiri</option>
+                        <option value="korinthos">Korinthos</option>
+
+                        <option value="lechaio">Lechaio</option>
+                        <option value="limni vouliagmenis">Limni Vouliagmenis</option>
+
+                        <option value="marousi">Marousi</option>
+
+                        <option value="nea penteli">Nea Penteli</option>
+
+                        <option value="patisia">Patisia</option>
+                        <option value="poseidonia">Poseidonia</option>
+
+                        <option value="saronikos">Saronikos</option>
+                        <option value="sikiona">Sikiona</option>
+                        <option value="soligeia">Soligeia</option>
+
+                        <option value="velo">Velo</option>
+                        <option value="vocha">Vocha</option>
+                        <option value="voula">Voula</option>
+
+                        <option value="xilokastro">Xilokastro</option>
+                        <option value="xilokeriza">Xilokeriza</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="searchFilter__filterItem filterCategory">
+                    <h3 class="searchFilter__filterItemLabel" th:text="${c.getContent('@common-content:common/general-headlines/object-type')}">Typ des Objekts</h3>
+                    <div class="searchFilter__filterItemOptions">
+                        <fieldset>
+                            <label th:each="validType : ${c.getElement('/valid-object-types').elements}" th:with="typeValue = ${validType.content}"><input type="checkbox" name="type" value="apartment" th:value="${typeValue}"><span th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + typeValue)}">Wohnung</span></label>
+                        </fieldset>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </article>
+
+    <article class="searchResults" th:with="
+        c = ${argo.contentElementUtility},
+        f = ${argo.formatterUtility},
+        p = ${argo.pagePropertiesUtility},
+        objects = ${c.getElement('@site-structure:/')}
+    ">
+        <div class="legend">
+            <div class="resultAmount" th:with="
+                pattern = ${c.getContent('@common-content:common/general-headlines/matching-objects-found')},
+                value = '<span class=\'amount\' data-content=\'result-amount\'>__${objects.elements.size()}__</span>',
+                formatted = ${f.formatString(pattern, value)}
+            ">
+                <i class="fa fa-list-ol" aria-hidden="true"></i>
+                <span th:utext="${formatted}">Immobilien gefunden.</span>
+            </div>
+            <!--
+            <div class="sorting">
+                <label>
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                    <span>Sortierung nach:</span>
+                    <select name="sort">
+                        <option>Preis (aufsteigend)</option>
+                        <option>Preis (absteigend)</option>
+                        <option>Zimmerzahl</option>
+                        <option>Raumfläche</option>
+                        <option>Entfernung zum Meer</option>
+                    </select>
+                </label>
+            </div>
+            -->
+        </div>
+
+        <div class="box boxLoading">
+            <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+            <p>Suche nach Objekten...</p>
+        </div>
+
+
+        <ul class="smallItemGalleryList">
+            <li class="hidden" th:each="link : ${objects.elements}" data-object-id="1234" th:attr="data-object-id=${link.name}"
+                th:with="
+                    properties = ${c.getElement(link, '/properties')},
+                    images = ${c.getElement(link, '/images')},
+                    type = ${c.getElement(properties, '/type')},
+                    code = ${c.getElement(properties, '/code')},
+                    price = ${c.getElement(properties, '/price')},
+                    href = ${p.getPath(link.target)}
+            ">
+                <span th:text="${code.content}">#code</span>
+                <span th:utext="|&lt;!-- ${link} --&gt;|"></span>
+                <div class="image">
+                    <div th:if="${images.elements.size() == 0}" class="noImagesInformation">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </div>
+                    <div th:unless="${images.elements.size() == 0}" class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li th:each="image : ${images.elements}">
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img th:attr="data-image-src=${image.source}" />
+                                            <span class="loader">
+                                                <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+                                            </span>
+                                            <span class="error">
+                                                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category" th:text="${c.getContent('@common-content:common/general-headlines/object-type:' + type.content)}">Gewerbe</div>
+                    <h3><a th:href="${href}" href="details.html" th:text="${c.getContent(link, '/headline')}">Gewerbegebiet mit bester Anbindung</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price" th:text="${f.formatPrice(price.content)}">500.500 €</span>
+                    <a th:href="${href}" href="details.html" class="cta" th:text="${c.getContent('@common-content:common/links-and-ctas/go-to-offer')}">Zum Angebot</a>
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery(".slider").each(function () {
+                    new Slider(
+                        jQuery(this),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            });
+        </script>
+
+        <div class="overlay overlayError">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <p>Entschuldigung, es sind intern Probleme aufgetreten.</p>
+            <p>Bitte verändern Sie die Filtereinstellungen oder versuchen Sie es später erneut.</p>
+        </div>
+        <div class="overlay overlayNoResult">
+            <i class="fa fa-meh-o" aria-hidden="true"></i>
+            <p>Zu diesen Filtereinstellungen konnten keine Ergebnisse gefunden werden.</p>
+        </div>
+    </article>
+
+</div>
+
+<footer th:replace="greekestate/base :: footer">
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,107 @@
+.slider {
+    position: relative;
+    padding: 0 20px;
+}
+
+.slider .sliderWrapper {
+    overflow: hidden;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -o-flex;
+    display: flex;
+    -moz-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    -o-flex: 1;
+    flex: 1;
+    position: relative;
+}
+
+.slider .sliderWrapper > ul {
+    width: 100%;
+    padding: 0;
+    white-space: nowrap;
+    font-size: 0;
+    position: relative;
+    -moz-transition: all .75s ease-in-out;
+    -webkit-transition: all .75s ease-in-out;
+    -ms-transition: all .75s ease-in-out;
+    -o-transition: all .75s ease-in-out;
+    transition: all .75s ease-in-out;
+}
+
+.slider .sliderWrapper > ul > li {
+    width: calc(100% / 3);
+    display: inline-block;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    background-image: none;
+    white-space: initial;
+    font-size: 12px;
+}
+
+.slider .sliderSlideLeft,
+.slider .sliderSlideRight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 40px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.slider .sliderSlideRight {
+    left: auto;
+    right: 0;
+}
+
+.slider .sliderSlideLeft.inactive,
+.slider .sliderSlideRight.inactive {
+    display: none;
+}
+
+.slider .sliderSlideLeft::after,
+.slider .sliderSlideRight::after {
+    content: "\f104";
+    font-family: FontAwesome;
+    font-size: 31px;
+    position: absolute;
+    top: 50%;
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.slider .sliderSlideRight::after {
+    content: "\f105";
+    right: 0;
+}
+
+.slider .sliderPagination {
+    text-align: center
+}
+
+.slider .sliderPagination ul {
+    display: inline-block;
+    padding: 0;
+}
+
+.slider .sliderPagination ul li {
+    display: inline-block;
+    width: 10px;
+    height: 4px;
+    font-size: 0;
+    background-color: #dfdfdf;
+    padding: 0;
+    margin: 10px;
+    background-image: none
+}
+
+.slider .sliderPagination ul li.active {
+    background-color: #fead4d
+}

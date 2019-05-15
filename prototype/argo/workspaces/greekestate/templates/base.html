@@ -1,0 +1,372 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Greece</title>
+    <link rel="stylesheet" href="/global/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/styles/slider.css">
+    <link rel="stylesheet" href="/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/scripts/slider.js"></script>
+</head>
+<body>
+
+<a th:fragment="simpleLink(url, title)" th:href="'http://argo.greekestate.fourigin.com/cms/view/' + ${url}" href="#" target="_top" th:text="${title}">
+
+</a>
+
+<header th:fragment="header" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
+    <!--<a class="logo" target="_top" th:href="'http://argo.greekestate.fourigin.com/cms/view/?base=DE&path=/home'" href="index.html"><img src="/assets/greekestate/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>-->
+    <a class="logo" target="_top" th:href="${p.getPath('/home')}" href="index.html"><img src="/assets/images/greek-estate-logo.jpg" alt="Greek Estate Logo"/></a>
+    <div class="meta">
+        <div class="contacts">
+            <div class="telephone">
+                <i class="fa fa-phone linkTypeIcon" aria-hidden="true"></i>
+                <span>(+30)&nbsp;27410-76506</span>
+            </div>
+            <div class="languages">
+                <span th:utext="|&lt;!--
+                    [ base: ${argo.language} ],
+                    [ path: ${argo.path} ],
+                    [ current scope link: ${p.getPath(argo.path)} ],
+                    [ link (DE): ${p.getPath(argo.path, 'DE')} ],
+                    [ link (RU): ${p.getPath(argo.path, 'RU')} ],
+                    [ link (EN): ${p.getPath(argo.path, 'EN')} ],
+                    [ link (DE, LIVE): ${p.getPath(argo.path, 'DE', 'LIVE')} ],
+                    [ link (RU, LIVE): ${p.getPath(argo.path, 'RU', 'LIVE')} ],
+                    [ link (EN, LIVE): ${p.getPath(argo.path, 'EN', 'LIVE')} ],
+
+                --&gt;|"></span>
+
+                <select name="siteLanguageSwitch" id="siteLanguageSwitch" th:with="
+                    currentPath = ${p.getAbsolutePath(argo.path)},
+                    dePath = ${p.getAbsolutePath(argo.path, 'DE')},
+                    enPath = ${p.getAbsolutePath(argo.path, 'EN')},
+                    ruPath = ${p.getAbsolutePath(argo.path, 'RU')}
+                ">
+                    <option th:selected="${currentPath == dePath ? 'selected' : 'false'}" th:value="${dePath}" value="#">deutsch</option>
+                    <option th:selected="${currentPath == enPath ? 'selected' : 'false'}" th:value="${enPath}" value="#">english</option>
+                    <option th:selected="${currentPath == ruPath ? 'selected' : 'false'}" th:value="${ruPath}" value="#">русский</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <nav th:with="
+        c = ${argo.contentElementUtility},
+        p = ${argo.pagePropertiesUtility}
+    ">
+        <ul>
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/about')}">
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/about')}" href="#">Über uns</a>
+            </li>
+            <!--
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/regions')}">
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/regions')}" href="#">Griechische Regionen</a>
+            </li>
+            -->
+            <li th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
+                <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="body">
+
+    <nav th:fragment="breadcrumb" class="breadcrumb" th:with="
+        c = ${argo.contentElementUtility},
+        p = ${argo.pagePropertiesUtility}
+    ">
+        <div class="wrapper">
+            <div class="breadcrumbPath">
+                <i class="fa fa-bookmark-o linkTypeIcon" aria-hidden="true"></i>
+
+                <ul th:with="ancestors = ${p.getAncestors(argo.path)}" class="folderList">
+                    <li th:with="ref = ${c.getElement('@top-level-navigation:/home')}">
+                        <a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/home')}" href="index.html">Start</a>
+                    </li>
+                    
+                    <li th:each="ancestor: ${ancestors}">
+                        <a th:text="${ancestor.name}" th:href="${p.getPath(ancestor.path)}" href="index.html">Start</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="contextHighlights">
+                <div class="links" th:with="ref1 = ${c.getElement('@top-level-navigation:/')}, ref2 = ${c.getElement('@top-level-navigation:/')}">
+                    <a href="immobilie-kaufen.html" th:href="${p.getPath('/objects/sale/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/bill-property')}">Immobilie kaufen</a>
+                    <a href="feriendomizil-suchen.html" th:href="${p.getPath('/objects/rent/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/rent-property')}">Feriendomizil mieten</a>
+                </div>
+                <div class="searchAndGo" th:with="
+                        p = ${argo.pagePropertiesUtility}
+                    ">
+                    <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
+                    <form method="get" th:action="${p.getPath('/objects/search')}" action="#">
+                        <label>
+                            <span th:text="${c.getContent('@common-content:common/properties/code')}">Objekt-ID</span>
+                            <input name="object-id" type="text" />
+                            <input name="l" type="hidden" th:value="${argo.language}" />
+                            <input name="p" type="hidden" value="/objects/search" />
+                        </label>
+                        <input class="cta" type="submit" value="Suchen" th:value="${c.getContent('@common-content:common/links-and-ctas/search')}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <article th:fragment="article-h1-block()">
+        <h1 th:utext="${c.getContent('/headline')}">#headline</h1>
+        <p  th:utext="${c.getContent('/body')}">#body</p>
+    </article>
+
+
+    <article class="contextHighlights" th:with="
+    p = ${argo.pagePropertiesUtility}
+">
+        <div class="links">
+            <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+            <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+        </div>
+        <div class="searchAndGo">
+            <i class="fa fa-search linkTypeIcon" aria-hidden="true"></i>
+            <form method="get" th:action="${p.getPath('/objects/search')}" action="#">
+                <label>
+                    <span>Objekt-ID</span>
+                    <input name="object-id" type="text" />
+                </label>
+                <input class="cta" type="submit" value="Suchen"/>
+            </form>
+        </div>
+    </article>
+
+    <article th:fragment="article-headline-body(headline, body)">
+        <h1 th:text="${headline}">#headline</h1>
+        <p  th:utext="${body}">#body</p>
+    </article>
+
+    <article>
+        <h2>Besondere Angebote</h2>
+
+        <ul class="smallItemGalleryList">
+            <li>
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category">Gewerbe</div>
+                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price">
+                        500.500 €
+                    </span>
+                    <a href="details.html" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+            <li>
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category">Feriendomizil</div>
+                    <h3><a href="details.html">Gewerbegebiet mit bester Anbindung</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price">
+                        465.000 €
+                    </span>
+                    <a href="details.html" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+            <li>
+                <div class="image">
+                    <div class="slider">
+                        <input class="sliderPageStorage" value="1" type="hidden">
+                        <div class="sliderWrapper">
+                            <ul>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detailSlide">
+                                        <div class="image">
+                                            <img src="#"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sliderSlideLeft"></div>
+                        <div class="sliderSlideRight"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <div class="category">Gewerbe</div>
+                    <h3><a href="details.html">Restaurant im Touristen-Zentrum</a></h3>
+                </div>
+                <div class="priceAndCta">
+                    <span class="price">
+                        2.500 € Pacht
+                    </span>
+                    <a href="details.html" class="cta">Zum Angebot</a>
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery(".smallItemGalleryList .slider").each(function () {
+                    new Slider(
+                        jQuery(this),
+                        {
+                            "slideItemsAmountPerPage": [
+                                {
+                                    "min": "0px",
+                                    "max": null,
+                                    "slideItems": 1
+                                }
+                            ]
+                        }
+                    );
+                });
+            });
+        </script>
+    </article>
+
+    <!--
+    <article class="forwardings">
+        <a href="immobilie-kaufen.html">Immobilie kaufen</a>
+        <a href="feriendomizil-suchen.html">Feriendomizil mieten</a>
+        <a href="region.html">Informationen über Loutraki</a>
+    </article>
+    -->
+</div>
+<footer th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
+    <div class="content">
+        <div class="logo">
+            <img src="/assets/images/greek-estate-logo.jpg" />
+        </div>
+
+        <div class="metaInformationList">
+            <div class="metaInformationList__section">
+                <h3 th:text="${c.getContent('@common-content:common/properties/owner')}" class="metaInformationList__sectionHeadline">Inhaber</h3>
+                <div class="metaInformationList__sectionEntries">
+                    <p class="metaInformationList__sectionEntry">
+                        Georgios Tzafis
+                    </p>
+                </div>
+            </div>
+
+            <div class="metaInformationList__section">
+                <h3 th:text="${c.getContent('@common-content:common/properties/contact')}" class="metaInformationList__sectionHeadline">Kontakt</h3>
+                <div class="metaInformationList__sectionEntries">
+                    <p class="metaInformationList__sectionEntry">
+                        <span class="label" th:text="${c.getContent('@common-content:common/properties/phone')}">Telefon</span>
+                        <span>(+30)&nbsp;27410-76506</span>
+                    </p>
+                    <p class="metaInformationList__sectionEntry">
+                        <span class="label" th:text="${c.getContent('@common-content:common/properties/mobile')}">Mobile</span>
+                        <span>(+30)&nbsp;6946-003222</span>
+                    </p>
+                    <p class="metaInformationList__sectionEntry">
+                        <span class="label" th:text="${c.getContent('@common-content:common/properties/fax')}">Fax</span>
+                        <span>(+30)&nbsp;27410-76506</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="metaInformationList__section">
+                <h3 th:text="${c.getContent('@common-content:common/properties/pages')}" class="metaInformationList__sectionHeadline">Seiten</h3>
+                <div class="metaInformationList__sectionEntries">
+                    <p class="metaInformationList__sectionEntry" th:with="ref = ${c.getElement('@top-level-navigation:/home')}">
+                        <span><a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/home')}" href="#">Start</a></span>
+                    </p>
+                    <p class="metaInformationList__sectionEntry" th:with="ref = ${c.getElement('@top-level-navigation:/contact')}">
+                        <span><a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/contact')}" href="#">Kontakt</a></span>
+                    </p>
+                    <p class="metaInformationList__sectionEntry" th:with="ref = ${c.getElement('@top-level-navigation:/impressum')}">
+                        <span><a th:text="${c.getContent(ref, 'display-name')}" th:href="${p.getPath('/impressum')}" href="#">Impressum</a></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+</body>
+</html>

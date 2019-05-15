@@ -1,0 +1,129 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head th:with="c = ${argo.contentElementUtility}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${c.getPageTitle()}">Greece</title>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css"/>
+    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=News+Cycle');
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/static-search-results.js"></script>
+    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+</head>
+<body>
+<header th:replace="greekestate/base :: header">
+
+</header>
+<div class="body" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+">
+
+    <nav th:replace="greekestate/base :: breadcrumb">
+
+    </nav>
+
+    <article>
+        <h1 th:text="${c.getContent('/headline')}">Immobilien suchen</h1>
+    </article>
+
+    <article class="pagesList" th:with="
+        objects = ${c.getElement('@site-structure:/')}
+    ">
+
+        <div class="legend">
+            <div class="resultAmount" th:with="
+                pattern = ${c.getContent('@common-content:common/general-headlines/matching-objects-found')},
+                value = '<span class=\'amount\' data-content=\'result-amount\'>__${objects.elements.size()}__</span>',
+                formatted = ${f.formatString(pattern, value)}
+            ">
+                <i class="fa fa-list-ol" aria-hidden="true"></i>
+                <span th:utext="${formatted}">Immobilien gefunden.</span>
+            </div>
+        </div>
+
+        <div class="box boxLoading">
+            <i class="fa fa-refresh fa-spin" aria-hidden="true"></i>
+            <p>Suche nach Objekten...</p>
+        </div>
+
+        <ul class="pageSearchResultList">
+            <li class="pagePreview" th:each="link : ${objects.elements}" th:attr="data-object-id=${link.name}"
+                th:with="
+                    properties = ${c.getElement(link, '/properties')},
+                    images = ${c.getElement(link, '/images')},
+                    type = ${c.getElement(properties, '/type')},
+                    code = ${c.getElement(properties, '/code')},
+                    price = ${c.getElement(properties, '/price')},
+                    href = ${p.getPath(link.target)}
+            ">
+                <div class="pagePreview__description">
+                    <div th:if="${images.elements.size() == 0}" class="pagePreview__image noImagesInformation">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                    </div>
+                    <div th:unless="${images.elements.size() == 0}" class="pagePreview__image">
+                        <a href="#" th:href="${href}"><img th:attr="data-image-src=${images.elements[0].source}" th:alt="${images.elements[0].alternateText}" alt="haus mit straße" /></a>
+                    </div>
+                    <div class="pagePreview__information">
+                        <h2><a href="#" th:href="${href}" th:text="${c.getContent(link, '/headline')}">Haus mit Maus und Pferd im Herd</a></h2>
+                        <div>
+                            <p th:utext="${c.getContent(link, '/short-description')}">
+                                lala lulu
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagePreview__link">
+                    <a href="#" th:href="${href}" th:text="${c.getContent('@common-content:common/links-and-ctas/go-to-offer')}">Das ist das Ziel.html</a>
+                </div>
+            </li>
+
+            <!--<li class="pagePreview">-->
+                <!--<div class="pagePreview__description">-->
+                    <!--<div class="pagePreview__image">-->
+                        <!--<a href="#"><img src="http://www.images.bestgreekestate.com/de/558464ef8b927c40cdc974e887230a636f0eb2/125245998_900x675.jpeg" alt="haus mit straße" /></a>-->
+                    <!--</div>-->
+                    <!--<div class="pagePreview__information">-->
+                        <!--<h2><a href="#">Haus mit Maus und Pferd im Herd und und Zecken im Becken.</a></h2>-->
+                        <!--<div>-->
+                            <!--<p>-->
+                                <!--lala lulu lili lala-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="pagePreview__link">-->
+                    <!--<a href="#">Das ist das Ziel zum Haus mit Maus und Zecken im Becken.html</a>-->
+                <!--</div>-->
+            <!--</li>-->
+        </ul>
+
+        <div class="overlay overlayError">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <p>Entschuldigung, es sind intern Probleme aufgetreten.</p>
+            <p>Bitte verändern Sie die Filtereinstellungen oder versuchen Sie es später erneut.</p>
+        </div>
+        <div class="overlay overlayNoResult">
+            <i class="fa fa-meh-o" aria-hidden="true"></i>
+            <p>Zu dieser Objekt-ID konnte kein Ergebniss gefunden werden.</p>
+        </div>
+
+    </article>
+
+
+</div>
+<footer th:replace="greekestate/base :: footer">
+
+</footer>
+</body>
+</html>
