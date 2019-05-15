@@ -287,17 +287,19 @@ public class SiteStructureDataSource implements
                     }
 
                     String value = getCategoryValue(categoryValueElement);
-                    Map<String, List<Integer>> values = categories.get(categoryName);
-                    if (values == null) {
-                        values = new HashMap<>();
-                        categories.put(categoryName, values);
+                    if (value != null) {
+                        Map<String, List<Integer>> values = categories.get(categoryName);
+                        if (values == null) {
+                            values = new HashMap<>();
+                            categories.put(categoryName, values);
+                        }
+                        List<Integer> refs = values.get(value);
+                        if (refs == null) {
+                            refs = new ArrayList<>();
+                            values.put(value, refs);
+                        }
+                        refs.add(referenceNumber);
                     }
-                    List<Integer> refs = values.get(value);
-                    if (refs == null) {
-                        refs = new ArrayList<>();
-                        values.put(value, refs);
-                    }
-                    refs.add(referenceNumber);
                 }
 
                 for (FieldValue field : fields) {
@@ -309,7 +311,9 @@ public class SiteStructureDataSource implements
                     ContentElement fieldElement = ContentPageManager.resolveOptional(field.getPath(), elements);
                     if (fieldElement != null) {
                         String value = getFieldValue(fieldElement);
-                        values.add(value);
+                        if (value != null) {
+                            values.add(value);
+                        }
                     }
                 }
 
@@ -331,12 +335,13 @@ public class SiteStructureDataSource implements
                         }
 
                         LanguageContent value = getSearchValue(searchElement);
-
-                        for (String language : languages) {
-                            StringBuilder builder = builders.get(language);
-                            String languageValue = value.get(language);
-                            if (languageValue != null) {
-                                builder.append(languageValue.toLowerCase(Locale.US)).append(';');
+                        if (value != null) {
+                            for (String language : languages) {
+                                StringBuilder builder = builders.get(language);
+                                String languageValue = value.get(language);
+                                if (languageValue != null) {
+                                    builder.append(languageValue.toLowerCase(Locale.US)).append(';');
+                                }
                             }
                         }
                     }

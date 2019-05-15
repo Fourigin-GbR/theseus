@@ -22,7 +22,7 @@
 <header>
     <img class="logo" src="/assets/images/argo-logo.png" alt="argo Logo"/>
 </header>
-<div id="system" class="systemContent split left" th:data-l="${system.language}" th:data-project="${system.project}">
+<div id="system" class="systemContent split left" th:data-language="${system.language}" th:data-project="${system.project}">
     <div class="project" th:text="${system.project}">IBM</div>
     <div id="jstree"></div>
 </div>
@@ -68,22 +68,22 @@
         $('#actions input').hide();
         $('#action_stage').click(function () {
             var language = $('#system').attr('data-language');
-            var path = $('#path').text();
+            var path = $('#path').data('path');
             changeState(language, path, 'STAGED');
         });
         $('#action_unstage').click(function () {
             var language = $('#system').attr('data-language');
-            var path = $('#path').text();
+            var path = $('#path').data('path');
             changeState(language, path, 'DRAFT');
         });
         $('#action_go_live').click(function () {
             var language = $('#system').attr('data-language');
-            var path = $('#path').text();
+            var path = $('#path').data('path');
             changeState(language, path, 'LIVE');
         });
         $('#action_revoke').click(function () {
             var language = $('#system').attr('data-language');
-            var path = $('#path').text();
+            var path = $('#path').data('path');
             changeState(language, path, 'STAGED');
         });
 
@@ -114,7 +114,7 @@
 
     function loadTreeNode(language, path) {
         return $.ajax({
-            url: "/cms/system/treeNode/?l=" + language + "&path=" + path
+            url: "/cms/system/treeNode/?l=" + language + "&p=" + path
         });
     }
 
@@ -129,10 +129,21 @@
             return;
         }
 
-        $('#path').html(path);
+        var cmsLink = "/cms/compile/?l=" + language + "&p=" + path;
+        $('#path')
+            .attr('data-path', path)
+            .empty()
+            .append($("<span></span>").text(path))
+            .append(" (")
+            .append($("<a></a>")
+                .attr("href", cmsLink)
+                .attr("target", "_blank")
+                .text("cms")
+            )
+            .append(")");
 
         $.ajax({
-            url: "/cms/system/info/?l=" + language + "&path=" + path,
+            url: "/cms/system/info/?l=" + language + "&p=" + path,
             success: function (data) {
                 console.log(data);
 
@@ -288,7 +299,7 @@
     function changeState(language, path, state) {
         console.log('Changing state to ' + state);
         $.ajax({
-            url: "/cms/system/updateState/?l=" + language + "&path=" + path + "&state=" + state,
+            url: "/cms/system/updateState/?l=" + language + "&p=" + path + "&state=" + state,
             success: function (data) {
                 if (!data.success) {
                     console.log('Error occurred: ' + data.message);

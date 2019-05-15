@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -23,11 +24,7 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
     private static final String DIR_BLOB_BASE = "blobs";
     private static final String DIR_META_BASE = "meta";
 
-//    private File baseDirectory;
-
     private BlobRepositoryImpl blobRepository;
-
-//    private ObjectMapper objectMapper = new ObjectMapper();
 
     public BlobBasedAssetRepository(File baseDirectory) {
         Objects.requireNonNull(baseDirectory, "baseDirectory must not be null!");
@@ -192,7 +189,7 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
             throw new IllegalStateException("Unable to create missing asset directory '" + assetDirectory.getAbsolutePath() + "'!");
         }
 
-        String propsFile = "props_" + path[0] + ".json";
+        String propsFile = "props_" + path[0].toUpperCase(Locale.US) + ".json";
         return new File(assetDirectory, propsFile);
     }
     
