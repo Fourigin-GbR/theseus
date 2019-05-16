@@ -1,25 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>argo - Something wrong...</title>
+    <link rel="stylesheet" href="assets/styles/cms-error-page.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Dosis|Economica|Roboto+Condensed|Saira+Condensed"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
+    <link rel="stylesheet" href="assets/libraries/animate-css/animate.min.css"/>
+
+    <script src="assets/libraries/jquery/jquery-3.3.1.min.js"></script>
+    <script src="assets/libraries/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="assets/scripts/error-page.js"></script>
+
+</head>
 <body>
-<h1>Internal server error</h1>
-<div class="message" th:text="${message}">Error headline</div>
-<div class="cause" th:text="${cause}">Error cause</div>
 
-<h2>Cause</h2>
-<ul th:each="cause : ${stack}">
-    <li>
-        <span class="key" th:text="${cause.class}">cause</span>
-    </li>
-</ul>
+    <div class="argoError">
 
-<h2>Attributes</h2>
-<div th:text="${attributeNames}">Attribute names</div>
-<ul th:each="attr : ${attributes}">
-    <li>
-        <span class="key" th:text="${attr.key}">key</span>
-        (<span class="type" th:text="${attr.value.class}">key</span>)
-        <span class="value" th:text="${attr.value}">value</span>
-    </li>
-</ul>
+        <div class="argoError__title">
+            <div class="argoError__titleGraphic">
+                <i class="far fa-meh"></i>
+            </div>
+            <div class="argoError__titleCopy">
+                <h1>Oooh, there is something wrong...</h1>
+            </div>
+        </div>
+
+        <div class="argoError__error">
+            <button id="diagnoseErrorButton" class="argoError__errorDiagnosesButton button button--preferredAction">
+                <span class="button__icon">
+                    <i class="fas fa-diagnoses"></i>
+                </span>
+                <span class="button__copy">
+                    Diagnose
+                </span>
+            </button>
+
+            <h2 class="argoError__errorMessage">
+                <span th:text="${message}"></span>
+            </h2>
+            <div id="diagnoseErrorContent" class="argoError__errorDetails">
+                <div th:text="${cause}"></div>
+                <div>
+                    <ul th:each="cause : ${stack}">
+                        <li>
+                            <span class="key" th:text="${cause.class}">cause</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="argoError__nextSteps">
+            <div class="argoError__nextStepsIcon">
+                <i class="fas fa-shoe-prints"></i>
+            </div>
+            <div class="argoError__nextStepsTitle">
+                Next steps
+            </div>
+        </div>
+
+        <ul class="argoError__nextStepsList">
+            <li class="argoError__nextStepsItem">
+                <a href="#" class="argoError__errorDiagnosesButton button button--preferredAction">
+                    <span class="button__icon">
+                        <i class="fas fa-redo"></i>
+                    </span>
+                    <span class="button__copy">
+                        Try again
+                    </span>
+                </a>
+            </li>
+            <li class="argoError__nextStepsItem">
+                <a href="#" class="argoError__errorDiagnosesButton button button--preferredAction">
+                    <span class="button__icon">
+                        <i class="far fa-envelope"></i>
+                    </span>
+                    <span class="button__copy">
+                        Send error-message to cms-admin
+                    </span>
+                </a>
+            </li>
+            <li class="argoError__nextStepsItem">
+                <a href="#" class="argoError__errorDiagnosesButton button button--preferredAction">
+                    <span class="button__icon">
+                        <i class="fas fa-backspace"></i>
+                    </span>
+                    <span class="button__copy">
+                        Quit and go back
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
 </body>
 </html>
