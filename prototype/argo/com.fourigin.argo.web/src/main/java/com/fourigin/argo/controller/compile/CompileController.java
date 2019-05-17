@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import static com.fourigin.argo.template.engine.ProcessingMode.CMS;
 
@@ -159,10 +160,12 @@ public class CompileController {
         MDC.put("language", language);
         try {
 
+            String normalizedLanguage = language.toLowerCase(Locale.US);
+
             long startTimestamp = System.currentTimeMillis();
             if (!recursive) {
                 try {
-                    writePageOutput(project, language, path, mode);
+                    writePageOutput(project, normalizedLanguage, path, mode);
                 } catch (Throwable ex) {
                     return new ResponseEntity<>(
                         new CompileResult(mode, false).withAttribute("cause", ex),
@@ -178,7 +181,7 @@ public class CompileController {
                 for (PageInfo node : nodes) {
                     String nodePath = node.getPath() + '/' + node.getName();
                     try {
-                        writePageOutput(project, language, nodePath, mode);
+                        writePageOutput(project, normalizedLanguage, nodePath, mode);
                     } catch (Throwable ex) {
                         return new ResponseEntity<>(
                             new CompileResult(mode, false).withAttribute("cause", ex),

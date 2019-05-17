@@ -37,44 +37,49 @@ public class FlushRepositoriesInterceptor implements WebRequestInterceptor {
     }
 
     @Override
-    public void preHandle(WebRequest request) throws IOException {
-        boolean flushCaches = Boolean.valueOf(request.getParameter(RequestParameters.FLUSH));
+    public void preHandle(WebRequest webRequest) throws IOException {
+        boolean flushCaches = Boolean.valueOf(webRequest.getParameter(RequestParameters.FLUSH));
 
-        if(flushCaches) {
-            String language = request.getParameter(RequestParameters.LANGUAGE);
+        if (!flushCaches) {
+            return;
+        }
 
-            Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+        //noinspection unchecked
+        Map<String, String> pathVariables = (Map<String, String>) webRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+        if (pathVariables.isEmpty()) {
+            if (logger.isWarnEnabled()) logger.warn("Unable to flush, no path-variables available on request!");
+            return;
+        }
 
-            if (logger.isInfoEnabled()) logger.info("path-variables: {}", pathVariables);
+        String language = webRequest.getParameter(RequestParameters.LANGUAGE);
+        if (logger.isInfoEnabled()) logger.info("language: {}, path-variables: {}", language, pathVariables);
 
-            String project = (String) pathVariables.get("project");
+        String project = pathVariables.get("project");
 
-            MDC.put("project", project);
-            MDC.put("language", language);
+        MDC.put("project", project);
+        MDC.put("language", language);
 
-            try {
-                ContentResolver contentResolver = contentRepositoryFactory.getInstance(project, language);
+        try {
+            ContentResolver contentResolver = contentRepositoryFactory.getInstance(project, language);
 
-                if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", language);
-                contentResolver.flush();
+            if (logger.isInfoEnabled()) logger.info("Flushing content resolver for {}", language);
+            contentResolver.flush();
 
-                if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", language);
-                cmsRequestAggregationResolver.flush();
-            }
-            finally {
-                MDC.remove("project");
-                MDC.remove("language");
-            }
+            if (logger.isInfoEnabled()) logger.info("Flushing cmsRequestAggregationResolver", language);
+            cmsRequestAggregationResolver.flush();
+        } finally {
+            MDC.remove("project");
+            MDC.remove("language");
         }
     }
 
     @Override
     public void postHandle(WebRequest request, ModelMap model) {
-        // nothing to do
+
     }
 
     @Override
     public void afterCompletion(WebRequest request, Exception ex) {
-        // nothing to do
+
     }
 }

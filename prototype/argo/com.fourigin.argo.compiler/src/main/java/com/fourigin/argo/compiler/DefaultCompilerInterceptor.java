@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 public class DefaultCompilerInterceptor implements CompilerInterceptor {
     private File baseDir;
@@ -36,8 +37,10 @@ public class DefaultCompilerInterceptor implements CompilerInterceptor {
 //            return;
 //        }
 
-        String folderPath = preparedContentFilenameStrategy.getFolder(language, pageInfo);
-        String filename = preparedContentFilenameStrategy.getFilename(language, pageInfo);
+        String normalizedLanguage = language.toLowerCase(Locale.US);
+
+        String folderPath = preparedContentFilenameStrategy.getFolder(normalizedLanguage, pageInfo);
+        String filename = preparedContentFilenameStrategy.getFilename(normalizedLanguage, pageInfo);
 
         File folder = new File(baseDir, folderPath);
         if (!folder.exists()) {
