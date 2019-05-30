@@ -1,6 +1,7 @@
 package com.fourigin.argo.controller.assets;
 
 import com.fourigin.argo.assets.models.Asset;
+import com.fourigin.argo.assets.models.AssetSearchFilter;
 import com.fourigin.argo.assets.models.Assets;
 import com.fourigin.argo.assets.models.ImageAsset;
 import com.fourigin.argo.assets.repository.AssetRepository;
@@ -38,6 +39,7 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -78,7 +80,8 @@ public class AssetsController {
         @RequestParam(RequestParameters.LANGUAGE) String language,
         @RequestParam(RequestParameters.ASSET_ID) String assetId
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing resolveAsset request for language {} and id {}", language, assetId);
+        if (logger.isDebugEnabled())
+            logger.debug("Processing resolveAsset request for language {} and id {}", language, assetId);
 
         MDC.put("project", project);
         MDC.put("language", language);
@@ -89,8 +92,7 @@ public class AssetsController {
             if (logger.isDebugEnabled()) logger.debug("Returning asset {} for id {}", asset, assetId);
 
             return asset;
-        }
-        finally {
+        } finally {
             MDC.remove("language");
             MDC.remove("project");
         }
@@ -103,7 +105,8 @@ public class AssetsController {
         @RequestParam(RequestParameters.ASSET_ID) String assetId,
         HttpServletResponse response
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing resolveAssetData request for language {} and id {}", language, assetId);
+        if (logger.isDebugEnabled())
+            logger.debug("Processing resolveAssetData request for language {} and id {}", language, assetId);
 
         MDC.put("project", project);
         MDC.put("language", language);
@@ -116,14 +119,35 @@ public class AssetsController {
             InputStream is = assetRepository.retrieveAssetData(assetId);
 
             org.apache.commons.io.IOUtils.copyLarge(is, outputStream);
-        }
-        catch (Throwable th){
+        } catch (Throwable th) {
             if (logger.isErrorEnabled()) logger.error("Unexpected error occurred!", th);
-        }
-        finally {
+        } finally {
             MDC.remove("language");
             MDC.remove("project");
         }
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public Map<String, Asset> searchAssets(
+        @PathVariable String project,
+        @RequestParam(RequestParameters.LANGUAGE) String language,
+        @RequestParam(value = "w", required = false) Integer width,
+        @RequestParam(value = "h", required = false) Integer height,
+        @RequestParam(value = "m", required = false) String mimeType,
+        @RequestParam(value = "t", required = false) Set<String> tags,
+        @RequestParam(value = "k", required = false) String keyword
+    ) {
+        if (logger.isDebugEnabled()) logger.debug("Processing search assets request for language {}", language);
+
+        AssetSearchFilter filter = new AssetSearchFilter.Builder()
+            .withWidth(width)
+            .withHeight(height)
+            .withMimeType(mimeType)
+            .withTags(tags)
+            .withKeyword(keyword)
+            .build();
+
+        return assetRepository.findAssets(language, filter);
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -173,8 +197,7 @@ public class AssetsController {
             }
 
             return result;
-        }
-        finally {
+        } finally {
             MDC.remove("language");
             MDC.remove("project");
         }
@@ -285,8 +308,7 @@ public class AssetsController {
                 if (logger.isInfoEnabled())
                     logger.info("Returned {} bytes of data for resource {}.", count, assetId);
             }
-        }
-        finally {
+        } finally {
             MDC.remove("language");
             MDC.remove("project");
         }
