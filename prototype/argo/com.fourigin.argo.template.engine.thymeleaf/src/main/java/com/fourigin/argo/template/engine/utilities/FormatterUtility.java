@@ -69,14 +69,14 @@ public class FormatterUtility implements ThymeleafTemplateUtility {
         }
     }
 
-    public String formatString(String pattern, String... values) {
+    public String formatString(String pattern, Object... values) {
         if (values == null || values.length == 0) {
             return pattern;
         }
 
         Map<String, String> valuesMap = new HashMap<>();
         for (int i = 0; i < values.length; i++) {
-            valuesMap.put(String.valueOf(i), values[i]);
+            valuesMap.put(String.valueOf(i), String.valueOf(values[i]));
         }
 
         return replacement.process(pattern, valuesMap);

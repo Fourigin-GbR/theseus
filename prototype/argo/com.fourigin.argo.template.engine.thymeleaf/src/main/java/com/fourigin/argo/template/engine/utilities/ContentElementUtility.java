@@ -158,21 +158,29 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         return null;
     }
 
+    private String resolveTextContent(TextAwareContentElement element){
+        LanguageContent content = element.getContent();
+        if (content != null) {
+            return content.get(language);
+        }
+
+        return null;
+    }
+
+    private String resolveDataContent(DataAwareContentElement element){
+        return element.getContent();
+    }
+
     public String getContent(String path) {
         ContentElement element = getElement(path);
         Class<? extends ContentElement> elementClass = element.getClass();
 
         if (TextAwareContentElement.class.isAssignableFrom(elementClass)) {
-            LanguageContent content = ((TextAwareContentElement) element).getContent();
-            if (content != null) {
-                return content.get(language);
-            }
-
-            return null;
+            return resolveTextContent((TextAwareContentElement) element);
         }
 
         if (DataAwareContentElement.class.isAssignableFrom(elementClass)) {
-            return ((DataAwareContentElement) element).getContent();
+            return resolveDataContent ((DataAwareContentElement) element);
         }
 
         return null;
@@ -191,16 +199,11 @@ public class ContentElementUtility implements ContentPageAwareThymeleafTemplateU
         Class<? extends ContentElement> elementClass = element.getClass();
 
         if (TextAwareContentElement.class.isAssignableFrom(elementClass)) {
-            LanguageContent content = ((TextAwareContentElement) element).getContent();
-            if (content != null) {
-                return content.get(language);
-            }
-
-            return null;
+            return resolveTextContent((TextAwareContentElement) element);
         }
 
         if (DataAwareContentElement.class.isAssignableFrom(elementClass)) {
-            return ((DataAwareContentElement) element).getContent();
+            return resolveDataContent ((DataAwareContentElement) element);
         }
 
         return null;
