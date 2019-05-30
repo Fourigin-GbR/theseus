@@ -33,8 +33,29 @@
 
     </nav>
 
-    <article>
-        <h1 th:text="${c.getContent('/headline')}">Immobilien suchen</h1>
+    <article class="section">
+        <h1 th:text="${c.getContent('/headline')}">Kategorie wählen</h1>
+
+        <div class="ctaList">
+            <a class="cta" href="immobilie-kaufen.html" th:href="${p.getPath('/objects/sale/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/bill-property')}">Immobilie kaufen</a>
+            <a class="cta" href="feriendomizil-suchen.html" th:href="${p.getPath('/objects/rent/search')}" th:text="${c.getContent('@common-content:common/links-and-ctas/rent-property')}">Feriendomizil mieten</a>
+        </div>
+    </article>
+
+    <article class="section">
+        <h1 th:text="${c.getContent('/headline-search-section')}">Immobilien suchen</h1>
+
+        <div class="prominentSearch">
+            <form method="get" th:action="${p.getPath('/objects/search')}" action="#">
+                <label>
+                    <input name="object-id" type="text" placeholder="Objekt-ID" th:placeholder="${c.getContent('@common-content:common/properties/code')}" />
+                    <input name="l" type="hidden" th:value="${argo.language}" />
+                    <input name="p" type="hidden" value="/objects/search" />
+                </label>
+                <input class="cta" type="submit" value="Suchen" th:value="${c.getContent('@common-content:common/links-and-ctas/search')}"/>
+            </form>
+        </div>
+
     </article>
 
     <article class="pagesList" th:with="
@@ -58,7 +79,7 @@
         </div>
 
         <ul class="pageSearchResultList">
-            <li class="pagePreview" th:each="link : ${objects.elements}" th:attr="data-object-id=${link.name}"
+            <li class="pagePreview" th:each="link : ${objects.elements}" th:data-object-id="${link.name}" th:data-object-code="${c.getContent(link, '/properties/code')}"
                 th:with="
                     properties = ${c.getElement(link, '/properties')},
                     images = ${c.getElement(link, '/images')},

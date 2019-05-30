@@ -1096,3 +1096,30 @@ ul.smallItemGalleryList li h3:hover a {
     padding: 10px 0;
     text-align: right;
 }
+
+
+
+.prominentSearch form {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+.prominentSearch label {
+    width: 50%;
+}
+.prominentSearch input[name='object-id'] {
+    padding: 10px;
+    width: 100%;
+}
+
+
+article.section {
+    margin-bottom: 40px;
+}
+
+.ctaList {
+    padding: 20px 30px;
+}
+.ctaList .cta {
+    margin: 0 10px 10px 0;
+}

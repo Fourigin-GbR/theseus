@@ -12,6 +12,8 @@ var staticSearchResult = function() {
     this.jResultAmount = jQuery("[data-content='result-amount']");
     this.objectIds = $.urlParam('object-id');
 
+    jQuery("input[name='object-id']").val(this.objectIds);
+
     // overlays, info-boxes
 
     staticSearchResult.prototype.showErrorOverlay = function() {
@@ -67,10 +69,11 @@ var staticSearchResult = function() {
         if(objectIds) {
             self.jPageResultEntries.each(function () {
                 var jThis = jQuery(this),
-                    currentObjectId = jThis.attr("data-object-id");
+                    currentObjectId = jThis.attr("data-object-id"),
+                    currentObjectCode = jThis.attr("data-object-code");
                 //
 
-                if (objectIds.indexOf(currentObjectId) > -1) {
+                if((objectIds.indexOf(currentObjectId) > -1) || (objectIds.indexOf(currentObjectCode) > -1)) {
                     self.showObject(jThis);
                     self.enableImages(jThis);
                     counterMatchingObjects++;
