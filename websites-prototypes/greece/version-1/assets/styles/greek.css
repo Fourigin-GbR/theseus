@@ -1119,6 +1119,8 @@ article.section {
 
 .ctaList {
     padding: 20px 30px;
+    display: flex;
+    justify-content: center;
 }
 .ctaList .cta {
     margin: 0 10px 10px 0;
