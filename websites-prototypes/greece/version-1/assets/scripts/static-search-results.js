@@ -85,7 +85,7 @@ var staticSearchResult = function() {
 
         self.jResultAmount.html(counterMatchingObjects);
 
-        if(!objectIds || objectIds.length === 0) {
+        if(counterMatchingObjects === 0) {
             this.showNoResultsOverlay();
         }
     };
