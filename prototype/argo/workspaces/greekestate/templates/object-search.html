@@ -4,10 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${c.getPageTitle()}">Greece</title>
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <link rel="stylesheet" href="/global-assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/styles/slider.css"/>
+    <link rel="stylesheet" href="/assets/styles/greek.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css?family=News+Cycle');
     </style>
@@ -15,13 +15,13 @@
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
-    <script src="/assets/shared/greekestate/assets/scripts/object-search.js"></script>
-    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+    <script type="text/javascript" src="/assets/scripts/slider.js"></script>
+    <script type="text/javascript" src="/assets/scripts/language-switch.js"></script>
+    <script type="text/javascript" src="/assets/scripts/object-search.js"></script>
 </head>
 <body>
 
-<header th:replace="greekestate/base :: header">
+<header th:replace="base :: header">
 
 </header>
 
@@ -31,7 +31,7 @@
     p = ${argo.pagePropertiesUtility}
 ">
 
-    <nav class="breadcrumb" th:insert="greekestate/base :: breadcrumb">
+    <nav class="breadcrumb" th:insert="base :: breadcrumb">
 
     </nav>
 
@@ -81,7 +81,7 @@
         ">
             <!--th:action="'http://argo.greekestate.fourigin.com/cms/search/?base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"-->
             <form
-                    th:action="${searchServiceUrl} + 'base=' + ${argo.base} + '&path=' + ${argo.path}" action="#" id="searchObjects"
+                    th:action="${searchServiceUrl} + 'l=' + ${argo.language} + '&p=' + ${argo.path}" action="#" id="searchObjects"
                     th:data-form-index="${dataSourceId.index.name}"
             >
                 <div class="searchFilter__filterItem region">
@@ -152,6 +152,7 @@
         objects = ${c.getElement('@site-structure:/')}
     ">
         <div class="legend">
+            <!--formatted = ${f.formatString(pattern, objects.elements.size())}-->
             <div class="resultAmount" th:with="
                 pattern = ${c.getContent('@common-content:common/general-headlines/matching-objects-found')},
                 value = '<span class=\'amount\' data-content=\'result-amount\'>__${objects.elements.size()}__</span>',
@@ -265,7 +266,7 @@
 
 </div>
 
-<footer th:replace="greekestate/base :: footer">
+<footer th:replace="base :: footer">
 
 </footer>
 </body>

@@ -18,12 +18,16 @@
 					"text-length-min": 5,
 					"text-length-max": 20
 				},
-				"content": "<Headline>"
+				"content": {
+					"en": "<Headline>"
+				}
 			},
 			{
 				"name": "body",
 				"type": "text",
-				"content": "<article>"
+				"content": {
+					"en": "<article>"
+				}
 			}
 		],
 		"dataSourceContents": [

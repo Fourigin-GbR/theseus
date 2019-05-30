@@ -4,10 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${c.getPageTitle()}">Greece</title>
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/basic-layout.css"/>
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/slider.css">
-    <link rel="stylesheet" href="/assets/shared/greekestate/assets/styles/greek.css"/>
+    <link rel="stylesheet" href="/global-assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/styles/basic-layout.css"/>
+    <link rel="stylesheet" href="/assets/styles/slider.css"/>
+    <link rel="stylesheet" href="/assets/styles/greek.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css?family=News+Cycle');
     </style>
@@ -15,11 +15,11 @@
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-    <script src="/assets/shared/greekestate/assets/scripts/slider.js"></script>
-    <script src="/assets/shared/greekestate/assets/scripts/language-switch.js"></script>
+    <script type="text/javascript" src="/assets/scripts/slider.js"></script>
+    <script type="text/javascript" src="/assets/scripts/language-switch.js"></script>
 </head>
 <body>
-<header th:replace="greekestate/base :: header">
+<header th:replace="base :: header">
 
 </header>
 <div class="body" th:with="
@@ -28,15 +28,15 @@
     f = ${argo.formatterUtility}
 ">
 
-    <nav th:replace="greekestate/base :: breadcrumb">
+    <nav th:replace="base :: breadcrumb">
 
     </nav>
 
-    <article th:replace="greekestate/base :: article-headline-body(${c.getContent('/headline')}, ${c.getContent('/body')})">
+    <article th:replace="base :: article-headline-body(${c.getContent('/headline')}, ${c.getContent('/body')})">
 
     </article>
 </div>
-<footer th:replace="greekestate/base :: footer">
+<footer th:replace="base :: footer">
 
 </footer>
 </body>

@@ -43,7 +43,9 @@
 									"text-length-min": 5,
 									"text-length-max": 20
 								},
-								"content": "Exclusiv!"
+								"content": {
+									"en": "Exclusiv!"
+								}
 							},
 							{
 								"name": "headline",
@@ -53,7 +55,9 @@
 									"link-type": "INTERNAL | EXTERNAL"
 								},
 								"url": "site://sales/123 | site:../123 | http(s)://google.de | //google.de",
-								"title": "blah",
+								"title": {
+									"en": "blah"
+								},
 								"target": "?",
 								"elements": [
 									{
@@ -64,7 +68,9 @@
 											"text-length-min": 5,
 											"text-length-max": 20
 										},
-										"content": "Villa am Meer"
+										"content": {
+											"en": "Villa am Meer"
+										}
 									}
 								]
 							},
@@ -84,7 +90,9 @@
 											"text-length-min": 5,
 											"text-length-max": 20
 										},
-										"content": "Sofort bezugsfertig, auf Wunsch möbliert"
+										"content": {
+											"en": "Sofort bezugsfertig, auf Wunsch möbliert"
+										}
 									}
 								]
 							},
@@ -95,7 +103,9 @@
 									"pattern": "[0-9]+"
 								},
 								"name": "price",
-								"content": "175.000,00 €"
+								"content": {
+									"en": "175.000,00 €"
+								}
 							}
 						]
 					}
@@ -109,12 +119,16 @@
 					"text-length-min": 5,
 					"text-length-max": 20
 				},
-				"content": "Unser Angebot und Service"
+				"content": {
+					"en": "Unser Angebot und Service"
+				}
 			},
 			{
 				"name": "body",
 				"type": "text",
-				"content": "Wir haben und haben dies uns das und haben und haben alles und jedes."
+				"content": {
+					"en": "Wir haben und haben dies uns das und haben und haben alles und jedes."
+				}
 			},
 			{
 				"name": "offers",
@@ -123,8 +137,10 @@
 					{
 						"name": "headline",
 						"type": "text",
-						"content": "Besondere Angebote"
-                    },
+						"content": {
+							"en": "Besondere Angebote"
+						}
+					},
 					{
 						"name": "objects",
 						"type": "list",
@@ -143,17 +159,23 @@
 									{
 										"name": "headline",
 										"type": "text",
-										"content": "Objekt ABC"
-                                    },
+										"content": {
+											"en": "Objekt ABC"
+										}
+									},
 									{
 										"name": "description",
 										"type": "text",
-										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										"content": {
+											"en": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										}
 									},
 									{
 										"type": "text",
 										"name": "price",
-										"content": "175.000,00 €"
+										"content": {
+											"en": "175.000,00 €"
+										}
 									}
 								]
 							},
@@ -171,17 +193,23 @@
 									{
 										"name": "headline",
 										"type": "text",
-										"content": "Apartment groß"
-                                    },
+										"content": {
+											"en": "Apartment groß"
+										}
+									},
 									{
 										"name": "description",
 										"type": "text",
-										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										"content": {
+											"en": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										}
 									},
 									{
 										"type": "text",
 										"name": "price",
-										"content": "15.000,00 €"
+										"content": {
+											"en": "15.000,00 €"
+										}
 									}
 								]
 							},
@@ -199,17 +227,23 @@
 									{
 										"name": "headline",
 										"type": "text",
-										"content": "Gewerbefläche"
-                                    },
+										"content": {
+											"en": "Gewerbefläche"
+										}
+									},
 									{
 										"name": "description",
 										"type": "text",
-										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										"content": {
+											"en": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										}
 									},
 									{
 										"type": "text",
 										"name": "price",
-										"content": "50.750,00 €"
+										"content": {
+											"en": "50.750,00 €"
+										}
 									}
 								]
 							},
@@ -227,17 +261,23 @@
 									{
 										"name": "headline",
 										"type": "text",
-										"content": "Seeplatz"
-                                    },
+										"content": {
+											"en": "Seeplatz"
+										}
+									},
 									{
 										"name": "description",
 										"type": "text",
-										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										"content": {
+											"en": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										}
 									},
 									{
 										"type": "text",
 										"name": "price",
-										"content": "175.000,00 €"
+										"content": {
+											"en": "175.000,00 €"
+										}
 									}
 								]
 							},
@@ -255,17 +295,23 @@
 									{
 										"name": "headline",
 										"type": "text",
-										"content": "Hütte"
-                                    },
+										"content": {
+											"en": "Hütte"
+										}
+									},
 									{
 										"name": "description",
 										"type": "text",
-										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										"content": {
+											"en": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										}
 									},
 									{
 										"type": "text",
 										"name": "price",
-										"content": "15.000,00 €"
+										"content": {
+											"en": "15.000,00 €"
+										}
 									}
 								]
 							},
@@ -283,17 +329,23 @@
 									{
 										"name": "headline",
 										"type": "text",
-										"content": "Hausboot"
-                                    },
+										"content": {
+											"en": "Hausboot"
+										}
+									},
 									{
 										"name": "description",
 										"type": "text",
-										"content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										"content": {
+											"en": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+										}
 									},
 									{
 										"type": "text",
 										"name": "price",
-										"content": "15.000,00 €"
+										"content": {
+											"en": "15.000,00 €"
+										}
 									}
 								]
 							}
