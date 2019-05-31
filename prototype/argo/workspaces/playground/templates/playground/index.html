@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Natur</title>
+    <link rel="stylesheet" href="/assets/styles/nature.css" />
+
+</head>
+<body style="background-image: url('/assets/images/waldweg-sonnig.gif')" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+    ">
+<div class="heroStage">
+    <h1 class="heroStage__headline" th:text="${c.getContent('/title')}">Willkommen Natur!</h1>
+</div>
+<div class="tilesBoxes">
+    <div class="tilesBoxes__headline" th:text="${c.getContent('/teasers/title')}">
+        Die Natur ist alles, was wir haben.
+    </div>
+    <ul class="tilesBoxes__boxesWrapper" th:with="boxes = ${c.getElement('/teasers/teaserItems')}">
+        <li class="tilesBoxes__box" th:each="box : ${boxes.elements}">
+            <span th:utext="${c.getContent(box, '/copy')}">Morgens</span>
+            <img src="/assets/images/baum1.jpg"/>
+        </li>
+        <li class="tilesBoxes__box">
+            Mittags
+            <img src="/assets/images/jogger-see-schwäne.jpg"/>
+        </li>
+        <li class="tilesBoxes__box">
+            Abends
+            <img src="/assets/images/kuh-fressend.jpeg"/>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

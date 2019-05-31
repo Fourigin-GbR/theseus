@@ -1,0 +1,16 @@
+{
+  "staged" : false,
+  "live" : false,
+  "timestampLiveSwitch" : 0,
+  "compileState" : {
+    "checksum" : "EF2D581D96F724AFBBAA723AA9038991-E95604453A8B7F64262D2C48314F51AD",
+    "compiled" : true,
+    "timestamp" : 0
+  },
+  "checksum" : {
+    "metaDataValue" : "EF2D581D96F724AFBBAA723AA9038991",
+    "contentValue" : "E95604453A8B7F64262D2C48314F51AD",
+    "dataSourceValues" : { }
+  },
+  "revision" : "1"
+}

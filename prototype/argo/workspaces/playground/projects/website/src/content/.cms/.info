@@ -1,0 +1,35 @@
+{
+  "path" : "/",
+  "children" : [ {
+    "type" : "file",
+    "name" : "home",
+    "localizedName" : {
+      "de" : "home",
+      "en" : "home",
+      "ru" : "home"
+    },
+    "displayName" : {
+      "de" : "Häuschen",
+      "en" : "Home",
+      "ru" : "Домик"
+    },
+    "templateReference" : {
+      "templateId" : "playground.index",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "dir",
+    "name" : "meta",
+    "localizedName" : {
+      "de" : "meta",
+      "en" : "meta",
+      "ru" : "meta"
+    },
+    "displayName" : {
+      "de" : "Meta",
+      "en" : "meta",
+      "ru" : "meta"
+    }
+  } ]
+}

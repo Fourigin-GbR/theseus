@@ -1,0 +1,30 @@
+{
+  "path" : "/meta",
+  "children" : [ {
+    "type" : "file",
+    "name" : "overview",
+    "localizedName" : {
+      "en" : "overview",
+      "de" : "overview",
+      "ru" : "overview"
+    },
+    "templateReference" : {
+      "templateId" : "playground.article",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "imprint",
+    "localizedName" : {
+      "en" : "imprint",
+      "de" : "Impressum",
+      "ru" : "imprint"
+    },
+    "templateReference" : {
+      "templateId" : "playground.article",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  } ]
+}

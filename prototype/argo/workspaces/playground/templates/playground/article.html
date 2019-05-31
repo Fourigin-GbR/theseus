@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Natur</title>
+    <link rel="stylesheet" href="/assets/styles/nature.css" />
+
+</head>
+<body style="background-image: url('/assets/images/waldweg-sonnig.gif')" th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility},
+    f = ${argo.formatterUtility}
+    ">
+
+<div class="article">
+
+    <h1 class="article__headline" th:text="${c.getContent('/title')}">Willkommen Natur!</h1>
+
+    <div class="article__body" th:utext="${c.getContent('/article')}">
+
+    </div>
+
+</div>
+
+</body>
+</html>

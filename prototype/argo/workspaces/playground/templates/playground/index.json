@@ -1,0 +1,160 @@
+{
+  "contentPrototype": {
+    "id": "homepage",
+    "metaData": {
+      "title": "My first ContentPage for testing...",
+      "attributes": {
+        "key-1": "value-1",
+        "key-2": "value-2",
+        "key-3": "value-3"
+      }
+    },
+    "content": [
+      {
+        "name": "title",
+        "type": "text",
+        "content": {
+          "de": "Hallo Welt"
+        }
+      },
+      {
+        "type": "group",
+        "name": "teasers",
+        "elements": [
+          {
+            "type": "text",
+            "name": "title",
+            "content": {
+              "de": "Die Natur ist alles, was wir haben!"
+            }
+          },
+          {
+            "type": "list",
+            "name": "teaserItems",
+            "elements": [
+              {
+                "type": "list-group",
+                "elements": [
+                  {
+                    "type": "text",
+                    "name": "copy",
+                    "content": {
+                      "de": "Das Rauschen ist Natur :-)"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "list-group",
+                "elements": [
+                  {
+                    "type": "text",
+                    "name": "copy",
+                    "content": {
+                      "de": "Das Rauschen ist soooo wunderschöne Natur :-)"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "header",
+        "type": "group",
+        "elements": []
+      },
+      {
+        "type": "list",
+        "name": "todo",
+        "elements": [
+          {
+            "type": "list-text",
+            "content": {
+              "de": "Aufstehen"
+            }
+          },
+          {
+            "type": "list-text",
+            "content": {
+              "de": "Frühstücken"
+            }
+          },
+          {
+            "type": "list-text",
+            "content": {
+              "de": "Schlafen."
+            }
+          }
+        ]
+      },
+      {
+        "name": "main-content",
+        "type": "group",
+        "elements": [
+          {
+            "name": "headline",
+            "type": "text",
+            "content": {
+              "de": "Hallo Welt"
+            }
+          },
+          {
+            "name": "image",
+            "type": "object",
+            "referenceId": "1234567",
+            "mimeType": "png",
+            "alternateText": "Image one",
+            "source": "/images/image1.png"
+          },
+          {
+            "name": "list",
+            "type": "list",
+            "elements": [
+              {
+                "type": "list-text",
+                "content": {
+                  "de": "lala"
+                }
+              },
+              {
+                "type": "list-text",
+                "content": {
+                  "de": "lala"
+                }
+              },
+              {
+                "type": "list-text",
+                "content": {
+                  "de": "lala"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "footer",
+        "type": "group",
+        "elements": []
+      }
+    ],
+    "dataSourceContents": [
+    ]
+  },
+  "hotspots": {
+    "/title": {
+      "title": "Headline",
+      "description": "Top headline, important for SEO. Use significant copy."
+    },
+    "/teasers": {
+      "title": "Nature teasers",
+      "description": "Something..."
+    },
+    "/todo": {
+      "title": "Todo list",
+      "description": "Some description."
+    }
+  }
+}

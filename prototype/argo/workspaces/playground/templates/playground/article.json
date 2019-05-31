@@ -1,0 +1,41 @@
+{
+  "contentPrototype": {
+    "id": "article",
+    "metaData": {
+      "title": "Nature - imprint",
+      "attributes": {
+        "key-1": "value-1",
+        "key-2": "value-2",
+        "key-3": "value-3"
+      }
+    },
+    "content": [
+      {
+        "name": "title",
+        "type": "text",
+        "content": {
+          "de": "Impressum"
+        }
+      },
+      {
+        "name": "article",
+        "type": "text",
+        "content": {
+          "de": "Hallo Welt"
+        }
+      }
+    ],
+    "dataSourceContents": [
+    ]
+  },
+  "hotspots": {
+    "/title": {
+      "title": "Headline",
+      "description": "Top headline, important for SEO. Use significant copy."
+    },
+    "/article": {
+      "title": "Article",
+      "description": "Something..."
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "id" : "overview",
+  "metaData" : {
+    "title" : "My first ContentPage for testing...",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "title",
+    "content" : {
+      "de" : "META Overview"
+    }
+  }, {
+    "type" : "group",
+    "name" : "header",
+    "elements" : [ ]
+  }, {
+    "type" : "group",
+    "name" : "teasers",
+    "elements" : [ {
+      "type" : "text",
+      "name" : "title",
+      "content" : {
+        "de" : "Die Natur ist alles, was wir haben!"
+      }
+    }, {
+      "type" : "list",
+      "name" : "teaserItems",
+      "elements" : [ {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "copy",
+          "content" : {
+            "de" : "Das Rauschen ist Natur :-)<br />Und <strong>alles</strong> ist so pur einfach <em>erholsam</em>!"
+          }
+        } ]
+      }, {
+        "type" : "list-group",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "copy",
+          "content" : {
+            "de" : "Genieße diese Bilder.... Traumhaft!"
+          }
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "name" : "todo",
+    "elements" : [ {
+      "type" : "list-text",
+      "content" : {
+        "de" : "Aufstehen.. das ist das Schönste!"
+      }
+    }, {
+      "type" : "list-text",
+      "content" : {
+        "de" : "Frühstücken"
+      }
+    }, {
+      "type" : "list-text",
+      "content" : {
+        "de" : "Schlafen."
+      }
+    }, {
+      "type" : "list-text",
+      "content" : {
+        "de" : "....Träumen!!"
+      }
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "main-content",
+    "elements" : [ {
+      "type" : "text",
+      "name" : "headline",
+      "content" : {
+        "de" : "Hallo Welt"
+      }
+    }, {
+      "type" : "object",
+      "name" : "image",
+      "referenceId" : "1234567",
+      "source" : "/images/image1.png",
+      "alternateText" : "Image one",
+      "mimeType" : "png"
+    }, {
+      "type" : "list",
+      "name" : "list",
+      "elements" : [ {
+        "type" : "list-text",
+        "content" : {
+          "de" : "Item A"
+        }
+      }, {
+        "type" : "list-text",
+        "content" : {
+          "de" : "Item B"
+        }
+      }, {
+        "type" : "list-text",
+        "content" : {
+          "de" : "Item C"
+        }
+      } ]
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "footer",
+    "elements" : [ ]
+  } ],
+  "dataSourceContents" : [ ]
+}
