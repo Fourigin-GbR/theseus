@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>argo - Something wrong...</title>
-    <link rel="stylesheet" href="/global/styles/cms-error-page.css"/>
+    <link rel="stylesheet" href="/global-assets/styles/cms-error-page.css"/>
     <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Dosis|Economica|Roboto+Condensed|Saira+Condensed"
           rel="stylesheet"/>
-    <link rel="stylesheet" href="/global/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
+    <link rel="stylesheet" href="/global-assets/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
 
-    <script src="/global/libraries/jquery/jquery-3.3.1.min.js"></script>
-    <script src="/global/scripts/error-page.js"></script>
+    <script src="/global-assets/libraries/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/global-assets/scripts/error-page.js"></script>
 
 </head>
 <body>
@@ -36,7 +36,7 @@
             </button>
 
             <h2 class="argoError__errorMessage">
-                <span th:text="${message}"></span>
+                <span th:text="${message}">#Message</span>
             </h2>
             <div id="diagnoseErrorContent" class="argoError__errorDetails">
                 <div th:text="${cause}"></div>

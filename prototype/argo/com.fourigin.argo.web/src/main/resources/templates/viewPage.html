@@ -12,7 +12,10 @@
     <script src="/global-assets/scripts/argo.js"></script>
     <script src="/global-assets/libraries/tinymce/js/tinymce/tinymce.min.js"></script>
 </head>
-<body>
+<body th:with="
+    c = ${argo.contentElementUtility},
+    p = ${argo.pagePropertiesUtility}
+">
 <div class="argoCmsPageEditorHeader">
     <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeader__section--header">
         <div class="argoCmsPageEditorHeader__sectionContent">
@@ -51,11 +54,12 @@
                 <div class="editContentBox editContentBox--big">
                     <div class="editContentBox__contentBoxWrapper">
                         <div class="editContentBox__contentBox">
-                            <ul class="pathStructureLinkList">
-                                <li th:each="pathToken : ${#strings.arraySplit(argo.path, '/')}">
-                                    <a th:href="@{/view/(l=${argo.language},p=${argo.path})}" href="#" th:text="${pathToken}">#</a>
+                            <ul th:with="ancestors = ${p.getAncestors(argo.path)}" class="pathStructureLinkList">
+                                <li th:each="ancestor: ${ancestors}">
+                                    <a th:text="${ancestor.name}" th:href="${p.getPath(ancestor.path)}" href="index.html">Start</a>
                                 </li>
                             </ul>
+
                         </div>
                         <div class="tooltip" data-tooltip-target-id="tt2">
                             <i class="tooltip__icon fas fa-question"></i>
