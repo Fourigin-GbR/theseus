@@ -267,6 +267,97 @@
             </div>
         </div>
     </div>
+
+    <div data-argo-element="mediaSelector" class="overlay overlayMediaSelector">
+        <div class="overlay__header">
+            <div class="overlay__content">
+                <h3 class="overlay__title">Select image</h3>
+                <div class="overlay__closeButton">
+                    <div class="iconButton iconButton--close">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay__body">
+            <div class="overlay__content">
+
+                <div class="uploadMediaItem">
+                    <form class="uploadMediaItem__form" data-argo-action="submitMediaItemUpload">
+                        <div class="uploadMediaItem__title">
+                            <h4>You can upload a new image:</h4>
+                        </div>
+                        <div class="uploadMediaItem__formInput">
+                            <label>
+                                <input type="file" />
+                                <div class="uploadMediaItem__selectButton">
+                                    <i class="far fa-hand-pointer"></i>
+                                    <span>Select image from your device</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="uploadMediaItem__button">
+                            <button type="submit" class="button">
+                                <span class="button__icon">
+                                    <i class="fas fa-file-upload"></i>
+                                </span>
+                                <span class="button__copy">
+                                    Upload
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="selectedImageView">
+                    <div class="selectedImageView__title">
+                        <h4>Selected image:</h4>
+                    </div>
+                    <div class="selectedImageView__imageInformation">
+                        <div class="selectedImageView__imageWrapper">
+                            <div class="selectedImageView__imagePlaceholder">
+                                <i class="fas fa-expand"></i>
+                                Nothing selected.
+                            </div>
+                            <img data-argo-element="selectedImagePreview" class="selectedImageView__image" src="assets/images/examples/KIKUS-digital_Idee_630.png"/>
+                        </div>
+                        <div class="selectedImageView__imageDetails">
+                            <div class="selectedImageView__imageDetail">
+                                <span class="selectedImageView__imageDetailLabel">Name:</span>
+                                <span data-argo-element="selectedImageName" class="selectedImageView__imageDetailValue"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selectedImagView__button">
+                        <button data-argo-action="takeSelection" class="button button--preferredAction">
+                            <span class="button__icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </span>
+                            <span class="button__copy">
+                                Take selection
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <h4>Available images for the current editor. Select one:</h4>
+                    <form>
+                        <ul data-argo-element="mediaList" class="imageListGutter">
+                            <li data-argo-prototype="mediaListItem" class="imageListGutter__gutterItem">
+                                <label class="mediaSelectorItem">
+                                    <input class="mediaSelectorItem__checkbox" type="checkbox" name="mediaItem"
+                                           value="feldhase"/>
+                                    <img data-argo-element="mediaListItemImage" class="imageListGutter__image mediaSelectorItem__mediaItem"
+                                         src="assets/images/examples/Feldhase.jpg"/>
+                                </label>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="tooltips">
@@ -804,6 +895,14 @@
 
 <script type="text/javascript" th:inline="javascript">
     var argoMessages = new com.fourigin.argo.Messages();
+    var argoMediaSelector = new com.fourigin.argo.MediaSelector(
+        {
+            "urlAssetsThumbnails": {
+                "big" : "/thumbnails/big?id="
+            }
+        }
+    );
+
     var hotspots = [[${data_hotspots}]];
     var language = [[${argo.language}]];
     var path = [[${argo.path}]];
