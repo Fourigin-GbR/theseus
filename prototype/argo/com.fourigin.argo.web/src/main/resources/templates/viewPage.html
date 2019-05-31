@@ -622,6 +622,60 @@
         </fieldset>
     </div>
 
+    <!-- list object editor -->
+    <div class="contentEditor__editorField" data-editor-type="listObject">
+        <fieldset data-type="listObject">
+            <input type="hidden" name="type" value="list-object"/>
+            <div class="contentEditor__editorFieldName"></div>
+            <div class="contentEditor__contentWrapper">
+                <div class="contentEditor__imageWrapper">
+                    <img src="" alt="Preview"/>
+                </div>
+                <div class="contentEditor__imageWrapperButtons">
+                    <span data-argo-action="openMediaSelector" class="button button--iconButton">
+                        <i class="fas fa-exchange-alt"></i>
+                        Change image...
+                    </span>
+                </div>
+                <label class="contentEditor__field">
+                    <span class="contentEditor__fieldTitle">Source</span>
+                    <input disabled="disabled" type="text" name="source" value="" />
+                    <span class="contentEditor__label">text</span>
+                </label>
+
+                <div class="moreOptions">
+                    <a class="moreOptions__button" href="#">
+                                            <span class="moreOptions__buttonCopy moreOptions__buttonCopy--more">
+                                                <span class="button_icon"><i class="fas fa-plus"></i></span>
+                                                Weitere Optionen...
+                                            </span>
+                        <span class="moreOptions__buttonCopy moreOptions__buttonCopy--less">
+                                                <span class="button_icon"><i class="fas fa-minus"></i></span>
+                                                Weniger Optionen...
+                                            </span>
+                    </a>
+                    <div class="moreOptions__content">
+                        <label class="contentEditor__field">
+                            <span class="contentEditor__fieldTitle">Reference id</span>
+                            <input disabled="disabled" type="text" name="referenceId" value="" />
+                            <span class="contentEditor__label">text</span>
+                        </label>
+                        <label class="contentEditor__field">
+                            <span class="contentEditor__fieldTitle">Alternative text</span>
+                            <input disabled="disabled" type="text" name="alternativeText" value="" />
+                            <span class="contentEditor__label">text</span>
+                        </label>
+                        <label class="contentEditor__field">
+                            <span class="contentEditor__fieldTitle">mime type</span>
+                            <input disabled="disabled" type="text" name="mimeType" value="" />
+                            <span class="contentEditor__label">text</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
     <!-- list editor -->
     <div class="contentEditor__editorField contentEditorTypeList" data-editor-type="list">
         <fieldset data-type="list">
@@ -894,18 +948,20 @@
 <!--/*@thymesVar id="data_hotspots" type="java.util.Map<String, com.fourigin.argo.models.content.hotspots.ElementsEditorProperties>"*/-->
 
 <script type="text/javascript" th:inline="javascript">
-    var argoMessages = new com.fourigin.argo.Messages();
-    var argoMediaSelector = new com.fourigin.argo.MediaSelector(
-        {
-            "urlAssetsThumbnails": {
-                "big" : "/thumbnails/big?id="
-            }
-        }
-    );
-
     var hotspots = [[${data_hotspots}]];
     var language = [[${argo.language}]];
     var path = [[${argo.path}]];
+
+
+    var argoMessages = new com.fourigin.argo.Messages();
+    var argoMediaSelector = new com.fourigin.argo.MediaSelector(
+        {
+            "urlLoadMediaList": "/cms/assets/search/?l=" + language,
+            "urlAssetsThumbnails": {
+                "big" : "/cms/assets/thumbnail/big?l=" + language + "&id="
+            }
+        }
+    );
     var argoPageEditor = new com.fourigin.argo.PageEditor(
         {
             "base": [[${argo.language}]],
