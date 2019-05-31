@@ -163,3 +163,10 @@ table.dataTable tr.group.closed td:first-of-type::before {
 .ui-button  {
     padding: .05em .5em;
 }
+
+.dataTableFilterList {
+    display: flex;
+}
+.dataTableFilterList__item {
+    padding-right: 15px;
+}

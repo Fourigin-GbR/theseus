@@ -67,13 +67,22 @@
                 <div>
                     <h2>Aufträge</h2>
 
-                    <div class="dataTableFilter">
-                        Filter:
-                        <select autocomplete="off" id="dataTableFilter">
-                            <option name="" selected="selected"></option>
-                            <option name="Registrierung">Registrierung</option>
-                            <option name="KFZ-Anmeldung">KFZ-Anmeldung</option>
-                        </select>
+                    <div class="dataTableFilter dataTableFilterList">
+                        <div class="dataTableFilterList__item">
+                            Filter:
+                            <select autocomplete="off" id="dataTableFilter">
+                                <option name="" selected="selected"></option>
+                                <option name="Registrierung">Registrierung</option>
+                                <option name="KFZ-Anmeldung">KFZ-Anmeldung</option>
+                            </select>
+                        </div>
+                        <div class="dataTableFilterList__item">
+                            Status:
+                            <select autocomplete="off" idnix="dataTableStatus">
+                                <option name="" selected="selected"></option>
+                                <option name="Registrierung">Waiting</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="tableContainer">
