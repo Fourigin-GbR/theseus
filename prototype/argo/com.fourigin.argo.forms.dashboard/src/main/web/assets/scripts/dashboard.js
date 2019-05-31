@@ -12,6 +12,10 @@ function init() {
     var languageDE = $('#language-de');
     var languageEN = $('#language-en');
 
+    var jFilterByType = jQuery('#dataTableFilter');
+    var jFilterByStatus = jQuery('#dataTableStatusFilter');
+    var jAllFilters = jFilterByType.add(jFilterByStatus);
+
     languageDE.click(function () {
         selectLanguage('de');
         languageDE.prop('disabled', true);
@@ -25,8 +29,10 @@ function init() {
 
     languageDE.prop('disabled', true);
 
-    jQuery('#dataTableFilter').on('change',
-        function () { requestsDataTable.search( this.value ).draw();
+    jAllFilters.on('change',
+        function () {
+            var sSearch = jFilterByType[0].value + ' ' + jFilterByStatus[0].value;
+            requestsDataTable.search(sSearch ).draw();
         });
 }
 
