@@ -230,6 +230,13 @@ textarea.invalid {
     color: #e21719;
     background-color: rgba(179, 35, 63, 0.18);
 }
+input.warning,
+select.warning,
+textarea.warning {
+    border-color: #ffaa34;
+    color: #ffaa34;
+    background-color: rgba(255, 170, 52, 0.18);
+}
 
 textarea {
     text-align: left;
@@ -291,6 +298,9 @@ a.hint:hover {
 }
 .validationMessage.error {
     color: #e21719;
+}
+.validationMessage.warning {
+    color: #ffaa34;
 }
 
 
