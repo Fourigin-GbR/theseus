@@ -319,28 +319,31 @@ public final class ContentPageManager {
             }
 
             for (ContentElement element : elements) {
-                if (NamedElement.class.isAssignableFrom(element.getClass())) {
-                    if (token.equals(((NamedElement) element).getName())) {
-                        if (indexReference != null) {
-                            // get referenced sub-element
-                            int index = Integer.parseInt(indexReference);
+                if (!NamedElement.class.isAssignableFrom(element.getClass())) {
+                    continue;
+                }
 
-                            if (!ContentListElementsContainer.class.isAssignableFrom(element.getClass())) {
-                                throw new UnresolvableContentPathException("Unable to resolve list reference '" + index + "'!", path);
-                            }
+                NamedElement namedElement = (NamedElement) element;
+                if (token.equals(namedElement.getName())) {
+                    if (indexReference != null) {
+                        // get referenced sub-element
+                        int index = Integer.parseInt(indexReference);
 
-                            List<ListElement> listElements = ((ContentListElementsContainer) element).getElements();
-                            if (listElements.size() <= index) {
-                                throw new UnresolvableContentPathException("Index out of range for reference '" + index + "', only " + listElements.size() + " elements available!", path);
-                            }
-
-                            current = listElements.get(index);
-                        } else {
-                            current = element;
+                        if (!ContentListElementsContainer.class.isAssignableFrom(element.getClass())) {
+                            throw new UnresolvableContentPathException("Unable to resolve list reference '" + index + "'!", path);
                         }
 
-                        break;
+                        List<ListElement> listElements = ((ContentListElementsContainer) element).getElements();
+                        if (listElements.size() <= index) {
+                            throw new UnresolvableContentPathException("Index out of range for reference '" + index + "', only " + listElements.size() + " elements available!", path);
+                        }
+
+                        current = listElements.get(index);
+                    } else {
+                        current = element;
                     }
+
+                    break;
                 }
             }
 
