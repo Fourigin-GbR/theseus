@@ -18,7 +18,7 @@ import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.normalizer.DataNormalizer;
 import com.fourigin.argo.forms.prepopulation.PrePopulationType;
 import com.fourigin.argo.forms.prepopulation.PrePopulationValuesResolver;
-import com.fourigin.argo.forms.validation.FailureReason;
+import com.fourigin.argo.forms.validation.ValidationMessage;
 import com.fourigin.argo.forms.validation.FormData;
 import com.fourigin.argo.forms.validation.FormFieldValidationResult;
 import com.fourigin.argo.forms.validation.FormValidationResult;
@@ -560,7 +560,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
 
         if (formDefinitionId != null) {
-            if (logger.isDebugEnabled()) logger.debug("Resolving pre-population values for formDefinition '{}'", formDefinitionId);
+            if (logger.isDebugEnabled())
+                logger.debug("Resolving pre-population values for formDefinition '{}'", formDefinitionId);
 
             FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
 
@@ -664,19 +665,33 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         Map<String, FormFieldValidationResult> fields = result.getFields();
         for (Map.Entry<String, FormFieldValidationResult> entry : fields.entrySet()) {
             FormFieldValidationResult fieldResult = entry.getValue();
+
+            List<ValidationMessage> hints = fieldResult.getHints();
+            if (hints != null && !hints.isEmpty()) {
+                // create formatted messages
+                for (ValidationMessage hint : hints) {
+                    hint.setFormattedMessage(messageSource.getMessage(
+                        hint.getCode(),
+                        hint.getArguments().toArray(),
+                        locale
+                    ));
+                }
+            }
+
             if (fieldResult.isValid()) {
                 continue;
             }
 
-            List<FailureReason> failureReasons = fieldResult.getFailureReasons();
-            if (failureReasons == null || failureReasons.isEmpty()) {
+            List<ValidationMessage> errorMessages = fieldResult.getErrorMessages();
+            if (errorMessages == null || errorMessages.isEmpty()) {
                 continue;
             }
 
-            for (FailureReason failureReason : failureReasons) {
-                failureReason.setFormattedMessage(messageSource.getMessage(
-                    failureReason.getFailureCode(),
-                    failureReason.getArguments().toArray(),
+            // create formatted error messages
+            for (ValidationMessage message : errorMessages) {
+                message.setFormattedMessage(messageSource.getMessage(
+                    message.getCode(),
+                    message.getArguments().toArray(),
                     locale
                 ));
             }

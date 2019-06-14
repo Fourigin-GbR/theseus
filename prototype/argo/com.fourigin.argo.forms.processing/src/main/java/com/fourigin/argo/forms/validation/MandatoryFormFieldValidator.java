@@ -9,12 +9,23 @@ public class MandatoryFormFieldValidator implements FormFieldValidator {
     public static final String VALIDATION_ERROR_INCOMPATIBLE_VALIDATOR_VALUE = "INCOMPATIBLE_VALIDATOR_VALUE";
     public static final String VALIDATION_ERROR_MISSING_MANDATORY_VALUE = "MISSING_MANDATORY_VALUE";
 
+    private boolean optional;
+
+    public MandatoryFormFieldValidator(boolean optional) {
+        this.optional = optional;
+    }
+
     @Override
-    public FailureReason validateField(FormDefinition formDefinition, String fieldName, String fieldValue, Object validatorValue) {
+    public boolean isOptional() {
+        return optional;
+    }
+
+    @Override
+    public ValidationMessage validateField(FormDefinition formDefinition, String fieldName, String fieldValue, Object validatorValue) {
         Objects.requireNonNull(validatorValue, "validatorValue must not be null!");
 
         if (!Boolean.class.isAssignableFrom(validatorValue.getClass())) {
-            return new FailureReason.Builder()
+            return new ValidationMessage.Builder()
                 .withValidator("MandatoryFormFieldValidator")
                 .withCode(VALIDATION_ERROR_INCOMPATIBLE_VALIDATOR_VALUE)
                 .withArgument(validatorValue.getClass().getName())
@@ -24,7 +35,7 @@ public class MandatoryFormFieldValidator implements FormFieldValidator {
 
         Boolean shouldBeMandatory = (Boolean) validatorValue;
         if (shouldBeMandatory && (fieldValue == null || fieldValue.isEmpty())) {
-            return new FailureReason.Builder()
+            return new ValidationMessage.Builder()
                 .withValidator("MandatoryFormFieldValidator")
                 .withCode(VALIDATION_ERROR_MISSING_MANDATORY_VALUE)
                 .withArgument(fieldName)

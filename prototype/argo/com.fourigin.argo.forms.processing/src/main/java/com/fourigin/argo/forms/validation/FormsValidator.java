@@ -6,12 +6,10 @@ import com.fourigin.argo.forms.definition.FormDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -27,8 +25,10 @@ public final class FormsValidator {
 
     static {
         FIELD_VALIDATORS = new HashMap<>();
-        FIELD_VALIDATORS.put("mandatory", new MandatoryFormFieldValidator());
-        FIELD_VALIDATORS.put("pattern", new PatternMatchingFormFieldValidator());
+        FIELD_VALIDATORS.put("mandatory", new MandatoryFormFieldValidator(false));
+        FIELD_VALIDATORS.put("optional-mandatory", new MandatoryFormFieldValidator(true));
+        FIELD_VALIDATORS.put("pattern", new PatternMatchingFormFieldValidator(false));
+        FIELD_VALIDATORS.put("optional-pattern", new PatternMatchingFormFieldValidator(true));
 
         VALID_CHECK_VALUES = new HashSet<>(Arrays.asList(
             "true",
@@ -94,7 +94,7 @@ public final class FormsValidator {
                 if (hasInvalidValues(fieldDefinition, fieldValue)) {
                     if (logger.isInfoEnabled())
                         logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
-                    failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                    failure(result, fieldName, fieldValue, new ValidationMessage.Builder()
                         .withValidator("FormsValidator")
                         .withCode(VALIDATION_ERROR_MISMATCHED_FIELD_VALUE)
                         .withArgument(fieldName)
@@ -107,7 +107,7 @@ public final class FormsValidator {
                 if (logger.isDebugEnabled()) logger.debug("Validation failed!", ex);
                 if (logger.isInfoEnabled())
                     logger.info("No field definition found for field '{}', validation failed", fieldName);
-                failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                failure(result, fieldName, fieldValue, new ValidationMessage.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_DEFINITION)
                     .withArgument(fieldName)
@@ -123,14 +123,14 @@ public final class FormsValidator {
             if (validationRules == null || validationRules.isEmpty()) {
                 if (logger.isInfoEnabled())
                     logger.info("No validation rules specified for field '{}', validation successful", fieldName);
-                success(result, fieldName, fieldValue);
+                success(result, fieldName, fieldValue, null);
                 continue;
             }
 
             boolean failed = validateRules(formDefinition, fieldName, fieldValue, validationRules, result);
             if (!failed) {
                 if (logger.isInfoEnabled()) logger.info("Field validation successful for field '{}'", fieldName);
-                success(result, fieldName, fieldValue);
+                success(result, fieldName, fieldValue, null);
             }
         }
 
@@ -179,7 +179,7 @@ public final class FormsValidator {
                     if (logger.isInfoEnabled())
                         logger.info("Field value doesn't match the definition for field '{}': {}", fieldName, fieldValue);
 
-                    failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                    failure(result, fieldName, fieldValue, new ValidationMessage.Builder()
                         .withValidator("FormsValidator")
                         .withCode(VALIDATION_ERROR_MISMATCHED_FIELD_VALUE)
                         .withArgument(fieldName)
@@ -191,7 +191,7 @@ public final class FormsValidator {
             } catch (Exception ex) {
                 if (logger.isInfoEnabled())
                     logger.info("No field definition found for field '{}', validation failed", fieldName, ex);
-                failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                failure(result, fieldName, fieldValue, new ValidationMessage.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_DEFINITION)
                     .withArgument(fieldName)
@@ -218,14 +218,14 @@ public final class FormsValidator {
             if (validationRules == null || validationRules.isEmpty()) {
                 if (logger.isInfoEnabled())
                     logger.info("No validation rules specified for field '{}', validation successful", fieldName);
-                success(result, fieldName, fieldValue);
+                success(result, fieldName, fieldValue, null);
                 continue;
             }
 
             boolean failed = validateRules(formDefinition, fieldName, fieldValue, validationRules, result);
             if (!failed) {
                 if (logger.isInfoEnabled()) logger.info("Field validation successful for field '{}'", fieldName);
-                success(result, fieldName, fieldValue);
+                success(result, fieldName, fieldValue, null);
             }
         }
 
@@ -238,7 +238,7 @@ public final class FormsValidator {
             case HIDDEN:
                 return false;
             case CHOOSE:
-                if(definition.getExternalValueReference() != null){
+                if (definition.getExternalValueReference() != null) {
                     // ignore external generated values (e.g. customer's IBAN)
                     return false;
                 }
@@ -263,7 +263,7 @@ public final class FormsValidator {
             if (fieldValidator == null) {
                 if (logger.isInfoEnabled())
                     logger.info("No field validator configured for field '{}' and name '{}'", fieldName, validatorType);
-                failure(result, fieldName, fieldValue, new FailureReason.Builder()
+                failure(result, fieldName, fieldValue, new ValidationMessage.Builder()
                     .withValidator("FormsValidator")
                     .withCode(VALIDATION_ERROR_MISSING_FIELD_VALIDATOR)
                     .withArgument(validatorType)
@@ -274,12 +274,18 @@ public final class FormsValidator {
                 continue;
             }
 
-            FailureReason failureReason = fieldValidator.validateField(formDefinition, fieldName, fieldValue, ruleEntry.getValue());
-            if (failureReason != null) {
+            ValidationMessage message = fieldValidator.validateField(formDefinition, fieldName, fieldValue, ruleEntry.getValue());
+            if (message != null) {
                 if (logger.isInfoEnabled())
                     logger.info("Field validation failed for field '{}' and validator '{}'", fieldName, validatorType);
-                failure(result, fieldName, fieldValue, failureReason);
-                failed = true;
+
+                if (fieldValidator.isOptional()) {
+                    success(result, fieldName, fieldValue, message);
+                } else {
+                    failure(result, fieldName, fieldValue, message);
+                    failed = true;
+                }
+
                 continue;
             }
 
@@ -290,47 +296,27 @@ public final class FormsValidator {
         return failed;
     }
 
-    private static void success(FormValidationResult formResult, String fieldName, Object value) {
-        Map<String, FormFieldValidationResult> fields = formResult.getFields();
-        if (fields == null) {
-            fields = new HashMap<>();
-            formResult.setFields(fields);
+    private static void success(FormValidationResult formResult, String fieldName, Object value, ValidationMessage hint) {
+        FormFieldValidationResult result = formResult.findOrCreateFieldValidationResult(fieldName);
+        result.setValue(value);
+
+        if (hint != null) {
+            result.addHint(hint);
         }
 
-        FormFieldValidationResult result = fields.get(fieldName);
-        if (result == null) {
-            result = new FormFieldValidationResult();
-            result.setValue(value);
-            fields.put(fieldName, result);
-        }
-
-        result.setValid(true);
+        formResult.addFieldValidationResult(fieldName, result);
     }
 
-    private static void failure(FormValidationResult formResult, String fieldName, Object value, FailureReason failureReason) {
+    private static void failure(FormValidationResult formResult, String fieldName, Object value, ValidationMessage message) {
         formResult.setValid(false);
 
-        Map<String, FormFieldValidationResult> fields = formResult.getFields();
-        if (fields == null) {
-            fields = new HashMap<>();
-            formResult.setFields(fields);
+        FormFieldValidationResult result = formResult.findOrCreateFieldValidationResult(fieldName);
+        result.setValue(value);
+
+        if (message != null) {
+            result.addErrorMessage(message);
         }
 
-        FormFieldValidationResult result = fields.get(fieldName);
-        if (result == null) {
-            result = new FormFieldValidationResult();
-            result.setValue(value);
-            fields.put(fieldName, result);
-        }
-
-        result.setValid(false);
-
-        List<FailureReason> reasons = result.getFailureReasons();
-        if (reasons == null) {
-            reasons = new ArrayList<>();
-            result.setFailureReasons(reasons);
-        }
-
-        reasons.add(failureReason);
+        formResult.addFieldValidationResult(fieldName, result);
     }
 }

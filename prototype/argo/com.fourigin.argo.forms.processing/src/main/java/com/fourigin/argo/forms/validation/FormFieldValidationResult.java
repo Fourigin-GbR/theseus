@@ -1,42 +1,35 @@
 package com.fourigin.argo.forms.validation;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class FormFieldValidationResult implements Serializable {
     private static final long serialVersionUID = 3989909499667879603L;
 
-    private boolean valid;
     private Object value;
-    private List<FailureReason> failureReasons;
+    private List<ValidationMessage> hints;
+    private List<ValidationMessage> errorMessages;
 
-    public static FormFieldValidationResult success(Object value){
-        FormFieldValidationResult result = new FormFieldValidationResult();
+    public void addHint(ValidationMessage message){
+        if (hints == null) {
+            hints = new ArrayList<>();
+        }
 
-        result.setValid(true);
-        result.setValue(value);
-
-        return result;
+        hints.add(message);
     }
 
-    public static FormFieldValidationResult failure(Object value, FailureReason... reasons){
-        FormFieldValidationResult result = new FormFieldValidationResult();
+    public void addErrorMessage(ValidationMessage message){
+        if (errorMessages == null) {
+            errorMessages = new ArrayList<>();
+        }
 
-        result.setValid(false);
-        result.setValue(value);
-        result.setFailureReasons(Arrays.asList(reasons));
-
-        return result;
+        errorMessages.add(message);
     }
 
     public boolean isValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
+        return errorMessages == null || errorMessages.isEmpty();
     }
 
     public Object getValue() {
@@ -47,35 +40,43 @@ public class FormFieldValidationResult implements Serializable {
         this.value = value;
     }
 
-    public List<FailureReason> getFailureReasons() {
-        return failureReasons;
+    public List<ValidationMessage> getHints() {
+        return hints;
     }
 
-    public void setFailureReasons(List<FailureReason> failureReasons) {
-        this.failureReasons = failureReasons;
+    public void setHints(List<ValidationMessage> hints) {
+        this.hints = hints;
+    }
+
+    public List<ValidationMessage> getErrorMessages() {
+        return errorMessages;
+    }
+
+    public void setErrorMessages(List<ValidationMessage> failureReasons) {
+        this.errorMessages = failureReasons;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof FormFieldValidationResult)) return false;
-        FormFieldValidationResult that = (FormFieldValidationResult) o;
-        return valid == that.valid &&
-            Objects.equals(value, that.value) &&
-            Objects.equals(failureReasons, that.failureReasons);
+        FormFieldValidationResult result = (FormFieldValidationResult) o;
+        return Objects.equals(value, result.value) &&
+            Objects.equals(hints, result.hints) &&
+            Objects.equals(errorMessages, result.errorMessages);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(valid, value, failureReasons);
+        return Objects.hash(value, hints, errorMessages);
     }
 
     @Override
     public String toString() {
         return "FormFieldValidationResult{" +
-            "valid=" + valid +
-            ", value=" + value +
-            ", failureReasons=" + failureReasons +
+            "value=" + value +
+            ", hints=" + hints +
+            ", errorMessages=" + errorMessages +
             '}';
     }
 }

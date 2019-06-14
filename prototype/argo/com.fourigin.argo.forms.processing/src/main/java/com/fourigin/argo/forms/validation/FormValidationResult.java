@@ -47,21 +47,38 @@ public class FormValidationResult implements Serializable {
         this.formDefinition = formDefinition;
     }
 
-    public void addFieldValidationResult(String fieldName, FormFieldValidationResult result){
-        if(fieldName == null && result == null) {
+    public FormFieldValidationResult findOrCreateFieldValidationResult(String fieldName) {
+        if (fieldName == null) {
+            return null;
+        }
+
+        if (fields == null) {
+            fields = new HashMap<>();
+        }
+
+        FormFieldValidationResult result = fields.get(fieldName);
+        if (result == null) {
+            result = new FormFieldValidationResult();
+            fields.put(fieldName, result);
+        }
+
+        return result;
+    }
+
+    public void addFieldValidationResult(String fieldName, FormFieldValidationResult result) {
+        if (fieldName == null && result == null) {
             return;
         }
 
-        if(result == null){
-            if(fields != null){
+        if (result == null) {
+            if (fields != null) {
                 fields.remove(fieldName);
 
-                if(fields.isEmpty()){
+                if (fields.isEmpty()) {
                     fields = null;
                 }
             }
-        }
-        else {
+        } else {
             if (fields == null) {
                 fields = new HashMap<>();
             }

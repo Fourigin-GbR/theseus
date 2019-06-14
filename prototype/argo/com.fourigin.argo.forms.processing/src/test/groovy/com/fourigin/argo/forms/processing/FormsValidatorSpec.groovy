@@ -4,7 +4,8 @@ import com.fourigin.argo.forms.definition.FieldDefinition
 import com.fourigin.argo.forms.definition.FormDefinition
 import com.fourigin.argo.forms.definition.Type
 import com.fourigin.argo.forms.definition.ValidationPattern
-import com.fourigin.argo.forms.validation.FailureReason
+import com.fourigin.argo.forms.validation.PatternMatchingFormFieldValidator
+import com.fourigin.argo.forms.validation.ValidationMessage
 import com.fourigin.argo.forms.validation.FormData
 import com.fourigin.argo.forms.validation.FormValidationResult
 import com.fourigin.argo.forms.validation.FormsValidator
@@ -72,10 +73,10 @@ class FormsValidatorSpec extends Specification {
         !result.valid
         result.fields['a'].valid
         !result.fields['b'].valid
-        result.fields['b'].failureReasons == [
-                new FailureReason(
+        result.fields['b'].errorMessages == [
+                new ValidationMessage(
                         validator: 'FormsValidator',
-                        failureCode: FormsValidator.VALIDATION_ERROR_MISSING_FIELD_DEFINITION,
+                        code: FormsValidator.VALIDATION_ERROR_MISSING_FIELD_DEFINITION,
                         arguments: ['b']
                 )
         ]
@@ -261,6 +262,56 @@ class FormsValidatorSpec extends Specification {
         result != null
         !result.valid
         !result.fields['nameplate'].valid
+        result.fields['nameplate'].errorMessages == [
+                new ValidationMessage(
+                        validator: 'PatternMatchingFormFieldValidator',
+                        code: PatternMatchingFormFieldValidator.VALIDATION_ERROR_VALUE_MISMATCH,
+                        arguments: ['nameplate', 'DA-VN 757', 'nameplate']
+                )
+        ]
+    }
+
+    def 'optional validate with one specified text field with a wrong pattern fails as expected'() {
+        FormDefinition definition = new FormDefinition(
+                form: 'test-form',
+                validationPatterns: [
+                        'nameplate': new ValidationPattern(
+                                pattern: '[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}'
+                        )
+                ],
+                fields: [
+                        'nameplate': new FieldDefinition(
+                                type: Type.TEXT,
+                                validation: [
+                                        'optional-pattern': 'nameplate'
+                                ]
+                        )
+                ]
+        )
+
+        FormData data = new FormData(
+                formId: 'my-test-form-1',
+                formDefinitionId: 'test-form',
+                preValidation: false,
+                validateFields: [
+                        'nameplate': 'DA-VN 757'
+                ],
+                stateFields: [:]
+        )
+
+        FormValidationResult result = FormsValidator.validate(definition, data)
+
+        expect:
+        result != null
+        result.valid
+        result.fields['nameplate'].valid
+        result.fields['nameplate'].hints == [
+                new ValidationMessage(
+                        validator: 'PatternMatchingFormFieldValidator',
+                        code: PatternMatchingFormFieldValidator.VALIDATION_ERROR_VALUE_MISMATCH,
+                        arguments: ['nameplate', 'DA-VN 757', 'nameplate']
+                )
+        ]
     }
 
     def 'validate with one specified choose field works as expected'() {

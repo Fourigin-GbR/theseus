@@ -14,12 +14,23 @@ public class PatternMatchingFormFieldValidator implements FormFieldValidator {
     public static final String VALIDATION_ERROR_VALUE_MISMATCH = "VALUE_MISMATCH";
     public static final String VALIDATION_ERROR_UNKNOWN_PATTERN = "UNKNOWN_PATTERN";
 
+    private boolean optional;
+
+    public PatternMatchingFormFieldValidator(boolean optional) {
+        this.optional = optional;
+    }
+
     @Override
-    public FailureReason validateField(FormDefinition formDefinition, String fieldName, String fieldValue, Object validatorValue) {
+    public boolean isOptional() {
+        return optional;
+    }
+
+    @Override
+    public ValidationMessage validateField(FormDefinition formDefinition, String fieldName, String fieldValue, Object validatorValue) {
         Objects.requireNonNull(validatorValue, "validatorValue must not be null!");
 
         if (!String.class.isAssignableFrom(validatorValue.getClass())) {
-            return new FailureReason.Builder()
+            return new ValidationMessage.Builder()
                 .withValidator("PatternMatchingFormFieldValidator")
                 .withCode(VALIDATION_ERROR_INCOMPATIBLE_VALIDATOR_VALUE)
                 .withArgument(validatorValue.getClass().getName())
@@ -28,7 +39,7 @@ public class PatternMatchingFormFieldValidator implements FormFieldValidator {
         }
 
         if (fieldValue == null) {
-            return new FailureReason.Builder()
+            return new ValidationMessage.Builder()
                 .withValidator("PatternMatchingFormFieldValidator")
                 .withCode(VALIDATION_ERROR_MISSING_VALUE)
                 .withArgument(fieldName)
@@ -43,7 +54,7 @@ public class PatternMatchingFormFieldValidator implements FormFieldValidator {
         String patternName = (String) validatorValue;
         Map<String, ValidationPattern> patternMapping = formDefinition.getValidationPatterns();
         if (patternMapping == null || !patternMapping.containsKey(patternName)) {
-            return new FailureReason.Builder()
+            return new ValidationMessage.Builder()
                 .withValidator("PatternMatchingFormFieldValidator")
                 .withCode(VALIDATION_ERROR_UNKNOWN_PATTERN)
                 .withArgument(patternName)
@@ -67,7 +78,7 @@ public class PatternMatchingFormFieldValidator implements FormFieldValidator {
                 examples = builder.toString();
             }
 
-            return new FailureReason.Builder()
+            return new ValidationMessage.Builder()
                 .withValidator("PatternMatchingFormFieldValidator")
                 .withCode(VALIDATION_ERROR_VALUE_MISMATCH)
                 .withArgument(fieldName)
