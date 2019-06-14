@@ -119,14 +119,14 @@ public class Argo {
         this.customUtilities = customUtilities;
     }
 
-    public void addCustomUtility(String name, ThymeleafTemplateUtility utility){
-        if(utility == null){
+    public void addCustomUtility(String name, ThymeleafTemplateUtility utility) {
+        if (utility == null) {
             return;
         }
 
         Objects.requireNonNull(name, "Utility name must not be null!");
 
-        if(customUtilities == null){
+        if (customUtilities == null) {
             customUtilities = new HashMap<>();
         }
 
@@ -145,57 +145,57 @@ public class Argo {
         private Map<ProcessingMode, InternalLinkResolutionStrategy> internalLinkResolutionStrategies;
         private SiteNodeContainerInfo root;
 
-        public Builder withProject(String project){
+        public Builder withProject(String project) {
             this.project = project;
             return this;
         }
 
-        public Builder withLanguage(String language){
+        public Builder withLanguage(String language) {
             this.language = language;
             return this;
         }
 
-        public Builder withPath(String path){
+        public Builder withPath(String path) {
             this.path = path;
             return this;
         }
 
-        public Builder withContentPage(ContentPage contentPage){
+        public Builder withContentPage(ContentPage contentPage) {
             this.contentPage = contentPage;
             return this;
         }
 
-        public Builder withPageInfo(PageInfo pageInfo){
+        public Builder withPageInfo(PageInfo pageInfo) {
             this.pageInfo = pageInfo;
             return this;
         }
 
-        public Builder withProcessingMode(ProcessingMode processingMode){
+        public Builder withProcessingMode(ProcessingMode processingMode) {
             this.processingMode = processingMode;
             return this;
         }
 
-        public Builder withSiteAttributes(Map<String, String> siteAttributes){
+        public Builder withSiteAttributes(Map<String, String> siteAttributes) {
             this.siteAttributes = siteAttributes;
             return this;
         }
 
-        public Builder withInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> strategies){
+        public Builder withInternalLinkResolutionStrategies(Map<ProcessingMode, InternalLinkResolutionStrategy> strategies) {
             this.internalLinkResolutionStrategies = strategies;
             return this;
         }
 
-        public Builder withCustomUtility(String name, ThymeleafTemplateUtility utility){
+        public Builder withCustomUtility(String name, ThymeleafTemplateUtility utility) {
             this.customUtilities.put(name, utility);
             return this;
         }
 
-        public Builder withRootNodeInfo(SiteNodeContainerInfo root){
+        public Builder withRootNodeInfo(SiteNodeContainerInfo root) {
             this.root = root;
             return this;
         }
 
-        public Argo build(){
+        public Argo build() {
             Argo argo = new Argo();
             argo.setProject(this.project);
             argo.setLanguage(this.language);
@@ -223,7 +223,7 @@ public class Argo {
             formatterUtility.setLanguage(this.language);
             argo.setFormatterUtility(formatterUtility);
 
-            if(!this.customUtilities.isEmpty()){
+            if (!this.customUtilities.isEmpty()) {
                 argo.setCustomUtilities(this.customUtilities);
             }
 

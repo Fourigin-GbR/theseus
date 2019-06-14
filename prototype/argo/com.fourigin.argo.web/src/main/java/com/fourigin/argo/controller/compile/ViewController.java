@@ -3,11 +3,15 @@ package com.fourigin.argo.controller.compile;
 import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.models.content.ContentPagePrototype;
 import com.fourigin.argo.models.content.hotspots.ElementsEditorProperties;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.repository.ContentResolver;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
+import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
+import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.api.Argo;
+import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -54,6 +59,9 @@ public class ViewController {
 
         ContentResolver contentResolver = aggregation.getContentResolver();
 
+        Map<ProcessingMode, InternalLinkResolutionStrategy> linkResolutionStrategies = new HashMap<>();
+        linkResolutionStrategies.put(ProcessingMode.CMS, new CmsInternalLinkResolutionStrategy());
+
         // create result
         ModelAndView modelAndView = new ModelAndView("viewPage");
 
@@ -65,7 +73,10 @@ public class ViewController {
             .withPath(path)
             .withContentPage(aggregation.getContentPage())
             .withPageInfo(aggregation.getPageInfo())
+            .withProcessingMode(ProcessingMode.CMS)
             .withSiteAttributes(contentResolver.resolveSiteAttributes())
+            .withInternalLinkResolutionStrategies(linkResolutionStrategies)
+            .withRootNodeInfo(contentResolver.resolveInfo(SiteNodeContainerInfo.class, "/"))
             .build()
         );
 
