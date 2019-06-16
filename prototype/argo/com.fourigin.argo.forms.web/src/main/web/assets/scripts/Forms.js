@@ -250,7 +250,7 @@ var setFormFieldSelectValues = function(formFieldSelect, dataObject) {
     for(var property in dataObject) {
         if (dataObject.hasOwnProperty(property)) {
             var newOption = document.createElement('option');
-            newOption.innerHTML = dataObject[property].displayName;
+            newOption.innerHTML = dataObject[property];
             newOption.setAttribute("value", property);
             if(dataObject[property].active === true) {
                 newOption.setAttribute("selected", "selected");
