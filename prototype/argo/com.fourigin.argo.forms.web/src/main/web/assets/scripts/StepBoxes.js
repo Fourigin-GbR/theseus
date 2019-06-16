@@ -207,8 +207,13 @@ Fourigin.StepsBox = Fourigin.StepsBox || (function () {
                     var messagesString = "";
                     // TODO:Alle Fehlermeldungen als <p> ausgeben!
                     console.info("### ", fieldKey, fields[fieldKey]);
-                    for(var i=0, il= fields[fieldKey]['failureReasons'].length; i<il; i++) {
-                        messagesString = messagesString + "<p>" + fields[fieldKey]['failureReasons'][i].formattedMessage + "</p>";
+                    for(var i=0, il= fields[fieldKey]['errorMessages'].length; i<il; i++) {
+                        messagesString = messagesString + "<p class='ValidationMessages__message--error'>" + fields[fieldKey]['errorMessages'][i].formattedMessage + "</p>";
+                    }
+                    if(fields[fieldKey]['hints']) {
+                        for (i = 0, il = fields[fieldKey]['hints'].length; i < il; i++) {
+                            messagesString = messagesString + "<p class='ValidationMessages__message--hint>" + fields[fieldKey]['hints'][i].formattedMessage + "</p>";
+                        }
                     }
                     messageField.innerHTML = messagesString;
                     messageField.classList.add("active");

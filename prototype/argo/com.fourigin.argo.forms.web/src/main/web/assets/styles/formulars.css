@@ -88,22 +88,17 @@ label p.description {
 
 
 .FieldValidationMessage {
-    background-color: #f67272;
-    margin: 5px 10px 0 15px;
-    padding: 10px;
-    border-radius: 0 10px 10px 15px;
-    color: #fff;
     display: none;
 }
 .FieldValidationMessage.active {
     display: block;
 }
 .FieldValidationMessage p {
-    margin: 0 0 5px 0;
-    padding: 0;
-}
-.FieldValidationMessage p:first-of-type {
-    margin: 0;
+    background-color: #f67272;
+    margin: 5px 10px 0 15px;
+    padding: 10px;
+    border-radius: 0 10px 10px 15px;
+    color: #fff;
 }
 
 fieldset.radioList,
@@ -372,7 +367,7 @@ a.hint:hover {
     display: block;
 }
 
-/* Validation message */
+/* Validation message TODO: Cleanup!!!!!! */
 .ValidationMessages {
     width: 100%;
     text-align: left;
@@ -388,8 +383,9 @@ a.hint:hover {
 .ValidationMessages__message.active {
     display: block;
 }
-.ValidationMessages__message--invalid {
-    background-color: rgba(255, 126, 25, 0.99);
+.ValidationMessages__message--invalid,
+.FieldValidationMessage .ValidationMessages__message--hint {
+    background-color: rgba(165, 165, 165, 0.99);
     color: #f3f3f3;
 }
 .ValidationMessages__message--error {

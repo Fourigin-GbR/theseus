@@ -73,9 +73,9 @@ var generateSummarizedListOfAllFormData = function() {
      */
     var prototype = formular.querySelector("[data-prototype='summary-list-item']");
     var summaryListItemsTarget = formular.querySelector("[data-element='summary-list']");
-    var allLFormularItems = formular.querySelectorAll("input, textarea");
+    var allFormularItems = formular.querySelectorAll("input[type=text], input[type=checkbox]:checked, input[type=radio]:checked, textarea, option:checked");
 
-    var htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets = Array.prototype.filter.call(allLFormularItems, function(element) {
+    var htmlNodes_formFieldsWithoutDisabledByDisabledFieldsets = Array.prototype.filter.call(allFormularItems, function(element) {
         /**
          * Filter out all form-fields, who do not have somewhere on their ancestors a fieldset which is 'disabled'.
          */
@@ -89,9 +89,75 @@ var generateSummarizedListOfAllFormData = function() {
         var newItem = prototype.cloneNode(true);
         var title = newItem.querySelector("[data-element='summary-list-title']");
         var value = newItem.querySelector("[data-element='summary-list-value']");
+        var tagName = el.tagName.toLowerCase();
+        var type  = null;
+        var innerTooltip = null;
+        var label = null, evaluatedValue = null;
 
-        if(el.closest("label") && el.closest("label").querySelector("span")) {
-            title.innerHTML = el.closest("label").querySelector("span").textContent;
+        if("input" === tagName) {
+            type = el.type.toLowerCase();
+
+            if ("text" === type) {
+                if (el.closest("label").querySelector("span")) {
+                    label = el.closest("label").querySelector("span").cloneNode(true);
+                    if (label) {
+                        // Remove optional tooltips:
+                        innerTooltip = label.querySelector(".tooltip");
+                        if (innerTooltip) {
+                            label.removeChild(innerTooltip);
+                        }
+                    }
+                }
+                title.innerHTML = label ? label.textContent : "";
+                value.innerHTML = el.value;
+                summaryListItemsTarget.appendChild(newItem);
+            }
+            else if ("radio" === type || "checkbox" === type) {
+                if (el.closest("fieldset")) {
+                    label = el.closest("fieldset").querySelector("legend");
+                }
+                if (el.closest("label") && el.closest("label").querySelector("span")) {
+                    evaluatedValue = el.closest("label").querySelector("span").cloneNode(true);
+                    if (evaluatedValue) {
+                        // Remove optional tooltips:
+                        innerTooltip = evaluatedValue.querySelector(".tooltip");
+                        if (innerTooltip) {
+                            evaluatedValue.removeChild(innerTooltip);
+                        }
+                    }
+                }
+                title.innerHTML = label ? label.textContent : "";
+                value.innerHTML = evaluatedValue ? evaluatedValue.textContent : el.value;
+                summaryListItemsTarget.appendChild(newItem);
+            }
+        }
+        else if("option" === tagName) {
+            if (el.closest("label").querySelector("span")) {
+                label = el.closest("label").querySelector("span").cloneNode(true);
+                if(label) {
+                    // Remove optional tooltips:
+                    innerTooltip = label.querySelector(".tooltip");
+                    if (innerTooltip) {
+                        label.removeChild(innerTooltip);
+                    }
+                }
+            }
+            title.innerHTML = label ? label.textContent : "";
+            value.innerHTML = el.value;
+            summaryListItemsTarget.appendChild(newItem);
+        }
+        else if("textarea" === tagName) {
+            if (el.closest("label").querySelector("span")) {
+                label = el.closest("label").querySelector("span").cloneNode(true);
+                if(label) {
+                    // Remove optional tooltips:
+                    innerTooltip = label.querySelector(".tooltip");
+                    if (innerTooltip) {
+                        label.removeChild(innerTooltip);
+                    }
+                }
+            }
+            title.innerHTML = label ? label.textContent : "";
             value.innerHTML = el.value;
             summaryListItemsTarget.appendChild(newItem);
         }
@@ -411,8 +477,8 @@ var getAllInvalidFieldsAndMarkThem = function (message) {
                 var messagesString = "";
                 // TODO:Alle Fehlermeldungen als <p> ausgeben!
                 console.info("### ", fieldKey, fields[fieldKey]);
-                for(var i=0, il= fields[fieldKey]['failureReasons'].length; i<il; i++) {
-                    messagesString = messagesString + "<p>" + fields[fieldKey]['failureReasons'][i].formattedMessage + "</p>";
+                for(var i=0, il= fields[fieldKey]['errorMessages'].length; i<il; i++) {
+                    messagesString = messagesString + "<p class='ValidationMessages__message--error'>" + fields[fieldKey]['errorMessages'][i].formattedMessage + "</p>";
                 }
                 messageField.innerHTML = messagesString;
                 messageField.classList.add("active");
