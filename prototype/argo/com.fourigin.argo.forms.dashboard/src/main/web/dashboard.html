@@ -28,95 +28,106 @@
 
     <figure>
         <div class="tab1">
-
-
-                <div>
-                    <h2>Kunden</h2>
-                    <table id="users" class="display" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Kd-Nr.</th>
-                            <th>Vorname</th>
-                            <th>Nachname</th>
-                            <th>Email</th>
-                        </tr>
-                        </thead>
-                    </table>
-                    <div id="user-controls">
-                        <input type="button" id="add-user-button" name="add-user" value="Hinzufügen"/>
-                        <input type="button" id="delete-user-button" name="delete-user" value="Entfernen"/>
-                    </div>
-                    <div id="request-controls">
-                        <form action="form-kfz-anmeldung.html" target="_blank">
-                            einen neuen Auftrag erstellen:
-                            <select name="request-type">
-                                <option selected="selected">... bitte wählen ...</option>
-                                <option name="register-vehicle">KFZ-Anmeldung</option>
-                            </select>
-                            <input type="hidden" name="customer.id" id="selectedClient"/>
-                            <input type="submit" name="start-request" value="Starten"/>
-                        </form>
-                    </div>
+            <div>
+                <h2>Kunden</h2>
+                <table id="users" class="display" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Kd-Nr.</th>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="user-controls">
+                    <input type="button" id="add-user-button" name="add-user" value="Hinzufügen"/>
+                    <input type="button" id="delete-user-button" name="delete-user" value="Entfernen"/>
                 </div>
-
-
+                <div id="request-controls">
+                    <form action="form-kfz-anmeldung.html" target="_blank">
+                        einen neuen Auftrag erstellen:
+                        <select name="request-type">
+                            <option selected="selected">... bitte wählen ...</option>
+                            <option name="register-vehicle">KFZ-Anmeldung</option>
+                        </select>
+                        <input type="hidden" name="customer.id" id="selectedClient"/>
+                        <input type="submit" name="start-request" value="Starten"/>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="tab2">
+            <div>
+                <h2>Aufträge</h2>
 
-
-                <div>
-                    <h2>Aufträge</h2>
-
-                    <div class="dataTableFilter dataTableFilterList">
-                        <div class="dataTableFilterList__item">
-                            Filter:
-                            <select autocomplete="off" id="dataTableFilter">
-                                <option name="" selected="selected"></option>
-                                <option name="Registrierung">Registrierung</option>
-                                <option name="KFZ-Anmeldung">KFZ-Anmeldung</option>
-                            </select>
-                        </div>
-                        <div class="dataTableFilterList__item">
-                            Status:
-                            <select autocomplete="off" id="dataTableStatusFilter">
-                                <option name="" selected="selected"></option>
-                                <option name="WAITING">Waiting</option>
-                                <option name="REJECTED">Rejected</option>
-                                <option name="DONE">Done</option>
-                            </select>
-                        </div>
+                <div class="dataTableFilter dataTableFilterList">
+                    <div class="dataTableFilterList__item">
+                        Filter:
+                        <select autocomplete="off" id="dataTableFilter">
+                            <option name="" selected="selected"></option>
+                            <option name="Registrierung">Registrierung</option>
+                            <option name="KFZ-Anmeldung">KFZ-Anmeldung</option>
+                        </select>
                     </div>
-
-                    <div class="tableContainer">
-
-                    </div>
-
-                    <table id="requests" class="display" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Typ</th>
-                            <th>Kd-Nr.</th>
-                            <th>Datum</th>
-                            <th>Datum Sortierung</th>
-                            <th>Datum Gruppierung</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                    </table>
-                    <div id="request-details">
-                        <div class="overlay">
-                            <h3>Auftrag-Details</h3>
-                            <i class="close fa fa-times-circle"></i>
-                            <div class="requestDetails__content">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div id="attachments">
+                    <div class="dataTableFilterList__item">
+                        Status:
+<!--
+        case 'FAILED':
+            return 'Fehlerhaft';
+        case 'PENDING':
+            return 'Wartet auf Verarbeitung';
+        case 'PROCESSING':
+            return 'Wird intern verarbeitet';
+        case 'SUSPENDED':
+            return 'Pausiert';
+        case 'REJECTED':
+            return 'Abgelehnt';
+        case 'WAITING':
+            return 'Wartet auf Dateneingabe';
+        case 'IN_PROGRESS':
+            return 'In Arbeit';
+        case 'DONE':
+            return 'Erfolgreich abgeschlossen';
+-->
+                        <select autocomplete="off" id="dataTableStatusFilter">
+                            <option name="" selected="selected"></option>
+                            <option name="WAITING">Wartet auf Dateneingabe</option>
+                            <option name="REJECTED">Abgelehnt</option>
+                            <option name="IN_PROGRESS">In Arbeit</option>
+                            <option name="DONE">Erfolgreich abgeschlossen</option>
+                        </select>
                     </div>
                 </div>
 
+                <div class="tableContainer">
 
+                </div>
+
+                <table id="requests" class="display" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Typ</th>
+                        <th>Kd-Nr.</th>
+                        <th>Datum</th>
+                        <th>Datum Sortierung</th>
+                        <th>Datum Gruppierung</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="request-details">
+                    <div class="overlay">
+                        <h3>Auftrag-Details</h3>
+                        <i class="close fa fa-times-circle"></i>
+                        <div class="requestDetails__content">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="attachments">
+                </div>
+            </div>
         </div>
 
     </figure>

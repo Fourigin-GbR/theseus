@@ -170,7 +170,10 @@ function internalInitRequestsTable(data) {
                 "visible": false
             },
             {
-                "data": "state"
+                "data": "state",
+                "render": function (data) {
+                    return formatState(data);
+                }
             }
         ],
         "language": {
@@ -405,8 +408,6 @@ function initRequestsTable() {
     $('#attachments').hide();
 
     return dataTable;
-
-
 }
 
 function approveEntry(entryId){
@@ -470,6 +471,29 @@ function formatDateForGroupingView(date) {
     return d + "." + m + "." + y;
 }
 
+function formatState(data) {
+    switch (data) {
+        case 'FAILED':
+            return 'Fehlerhaft';
+        case 'PENDING':
+            return 'Wartet auf Verarbeitung';
+        case 'PROCESSING':
+            return 'Wird intern verarbeitet';
+        case 'SUSPENDED':
+            return 'Pausiert';
+        case 'REJECTED':
+            return 'Abgelehnt';
+        case 'WAITING':
+            return 'Wartet auf Dateneingabe';
+        case 'IN_PROGRESS':
+            return 'In Arbeit';
+        case 'DONE':
+            return 'Erfolgreich abgeschlossen';
+    }
+
+    return data;
+}
+
 var processAjaxForms = function() {
     $('body').on('submit', function(e) {
         if( e.target.nodeName !== "FORM") {
@@ -491,7 +515,6 @@ var processAjaxForms = function() {
 
             return json;
         }
-
 
         e.preventDefault();
 
