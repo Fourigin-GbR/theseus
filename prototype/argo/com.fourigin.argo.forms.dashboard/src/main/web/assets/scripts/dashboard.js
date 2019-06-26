@@ -105,13 +105,13 @@ function internalInitRequestsTable(data) {
         "rowId": function (data) {
             return data.id;
         },
-        "order": [[ 5, 'desc' ]],
+        "order": [[ 6, 'desc' ]],
         "drawCallback": function ( settings ) {
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
             var last=null;
 
-            api.column(6, {page:'current'} ).data().each( function ( group, i ) {
+            api.column(5, {page:'current'} ).data().each( function ( group, i ) {
                 var parseTimestampToDate = function (group) {
                     var date = new Date(group);
                     return formatDateForGrouping(date);
@@ -122,7 +122,7 @@ function internalInitRequestsTable(data) {
                     var date = new Date(group);
                     var viewDateFormatted = window.formatDateForGroupingView(date);
                     $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="4">' + viewDateFormatted + '</td></tr>'
+                        '<tr class="group"><td colspan="6">' + viewDateFormatted + '</td></tr>'
                     );
 
                     last = parsedDate;
