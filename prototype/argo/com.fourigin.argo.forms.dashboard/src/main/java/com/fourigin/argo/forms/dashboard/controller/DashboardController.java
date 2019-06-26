@@ -104,17 +104,61 @@ public class DashboardController {
     private FormRequestInfo convertEntry(FormsStoreEntryInfo entryInfo) {
         FormsEntryHeader header = entryInfo.getHeader();
         String customerId = header.getCustomer();
+        String entryId = entryInfo.getId();
+        String type = header.getFormDefinition();
 
         Set<AttachmentDescriptor> attachments = formsStoreRepository.getAttachmentDescriptors(entryInfo.getId());
 
         FormRequestInfo info = new FormRequestInfo();
-        info.setId(entryInfo.getId());
-        info.setFormDefinition(header.getFormDefinition());
+        info.setId(entryId);
+        info.setFormDefinition(type);
         info.setBase(header.getBase());
         info.setCustomer(customerId);
         info.setCreationTimestamp(entryInfo.getCreationTimestamp());
         info.setAttachments(attachments);
         info.setProcessingState(entryInfo.getProcessingState());
+
+        Customer customer = customerRepository.retrieveCustomer(customerId);
+        info.setCustomerName(customer.getFirstname() + ' ' + customer.getLastname());
+
+        Map<String, String> entryData = data(entryId);
+
+        switch (type) {
+            case "register-customer":
+                info.setRequestData("");
+                break;
+            case "register-vehicle":
+                StringBuilder value = new StringBuilder();
+                String existingNameplate = entryData.get("vehicle.existing-nameplate");
+                String newNameplateType = entryData.get("vehicle.new-nameplate");
+                String newNameplateCustomerRequirements = entryData.get("vehicle.new-nameplate/nameplate-customer-requirements");
+                String newNameplateCustomerReservation = entryData.get("vehicle.new-nameplate/nameplate-customer-reservation");
+
+                if (existingNameplate != null && existingNameplate.isEmpty()) {
+                    value.append(existingNameplate);
+                } else {
+                    value.append('-');
+                }
+                value.append(" / ");
+                switch (newNameplateType) {
+                    case "portal":
+                        value.append(newNameplateCustomerRequirements).append(" (Wunsch)");
+                        break;
+                    case "self":
+                        value.append(newNameplateCustomerReservation).append(" (reserviert)");
+                        break;
+                    case "random":
+                        value.append('-');
+                        break;
+                    default:
+                        throw new IllegalStateException("Unsupported nameplate registration type '" + newNameplateType + "'!");
+                }
+
+                info.setRequestData(value.toString());
+                break;
+            default:
+                throw new IllegalStateException("Unsupported form definition type '" + type + "'!");
+        }
 
         return info;
     }

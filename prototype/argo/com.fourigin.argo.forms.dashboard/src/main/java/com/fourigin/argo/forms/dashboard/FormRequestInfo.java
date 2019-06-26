@@ -14,6 +14,8 @@ public class FormRequestInfo implements Serializable {
     private String id;
     private String formDefinition;
     private String customer;
+    private String customerName;
+    private String requestData;
     private String base;
     private long creationTimestamp;
     private ProcessingState state;
@@ -42,6 +44,22 @@ public class FormRequestInfo implements Serializable {
 
     public void setCustomer(String customer) {
         this.customer = customer;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getRequestData() {
+        return requestData;
+    }
+
+    public void setRequestData(String requestData) {
+        this.requestData = requestData;
     }
 
     public String getBase() {
@@ -96,6 +114,8 @@ public class FormRequestInfo implements Serializable {
             Objects.equals(id, that.id) &&
             Objects.equals(formDefinition, that.formDefinition) &&
             Objects.equals(customer, that.customer) &&
+            Objects.equals(customerName, that.customerName) &&
+            Objects.equals(requestData, that.requestData) &&
             Objects.equals(base, that.base) &&
             state == that.state &&
             Objects.equals(attachments, that.attachments) &&
@@ -104,7 +124,7 @@ public class FormRequestInfo implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, formDefinition, customer, base, creationTimestamp, state, attachments, processingState);
+        return Objects.hash(id, formDefinition, customer, customerName, requestData, base, creationTimestamp, state, attachments, processingState);
     }
 
     @Override
@@ -113,6 +133,8 @@ public class FormRequestInfo implements Serializable {
             "id='" + id + '\'' +
             ", formDefinition='" + formDefinition + '\'' +
             ", customer='" + customer + '\'' +
+            ", customerName='" + customerName + '\'' +
+            ", requestData='" + requestData + '\'' +
             ", base='" + base + '\'' +
             ", creationTimestamp=" + creationTimestamp +
             ", state=" + state +

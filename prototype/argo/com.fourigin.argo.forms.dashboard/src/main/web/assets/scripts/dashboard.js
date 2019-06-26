@@ -105,16 +105,16 @@ function internalInitRequestsTable(data) {
         "rowId": function (data) {
             return data.id;
         },
-        "order": [[ 3, 'desc' ]],
+        "order": [[ 5, 'desc' ]],
         "drawCallback": function ( settings ) {
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
             var last=null;
 
-            api.column(4, {page:'current'} ).data().each( function ( group, i ) {
+            api.column(6, {page:'current'} ).data().each( function ( group, i ) {
                 var parseTimestampToDate = function (group) {
                     var date = new Date(group);
-                     return formatDateForGrouping(date);
+                    return formatDateForGrouping(date);
                 };
                 var parsedDate = parseTimestampToDate(group);
 
@@ -131,6 +131,10 @@ function internalInitRequestsTable(data) {
         },
         "columns": [
             {
+                "data": "id",
+                "visible": false
+            },
+            {
                 "data": "formDefinition",
                 "render": function (data) {
                     if ("register-vehicle" === data) {
@@ -145,6 +149,12 @@ function internalInitRequestsTable(data) {
             },
             {
                 "data": "customer"
+            },
+            {
+                "data": "customerName"
+            },
+            {
+                "data": "requestData"
             },
             {
                 "data": "creationTimestamp",
