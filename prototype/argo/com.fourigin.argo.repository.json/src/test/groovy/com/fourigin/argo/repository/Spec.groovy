@@ -18,13 +18,16 @@ class Spec extends Specification {
     ObjectMapper objectMapper
 
     def "test1"() {
+        File parentDir = File.createTempFile(this.class.name, "test").parentFile
+        String path = parentDir.getAbsolutePath()
+
         HiddenDirectoryContentRepository contentPageRepository = new HiddenDirectoryContentRepository()
         contentPageRepository.setObjectMapper(objectMapper)
-        contentPageRepository.setContentRoot('/work/content')
+        contentPageRepository.setContentRoot(path)
 
         expect:
         contentPageRepository != null
-        contentPageRepository.contentRoot.absolutePath == '/work/content'
+        contentPageRepository.contentRoot.absolutePath == path
     }
 
     def "test2"() {
