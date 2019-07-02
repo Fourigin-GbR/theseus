@@ -2,22 +2,14 @@ import de.thetaphi.forbiddenapis.gradle.ForbiddenApisPlugin
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
+//    ext.kotlin_version = '1.2.31'
     
     repositories {
-        maven {
-            name 'nexus'
-            url 'http://ci.ignitiongroupe.com/nexus/content/groups/public'
-        }
         maven {
             url 'https://repo.spring.io/libs-milestone'
         }
         mavenLocal()
         mavenCentral()
-
-        dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        }
     }
 
     apply from: 'dependencies.gradle'
@@ -26,21 +18,17 @@ buildscript {
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'de.thetaphi:forbiddenapis:2.4.1'
-        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.4.2'
+//        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.4.2'
         classpath 'org.akhikhl.gretty:gretty:2.0.0'
         classpath 'org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3'
-        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+//        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
 //        classpath managedDependency('com.github.jengelman.gradle.plugins:shadow')
-//        classpath managedDependency('io.ratpack:ratpack-gradle')
         classpath managedDependency('org.springframework.boot:spring-boot-gradle-plugin')
 
 
         //my
-//        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.BUILD-SNAPSHOT"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
-//        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M7"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -50,6 +38,8 @@ wrapper {
 }
 
 def sourceCompatibility = '1.8'
+
+System.out.println("*** current java version: " + JavaVersion.current().toString() + " ***")
 /*
 if(JavaVersion.current().isJava9Compatible()) {
 	sourceCompatibility = '9'
@@ -58,7 +48,7 @@ if(JavaVersion.current().isJava9Compatible()) {
 
 def targetCompatibility = sourceCompatibility
 def checkstyleToolVersion = '8.7'
-def jacocoToolVersion = '0.8.0'
+//def jacocoToolVersion = '0.8.0'
 
 //region repositories for all projects
 allprojects {
@@ -114,23 +104,23 @@ allprojects {
                 ignoreFailures = false
             }
         }
-        else if (plugin instanceof JacocoPlugin) {
-            convention.getByType(JacocoPluginExtension).with {
-                it.toolVersion = jacocoToolVersion
-            }
-            tasks.withType JacocoReport, {
-                def javaPluginConvention = it.project.convention.getPlugin(JavaPluginConvention)
-                def mainSourceSet = javaPluginConvention.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME]
-                it.additionalSourceDirs = mainSourceSet.allSource
-                it.sourceDirectories = mainSourceSet.allSource
-                it.classDirectories = mainSourceSet.output
-                it.reports {
-                    it.html.enabled = true
-                    it.xml.enabled = true
-                    it.csv.enabled = false
-                }
-            }
-        }
+//        else if (plugin instanceof JacocoPlugin) {
+//            convention.getByType(JacocoPluginExtension).with {
+//                it.toolVersion = jacocoToolVersion
+//            }
+//            tasks.withType JacocoReport, {
+//                def javaPluginConvention = it.project.convention.getPlugin(JavaPluginConvention)
+//                def mainSourceSet = javaPluginConvention.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME]
+//                it.additionalSourceDirs = mainSourceSet.allSource
+//                it.sourceDirectories = mainSourceSet.allSource
+//                it.classDirectories = mainSourceSet.output
+//                it.reports {
+//                    it.html.enabled = true
+//                    it.xml.enabled = true
+//                    it.csv.enabled = false
+//                }
+//            }
+//        }
         else if (plugin instanceof JavaPlugin) {
             artifacts.add Dependency.ARCHIVES_CONFIGURATION, tasks.create('sourcesJar', Jar, {
                 def javaPluginConvention = it.project.convention.getPlugin(JavaPluginConvention)
@@ -177,22 +167,6 @@ allprojects {
 //                it.groovyOptions.encoding = sourceEncoding
             }
         }
-//        else if (plugin instanceof MavenPlugin) {
-//            if(localNexusUserName != null && localNexusPassword != null) {
-//                uploadArchives {
-//                    repositories {
-//                        mavenDeployer {
-//                            repository(url: 'http://ci.ignitiongroupe.com/nexus/content/repositories/releases') {
-//                                authentication(userName: localNexusUserName, password: localNexusPassword)
-//                            }
-//                            snapshotRepository(url: 'http://ci.ignitiongroupe.com/nexus/content/repositories/snapshots') {
-//                                authentication(userName: localNexusUserName, password: localNexusPassword)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
         else if (plugin instanceof SpringBootPlugin) {
             def extraProperties = extensions.getByType(ExtraPropertiesExtension)
             springBootVersionOverrides.each {
@@ -204,7 +178,6 @@ allprojects {
 //endregion
 
 //region Apply Plugins
-//apply plugin: 'com.github.ben-manes.versions'
 
 allprojects {
     apply plugin: 'idea'
@@ -218,8 +191,7 @@ allprojects {
         apply plugin: 'groovy' // not for jacocoRootReport
         apply plugin: 'de.thetaphi.forbiddenapis'
         apply plugin: 'project-report'
-        apply plugin: 'jacoco'
-        apply plugin: 'kotlin'
+//        apply plugin: 'jacoco'
 
         //workaround
         //https://github.com/johnrengelman/shadow/issues/347
@@ -277,8 +249,6 @@ allprojects {
             excludedDependencies.each {
                 configuration.exclude it
             }
-
-            //((org.gradle.api.internal.artifacts.configurations.DefaultConfiguration)(configuration)).excludeRules = excludedDependenciesInternal
 
             configuration.resolutionStrategy.force(forcedDependencies)
 

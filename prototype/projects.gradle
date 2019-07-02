@@ -501,6 +501,7 @@ project(':hera') {
             compile heraCore
 
             compile managedDependency('org.springframework.boot:spring-boot')
+            compile managedDependency('javax.annotation:javax.annotation-api')
         }
     }
 

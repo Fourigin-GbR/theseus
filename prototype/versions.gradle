@@ -3,6 +3,7 @@
  */
 
 def versionMap = [
+		'annotation': '1.3.2',
 		'aspectj': '1.8.13',
 		'batik': '1.9',
 		'bytebuddy': '1.8.0',
@@ -17,7 +18,7 @@ def versionMap = [
 		// 'httpClient': '4.4.1',
 		'jackson': '2.9.4',
 		'jacksonModule': '2.9.4',
-		'lilith': '8.2.0-SNAPSHOT',
+		'lilith': '8.2.0',
 		'mockito': '2.16.0',
 		'logback': '1.2.3',
 		'netty': '4.1.30.Final',
@@ -33,7 +34,7 @@ def versionMap = [
 		'springshell': '1.2.0.RELEASE',
 		//'springws': '2.4.0.RELEASE',
 		'springws': '3.0.0.RELEASE',
-		'sulky': '8.2.0-SNAPSHOT',
+		'sulky': '8.2.0',
 		'taglibsStandard': '1.2.1',
 		'thymeleaf': '3.0.9.RELEASE',
 		'tomcat':'7.0.42',
@@ -83,6 +84,7 @@ def versionMap = [
 //} as Action<Project>
 
 def springBootVersionOverrides = [:] as Map<String, Object>
+springBootVersionOverrides['annotation.version'] 			= versionMap.annotation
 springBootVersionOverrides['aspectj.version'] 				= versionMap.aspectj
 springBootVersionOverrides['derby.version'] 				= versionMap.derby
 springBootVersionOverrides['groovy.version'] 				= versionMap.groovy
@@ -100,6 +102,8 @@ springBootVersionOverrides['spring.version'] 				= versionMap.spring
 springBootVersionOverrides['thymeleaf.version'] 			= versionMap.thymeleaf
 springBootVersionOverrides['reactor.version']			    = versionMap.reactor
 
+
+registerVersion('javax.annotation:javax.annotation-api', versionMap.annotation)
 
 registerVersion('axis:axis-saaj', '1.3')
 registerVersion('axis:axis-wsdl4j', '1.5.1')
