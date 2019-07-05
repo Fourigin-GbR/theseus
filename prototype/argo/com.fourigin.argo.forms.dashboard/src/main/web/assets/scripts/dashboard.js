@@ -399,12 +399,15 @@ function initRequestsTable() {
                 div.append(form);
 
                 if (visibleAttachmentsCount > 0) {
+                    var divAttachments = $('<div class="request-attachments"></div>');
                     var h4 = $('<h4></h4>')
                         .append('Anhänge (' + visibleAttachmentsCount + '):');
 
-                    div
+                    divAttachments
                         .append(h4)
                         .append(ul);
+
+                    div.append(divAttachments)
                 }
 
                 attachments

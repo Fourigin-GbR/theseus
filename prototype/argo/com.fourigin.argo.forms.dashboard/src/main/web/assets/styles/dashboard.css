@@ -170,3 +170,56 @@ table.dataTable tr.group.closed td:first-of-type::before {
 .dataTableFilterList__item {
     padding-right: 15px;
 }
+
+
+
+.buttonLca,
+.buttonCta {
+    padding: 5px 10px;
+    border: 0;
+    background-color: #c5c5c5;
+}
+.buttonCta {
+    background-color: #00b393;
+    color: #fff;
+}
+
+
+
+.request-stages {
+    display: flex;
+    margin: 0 0 20px 0;
+}
+.request-stage {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+}
+.request-stage-title {
+    font-weight: bold;
+    text-align: center;
+}
+.request-stage-status {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 40px;
+    color: #00b393;
+}
+.request-stage-action {
+    text-align: center;
+}
+
+
+.request-attachments a {
+    font-size: 14px;
+    color: #00b393;
+}
+
+
+#request-details h4 {
+    display: block;
+    font-weight: bold;
+    color: #4a4a4a;
+    padding: 15px 20px 5px 5px;
+    width: 100%;
+    border-bottom: 2px solid #00b393;
+}
