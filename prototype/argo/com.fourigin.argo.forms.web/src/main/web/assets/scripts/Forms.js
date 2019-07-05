@@ -593,7 +593,7 @@ var sendForm = function() {
         var self = this,
             dataJson = {
                 "header": {
-                    "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+                    "formDefinition": jForm.attr("data-form-definition-id"),
                     "customer": "tsp",
                     "base": "DE",
                     "locale": "en_GB", // TODO: replace with browser locale
