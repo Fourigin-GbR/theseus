@@ -461,7 +461,7 @@ var getAllInvalidFieldsAndMarkThem = function (message) {
         if (fields.hasOwnProperty(fieldKey)) {
             var htmlNode_field = formular.querySelectorAll("[name=\"" + fieldKey + "\"]")[0];
             if (!htmlNode_field) {
-                console.warn("Can not find htmlNode to mark invalid element.");
+                console.warn("Can not find htmlNode to mark invalid element. Field: '" + fieldKey + "'");
                 continue;
             }
             if (fields[fieldKey].valid) {
