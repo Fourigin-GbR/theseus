@@ -2,11 +2,17 @@ package com.fourigin.argo.forms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.customer.Customer;
+import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
+import com.fourigin.argo.forms.definition.ProcessingStages;
+import com.fourigin.argo.forms.model.FormsData;
+import com.fourigin.argo.forms.model.StringList;
 import com.fourigin.argo.forms.models.Attachment;
+import com.fourigin.argo.forms.models.FormsDataProcessingRecord;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
+import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.utilities.core.JsonFileBasedRepository;
 import com.fourigin.utilities.core.MimeTypes;
 import de.huxhorn.sulky.blobs.AmbiguousIdException;
@@ -15,25 +21,36 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
 
-public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository implements FormsStoreRepository, FormDefinitionRepository, CustomerRepository {
+public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
+        implements FormsStoreRepository, FormDefinitionResolver, CustomerRepository {
+
     private BlobRepositoryImpl blobRepository;
 
     private File definitionsBaseDir;
 
     private File customersBaseDir;
+
+    private Set<String> entryIds;
 
     private static final String DIR_BLOBS = ".blobs";
 
@@ -68,9 +85,71 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         }
     }
 
+    private void updateIdsIndex() {
+        if (logger.isDebugEnabled()) logger.debug("Updating ids index");
+
+        ReadWriteLock lock = getLock("ids-index");
+        lock.writeLock().lock();
+
+        File file = new File(getBaseDirectory(), "ids-index.json");
+        if (logger.isDebugEnabled()) logger.debug("Writing index file '{}'", file.getAbsolutePath());
+
+        try (OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
+            StringList data = new StringList();
+            data.addAll(entryIds);
+            getObjectMapper().writerWithDefaultPrettyPrinter().writeValue(os, data);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Error writing ids index to file (" + file.getAbsolutePath() + ")!", ex);
+        } finally {
+            lock.writeLock().unlock();
+            if (logger.isDebugEnabled()) logger.debug("Writing done.");
+        }
+    }
+
     @Override
     public Collection<String> listEntryIds() {
-        return blobRepository.idSet();
+        if (logger.isDebugEnabled()) logger.debug("Reading entry ids");
+
+        ReadWriteLock lock = getLock("ids-index");
+        lock.readLock().lock();
+
+        File file = new File(getBaseDirectory(), "ids-index.json");
+        if (logger.isDebugEnabled()) logger.debug("Reading index file '{}'", file.getAbsolutePath());
+
+        boolean changed = false;
+        try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
+            StringList idList = getObjectMapper().readValue(is, StringList.class);
+            entryIds = new HashSet<>(idList);
+        } catch (IOException ex) {
+            if (logger.isDebugEnabled()) logger.debug("Re-initializing entryIds view, reading failed", ex);
+            entryIds = new HashSet<>();
+
+            Set<String> blobs = blobRepository.idSet();
+            for (String blob : blobs) {
+                FormsStoreEntryInfo info = retrieveEntryInfo(blob);
+                if (info == null) {
+                    if (logger.isDebugEnabled()) logger.debug("Skipping a non-base blob id {}", blob);
+                    continue;
+                }
+
+                if (logger.isDebugEnabled())
+                    logger.debug("Adding a valid entry-id {} with current revision {}", blob, info.getRevision());
+
+                entryIds.add(blob);
+            }
+
+            changed = true;
+        } finally {
+            lock.readLock().unlock();
+            if (logger.isDebugEnabled()) logger.debug("Reading done.");
+        }
+
+        if (changed) {
+            updateIdsIndex();
+        }
+
+        if (logger.isDebugEnabled()) logger.debug("Actual entry ids: {}", entryIds);
+        return entryIds;
     }
 
     @Override
@@ -88,37 +167,76 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
             throw new IllegalArgumentException("Unable to serialize form data!", ex);
         }
 
+        // update entryIds view
+        entryIds.add(entryId);
+        updateIdsIndex();
+
         entry.setId(entryId);
         return entryId;
     }
 
     @Override
-    public void deleteEntry(String entryId) {
-        try {
-            if (blobRepository.contains(entryId)) {
-                blobRepository.delete(entryId);
+    public void deleteEntry(FormsStoreEntryInfo info) {
+        List<String> dataVersions = info.getDataVersions();
+        if (dataVersions == null || dataVersions.isEmpty()) {
+            return;
+        }
+
+        for (String dataVersion : dataVersions) {
+            try {
+                if (blobRepository.contains(dataVersion)) {
+                    blobRepository.delete(dataVersion);
+                }
+            } catch (AmbiguousIdException ex) {
+                throw new IllegalArgumentException("Something wrong...", ex);
             }
-        } catch (AmbiguousIdException ex) {
-            throw new IllegalArgumentException("Something wrong...", ex);
         }
     }
 
     @Override
-    public FormsStoreEntry retrieveEntry(String entryId) {
-        Objects.requireNonNull(entryId, "entryId must not be null!");
+    public void updateEntry(FormsStoreEntryInfo info, FormsStoreEntry entry) {
+        Objects.requireNonNull(entry, "entry must not be null!");
+
+        String dataVersion;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            getObjectMapper().writeValue(baos, entry.getData());
+
+            byte[] bytes = baos.toByteArray();
+
+            dataVersion = blobRepository.put(bytes);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Unable to serialize form data!", ex);
+        }
+
+        info.setRevision(info.getRevision() + 1);
+        info.getDataVersions().add(dataVersion);
+    }
+
+    @Override
+    public FormsStoreEntry retrieveEntry(FormsStoreEntryInfo info) {
+        Objects.requireNonNull(info, "info must not be null!");
+
+        String dataVersion = getCurrentDataVersion(info);
 
         Map<String, String> data;
-        try (InputStream is = blobRepository.get(entryId)) {
+        try (InputStream is = blobRepository.get(dataVersion)) {
             data = getObjectMapper().readValue(is, FormsData.class);
         } catch (Throwable th) {
-            throw new IllegalArgumentException("Unable to retrieve entry for id '" + entryId + "'!", th);
+            throw new IllegalArgumentException("Unable to retrieve entry for id '" + dataVersion + "'!", th);
         }
 
         FormsStoreEntry entry = new FormsStoreEntry();
-        entry.setId(entryId);
+        entry.setId(info.getId());
         entry.setData(data);
 
         return entry;
+    }
+
+    private String getCurrentDataVersion(FormsStoreEntryInfo info) {
+        int revision = info.getRevision();
+        List<String> dataVersions = info.getDataVersions();
+
+        return dataVersions.get(revision - 1);
     }
 
     @Override
@@ -129,19 +247,37 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    public void createEntryInfo(String entryId, FormsEntryHeader header) {
+    public FormsStoreEntryInfo createEntryInfo(String entryId, FormsEntryHeader header) {
         Objects.requireNonNull(entryId, "entryId must not be null!");
         Objects.requireNonNull(header, "header must not be null!");
 
+        if (logger.isDebugEnabled())
+            logger.debug("Creating a new EntryInfo for id '{}' and header {}", entryId, header);
+
+        String formDefinitionId = header.getFormDefinition();
+        ProcessingStages stages = retrieveStages(formDefinitionId);
+        String stage = stages.firstName();
+
+        if (logger.isDebugEnabled()) logger.debug("Initial stage: {}", stage);
+
+        List<String> dataVersions = new ArrayList<>();
+        dataVersions.add(entryId);
+
+        if (logger.isDebugEnabled()) logger.debug("DataVersions: {}", dataVersions);
+
         FormsStoreEntryInfo info = new FormsStoreEntryInfo();
         info.setId(entryId);
-        info.setRevision(1L);
+        info.setRevision(1);
+        info.setDataVersions(dataVersions);
+        info.setStage(stage);
         info.setHeader(header);
         info.setCreationTimestamp(System.currentTimeMillis());
 
         if (logger.isDebugEnabled()) logger.debug("Creating entry info {}", info);
 
         write(info, entryId);
+
+        return info;
     }
 
     @Override
@@ -153,38 +289,46 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
         write(info, info.getId());
     }
 
-//    @Override
-//    public void addProcessingState(String entryId, String processorName, ProcessingState state) {
-//        addProcessingState(entryId, processorName, state, null);
-//    }
-//
-//    @Override
-//    public void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context) {
-//        FormsStoreEntryInfo info = read(FormsStoreEntryInfo.class, entryId);
-//
-//        Map<String, FormsDataProcessingState> states = info.getProcessingStates();
-//        FormsDataProcessingState formDataProcessingState = states.get(processorName);
-//        if (formDataProcessingState == null) {
-//            formDataProcessingState = new FormsDataProcessingState();
-//            states.put(processorName, formDataProcessingState);
-//        }
-//        formDataProcessingState.setState(state);
-//
-//        List<ProcessingHistoryRecord> history = formDataProcessingState.getHistory();
-//        if (history == null) {
-//            history = new ArrayList<>();
-//            formDataProcessingState.setHistory(history);
-//        }
-//
-//        ProcessingHistoryRecord historyEntry = new ProcessingHistoryRecord();
-//        historyEntry.setTimestamp(System.currentTimeMillis());
-//        if (context != null) {
-//            historyEntry.setContext(context);
-//        }
-//        history.add(historyEntry);
-//
-//        write(info, entryId);
-//    }
+    @Override
+    public void updateProcessingState(FormsStoreEntryInfo info, ProcessingState state) {
+        Objects.requireNonNull(info, "info must not be null!");
+
+        FormsDataProcessingRecord processingRecord = info.getProcessingRecord();
+        if (processingRecord == null) {
+            processingRecord = new FormsDataProcessingRecord();
+            info.setProcessingRecord(processingRecord);
+        }
+
+        processingRecord.setState(state);
+
+        updateEntryInfo(info);
+    }
+
+    @Override
+    public Collection<FormsStoreEntryInfo> findEntryInfosByProcessingState(ProcessingState state) {
+        Collection<String> allIds = listEntryIds();
+        if (allIds == null || allIds.isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        Collection<FormsStoreEntryInfo> matchingIds = new HashSet<>();
+
+        for (String id : allIds) {
+            FormsStoreEntryInfo entryInfo = retrieveEntryInfo(id);
+            FormsDataProcessingRecord processingRecord = entryInfo.getProcessingRecord();
+            if (processingRecord == null) {
+                if (state == null) {
+                    matchingIds.add(entryInfo);
+                }
+            } else {
+                if (processingRecord.getState() == state) {
+                    matchingIds.add(entryInfo);
+                }
+            }
+        }
+
+        return matchingIds;
+    }
 
     @Override
     public Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId) {
@@ -322,7 +466,57 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
     }
 
     @Override
-    public FormDefinition retrieveDefinition(String formDefinitionId) {
+    public ProcessingStages retrieveStages(String formDefinitionId) {
+        FormDefinition definition = retrieveDefinitionInternal(formDefinitionId);
+        if (definition == null) {
+            return new ProcessingStages(null);
+        }
+
+        return new ProcessingStages(definition.getStages());
+    }
+
+    @Override
+    public FormDefinition retrieveDefinition(String formDefinitionId, String stageName) {
+        FormDefinition definition = retrieveDefinitionInternal(formDefinitionId);
+
+        if (definition == null) {
+            return null;
+        }
+
+        Map<String, FieldDefinition> fields = definition.getFields();
+        if (fields == null || fields.isEmpty()) {
+            return definition;
+        }
+
+        Map<String, FieldDefinition> fixedFields = new HashMap<>();
+
+        for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
+            String fieldName = entry.getKey();
+            FieldDefinition field = entry.getValue();
+
+            int pos = fieldName.indexOf("@");
+            if (pos < 0) {
+                fixedFields.put(fieldName, field);
+                continue;
+            }
+
+            String name = fieldName.substring(0, pos);
+            String fieldStageName = fieldName.substring(pos + 1);
+            if (stageName.equals(fieldStageName)) {
+                fixedFields.put(name, field);
+                if (logger.isDebugEnabled())
+                    logger.debug("Attaching field '{}' corresponding to stage '{}'", name, stageName);
+            } else {
+                if (logger.isDebugEnabled())
+                    logger.debug("Skipping field '{}', corresponding to another stage '{}'", fieldName, fieldStageName);
+            }
+        }
+
+        definition.setFields(fixedFields);
+        return definition;
+    }
+
+    private FormDefinition retrieveDefinitionInternal(String formDefinitionId) {
         File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
         if (!defFile.exists()) {
             if (logger.isErrorEnabled()) logger.error("No form definition found for id '{}'!", formDefinitionId);
@@ -337,53 +531,53 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository imple
                 logger.error("Unable to read form definition file '{}'!", defFile.getAbsolutePath(), ex);
             return null;
         }
-        
+
         return formDefinition;
     }
 
-    @Override
-    public void createDefinition(FormDefinition formDefinition) {
-        String formDefinitionId = formDefinition.getForm();
-
-        File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if (defFile.exists()) {
-            throw new IllegalArgumentException("Unable to create form definition '" + formDefinitionId + "', because it's already exists!");
-        }
-
-        try {
-            getObjectMapper().writeValue(defFile, formDefinition);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Error writing form definition file '" + defFile.getAbsolutePath() + "'!", ex);
-        }
-    }
-
-    @Override
-    public void updateDefinition(FormDefinition formDefinition) {
-        String formDefinitionId = formDefinition.getForm();
-
-        File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if (!defFile.exists()) {
-            throw new IllegalArgumentException("Unable to update form definition '" + formDefinitionId + "', because it doesn't exist!");
-        }
-
-        try {
-            getObjectMapper().writeValue(defFile, formDefinition);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Error writing form definition file '" + defFile.getAbsolutePath() + "'!", ex);
-        }
-    }
-
-    @Override
-    public void deleteDefinition(String formDefinitionId) {
-        File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
-        if (!defFile.exists()) {
-            throw new IllegalArgumentException("Unable to delete form definition '" + formDefinitionId + "', because it doesn't exist!");
-        }
-
-        if (!defFile.delete()) {
-            throw new IllegalStateException("Error deleting form definition file '" + defFile.getAbsolutePath() + "'!");
-        }
-    }
+//    @Override
+//    public void createDefinition(FormDefinition formDefinition) {
+//        String formDefinitionId = formDefinition.getForm();
+//
+//        File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
+//        if (defFile.exists()) {
+//            throw new IllegalArgumentException("Unable to create form definition '" + formDefinitionId + "', because it's already exists!");
+//        }
+//
+//        try {
+//            getObjectMapper().writeValue(defFile, formDefinition);
+//        } catch (IOException ex) {
+//            throw new IllegalStateException("Error writing form definition file '" + defFile.getAbsolutePath() + "'!", ex);
+//        }
+//    }
+//
+//    @Override
+//    public void updateDefinition(FormDefinition formDefinition) {
+//        String formDefinitionId = formDefinition.getForm();
+//
+//        File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
+//        if (!defFile.exists()) {
+//            throw new IllegalArgumentException("Unable to update form definition '" + formDefinitionId + "', because it doesn't exist!");
+//        }
+//
+//        try {
+//            getObjectMapper().writeValue(defFile, formDefinition);
+//        } catch (IOException ex) {
+//            throw new IllegalStateException("Error writing form definition file '" + defFile.getAbsolutePath() + "'!", ex);
+//        }
+//    }
+//
+//    @Override
+//    public void deleteDefinition(String formDefinitionId) {
+//        File defFile = new File(definitionsBaseDir, formDefinitionId + ".json");
+//        if (!defFile.exists()) {
+//            throw new IllegalArgumentException("Unable to delete form definition '" + formDefinitionId + "', because it doesn't exist!");
+//        }
+//
+//        if (!defFile.delete()) {
+//            throw new IllegalStateException("Error deleting form definition file '" + defFile.getAbsolutePath() + "'!");
+//        }
+//    }
 
     @Override
     public List<String> listCustomerIds() {

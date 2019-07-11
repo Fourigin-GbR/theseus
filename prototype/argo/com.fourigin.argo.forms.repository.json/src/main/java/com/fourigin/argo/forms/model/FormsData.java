@@ -1,4 +1,4 @@
-package com.fourigin.argo.forms;
+package com.fourigin.argo.forms.model;
 
 import java.util.HashMap;
 

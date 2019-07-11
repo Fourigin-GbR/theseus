@@ -6,6 +6,7 @@ import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.definition.ExternalValueReference;
 import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
+import com.fourigin.argo.forms.definition.ProcessingStages;
 import com.fourigin.argo.forms.formatter.DataFormatter;
 import com.fourigin.argo.forms.initialization.ExternalValueResolver;
 import com.fourigin.argo.forms.initialization.ExternalValueResolverFactory;
@@ -15,6 +16,8 @@ import com.fourigin.argo.forms.model.FormsRequest;
 import com.fourigin.argo.forms.model.InitRequest;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
+import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
+import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.argo.forms.normalizer.DataNormalizer;
 import com.fourigin.argo.forms.prepopulation.PrePopulationType;
 import com.fourigin.argo.forms.prepopulation.PrePopulationValuesResolver;
@@ -62,9 +65,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
     private FormsStoreRepository formsStoreRepository;
 
-    private FormDefinitionRepository formDefinitionRepository;
+    private FormDefinitionResolver formDefinitionResolver;
 
-    private FormsProcessingDispatcher formsProcessingDispatcher;
+//    private FormsProcessingDispatcher formsProcessingDispatcher;
 
     private ExternalValueResolverFactory externalValueResolverFactory;
 
@@ -87,9 +90,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     public HttpServerHandler(
         String contextPath,
         CustomerRepository customerRepository,
-        FormDefinitionRepository formDefinitionRepository,
+        FormDefinitionResolver formDefinitionResolver,
         FormsStoreRepository formsStoreRepository,
-        FormsProcessingDispatcher formsProcessingDispatcher,
         ExternalValueResolverFactory externalValueResolverFactory,
         Set<PrePopulationValuesResolver> prePopulationValuesResolvers,
         MessageSource messageSource,
@@ -98,8 +100,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         this.contextPath = contextPath;
         this.customerRepository = customerRepository;
         this.formsStoreRepository = formsStoreRepository;
-        this.formDefinitionRepository = formDefinitionRepository;
-        this.formsProcessingDispatcher = formsProcessingDispatcher;
+        this.formDefinitionResolver = formDefinitionResolver;
         this.externalValueResolverFactory = externalValueResolverFactory;
         this.prePopulationValuesResolvers = prePopulationValuesResolvers;
         this.messageSource = messageSource;
@@ -179,7 +180,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             FormsEntryHeader header = formsRequest.getHeader();
             String formDefinitionId = header.getFormDefinition();
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
+
+            FormDefinition formDefinition = formDefinitionResolver.retrieveDefinition(formDefinitionId, stages.firstName());
             if (formDefinition == null) {
                 throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
             }
@@ -214,7 +217,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             FormsEntryHeader header = formsRequest.getHeader();
             String formDefinitionId = header.getFormDefinition();
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
+
+            FormDefinition formDefinition = formDefinitionResolver.retrieveDefinition(formDefinitionId, stages.firstName());
             if (formDefinition == null) {
                 throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
             }
@@ -247,7 +252,10 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             InitRequest initRequest = getRequestBody(InitRequest.class, request);
 
             String formDefinitionId = initRequest.getFormDefinition();
-            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+
+            ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
+
+            FormDefinition formDefinition = formDefinitionResolver.retrieveDefinition(formDefinitionId, stages.firstName());
 
             String customerId = initRequest.getCustomer();
 
@@ -294,7 +302,10 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             FormsEntryHeader header = formsRequest.getHeader();
             String formDefinitionId = header.getFormDefinition();
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
+            String firstStageName = stages.firstName();
+
+            FormDefinition formDefinition = formDefinitionResolver.retrieveDefinition(formDefinitionId, firstStageName);
             if (formDefinition == null) {
                 throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
             }
@@ -327,7 +338,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             entry.setData(formattedData);
             String entryId = formsStoreRepository.createEntry(entry);
 
-            formsStoreRepository.createEntryInfo(entryId, header);
+            FormsStoreEntryInfo entryInfo = formsStoreRepository.createEntryInfo(entryId, header);
 
             // map form entry to defined objects
             Map<String, InitializableObjectDescriptor> objectMappings = formDefinition.getObjectMappings();
@@ -344,7 +355,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             }
 
             // start processing form entry
-            formsProcessingDispatcher.processFormEntry(entryId);
+            formsStoreRepository.updateProcessingState(entryInfo, ProcessingState.PENDING);
 
             // generate response
             Map<String, String> result = new HashMap<>();
@@ -364,7 +375,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
 
             String formDefinitionId = cleanupRequest.getFormDefinitionId();
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
+
+            FormDefinition formDefinition = formDefinitionResolver.retrieveDefinition(formDefinitionId, stages.firstName());
             if (formDefinition == null) {
                 throw new IllegalArgumentException("No form-definition found for id '" + formDefinitionId + "'!");
             }
@@ -547,7 +560,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         if (entryId != null) {
             if (logger.isDebugEnabled()) logger.debug("Resolving pre-population values for entry '{}'", entryId);
 
-            final FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
+            FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
+            final FormsStoreEntry entry = formsStoreRepository.retrieveEntry(info);
 
             for (PrePopulationValuesResolver resolver : prePopulationValuesResolvers) {
                 if (resolver.isAccepted(PrePopulationType.ENTRY)) {
@@ -563,7 +577,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
             if (logger.isDebugEnabled())
                 logger.debug("Resolving pre-population values for formDefinition '{}'", formDefinitionId);
 
-            FormDefinition formDefinition = formDefinitionRepository.retrieveDefinition(formDefinitionId);
+            ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
+
+            FormDefinition formDefinition = formDefinitionResolver.retrieveDefinition(formDefinitionId, stages.firstName());
 
             for (PrePopulationValuesResolver resolver : prePopulationValuesResolvers) {
                 if (resolver.isAccepted(PrePopulationType.FORM_DEFINITION)) {

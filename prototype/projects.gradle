@@ -26,6 +26,7 @@ def heraCore                                = project(':hera:com.fourigin.hera.c
 
 def utilitiesCore                           = project(':utilities:com.fourigin.utilities.core')
 def utilitiesPdfBox                         = project(':utilities:com.fourigin.utilities.pdfbox')
+def utilitiesSpringScheduling               = project(':utilities:com.fourigin.utilities.spring.scheduling')
 
 def thymeleaf                               = managedDependency('org.thymeleaf:thymeleaf')
 def thymeleafSpring                         = managedDependency('org.thymeleaf:thymeleaf-spring4')
@@ -299,6 +300,8 @@ project(':argo') {
 //            runtime managedDependency('mysql:mysql-connector-java')
             compile utilitiesPdfBox
             compile managedDependency('org.apache.pdfbox:pdfbox')
+
+            compile utilitiesSpringScheduling
         }
     }
 
@@ -439,8 +442,10 @@ project(':argo') {
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
 
             compile managedDependency('org.springframework.boot:spring-boot-starter')
+            compile managedDependency('org.springframework.boot:spring-boot-starter-quartz')
             compile managedDependency('org.springframework:spring-context-support')
-
+            
+            compile utilitiesSpringScheduling
         }
     }
 
@@ -566,6 +571,15 @@ project(':utilities') {
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
             compile argoModels
+        }
+    }
+
+    project('com.fourigin.utilities.spring.scheduling') {
+        version = utilitiesVersion
+
+        dependencies {
+            compile managedDependency('org.quartz-scheduler:quartz')
+            compile managedDependency('org.springframework:spring-context-support')
         }
     }
 

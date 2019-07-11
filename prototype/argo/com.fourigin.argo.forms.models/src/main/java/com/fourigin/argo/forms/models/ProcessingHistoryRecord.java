@@ -12,11 +12,13 @@ public class ProcessingHistoryRecord implements Serializable {
 
     private long timestamp;
 
-    public static final String KEY_MESSAGE = "status/message";
-    public static final String KEY_STATUS_CHANGE = "status/change";
-    public static final String KEY_PROCESSING_START = "processing/start";
-    public static final String KEY_PROCESSING_DONE = "processing/done";
-    public static final String KEYPREFIX_PROCESSING = "processing/";
+    public static final String PREFIX_PROCESSING = "processing/";
+    public static final String PREFIX_STATUS = "processing/";
+
+    public static final String KEY_MESSAGE = PREFIX_STATUS + "message";
+    public static final String KEY_STATUS_CHANGE = PREFIX_STATUS + "change";
+    public static final String KEY_PROCESSING_START = PREFIX_PROCESSING + "start";
+    public static final String KEY_PROCESSING_DONE = PREFIX_PROCESSING + "done";
 
     public ProcessingHistoryRecord() {
     }

@@ -23,10 +23,12 @@
 	<!--<logger name="org.springframework" level="DEBUG"/>-->
 	<!--<logger name="org.springframework.security" level="DEBUG"/>-->
 
-	<logger name="com.fourigin.argo.controller.compile.CompileController" level="DEBUG"/>
+    <logger name="com.fourigin.argo.controller.compile.CompileController" level="DEBUG"/>
+    <logger name="com.fourigin.argo.forms.dashboard.controller.DashboardController" level="DEBUG"/>
 
 	<!--<logger name="com.fasterxml.jackson.databind" level="DEBUG"/>-->
-	<logger name="com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver" level="DEBUG"/>
+    <logger name="com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver" level="DEBUG"/>
+    <logger name="com.fourigin.argo.forms.JsonFilesBasedFormsRepository" level="DEBUG"/>
 
 	<root level="INFO">
 		<appender-ref ref="CONSOLE"/>

@@ -51,7 +51,7 @@ public class NettyServer {
     public static void main(String... args) throws Exception {
         SpringApplication app = new SpringApplication(NettyServer.class);
         app.addListeners(
-            new ApplicationPidFileWriter()  // DEFAULT: application.pid
+                new ApplicationPidFileWriter()  // DEFAULT: application.pid
         );
 
         ConfigurableApplicationContext context = app.run(args);
@@ -63,29 +63,27 @@ public class NettyServer {
 
     @Bean
     public ServerBootstrap serverBootstrap(
-        @Autowired CustomerRepository customerRepository,
-        @Autowired FormsStoreRepository formsStoreRepository,
-        @Autowired FormDefinitionRepository formDefinitionRepository,
-        @Autowired FormsProcessingDispatcher formsProcessingDispatcher,
-        @Autowired ExternalValueResolverFactory externalValueResolverFactory,
-        @Autowired(required = false) Set<PrePopulationValuesResolver> prePopulationValuesResolvers,
-        @Autowired MessageSource messageSource
+            @Autowired CustomerRepository customerRepository,
+            @Autowired FormsStoreRepository formsStoreRepository,
+            @Autowired FormDefinitionResolver formDefinitionResolver,
+            @Autowired ExternalValueResolverFactory externalValueResolverFactory,
+            @Autowired(required = false) Set<PrePopulationValuesResolver> prePopulationValuesResolvers,
+            @Autowired MessageSource messageSource
     ) {
         return new ServerBootstrap()
-            .group(eventLoopGroup())
-            .handler(new LoggingHandler(LogLevel.INFO))
-            .childHandler(new HttpServerInitializer(
-                contextPath,
-                customerRepository,
-                formsStoreRepository,
-                formDefinitionRepository,
-                formsProcessingDispatcher,
-                externalValueResolverFactory,
-                prePopulationValuesResolvers,
-                messageSource,
-                objectMapper()
-            ))
-            .channel(NioServerSocketChannel.class);
+                .group(eventLoopGroup())
+                .handler(new LoggingHandler(LogLevel.INFO))
+                .childHandler(new HttpServerInitializer(
+                        contextPath,
+                        customerRepository,
+                        formsStoreRepository,
+                        formDefinitionResolver,
+                        externalValueResolverFactory,
+                        prePopulationValuesResolvers,
+                        messageSource,
+                        objectMapper()
+                ))
+                .channel(NioServerSocketChannel.class);
     }
 
     @Bean(destroyMethod = "shutdownGracefully")
@@ -108,18 +106,23 @@ public class NettyServer {
         return objectMapper;
     }
 
+    // TODO: change this configuration!
+    // It should be loaded from the from-definition corresponding to the current processing step
     @Bean
     public FormsEntryProcessorMapping formsEntryProcessorMapping() {
         FormsEntryProcessorMapping mapping = new FormsEntryProcessorMapping();
 
-        mapping.put("register-customer", Collections.singletonList(
-            CreateCustomerFormsEntryProcessor.NAME
+        mapping.put("register-customer:base-customer-data", Collections.singletonList(
+                CreateCustomerFormsEntryProcessor.NAME
         ));
 
-        mapping.put("register-vehicle", Arrays.asList(
-            FulfillVehicleRegistrationFormEntryProcessor.NAME,
-            FulfillTaxPaymentFormEntryProcessor.NAME,
-            FulfillInternalCardFormEntryProcessor.NAME
+        mapping.put("register-vehicle:base-data-without-approved-nameplate", Arrays.asList(
+                FulfillVehicleRegistrationFormEntryProcessor.NAME,
+                FulfillTaxPaymentFormEntryProcessor.NAME,
+                FulfillInternalCardFormEntryProcessor.NAME
+        ));
+
+        mapping.put("register-vehicle:final-data-with-approved-nameplate", Arrays.asList(
         ));
 
         return mapping;
@@ -127,11 +130,11 @@ public class NettyServer {
 
     @Bean
     public FormsEntryProcessorFactory formsEntryProcessorFactory(
-        @Autowired FormsStoreRepository formsStoreRepository,
-        @Autowired CustomerRepository customerRepository,
-        @Value("${forms.vehicle-registration.registration-form}") File registrationForm,
-        @Value("${forms.vehicle-registration.tax-payment-form}") File taxPaymentForm,
-        @Value("${forms.vehicle-registration.registration-card-form}") File internalForm
+            @Autowired FormsStoreRepository formsStoreRepository,
+            @Autowired CustomerRepository customerRepository,
+            @Value("${forms.vehicle-registration.registration-form}") File registrationForm,
+            @Value("${forms.vehicle-registration.tax-payment-form}") File taxPaymentForm,
+            @Value("${forms.vehicle-registration.registration-card-form}") File internalForm
     ) {
         if (!registrationForm.exists()) {
             throw new IllegalArgumentException("Original vehicle registration form '" + registrationForm.getAbsolutePath() + "' not found!");
@@ -142,26 +145,26 @@ public class NettyServer {
         }
 
         CreateCustomerFormsEntryProcessor createCustomerFormsEntryProcessor = new CreateCustomerFormsEntryProcessor(
-            formsStoreRepository,
-            customerRepository
+                formsStoreRepository,
+                customerRepository
         );
 
         FulfillVehicleRegistrationFormEntryProcessor fulfillFormEntryProcessor = new FulfillVehicleRegistrationFormEntryProcessor(
-            formsStoreRepository,
-            customerRepository,
-            registrationForm
+                formsStoreRepository,
+                customerRepository,
+                registrationForm
         );
 
         FulfillTaxPaymentFormEntryProcessor fulfillTaxPaymentEntryProcessor = new FulfillTaxPaymentFormEntryProcessor(
-            formsStoreRepository,
-            customerRepository,
-            taxPaymentForm
+                formsStoreRepository,
+                customerRepository,
+                taxPaymentForm
         );
 
         FulfillInternalCardFormEntryProcessor fulfillInternalCardFormEntryProcessor = new FulfillInternalCardFormEntryProcessor(
-            formsStoreRepository,
-            customerRepository,
-            internalForm
+                formsStoreRepository,
+                customerRepository,
+                internalForm
         );
 
         Map<String, FormsEntryProcessor> processors = new HashMap<>();
@@ -180,22 +183,22 @@ public class NettyServer {
 
     @Bean
     public FormsProcessingDispatcher formsProcessingDispatcher(
-        @Autowired FormsStoreRepository formsStoreRepository,
-        @Autowired FormsEntryProcessorMapping formsEntryProcessorMapping,
-        @Autowired FormsEntryProcessorFactory formsEntryProcessorFactory,
-        @Autowired FormsRegistry formsRegistry
+            @Autowired FormDefinitionResolver formDefinitionResolver,
+            @Autowired FormsStoreRepository formsStoreRepository,
+            @Autowired FormsEntryProcessorMapping formsEntryProcessorMapping,
+            @Autowired FormsEntryProcessorFactory formsEntryProcessorFactory
     ) {
         return new DefaultFormsProcessingDispatcher(
-            formsStoreRepository,
-            formsEntryProcessorMapping,
-            formsEntryProcessorFactory,
-            formsRegistry
+                formDefinitionResolver,
+                formsStoreRepository,
+                formsEntryProcessorMapping,
+                formsEntryProcessorFactory
         );
     }
 
     @Bean
     public ExternalValueResolverFactory externalValueResolverFactory(
-        @Autowired CustomerRepository customerRepository
+            @Autowired CustomerRepository customerRepository
     ) {
         ExternalValueResolverFactory externalValueResolverFactory = new ExternalValueResolverFactory();
 
@@ -207,8 +210,8 @@ public class NettyServer {
     @Bean
     Set<PrePopulationValuesResolver> prePopulationValuesResolvers() {
         return new HashSet<>(Arrays.asList(
-            new StoredEntryPrePopulationValueResolver("STORED_DATA"),
-            new DummyNameplatePrePopulationValueResolver("DEFAULTS")
+                new StoredEntryPrePopulationValueResolver("STORED_DATA"),
+                new DummyNameplatePrePopulationValueResolver("DEFAULTS")
         ));
     }
 

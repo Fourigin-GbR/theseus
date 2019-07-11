@@ -1,0 +1,108 @@
+{
+  "form": "register-customer",
+  "validationPatterns": {
+    "nameplates": {
+      "pattern": "[A-ZÖÜÄ]{1,3}\\s?[\\s-]\\s?[A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}",
+      "validExamples": [
+        "B NN 123",
+        "B-NN 123"
+      ]
+    },
+    "bank-account-codes": {
+      "pattern": "^DE([0-9a-zA-Z]\\s?){20}$",
+      "validExamples": [
+        "DExx xxxx xxxx xxxx xxxx xx"
+      ]
+    }
+  },
+  "stages": [
+    {
+      "name": "base-customer-data",
+      "processors": [
+      ]
+    }
+  ],
+  "fields": {
+    "gender": {
+      "type": "CHOOSE",
+      "validation": {
+        "mandatory": true
+      },
+      "values": {
+        "MALE": null,
+        "FEMALE": null
+      }
+    },
+    "firstname": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "lastname": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "birthname": {
+      "type": "TEXT"
+    },
+    "birthdate": {
+      "type": "TEXT"
+    },
+    "cityOfBorn": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "street": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "house-number": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "additional-info": {
+      "type": "TEXT"
+    },
+    "zip-code": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "city": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "contact.email": {
+      "type": "TEXT",
+      "validation": {
+        "mandatory": true
+      }
+    },
+    "contact.phone": {
+      "type": "TEXT"
+    },
+    "contact.fax": {
+      "type": "TEXT"
+    }
+  },
+  "objectMappings": {
+    "customer": {
+      "targetClass": "com.fourigin.argo.forms.customer.Customer",
+      "settings": {
+        "file": "register-customer/customer-mapper.groovy"
+      }
+    }
+  }
+}

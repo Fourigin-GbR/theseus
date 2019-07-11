@@ -17,7 +17,7 @@ import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
-import com.fourigin.argo.scheduling.AutowiringSpringBeanJobFactory;
+import com.fourigin.utilities.spring.scheduling.AutowiringSpringBeanJobFactory;
 import com.fourigin.argo.scheduling.CompileJob;
 import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
@@ -81,7 +81,6 @@ import java.util.Map;
 @EnableCaching
 public class App {
 
-    @Autowired
     private ApplicationContext applicationContext;
 
     @Value("${template.engine.thymeleaf.base}")
@@ -107,7 +106,6 @@ public class App {
 
     private TemplateResolver templateResolver;
 
-    @Autowired
     private ProjectsConfiguration projectsConfiguration;
 
     private AssetResolver assetResolver;
@@ -350,6 +348,16 @@ public class App {
         AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
         jobFactory.setApplicationContext(applicationContext);
         return jobFactory;
+    }
+
+    @Autowired
+    public void setProjectsConfiguration(ProjectsConfiguration projectsConfiguration) {
+        this.projectsConfiguration = projectsConfiguration;
+    }
+
+    @Autowired
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     /*

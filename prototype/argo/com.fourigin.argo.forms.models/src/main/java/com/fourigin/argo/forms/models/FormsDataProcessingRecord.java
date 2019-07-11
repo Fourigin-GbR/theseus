@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FormsDataProcessingState implements Serializable {
+public class FormsDataProcessingRecord implements Serializable {
     private static final long serialVersionUID = -9151906834376089744L;
 
     private ProcessingState state;
@@ -19,6 +19,8 @@ public class FormsDataProcessingState implements Serializable {
     }
     
     public void setState(ProcessingState state) {
+        addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, state.name());
+
         this.state = state;
     }
 
@@ -59,8 +61,8 @@ public class FormsDataProcessingState implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FormsDataProcessingState)) return false;
-        FormsDataProcessingState that = (FormsDataProcessingState) o;
+        if (!(o instanceof FormsDataProcessingRecord)) return false;
+        FormsDataProcessingRecord that = (FormsDataProcessingRecord) o;
         return state == that.state &&
             Objects.equals(currentStatusMessage, that.currentStatusMessage) &&
             Objects.equals(history, that.history);
@@ -73,7 +75,7 @@ public class FormsDataProcessingState implements Serializable {
 
     @Override
     public String toString() {
-        return "FormsDataProcessingState{" +
+        return "FormsDataProcessingRecord{" +
             "state=" + state +
             ", currentStatusMessage='" + currentStatusMessage + '\'' +
             ", history=" + history +

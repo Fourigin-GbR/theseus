@@ -1,4 +1,4 @@
-package com.fourigin.argo.scheduling;
+package com.fourigin.utilities.spring.scheduling;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;

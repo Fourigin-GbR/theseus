@@ -2,13 +2,11 @@ package com.fourigin.argo.forms.processing;
 
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
-import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.customer.Gender;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
-import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.argo.forms.models.Vehicle;
 import com.fourigin.argo.forms.models.VehicleRegistration;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -33,7 +31,7 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
     protected abstract void fulfillForm(PDDocument pdDocument, VehicleRegistration registration, Customer customer) throws IOException;
 
     @Override
-    public ProcessingState processEntry(String entryId, FormsRegistry registry) {
+    public boolean processEntry(String entryId) {
         VehicleRegistration registration = formsStoreRepository.getObjectAttachment(
             entryId,
             getRegistrationAttachmentName(),
@@ -74,7 +72,7 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
             throw new IllegalStateException("Error processing form fulfillment!", ex);
         }
 
-        return ProcessingState.WAITING;
+        return true;
     }
 
     protected String resolveNameplateToUse(Vehicle vehicle){

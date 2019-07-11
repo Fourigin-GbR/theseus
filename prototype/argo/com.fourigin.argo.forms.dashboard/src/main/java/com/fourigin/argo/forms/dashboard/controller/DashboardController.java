@@ -6,7 +6,7 @@ import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.dashboard.CustomerInfo;
 import com.fourigin.argo.forms.dashboard.FormRequestInfo;
-import com.fourigin.argo.forms.models.FormsDataProcessingState;
+import com.fourigin.argo.forms.models.FormsDataProcessingRecord;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
@@ -79,6 +79,8 @@ public class DashboardController {
             return Collections.emptyList();
         }
 
+        if (logger.isDebugEnabled()) logger.debug("Preparing request-info objects for IDs {}", entryIds);
+
         List<FormRequestInfo> result = new ArrayList<>();
 
         for (String entryId : entryIds) {
@@ -91,7 +93,7 @@ public class DashboardController {
 
     @RequestMapping("/request")
     public FormRequestInfo request(
-        @RequestParam String entryId
+            @RequestParam String entryId
     ) {
         FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
         if (entryInfo == null) {
@@ -116,7 +118,7 @@ public class DashboardController {
         info.setCustomer(customerId);
         info.setCreationTimestamp(entryInfo.getCreationTimestamp());
         info.setAttachments(attachments);
-        info.setProcessingState(entryInfo.getProcessingState());
+        info.setProcessingState(entryInfo.getProcessingRecord());
 
         Customer customer = customerRepository.retrieveCustomer(customerId);
         info.setCustomerName(customer.getFirstname() + ' ' + customer.getLastname());
@@ -165,11 +167,12 @@ public class DashboardController {
 
     @RequestMapping("/data")
     public SortedMap<String, String> data(
-        @RequestParam String entryId
+            @RequestParam String entryId
     ) {
         Objects.requireNonNull(entryId, "entryId must not bei null!");
 
-        FormsStoreEntry entry = formsStoreRepository.retrieveEntry(entryId);
+        FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
+        FormsStoreEntry entry = formsStoreRepository.retrieveEntry(info);
         if (entry == null) {
             throw new IllegalArgumentException("No entry found for id '" + entryId + "'!");
         }
@@ -184,10 +187,10 @@ public class DashboardController {
 
     @RequestMapping("/attachment")
     public void attachment(
-        @RequestParam String entryId,
-        @RequestParam String attachmentName,
-        @RequestParam String mimeType,
-        HttpServletResponse response
+            @RequestParam String entryId,
+            @RequestParam String attachmentName,
+            @RequestParam String mimeType,
+            HttpServletResponse response
     ) {
         Objects.requireNonNull(entryId, "entryId must not bei null!");
         Objects.requireNonNull(attachmentName, "attachmentName must not bei null!");
@@ -209,7 +212,7 @@ public class DashboardController {
 
     @RequestMapping("/delete-customer")
     public void deleteCustomer(
-        @RequestParam String customerId
+            @RequestParam String customerId
     ) {
         Objects.requireNonNull(customerId, "customerId must not bei null!");
 
@@ -223,32 +226,31 @@ public class DashboardController {
 
     @RequestMapping("/change-state")
     public void changeState(
-        @RequestParam String customerId,
-        @RequestParam String entryId,
-        @RequestParam ProcessingState processingState,
-        @RequestParam(required = false) String comment
+            @RequestParam String customerId,
+            @RequestParam String entryId,
+            @RequestParam ProcessingState processingState,
+            @RequestParam(required = false) String comment
     ) {
         Objects.requireNonNull(customerId, "customerId must not bei null!");
         Objects.requireNonNull(entryId, "entryId must not bei null!");
         Objects.requireNonNull(processingState, "state must not bei null!");
 
         FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
-        FormsDataProcessingState state = info.getProcessingState();
+        FormsDataProcessingRecord record = info.getProcessingRecord();
 
         boolean changed = false;
         if (comment != null && !comment.isEmpty()) {
-            state.setCurrentStatusMessage(comment);
+            record.setCurrentStatusMessage(comment);
 
-            state.addHistoryRecord(ProcessingHistoryRecord.KEY_MESSAGE, comment);
+            record.addHistoryRecord(ProcessingHistoryRecord.KEY_MESSAGE, comment);
 
             changed = true;
         } else {
-            state.setCurrentStatusMessage(null);
+            record.setCurrentStatusMessage(null);
         }
 
-        if (state.getState() != processingState) {
-            state.setState(processingState);
-            state.addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, processingState.name());
+        if (record.getState() != processingState) {
+            record.setState(processingState);
 
             changed = true;
         }

@@ -2,11 +2,9 @@ package com.fourigin.argo.forms.processing.customer;
 
 import com.fourigin.argo.forms.CustomerRepository;
 import com.fourigin.argo.forms.FormsEntryProcessor;
-import com.fourigin.argo.forms.FormsRegistry;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
-import com.fourigin.argo.forms.models.ProcessingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +34,7 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
     }
 
     @Override
-    public ProcessingState processEntry(String entryId, FormsRegistry registry) {
+    public boolean processEntry(String entryId) {
         Customer customer = formsStoreRepository.getObjectAttachment(entryId, ATTACHMENT_NAME, Customer.class);
 
         // search for the next free id
@@ -58,6 +56,6 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
 
         customerRepository.createCustomer(customer);
 
-        return ProcessingState.DONE;
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package com.fourigin.argo.forms;
 
-public interface FormsProcessingDispatcher {
-    void processFormEntry(String entryId);
+import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
 
+public interface FormsProcessingDispatcher {
+    void processFormEntry(FormsStoreEntryInfo entryInfo);
 }

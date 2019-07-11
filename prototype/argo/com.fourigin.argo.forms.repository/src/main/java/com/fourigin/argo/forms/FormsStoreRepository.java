@@ -3,6 +3,7 @@ package com.fourigin.argo.forms;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
+import com.fourigin.argo.forms.models.ProcessingState;
 
 import java.util.Collection;
 import java.util.Set;
@@ -12,17 +13,20 @@ public interface FormsStoreRepository {
 
     // entry
     String createEntry(FormsStoreEntry entry);
-    void deleteEntry(String entryId);
-    FormsStoreEntry retrieveEntry(String entryId);
+    FormsStoreEntry retrieveEntry(FormsStoreEntryInfo info);
+    void updateEntry(FormsStoreEntryInfo info, FormsStoreEntry entry);
+    void deleteEntry(FormsStoreEntryInfo info);
 
     // info
-    void createEntryInfo(String entryId, FormsEntryHeader header);
+    FormsStoreEntryInfo createEntryInfo(String entryId, FormsEntryHeader header);
     FormsStoreEntryInfo retrieveEntryInfo(String entryId);
     void updateEntryInfo(FormsStoreEntryInfo info);
 
-//    // processing states
-//    void addProcessingState(String entryId, String processorName, ProcessingState state);
-//    void addProcessingState(String entryId, String processorName, ProcessingState state, Map<String, String> context);
+    // state
+    void updateProcessingState(FormsStoreEntryInfo info, ProcessingState state);
+
+    // find
+    Collection<FormsStoreEntryInfo> findEntryInfosByProcessingState(ProcessingState state);
 
     // attachments
     Set<AttachmentDescriptor> getAttachmentDescriptors(String entryId);

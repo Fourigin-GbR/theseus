@@ -3,6 +3,7 @@ package com.fourigin.argo.forms.definition;
 import com.fourigin.utilities.reflection.InitializableObjectDescriptor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ public class FormDefinition implements Serializable {
     private Map<String, ValidationPattern> validationPatterns;
     private Map<String, InitializableObjectDescriptor> dataNormalizers;
     private Map<String, InitializableObjectDescriptor> dataFormatters;
+    private List<ProcessingStage> stages;
     private Map<String, FieldDefinition> fields;
     private Map<String, InitializableObjectDescriptor> objectMappings;
 
@@ -49,6 +51,14 @@ public class FormDefinition implements Serializable {
         this.dataFormatters = dataFormatters;
     }
 
+    public List<ProcessingStage> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<ProcessingStage> stages) {
+        this.stages = stages;
+    }
+
     public Map<String, FieldDefinition> getFields() {
         return fields;
     }
@@ -68,30 +78,32 @@ public class FormDefinition implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FormDefinition)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         FormDefinition that = (FormDefinition) o;
         return Objects.equals(form, that.form) &&
-            Objects.equals(validationPatterns, that.validationPatterns) &&
-            Objects.equals(dataNormalizers, that.dataNormalizers) &&
-            Objects.equals(dataFormatters, that.dataFormatters) &&
-            Objects.equals(fields, that.fields) &&
-            Objects.equals(objectMappings, that.objectMappings);
+                Objects.equals(validationPatterns, that.validationPatterns) &&
+                Objects.equals(dataNormalizers, that.dataNormalizers) &&
+                Objects.equals(dataFormatters, that.dataFormatters) &&
+                Objects.equals(stages, that.stages) &&
+                Objects.equals(fields, that.fields) &&
+                Objects.equals(objectMappings, that.objectMappings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(form, validationPatterns, dataNormalizers, dataFormatters, fields, objectMappings);
+        return Objects.hash(form, validationPatterns, dataNormalizers, dataFormatters, stages, fields, objectMappings);
     }
 
     @Override
     public String toString() {
         return "FormDefinition{" +
-            "form='" + form + '\'' +
-            ", validationPatterns=" + validationPatterns +
-            ", dataNormalizers=" + dataNormalizers +
-            ", dataFormatters=" + dataFormatters +
-            ", fields=" + fields +
-            ", objectMappings=" + objectMappings +
-            '}';
+                "form='" + form + '\'' +
+                ", validationPatterns=" + validationPatterns +
+                ", dataNormalizers=" + dataNormalizers +
+                ", dataFormatters=" + dataFormatters +
+                ", stages=" + stages +
+                ", fields=" + fields +
+                ", objectMappings=" + objectMappings +
+                '}';
     }
 }

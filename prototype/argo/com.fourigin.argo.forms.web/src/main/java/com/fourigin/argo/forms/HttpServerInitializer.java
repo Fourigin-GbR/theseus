@@ -19,8 +19,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
     private final String contextPath;
     private CustomerRepository customerRepository;
     private FormsStoreRepository formsStoreRepository;
-    private FormDefinitionRepository formDefinitionRepository;
-    private FormsProcessingDispatcher formsProcessingDispatcher;
+    private FormDefinitionResolver formDefinitionResolver;
     private ExternalValueResolverFactory externalValueResolverFactory;
     private Set<PrePopulationValuesResolver> prePopulationValuesResolvers;
     private MessageSource messageSource;
@@ -32,8 +31,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         String contextPath,
         CustomerRepository customerRepository,
         FormsStoreRepository formsStoreRepository,
-        FormDefinitionRepository formDefinitionRepository,
-        FormsProcessingDispatcher formsProcessingDispatcher,
+        FormDefinitionResolver formDefinitionResolver,
         ExternalValueResolverFactory externalValueResolverFactory,
         Set<PrePopulationValuesResolver> prePopulationValuesResolvers,
         MessageSource messageSource,
@@ -42,8 +40,7 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         this.contextPath = contextPath;
         this.customerRepository = customerRepository;
         this.formsStoreRepository = formsStoreRepository;
-        this.formDefinitionRepository = formDefinitionRepository;
-        this.formsProcessingDispatcher = formsProcessingDispatcher;
+        this.formDefinitionResolver = formDefinitionResolver;
         this.externalValueResolverFactory = externalValueResolverFactory;
         this.prePopulationValuesResolvers = prePopulationValuesResolvers;
         this.messageSource = messageSource;
@@ -61,9 +58,8 @@ public class HttpServerInitializer extends ChannelInitializer<Channel> {
         pipeline.addLast(new HttpServerHandler(
             contextPath,
             customerRepository,
-            formDefinitionRepository,
+                formDefinitionResolver,
             formsStoreRepository,
-            formsProcessingDispatcher,
             externalValueResolverFactory,
             prePopulationValuesResolvers,
             messageSource,
