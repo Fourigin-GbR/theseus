@@ -223,3 +223,51 @@ table.dataTable tr.group.closed td:first-of-type::before {
     width: 100%;
     border-bottom: 2px solid #00b393;
 }
+
+#state-value {
+    margin: 1em;
+    padding: 0.3em;
+    display: inline-block;
+}
+
+.state-value-cell {
+    width: 250px;
+}
+
+.PENDING {
+    background-color: lightgray;
+}
+
+.PROCESSING {
+    background-color: lightgray;
+    border: 2px solid green;
+}
+
+.WAITING_FOR_INPUT {
+    background-color: yellow;
+}
+
+.FAILED {
+    background-color: red;
+}
+
+.SUSPENDED {
+    background-color: gray;
+}
+
+.READY_TO_APPROVE {
+    background-color: yellow;
+}
+
+.WAITING_FOR_APPROVAL {
+    background-color: yellow;
+    border: 2px solid green;
+}
+
+.REJECTED {
+    background-color: red;
+}
+
+.DONE {
+    background-color: green;
+}

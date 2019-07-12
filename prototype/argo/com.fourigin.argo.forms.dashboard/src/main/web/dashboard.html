@@ -65,37 +65,24 @@
                     <div class="dataTableFilterList__item">
                         Filter:
                         <select autocomplete="off" id="dataTableFilter">
-                            <option name="" value="" selected="selected">Alle</option>
+                            <option name="" value="" selected="selected">-- Alle --</option>
                             <option name="KFZ-Anmeldung" value="KFZ-Anmeldung">KFZ-Anmeldung</option>
                             <option name="Registrierung" value="Registrierung">Kundenregistrierung</option>
                         </select>
                     </div>
                     <div class="dataTableFilterList__item">
                         Status:
-<!--
-        case 'FAILED':
-            return 'Fehlerhaft';
-        case 'PENDING':
-            return 'Wartet auf Verarbeitung';
-        case 'PROCESSING':
-            return 'Wird intern verarbeitet';
-        case 'SUSPENDED':
-            return 'Pausiert';
-        case 'REJECTED':
-            return 'Abgelehnt';
-        case 'WAITING':
-            return 'Wartet auf Dateneingabe';
-        case 'IN_PROGRESS':
-            return 'In Arbeit';
-        case 'DONE':
-            return 'Erfolgreich abgeschlossen';
--->
                         <select autocomplete="off" id="dataTableStatusFilter">
-                            <option name="" value="" selected="selected">Alle</option>
-                            <option name="WAITING" value="Wartet auf Dateneingabe">Wartet auf Dateneingabe</option>
-                            <option name="REJECTED" value="Abgelehnt">Abgelehnt</option>
-                            <option name="IN_PROGRESS" value="In Arbeit">In Arbeit</option>
-                            <option name="DONE" value="Erfolgreich abgeschlossen">Erfolgreich abgeschlossen</option>
+                            <option name="" value="" selected="selected">-- Alle --</option>
+                            <option name="WAITING_FOR_INPUT" value=""></option>
+                            <option name="READY_TO_APPROVE" value=""></option>
+                            <option name="WAITING_FOR_APPROVAL" value=""></option>
+                            <option name="REJECTED" value=""></option>
+                            <option name="FAILED" value=""></option>
+                            <option name="PROCESSING" value=""></option>
+                            <option name="SUSPENDED" value=""></option>
+                            <option name="PENDING" value=""></option>
+                            <option name="DONE" value=""></option>
                         </select>
                     </div>
                 </div>
@@ -166,6 +153,7 @@
 
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="assets/scripts/common.js"></script>
 <script type="text/javascript" src="assets/scripts/dashboard.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import static com.fourigin.argo.forms.models.ProcessingState.WAITING_FOR_INPUT;
+import static com.fourigin.argo.forms.processing.TspFieldNames.NEW_TEMPLATE_FINAL_VALUE;
 
 public class NewNameplateVerifier implements Initializable, StageProcessor {
 
@@ -36,7 +37,7 @@ public class NewNameplateVerifier implements Initializable, StageProcessor {
     ) {
         FormsStoreEntry entry = formsStoreRepository.retrieveEntry(info);
         Map<String, String> data = entry.getData();
-        String newNameplate = data.get("vehicle.valid-new-nameplate");
+        String newNameplate = data.get(NEW_TEMPLATE_FINAL_VALUE);
         if (newNameplate != null && !newNameplate.isEmpty()) {
             return;
         }

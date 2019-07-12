@@ -52,12 +52,12 @@
                 <span class="state-message">Hello World! I'm a status message!</span>
             </div>
             <div>
-                <span class="state-value">WAITING</span>
+                <span id="state-value">WAITING</span>
                 <label for="state-change-button">ändern ...</label><input autocomplete="off" id="state-change-button" type="checkbox" />
             </div>
         </div>
 
-        <fieldset id="state-change" style="display: none; height: 0;">
+        <fieldset id="state-change">
             <form id="state-change-form" action="/forms-dashboard/change-state">
                 <input id="form-customerId" name="customerId" type="hidden" />
                 <input id="form-entryId" name="entryId" type="hidden" />
@@ -65,9 +65,33 @@
                 <label for="new-state">Neuer Zustand:</label>
                 <select id="new-state" name="processingState">
                     <option value="-">Bitte wählen Sie</option>
-                    <option value="DONE">DONE</option>
-                    <option value="REJECTED">REJECTED</option>
-                    <option value="WAITING">WAITING</option>
+                    <option value="DONE">Erfolgreich abgeschlossen</option>
+                    <option value="REJECTED">Abgelehnt</option>
+                    <option value="WAITING_FOR_INPUT">Wartet auf Dateneingabe</option>
+                    <option value="WAITING_FOR_APPROVAL">Wartet auf Freigabe</option>
+                    <option value="PENDING">Wartet auf Verarbeitung</option>
+                    <option value="SUSPENDED">Pausiert</option>
+<!--
+        case 'PENDING':
+            return 'Wartet auf Verarbeitung';
+        case 'PROCESSING':
+            return 'Wird verarbeitet';
+        case 'WAITING_FOR_INPUT':
+            return 'Wartet auf Dateneingabe';
+        case 'FAILED':
+            return 'Fehlerhaft';
+        case 'SUSPENDED':
+            return 'Pausiert';
+        case 'READY_TO_APPROVE':
+            return 'Bereit für Freigabe';
+        case 'WAITING_FOR_APPROVAL':
+            return 'Wartet auf Freigabe';
+        case 'REJECTED':
+            return 'Abgelehnt';
+        case 'DONE':
+            return 'Erfolgreich abgeschlossen';
+
+-->
                 </select>
                 <br/>
                 <label for="message">Ihr Kommentar:</label>
@@ -94,6 +118,7 @@
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="assets/scripts/common.js"></script>
 <script type="text/javascript" src="assets/scripts/request-info.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

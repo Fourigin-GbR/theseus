@@ -56,9 +56,11 @@ function init() {
                 stateMessageSpan.append(message)
             }
 
-            $(currentStateDiv).find('.state-value')
+            $(currentStateDiv).find('#state-value')
                 .empty()
-                .append(processingState.state);
+                .removeClass()
+                .addClass(processingState.state)
+                .append(formatState(processingState.state));
 
             // form
             $('select#new-state').val(processingState.state);
@@ -73,25 +75,51 @@ function init() {
 
             var historyData = processingState.history;
 
+            var indent = '..................&nbsp;'
+            var lastDate = null;
             $.each(historyData, function (index, historyEntry) {
                 var date = new Date(historyEntry.timestamp);
+
+                var currentDate = date.getFullYear() + '.' + (date.getMonth()+1) + '.' + date.getDate();
+
+                console.log('check: ' + (currentDate === lastDate) + ', lastDate: ' + lastDate + ', currentDate: ' + currentDate + ': ' + historyEntry.key + ' - ' + historyEntry.value);
 
                 if (historyEntry.value) {
                     historyBody.prepend(
                         $('<tr></tr>')
-                            .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
-                            .append($('<td></td>').attr('class', 'state').append(historyEntry.key))
-                            .append($('<td></td>').attr('class', 'message').append(historyEntry.value))
+                            .append($('<td></td>')
+                                .attr('class', 'timestamp')
+                                .append((currentDate === lastDate) ? indent + formatTime(date, true) : formatDate(date, true))
+                            )
+                            .append($('<td></td>')
+                                .attr('class', 'state')
+                                .append(formatStateType(historyEntry.key))
+                            )
+                            .append($('<td></td>')
+                                .attr('class', 'message')
+                                .append(formatState(historyEntry.value))
+                            )
                     );
                 }
                 else {
                     historyBody.prepend(
                         $('<tr></tr>')
-                            .append($('<td></td>').attr('class', 'timestamp').append(formatDate(date, true)))
-                            .append($('<td></td>').attr('colspan', 2).attr('class', 'state').append(historyEntry.key))
-                            .append($('<td></td>').attr('style', 'display: none;'))
+                            .append($('<td></td>')
+                                .attr('class', 'timestamp')
+                                .append((currentDate === lastDate) ? indent + formatTime(date, true) : formatDate(date, true))
+                            )
+                            .append($('<td></td>')
+                                .attr('colspan', 2)
+                                .attr('class', 'state')
+                                .append(formatStateType(historyEntry.key))
+                            )
+                            .append($('<td></td>')
+                                .attr('style', 'display: none;')
+                            )
                     );
                 }
+
+                lastDate = currentDate;
             });
 
             historyDataTable = historyTable.DataTable({
@@ -192,49 +220,3 @@ function loadRequestData(entryId) {
         url: "/forms-dashboard/data?entryId=" + entryId
     });
 }
-
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-        }
-    }
-};
-
-function formatDate(date, short) {
-    var month = date.getMonth() + 1;
-    var m = month < 10 ? "0" + month : "" + month;
-
-    var day = date.getDate();
-    var d = day < 10 ? "0" + day : day;
-
-    var hh = date.getHours();
-
-    var minutes = date.getMinutes();
-    var mm = minutes < 10 ? "0" + minutes : minutes;
-
-    if (!short) {
-        var y = date.getFullYear();
-        var seconds = date.getSeconds();
-        var ss = seconds < 10 ? "0" + seconds : seconds;
-        return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm + ":" + ss;
-    }
-    else {
-        var dateYear = date.getYear();
-        if (dateYear === new Date().getYear()) {
-            return d + "." + m + "&nbsp;" + hh + ":" + mm;
-        }
-        else {
-            var y = date.getYear() > 100 ? date.getYear() - 100 : date.getYear();
-            return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
-        }
-    }
-}
-

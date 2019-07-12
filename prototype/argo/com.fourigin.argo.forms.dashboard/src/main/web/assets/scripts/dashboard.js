@@ -29,6 +29,18 @@ function init() {
 
     languageDE.prop('disabled', true);
 
+    jQuery('#dataTableStatusFilter > option').each(function() {
+        var option = jQuery(this);
+        var code = option.attr('name');
+        if (code === "") {
+            return;
+        }
+
+        var state = formatState(code);
+        option.attr('value', state);
+        option.text(state);
+    });
+
     jAllFilters.on('change',
         function () {
             var sSearch = jFilterByType[0].value + ' ' + jFilterByStatus[0].value;
@@ -181,8 +193,15 @@ function internalInitRequestsTable(data) {
             },
             {
                 "data": "state",
-                "render": function (data) {
-                    return formatState(data);
+                "render": function (data, type, full) {
+                    console.log('rendering state cell ' + data);
+                    return $('<div></div>')
+                        .attr('class', data + ' state-value-cell')
+                        .append($('<span></span>')
+                            .html(formatState(data))
+                        )[0].outerHTML;
+//                    return $('<span></span>').attr('class=', data).text(formatState(data)).text();
+//                    return jQuery('<span></span>').attr('class=', data).text(formatState(data)).text();
                 }
             }
         ],
@@ -433,78 +452,6 @@ function resolveFAType(mimeType) {
     }
 
     return "fa-file-text-o";
-}
-
-function formatDate(date) {
-    var month = date.getMonth() + 1;
-    var y = date.getFullYear();
-    var m = month < 10 ? "0" + month : "" + month;
-    var day = date.getDate();
-    var d = day < 10 ? "0" + day : day;
-    var hh = date.getHours();
-    var minutes = date.getMinutes();
-    var mm = minutes < 10 ? "0" + minutes : minutes;
-    return d + "." + m + "." + y + "&nbsp;" + hh + ":" + mm;
-}
-
-function formatDateForGroupedView(date) {
-    var hh = date.getHours();
-    var minutes = date.getMinutes();
-    var mm = minutes < 10 ? "0" + minutes : minutes;
-    return hh + ":" + mm;
-}
-
-function formatDateForSorting(date) {
-    var month = date.getMonth() + 1;
-    var y = date.getFullYear();
-    var m = month < 10 ? "0" + month : "" + month;
-    var day = date.getDate();
-    var d = day < 10 ? "0" + day : day;
-    var hh = date.getHours();
-    var minutes = date.getMinutes();
-    var mm = minutes < 10 ? "0" + minutes : minutes;
-    return y + "-" + m + "-" + d + " " + hh + ":" + mm;
-}
-
-function formatDateForGrouping(date) {
-    var month = date.getMonth() + 1;
-    var y = date.getFullYear();
-    var m = month < 10 ? "0" + month : "" + month;
-    var day = date.getDate();
-    var d = day < 10 ? "0" + day : day;
-    return y + "-" + m + "-" + d;
-}
-
-function formatDateForGroupingView(date) {
-    var month = date.getMonth() + 1;
-    var y = date.getFullYear();
-    var m = month < 10 ? "0" + month : "" + month;
-    var day = date.getDate();
-    var d = day < 10 ? "0" + day : day;
-    return d + "." + m + "." + y;
-}
-
-function formatState(data) {
-    switch (data) {
-        case 'FAILED':
-            return 'Fehlerhaft';
-        case 'PENDING':
-            return 'Wartet auf Verarbeitung';
-        case 'PROCESSING':
-            return 'Wird intern verarbeitet';
-        case 'SUSPENDED':
-            return 'Pausiert';
-        case 'REJECTED':
-            return 'Abgelehnt';
-        case 'WAITING':
-            return 'Wartet auf Dateneingabe';
-        case 'IN_PROGRESS':
-            return 'In Arbeit';
-        case 'DONE':
-            return 'Erfolgreich abgeschlossen';
-    }
-
-    return data;
 }
 
 var processAjaxForms = function() {
