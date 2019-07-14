@@ -317,8 +317,9 @@ project(':argo') {
 
         dependencies {
             compile argoModels
+            compile argoProjects
             compile argoRepository
-            runtime argoRepositoryJson
+            compile argoRepositoryJson
             compile argoTemplateEngine
             compile argoTemplateEngineThymeleaf
 //            compile argoAssetsModels

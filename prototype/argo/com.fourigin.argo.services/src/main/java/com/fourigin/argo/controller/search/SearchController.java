@@ -31,8 +31,8 @@ public class SearchController {
     @ResponseBody
     public List<String> resolveMatchingIndexTargets(
         @PathVariable("project") String project,
-        @RequestParam("locale") String language,
-        @RequestParam("path") String path,
+        @RequestParam("l") String language,
+        @RequestParam("p") String path,
         @RequestBody SearchRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Resolving matching index for {}/{} and {}", language, path, request);
@@ -53,7 +53,12 @@ public class SearchController {
 
             if (logger.isDebugEnabled()) logger.debug("Resolved index: {}", index);
 
-            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields(), language);
+            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(
+                    index,
+                    request.getCategories(),
+                    request.getFields(),
+                    language
+            );
             if (logger.isDebugEnabled()) logger.debug("References: {}", references);
 
             return references;

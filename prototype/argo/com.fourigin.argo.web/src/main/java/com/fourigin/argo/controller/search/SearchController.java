@@ -52,7 +52,12 @@ public class SearchController {
             DataSourceIndex index = contentRepository.resolveIndex(info, indexName);
             if (logger.isDebugEnabled()) logger.debug("Resolved index: {}", index);
 
-            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(index, request.getCategories(), request.getFields(), language);
+            List<String> references = DataSourceIndexProcessing.resolveMatchingIndexTargets(
+                    index,
+                    request.getCategories(),
+                    request.getFields(),
+                    language
+            );
             if (logger.isDebugEnabled()) logger.debug("References: {}", references);
 
 //            List<String> references = index.getReferences();

@@ -32,10 +32,11 @@ public class LiveDataSourceIndexResolver implements DataSourceIndexResolver {
 
     @Override
     public DataSourceIndex resolveIndex(String path, String indexName) {
-        File hiddenDir = new File(getContentRoot(), ".index");
+//        File hiddenDir = new File(getContentRoot(), ".index");
+        File hiddenDir = getContentRoot();
         if (!hiddenDir.exists()) { // NOPMD
             if (!hiddenDir.mkdirs()) { // NOPMD
-                throw new IllegalStateException("Unable to create missing hidden directory '" + hiddenDir.getAbsolutePath() + "'!");
+                throw new IllegalStateException("Unable to create missing directory '" + hiddenDir.getAbsolutePath() + "'!");
             }
         }
 
