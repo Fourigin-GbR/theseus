@@ -82,7 +82,7 @@ table.display {
     padding: 40px;
     background: #eeeeee;
     text-align: left;
-    border: 2px solid #00b393;
+    border: 1px solid #d7d7d7;
     overflow-y: scroll;
 }
 
