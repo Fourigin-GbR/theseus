@@ -2,7 +2,7 @@ var admin = false;
 var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
-let stages, amountOfStages, stagesNamesList = [];
+let requestData, stages, amountOfStages, stagesNamesList = [];
 
 function init() {
     translationBundle = resolveLanguageBundle('de');
@@ -304,15 +304,30 @@ function initUsersTable() {
 function initRequestsTable() {
     var dataTable = null;
 
+    let jOverlayStagePrototype = $("<div class=\"request-stage\">\n" +
+        "                                <div class=\"request-stage-title\"></div>\n" +
+        "                                <div class=\"request-stage-status\">\n" +
+        "                                    <i class=\"statusComplete fa fa-check-circle\"></i>\n" +
+        "                                    <i class=\"statusIncomplete fa fa-circle-thin\"></i>\n" +
+        "                                </div>\n" +
+        "                                <div class=\"request-stage-action\">\n" +
+        "                                </div>\n" +
+        "                            </div>");
+    let jOverlayStageActionButton = $("<form>\n" +
+        "                                        <input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
+        "                                    </form>\n");
+
     $.when(loadRequests()).done(
         function (data) {
             console.log(data);
 
             var table = $('#requests');
 
+            requestData = data;
             internalInitRequestsTable(data);
 
             var requestDetails = $('#request-details');
+            var jRequestStages = requestDetails.find(".request-stages");
 
             requestDetails.on('click', '.close', function(e) {
                 e.stopPropagation();
@@ -331,7 +346,37 @@ function initRequestsTable() {
                     jThis.addClass('selected');
                     var rowId = requestsDataTable.row(this).id();
                     var content = $('#attachment-' + rowId).clone();
+                    var currentRequestData = getRequestDataItemById(rowId);
+                    var bFoundRequestStage = false;
+
                     requestDetails.find(".requestDetails__content").html(content);
+                    // Set stages:
+                    console.log("Zeige details von dem: ", rowId, requestData, currentRequestData);
+                    jRequestStages.empty();
+                    for(let i=0; i<amountOfStages; i++) {
+                        let jStageCurrent = jOverlayStagePrototype.clone();
+                        //
+                        if(!bFoundRequestStage) {
+                            // Not passed the current stage yet, so guess all previous stages are done:
+                            jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
+                        }
+                        console.log("Vergleiche stages:", stages[i].name, currentRequestData.stage);
+                        if(!bFoundRequestStage && stages[i].name === currentRequestData.stage) {
+                            bFoundRequestStage = true;
+                        }
+                        jStageCurrent.find(".request-stage-title").text(stages[i].name);
+                        // Actions
+                        console.log("actions:", stages[i]);
+                        for(let key in stages[i].actions) {
+                            console.log("action:", stages[i].actions[key]);
+                            let jActionButton = jOverlayStageActionButton.clone();
+                            //
+                            jActionButton.find("input").val(key);
+                            jStageCurrent.find(".request-stage-action").append(jActionButton);
+                        }
+                        jRequestStages.append(jStageCurrent);
+                    }
+                    //setRequestDetailsStages();
                     requestDetails.show();
                 }
             });
@@ -382,6 +427,7 @@ function initRequestsTable() {
                     var approveButton = $('<input></input>')
                         .prop('id', 'approveButton-' + req.id)
                         .prop('type', 'submit')
+                        .prop('class', 'buttonLca')
                         .prop('value', 'Bearbeitung abschliessen');
                     approveForm.append(approveCustomerIdField);
                     approveForm.append(approveMessageField);
@@ -394,6 +440,7 @@ function initRequestsTable() {
 
                 var infoButton = $('<input></input>')
                     .prop('id', 'infoButton-' + req.id)
+                    .prop('class', 'buttonLca')
                     .prop('type', 'submit')
                     .prop('value', 'Auftragsdetails ...');
 
@@ -516,6 +563,17 @@ function getStateHtml(state) {
     jState = $("<i class=\"statusIcon " + stateIconClassName + "\" aria-hidden=\"true\"></i><span>" + stateCopy + "</span>");
 
     return jState;
+}
+
+function getRequestDataItemById(id) {
+    for(let i=0, il = requestData.length; i<il; i++) {
+        let currentRequestItem = requestData[i];
+        if(currentRequestItem.id === id) {
+            return currentRequestItem;
+        }
+    }
+
+    return null;
 }
 
 var processAjaxForms = function() {

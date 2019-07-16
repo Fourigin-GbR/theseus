@@ -41,8 +41,8 @@
                     </thead>
                 </table>
                 <div id="user-controls">
-                    <input type="button" id="add-user-button" name="add-user" value="Hinzufügen"/>
-                    <input type="button" id="delete-user-button" name="delete-user" value="Entfernen"/>
+                    <input type="button" id="add-user-button" class="buttonCta" name="add-user" value="Hinzufügen"/>
+                    <input type="button" id="delete-user-button" class="buttonLca" name="delete-user" value="Entfernen"/>
                 </div>
                 <div id="request-controls">
                     <form action="form-kfz-anmeldung.html" target="_blank">
@@ -52,7 +52,7 @@
                             <option name="register-vehicle">KFZ-Anmeldung</option>
                         </select>
                         <input type="hidden" name="customer.id" id="selectedClient"/>
-                        <input type="submit" name="start-request" value="Starten"/>
+                        <input type="submit" class="buttonCta" name="start-request" value="Starten"/>
                     </form>
                 </div>
             </div>
@@ -112,27 +112,17 @@
                         <h3>Auftrag-Details</h3>
                         <i class="close fa fa-times-circle"></i>
 
-                        <h4>Status der Auftrags-Phasen</h4>
+                        <h4>Prozess-Übersicht</h4>
                         <div class="request-stages">
                             <div class="request-stage">
-                                <div class="request-stage-title">1.) Angabe der Basisdaten zur KFZ-Anmeldung</div>
-                                <div class="request-stage-status">
-                                    <i class="fa fa-check-circle"></i>
+                                <div class="request-stage-title"></div>
+                                <div class="request-stage-status request-stage-status--done">
+                                    <i class="statusComplete fa fa-check-circle"></i>
+                                    <i class="statusIncomplete fa fa-circle-thin"></i>
                                 </div>
                                 <div class="request-stage-action">
                                     <form>
-                                        <input type="submit" class="buttonLca" value="Basisdaten bearbeiten"/>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="request-stage">
-                                <div class="request-stage-title">2.) Genehmigtes KFZ-Kennzeichen ergänzen</div>
-                                <div class="request-stage-status">
-                                    <i class="fa fa-times"></i>
-                                </div>
-                                <div class="request-stage-action">
-                                    <form>
-                                        <input type="submit" class="buttonCta" value="Jetzt KFZ-Kennzeichen ergänzen"/>
+                                        <input type="submit" class="buttonLca" value=""/>
                                     </form>
                                 </div>
                             </div>

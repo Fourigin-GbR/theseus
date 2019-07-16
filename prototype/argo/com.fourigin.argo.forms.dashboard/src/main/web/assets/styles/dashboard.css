@@ -61,7 +61,7 @@ table.display {
     padding-bottom: 10px;
     margin-bottom: 10px;
     color: white;
-    background: #9d9d9d;
+    background: #514f4f;
     text-align: center;
 }
 
@@ -131,6 +131,9 @@ table.dataTable.display tbody tr.odd.selected > .sorting_1, table.dataTable.orde
 table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
     background-color: #00b3933d !important;
 }
+table.dataTable.display tbody tr.even.selected > .sorting_1 {
+    background-color: transparent !important;
+}
 table.dataTable tbody tr td {
     cursor: pointer;
     text-align: center;
@@ -174,9 +177,16 @@ table.dataTable tr.group.closed td:first-of-type::before {
 
 .buttonLca,
 .buttonCta {
-    padding: 5px 10px;
     border: 0;
-    background-color: #c5c5c5;
+    cursor: pointer;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 3px;
+    border: none;
+    background-color: #aaaeaf;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
 }
 .buttonCta {
     background-color: #00b393;
@@ -204,7 +214,8 @@ table.dataTable tr.group.closed td:first-of-type::before {
     color: #00b393;
 }
 .request-stage-action {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 
@@ -234,26 +245,6 @@ table.dataTable tr.group.closed td:first-of-type::before {
 }
 
 
-
-
-.processState {
-
-}
-.processState--pending {
-    width: 10%;
-}
-.processState--processing {
-    width: 20%;
-}
-.processState--waitingForInput {
-    width: 30%;
-}
-.processState--readyToApprove {
-    width: 80%;
-}
-.processState--done {
-    width: 100%;
-}
 
 
 .processBar {
@@ -315,6 +306,19 @@ table.dataTable tr.group.closed td:first-of-type::before {
     font-size: 12px;
 }
 
+
+.request-stage-status .statusComplete {
+    display: none;
+}
+.request-stage-status .statusIncomplete {
+    display: block;
+}
+.request-stage-status.request-stage-status--done .statusComplete {
+    display: block;
+}
+.request-stage-status.request-stage-status--done .statusIncomplete {
+    display: none;
+}
 
 
 .PENDING .statusIcon:before,
