@@ -93,6 +93,21 @@ function formatDateForGroupingView(date) {
     return d + "." + m + "." + y;
 }
 
+function getStageTranslation(stage) {
+    let translation = "---";
+    let stagesTranslations = {
+        "base-data-without-approved-nameplate" : "Basis-Daten ohne genehmigtes KFZ-Kennzeichen",
+        "final-data-with-approved-nameplate" : "Finale Daten mit genehmigtem KFZ-Kennzeichen",
+        "request-delivered-to-registration-authority" : "Daten wurden der Registrierungsbehörde übergeben",
+        "request-returned-from-registration-authority" : "Daten wurden von der Registrierungsbehörde zurückgeschickt"
+    };
+    if(stagesTranslations[stage]) {
+        translation = stagesTranslations[stage];
+    }
+
+    return translation;
+}
+
 function formatState(data) {
     switch (data) {
         case 'PENDING':

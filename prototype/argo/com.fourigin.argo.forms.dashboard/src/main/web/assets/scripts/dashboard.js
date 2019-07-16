@@ -2,12 +2,25 @@ var admin = false;
 var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
+let stages, amountOfStages, stagesNamesList = [];
 
 function init() {
     translationBundle = resolveLanguageBundle('de');
 
-    initUsersTable();
-    initRequestsTable();
+    // Stages
+    $.when(loadStages()).done(
+        function (data) {
+            stages = data;
+            amountOfStages = stages.length;
+            for(let i=0; i<amountOfStages; i++) {
+                stagesNamesList.push(stages[i]['name']);
+            }
+            console.log("stagesNamesList", stagesNamesList);
+
+            initUsersTable();
+            initRequestsTable();
+        }
+    );
 
     var languageDE = $('#language-de');
     var languageEN = $('#language-en');
@@ -46,6 +59,12 @@ function init() {
             var sSearch = jFilterByType[0].value + ' ' + jFilterByStatus[0].value;
             requestsDataTable.search(sSearch ).draw();
         });
+}
+
+function loadStages() {
+    return $.ajax({
+        url: "/forms-dashboard/stages?formId=register-vehicle"
+    });
 }
 
 function loadCustomers() {
@@ -134,7 +153,7 @@ function internalInitRequestsTable(data) {
                     var date = new Date(group);
                     var viewDateFormatted = window.formatDateForGroupingView(date);
                     $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="6">' + viewDateFormatted + '</td></tr>'
+                        '<tr class="group"><td colspan="7">' + viewDateFormatted + '</td></tr>'
                     );
 
                     last = parsedDate;
@@ -192,16 +211,25 @@ function internalInitRequestsTable(data) {
                 "visible": false
             },
             {
+                "data": "stage",
+                "render": function (data, type, full) {
+                    let processHandleWidth = ((stagesNamesList.indexOf(data) + 1) * 100) / amountOfStages;
+                    return $('<div></div>')
+                        .attr('class', data + ' stage-value-cell')
+                        .append('<div class="processBar"><span class="processBar__handle" style="width:' + processHandleWidth + '%"></span><span class="processBar__label">' + processHandleWidth + '%</span></div>')
+                        .append($('<span class="processName"></span>')
+                            .html(getStageTranslation(data))
+                        )[0].outerHTML;
+                }
+            },
+            {
                 "data": "state",
                 "render": function (data, type, full) {
-                    console.log('rendering state cell ' + data);
                     return $('<div></div>')
                         .attr('class', data + ' state-value-cell')
                         .append($('<span></span>')
-                            .html(formatState(data))
+                            .html(getStateHtml(data))
                         )[0].outerHTML;
-//                    return $('<span></span>').attr('class=', data).text(formatState(data)).text();
-//                    return jQuery('<span></span>').attr('class=', data).text(formatState(data)).text();
                 }
             }
         ],
@@ -286,9 +314,9 @@ function initRequestsTable() {
 
             var requestDetails = $('#request-details');
 
-            requestDetails.on('click', '.close', function() {
+            requestDetails.on('click', '.close', function(e) {
+                e.stopPropagation();
                 requestDetails.hide();
-                table.find('tbody tr.selected').removeClass('selected');
             });
 
             // Events for show selected row status and showing details on: row click.
@@ -452,6 +480,42 @@ function resolveFAType(mimeType) {
     }
 
     return "fa-file-text-o";
+}
+
+function getStateHtml(state) {
+    let stateCopy = formatState(state),
+        stateIconClassName = "",
+        jState;
+    //
+    switch(state) {
+        case "PENDING":
+        case "WAITING_FOR_INPUT":
+        case "WAITING_FOR_APPROVAL":
+            stateIconClassName = "fa fa-clock-o";
+            break;
+        case "PROCESSING":
+            stateIconClassName = "fa fa-cogs";
+            break;
+        case "FAILED":
+            stateIconClassName = "fa fa-exclamation-triangle";
+            break;
+        case "SUSPENDED":
+            stateIconClassName = "fa fa-pause";
+            break;
+        case "READY_TO_APPROVE":
+            stateIconClassName = "fa fa-flag";
+            break;
+        case "REJECTED":
+            stateIconClassName = "fa fa-times";
+            break;
+        case "DONE":
+        case "PROCESSED":
+            stateIconClassName = "fa fa-check-square-o";
+            break;
+    }
+    jState = $("<i class=\"statusIcon " + stateIconClassName + "\" aria-hidden=\"true\"></i><span>" + stateCopy + "</span>");
+
+    return jState;
 }
 
 var processAjaxForms = function() {

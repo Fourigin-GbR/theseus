@@ -129,8 +129,7 @@ table.display {
 table.dataTable tbody tr.selected,
 table.dataTable.display tbody tr.odd.selected > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_1,
 table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
-    background-color: #00b393 !important;
-    color: #fff !important;
+    background-color: #00b3933d !important;
 }
 table.dataTable tbody tr td {
     cursor: pointer;
@@ -234,40 +233,106 @@ table.dataTable tr.group.closed td:first-of-type::before {
     width: 250px;
 }
 
-.PENDING {
-    background-color: lightgray;
+
+
+
+.processState {
+
+}
+.processState--pending {
+    width: 10%;
+}
+.processState--processing {
+    width: 20%;
+}
+.processState--waitingForInput {
+    width: 30%;
+}
+.processState--readyToApprove {
+    width: 80%;
+}
+.processState--done {
+    width: 100%;
 }
 
-.PROCESSING {
-    background-color: lightgray;
-    border: 2px solid green;
+
+.processBar {
+    height: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    background-color: #eee;
+    position: relative;
+}
+.processBar .processBar__handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    background-color: #00b393;
+}
+.processBar .processBar__label {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    color: #111;
+    background-color: rgba(255,255,255,.6);
+    font-size: 11px;
+    line-height: 20px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    transform: translateX(-50%);
 }
 
-.WAITING_FOR_INPUT {
-    background-color: yellow;
+.processName {
+    font-size: 12px;
+    line-height: 1.2;
+    display: inline-block;
+    background-color: #f2e383;
+    padding: 5px 10px;
 }
 
-.FAILED {
-    background-color: red;
+.stage-value-cell {
+    width: 250px;
+}
+.state-value-cell {
+    text-align: left;
 }
 
-.SUSPENDED {
-    background-color: gray;
+.state-value-cell .statusIcon {
+    color: #ccc;
+    display: inline-block;
+    margin-right: 10px;
+}
+.state-value-cell .statusIcon:before {
+    font-size: 24px;
+    color: #fff;
+    padding: 5px;
 }
 
-.READY_TO_APPROVE {
-    background-color: yellow;
+.statusState {
+    font-size: 12px;
 }
 
-.WAITING_FOR_APPROVAL {
-    background-color: yellow;
-    border: 2px solid green;
+
+
+.PENDING .statusIcon:before,
+.PROCESSING .statusIcon:before,
+.WAITING_FOR_APPROVAL .statusIcon:before,
+.WAITING_FOR_INPUT .statusIcon:before {
+    background-color: #ffaa34;
 }
 
-.REJECTED {
-    background-color: red;
+.REJECTED .statusIcon:before,
+.FAILED .statusIcon:before {
+    background-color: #b3233f;
 }
 
-.DONE {
-    background-color: green;
+.READY_TO_APPROVE .statusIcon:before {
+    background-color: #18beee;
+}
+
+.DONE .statusIcon:before {
+    background-color: #00b393;
 }
