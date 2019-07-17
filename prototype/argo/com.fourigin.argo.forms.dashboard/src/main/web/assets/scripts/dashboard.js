@@ -342,12 +342,14 @@ function initRequestsTable() {
                     requestDetails.hide();
                 }
                 else {
+                    // Overlay
                     table.find('tr.selected').removeClass('selected');
                     jThis.addClass('selected');
                     var rowId = requestsDataTable.row(this).id();
                     var content = $('#attachment-' + rowId).clone();
                     var currentRequestData = getRequestDataItemById(rowId);
                     var bFoundRequestStage = false;
+                    var jRequestState = getStateHtml(currentRequestData.state);
 
                     requestDetails.find(".requestDetails__content").html(content);
                     // Set stages:
@@ -376,7 +378,9 @@ function initRequestsTable() {
                         }
                         jRequestStages.append(jStageCurrent);
                     }
-                    //setRequestDetailsStages();
+                    // State:
+                    requestDetails.find(".request-status").empty().append(jRequestState);
+                    //
                     requestDetails.show();
                 }
             });
@@ -531,33 +535,33 @@ function resolveFAType(mimeType) {
 
 function getStateHtml(state) {
     let stateCopy = formatState(state),
-        stateIconClassName = "",
+        stateIconClassName = state,
         jState;
     //
     switch(state) {
         case "PENDING":
         case "WAITING_FOR_INPUT":
         case "WAITING_FOR_APPROVAL":
-            stateIconClassName = "fa fa-clock-o";
+            stateIconClassName += " fa fa-clock-o";
             break;
         case "PROCESSING":
-            stateIconClassName = "fa fa-cogs";
+            stateIconClassName += " fa fa-cogs";
             break;
         case "FAILED":
-            stateIconClassName = "fa fa-exclamation-triangle";
+            stateIconClassName += " fa fa-exclamation-triangle";
             break;
         case "SUSPENDED":
-            stateIconClassName = "fa fa-pause";
+            stateIconClassName += " fa fa-pause";
             break;
         case "READY_TO_APPROVE":
-            stateIconClassName = "fa fa-flag";
+            stateIconClassName += " fa fa-flag";
             break;
         case "REJECTED":
-            stateIconClassName = "fa fa-times";
+            stateIconClassName += " fa fa-times";
             break;
         case "DONE":
         case "PROCESSED":
-            stateIconClassName = "fa fa-check-square-o";
+            stateIconClassName += " fa fa-check-square-o";
             break;
     }
     jState = $("<i class=\"statusIcon " + stateIconClassName + "\" aria-hidden=\"true\"></i><span>" + stateCopy + "</span>");

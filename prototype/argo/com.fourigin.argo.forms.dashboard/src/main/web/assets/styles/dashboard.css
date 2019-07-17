@@ -291,12 +291,14 @@ table.dataTable tr.group.closed td:first-of-type::before {
     text-align: left;
 }
 
-.state-value-cell .statusIcon {
+.state-value-cell .statusIcon,
+.request-status .statusIcon {
     color: #ccc;
     display: inline-block;
     margin-right: 10px;
 }
-.state-value-cell .statusIcon:before {
+.state-value-cell .statusIcon:before,
+.request-status .statusIcon:before {
     font-size: 24px;
     color: #fff;
     padding: 5px;
@@ -321,22 +323,22 @@ table.dataTable tr.group.closed td:first-of-type::before {
 }
 
 
-.PENDING .statusIcon:before,
-.PROCESSING .statusIcon:before,
-.WAITING_FOR_APPROVAL .statusIcon:before,
-.WAITING_FOR_INPUT .statusIcon:before {
+.PENDING.statusIcon:before,
+.PROCESSING.statusIcon:before,
+.WAITING_FOR_APPROVAL.statusIcon:before,
+.WAITING_FOR_INPUT.statusIcon:before {
     background-color: #ffaa34;
 }
 
-.REJECTED .statusIcon:before,
-.FAILED .statusIcon:before {
+.REJECTED.statusIcon:before,
+.FAILED.statusIcon:before {
     background-color: #b3233f;
 }
 
-.READY_TO_APPROVE .statusIcon:before {
+.READY_TO_APPROVE.statusIcon:before {
     background-color: #18beee;
 }
 
-.DONE .statusIcon:before {
+.DONE.statusIcon:before {
     background-color: #00b393;
 }
