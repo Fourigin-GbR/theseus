@@ -358,6 +358,10 @@ var prePopulateForm = function(data) {
     for(var property in storedData) {
         if (storedData.hasOwnProperty(property)) {
             currentFormElement = document.querySelector("[name='" + property + "']");
+            if(!currentFormElement) {
+                console.error("Can not find form element with property name", property);
+                return;
+            }
             switch (currentFormElement.getAttribute("type")) {
                 case "text":
                     currentFormElement.value = storedData[property];
