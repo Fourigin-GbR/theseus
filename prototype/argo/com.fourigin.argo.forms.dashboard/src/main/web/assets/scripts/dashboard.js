@@ -310,12 +310,15 @@ function initRequestsTable() {
         "                                    <i class=\"statusComplete fa fa-check-circle\"></i>\n" +
         "                                    <i class=\"statusIncomplete fa fa-circle-thin\"></i>\n" +
         "                                </div>\n" +
-        "                                <div class=\"request-stage-action\">\n" +
+        "                                <div class=\"request-stage-edit-action\">\n" +
         "                                </div>\n" +
         "                            </div>");
-    let jOverlayStageActionButton = $("<form>\n" +
+    let jOverlayStageEditButton = $("<form>\n" +
         "                                        <input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
+        "                                        <input type=\"hidden\" name=\"entryId\" value=\"\"/>\n" +
         "                                    </form>\n");
+    let jOverlayStageActionButton = $("<span><input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
+        "                                        <input type=\"hidden\" name=\"entryId\" value=\"\"/></span>\n");
 
     $.when(loadRequests()).done(
         function (data) {
@@ -350,6 +353,9 @@ function initRequestsTable() {
                     var currentRequestData = getRequestDataItemById(rowId);
                     var bFoundRequestStage = false;
                     var jRequestState = getStateHtml(currentRequestData.state);
+                    var currentStageObject;
+                    var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
+                    var jCurrentStageActions = jCurrentStageActionsWrapper.find(".request-current-stage-actions");
 
                     requestDetails.find(".requestDetails__content").html(content);
                     // Set stages:
@@ -362,24 +368,31 @@ function initRequestsTable() {
                             // Not passed the current stage yet, so guess all previous stages are done:
                             jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
                         }
-                        console.log("Vergleiche stages:", stages[i].name, currentRequestData.stage);
                         if(!bFoundRequestStage && stages[i].name === currentRequestData.stage) {
                             bFoundRequestStage = true;
+                            currentStageObject = stages[i];
                         }
                         jStageCurrent.find(".request-stage-title").text(stages[i].name);
-                        // Actions
-                        console.log("actions:", stages[i]);
-                        for(let key in stages[i].actions) {
-                            console.log("action:", stages[i].actions[key]);
-                            let jActionButton = jOverlayStageActionButton.clone();
+                        // Stage-field-edit-action
+                        if(!stages[i].editFields) {
+                            let jStageEditButton = jOverlayStageEditButton.clone();
                             //
-                            jActionButton.find("input").val(key);
-                            jStageCurrent.find(".request-stage-action").append(jActionButton);
+                            jStageEditButton.find("input[type=submit]").val("Daten erneut editieren");
+                            jStageEditButton.find("input[name=entryId]").val(rowId);
+                            jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                         }
                         jRequestStages.append(jStageCurrent);
                     }
                     // State:
                     requestDetails.find(".request-status").empty().append(jRequestState);
+                    // Stage actions:
+                    jCurrentStageActions.empty();
+                    for(let key in currentStageObject.actions) {
+                        let jCurrentButton = jOverlayStageActionButton.clone();
+                        //
+                        jCurrentButton.find("input[type=submit]").val(key);
+                        jCurrentStageActions.append(jCurrentButton);
+                    }
                     //
                     requestDetails.show();
                 }

@@ -213,11 +213,32 @@ table.dataTable tr.group.closed td:first-of-type::before {
     font-size: 40px;
     color: #00b393;
 }
-.request-stage-action {
+.request-edit-action {
     display: flex;
     justify-content: space-between;
 }
 
+.request-current-stage-actions-wrapper {
+    margin: 20px 0;
+}
+.request-current-stage-actions-wrapper form {
+    display: flex;
+    align-items: center;
+}
+.request-current-stage-actions {
+    display: flex;
+}
+.request-current-stage-actions > span {
+    padding-right: 10px;
+}
+.request-current-stage-actions-message {
+    display: flex;
+    align-items: center;
+}
+.request-current-stage-actions-message .label {
+    font-size: 11px;
+    padding: 0 10px 0 40px;
+}
 
 .request-attachments a {
     font-size: 14px;
