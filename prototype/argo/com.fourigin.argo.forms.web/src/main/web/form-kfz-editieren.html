@@ -10,49 +10,8 @@
 <body>
 <h1>KFZ-Anmeldung Basis-Daten</h1>
 
-<div class="Tabs_ StepsBox" id="fccFormular">
-    <nav class="StepsNavigation">
-        <div class="TabNavigationItem_ StepsNavigation__item active" data-tab-id="tab1">
-            <div class="StepsNavigation__item__wrapper">
-                <i class="fa fa-car la la-automobile"></i>
-                <span>
-                    <span class="StepsNavigation__item__copy">Fahrzeug</span>
-                </span>
-            </div>
-        </div>
-        <div class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab2">
-            <div class="StepsNavigation__item__wrapper">
-                <i class="fa fa-pencil-square la la-pencil-square"></i>
-                <span>
-                    <span class="StepsNavigation__item__copy">KFZ-Steuer</span>
-                </span>
-            </div>
-        </div>
-        <div class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab3">
-            <div class="StepsNavigation__item__wrapper">
-                <i class="fa fa-money la la-money"></i>
-                <span>
-                    <span class="StepsNavigation__item__copy">Zahlung</span>
-                </span>
-            </div>
-        </div>
-        <div class="TabNavigationItem_ StepsNavigation__item" data-tab-id="tab4">
-            <div class="StepsNavigation__item__wrapper">
-                <i class="fa fa-suitcase la la-suitcase"></i>
-                <span>
-                    <span class="StepsNavigation__item__copy">Dokumentübergabe</span>
-                </span>
-            </div>
-        </div>
-        <div class="TabNavigationItem_ StepsNavigation__item StepsNavigation__item--last" data-tab-id="tab5">
-            <div class="StepsNavigation__item__wrapper">
-                <i class="fa fa-upload la la-upload"></i>
-                <span>
-                    <span class="StepsNavigation__item__copy">Prüfen & Abschließen</span>
-                </span>
-            </div>
-        </div>
-    </nav>
+<div id="fccFormular">
+
     <div class="TabsWrapper">
         <form action="#" method="get" data-form-definition-id="register-vehicle">
             <input type="hidden" name="customer.id" id="customer.id" value="unspecified"/>
@@ -82,97 +41,274 @@
                 </footer>
             </div>
 
-            <div data-target-tab-id="tab1" class="Tab StepsBox__step active">
+
+            <fieldset>
+                <legend>Informationen zum Fahrzeug</legend>
                 <fieldset>
-                    <legend>Informationen zum Fahrzeug</legend>
-                    <fieldset>
-                        <legend>Kennzeichen</legend>
+                    <legend>Kennzeichen</legend>
 
-                        <!-- old nameplate -->
+                    <!-- old nameplate -->
+                    <label>
+                        <span>das alte Kennzeichen (falls vorhanden)</span>
+
+                        <input type="text" name="vehicle.existing-nameplate"/>
+                    </label>
+                    <div class="FieldValidationMessage" data-input="vehicle.existing-nameplate" data-element="validation-message"></div>
+
+                    <!-- new nameplate -->
+                    <fieldset name="neues_kennzeichen" class="CheckboxList">
+                        <legend>das neue Kennzeichen</legend>
+
+                        <div class="CheckboxList__item DependencyGroup">
+                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                <input checked="checked" type="radio" name="vehicle.new-nameplate" value="portal"
+                                       data-activate-fieldset-name="nameplate-customer-requirements-group"/>
+                                <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
+                            </label>
+                            <fieldset class="DependencyGroup__dependant" name="nameplate-customer-requirements-group"
+                                      disabled="disabled">
+                                <label>
+                                    <input type="text" name="vehicle.new-nameplate/nameplate-customer-requirements"/>
+                                </label>
+                                <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-requirements" data-element="validation-message"></div>
+                            </fieldset>
+                        </div>
+                        <!---->
+                        <div class="CheckboxList__item DependencyGroup">
+                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                <input type="radio" name="vehicle.new-nameplate" value="self"
+                                       data-activate-fieldset-name="nameplate-customer-reservation-group"/>
+                                <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
+                            </label>
+                            <fieldset class="DependencyGroup__dependant" name="nameplate-customer-reservation-group"
+                                      disabled="disabled">
+                                <label>
+                                    <!--<span>Reservierung</span>-->
+                                    <input type="text" name="vehicle.new-nameplate/nameplate-customer-reservation"/>
+                                </label>
+                                <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-reservation" data-element="validation-message"></div>
+                            </fieldset>
+                        </div>
+                        <!---->
+                        <div class="CheckboxList__item">
+                            <label class="CheckboxList__item__checkbox">
+                                <input type="radio" name="vehicle.new-nameplate" value="random"/>
+                                <span>spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="vehicle.new-nameplate" data-element="validation-message"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- nameplate type -->
+                    <fieldset name="kennzeichen_typ" class="CheckboxList">
+                        <legend>Typ des Kennzeichens</legend>
+
+                        <div class="CheckboxList__item DependencyGroup">
+                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                <input checked="checked" type="radio" name="vehicle.nameplate-type" value="normal" />
+                                <span>normales Kennzeichen</span>
+                            </label>
+                        </div>
+                        <!---->
+                        <div class="CheckboxList__item DependencyGroup">
+                            <label class="CheckboxList__item__checkbox DependencyGroup__master">
+                                <input type="radio" name="vehicle.nameplate-type" value="season"
+                                       data-activate-fieldset-name="nameplate-type-group"/>
+                                <span>Saison-Kennzeichen</span>
+                            </label>
+                            <fieldset class="DependencyGroup__dependant" name="nameplate-type-group"
+                                      disabled="disabled">
+                                <div class="FormularGroup Grid">
+                                    <div class="Grid_Module--50">
+                                        <label>
+                                            von:
+                                            <input type="text" name="vehicle.nameplate-type/season-begin"/>
+                                        </label>
+                                        <div class="FieldValidationMessage" data-input="vehicle.nameplate-type/season-begin" data-element="validation-message"></div>
+                                    </div>
+                                    <div class="Grid_Module--50">
+                                        <label>
+                                            bis:
+                                            <input type="text" name="vehicle.nameplate-type/season-end"/>
+                                        </label>
+                                        <div class="FieldValidationMessage" data-input="vehicle.nameplate-type/season-end" data-element="validation-message"></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </fieldset>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Fahrzeugdaten</legend>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Ident-Nummer</span>
+                                <input type="text" name="vehicle-data.ident"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="vehicle-data.ident" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Fahrzeugbrief-Nummer</span>
+                                <input type="text" name="vehicle-data.vehicle-id"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="vehicle-data.vehicle-id" data-element="validation-message"></div>
+                        </div>
+                    </div>
+
+
+                    <label class="Checkbox">
+                        <input type="checkbox" name="vehicle-data.leasing" />
+                        <span>Fahrzeug wird finanziert bzw. geleast</span>
+                    </label>
+                    <div class="FieldValidationMessage" data-input="vehicle-data.leasing" data-element="validation-message"></div>
+
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>KFZ-Versicherung</legend>
+
+                    <label>
+                        <span>eVB-Nummer
+                           <span class="tooltip">
+                                <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
+                               <span class="tooltip__copy">
+                                   Eine elektronische Versicherungsbestätigung (eVB) ist in Deutschland
+                                   der Nachweis einer Versicherungsgesellschaft über die gesetzliche
+                                   Kfz-Haftpflichtversicherung („Deckung“) für ein im öffentlichen Raum
+                                   verkehrendes Kraftfahrzeug. Die Bestätigung muss der Kraftfahrzeug-Zulassungsbehörde
+                                   bei Erstzulassung und bei technischen oder personenbezogenen Änderungen
+                                   des Kraftfahrzeugs vorgelegt werden. Nur dann kann von der Zulassungsstelle
+                                   eine Zulassung vergeben werden. Sollten Sie noch keine Versicherung abgeschloßen
+                                   haben, so können Sie<a href="https://www.procheck24.de/einsurance/csp/doHomepageEntry.do?cspident=09D0551142A73B77DECE5CADBE06D08B&p=4&sub=1" target="_blank">hier</a>
+                                   nach einer passenden suchen.
+                               </span>
+                            </span>
+                        </span>
+                        <input type="text" name="vehicle-insurance.id"/>
+                    </label>
+                    <div class="FieldValidationMessage" data-input="vehicle-insurance.id" data-element="validation-message"></div>
+
+                </fieldset>
+
+            </fieldset>
+
+            <fieldset class="checkboxList">
+                <legend>Bankdaten für die Abbuchung der KFZ-Steuer</legend>
+                <div class="DependencyGroup">
+                    <label class="Checkbox DependencyGroup__master">
+                        <input type="radio" name="tax.account" value="use-stored-account"
+                               data-activate-fieldset-name="hinterlegte_kontodaten"/>
+                        <span>die hinterlegte Bankverbindung verwenden:
+                                    <span class="tooltip">
+                                        <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
+                                        <span class="tooltip__copy">Muss man dir denn alles erklären?</span>
+                                    </span>
+                        </span>
+                    </label>
+                    <fieldset name="hinterlegte_kontodaten" class="DependencyGroup__dependant">
                         <label>
-                            <span>das alte Kennzeichen (falls vorhanden)</span>
-
-                            <input type="text" name="vehicle.existing-nameplate"/>
+                            <select name="tax.account/stored-account">
+                                <!--<option value="DE12 3456 7890 1234 5678 90">Deutsche Bank, IBAN: DE12 3456 7890 1234 5678 90</option>-->
+                                <!--<option value="DE09 8765 4321 0987 6543 21">Sparkasse Berlin, IBAN: DE09 8765 4321 0987 6543 21</option>-->
+                            </select>
                         </label>
-                        <div class="FieldValidationMessage" data-input="vehicle.existing-nameplate" data-element="validation-message"></div>
+                        <div class="FieldValidationMessage" data-input="tax.account/stored-account" data-element="validation-message"></div>
+                    </fieldset>
+                </div>
 
-                        <!-- new nameplate -->
-                        <fieldset name="neues_kennzeichen" class="CheckboxList">
-                            <legend>das neue Kennzeichen</legend>
-
-                            <div class="CheckboxList__item DependencyGroup">
-                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                    <input checked="checked" type="radio" name="vehicle.new-nameplate" value="portal"
-                                           data-activate-fieldset-name="nameplate-customer-requirements-group"/>
-                                    <span>soll von uns beantragt werden und soll dabei folgenden Wünschen entsprechen:</span>
+                <div class="DependencyGroup">
+                    <label class="Checkbox DependencyGroup__master">
+                        <input type="radio" name="tax.account" value="use-new-account"
+                               data-activate-fieldset-name="neue_kontodaten"/>
+                        <span>eine neue Bankverbindung verwenden:</span>
+                    </label>
+                    <fieldset name="neue_kontodaten" class="DependencyGroup__dependant">
+                        <div class="Grid">
+                            <div class="Grid__Module Grid_Module--40">
+                                <label>
+                                    <span>IBAN:</span>
+                                    <input type="text" name="tax.account/new-account-code"/>
                                 </label>
-                                <fieldset class="DependencyGroup__dependant" name="nameplate-customer-requirements-group"
-                                          disabled="disabled">
+                                <div class="FieldValidationMessage" data-input="tax.account/new-account-code" data-element="validation-message"></div>
+                            </div>
+                            <div class="Grid__Module Grid_Module--30">
+                                <label>
+                                    <span>BIC:</span>
+                                    <input type="text" name="tax.account/new-account-bankcode"/>
+                                </label>
+                                <div class="FieldValidationMessage" data-input="tax.account/new-account-bankcode" data-element="validation-message"></div>
+                            </div>
+                            <div class="Grid__Module Grid_Module--30">
+                                <label>
+                                    <span>Bank:</span>
+                                    <input type="text" name="tax.account/new-account-bankname"/>
+                                </label>
+                                <div class="FieldValidationMessage" data-input="tax.account/new-account-bankname" data-element="validation-message"></div>
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <legend>Kontoinhaber</legend>
+                            <label class="Radio">
+                                <input checked="checked" type="radio" name="tax.account/new-account-owner" value="applicant"/>
+                                <span>Antragsteller selbst</span>
+                            </label>
+                            <div class="DependencyGroup">
+                                <label class="Radio DependencyGroup__master">
+                                    <input type="radio" name="tax.account/new-account-owner" value="other"
+                                           data-activate-fieldset-name="tax.account/new-account-owner_wrapper"/>
+                                    <span>eine andere Person</span>
+                                </label>
+                                <fieldset class="DependencyGroup__dependant" name="tax.account/new-account-owner_wrapper">
                                     <label>
-                                        <input type="text" name="vehicle.new-nameplate/nameplate-customer-requirements"/>
+                                        <span>Name:</span>
+                                        <input type="text" name="tax.account/new-account-owner/name"/>
                                     </label>
-                                    <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-requirements" data-element="validation-message"></div>
-                                </fieldset>
-                            </div>
-                            <!---->
-                            <div class="CheckboxList__item DependencyGroup">
-                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                    <input type="radio" name="vehicle.new-nameplate" value="self"
-                                           data-activate-fieldset-name="nameplate-customer-reservation-group"/>
-                                    <span>ist von Ihnen bereits auf Ihren Namen reserviert worden und soll lauten:</span>
-                                </label>
-                                <fieldset class="DependencyGroup__dependant" name="nameplate-customer-reservation-group"
-                                          disabled="disabled">
-                                    <label>
-                                        <!--<span>Reservierung</span>-->
-                                        <input type="text" name="vehicle.new-nameplate/nameplate-customer-reservation"/>
-                                    </label>
-                                    <div class="FieldValidationMessage" data-input="vehicle.new-nameplate/nameplate-customer-reservation" data-element="validation-message"></div>
-                                </fieldset>
-                            </div>
-                            <!---->
-                            <div class="CheckboxList__item">
-                                <label class="CheckboxList__item__checkbox">
-                                    <input type="radio" name="vehicle.new-nameplate" value="random"/>
-                                    <span>spielt für Sie keine Rolle und soll zufällig vergeben werden</span>
-                                </label>
-                                <div class="FieldValidationMessage" data-input="vehicle.new-nameplate" data-element="validation-message"></div>
-                            </div>
-                        </fieldset>
+                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/name" data-element="validation-message"></div>
 
-                        <!-- nameplate type -->
-                        <fieldset name="kennzeichen_typ" class="CheckboxList">
-                            <legend>Typ des Kennzeichens</legend>
-
-                            <div class="CheckboxList__item DependencyGroup">
-                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                    <input checked="checked" type="radio" name="vehicle.nameplate-type" value="normal" />
-                                    <span>normales Kennzeichen</span>
-                                </label>
-                            </div>
-                            <!---->
-                            <div class="CheckboxList__item DependencyGroup">
-                                <label class="CheckboxList__item__checkbox DependencyGroup__master">
-                                    <input type="radio" name="vehicle.nameplate-type" value="season"
-                                           data-activate-fieldset-name="nameplate-type-group"/>
-                                    <span>Saison-Kennzeichen</span>
-                                </label>
-                                <fieldset class="DependencyGroup__dependant" name="nameplate-type-group"
-                                          disabled="disabled">
                                     <div class="FormularGroup Grid">
-                                        <div class="Grid_Module--50">
+                                        <div class="Grid_Module--80">
                                             <label>
-                                                von:
-                                                <input type="text" name="vehicle.nameplate-type/season-begin"/>
+                                                <span>Straße:</span>
+                                                <input type="text" name="tax.account/new-account-owner/address.street"/>
                                             </label>
-                                            <div class="FieldValidationMessage" data-input="vehicle.nameplate-type/season-begin" data-element="validation-message"></div>
+                                            <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.street" data-element="validation-message"></div>
                                         </div>
-                                        <div class="Grid_Module--50">
+                                        <div class="Grid_Module--20">
                                             <label>
-                                                bis:
-                                                <input type="text" name="vehicle.nameplate-type/season-end"/>
+                                                <span>Hausnummer:</span>
+                                                <input type="text" name="tax.account/new-account-owner/address.house-number"/>
                                             </label>
-                                            <div class="FieldValidationMessage" data-input="vehicle.nameplate-type/season-end" data-element="validation-message"></div>
+                                            <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.house-number" data-element="validation-message"></div>
+                                        </div>
+                                    </div>
+
+                                    <label>
+                                        <span>Zusatzangaben:</span>
+                                        <input type="text" name="tax.account/new-account-owner/address.additional-info"/>
+                                    </label>
+                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.additional-info" data-element="validation-message"></div>
+
+                                    <div class="FormularGroup Grid">
+                                        <div class="Grid_Module--30">
+                                            <label>
+                                                <span>PLZ:</span>
+                                                <input type="text" name="tax.account/new-account-owner/address.zip-code"/>
+                                            </label>
+                                            <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.zip-code" data-element="validation-message"></div>
+                                        </div>
+                                        <div class="Grid_Module--80">
+                                            <label>
+                                                <span>Ort:</span>
+                                                <input type="text" name="tax.account/new-account-owner/address.city"/>
+                                            </label>
+                                            <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.city" data-element="validation-message"></div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -180,412 +316,172 @@
                         </fieldset>
 
                     </fieldset>
+                </div>
+                <div class="FieldValidationMessage" data-input="tax.account" data-element="validation-message"></div>
+            </fieldset>
 
-                    <fieldset>
-                        <legend>Fahrzeugdaten</legend>
-
-                        <div class="FormularGroup Grid">
-                            <div class="Grid_Module--50">
-                                <label>
-                                    <span>Ident-Nummer</span>
-                                    <input type="text" name="vehicle-data.ident"/>
-                                </label>
-                                <div class="FieldValidationMessage" data-input="vehicle-data.ident" data-element="validation-message"></div>
-                            </div>
-                            <div class="Grid_Module--50">
-                                <label>
-                                    <span>Fahrzeugbrief-Nummer</span>
-                                    <input type="text" name="vehicle-data.vehicle-id"/>
-                                </label>
-                                <div class="FieldValidationMessage" data-input="vehicle-data.vehicle-id" data-element="validation-message"></div>
-                            </div>
-                        </div>
-
-
-                        <label class="Checkbox">
-                            <input type="checkbox" name="vehicle-data.leasing" />
-                            <span>Fahrzeug wird finanziert bzw. geleast</span>
-                        </label>
-                        <div class="FieldValidationMessage" data-input="vehicle-data.leasing" data-element="validation-message"></div>
-
-
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>KFZ-Versicherung</legend>
-
-                        <label>
-                            <span>eVB-Nummer
-                               <span class="tooltip">
-                                    <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
-                                   <span class="tooltip__copy">
-                                       Eine elektronische Versicherungsbestätigung (eVB) ist in Deutschland
-                                       der Nachweis einer Versicherungsgesellschaft über die gesetzliche
-                                       Kfz-Haftpflichtversicherung („Deckung“) für ein im öffentlichen Raum
-                                       verkehrendes Kraftfahrzeug. Die Bestätigung muss der Kraftfahrzeug-Zulassungsbehörde
-                                       bei Erstzulassung und bei technischen oder personenbezogenen Änderungen
-                                       des Kraftfahrzeugs vorgelegt werden. Nur dann kann von der Zulassungsstelle
-                                       eine Zulassung vergeben werden. Sollten Sie noch keine Versicherung abgeschloßen
-                                       haben, so können Sie<a href="https://www.procheck24.de/einsurance/csp/doHomepageEntry.do?cspident=09D0551142A73B77DECE5CADBE06D08B&p=4&sub=1" target="_blank">hier</a>
-                                       nach einer passenden suchen.
-                                   </span>
-                                </span>
-                            </span>
-                            <input type="text" name="vehicle-insurance.id"/>
-                        </label>
-                        <div class="FieldValidationMessage" data-input="vehicle-insurance.id" data-element="validation-message"></div>
-
-                    </fieldset>
-
-
-                    <footer>
-                        <div class="ValidationMessages">
-                            <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
-                            <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
-                        </div>
-                        <button type="button" class="cta" data-action="nextTab">Weiter</button>
-                    </footer>
-                </fieldset>
-            </div>
-
-            <div data-target-tab-id="tab2" class="Tab StepsBox__step">
-
-                <fieldset class="checkboxList">
-                    <legend>Bankdaten für die Abbuchung der KFZ-Steuer</legend>
+            <fieldset class="checkboxList">
+                <legend>Verfügbare Zahlungsmethoden</legend>
+                <fieldset>
+                    <label class="Radio">
+                        <input type="radio" name="payment.methods" value="cash"/>
+                        <span>Barzahlung</span>
+                    </label>
+                    <label class="Radio">
+                        <input type="radio" name="payment.methods" value="paypal"/>
+                        <span>PayPal</span>
+                    </label>
+                    <label class="Radio">
+                        <input type="radio" name="payment.methods" value="sofort"/>
+                        <span>Sofort-Überweisung</span>
+                    </label>
+                    <label class="Radio">
+                        <input type="radio" name="payment.methods" value="pre-payment"/>
+                        <span>Vorkasse</span>
+                    </label>
                     <div class="DependencyGroup">
-                        <label class="Checkbox DependencyGroup__master">
-                            <input type="radio" name="tax.account" value="use-stored-account"
-                                   data-activate-fieldset-name="hinterlegte_kontodaten"/>
-                            <span>die hinterlegte Bankverbindung verwenden:
-                                        <span class="tooltip">
-                                            <i class="tooltip__icon fa fa-info-circle la la-info-circle"></i>
-                                            <span class="tooltip__copy">Muss man dir denn alles erklären?</span>
-                                        </span>
-                            </span>
+                        <label class="Radio DependencyGroup__master">
+                            <input type="radio" name="payment.methods" value="debit-from-existing-account"
+                                   data-activate-fieldset-name="payment.methods/stored-account_wrapper"/>
+                            <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
                         </label>
-                        <fieldset name="hinterlegte_kontodaten" class="DependencyGroup__dependant">
+                        <div class="FieldValidationMessage" data-input="payment.methods" data-element="validation-message"></div>
+                        <fieldset class="DependencyGroup__dependant" name="payment.methods/stored-account_wrapper">
                             <label>
-                                <select name="tax.account/stored-account">
+                                <span>Bankdaten</span>
+                                <select name="payment.methods/stored-account">
                                     <!--<option value="DE12 3456 7890 1234 5678 90">Deutsche Bank, IBAN: DE12 3456 7890 1234 5678 90</option>-->
                                     <!--<option value="DE09 8765 4321 0987 6543 21">Sparkasse Berlin, IBAN: DE09 8765 4321 0987 6543 21</option>-->
                                 </select>
                             </label>
-                            <div class="FieldValidationMessage" data-input="tax.account/stored-account" data-element="validation-message"></div>
+                            <div class="FieldValidationMessage" data-input="payment.methods/stored-account" data-element="validation-message"></div>
                         </fieldset>
                     </div>
-
                     <div class="DependencyGroup">
-                        <label class="Checkbox DependencyGroup__master">
-                            <input type="radio" name="tax.account" value="use-new-account"
-                                   data-activate-fieldset-name="neue_kontodaten"/>
-                            <span>eine neue Bankverbindung verwenden:</span>
+                        <label class="Radio DependencyGroup__master">
+                            <input type="radio" name="payment.methods" value="debit-from-new-account"
+                                   data-activate-fieldset-name="payment.methods/new-account_wrapper"/>
+                            <span>Lastschrifteinzug von einer neuen Bankverbindung</span>
                         </label>
-                        <fieldset name="neue_kontodaten" class="DependencyGroup__dependant">
+                        <fieldset class="DependencyGroup__dependant" name="payment.methods/new-account_wrapper">
                             <div class="Grid">
                                 <div class="Grid__Module Grid_Module--40">
                                     <label>
                                         <span>IBAN:</span>
-                                        <input type="text" name="tax.account/new-account-code"/>
+                                        <input type="text" name="payment.methods/new-account-code"/>
                                     </label>
-                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-code" data-element="validation-message"></div>
+                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-code" data-element="validation-message"></div>
                                 </div>
                                 <div class="Grid__Module Grid_Module--30">
                                     <label>
                                         <span>BIC:</span>
-                                        <input type="text" name="tax.account/new-account-bankcode"/>
+                                        <input type="text" name="payment.methods/new-account-bankcode"/>
                                     </label>
-                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-bankcode" data-element="validation-message"></div>
+                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-bankcode" data-element="validation-message"></div>
                                 </div>
                                 <div class="Grid__Module Grid_Module--30">
                                     <label>
                                         <span>Bank:</span>
-                                        <input type="text" name="tax.account/new-account-bankname"/>
+                                        <input type="text" name="payment.methods/new-account-bankname"/>
                                     </label>
-                                    <div class="FieldValidationMessage" data-input="tax.account/new-account-bankname" data-element="validation-message"></div>
+                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-bankname" data-element="validation-message"></div>
                                 </div>
                             </div>
 
                             <fieldset>
                                 <legend>Kontoinhaber</legend>
                                 <label class="Radio">
-                                    <input checked="checked" type="radio" name="tax.account/new-account-owner" value="applicant"/>
+                                    <input checked="checked" type="radio" name="payment.methods/new-account-owner" value="applicant"/>
                                     <span>Antragsteller selbst</span>
                                 </label>
                                 <div class="DependencyGroup">
                                     <label class="Radio DependencyGroup__master">
-                                        <input type="radio" name="tax.account/new-account-owner" value="other"
-                                               data-activate-fieldset-name="tax.account/new-account-owner_wrapper"/>
+                                        <input type="radio" name="payment.methods/new-account-owner" value="other"
+                                               data-activate-fieldset-name="payment.methods/new-account-owner_wrapper"/>
                                         <span>eine andere Person</span>
                                     </label>
-                                    <fieldset class="DependencyGroup__dependant" name="tax.account/new-account-owner_wrapper">
+                                    <fieldset class="DependencyGroup__dependant" name="payment.methods/new-account-owner_wrapper">
                                         <label>
                                             <span>Name:</span>
-                                            <input type="text" name="tax.account/new-account-owner/name"/>
+                                            <input type="text" name="payment.methods/new-account-owner/name"/>
                                         </label>
-                                        <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/name" data-element="validation-message"></div>
+                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/name" data-element="validation-message"></div>
 
                                         <div class="FormularGroup Grid">
                                             <div class="Grid_Module--80">
                                                 <label>
                                                     <span>Straße:</span>
-                                                    <input type="text" name="tax.account/new-account-owner/address.street"/>
+                                                    <input type="text" name="payment.methods/new-account-owner/address.street"/>
                                                 </label>
-                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.street" data-element="validation-message"></div>
+                                                <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.street" data-element="validation-message"></div>
                                             </div>
                                             <div class="Grid_Module--20">
                                                 <label>
                                                     <span>Hausnummer:</span>
-                                                    <input type="text" name="tax.account/new-account-owner/address.house-number"/>
+                                                    <input type="text" name="payment.methods/new-account-owner/address.house-number"/>
                                                 </label>
-                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.house-number" data-element="validation-message"></div>
+                                                <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.house-number" data-element="validation-message"></div>
                                             </div>
                                         </div>
 
                                         <label>
                                             <span>Zusatzangaben:</span>
-                                            <input type="text" name="tax.account/new-account-owner/address.additional-info"/>
+                                            <input type="text" name="payment.methods/new-account-owner/address.additional-info"/>
                                         </label>
-                                        <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.additional-info" data-element="validation-message"></div>
+                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.additional-info" data-element="validation-message"></div>
 
                                         <div class="FormularGroup Grid">
                                             <div class="Grid_Module--30">
                                                 <label>
                                                     <span>PLZ:</span>
-                                                    <input type="text" name="tax.account/new-account-owner/address.zip-code"/>
+                                                    <input type="text" name="payment.methods/new-account-owner/address.zip-code"/>
                                                 </label>
-                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.zip-code" data-element="validation-message"></div>
+                                                <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.zip-code" data-element="validation-message"></div>
                                             </div>
                                             <div class="Grid_Module--80">
                                                 <label>
                                                     <span>Ort:</span>
-                                                    <input type="text" name="tax.account/new-account-owner/address.city"/>
+                                                    <input type="text" name="payment.methods/new-account-owner/address.city"/>
                                                 </label>
-                                                <div class="FieldValidationMessage" data-input="tax.account/new-account-owner/address.city" data-element="validation-message"></div>
+                                                <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.city" data-element="validation-message"></div>
                                             </div>
                                         </div>
                                     </fieldset>
                                 </div>
                             </fieldset>
-
                         </fieldset>
                     </div>
-                    <div class="FieldValidationMessage" data-input="tax.account" data-element="validation-message"></div>
                 </fieldset>
+            </fieldset>
 
-                <footer>
-                    <div class="ValidationMessages">
-                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
-                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
-                    </div>
-                    <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="button" class="cta" data-action="nextTab">Weiter</button>
-                </footer>
-            </div>
+            <fieldset class="checkboxList">
+                <legend>Folgende Optionen stehen Ihnen zur Verfügung</legend>
 
-            <div data-target-tab-id="tab3" class="Tab StepsBox__step">
-
-                <fieldset class="checkboxList">
-                    <legend>Verfügbare Zahlungsmethoden</legend>
-                    <fieldset>
-                        <label class="Radio">
-                            <input type="radio" name="payment.methods" value="cash"/>
-                            <span>Barzahlung</span>
-                        </label>
-                        <label class="Radio">
-                            <input type="radio" name="payment.methods" value="paypal"/>
-                            <span>PayPal</span>
-                        </label>
-                        <label class="Radio">
-                            <input type="radio" name="payment.methods" value="sofort"/>
-                            <span>Sofort-Überweisung</span>
-                        </label>
-                        <label class="Radio">
-                            <input type="radio" name="payment.methods" value="pre-payment"/>
-                            <span>Vorkasse</span>
-                        </label>
-                        <div class="DependencyGroup">
-                            <label class="Radio DependencyGroup__master">
-                                <input type="radio" name="payment.methods" value="debit-from-existing-account"
-                                       data-activate-fieldset-name="payment.methods/stored-account_wrapper"/>
-                                <span>Lastschrifteinzug von einer hinterlegten Bankverbindung</span>
-                            </label>
-                            <div class="FieldValidationMessage" data-input="payment.methods" data-element="validation-message"></div>
-                            <fieldset class="DependencyGroup__dependant" name="payment.methods/stored-account_wrapper">
-                                <label>
-                                    <span>Bankdaten</span>
-                                    <select name="payment.methods/stored-account">
-                                        <!--<option value="DE12 3456 7890 1234 5678 90">Deutsche Bank, IBAN: DE12 3456 7890 1234 5678 90</option>-->
-                                        <!--<option value="DE09 8765 4321 0987 6543 21">Sparkasse Berlin, IBAN: DE09 8765 4321 0987 6543 21</option>-->
-                                    </select>
-                                </label>
-                                <div class="FieldValidationMessage" data-input="payment.methods/stored-account" data-element="validation-message"></div>
-                            </fieldset>
-                        </div>
-                        <div class="DependencyGroup">
-                            <label class="Radio DependencyGroup__master">
-                                <input type="radio" name="payment.methods" value="debit-from-new-account"
-                                       data-activate-fieldset-name="payment.methods/new-account_wrapper"/>
-                                <span>Lastschrifteinzug von einer neuen Bankverbindung</span>
-                            </label>
-                            <fieldset class="DependencyGroup__dependant" name="payment.methods/new-account_wrapper">
-                                <div class="Grid">
-                                    <div class="Grid__Module Grid_Module--40">
-                                        <label>
-                                            <span>IBAN:</span>
-                                            <input type="text" name="payment.methods/new-account-code"/>
-                                        </label>
-                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-code" data-element="validation-message"></div>
-                                    </div>
-                                    <div class="Grid__Module Grid_Module--30">
-                                        <label>
-                                            <span>BIC:</span>
-                                            <input type="text" name="payment.methods/new-account-bankcode"/>
-                                        </label>
-                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-bankcode" data-element="validation-message"></div>
-                                    </div>
-                                    <div class="Grid__Module Grid_Module--30">
-                                        <label>
-                                            <span>Bank:</span>
-                                            <input type="text" name="payment.methods/new-account-bankname"/>
-                                        </label>
-                                        <div class="FieldValidationMessage" data-input="payment.methods/new-account-bankname" data-element="validation-message"></div>
-                                    </div>
-                                </div>
-
-                                <fieldset>
-                                    <legend>Kontoinhaber</legend>
-                                    <label class="Radio">
-                                        <input checked="checked" type="radio" name="payment.methods/new-account-owner" value="applicant"/>
-                                        <span>Antragsteller selbst</span>
-                                    </label>
-                                    <div class="DependencyGroup">
-                                        <label class="Radio DependencyGroup__master">
-                                            <input type="radio" name="payment.methods/new-account-owner" value="other"
-                                                   data-activate-fieldset-name="payment.methods/new-account-owner_wrapper"/>
-                                            <span>eine andere Person</span>
-                                        </label>
-                                        <fieldset class="DependencyGroup__dependant" name="payment.methods/new-account-owner_wrapper">
-                                            <label>
-                                                <span>Name:</span>
-                                                <input type="text" name="payment.methods/new-account-owner/name"/>
-                                            </label>
-                                            <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/name" data-element="validation-message"></div>
-
-                                            <div class="FormularGroup Grid">
-                                                <div class="Grid_Module--80">
-                                                    <label>
-                                                        <span>Straße:</span>
-                                                        <input type="text" name="payment.methods/new-account-owner/address.street"/>
-                                                    </label>
-                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.street" data-element="validation-message"></div>
-                                                </div>
-                                                <div class="Grid_Module--20">
-                                                    <label>
-                                                        <span>Hausnummer:</span>
-                                                        <input type="text" name="payment.methods/new-account-owner/address.house-number"/>
-                                                    </label>
-                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.house-number" data-element="validation-message"></div>
-                                                </div>
-                                            </div>
-
-                                            <label>
-                                                <span>Zusatzangaben:</span>
-                                                <input type="text" name="payment.methods/new-account-owner/address.additional-info"/>
-                                            </label>
-                                            <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.additional-info" data-element="validation-message"></div>
-
-                                            <div class="FormularGroup Grid">
-                                                <div class="Grid_Module--30">
-                                                    <label>
-                                                        <span>PLZ:</span>
-                                                        <input type="text" name="payment.methods/new-account-owner/address.zip-code"/>
-                                                    </label>
-                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.zip-code" data-element="validation-message"></div>
-                                                </div>
-                                                <div class="Grid_Module--80">
-                                                    <label>
-                                                        <span>Ort:</span>
-                                                        <input type="text" name="payment.methods/new-account-owner/address.city"/>
-                                                    </label>
-                                                    <div class="FieldValidationMessage" data-input="payment.methods/new-account-owner/address.city" data-element="validation-message"></div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </fieldset>
-                            </fieldset>
-                        </div>
-                    </fieldset>
-                </fieldset>
+                <label class="Radio">
+                    <input type="radio" name="handover.options" value="office-delivering"/>
+                    <span>Sie bringen Ihre Unterlagen zu uns</span>
+                    <p class="description">Unsere Adresse und reguläre Öffnungszeiten finden Sie in der
+                        Bestätigung-Email.</p>
+                </label>
 
 
-                <footer>
-                    <div class="ValidationMessages">
-                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
-                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
-                    </div>
-                    <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="button" class="cta" data-action="nextTab">Weiter</button>
-                </footer>
-            </div>
+                <label class="Radio">
+                    <input type="radio" name="handover.options" value="pickup"/>
+                    <span>Sie lassen uns Ihre Unterlagen abholen</span>
+                    <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden,
+                        welcher in der Bestätigung-Email steht.</p>
+                </label>
+                <div class="FieldValidationMessage" data-input="handover.options" data-element="validation-message"></div>
+            </fieldset>
 
-            <div data-target-tab-id="tab4" class="Tab StepsBox__step">
+            <footer>
+                <div class="ValidationMessages">
+                    <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
+                    <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                </div>
+                <button type="submit">Absenden</button>
+            </footer>
 
-                <fieldset class="checkboxList">
-                    <legend>Folgende Optionen stehen Ihnen zur Verfügung</legend>
-
-                    <label class="Radio">
-                        <input type="radio" name="handover.options" value="office-delivering"/>
-                        <span>Sie bringen Ihre Unterlagen zu uns</span>
-                        <p class="description">Unsere Adresse und reguläre Öffnungszeiten finden Sie in der
-                            Bestätigung-Email.</p>
-                    </label>
-
-
-                    <label class="Radio">
-                        <input type="radio" name="handover.options" value="pickup"/>
-                        <span>Sie lassen uns Ihre Unterlagen abholen</span>
-                        <p class="description">Der Termin und Abholort kann bequem über den Link vereinbart werden,
-                            welcher in der Bestätigung-Email steht.</p>
-                    </label>
-                    <div class="FieldValidationMessage" data-input="handover.options" data-element="validation-message"></div>
-                </fieldset>
-
-
-                <footer>
-                    <div class="ValidationMessages">
-                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
-                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
-                    </div>
-                    <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="button" class="cta" data-action="nextTab">Weiter</button>
-                </footer>
-            </div>
-
-            <div data-target-tab-id="tab5" class="Tab StepsBox__step">
-
-                Alle Daten wurden zusammengetragen. Sie können diese nun abschicken, oder zurück springen um sie zu überprüfen.
-
-                <h3>Ihre Daten:</h3>
-
-                <ul class="summaryList" data-element="summary-list">
-                    <li class="summaryList__entry" data-prototype="summary-list-item">
-                        <h4 class="summaryList__title" data-element="summary-list-title"></h4>
-                        <div class="summaryList__value" data-element="summary-list-value">
-
-                        </div>
-                    </li>
-                </ul>
-
-                <footer>
-                    <div class="ValidationMessages">
-                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
-                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
-                    </div>
-                    <button type="button" data-action="previousTab">Zurück</button>
-                    <button type="submit">Absenden</button>
-                </footer>
-            </div>
         </form>
     </div>
 
@@ -594,7 +490,6 @@
 
 <script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
 <script type="text/javascript" src="assets/scripts/Forms.js"></script>
-<script type="text/javascript" src="assets/scripts/StepBoxes.js"></script>
 
 </body>
 </html>

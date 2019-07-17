@@ -317,10 +317,13 @@ function initRequestsTable() {
         "                            </div>");
     let jOverlayStageEditButton = $("<form>\n" +
         "                                        <input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
-        "                                        <input type=\"hidden\" name=\"entryId\" value=\"\"/>\n" +
+        "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
+        "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
         "                                    </form>\n");
     let jOverlayStageActionButton = $("<span><input type=\"submit\" class=\"buttonCta\" value=\"\"/>\n" +
-        "                                        <input type=\"hidden\" name=\"entryId\" value=\"\"/></span>\n");
+        "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>" +
+        "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>" +
+        "</span>\n");
 
     $.when(loadRequests()).done(
         function (data) {
@@ -394,7 +397,8 @@ function initRequestsTable() {
                                     jStageEditButton.find("input[type=submit]").val("Daten eingeben");
                                     break;
                             }
-                            jStageEditButton.find("input[name=entryId]").val(rowId);
+                            jStageEditButton.find("input[name='entry.id']").val(rowId);
+                            jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
                             jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                         }
                         jRequestStages.append(jStageCurrent);
