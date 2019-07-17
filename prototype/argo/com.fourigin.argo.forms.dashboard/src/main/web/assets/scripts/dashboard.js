@@ -372,7 +372,7 @@ function initRequestsTable() {
                             bFoundRequestStage = true;
                             currentStageObject = stages[i];
                         }
-                        jStageCurrent.find(".request-stage-title").text(stages[i].name);
+                        jStageCurrent.find(".request-stage-title").text(getStageTranslation(stages[i].name));
                         // Stage-field-edit-action
                         if(!stages[i].editFields) {
                             let jStageEditButton = jOverlayStageEditButton.clone();
