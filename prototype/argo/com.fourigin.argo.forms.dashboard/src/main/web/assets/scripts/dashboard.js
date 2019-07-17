@@ -305,11 +305,13 @@ function initRequestsTable() {
     var dataTable = null;
 
     let jOverlayStagePrototype = $("<div class=\"request-stage\">\n" +
+        "                                <header>\n" +
         "                                <div class=\"request-stage-title\"></div>\n" +
         "                                <div class=\"request-stage-status\">\n" +
         "                                    <i class=\"statusComplete fa fa-check-circle\"></i>\n" +
         "                                    <i class=\"statusIncomplete fa fa-circle-thin\"></i>\n" +
         "                                </div>\n" +
+        "                                </header>\n" +
         "                                <div class=\"request-stage-edit-action\">\n" +
         "                                </div>\n" +
         "                            </div>");
@@ -317,7 +319,7 @@ function initRequestsTable() {
         "                                        <input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
         "                                        <input type=\"hidden\" name=\"entryId\" value=\"\"/>\n" +
         "                                    </form>\n");
-    let jOverlayStageActionButton = $("<span><input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
+    let jOverlayStageActionButton = $("<span><input type=\"submit\" class=\"buttonCta\" value=\"\"/>\n" +
         "                                        <input type=\"hidden\" name=\"entryId\" value=\"\"/></span>\n");
 
     $.when(loadRequests()).done(
@@ -367,6 +369,7 @@ function initRequestsTable() {
                         if(!bFoundRequestStage) {
                             // Not passed the current stage yet, so guess all previous stages are done:
                             jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
+                            jStageCurrent.addClass("request-stage--done");
                         }
                         if(!bFoundRequestStage && stages[i].name === currentRequestData.stage) {
                             bFoundRequestStage = true;
@@ -374,7 +377,7 @@ function initRequestsTable() {
                         }
                         jStageCurrent.find(".request-stage-title").text(getStageTranslation(stages[i].name));
                         // Stage-field-edit-action
-                        if(!stages[i].editFields) {
+                        if(stages[i].editable) {
                             let jStageEditButton = jOverlayStageEditButton.clone();
                             //
                             jStageEditButton.find("input[type=submit]").val("Daten erneut editieren");

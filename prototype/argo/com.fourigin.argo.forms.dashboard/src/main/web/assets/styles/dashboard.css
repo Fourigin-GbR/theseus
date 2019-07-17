@@ -202,10 +202,44 @@ table.dataTable tr.group.closed td:first-of-type::before {
 .request-stage {
     padding: 10px 20px;
     border: 1px solid #ccc;
+    margin-right: 20px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 7px;
 }
+.request-stage.request-stage--done {
+    background-color: #2d4d47;
+    color: #fff;
+}
+.request-stage:after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    background-color: #bebebe;
+    width: 22px;
+    right: 0;
+    transform: translateX(22px);
+    top: calc(50% - 5px);
+    z-index: 50;
+}
+.request-stage:last-of-type:after {
+    display: none;
+}
+.request-stage.request-stage--done:after {
+    background-color: #2d4d47;
+}
+
+.request-stage header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
 .request-stage-title {
     font-weight: bold;
     text-align: center;
+    font-size: 14px;
 }
 .request-stage-status {
     text-align: center;
@@ -213,9 +247,9 @@ table.dataTable tr.group.closed td:first-of-type::before {
     font-size: 40px;
     color: #00b393;
 }
-.request-edit-action {
+.request-stage-edit-action {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .request-current-stage-actions-wrapper {
@@ -224,6 +258,8 @@ table.dataTable tr.group.closed td:first-of-type::before {
 .request-current-stage-actions-wrapper form {
     display: flex;
     align-items: center;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
 }
 .request-current-stage-actions {
     display: flex;
