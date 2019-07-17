@@ -203,6 +203,7 @@ table.dataTable tr.group.closed td:first-of-type::before {
     padding: 10px 20px;
     border: 1px solid #ccc;
     margin-right: 20px;
+    margin-top: 50px;
     position: relative;
     background-color: #fff;
     border-radius: 7px;
@@ -210,6 +211,21 @@ table.dataTable tr.group.closed td:first-of-type::before {
 .request-stage.request-stage--done {
     background-color: #2d4d47;
     color: #fff;
+}
+.request-stage.request-stage--current:before {
+    content: "Aktueller Stand";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    text-align: center;
+    background-color: #79b0aa;
+    color: #fff;
+    transform: translateY(-50px);
+    border-radius: 7px 7px 0 0;
+    line-height: 50px;
+    font-size: 16px;
 }
 .request-stage:after {
     content: "";

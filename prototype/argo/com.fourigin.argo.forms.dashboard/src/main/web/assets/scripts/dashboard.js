@@ -374,6 +374,7 @@ function initRequestsTable() {
                         if(!bFoundRequestStage && stages[i].name === currentRequestData.stage) {
                             bFoundRequestStage = true;
                             currentStageObject = stages[i];
+                            jStageCurrent.addClass("request-stage--current");
                         }
                         jStageCurrent.find(".request-stage-title").text(getStageTranslation(stages[i].name));
                         // Stage-field-edit-action
