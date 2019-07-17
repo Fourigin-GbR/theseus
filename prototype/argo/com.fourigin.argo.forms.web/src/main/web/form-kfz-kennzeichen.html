@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Formulare - Prototypen</title>
+    <link rel="stylesheet" href="assets/styles/kfz-anmeldung.css"/>
+    <link rel="stylesheet" href="assets/styles/formulars.css"/>
+    <link rel="stylesheet" href="assets/webfonts/line-awesome/css/line-awesome-font-awesome.min.css"/>
+</head>
+<body>
+<h1>Genehmigtes KFZ-Zeichen eintragen</h1>
+
+<div class="Tabs_ StepsBox" id="fccFormular">
+    <div class="TabsWrapper">
+        <form action="#" method="get" data-form-definition-id="register-vehicle">
+            <input type="hidden" name="customer.id" id="customer.id" value="unspecified"/>
+            
+            <div id="thankYouPage" class="ThankYouPage">
+                <h2>Dankeschön!</h2>
+                <div class="ThankYouPage__icon">
+                    <i class="fa fa-check-square la la-check-square"></i>
+                </div>
+                <div class="ThankYouPage__subCopy">
+                    Ihre Daten wurden aktualisiert.
+                </div>
+                <footer class="ThankYouPage__footer">
+                    <a href="dashboard.html"><i class="fa fa-reply la la-reply"></i> Zurück zum Dashboard</a>
+                </footer>
+            </div>
+            <div id="errorPage" class="ThankYouPage ErrorPage">
+                <h2>Fehler!</h2>
+                <div class="ThankYouPage__icon ErrorPage__icon">
+                    <i class="fa fa-times la la-times"></i>
+                </div>
+                <div class="ThankYouPage__subCopy">
+                    Bitte versuchen Sie es später noch einmal.
+                </div>
+                <footer class="ThankYouPage__footer">
+                    <a href="dashboard.html"><i class="fa fa-reply la la-reply"></i> Zurück zum Dashboard</a>
+                </footer>
+            </div>
+
+
+
+                <label>
+                    <span>Genehmigtes KFZ-Kennzeichen</span>
+
+                    <input type="text" name="vehicle.new-nameplate/nameplate-customer-reservation"/>
+                </label>
+                <div class="FieldValidationMessage" data-input="vehicle.existing-nameplate" data-element="validation-message"></div>
+
+
+
+                <footer>
+                    <div class="ValidationMessages">
+                        <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
+                        <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                    </div>
+                    <button type="submit">Speichern</button>
+                </footer>
+
+        </form>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
+<script type="text/javascript" src="assets/scripts/Forms.js"></script>
+<script type="text/javascript" src="assets/scripts/StepBoxes.js"></script>
+
+</body>
+</html>

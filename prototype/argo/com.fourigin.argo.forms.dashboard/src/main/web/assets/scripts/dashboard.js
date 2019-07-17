@@ -381,7 +381,19 @@ function initRequestsTable() {
                         if(stages[i].editable) {
                             let jStageEditButton = jOverlayStageEditButton.clone();
                             //
-                            jStageEditButton.find("input[type=submit]").val("Daten erneut editieren");
+                            switch (stages[i].name) {
+                                case "base-data-without-approved-nameplate":
+                                    jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
+                                    jStageEditButton.find("input[type=submit]").val("Basis-Daten eingeben");
+                                    break;
+                                case "final-data-with-approved-nameplate":
+                                    jStageEditButton.attr("action", "/form-kfz-kennzeichen.html").attr("target", "_blank");
+                                    jStageEditButton.find("input[type=submit]").val("KFZ-Kennzeichen eingeben");
+                                    break;
+                                default:
+                                    jStageEditButton.find("input[type=submit]").val("Daten eingeben");
+                                    break;
+                            }
                             jStageEditButton.find("input[name=entryId]").val(rowId);
                             jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                         }
