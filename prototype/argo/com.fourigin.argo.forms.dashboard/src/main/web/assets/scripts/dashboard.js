@@ -511,11 +511,11 @@ function initRequestsTable() {
 
                 if (visibleAttachmentsCount > 0) {
                     var divAttachments = $('<div class="request-attachments"></div>');
-                    var h4 = $('<h4></h4>')
+                    var h5 = $('<h5></h5>')
                         .append('Anhänge (' + visibleAttachmentsCount + '):');
 
                     divAttachments
-                        .append(h4)
+                        .append(h5)
                         .append(ul);
 
                     div.append(divAttachments)

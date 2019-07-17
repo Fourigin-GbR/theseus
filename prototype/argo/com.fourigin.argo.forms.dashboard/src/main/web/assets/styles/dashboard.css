@@ -246,13 +246,24 @@ table.dataTable tr.group.closed td:first-of-type::before {
 }
 
 
+#request-details section {
+    margin-bottom: 40px;
+}
+#request-details .sectionBody {
+    padding-left: 20px;
+}
 #request-details h4 {
     display: block;
     font-weight: bold;
     color: #4a4a4a;
     padding: 15px 20px 5px 5px;
+    margin: 0 0 20px 0;
     width: 100%;
     border-bottom: 2px solid #00b393;
+}
+#request-details h5 {
+    border-bottom: 0;
+    font-size: 14px;
 }
 
 #state-value {
