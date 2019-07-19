@@ -183,7 +183,7 @@ table.dataTable tr.group.closed td:first-of-type::before {
     display: inline-block;
     border-radius: 3px;
     border: none;
-    background-color: #aaaeaf;
+    background-color: #808182;
     color: #fff;
     font-size: 12px;
     font-weight: bold;
