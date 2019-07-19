@@ -310,6 +310,7 @@ function initRequestsTable() {
         "                                <div class=\"request-stage-status\">\n" +
         "                                    <i class=\"statusComplete fa fa-check-circle\"></i>\n" +
         "                                    <i class=\"statusIncomplete fa fa-circle-thin\"></i>\n" +
+        "                                    <i class=\"statusCurrent fa fa-pencil-square-o\"></i>\n\n" +
         "                                </div>\n" +
         "                                </header>\n" +
         "                                <div class=\"request-stage-edit-action\">\n" +

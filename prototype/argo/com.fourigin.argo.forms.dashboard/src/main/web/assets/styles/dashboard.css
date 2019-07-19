@@ -212,6 +212,9 @@ table.dataTable tr.group.closed td:first-of-type::before {
     background-color: #2d4d47;
     color: #fff;
 }
+.request-stage.request-stage--current {
+    background-color: #79b0aa;
+}
 .request-stage.request-stage--current:before {
     content: "Aktueller Stand";
     position: absolute;
@@ -220,7 +223,7 @@ table.dataTable tr.group.closed td:first-of-type::before {
     right: 0;
     height: 50px;
     text-align: center;
-    background-color: #79b0aa;
+    background-color: #3a7f82;
     color: #fff;
     transform: translateY(-50px);
     border-radius: 7px 7px 0 0;
@@ -393,19 +396,41 @@ table.dataTable tr.group.closed td:first-of-type::before {
 }
 
 
+.request-stage-status .statusCurrent,
 .request-stage-status .statusComplete {
     display: none;
 }
 .request-stage-status .statusIncomplete {
     display: block;
 }
-.request-stage-status.request-stage-status--done .statusComplete {
+
+/*Incomplete*/
+.statusIncomplete {
     display: block;
 }
-.request-stage-status.request-stage-status--done .statusIncomplete {
+.statusCurrent,
+.statusComplete {
     display: none;
 }
 
+/*Complete*/
+.request-stage--done .statusComplete {
+    display: block;
+}
+.request-stage--done .statusCurrent,
+.request-stage--done .statusIncomplete {
+    display: none;
+}
+
+/*Current*/
+.request-stage--current .statusCurrent {
+    display: block;
+    color: #fff;
+}
+.request-stage--current .statusComplete,
+.request-stage--current .statusIncomplete {
+    display: none;
+}
 
 .PENDING.statusIcon:before,
 .PROCESSING.statusIcon:before,
