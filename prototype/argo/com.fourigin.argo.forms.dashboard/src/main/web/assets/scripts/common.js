@@ -94,8 +94,9 @@ function formatDateForGroupingView(date) {
 }
 
 function getStageTranslation(stage) {
-    let translation = "---";
+    let translation = stage;
     let stagesTranslations = {
+        "base-customer-data" : "Basis Kundendaten",
         "base-data-without-approved-nameplate" : "Basis-Daten ohne genehmigtes KFZ-Kennzeichen",
         "final-data-with-approved-nameplate" : "Finale Daten mit genehmigtem KFZ-Kennzeichen",
         "request-delivered-to-registration-authority" : "Daten wurden der Registrierungsbehörde übergeben",

@@ -428,7 +428,7 @@ function initRequestsTable() {
                             jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
                             jStageCurrent.addClass("request-stage--done");
                         }
-                        if(!bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
+                        if(1 < currentStages.amount && !bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
                             bFoundRequestStage = true;
                             currentStageObject = currentStages.data[i];
                             jStageCurrent.addClass("request-stage--current");
@@ -438,6 +438,7 @@ function initRequestsTable() {
                         if(currentStages.data[i].editable) {
                             let jStageEditButton = jOverlayStageEditButton.clone();
                             //
+                            jCurrentStageActionsWrapper.show();
                             switch (currentStages.data[i].name) {
                                 case "base-data-without-approved-nameplate":
                                     jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
@@ -455,6 +456,10 @@ function initRequestsTable() {
                             jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
                             jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                         }
+                        else {
+                            jCurrentStageActionsWrapper.hide();
+                        }
+
                         jRequestStages.append(jStageCurrent);
                     }
                     // State:
