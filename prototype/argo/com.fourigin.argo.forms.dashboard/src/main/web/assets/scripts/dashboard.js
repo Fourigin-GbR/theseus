@@ -428,17 +428,18 @@ function initRequestsTable() {
                             jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
                             jStageCurrent.addClass("request-stage--done");
                         }
-                        if(1 < currentStages.amount && !bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
+                        if(!bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
                             bFoundRequestStage = true;
                             currentStageObject = currentStages.data[i];
-                            jStageCurrent.addClass("request-stage--current");
+                            if(1 < currentStages.amount) {
+                                jStageCurrent.addClass("request-stage--current");
+                            }
                         }
                         jStageCurrent.find(".request-stage-title").text(getStageTranslation(currentStages.data[i].name));
                         // Stage-field-edit-action
                         if(currentStages.data[i].editable) {
                             let jStageEditButton = jOverlayStageEditButton.clone();
                             //
-                            jCurrentStageActionsWrapper.show();
                             switch (currentStages.data[i].name) {
                                 case "base-data-without-approved-nameplate":
                                     jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
@@ -456,9 +457,6 @@ function initRequestsTable() {
                             jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
                             jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                         }
-                        else {
-                            jCurrentStageActionsWrapper.hide();
-                        }
 
                         jRequestStages.append(jStageCurrent);
                     }
@@ -466,12 +464,19 @@ function initRequestsTable() {
                     requestDetails.find(".request-status").empty().append(jRequestState);
                     // Stage actions:
                     jCurrentStageActions.empty();
+                    jCurrentStageActionsWrapper.hide();
                     if(currentStageObject) {
-                        for (let key in currentStageObject.actions) {
-                            let jCurrentButton = jOverlayStageActionButton.clone();
-                            //
-                            jCurrentButton.find("input[type=submit]").val(formatStateAction(key));
-                            jCurrentStageActions.append(jCurrentButton);
+                        jCurrentStageActionsWrapper.show();
+                        if(!currentStageObject.actions) {
+                            jCurrentStageActionsWrapper.hide();
+                        }
+                        else {
+                            for (let key in currentStageObject.actions) {
+                                let jCurrentButton = jOverlayStageActionButton.clone();
+                                //
+                                jCurrentButton.find("input[type=submit]").val(formatStateAction(key));
+                                jCurrentStageActions.append(jCurrentButton);
+                            }
                         }
                     }
                     //
