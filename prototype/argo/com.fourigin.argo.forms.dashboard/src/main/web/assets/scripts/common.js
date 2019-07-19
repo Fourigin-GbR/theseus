@@ -108,6 +108,17 @@ function getStageTranslation(stage) {
     return translation;
 }
 
+function formatStateAction(data) {
+    switch (data) {
+        case 'mark-as-send-to-approval':
+            return 'Markieren als fertig zur Freigabe';
+        case 'suspend':
+            return 'Pausieren';
+    }
+
+    return data;
+}
+
 function formatState(data) {
     switch (data) {
         case 'PENDING':

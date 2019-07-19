@@ -2,23 +2,55 @@ var admin = false;
 var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
-let requestData, stages, amountOfStages, stagesNamesList = [];
+let requestData,
+    stages = {
+        "registerCustomer": {"data": null, "namesList": [], "amount": null},
+        "registerVehicle": {"data": null, "namesList": [], "amount": null}},
+    amountOfStages, stagesNamesList = [];
 
 function init() {
     translationBundle = resolveLanguageBundle('de');
 
-    // Stages
-    $.when(loadStages()).done(
-        function (data) {
-            stages = data;
-            amountOfStages = stages.length;
-            for(let i=0; i<amountOfStages; i++) {
-                stagesNamesList.push(stages[i]['name']);
-            }
-            console.log("stagesNamesList", stagesNamesList);
+    function initUserAndCustomerTables() {
+        if(!stages.registerVehicle.data || !stages.registerCustomer.data) {
+            console.warn("Stages are not loaded for both forms yet.");
+            return;
+        }
+        initUsersTable();
+        initRequestsTable();
+    }
 
-            initUsersTable();
-            initRequestsTable();
+    // Stages
+    $.when(loadStagesRegisterVehicle()).done(
+        function (data) {
+            // Validate
+            if(!data) {
+                console.error("Register Vehicles: No stages available!");
+            }
+
+            stages.registerVehicle.data = data;
+            stages.registerVehicle.amount = data.length;
+            for(let i=0; i<stages.registerVehicle.amount; i++) {
+                stages.registerVehicle.namesList.push(data[i]['name']);
+            }
+            console.log("stagesNamesList", stages.registerVehicle.namesList);
+            initUserAndCustomerTables();
+        }
+    );
+    $.when(loadStagesRegisterCustomer()).done(
+        function (data) {
+            // Validate
+            if(!data) {
+                console.error("Register Customer: No stages available!");
+            }
+
+            stages.registerCustomer.data = data;
+            stages.registerCustomer.amount = data.length;
+            for(let i=0; i<stages.registerCustomer.amount; i++) {
+                stages.registerCustomer.namesList.push(data[i]['name']);
+            }
+            console.log("stagesNamesList", stages.registerCustomer.namesList);
+            initUserAndCustomerTables();
         }
     );
 
@@ -61,11 +93,17 @@ function init() {
         });
 }
 
-function loadStages() {
+function loadStagesRegisterVehicle() {
     return $.ajax({
         url: "/forms-dashboard/stages?formId=register-vehicle"
     });
 }
+function loadStagesRegisterCustomer() {
+    return $.ajax({
+        url: "/forms-dashboard/stages?formId=register-customer"
+    });
+}
+
 
 function loadCustomers() {
     return $.ajax({
@@ -212,8 +250,16 @@ function internalInitRequestsTable(data) {
             },
             {
                 "data": "stage",
-                "render": function (data, type, full) {
-                    let processHandleWidth = ((stagesNamesList.indexOf(data) + 1) * 100) / amountOfStages;
+                "render": function (data, type, completeDataObject) {
+                    let currentStages, processHandleWidth;
+
+                    if (completeDataObject.formDefinition && completeDataObject.formDefinition === "register-vehicle") {
+                        currentStages = stages.registerVehicle;
+                    }
+                    else {
+                        currentStages = stages.registerCustomer;
+                    }
+                    processHandleWidth = ((currentStages.namesList.indexOf(data) + 1) * 100) / currentStages.amount;
                     return $('<div></div>')
                         .attr('class', data + ' stage-value-cell')
                         .append('<div class="processBar"><span class="processBar__handle" style="width:' + processHandleWidth + '%"></span><span class="processBar__label">' + processHandleWidth + '%</span></div>')
@@ -362,12 +408,19 @@ function initRequestsTable() {
                     var currentStageObject;
                     var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
                     var jCurrentStageActions = jCurrentStageActionsWrapper.find(".request-current-stage-actions");
+                    let currentStages;
+
+                    if (currentRequestData.formDefinition && currentRequestData.formDefinition === "register-vehicle") {
+                        currentStages = stages.registerVehicle;
+                    }
+                    else {
+                        currentStages = stages.registerCustomer;
+                    }
 
                     requestDetails.find(".requestDetails__content").html(content);
                     // Set stages:
-                    console.log("Zeige details von dem: ", rowId, requestData, currentRequestData);
                     jRequestStages.empty();
-                    for(let i=0; i<amountOfStages; i++) {
+                    for(let i=0; i<currentStages.amount; i++) {
                         let jStageCurrent = jOverlayStagePrototype.clone();
                         //
                         if(!bFoundRequestStage) {
@@ -375,17 +428,17 @@ function initRequestsTable() {
                             jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
                             jStageCurrent.addClass("request-stage--done");
                         }
-                        if(!bFoundRequestStage && stages[i].name === currentRequestData.stage) {
+                        if(!bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
                             bFoundRequestStage = true;
-                            currentStageObject = stages[i];
+                            currentStageObject = currentStages.data[i];
                             jStageCurrent.addClass("request-stage--current");
                         }
-                        jStageCurrent.find(".request-stage-title").text(getStageTranslation(stages[i].name));
+                        jStageCurrent.find(".request-stage-title").text(getStageTranslation(currentStages.data[i].name));
                         // Stage-field-edit-action
-                        if(stages[i].editable) {
+                        if(currentStages.data[i].editable) {
                             let jStageEditButton = jOverlayStageEditButton.clone();
                             //
-                            switch (stages[i].name) {
+                            switch (currentStages.data[i].name) {
                                 case "base-data-without-approved-nameplate":
                                     jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
                                     jStageEditButton.find("input[type=submit]").val("Basis-Daten eingeben");
@@ -408,11 +461,13 @@ function initRequestsTable() {
                     requestDetails.find(".request-status").empty().append(jRequestState);
                     // Stage actions:
                     jCurrentStageActions.empty();
-                    for(let key in currentStageObject.actions) {
-                        let jCurrentButton = jOverlayStageActionButton.clone();
-                        //
-                        jCurrentButton.find("input[type=submit]").val(key);
-                        jCurrentStageActions.append(jCurrentButton);
+                    if(currentStageObject) {
+                        for (let key in currentStageObject.actions) {
+                            let jCurrentButton = jOverlayStageActionButton.clone();
+                            //
+                            jCurrentButton.find("input[type=submit]").val(formatStateAction(key));
+                            jCurrentStageActions.append(jCurrentButton);
+                        }
                     }
                     //
                     requestDetails.show();
