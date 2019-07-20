@@ -1,4 +1,5 @@
 var admin = false;
+var DataTableRequestsTable;
 var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
@@ -6,7 +7,7 @@ let requestData,
     stages = {
         "registerCustomer": {"data": null, "namesList": [], "amount": null},
         "registerVehicle": {"data": null, "namesList": [], "amount": null}},
-    amountOfStages, stagesNamesList = [];
+    stagesNamesList = [];
 
 function init() {
     translationBundle = resolveLanguageBundle('de');
@@ -18,6 +19,7 @@ function init() {
         }
         initUsersTable();
         initRequestsTable();
+        applyChangeState();
     }
 
     // Stages
@@ -170,6 +172,7 @@ function internalInitRequestsTable(data) {
     var table = $('#requests');
 
     requestsDataTable = table.DataTable({
+        "ajax": "/forms-dashboard/requests",
         "data": data,
         "rowId": function (data) {
             return data.id;
@@ -272,7 +275,7 @@ function internalInitRequestsTable(data) {
                 "data": "state",
                 "render": function (data, type, full) {
                     return $('<div></div>')
-                        .attr('class', data + ' state-value-cell')
+                        .attr('class','state-value-cell')
                         .append($('<span></span>')
                             .html(getStateHtml(data))
                         )[0].outerHTML;
@@ -291,6 +294,11 @@ function internalInitRequestsTable(data) {
         //     }
         // ]
     });
+
+    window.DataTableRequestsTable = requestsDataTable;
+    setInterval( function () {
+        window.DataTableRequestsTable.ajax.reload();
+    }, 30000 );
 }
 
 function initUsersTable() {
@@ -367,10 +375,20 @@ function initRequestsTable() {
         "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
         "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
         "                                    </form>\n");
-    let jOverlayStageActionButton = $("<span><input type=\"submit\" class=\"buttonCta\" value=\"\"/>\n" +
-        "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>" +
-        "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>" +
-        "</span>\n");
+    let jOverlayStageActionButtonForm = $("<form class=\"state-change-form\" name=\"state-change-form\" action=\"/forms-dashboard/change-state\">" +
+        "                                   <input type=\"hidden\" name=\"entryId\" value=\"\"/>\n" +
+        "                                   <input type=\"hidden\" name=\"customerId\" value=\"\"/>\n" +
+        "                                   <input type=\"hidden\" name=\"processingState\" value=\"\"/>\n" +
+        "                                   <label class='buttonCta hideButton'>" +
+        "                                       <input type=\"submit\" name=\"sendAction\" value=\"\"/>" +
+        "                                       <span class='labelCopy'></span>" +
+        "                                   </label>\n" +
+        "<label class=\"request-current-stage-actions-message\">" +
+        "<span class=\"label\">Optionale Nachricht:</span>" +
+        "<textarea name=\"comment\"></textarea>" +
+        "</label>\n" +
+        "<div class='ajaxErrorMessage'></div>\n" +
+        "</form>\n");
 
     $.when(loadRequests()).done(
         function (data) {
@@ -407,7 +425,6 @@ function initRequestsTable() {
                     var jRequestState = getStateHtml(currentRequestData.state);
                     var currentStageObject;
                     var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
-                    var jCurrentStageActions = jCurrentStageActionsWrapper.find(".request-current-stage-actions");
                     let currentStages;
 
                     if (currentRequestData.formDefinition && currentRequestData.formDefinition === "register-vehicle") {
@@ -463,7 +480,7 @@ function initRequestsTable() {
                     // State:
                     requestDetails.find(".request-status").empty().append(jRequestState);
                     // Stage actions:
-                    jCurrentStageActions.empty();
+                    jCurrentStageActionsWrapper.empty();
                     jCurrentStageActionsWrapper.hide();
                     if(currentStageObject) {
                         jCurrentStageActionsWrapper.show();
@@ -472,10 +489,14 @@ function initRequestsTable() {
                         }
                         else {
                             for (let key in currentStageObject.actions) {
-                                let jCurrentButton = jOverlayStageActionButton.clone();
+                                let jCurrentButtonForm = jOverlayStageActionButtonForm.clone();
                                 //
-                                jCurrentButton.find("input[type=submit]").val(formatStateAction(key));
-                                jCurrentStageActions.append(jCurrentButton);
+                                jCurrentButtonForm.find("input[name='entryId']").val(rowId);
+                                jCurrentButtonForm.find("input[name='customerId']").val(currentRequestData.customer);
+                                jCurrentButtonForm.find("input[name='processingState']").val(key);
+                                jCurrentButtonForm.find("input[type='submit']").val(key);
+                                jCurrentButtonForm.find(".labelCopy").text(formatStateAction(key));
+                                jCurrentStageActionsWrapper.append(jCurrentButtonForm);
                             }
                         }
                     }
@@ -678,6 +699,33 @@ function getRequestDataItemById(id) {
 
     return null;
 }
+
+var applyChangeState = function () {
+    $("body").on("submit", "form.state-change-form", function (e) {
+        let jStateChangeForm = $(this);
+        e.preventDefault();
+        e.stopPropagation();
+
+        jStateChangeForm.find(".ajaxErrorMessage").empty().hide();
+
+        $.ajax({
+            method: "POST",
+            url: jStateChangeForm.attr("action"),
+            data: jStateChangeForm.serializeArray()
+        })
+            .done(function (msg) {
+                DataTableRequestsTable.ajax.reload();
+                let requestDetails = $('#request-details');
+                requestDetails.hide();
+            })
+            .fail(function (msg) {
+                jStateChangeForm.
+                    find(".ajaxErrorMessage").text("Der Status konnte nicht aktualisiert werden. Bitte versuchen Sie es später erneut, oder kontaktieren Sie Vlad Satanowski.").
+                    show();
+                console.error("State change: Error!!", msg);
+            });
+    })
+};
 
 var processAjaxForms = function() {
     $('body').on('submit', function(e) {
