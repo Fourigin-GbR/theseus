@@ -1,6 +1,7 @@
 var inputs = document.getElementsByTagName("input");
 var fieldsets = document.getElementsByTagName("fieldset");
 var formular = document.querySelector("#fccFormular form");
+var jFormular = $(formular);
 console.log("form, inputs, fieldsets", formular, inputs, fieldsets);
 
 var inputsWithBoundFieldSets = Array.prototype.filter.call(inputs, function(element, index, aElements) {
@@ -219,7 +220,7 @@ var getUrlParameterAndUpdateAndInitForm = function() {
         document.querySelector("input[name='customer.id']").value = customerId;
     }
     if(stageId) {
-        document.querySelector("input[name='stage.id']").value = stageId;
+        jFormular.attr("data-form-stage-id", stageId);
     }
 
     initializeFormWithRequestData(customerId, entryId);
@@ -418,10 +419,10 @@ var sendFormDataToValidate = function(formData) {
         return data;
     };
 
-    var self = this,
-        dataJson = {
+    var dataJson = {
             "header": {
-                "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+                "formDefinition": jFormular.attr("data-form-definition-id"),
+                "stage": jFormular.attr("data-form-stage-id"),
                 "customer": "tsp",
                 "base": "DE",
                 "locale": "en_GB",
@@ -605,6 +606,7 @@ var sendForm = function() {
             dataJson = {
                 "header": {
                     "formDefinition": jForm.attr("data-form-definition-id"),
+                    "stage": jForm.attr("data-form-stage-id"),
                     "customer": "tsp",
                     "base": "DE",
                     "locale": "en_GB", // TODO: replace with browser locale
