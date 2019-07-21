@@ -219,6 +219,9 @@ var getUrlParameterAndUpdateAndInitForm = function() {
     if(customerId) {
         document.querySelector("input[name='customer.id']").value = customerId;
     }
+    if(entryId) {
+        jFormular.attr("data-form-entry-id", entryId);
+    }
     if(stageId) {
         jFormular.attr("data-form-stage-id", stageId);
     }
@@ -423,6 +426,7 @@ var sendFormDataToValidate = function(formData) {
             "header": {
                 "formDefinition": jFormular.attr("data-form-definition-id"),
                 "stage": jFormular.attr("data-form-stage-id"),
+                "entryId": jFormular.attr("data-form-entry-id"),
                 "customer": "tsp",
                 "base": "DE",
                 "locale": "en_GB",
