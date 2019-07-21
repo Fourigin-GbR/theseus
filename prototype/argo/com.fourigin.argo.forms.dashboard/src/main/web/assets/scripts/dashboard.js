@@ -3,6 +3,7 @@ var DataTableRequestsTable;
 var usersDataTable;
 var requestsDataTable;
 var translationBundle = resolveLanguageBundle('de');
+var jSelectedRequestInput = $("#selectedRequestId");
 let requestData,
     stages = {
         "registerCustomer": {"data": null, "namesList": [], "amount": null},
@@ -199,6 +200,12 @@ function internalInitRequestsTable(data) {
                     last = parsedDate;
                 }
             } );
+
+            // If a pre-selection exists in "cache", select the row:
+            if(jSelectedRequestInput.val()) {
+                // Find tr
+                table.find("#" + jSelectedRequestInput.val()).addClass('selected');
+            }
         },
         "columns": [
             {
@@ -405,12 +412,14 @@ function initRequestsTable() {
 
             // Events for show selected row status and showing details on: row click.
             table.find('tbody').off().on('click', 'tr:not(.group)', function () {
-                var jThis = $(this);
+                var jThis = $(this),
+                    rowId = requestsDataTable.row(this).id();
 
+                // Store selection
+                jSelectedRequestInput.val(rowId);
                 // Overlay
                 table.find('tr.selected').removeClass('selected');
                 jThis.addClass('selected');
-                var rowId = requestsDataTable.row(this).id();
                 var content = $('#attachment-' + rowId).clone();
                 var currentRequestData = getRequestDataItemById(rowId);
                 var bFoundRequestStage = false;
