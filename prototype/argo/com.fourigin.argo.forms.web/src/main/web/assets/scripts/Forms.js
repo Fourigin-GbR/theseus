@@ -166,6 +166,7 @@ var generateSummarizedListOfAllFormData = function() {
 
 var showThankYouPage = function() {
     var htmlNode_thankYouPage = document.getElementById("thankYouPage"),
+        htmlNode_formEditOnePage = document.getElementById("formularOnePage"), // currently for the edit-base-data-pages
         htmlNodes_stepBoxSteps = document.getElementsByClassName("StepsBox__step");
     //
     Array.prototype.forEach.call(htmlNodes_stepBoxSteps, function(el){
@@ -173,6 +174,8 @@ var showThankYouPage = function() {
     });
     // document.querySelector(".StepsNavigation__item--last").classList.add("validated");
     htmlNode_thankYouPage.classList.add("active");
+    console.log("HIDE", htmlNode_formEditOnePage);
+    htmlNode_formEditOnePage.style.display = 'none';
 };
 
 var showErrorPage = function() {
@@ -210,9 +213,13 @@ var getUrlParameterAndUpdateAndInitForm = function() {
     };
 
     var customerId = getUrlParameter('customer.id') || null,
-        entryId = getUrlParameter('entry.id') || null;
+        entryId = getUrlParameter('entry.id') || null,
+        stageId = getUrlParameter('stage.id') || null;
     if(customerId) {
         document.querySelector("input[name='customer.id']").value = customerId;
+    }
+    if(stageId) {
+        document.querySelector("input[name='stage.id']").value = stageId;
     }
 
     initializeFormWithRequestData(customerId, entryId);

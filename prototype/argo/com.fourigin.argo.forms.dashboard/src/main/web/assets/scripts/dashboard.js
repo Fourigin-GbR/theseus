@@ -369,6 +369,7 @@ function initRequestsTable() {
         "                                        <input type=\"submit\" class=\"buttonLca\" value=\"\"/>\n" +
         "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
         "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
+        "                                        <input type=\"hidden\" name=\"stage.id\" value=\"\"/>\n" +
         "                                    </form>\n");
     let jOverlayStageActionButtonForm = $("<form class=\"state-change-form\" name=\"state-change-form\" action=\"/forms-dashboard/change-state\">" +
         "                                   <input type=\"hidden\" name=\"entryId\" value=\"\"/>\n" +
@@ -475,6 +476,7 @@ function initRequestsTable() {
                             }
                             jStageEditButton.find("input[name='entry.id']").val(rowId);
                             jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
+                            jStageEditButton.find("input[name='stage.id']").val(currentRequestData.stage);
                             jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                         }
 
