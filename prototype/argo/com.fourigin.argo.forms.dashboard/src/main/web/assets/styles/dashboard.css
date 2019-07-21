@@ -332,7 +332,12 @@ table.dataTable tr.group.closed td:first-of-type::before {
     border-bottom: 0;
     font-size: 14px;
 }
-
+.requestDetails__content .message {
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #ccc;
+    margin-bottom: 15px;
+}
 #state-value {
     margin: 1em;
     padding: 0.3em;
