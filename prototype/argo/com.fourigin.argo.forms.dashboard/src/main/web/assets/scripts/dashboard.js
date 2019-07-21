@@ -172,7 +172,6 @@ function internalInitRequestsTable(data) {
     var table = $('#requests');
 
     requestsDataTable = table.DataTable({
-        "ajax": "/forms-dashboard/requests",
         "data": data,
         "rowId": function (data) {
             return data.id;
@@ -295,10 +294,6 @@ function internalInitRequestsTable(data) {
         // ]
     });
 
-    window.DataTableRequestsTable = requestsDataTable;
-    setInterval( function () {
-        window.DataTableRequestsTable.ajax.reload();
-    }, 30000 );
 }
 
 function initUsersTable() {
@@ -493,8 +488,8 @@ function initRequestsTable() {
                                 //
                                 jCurrentButtonForm.find("input[name='entryId']").val(rowId);
                                 jCurrentButtonForm.find("input[name='customerId']").val(currentRequestData.customer);
-                                jCurrentButtonForm.find("input[name='processingState']").val(key);
-                                jCurrentButtonForm.find("input[type='submit']").val(key);
+                                jCurrentButtonForm.find("input[name='processingState']").val(currentStageObject.actions[key]);
+                                jCurrentButtonForm.find("input[type='submit']").val(currentStageObject.actions[key]);
                                 jCurrentButtonForm.find(".labelCopy").text(formatStateAction(key));
                                 jCurrentStageActionsWrapper.append(jCurrentButtonForm);
                             }
@@ -714,9 +709,7 @@ var applyChangeState = function () {
             data: jStateChangeForm.serializeArray()
         })
             .done(function (msg) {
-                DataTableRequestsTable.ajax.reload();
-                let requestDetails = $('#request-details');
-                requestDetails.hide();
+                window.location.reload();
             })
             .fail(function (msg) {
                 jStateChangeForm.
