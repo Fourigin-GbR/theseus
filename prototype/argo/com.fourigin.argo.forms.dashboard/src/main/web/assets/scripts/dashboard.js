@@ -418,6 +418,7 @@ function initRequestsTable() {
                     var currentRequestData = getRequestDataItemById(rowId);
                     var bFoundRequestStage = false;
                     var jRequestState = getStateHtml(currentRequestData.state);
+                    var requestStateComment = currentRequestData.processingState.currentStatusMessage;
                     var currentStageObject;
                     var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
                     let currentStages;
@@ -430,6 +431,13 @@ function initRequestsTable() {
                     }
 
                     requestDetails.find(".requestDetails__content").html(content);
+                    if(requestStateComment) {
+                        requestDetails.find(".request-status-comment").text(requestStateComment).show();
+                    }
+                    else {
+                        requestDetails.find(".request-status-comment").hide();
+                    }
+
                     // Set stages:
                     jRequestStages.empty();
                     for(let i=0; i<currentStages.amount; i++) {
@@ -601,13 +609,13 @@ function initRequestsTable() {
                     }
                 }
 
-                if (processingState.currentStatusMessage) {
+/*                if (processingState.currentStatusMessage) {
                     var spanMessage = $('<div></div>')
                         .prop('class', 'message')
                         .append(processingState.currentStatusMessage);
 
                     div.append(spanMessage);
-                }
+                }*/
 
                 div.append(form);
 
