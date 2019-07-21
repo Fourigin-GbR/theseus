@@ -406,108 +406,103 @@ function initRequestsTable() {
             // Events for show selected row status and showing details on: row click.
             table.find('tbody').off().on('click', 'tr:not(.group)', function () {
                 var jThis = $(this);
-                if (jThis.hasClass('selected')) {
-                    jThis.removeClass('selected');
-                    requestDetails.hide();
+
+                // Overlay
+                table.find('tr.selected').removeClass('selected');
+                jThis.addClass('selected');
+                var rowId = requestsDataTable.row(this).id();
+                var content = $('#attachment-' + rowId).clone();
+                var currentRequestData = getRequestDataItemById(rowId);
+                var bFoundRequestStage = false;
+                var jRequestState = getStateHtml(currentRequestData.state);
+                var requestStateComment = currentRequestData.processingState.currentStatusMessage;
+                var currentStageObject;
+                var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
+                let currentStages;
+
+                if (currentRequestData.formDefinition && currentRequestData.formDefinition === "register-vehicle") {
+                    currentStages = stages.registerVehicle;
                 }
                 else {
-                    // Overlay
-                    table.find('tr.selected').removeClass('selected');
-                    jThis.addClass('selected');
-                    var rowId = requestsDataTable.row(this).id();
-                    var content = $('#attachment-' + rowId).clone();
-                    var currentRequestData = getRequestDataItemById(rowId);
-                    var bFoundRequestStage = false;
-                    var jRequestState = getStateHtml(currentRequestData.state);
-                    var requestStateComment = currentRequestData.processingState.currentStatusMessage;
-                    var currentStageObject;
-                    var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
-                    let currentStages;
-
-                    if (currentRequestData.formDefinition && currentRequestData.formDefinition === "register-vehicle") {
-                        currentStages = stages.registerVehicle;
-                    }
-                    else {
-                        currentStages = stages.registerCustomer;
-                    }
-
-                    requestDetails.find(".requestDetails__content").html(content);
-                    if(requestStateComment) {
-                        requestDetails.find(".request-status-comment").text(requestStateComment).show();
-                    }
-                    else {
-                        requestDetails.find(".request-status-comment").hide();
-                    }
-
-                    // Set stages:
-                    jRequestStages.empty();
-                    for(let i=0; i<currentStages.amount; i++) {
-                        let jStageCurrent = jOverlayStagePrototype.clone();
-                        //
-                        if(!bFoundRequestStage) {
-                            // Not passed the current stage yet, so guess all previous stages are done:
-                            jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
-                            jStageCurrent.addClass("request-stage--done");
-                        }
-                        if(!bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
-                            bFoundRequestStage = true;
-                            currentStageObject = currentStages.data[i];
-                            if(1 < currentStages.amount) {
-                                jStageCurrent.addClass("request-stage--current");
-                            }
-                        }
-                        jStageCurrent.find(".request-stage-title").text(getStageTranslation(currentStages.data[i].name));
-                        // Stage-field-edit-action
-                        if(currentStages.data[i].editable) {
-                            let jStageEditButton = jOverlayStageEditButton.clone();
-                            //
-                            switch (currentStages.data[i].name) {
-                                case "base-data-without-approved-nameplate":
-                                    jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
-                                    jStageEditButton.find("input[type=submit]").val("Basis-Daten eingeben");
-                                    break;
-                                case "final-data-with-approved-nameplate":
-                                    jStageEditButton.attr("action", "/form-kfz-kennzeichen.html").attr("target", "_blank");
-                                    jStageEditButton.find("input[type=submit]").val("KFZ-Kennzeichen eingeben");
-                                    break;
-                                default:
-                                    jStageEditButton.find("input[type=submit]").val("Daten eingeben");
-                                    break;
-                            }
-                            jStageEditButton.find("input[name='entry.id']").val(rowId);
-                            jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
-                            jStageEditButton.find("input[name='stage.id']").val(currentRequestData.stage);
-                            jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
-                        }
-
-                        jRequestStages.append(jStageCurrent);
-                    }
-                    // State:
-                    requestDetails.find(".request-status").empty().append(jRequestState);
-                    // Stage actions:
-                    jCurrentStageActionsWrapper.empty();
-                    jCurrentStageActionsWrapper.hide();
-                    if(currentStageObject) {
-                        jCurrentStageActionsWrapper.show();
-                        if(!currentStageObject.actions) {
-                            jCurrentStageActionsWrapper.hide();
-                        }
-                        else {
-                            for (let key in currentStageObject.actions) {
-                                let jCurrentButtonForm = jOverlayStageActionButtonForm.clone();
-                                //
-                                jCurrentButtonForm.find("input[name='entryId']").val(rowId);
-                                jCurrentButtonForm.find("input[name='customerId']").val(currentRequestData.customer);
-                                jCurrentButtonForm.find("input[name='processingState']").val(currentStageObject.actions[key]);
-                                jCurrentButtonForm.find("input[type='submit']").val(currentStageObject.actions[key]);
-                                jCurrentButtonForm.find(".labelCopy").text(formatStateAction(key));
-                                jCurrentStageActionsWrapper.append(jCurrentButtonForm);
-                            }
-                        }
-                    }
-                    //
-                    requestDetails.show();
+                    currentStages = stages.registerCustomer;
                 }
+
+                requestDetails.find(".requestDetails__content").html(content);
+                if(requestStateComment) {
+                    requestDetails.find(".request-status-comment").text(requestStateComment).show();
+                }
+                else {
+                    requestDetails.find(".request-status-comment").hide();
+                }
+
+                // Set stages:
+                jRequestStages.empty();
+                for(let i=0; i<currentStages.amount; i++) {
+                    let jStageCurrent = jOverlayStagePrototype.clone();
+                    //
+                    if(!bFoundRequestStage) {
+                        // Not passed the current stage yet, so guess all previous stages are done:
+                        jStageCurrent.find(".request-stage-status").addClass("request-stage-status--done");
+                        jStageCurrent.addClass("request-stage--done");
+                    }
+                    if(!bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
+                        bFoundRequestStage = true;
+                        currentStageObject = currentStages.data[i];
+                        if(1 < currentStages.amount) {
+                            jStageCurrent.addClass("request-stage--current");
+                        }
+                    }
+                    jStageCurrent.find(".request-stage-title").text(getStageTranslation(currentStages.data[i].name));
+                    // Stage-field-edit-action
+                    if(currentStages.data[i].editable) {
+                        let jStageEditButton = jOverlayStageEditButton.clone();
+                        //
+                        switch (currentStages.data[i].name) {
+                            case "base-data-without-approved-nameplate":
+                                jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
+                                jStageEditButton.find("input[type=submit]").val("Basis-Daten eingeben");
+                                break;
+                            case "final-data-with-approved-nameplate":
+                                jStageEditButton.attr("action", "/form-kfz-kennzeichen.html").attr("target", "_blank");
+                                jStageEditButton.find("input[type=submit]").val("KFZ-Kennzeichen eingeben");
+                                break;
+                            default:
+                                jStageEditButton.find("input[type=submit]").val("Daten eingeben");
+                                break;
+                        }
+                        jStageEditButton.find("input[name='entry.id']").val(rowId);
+                        jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
+                        jStageEditButton.find("input[name='stage.id']").val(currentRequestData.stage);
+                        jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
+                    }
+
+                    jRequestStages.append(jStageCurrent);
+                }
+                // State:
+                requestDetails.find(".request-status").empty().append(jRequestState);
+                // Stage actions:
+                jCurrentStageActionsWrapper.empty();
+                jCurrentStageActionsWrapper.hide();
+                if(currentStageObject) {
+                    jCurrentStageActionsWrapper.show();
+                    if(!currentStageObject.actions) {
+                        jCurrentStageActionsWrapper.hide();
+                    }
+                    else {
+                        for (let key in currentStageObject.actions) {
+                            let jCurrentButtonForm = jOverlayStageActionButtonForm.clone();
+                            //
+                            jCurrentButtonForm.find("input[name='entryId']").val(rowId);
+                            jCurrentButtonForm.find("input[name='customerId']").val(currentRequestData.customer);
+                            jCurrentButtonForm.find("input[name='processingState']").val(currentStageObject.actions[key]);
+                            jCurrentButtonForm.find("input[type='submit']").val(currentStageObject.actions[key]);
+                            jCurrentButtonForm.find(".labelCopy").text(formatStateAction(key));
+                            jCurrentStageActionsWrapper.append(jCurrentButtonForm);
+                        }
+                    }
+                }
+                //
+                requestDetails.show();
             });
 
             table.find('tbody').on('click', 'tr.group', function () {
