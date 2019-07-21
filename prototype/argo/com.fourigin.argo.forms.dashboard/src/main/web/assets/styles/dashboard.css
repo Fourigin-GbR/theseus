@@ -456,6 +456,9 @@ table.dataTable tr.group.closed td:first-of-type::before {
     background-color: #b3233f;
 }
 
+.SUSPENDED.statusIcon:before {
+    background-color: #998fc7;
+}
 .READY_TO_APPROVE.statusIcon:before {
     background-color: #18beee;
 }
