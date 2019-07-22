@@ -217,7 +217,7 @@ var getUrlParameterAndUpdateAndInitForm = function() {
         entryId = getUrlParameter('entry.id') || null,
         stageId = getUrlParameter('stage.id') || null;
     if(customerId) {
-        document.querySelector("input[name='customer.id']").value = customerId;
+        jFormular.attr("data-form-customer-id", customerId);
     }
     if(entryId) {
         jFormular.attr("data-form-entry-id", entryId);
@@ -427,7 +427,7 @@ var sendFormDataToValidate = function(formData) {
                 "formDefinition": jFormular.attr("data-form-definition-id"),
                 "stage": jFormular.attr("data-form-stage-id"),
                 "entryId": jFormular.attr("data-form-entry-id"),
-                "customer": "tsp",
+                "customerId": jFormular.attr("data-form-customer-id"),
                 "base": "DE",
                 "locale": "en_GB",
                 "referrer": {
@@ -611,6 +611,8 @@ var sendForm = function() {
                 "header": {
                     "formDefinition": jForm.attr("data-form-definition-id"),
                     "stage": jForm.attr("data-form-stage-id"),
+                    "entryId": jForm.attr("data-form-entry-id"),
+                    "customerId": jForm.attr("data-form-customer-id"),
                     "customer": "tsp",
                     "base": "DE",
                     "locale": "en_GB", // TODO: replace with browser locale
