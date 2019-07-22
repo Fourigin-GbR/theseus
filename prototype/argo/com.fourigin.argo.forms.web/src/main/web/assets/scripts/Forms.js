@@ -625,7 +625,7 @@ var sendForm = function() {
             };
 
         $.ajax({
-            url: '/forms/register-form',
+            url: jForm.attr("action"),
             dataType: 'JSON',
             contentType: 'application/json',
             method: 'POST',
