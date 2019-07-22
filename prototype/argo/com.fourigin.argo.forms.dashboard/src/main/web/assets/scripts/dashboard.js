@@ -277,7 +277,7 @@ function internalInitRequestsTable(data) {
                         currentLastFinishedStageCopy = currentLastFinishedStageIndex >= 0 ? currentStages.namesList[currentLastFinishedStageIndex] : "";
                     }
 
-                    processHandleWidth = (currentStageIndex * 100) / (currentStages.amount - 1);
+                    processHandleWidth = Math.floor((currentStageIndex * 100) / (currentStages.amount - 1));
                     return $('<div></div>')
                         .attr('class', data + ' stage-value-cell')
                         .append('<div class="processBar"><span class="processBar__handle" style="width:' + processHandleWidth + '%"></span><span class="processBar__label">' + processHandleWidth + '%</span></div>')
