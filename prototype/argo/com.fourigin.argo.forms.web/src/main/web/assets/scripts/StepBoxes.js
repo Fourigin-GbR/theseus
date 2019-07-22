@@ -246,11 +246,15 @@ var xyz = new Fourigin.StepsBox(htmlNode_setsBox, function (allFormFieldInStep) 
             return data;
         };
 
+        var jFormular = $("#fccFormular form");
+
         var self = this,
             dataJson = {
                 "header": {
-                    "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
-                    "customer": "tsp",
+                    "formDefinition": jFormular.attr("data-form-definition-id"),
+                    "stage": jFormular.attr("data-form-stage-id"),
+                    "entryId": jFormular.attr("data-form-entry-id"),
+                    "customerId": jFormular.attr("data-form-customer-id"),
                     "base": "DE",
                     "locale": "en_GB",
                     "referrer": {

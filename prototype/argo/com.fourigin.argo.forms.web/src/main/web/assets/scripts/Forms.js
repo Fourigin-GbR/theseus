@@ -613,7 +613,6 @@ var sendForm = function() {
                     "stage": jForm.attr("data-form-stage-id"),
                     "entryId": jForm.attr("data-form-entry-id"),
                     "customerId": jForm.attr("data-form-customer-id"),
-                    "customer": "tsp",
                     "base": "DE",
                     "locale": "en_GB", // TODO: replace with browser locale
                     "referrer": { // TODO: optional map (schema free), replace with some sane values, for statistics only
