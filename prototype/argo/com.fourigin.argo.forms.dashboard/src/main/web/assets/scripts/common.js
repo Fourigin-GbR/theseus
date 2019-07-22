@@ -111,6 +111,8 @@ function getStageTranslation(stage) {
 
 function formatStateAction(data) {
     switch (data) {
+        case 'mark-as-approved':
+            return 'Markieren als freigegeben';
         case 'mark-as-sent-to-approval':
             return 'Markieren als fertig zur Freigabe';
         case 'suspend':

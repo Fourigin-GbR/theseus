@@ -260,7 +260,7 @@ function internalInitRequestsTable(data) {
             {
                 "data": "stage",
                 "render": function (data, type, completeDataObject) {
-                    let currentStages, processHandleWidth;
+                    let currentStages, processHandleWidth, currentStageIndex, currentLastFinishedStageIndex, currentLastFinishedStageCopy;
 
                     if (completeDataObject.formDefinition && completeDataObject.formDefinition === "register-vehicle") {
                         currentStages = stages.registerVehicle;
@@ -268,12 +268,21 @@ function internalInitRequestsTable(data) {
                     else {
                         currentStages = stages.registerCustomer;
                     }
-                    processHandleWidth = ((currentStages.namesList.indexOf(data) + 1) * 100) / currentStages.amount;
+                    currentStageIndex = currentStages.namesList.indexOf(data);
+                    currentLastFinishedStageIndex = currentStageIndex - 1;
+                    if(completeDataObject.state === "DONE") {
+                        currentLastFinishedStageCopy = "Abgeschlossen.";
+                    }
+                    else {
+                        currentLastFinishedStageCopy = currentLastFinishedStageIndex >= 0 ? currentStages.namesList[currentLastFinishedStageIndex] : "";
+                    }
+
+                    processHandleWidth = (currentStageIndex * 100) / (currentStages.amount - 1);
                     return $('<div></div>')
                         .attr('class', data + ' stage-value-cell')
                         .append('<div class="processBar"><span class="processBar__handle" style="width:' + processHandleWidth + '%"></span><span class="processBar__label">' + processHandleWidth + '%</span></div>')
                         .append($('<span class="processName"></span>')
-                            .html(getStageTranslation(data))
+                            .html(getStageTranslation(currentLastFinishedStageCopy))
                         )[0].outerHTML;
                 }
             },
@@ -424,6 +433,7 @@ function initRequestsTable() {
                 var currentRequestData = getRequestDataItemById(rowId);
                 var bFoundRequestStage = false;
                 var jRequestState = getStateHtml(currentRequestData.state);
+                var requestStateValue = currentRequestData.processingState.state;
                 var requestStateComment = currentRequestData.processingState.currentStatusMessage;
                 var currentStageObject;
                 var jCurrentStageActionsWrapper = $(".request-current-stage-actions-wrapper");
@@ -457,7 +467,7 @@ function initRequestsTable() {
                     if(!bFoundRequestStage && currentStages.data[i].name === currentRequestData.stage) {
                         bFoundRequestStage = true;
                         currentStageObject = currentStages.data[i];
-                        if(1 < currentStages.amount) {
+                        if(1 < currentStages.amount && "DONE" !== requestStateValue) {
                             jStageCurrent.addClass("request-stage--current");
                         }
                     }
@@ -492,7 +502,7 @@ function initRequestsTable() {
                 // Stage actions:
                 jCurrentStageActionsWrapper.empty();
                 jCurrentStageActionsWrapper.hide();
-                if(currentStageObject) {
+                if(currentStageObject && "DONE" !== requestStateValue) {
                     jCurrentStageActionsWrapper.show();
                     if(!currentStageObject.actions) {
                         jCurrentStageActionsWrapper.hide();
