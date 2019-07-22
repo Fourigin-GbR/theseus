@@ -481,7 +481,7 @@ function initRequestsTable() {
                         }
                         jStageEditButton.find("input[name='entry.id']").val(rowId);
                         jStageEditButton.find("input[name='customer.id']").val(currentRequestData.customer);
-                        jStageEditButton.find("input[name='stage.id']").val(currentRequestData.stage);
+                        jStageEditButton.find("input[name='stage.id']").val(currentStages.data[i].name);
                         jStageCurrent.find(".request-stage-edit-action").append(jStageEditButton);
                     }
 
