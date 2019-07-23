@@ -165,16 +165,25 @@ function internalInitUsersTable(data) {
             {
                 "data": "id",
                 "render": function(data, type, completeDataObject) {
-                    var jWrapper = $("<div></div>");
+                    var jWrapper = $("<div class='fieldActionForms'></div>");
                     var jButtonForm1 = $("<form target='_blank' action='/form-benutzer-editieren.html'>\n" +
-                        "                                        <input type=\"submit\" class=\"buttonLca\" value=\"Bearbeiten\"/>\n" +
+                        "                                        <input type=\"submit\" class=\"buttonCta\" value=\"Bearbeiten\"/>\n" +
+                        "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
+                        "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
+                        "                                    </form>\n");
+                    var jButtonForm2 = $("<form class='action-remove-user' target='_blank' action='/benutzer-entfernen'>\n" +
+                        "                                        <input type=\"submit\" class=\"buttonLca\" value=\"Entfernen\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
                         "                                    </form>\n");
                     jButtonForm1.find("input[name='customer.id']").val(data);
-                    jButtonForm1.find("input[name='entry.id']").val(completeDataObject.id);
+                    jButtonForm1.find("input[name='entry.id']").val(completeDataObject.entryId);
+
+                    jButtonForm2.find("input[name='customer.id']").val(data);
+                    jButtonForm2.find("input[name='entry.id']").val(completeDataObject.entryId);
 
                     jWrapper.append(jButtonForm1);
+                    jWrapper.append(jButtonForm2);
                     return jWrapper[0].outerHTML;
                 }}
         ],
@@ -337,44 +346,50 @@ function initUsersTable() {
             internalInitUsersTable(data);
 
             var requestControls = $('#request-controls');
-            var deleteUserButton = $('#delete-user-button');
 
             table.find('tbody').off().on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                     requestControls.hide();
-                    deleteUserButton.prop('disabled', true);
                 }
                 else {
                     table.find('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     var rowId = usersDataTable.row(this).id();
                     requestControls.show();
-                    deleteUserButton.prop('disabled', false);
                     $('#selectedClient').val(rowId);
                 }
             });
         }
     );
 
+    var table = $('#users');
     var requestControls = $('#request-controls');
     var addUserButton = $('#add-user-button');
-    var deleteUserButton = $('#delete-user-button');
 
     requestControls.hide();
-    deleteUserButton.prop('disabled', true);
 
-    deleteUserButton.off().click(function () {
-        var rowId = usersDataTable.row($('tr.selected')).id();
-        if (confirm("Sind Sie sicher, dass der Kunde " + rowId + " gelöscht werden soll?")) {
-            deleteUser(rowId);
+    table.on("submit", "form.action-remove-user", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        //
+        let jRemoveForm, entryId;
+
+        jRemoveForm = $(this);
+        entryId = jRemoveForm.find("input[name='entry.id']").val();
+
+        if(!entryId) {
+            alert("Ein interner Fehler ist aufgetreten, der Nutzer kann momentan leider nicht gelöscht werden.");
+            console.error("Remove-Error", entryId, jRemoveForm, );
+            return;
+        }
+        if (confirm("Sind Sie sicher, dass der Kunde " + entryId + " gelöscht werden soll?")) {
+            deleteUser(entryId);
             usersDataTable.destroy();
             initUsersTable();
         }
-        else {
-            return false;
-        }
     });
+
 
     addUserButton.off().click(function () {
         window.open('form-benutzer-anlegen.html', '_blank'); // TODO: fix it!

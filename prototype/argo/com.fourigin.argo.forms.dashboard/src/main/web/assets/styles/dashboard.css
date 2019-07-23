@@ -389,6 +389,12 @@ table.dataTable tr.group.closed td:first-of-type::before {
     padding: 5px 10px;
 }
 
+
+.fieldActionForms form {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+}
+
 .stage-value-cell {
     width: 250px;
 }
