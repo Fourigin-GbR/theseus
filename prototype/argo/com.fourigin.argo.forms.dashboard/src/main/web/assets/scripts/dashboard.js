@@ -373,17 +373,18 @@ function initUsersTable() {
         e.preventDefault();
         e.stopPropagation();
         //
-        let jRemoveForm, entryId;
+        let jRemoveForm, entryId, customerId;
 
         jRemoveForm = $(this);
         entryId = jRemoveForm.find("input[name='entry.id']").val();
+        customerId = jRemoveForm.find("input[name='customer.id']").val();
 
         if(!entryId) {
             alert("Ein interner Fehler ist aufgetreten, der Nutzer kann momentan leider nicht gelöscht werden.");
             console.error("Remove-Error", entryId, jRemoveForm, );
             return;
         }
-        if (confirm("Sind Sie sicher, dass der Kunde " + entryId + " gelöscht werden soll?")) {
+        if (confirm("Sind Sie sicher, dass der Kunde " + customerId + " gelöscht werden soll?")) {
             deleteUser(entryId);
             usersDataTable.destroy();
             initUsersTable();
