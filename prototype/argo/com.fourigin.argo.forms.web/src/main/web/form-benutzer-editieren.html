@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Benutzer editieren</title>
+    <link rel="stylesheet" href="assets/styles/kfz-anmeldung.css"/>
+    <link rel="stylesheet" href="assets/styles/formulars.css"/>
+    <link rel="stylesheet" href="assets/webfonts/line-awesome/css/line-awesome-font-awesome.min.css"/>
+</head>
+<body>
+<h1>Benutzer anlegen</h1>
+
+<div class="Tabs_ StepsBox" id="fccFormular">
+
+    <div class="TabsWrapper">
+        <form action="#" method="get" data-form-definition-id="update-customer">
+
+            <div id="thankYouPage" class="ThankYouPage">
+                <h2>Dankeschön!</h2>
+                <div class="ThankYouPage__icon">
+                    <i class="fa fa-check-square la la-check-square"></i>
+                </div>
+                <div class="ThankYouPage__subCopy">
+                    Ihre Daten wurden eingetragen.
+                </div>
+                <footer class="ThankYouPage__footer">
+                    <a href="dashboard.html"><i class="fa fa-reply la la-reply"></i> Zurück zum Dashboard</a>
+                </footer>
+            </div>
+            <div id="errorPage" class="ThankYouPage ErrorPage">
+                <h2>Fehler!</h2>
+                <div class="ThankYouPage__icon ErrorPage__icon">
+                    <i class="fa fa-times la la-times"></i>
+                </div>
+                <div class="ThankYouPage__subCopy">
+                    Bitte versuchen Sie es später noch einmal.
+                </div>
+                <footer class="ThankYouPage__footer">
+                    <a href="dashboard.html"><i class="fa fa-reply la la-reply"></i> Zurück zum Dashboard</a>
+                </footer>
+            </div>
+
+
+            <div id="formularOnePage">
+
+                <div data-target-tab-id="tab1" class="Tab StepsBox__step active">
+
+                <fieldset>
+                    <legend>Kundendaten</legend>
+
+                    <fieldset name="gender" class="CheckboxList">
+                        <legend>Anrede</legend>
+
+                        <div class="CheckboxList__item">
+                            <label class="CheckboxList__item__checkbox">
+                                <input type="radio" name="gender" value="MALE"/>
+                                <span>Herr</span>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="gender" data-element="validation-message"></div>
+                        </div>
+                        <!---->
+                        <div class="CheckboxList__item">
+                            <label class="CheckboxList__item__checkbox">
+                                <input type="radio" name="gender" value="FEMALE"/>
+                                <span>Frau</span>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="gender" data-element="validation-message"></div>
+                        </div>
+                    </fieldset>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--40">
+                            <label>
+                                <span>Vorname</span>
+                                <input type="text" name="firstname"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="firstname" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--30">
+                            <label>
+                                <span>ggf. Geburtsname</span>
+                                <input type="text" name="birthname"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="birthname" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--40">
+                            <label>
+                                <span>Nachname</span>
+                                <input type="text" name="lastname"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="lastname" data-element="validation-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Geburtsdatum</span>
+                                <input type="text" name="birthdate"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="birthdate" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Geburtsort</span>
+                                <input type="text" name="cityOfBorn"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="cityOfBorn" data-element="validation-message"></div>
+                        </div>
+                    </div>
+
+                    <!--<fieldset name="nationality" class="CheckboxList">-->
+                        <!--<legend>Staatsangehörigkeit</legend>-->
+
+                        <!--<div class="CheckboxList__item">-->
+                            <!--<label class="CheckboxList__item__checkbox">-->
+                                <!--<input checked="checked" type="radio" name="nationality" value="german"/>-->
+                                <!--<span>deutsch</span>-->
+                            <!--</label>-->
+                            <!--<div class="FieldValidationMessage" data-input="nationality" data-element="validation-message"></div>-->
+                        <!--</div>-->
+                        <!---->
+                        <!--<div class="CheckboxList__item DependencyGroup">-->
+                            <!--<label class="CheckboxList__item__checkbox DependencyGroup__master">-->
+                                <!--<input type="radio" name="nationality" value="other"-->
+                                       <!--data-activate-fieldset-name="other"/>-->
+                                <!--<span>andere:</span>-->
+                            <!--</label>-->
+                            <!--<fieldset class="DependencyGroup__dependant" name="other" disabled="disabled">-->
+                                <!--<label>-->
+                                    <!--<input type="text" name="nationality/country"/>-->
+                                <!--</label>-->
+                                <!--<div class="FieldValidationMessage" data-input="nationality/country" data-element="validation-message"></div>-->
+                            <!--</fieldset>-->
+                        <!--</div>-->
+                    <!--</fieldset>-->
+                </fieldset>
+
+                <fieldset>
+                    <legend>Kontaktdaten</legend>
+
+                    <label>
+                        <span>E-Mail</span>
+                        <input type="text" name="contact.email"/>
+                    </label>
+                    <div class="FieldValidationMessage" data-input="contact.email" data-element="validation-message"></div>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Telefon</span>
+                                <input type="text" name="contact.phone"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="contact.phone" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--50">
+                            <label>
+                                <span>Fax</span>
+                                <input type="text" name="contact.fax"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="contact.fax" data-element="validation-message"></div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Adresse</legend>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--80">
+                            <label>
+                                <span>Straße</span>
+                                <input type="text" name="street"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="street" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--20">
+                            <label>
+                                <span>Hausnummer</span>
+                                <input type="text" name="house-number"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="house-number" data-element="validation-message"></div>
+                        </div>
+                    </div>
+
+                    <label>
+                        <span>Zusatzangaben</span>
+                        <input type="text" name="additional-info"/>
+                    </label>
+                    <div class="FieldValidationMessage" data-input="additional-info" data-element="validation-message"></div>
+
+                    <div class="FormularGroup Grid">
+                        <div class="Grid_Module--30">
+                            <label>
+                                <span>PLZ</span>
+                                <input type="text" name="zip-code"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="zip-code" data-element="validation-message"></div>
+                        </div>
+                        <div class="Grid_Module--80">
+                            <label>
+                                <span>Ort</span>
+                                <input type="text" name="city"/>
+                            </label>
+                            <div class="FieldValidationMessage" data-input="city" data-element="validation-message"></div>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <div class="ValidationMessages">
+                            <div class="ValidationMessages__message ValidationMessages__message--invalid" data-validation-message-type="invalid">Ihre Eingabe sind nicht korrekt.</div>
+                            <div class="ValidationMessages__message ValidationMessages__message--error" data-validation-message-type="error">Ihre Eingabe konnte nicht validiert werden. Bitte überprüfen Sie die Daten.</div>
+                        </div>
+                        <!--<button type="button" class="cta" data-action="nextTab">Weiter</button>-->
+                        <button type="submit">Absenden</button>
+                    </footer>
+
+                </fieldset>
+            </div>
+
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+<script type="text/javascript" src="assets/scripts/jQuery-3.3.1.min.js"></script>
+<script type="text/javascript" src="assets/scripts/Forms.js"></script>
+<script type="text/javascript" src="assets/scripts/StepBoxes.js"></script>
+
+</body>
+</html>
