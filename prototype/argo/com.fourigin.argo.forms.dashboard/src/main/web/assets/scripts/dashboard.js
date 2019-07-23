@@ -164,14 +164,15 @@ function internalInitUsersTable(data) {
             {"data": "email"},
             {
                 "data": "id",
-                "render": function(data) {
+                "render": function(data, type, completeDataObject) {
                     var jWrapper = $("<div></div>");
-                    var jButtonForm1 = $("<form target='_blank' action='/forms-dashboard/form-benutzer-editieren.html'>\n" +
+                    var jButtonForm1 = $("<form target='_blank' action='/form-benutzer-editieren.html'>\n" +
                         "                                        <input type=\"submit\" class=\"buttonLca\" value=\"Bearbeiten\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
                         "                                    </form>\n");
                     jButtonForm1.find("input[name='customer.id']").val(data);
+                    jButtonForm1.find("input[name='entry.id']").val(completeDataObject.id);
 
                     jWrapper.append(jButtonForm1);
                     return jWrapper[0].outerHTML;
