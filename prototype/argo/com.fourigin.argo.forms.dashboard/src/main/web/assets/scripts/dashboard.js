@@ -161,7 +161,21 @@ function internalInitUsersTable(data) {
             {"data": "id"},
             {"data": "firstName"},
             {"data": "lastName"},
-            {"data": "email"}
+            {"data": "email"},
+            {
+                "data": "id",
+                "render": function(data) {
+                    var jWrapper = $("<div></div>");
+                    var jButtonForm1 = $("<form target='_blank' action='/forms-dashboard/form-benutzer-editieren.html'>\n" +
+                        "                                        <input type=\"submit\" class=\"buttonLca\" value=\"Bearbeiten\"/>\n" +
+                        "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
+                        "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
+                        "                                    </form>\n");
+                    jButtonForm1.find("input[name='customer.id']").val(data);
+
+                    jWrapper.append(jButtonForm1);
+                    return jWrapper[0].outerHTML;
+                }}
         ],
         "language": {
             "url": translationBundle
@@ -277,7 +291,7 @@ function internalInitRequestsTable(data) {
                         currentLastFinishedStageCopy = currentLastFinishedStageIndex >= 0 ? currentStages.namesList[currentLastFinishedStageIndex] : "";
                     }
 
-                    processHandleWidth = Math.floor((currentStageIndex * 100) / (currentStages.amount - 1));
+                    processHandleWidth = currentStageIndex === 0 ? 0 : Math.floor((currentStageIndex * 100) / (currentStages.amount - 1));
                     return $('<div></div>')
                         .attr('class', data + ' stage-value-cell')
                         .append('<div class="processBar"><span class="processBar__handle" style="width:' + processHandleWidth + '%"></span><span class="processBar__label">' + processHandleWidth + '%</span></div>')

@@ -334,6 +334,7 @@ var prePopulateFormWithRequestData = function(customerId, entryId) {
     var self = this,
         dataJson = {
             "formDefinition": $("#fccFormular form").attr("data-form-definition-id"),
+            "stage": jFormular.attr("data-form-stage-id"),
             "customer": customerId
         };
 
