@@ -294,14 +294,28 @@ function internalInitRequestsTable(data) {
                     }
                     currentStageIndex = currentStages.namesList.indexOf(data);
                     currentLastFinishedStageIndex = currentStageIndex - 1;
-                    if(completeDataObject.state === "DONE") {
+
+                    processHandleWidth = Math.floor(((currentStageIndex + 1) * 100) / currentStages.amount);
+
+                    // Problem: Currently the form-definitions for customer and vehicle have a different structure.
+
+                    currentLastFinishedStageCopy = currentLastFinishedStageIndex >= 0 ? currentStages.namesList[currentLastFinishedStageIndex] : "";
+
+                    if(completeDataObject.formDefinition === "register-customer" && (currentStageIndex === currentStages.amount - 1)) {
                         currentLastFinishedStageCopy = "Abgeschlossen.";
-                    }
-                    else {
-                        currentLastFinishedStageCopy = currentLastFinishedStageIndex >= 0 ? currentStages.namesList[currentLastFinishedStageIndex] : "";
+                        processHandleWidth = 100;
                     }
 
-                    processHandleWidth = currentStageIndex === 0 ? 0 : Math.floor((currentStageIndex * 100) / (currentStages.amount - 1));
+                    if(completeDataObject.formDefinition === "register-vehicle") {
+                        if(completeDataObject.state === "DONE") {
+                            currentLastFinishedStageCopy = "Abgeschlossen.";
+                            processHandleWidth = 100;
+                        }
+                        else if(currentStageIndex === currentStages.amount - 1 && completeDataObject.state !== "DONE") {
+                            processHandleWidth = Math.floor(((currentStageIndex) * 100) / currentStages.amount);
+                        }
+                    }
+
                     return $('<div></div>')
                         .attr('class', data + ' stage-value-cell')
                         .append('<div class="processBar"><span class="processBar__handle" style="width:' + processHandleWidth + '%"></span><span class="processBar__label">' + processHandleWidth + '%</span></div>')
