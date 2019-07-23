@@ -236,6 +236,10 @@ var setFormFieldValues = function(fieldsDataMap) {
         if(fieldsDataMap.hasOwnProperty(fieldProperty)) {
             console.log("setFormFieldValues property:", fieldProperty);
             var formElement = document.querySelector("[name='" + fieldProperty + "']");
+            if(!formElement) {
+                console.error("Can not find form-field for property '" + fieldProperty + "'!");
+                continue;
+            }
             console.log("setFormFieldValues tagName:", formElement.tagName);
             switch (formElement.tagName) {
                 case "SELECT":
