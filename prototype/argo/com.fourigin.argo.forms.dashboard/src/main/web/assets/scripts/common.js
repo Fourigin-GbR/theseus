@@ -111,6 +111,8 @@ function getStageTranslation(stage) {
 
 function formatStateAction(data) {
     switch (data) {
+        case 'mark-as-rejected':
+            return 'Markieren als abgelehnt';
         case 'mark-as-approved':
             return 'Markieren als freigegeben';
         case 'mark-as-sent-to-approval':
