@@ -231,7 +231,7 @@ var getUrlParameterAndUpdateAndInitForm = function() {
 };
 
 var setFormFieldValues = function(fieldsDataMap) {
-    console.log("setFormFieldValues");
+    console.log("setFormFieldValues", fieldsDataMap);
     for(var fieldProperty in fieldsDataMap) {
         if(fieldsDataMap.hasOwnProperty(fieldProperty)) {
             console.log("setFormFieldValues property:", fieldProperty);
@@ -350,7 +350,6 @@ var prePopulateFormWithRequestData = function(customerId, entryId) {
         data: JSON.stringify(dataJson)
     })
         .done(function (res) {
-            console.log(res);
             if(res) {
                 prePopulateForm(res);
             }
@@ -375,8 +374,8 @@ var prePopulateForm = function(data) {
         if (storedData.hasOwnProperty(property)) {
             currentFormElement = document.querySelector("[name='" + property + "']");
             if(!currentFormElement) {
-                console.error("Can not find form element with property name", property);
-                return;
+                console.warn("Can not find form element with property name", property);
+                continue;
             }
             switch (currentFormElement.getAttribute("type")) {
                 case "text":
