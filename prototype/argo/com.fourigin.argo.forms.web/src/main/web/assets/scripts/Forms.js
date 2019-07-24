@@ -445,6 +445,7 @@ var sendFormDataToValidate = function(formData) {
     console.log("Validate me: ", formData);
 
     resetFormValidations();
+    setOnePageValidationAllMessagesInactive();
 
     $.ajax({
         url: '/forms/validate',
@@ -460,6 +461,10 @@ var sendFormDataToValidate = function(formData) {
         .fail(function (err) {
             console.error('Error: ' + err.status);
             getAllInvalidFieldsAndMarkThem(err);
+
+            // For the one-page versions (edit customer / vehicle):
+            setOnePageValidationMessageActive('invalid');
+
         });
 };
 
@@ -506,6 +511,23 @@ var getAllInvalidFieldsAndMarkThem = function (message) {
             }
         }
     }
+};
+
+
+var setOnePageValidationMessageActive = function (messageType) {
+    var htmlNode_message;
+    //
+    htmlNode_message = document.querySelectorAll("#formularOnePage [data-validation-message-type=\"" + messageType + "\"]")[0];
+    htmlNode_message.classList.add("active");
+};
+
+var setOnePageValidationAllMessagesInactive = function () {
+    var htmlNode_messages;
+    //
+    htmlNode_messages = document.querySelectorAll("#formularOnePage [data-validation-message-type]");
+    Array.prototype.forEach.call(htmlNode_messages, function (el) {
+        el.classList.remove("active");
+    });
 };
 
 
