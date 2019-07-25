@@ -32,14 +32,14 @@ public class ProcessFormRequestsJob implements Job {
             return;
         }
 
-        if (logger.isDebugEnabled()) logger.debug("Start processing of {} pending entries", pendingEntryInfos.size());
+        if (logger.isInfoEnabled()) logger.info("Start processing of {} pending entries", pendingEntryInfos.size());
 
         for (FormsStoreEntryInfo entryInfo : pendingEntryInfos) {
             if (logger.isInfoEnabled()) logger.info("Processing entry {}", entryInfo.getId());
             formsProcessingDispatcher.processFormEntry(entryInfo);
         }
 
-        if (logger.isDebugEnabled()) logger.debug("Processing of all entries done.");
+        if (logger.isInfoEnabled()) logger.info("Processing of all entries done.");
     }
 
     @Autowired

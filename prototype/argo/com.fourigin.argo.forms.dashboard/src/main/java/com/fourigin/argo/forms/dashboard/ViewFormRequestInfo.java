@@ -8,11 +8,12 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
-public class FormRequestInfo implements Serializable {
+public class ViewFormRequestInfo implements Serializable {
     private static final long serialVersionUID = -8317724026909376403L;
 
     private String id;
     private String formDefinition;
+    private String stage;
     private String customer;
     private String customerName;
     private String requestData;
@@ -36,6 +37,14 @@ public class FormRequestInfo implements Serializable {
 
     public void setFormDefinition(String formDefinition) {
         this.formDefinition = formDefinition;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
     }
 
     public String getCustomer() {
@@ -108,38 +117,40 @@ public class FormRequestInfo implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FormRequestInfo)) return false;
-        FormRequestInfo that = (FormRequestInfo) o;
+        if (o == null || getClass() != o.getClass()) return false;
+        ViewFormRequestInfo that = (ViewFormRequestInfo) o;
         return creationTimestamp == that.creationTimestamp &&
-            Objects.equals(id, that.id) &&
-            Objects.equals(formDefinition, that.formDefinition) &&
-            Objects.equals(customer, that.customer) &&
-            Objects.equals(customerName, that.customerName) &&
-            Objects.equals(requestData, that.requestData) &&
-            Objects.equals(base, that.base) &&
-            state == that.state &&
-            Objects.equals(attachments, that.attachments) &&
-            Objects.equals(processingRecord, that.processingRecord);
+                Objects.equals(id, that.id) &&
+                Objects.equals(formDefinition, that.formDefinition) &&
+                Objects.equals(stage, that.stage) &&
+                Objects.equals(customer, that.customer) &&
+                Objects.equals(customerName, that.customerName) &&
+                Objects.equals(requestData, that.requestData) &&
+                Objects.equals(base, that.base) &&
+                state == that.state &&
+                Objects.equals(attachments, that.attachments) &&
+                Objects.equals(processingRecord, that.processingRecord);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, formDefinition, customer, customerName, requestData, base, creationTimestamp, state, attachments, processingRecord);
+        return Objects.hash(id, formDefinition, stage, customer, customerName, requestData, base, creationTimestamp, state, attachments, processingRecord);
     }
 
     @Override
     public String toString() {
-        return "FormRequestInfo{" +
-            "id='" + id + '\'' +
-            ", formDefinition='" + formDefinition + '\'' +
-            ", customer='" + customer + '\'' +
-            ", customerName='" + customerName + '\'' +
-            ", requestData='" + requestData + '\'' +
-            ", base='" + base + '\'' +
-            ", creationTimestamp=" + creationTimestamp +
-            ", state=" + state +
-            ", attachments=" + attachments +
-            ", processingRecord=" + processingRecord +
-            '}';
+        return "ViewFormRequestInfo{" +
+                "id='" + id + '\'' +
+                ", formDefinition='" + formDefinition + '\'' +
+                ", stage='" + stage + '\'' +
+                ", customer='" + customer + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", requestData='" + requestData + '\'' +
+                ", base='" + base + '\'' +
+                ", creationTimestamp=" + creationTimestamp +
+                ", state=" + state +
+                ", attachments=" + attachments +
+                ", processingRecord=" + processingRecord +
+                '}';
     }
 }

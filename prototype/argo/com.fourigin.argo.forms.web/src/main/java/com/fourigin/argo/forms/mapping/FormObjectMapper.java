@@ -1,6 +1,7 @@
 package com.fourigin.argo.forms.mapping;
 
 import com.fourigin.argo.forms.CustomerRepository;
+import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import de.huxhorn.sulky.groovy.GroovyInstance;
 import groovy.lang.Binding;
@@ -13,9 +14,11 @@ public class FormObjectMapper {
     private GroovyInstance groovyInstance;
 
     private CustomerRepository customerRepository;
+    private FormsStoreRepository formsStoreRepository;
 
-    public FormObjectMapper(CustomerRepository customerRepository, String scriptPath) {
+    public FormObjectMapper(CustomerRepository customerRepository, FormsStoreRepository formsStoreRepository, String scriptPath) {
         this.customerRepository = customerRepository;
+        this.formsStoreRepository = formsStoreRepository;
         initialize(scriptPath);
     }
 
@@ -39,6 +42,7 @@ public class FormObjectMapper {
 
         Binding binding = new Binding(entry.getData());
         binding.setVariable("id", entryId);
+        binding.setVariable("formsStoreRepository", formsStoreRepository);
         binding.setVariable("customerRepository", customerRepository);
         script.setBinding(binding);
 

@@ -7,8 +7,10 @@ import com.fourigin.argo.forms.definition.ProcessingStages;
 import com.fourigin.argo.forms.models.FormsDataProcessingRecord;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
 import com.fourigin.argo.forms.models.FormsStoreEntryInfo;
+import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.utilities.reflection.Initializable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -20,14 +22,20 @@ import static com.fourigin.argo.forms.processing.TspFieldNames.NEW_TEMPLATE_VALU
 
 public class NewNameplateCarrier implements Initializable, StageProcessor {
 
+    private ProcessingState nameplateAvailableState;
+    private ProcessingState nameplateNotAvailableState;
+//    private ProcessingState failedState;
+
     @Override
     public Collection<String> requiredKeys() {
-        return null;
+        return Arrays.asList("nameplate-available-state", "nameplate-not-available-state");
     }
 
     @Override
     public void initialize(Map<String, Object> settings) {
-
+        nameplateAvailableState = ProcessingState.valueOf((String) settings.get("nameplate-available-state"));
+        nameplateNotAvailableState = ProcessingState.valueOf((String) settings.get("nameplate-not-available-state"));
+//        failedState = ProcessingState.valueOf((String) settings.get("fail-state"));
     }
 
     @Override
@@ -41,10 +49,13 @@ public class NewNameplateCarrier implements Initializable, StageProcessor {
         FormsStoreEntry entry = formsStoreRepository.retrieveEntry(info);
         Map<String, String> data = entry.getData();
 
+        String nextStageName = stages.getNext(currentStage.getName()).getName();
+
         // check the existing final nameplate
         String newNameplate = data.get(NEW_TEMPLATE_FINAL_VALUE);
         if (newNameplate != null && !newNameplate.isEmpty()) {
-            info.setStage(stages.getNext(currentStage.getName()).getName());
+            info.setStage(nextStageName);
+            record.setState(nameplateAvailableState);
             return;
         }
 
@@ -56,8 +67,11 @@ public class NewNameplateCarrier implements Initializable, StageProcessor {
             entry.setData(data);
             formsStoreRepository.updateEntry(info, entry);
 
-            info.setStage(stages.getNext(currentStage.getName()).getName());
+            info.setStage(nextStageName);
             record.setState(PENDING);
+        }
+        else {
+            record.setState(nameplateNotAvailableState);
         }
     }
 }

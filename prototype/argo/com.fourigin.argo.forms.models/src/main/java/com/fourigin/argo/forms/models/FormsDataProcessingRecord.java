@@ -19,6 +19,7 @@ public class FormsDataProcessingRecord implements Serializable {
     }
     
     public void setState(ProcessingState state) {
+        Objects.requireNonNull(state, "state must not be null!");
         addHistoryRecord(ProcessingHistoryRecord.KEY_STATUS_CHANGE, state.name());
 
         this.state = state;

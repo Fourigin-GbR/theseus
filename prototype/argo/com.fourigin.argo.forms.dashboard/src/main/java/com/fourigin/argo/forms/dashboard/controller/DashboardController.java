@@ -2,10 +2,14 @@ package com.fourigin.argo.forms.dashboard.controller;
 
 import com.fourigin.argo.forms.AttachmentDescriptor;
 import com.fourigin.argo.forms.CustomerRepository;
+import com.fourigin.argo.forms.FormDefinitionResolver;
 import com.fourigin.argo.forms.FormsStoreRepository;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.dashboard.CustomerInfo;
-import com.fourigin.argo.forms.dashboard.FormRequestInfo;
+import com.fourigin.argo.forms.dashboard.ViewFormRequestInfo;
+import com.fourigin.argo.forms.dashboard.ViewProcessingStage;
+import com.fourigin.argo.forms.definition.ProcessingStage;
+import com.fourigin.argo.forms.definition.ProcessingStages;
 import com.fourigin.argo.forms.models.FormsDataProcessingRecord;
 import com.fourigin.argo.forms.models.FormsEntryHeader;
 import com.fourigin.argo.forms.models.FormsStoreEntry;
@@ -38,11 +42,18 @@ public class DashboardController {
 
     private FormsStoreRepository formsStoreRepository;
 
+    private FormDefinitionResolver formDefinitionResolver;
+
     private final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
-    public DashboardController(CustomerRepository customerRepository, FormsStoreRepository formsStoreRepository) {
+    public DashboardController(
+            CustomerRepository customerRepository,
+            FormsStoreRepository formsStoreRepository,
+            FormDefinitionResolver formDefinitionResolver
+    ) {
         this.customerRepository = customerRepository;
         this.formsStoreRepository = formsStoreRepository;
+        this.formDefinitionResolver = formDefinitionResolver;
     }
 
     @RequestMapping("/customers")
@@ -63,6 +74,7 @@ public class DashboardController {
 
             CustomerInfo info = new CustomerInfo();
             info.setId(id);
+            info.setEntryId(customer.getEntryId());
             info.setFirstName(customer.getFirstname());
             info.setLastName(customer.getLastname());
             info.setEmail(customer.getEmail());
@@ -73,7 +85,7 @@ public class DashboardController {
     }
 
     @RequestMapping("/requests")
-    public List<FormRequestInfo> requests() {
+    public List<ViewFormRequestInfo> requests() {
         Collection<String> entryIds = formsStoreRepository.listEntryIds();
         if (entryIds == null || entryIds.isEmpty()) {
             return Collections.emptyList();
@@ -81,18 +93,23 @@ public class DashboardController {
 
         if (logger.isDebugEnabled()) logger.debug("Preparing request-info objects for IDs {}", entryIds);
 
-        List<FormRequestInfo> result = new ArrayList<>();
+        List<ViewFormRequestInfo> result = new ArrayList<>();
 
         for (String entryId : entryIds) {
             FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
-            result.add(convertEntry(entryInfo));
+            if (entryInfo == null) {
+                if (logger.isWarnEnabled()) logger.warn("No entry info found for id '{}'!", entryId);
+                continue;
+            }
+
+            result.add(convert(entryInfo));
         }
 
         return result;
     }
 
     @RequestMapping("/request")
-    public FormRequestInfo request(
+    public ViewFormRequestInfo request(
             @RequestParam String entryId
     ) {
         FormsStoreEntryInfo entryInfo = formsStoreRepository.retrieveEntryInfo(entryId);
@@ -100,30 +117,67 @@ public class DashboardController {
             throw new IllegalArgumentException("No entry found for id '" + entryId + "'!");
         }
 
-        return convertEntry(entryInfo);
+        return convert(entryInfo);
     }
 
-    private FormRequestInfo convertEntry(FormsStoreEntryInfo entryInfo) {
+    @RequestMapping("/stages")
+    public List<ViewProcessingStage> stages(
+            @RequestParam String formId
+    ) {
+        ProcessingStages stages = formDefinitionResolver.retrieveStages(formId);
+        if (stages == null) {
+            throw new IllegalArgumentException("No stages found for form definition id '" + formId + "'!");
+        }
+
+        List<ViewProcessingStage> result = new ArrayList<>();
+        for (ProcessingStage stage : stages.all()) {
+            result.add(convert(stage, stages.isEditable(stage.getName())));
+        }
+
+        return result;
+    }
+
+    private ViewProcessingStage convert(ProcessingStage stage, boolean editable) {
+        ViewProcessingStage result = new ViewProcessingStage();
+
+        result.setName(stage.getName());
+        result.setActions(stage.getActions());
+        result.setEditable(editable);
+
+        return result;
+    }
+
+    private ViewFormRequestInfo convert(FormsStoreEntryInfo entryInfo) {
+        if (logger.isDebugEnabled()) logger.debug("Converting {}", entryInfo);
+
         FormsEntryHeader header = entryInfo.getHeader();
-        String customerId = header.getCustomer();
+        String customerId = header.getCustomerId();
         String entryId = entryInfo.getId();
         String type = header.getFormDefinition();
 
+        Customer customer = customerRepository.retrieveCustomer(customerId);
+        if (customer == null) {
+            throw new IllegalArgumentException("No customer found for id '" + customerId + "'!");
+        }
+
         Set<AttachmentDescriptor> attachments = formsStoreRepository.getAttachmentDescriptors(entryInfo.getId());
 
-        FormRequestInfo info = new FormRequestInfo();
+        ViewFormRequestInfo info = new ViewFormRequestInfo();
         info.setId(entryId);
         info.setFormDefinition(type);
+        info.setStage(entryInfo.getStage());
         info.setBase(header.getBase());
         info.setCustomer(customerId);
         info.setCreationTimestamp(entryInfo.getCreationTimestamp());
         info.setAttachments(attachments);
         info.setProcessingState(entryInfo.getProcessingRecord());
 
-        Customer customer = customerRepository.retrieveCustomer(customerId);
         info.setCustomerName(customer.getFirstname() + ' ' + customer.getLastname());
 
-        Map<String, String> entryData = data(entryId);
+        Map<String, String> entryData = loadEntryData(entryInfo);
+        if (entryData == null) {
+            throw new IllegalStateException("No entry data found for '" + entryId + "'!");
+        }
 
         switch (type) {
             case "register-customer":
@@ -166,15 +220,17 @@ public class DashboardController {
     }
 
     @RequestMapping("/data")
-    public SortedMap<String, String> data(
-            @RequestParam String entryId
-    ) {
+    public SortedMap<String, String> data(@RequestParam String entryId) {
         Objects.requireNonNull(entryId, "entryId must not bei null!");
 
         FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
+        return loadEntryData(info);
+    }
+
+    private SortedMap<String, String> loadEntryData(FormsStoreEntryInfo info) {
         FormsStoreEntry entry = formsStoreRepository.retrieveEntry(info);
         if (entry == null) {
-            throw new IllegalArgumentException("No entry found for id '" + entryId + "'!");
+            throw new IllegalArgumentException("No entry found for id '" + info.getId() + "'!");
         }
 
         Map<String, String> data = entry.getData();
@@ -212,16 +268,25 @@ public class DashboardController {
 
     @RequestMapping("/delete-customer")
     public void deleteCustomer(
-            @RequestParam String customerId
+            @RequestParam("customerId") String customerEntryId
     ) {
-        Objects.requireNonNull(customerId, "customerId must not bei null!");
+        Objects.requireNonNull(customerEntryId, "customerEntryId must not bei null!");
 
-        List<String> allCustomers = customerRepository.listCustomerIds();
-        if (!allCustomers.contains(customerId)) {
-            throw new IllegalArgumentException("No customer found for id '" + customerId + "'!");
+        Map<String, String> entryIds = customerRepository.listCustomerEntryIds();
+
+        if (!entryIds.containsKey(customerEntryId)) {
+            throw new IllegalArgumentException("No customer found for entryId '" + customerEntryId + "'!");
         }
 
+        String customerId = entryIds.get(customerEntryId);
+        if (logger.isDebugEnabled()) logger.debug("Deleting customer {}", customerId);
         customerRepository.deleteCustomer(customerId);
+
+        Collection<FormsStoreEntryInfo> customerEntries = formsStoreRepository.findEntryInfosByCustomerId(customerId);
+        for (FormsStoreEntryInfo customerEntry : customerEntries) {
+            if (logger.isDebugEnabled()) logger.debug("Deleting also customer's entry {}", customerEntry.getId());
+            formsStoreRepository.deleteEntry(customerEntry);
+        }
     }
 
     @RequestMapping("/change-state")

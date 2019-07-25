@@ -68,9 +68,15 @@
 				{
 					"targetClass": "com.fourigin.argo.forms.processing.NewNameplateCarrier",
 					"settings": {
+						"nameplate-available-state": "READY_TO_APPROVE",
+						"nameplate-not-available-state": "WAITING_FOR_INPUT",
+						"fail-state": "FAILED"
 					}
 				}
-			]
+			],
+			"actions": {
+				"suspend": "SUSPENDED"
+			}
 		},
 		{
 			"name": "final-data-with-approved-nameplate",
@@ -78,18 +84,42 @@
 				{
 					"targetClass": "com.fourigin.argo.forms.processing.NewNameplateVerifier",
 					"settings": {
+						"nameplate-available-state": "READY_TO_APPROVE",
+						"nameplate-not-available-state": "WAITING_FOR_INPUT",
+						"fail-state": "FAILED"
 					}
 				}
-			]
+			],
+			"actions": {
+				"suspend": "SUSPENDED"
+			}
+		},
+		{
+			"name": "request-delivered-to-registration-authority",
+			"processors": [
+				{
+					"targetClass": "com.fourigin.argo.forms.ChangeState",
+					"settings": {
+						"target-state": "WAITING_FOR_APPROVAL"
+					}
+				}
+			],
+			"actions": {
+				"mark-as-sent-to-approval": "PENDING",
+				"suspend": "SUSPENDED"
+			}
+		},
+		{
+			"name": "request-returned-from-registration-authority",
+			"processors": [
+			],
+			"actions": {
+				"mark-as-approved": "DONE",
+				"mark-as-rejected": "REJECTED"
+			}
 		}
 	],
 	"fields": {
-		"customer.id": {
-			"type": "HIDDEN",
-			"validation": {
-				"mandatory": true
-			}
-		},
 		"vehicle.existing-nameplate": {
 			"type": "TEXT",
 			"validation": {

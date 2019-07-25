@@ -58,8 +58,9 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
         Vehicle vehicle = registration.getVehicle();
 
         // registration checkbox
-        PDCheckBox registrationCheckbox = doc.getCheckboxField("ZulassungWiederzulassung");
-        registrationCheckbox.check();
+        PDCheckBox registrationCheckbox = doc.getCheckboxField("Antragsart");
+        registrationCheckbox.setValue("Auswahl1");
+//        registrationCheckbox.check();
 
         // old nameplate
         String previousNameplate = vehicle.getPreviousNameplate();
@@ -77,6 +78,9 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
 
         // nameplate type / season nameplates
         if (vehicle.getNameplateTypeOption() == NameplateTypeOption.SEASON) {
+            PDCheckBox seasonCheckbox = doc.getCheckboxField("Checkbox Saison");
+            seasonCheckbox.check();
+
             PDTextField seasonStartMonth = doc.getTextField("Saison von");
             seasonStartMonth.setValue(String.valueOf(vehicle.getSeasonStartMonth()));
 
@@ -85,11 +89,11 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
         }
 
         // person
-        PDTextField titleField = doc.getTextField("Anrede");
+        PDTextField titleField = doc.getTextField("Anrede  Titel");
         titleField.setValue(resolveTitle(customer.getGender()));
 
         // last name
-        PDTextField lastNameField = doc.getTextField("Name / Firma");
+        PDTextField lastNameField = doc.getTextField("Name  Firmenname");
         lastNameField.setValue(customer.getLastname());
 
         // first name
@@ -97,7 +101,7 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
         firstNameField.setValue(customer.getFirstname());
 
         // birth name
-        PDTextField birthNameField = doc.getTextField("ggf Geburtsname");
+        PDTextField birthNameField = doc.getTextField("Geburtsname");
         birthNameField.setValue(customer.getBirthname());
 
         // birthday
@@ -120,10 +124,10 @@ public class FulfillVehicleRegistrationFormEntryProcessor extends BaseFulfillFor
         addressField.setValue(mainAddress.getStreet() + " " + mainAddress.getHouseNumber());
 
         // vehicle id
-        PDTextField vehicleIdField = doc.getTextField("FahrzeugIdentnummer");
+        PDTextField vehicleIdField = doc.getTextField("FahrzeugIdentifizierungsnummer");
         vehicleIdField.setValue(vehicle.getVehicleIdentNumber());
 
-        PDTextField zbField = doc.getTextField("ZB II alt  neu");
+        PDTextField zbField = doc.getTextField("ZB II");
         zbField.setValue(vehicle.getVehicleId());
 
         // insurance-id

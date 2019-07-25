@@ -33,21 +33,19 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
     @Override
     public boolean processEntry(String entryId) {
         VehicleRegistration registration = formsStoreRepository.getObjectAttachment(
-            entryId,
-            getRegistrationAttachmentName(),
-            VehicleRegistration.class
+                entryId,
+                getRegistrationAttachmentName(),
+                VehicleRegistration.class
         );
         if (logger.isDebugEnabled())
             logger.debug("Using registration data to fulfill the vehicle registration form: {}", registration);
 
-        String customerId = registration.getCustomerId();
-
         FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
         FormsEntryHeader header = info.getHeader();
-        String existingCustomerId = header.getCustomer();
-        if(!customerId.equals(existingCustomerId)) {
-            header.setCustomer(customerId);
-            formsStoreRepository.updateEntryInfo(info);
+        String customerId = header.getCustomerId();
+
+        if (customerId == null) {
+            throw new IllegalStateException("No customer defined in the registration form of '" + entryId + '!');
         }
 
         Customer customer = customerRepository.retrieveCustomer(customerId);
@@ -63,10 +61,10 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
 //            payload.setEncodedDataFromBytes(baos.toByteArray());
 
             formsStoreRepository.addBinaryAttachment(
-                entryId,
-                getFormAttachmentName(),
-                "application/pdf",
-                baos.toByteArray()
+                    entryId,
+                    getFormAttachmentName(),
+                    "application/pdf",
+                    baos.toByteArray()
             );
         } catch (IOException ex) {
             throw new IllegalStateException("Error processing form fulfillment!", ex);
@@ -75,7 +73,7 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
         return true;
     }
 
-    protected String resolveNameplateToUse(Vehicle vehicle){
+    protected String resolveNameplateToUse(Vehicle vehicle) {
         switch (vehicle.getNewNameplateOption()) {
             case NOT_REGISTERED:
                 // TODO: specify the workflow for this! Just leave empty?
@@ -90,7 +88,7 @@ public abstract class BaseFulfillFormEntryProcessor implements FormsEntryProcess
         }
     }
 
-    protected String resolveTitle(Gender gender){
+    protected String resolveTitle(Gender gender) {
         switch (gender) {
             case MALE:
                 return "Herr";

@@ -7,6 +7,7 @@ public class InitRequest implements Serializable {
     private static final long serialVersionUID = 3076639750885710397L;
 
     private String formDefinition;
+    private String stage;
     private String customer;
     private String entryId;
 
@@ -16,6 +17,14 @@ public class InitRequest implements Serializable {
 
     public void setFormDefinition(String formDefinition) {
         this.formDefinition = formDefinition;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
     }
 
     public String getCustomer() {
@@ -37,24 +46,26 @@ public class InitRequest implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof InitRequest)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         InitRequest that = (InitRequest) o;
         return Objects.equals(formDefinition, that.formDefinition) &&
-            Objects.equals(customer, that.customer) &&
-            Objects.equals(entryId, that.entryId);
+                Objects.equals(stage, that.stage) &&
+                Objects.equals(customer, that.customer) &&
+                Objects.equals(entryId, that.entryId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(formDefinition, customer, entryId);
+        return Objects.hash(formDefinition, stage, customer, entryId);
     }
 
     @Override
     public String toString() {
         return "InitRequest{" +
-            "formDefinition='" + formDefinition + '\'' +
-            ", customer='" + customer + '\'' +
-            ", entryId='" + entryId + '\'' +
-            '}';
+                "formDefinition='" + formDefinition + '\'' +
+                ", stage='" + stage + '\'' +
+                ", customer='" + customer + '\'' +
+                ", entryId='" + entryId + '\'' +
+                '}';
     }
 }

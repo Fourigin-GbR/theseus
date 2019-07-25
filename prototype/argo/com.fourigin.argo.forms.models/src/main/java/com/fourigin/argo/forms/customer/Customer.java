@@ -12,6 +12,7 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = -1363579994073607782L;
 
     private String id;
+    private String entryId;
     private Gender gender;
     private String firstname;
     private String lastname;
@@ -60,6 +61,14 @@ public class Customer implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
     }
 
     public Gender getGender() {
@@ -169,46 +178,48 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
         return Objects.equals(id, customer.id) &&
-            gender == customer.gender &&
-            Objects.equals(firstname, customer.firstname) &&
-            Objects.equals(lastname, customer.lastname) &&
-            Objects.equals(birthname, customer.birthname) &&
-            Objects.equals(birthdate, customer.birthdate) &&
-            Objects.equals(cityOfBorn, customer.cityOfBorn) &&
-            Objects.equals(mainAddress, customer.mainAddress) &&
-            Objects.equals(additionalAddresses, customer.additionalAddresses) &&
-            Objects.equals(bankAccounts, customer.bankAccounts) &&
-            Objects.equals(nationality, customer.nationality) &&
-            Objects.equals(email, customer.email) &&
-            Objects.equals(phone, customer.phone) &&
-            Objects.equals(fax, customer.fax);
+                Objects.equals(entryId, customer.entryId) &&
+                gender == customer.gender &&
+                Objects.equals(firstname, customer.firstname) &&
+                Objects.equals(lastname, customer.lastname) &&
+                Objects.equals(birthname, customer.birthname) &&
+                Objects.equals(birthdate, customer.birthdate) &&
+                Objects.equals(cityOfBorn, customer.cityOfBorn) &&
+                Objects.equals(mainAddress, customer.mainAddress) &&
+                Objects.equals(additionalAddresses, customer.additionalAddresses) &&
+                Objects.equals(bankAccounts, customer.bankAccounts) &&
+                Objects.equals(nationality, customer.nationality) &&
+                Objects.equals(email, customer.email) &&
+                Objects.equals(phone, customer.phone) &&
+                Objects.equals(fax, customer.fax);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, bankAccounts, nationality, email, phone, fax);
+        return Objects.hash(id, entryId, gender, firstname, lastname, birthname, birthdate, cityOfBorn, mainAddress, additionalAddresses, bankAccounts, nationality, email, phone, fax);
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-            "id='" + id + '\'' +
-            ", gender=" + gender +
-            ", firstname='" + firstname + '\'' +
-            ", lastname='" + lastname + '\'' +
-            ", birthname='" + birthname + '\'' +
-            ", birthdate=" + birthdate +
-            ", cityOfBorn='" + cityOfBorn + '\'' +
-            ", mainAddress=" + mainAddress +
-            ", additionalAddresses=" + additionalAddresses +
-            ", bankAccounts=" + bankAccounts +
-            ", nationality='" + nationality + '\'' +
-            ", email='" + email + '\'' +
-            ", phone='" + phone + '\'' +
-            ", fax='" + fax + '\'' +
-            '}';
+                "id='" + id + '\'' +
+                ", entryId='" + entryId + '\'' +
+                ", gender=" + gender +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", birthname='" + birthname + '\'' +
+                ", birthdate=" + birthdate +
+                ", cityOfBorn='" + cityOfBorn + '\'' +
+                ", mainAddress=" + mainAddress +
+                ", additionalAddresses=" + additionalAddresses +
+                ", bankAccounts=" + bankAccounts +
+                ", nationality='" + nationality + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", fax='" + fax + '\'' +
+                '}';
     }
 }

@@ -17,11 +17,15 @@ public class PdfDocument {
         if (acroForm == null) {
             throw new IllegalStateException("No AcroForm found in the document!");
         }
+
+//        this.acroForm.setXFA(null);
+//        this.acroForm.setNeedAppearances(true);
     }
 
     public PDTextField getTextField(String fieldName) {
         PDTextField field = getField(PDTextField.class, fieldName);
         field.setDefaultAppearance(defaultAppearance);
+
         return field;
     }
 

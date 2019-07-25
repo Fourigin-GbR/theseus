@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourigin.argo.forms.customer.Customer;
 import com.fourigin.argo.forms.definition.FieldDefinition;
 import com.fourigin.argo.forms.definition.FormDefinition;
+import com.fourigin.argo.forms.definition.ProcessingStage;
 import com.fourigin.argo.forms.definition.ProcessingStages;
 import com.fourigin.argo.forms.model.FormsData;
 import com.fourigin.argo.forms.model.StringList;
@@ -30,6 +31,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -152,6 +156,27 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
         return entryIds;
     }
 
+    private void updateEntryIds() {
+        if (logger.isDebugEnabled()) logger.debug("Re-initializing entryIds view");
+        entryIds = new HashSet<>();
+
+        Set<String> blobs = blobRepository.idSet();
+        for (String blob : blobs) {
+            FormsStoreEntryInfo info = retrieveEntryInfo(blob);
+            if (info == null) {
+                if (logger.isDebugEnabled()) logger.debug("Skipping a non-base blob id {}", blob);
+                continue;
+            }
+
+            if (logger.isDebugEnabled())
+                logger.debug("Adding a valid entry-id {} with current revision {}", blob, info.getRevision());
+
+            entryIds.add(blob);
+        }
+
+        updateIdsIndex();
+    }
+
     @Override
     public String createEntry(FormsStoreEntry entry) {
         Objects.requireNonNull(entry, "entry must not be null!");
@@ -182,15 +207,29 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
             return;
         }
 
+        File parent = blobRepository.getBaseDirectory().getParentFile();
+        File deletedDir = new File(parent, ".blobs-deleted");
+        if (!deletedDir.exists()) {
+            if (logger.isDebugEnabled()) logger.debug("Creating a directory for deleted entries");
+            if (!deletedDir.mkdirs()) {
+                throw new IllegalStateException("Unable to create directory '" + deletedDir.getAbsolutePath() + "'!");
+            }
+        }
+
         for (String dataVersion : dataVersions) {
             try {
                 if (blobRepository.contains(dataVersion)) {
+                    InputStream is = blobRepository.get(dataVersion);
+                    Path targetPath = new File(deletedDir, dataVersion).toPath();
+                    Files.copy(is, targetPath, StandardCopyOption.REPLACE_EXISTING);
                     blobRepository.delete(dataVersion);
                 }
-            } catch (AmbiguousIdException ex) {
-                throw new IllegalArgumentException("Something wrong...", ex);
+            } catch (AmbiguousIdException | IOException ex) {
+                throw new IllegalArgumentException("Something goes wrong...", ex);
             }
         }
+
+        delete(FormsStoreEntryInfo.class, info.getId());
     }
 
     @Override
@@ -313,8 +352,15 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
 
         Collection<FormsStoreEntryInfo> matchingIds = new HashSet<>();
 
+        boolean updateEntryIds = false;
         for (String id : allIds) {
             FormsStoreEntryInfo entryInfo = retrieveEntryInfo(id);
+            if (entryInfo == null) {
+                if (logger.isWarnEnabled()) logger.warn("No entry info found for id '{}'!", id);
+                updateEntryIds = true;
+                continue;
+            }
+
             FormsDataProcessingRecord processingRecord = entryInfo.getProcessingRecord();
             if (processingRecord == null) {
                 if (state == null) {
@@ -324,6 +370,30 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
                 if (processingRecord.getState() == state) {
                     matchingIds.add(entryInfo);
                 }
+            }
+        }
+
+        if (updateEntryIds) {
+            updateEntryIds();
+        }
+
+        return matchingIds;
+    }
+
+    @Override
+    public Collection<FormsStoreEntryInfo> findEntryInfosByCustomerId(String customerId) {
+        Collection<String> allIds = listEntryIds();
+        if (allIds == null || allIds.isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        Collection<FormsStoreEntryInfo> matchingIds = new HashSet<>();
+
+        for (String id : allIds) {
+            FormsStoreEntryInfo entryInfo = retrieveEntryInfo(id);
+            String entryCustomerId = entryInfo.getHeader().getCustomerId();
+            if (customerId.equals(entryCustomerId)) {
+                matchingIds.add(entryInfo);
             }
         }
 
@@ -472,7 +542,7 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
             return new ProcessingStages(null);
         }
 
-        return new ProcessingStages(definition.getStages());
+        return new ProcessingStages(definition);
     }
 
     @Override
@@ -488,20 +558,28 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
             return definition;
         }
 
+        List<ProcessingStage> stages = definition.getStages();
+
         Map<String, FieldDefinition> fixedFields = new HashMap<>();
 
         for (Map.Entry<String, FieldDefinition> entry : fields.entrySet()) {
             String fieldName = entry.getKey();
             FieldDefinition field = entry.getValue();
 
+            String name;
+            String fieldStageName;
+
             int pos = fieldName.indexOf("@");
             if (pos < 0) {
-                fixedFields.put(fieldName, field);
-                continue;
+                // No stage specified => first stage
+                name = fieldName;
+                fieldStageName = stages.get(0).getName();
+            } else {
+                // stage specified
+                name = fieldName.substring(0, pos);
+                fieldStageName = fieldName.substring(pos + 1);
             }
 
-            String name = fieldName.substring(0, pos);
-            String fieldStageName = fieldName.substring(pos + 1);
             if (stageName.equals(fieldStageName)) {
                 fixedFields.put(name, field);
                 if (logger.isDebugEnabled())
@@ -594,6 +672,20 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
     }
 
     @Override
+    // entryId -> customerId
+    public Map<String, String> listCustomerEntryIds() {
+        Map<String, String> result = new HashMap<>();
+
+        List<String> customerIds = listCustomerIds();
+        for (String customerId : customerIds) {
+            Customer customer = retrieveCustomer(customerId);
+            result.put(customer.getEntryId(), customerId);
+        }
+
+        return result;
+    }
+
+    @Override
     public Customer retrieveCustomer(String customerId) {
         File customerFile = new File(customersBaseDir, customerId + ".json");
         if (!customerFile.exists()) {
@@ -656,7 +748,17 @@ public class JsonFilesBasedFormsRepository extends JsonFileBasedRepository
             throw new IllegalArgumentException("Unable to delete form customer '" + customerId + "', because it doesn't exist!");
         }
 
-        if (!customerFile.delete()) {
+        File deletedDir = new File(customersBaseDir, ".deleted");
+        if (!deletedDir.exists()) {
+            if (logger.isDebugEnabled()) logger.debug("Creating a directory for deleted customer entries");
+            if (!deletedDir.mkdirs()) {
+                throw new IllegalStateException("Unable to create directory '" + deletedDir.getAbsolutePath() + "'!");
+            }
+        }
+
+        Customer customer = retrieveCustomer(customerId);
+        File targetFile = new File(deletedDir, "customer_" + customer.getEntryId() + ".json");
+        if (!customerFile.renameTo(targetFile)) {
             throw new IllegalStateException("Error deleting form customer file '" + customerFile.getAbsolutePath() + "'!");
         }
     }

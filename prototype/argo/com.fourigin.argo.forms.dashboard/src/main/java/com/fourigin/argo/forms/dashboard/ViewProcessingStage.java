@@ -1,18 +1,16 @@
-package com.fourigin.argo.forms.definition;
+package com.fourigin.argo.forms.dashboard;
 
 import com.fourigin.argo.forms.models.ProcessingState;
-import com.fourigin.utilities.reflection.InitializableObjectDescriptor;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ProcessingStage implements Serializable {
-    private static final long serialVersionUID = 1426472117127278702L;
+public class ViewProcessingStage implements Serializable {
+    private static final long serialVersionUID = -2709594233481353553L;
 
     private String name;
-    private List<InitializableObjectDescriptor> processors;
+    private boolean editable;
     private Map<String, ProcessingState> actions;
 
     public String getName() {
@@ -23,12 +21,12 @@ public class ProcessingStage implements Serializable {
         this.name = name;
     }
 
-    public List<InitializableObjectDescriptor> getProcessors() {
-        return processors;
+    public boolean isEditable() {
+        return editable;
     }
 
-    public void setProcessors(List<InitializableObjectDescriptor> processors) {
-        this.processors = processors;
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
     public Map<String, ProcessingState> getActions() {
@@ -43,22 +41,22 @@ public class ProcessingStage implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProcessingStage that = (ProcessingStage) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(processors, that.processors) &&
+        ViewProcessingStage that = (ViewProcessingStage) o;
+        return editable == that.editable &&
+                Objects.equals(name, that.name) &&
                 Objects.equals(actions, that.actions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, processors, actions);
+        return Objects.hash(name, editable, actions);
     }
 
     @Override
     public String toString() {
-        return "ProcessingStage{" +
+        return "ViewProcessingStage{" +
                 "name='" + name + '\'' +
-                ", processors=" + processors +
+                ", editable=" + editable +
                 ", actions=" + actions +
                 '}';
     }

@@ -58,6 +58,25 @@ public abstract class JsonFileBasedRepository extends FileBasedRepository {
         }
     }
 
+    protected <T> void delete(Class<T> targetClass, String id, String... path) {
+        File file = getFile(targetClass, id, "application/json", path);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("Unable to delete file (" + file.getAbsolutePath() + ") because it does not exist!");
+        }
+        File parent = file.getParentFile();
+        File deletedDir = new File(parent, ".info-deleted");
+        if (!deletedDir.exists()) {
+            if (logger.isDebugEnabled()) logger.debug("Creating a directory for deleted entries");
+            if (!deletedDir.mkdirs()) {
+                throw new IllegalStateException("Unable to create directory '" + deletedDir.getAbsolutePath() + "'!");
+            }
+        }
+        File targetFile = new File(deletedDir, file.getName());
+        if (!file.renameTo(targetFile)) {
+            throw new IllegalArgumentException("Unable to delete file (" + file.getAbsolutePath() + ")!");
+        }
+    }
+
     public static String resolveBasePath(String id) {
         String firstBlobPart = id.substring(0, 2);
         String remainingBlobPart = id.substring(2);

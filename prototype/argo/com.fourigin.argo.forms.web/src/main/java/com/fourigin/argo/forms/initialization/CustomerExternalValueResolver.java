@@ -48,13 +48,11 @@ public class CustomerExternalValueResolver implements ExternalValueResolver {
             throw new IllegalArgumentException("Unsupported key '" + key + "' found, expected one of " + supportedKeys + "!");
         }
 
-        switch (key) {
-            case STORED_ACCOUNTS:
-                return resolveStoredAccounts(customer);
-            default:
-                throw new IllegalArgumentException("Unsupported key '" + key + "' found, expected one of " + supportedKeys + "!");
-
+        if (STORED_ACCOUNTS.equals(key)) {
+            return resolveStoredAccounts(customer);
         }
+
+        throw new IllegalArgumentException("Unsupported key '" + key + "' found, expected one of " + supportedKeys + "!");
     }
 
     private Map<String, String> resolveStoredAccounts(Customer customer) {

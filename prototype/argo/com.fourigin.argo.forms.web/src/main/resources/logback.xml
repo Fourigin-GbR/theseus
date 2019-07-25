@@ -14,9 +14,6 @@
         </RemoteHosts>
     </appender>
 
-	<logger name="com.fourigin.argo.forms.processing.customer" level="DEBUG" />
-    <logger name="com.fourigin.argo.forms" level="DEBUG" />
-
 	<root level="INFO">
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="FILE"/>

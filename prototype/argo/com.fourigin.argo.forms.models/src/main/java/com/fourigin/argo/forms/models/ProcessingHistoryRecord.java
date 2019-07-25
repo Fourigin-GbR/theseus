@@ -14,8 +14,10 @@ public class ProcessingHistoryRecord implements Serializable {
 
     public static final String PREFIX_PROCESSING = "processing/";
     public static final String PREFIX_STATUS = "processing/";
+    public static final String PREFIX_FAILURE = "failed/";
 
     public static final String KEY_MESSAGE = PREFIX_STATUS + "message";
+    public static final String KEY_STAGE_CHANGE = PREFIX_STATUS + "stage";
     public static final String KEY_STATUS_CHANGE = PREFIX_STATUS + "change";
     public static final String KEY_PROCESSING_START = PREFIX_PROCESSING + "start";
     public static final String KEY_PROCESSING_DONE = PREFIX_PROCESSING + "done";

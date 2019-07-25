@@ -25,6 +25,7 @@ package com.fourigin.argo.forms.models;
 public enum ProcessingState {
     PENDING,                // stored, waiting for processing
     PROCESSING,             // processing
+    PROCESSED,              // processing done
     FAILED,                 // processing failed, manual action required
     WAITING_FOR_INPUT,      // waiting for internal processes, manual action required
     SUSPENDED,              // processing suspended, waiting for automatically retry

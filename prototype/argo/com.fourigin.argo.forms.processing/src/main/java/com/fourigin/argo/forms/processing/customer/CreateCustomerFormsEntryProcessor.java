@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
     public static final String NAME = "CREATE-CUSTOMER";
@@ -21,8 +22,8 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
     private final Logger logger = LoggerFactory.getLogger(CreateCustomerFormsEntryProcessor.class);
 
     public CreateCustomerFormsEntryProcessor(
-        FormsStoreRepository formsStoreRepository,
-        CustomerRepository customerRepository
+            FormsStoreRepository formsStoreRepository,
+            CustomerRepository customerRepository
     ) {
         this.formsStoreRepository = formsStoreRepository;
         this.customerRepository = customerRepository;
@@ -37,21 +38,48 @@ public class CreateCustomerFormsEntryProcessor implements FormsEntryProcessor {
     public boolean processEntry(String entryId) {
         Customer customer = formsStoreRepository.getObjectAttachment(entryId, ATTACHMENT_NAME, Customer.class);
 
+        Map<String, String> entryIds = customerRepository.listCustomerEntryIds();
+        String customerId = entryIds.get(entryId);
+        if (customerId != null) {
+            if (logger.isDebugEnabled()) logger.debug("Found existing customer for id '{}'", entryId);
+
+            // updating customer properties
+            Customer existingCustomer = customerRepository.retrieveCustomer(customerId);
+            existingCustomer.setGender(customer.getGender());
+            existingCustomer.setFirstname(customer.getFirstname());
+            existingCustomer.setLastname(customer.getLastname());
+            existingCustomer.setBirthname(customer.getBirthname());
+            existingCustomer.setBirthdate(customer.getBirthdate());
+            existingCustomer.setCityOfBorn(customer.getCityOfBorn());
+            existingCustomer.setMainAddress(customer.getMainAddress());
+            existingCustomer.setAdditionalAddresses(customer.getAdditionalAddresses());
+            existingCustomer.setBankAccounts(customer.getBankAccounts());
+            existingCustomer.setNationality(customer.getNationality());
+            existingCustomer.setEmail(customer.getEmail());
+            existingCustomer.setPhone(customer.getPhone());
+            existingCustomer.setFax(customer.getFax());
+
+            customerRepository.updateCustomer(existingCustomer);
+
+            return true;
+        }
+
         // search for the next free id
         int newId = 1;
         String newIdValue = String.valueOf(newId);
 
         List<String> availableIds = customerRepository.listCustomerIds();
-        while(availableIds.contains(newIdValue)){
+        while (availableIds.contains(newIdValue)) {
             newIdValue = String.valueOf(newId++);
         }
 
         if (logger.isDebugEnabled()) logger.debug("Generated customer id: '{}'", newIdValue);
 
         customer.setId(newIdValue);
+        customer.setEntryId(entryId);
 
         FormsStoreEntryInfo info = formsStoreRepository.retrieveEntryInfo(entryId);
-        info.getHeader().setCustomer(newIdValue);
+        info.getHeader().setCustomerId(newIdValue);
         formsStoreRepository.updateEntryInfo(info);
 
         customerRepository.createCustomer(customer);

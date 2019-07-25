@@ -69,7 +69,7 @@ public final class FormsValidator {
 
         Map<String, String> validateFields = data.getValidateFields();
         if (validateFields == null || validateFields.isEmpty()) {
-            if (logger.isInfoEnabled()) logger.info("No validate fields declared, nothing to validate");
+            if (logger.isDebugEnabled()) logger.debug("No validate fields declared, nothing to validate");
             return result;
         }
 
@@ -129,7 +129,7 @@ public final class FormsValidator {
 
             boolean failed = validateRules(formDefinition, fieldName, fieldValue, validationRules, result);
             if (!failed) {
-                if (logger.isInfoEnabled()) logger.info("Field validation successful for field '{}'", fieldName);
+                if (logger.isDebugEnabled()) logger.debug("Field validation successful for field '{}'", fieldName);
                 success(result, fieldName, fieldValue, null);
             }
         }
@@ -148,7 +148,7 @@ public final class FormsValidator {
 
         Map<String, String> validateFields = data.getValidateFields();
         if (validateFields == null || validateFields.isEmpty()) {
-            if (logger.isInfoEnabled()) logger.info("No validate fields declared, nothing to validate");
+            if (logger.isDebugEnabled()) logger.debug("No validate fields declared, nothing to validate");
             return result;
         }
 
@@ -216,15 +216,15 @@ public final class FormsValidator {
 
             Map<String, Object> validationRules = fieldDefinition.getValidation();
             if (validationRules == null || validationRules.isEmpty()) {
-                if (logger.isInfoEnabled())
-                    logger.info("No validation rules specified for field '{}', validation successful", fieldName);
+                if (logger.isDebugEnabled())
+                    logger.debug("No validation rules specified for field '{}', validation successful", fieldName);
                 success(result, fieldName, fieldValue, null);
                 continue;
             }
 
             boolean failed = validateRules(formDefinition, fieldName, fieldValue, validationRules, result);
             if (!failed) {
-                if (logger.isInfoEnabled()) logger.info("Field validation successful for field '{}'", fieldName);
+                if (logger.isDebugEnabled()) logger.debug("Field validation successful for field '{}'", fieldName);
                 success(result, fieldName, fieldValue, null);
             }
         }

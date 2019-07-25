@@ -19,6 +19,12 @@
     {
       "name": "base-customer-data",
       "processors": [
+        {
+          "targetClass": "com.fourigin.argo.forms.ChangeState",
+          "settings": {
+            "target-state": "DONE"
+          }
+        }
       ]
     }
   ],

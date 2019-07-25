@@ -41,7 +41,7 @@ final class PdfBoxPlayground {
 
         VehicleRegistration registration = new VehicleRegistration(
                 id: "c3a10d7b61775324245c5ac7656e42e93a2e42fa",
-                customerId: '123',
+//                customerId: '123',
                 vehicle: new Vehicle(
                         previousNameplate: 'DA NN 747',
                         newNameplateOption: NameplateRegistrationOption.ALREADY_REGISTERED_BY_CLIENT,

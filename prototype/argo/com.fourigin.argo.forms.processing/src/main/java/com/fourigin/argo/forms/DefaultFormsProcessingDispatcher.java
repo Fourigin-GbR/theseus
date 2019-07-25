@@ -8,6 +8,8 @@ import com.fourigin.argo.forms.models.ProcessingHistoryRecord;
 import com.fourigin.argo.forms.models.ProcessingState;
 import com.fourigin.utilities.reflection.InitializableObjectDescriptor;
 import com.fourigin.utilities.reflection.ObjectInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
     private FormsEntryProcessorMapping processorMapping;
 
     private FormsEntryProcessorFactory processorFactory;
+
+    private final Logger logger = LoggerFactory.getLogger(DefaultFormsProcessingDispatcher.class);
 
     public DefaultFormsProcessingDispatcher(
             FormDefinitionResolver formDefinitionResolver,
@@ -63,6 +67,8 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
                             record.addHistoryRecord(ProcessingHistoryRecord.PREFIX_PROCESSING + processorName);
                         }
                     } catch (Throwable th) {
+                        if (logger.isErrorEnabled()) logger.error("Error executing processor {}", processorName, th);
+                        record.addHistoryRecord(ProcessingHistoryRecord.PREFIX_FAILURE + processorName, th.getMessage());
                         success = false;
                     }
                 }
@@ -74,19 +80,26 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
             info = formsStoreRepository.retrieveEntryInfo(entryId);
 
             // set state
-            if (success) {
-
+            if (!success) {
+                record.setState(ProcessingState.FAILED);
+            } else {
                 ProcessingStages stages = formDefinitionResolver.retrieveStages(formDefinitionId);
 
-                if (stages.isLast(currentStageName)) {
-                    record.setState(ProcessingState.READY_TO_APPROVE);
-                } else {
-                    record.setState(ProcessingState.WAITING_FOR_INPUT);
+                boolean lastStage;
+                if (!stages.isLast(currentStageName)) {
+                    lastStage = false;
 
+                    // go to the next stage if possible
                     ProcessingStage nextStage = stages.getNext(currentStageName);
-                    info.setStage(nextStage.getName());
+                    String nextStageName = nextStage.getName();
+                    record.addHistoryRecord(ProcessingHistoryRecord.KEY_STAGE_CHANGE, nextStageName);
+                    info.setStage(nextStageName);
+                }
+                else {
+                    lastStage = true;
                 }
 
+                // execute current stage processors
                 ProcessingStage currentStage = stages.find(currentStageName);
                 List<InitializableObjectDescriptor> stageProcessors = currentStage.getProcessors();
                 if (stageProcessors != null && !stageProcessors.isEmpty()) {
@@ -96,14 +109,18 @@ public class DefaultFormsProcessingDispatcher implements FormsProcessingDispatch
                     }
                 }
 
-            } else {
-                record.setState(ProcessingState.FAILED);
+                if (record.getState() == ProcessingState.PROCESSING) {
+                    // change state if not already changed by any of processors
+                    record.setState(lastStage ? ProcessingState.DONE : ProcessingState.PROCESSED);
+                }
             }
+
             info.setProcessingRecord(record);
 
             // update entry
             formsStoreRepository.updateEntryInfo(info);
         } catch (Exception ex) {
+            if (logger.isErrorEnabled()) logger.error("Error occurred!", ex);
             record.setCurrentStatusMessage("Internal error: " + ex.getMessage());
             record.setState(ProcessingState.FAILED);
 

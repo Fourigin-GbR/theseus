@@ -9,7 +9,9 @@ public class FormsEntryHeader implements Serializable {
     private static final long serialVersionUID = 7175957709964797404L;
 
     private String formDefinition;
-    private String customer;
+    private String stage;
+    private String entryId;
+    private String customerId;
     private String base;
     private Locale locale;
     private Map<String, String> referrer;
@@ -22,12 +24,28 @@ public class FormsEntryHeader implements Serializable {
         this.formDefinition = formDefinition;
     }
 
-    public String getCustomer() {
-        return customer;
+    public String getStage() {
+        return stage;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
+
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getBase() {
@@ -57,28 +75,32 @@ public class FormsEntryHeader implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FormsEntryHeader)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         FormsEntryHeader that = (FormsEntryHeader) o;
         return Objects.equals(formDefinition, that.formDefinition) &&
-            Objects.equals(customer, that.customer) &&
-            Objects.equals(base, that.base) &&
-            Objects.equals(locale, that.locale) &&
-            Objects.equals(referrer, that.referrer);
+                Objects.equals(stage, that.stage) &&
+                Objects.equals(entryId, that.entryId) &&
+                Objects.equals(customerId, that.customerId) &&
+                Objects.equals(base, that.base) &&
+                Objects.equals(locale, that.locale) &&
+                Objects.equals(referrer, that.referrer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(formDefinition, customer, base, locale, referrer);
+        return Objects.hash(formDefinition, stage, entryId, customerId, base, locale, referrer);
     }
 
     @Override
     public String toString() {
         return "FormsEntryHeader{" +
-            "formDefinition='" + formDefinition + '\'' +
-            ", customer='" + customer + '\'' +
-            ", base='" + base + '\'' +
-            ", locale=" + locale +
-            ", referrer=" + referrer +
-            '}';
+                "formDefinition='" + formDefinition + '\'' +
+                ", stage='" + stage + '\'' +
+                ", entryId='" + entryId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", base='" + base + '\'' +
+                ", locale=" + locale +
+                ", referrer=" + referrer +
+                '}';
     }
 }

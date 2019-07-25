@@ -66,9 +66,10 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
         String id = registration.getId();
         if (id != null && !id.isEmpty()) {
             PDTextField idField = doc.getTextField("Auftrag");
-            int len = id.length();
-            String visibleId = id.substring(0, 10) + "..." + id.substring(len - 10, len);
-            idField.setValue(visibleId.toUpperCase(Locale.US));
+//            int len = id.length();
+//            String visibleId = id.substring(0, 10) + "..." + id.substring(len - 10, len);
+//            idField.setValue(visibleId.toUpperCase(Locale.US));
+            idField.setValue(id.toUpperCase(Locale.US));
         }
 
         // old nameplate
@@ -95,6 +96,10 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
         // person
         PDTextField titleField = doc.getTextField("Anrede");
         titleField.setValue(resolveTitle(customer.getGender()));
+
+        // both names
+        PDTextField bothNamesField = doc.getTextField("Auftraggeber");
+        bothNamesField.setValue(customer.getLastname() + ", " + customer.getFirstname());
 
         // last name
         PDTextField lastNameField = doc.getTextField("Nachname");
@@ -181,23 +186,22 @@ public class FulfillInternalCardFormEntryProcessor extends BaseFulfillFormEntryP
         nameplatesPriceField.setValue("20,00");  // externalize
 
         HandoverOption handoverOption = registration.getHandoverOption();
+        PDCheckBox handoverCheckbox = doc.getCheckboxField("check_delivering");
         switch (handoverOption) {
             case OFFICE_DELIVERING:
-                PDCheckBox handoverOfficeDeliveringCheckbox = doc.getCheckboxField("Abholung");
-                handoverOfficeDeliveringCheckbox.check();
+                handoverCheckbox.setValue("Lieferung");
                 break;
             case PICKUP:
-                PDCheckBox handoverPickupCheckbox = doc.getCheckboxField("Lieferung");
-                handoverPickupCheckbox.check();
+                handoverCheckbox.setValue("Abholung");
                 break;
             default:
                 throw new IllegalStateException("Unsupported handover option found '" + handoverOption + "'!");
         }
 
-        doc.getCheckboxField("TSP").unCheck();
-        doc.getCheckboxField("NICHT TSP").unCheck();
-        doc.getCheckboxField("versandt").unCheck();
-        doc.getCheckboxField("nicht_versandt").unCheck();
+        doc.getCheckboxField("check_bezahlt").unCheck();
+        doc.getCheckboxField("check_customer_called").unCheck();
+        doc.getCheckboxField("check_kundentyp").unCheck();
+        doc.getCheckboxField("check_sent").unCheck();
     }
 
     private void applyTextFieldAppearance(PDTextField textField){

@@ -10,6 +10,7 @@ import com.fourigin.argo.forms.normalizer.mapping.DataNormalizerModule;
 import com.fourigin.argo.forms.prepopulation.DummyNameplatePrePopulationValueResolver;
 import com.fourigin.argo.forms.prepopulation.PrePopulationValuesResolver;
 import com.fourigin.argo.forms.prepopulation.StoredEntryPrePopulationValueResolver;
+import com.fourigin.argo.forms.processing.FulfillChecklistFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillInternalCardFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillTaxPaymentFormEntryProcessor;
 import com.fourigin.argo.forms.processing.FulfillVehicleRegistrationFormEntryProcessor;
@@ -119,11 +120,11 @@ public class NettyServer {
         mapping.put("register-vehicle:base-data-without-approved-nameplate", Arrays.asList(
                 FulfillVehicleRegistrationFormEntryProcessor.NAME,
                 FulfillTaxPaymentFormEntryProcessor.NAME,
-                FulfillInternalCardFormEntryProcessor.NAME
+                FulfillInternalCardFormEntryProcessor.NAME,
+                FulfillChecklistFormEntryProcessor.NAME
         ));
 
-        mapping.put("register-vehicle:final-data-with-approved-nameplate", Arrays.asList(
-        ));
+        mapping.put("register-vehicle:final-data-with-approved-nameplate", Collections.emptyList());
 
         return mapping;
     }
@@ -134,7 +135,8 @@ public class NettyServer {
             @Autowired CustomerRepository customerRepository,
             @Value("${forms.vehicle-registration.registration-form}") File registrationForm,
             @Value("${forms.vehicle-registration.tax-payment-form}") File taxPaymentForm,
-            @Value("${forms.vehicle-registration.registration-card-form}") File internalForm
+            @Value("${forms.vehicle-registration.registration-card-form}") File internalForm,
+            @Value("${forms.vehicle-registration.checklist-form}") File checklistForm
     ) {
         if (!registrationForm.exists()) {
             throw new IllegalArgumentException("Original vehicle registration form '" + registrationForm.getAbsolutePath() + "' not found!");
@@ -167,11 +169,18 @@ public class NettyServer {
                 internalForm
         );
 
+        FulfillChecklistFormEntryProcessor fulfillChecklistFormEntryProcessor = new FulfillChecklistFormEntryProcessor(
+                formsStoreRepository,
+                customerRepository,
+                checklistForm
+        );
+
         Map<String, FormsEntryProcessor> processors = new HashMap<>();
         processors.put(CreateCustomerFormsEntryProcessor.NAME, createCustomerFormsEntryProcessor);
         processors.put(FulfillVehicleRegistrationFormEntryProcessor.NAME, fulfillFormEntryProcessor);
         processors.put(FulfillTaxPaymentFormEntryProcessor.NAME, fulfillTaxPaymentEntryProcessor);
         processors.put(FulfillInternalCardFormEntryProcessor.NAME, fulfillInternalCardFormEntryProcessor);
+        processors.put(FulfillChecklistFormEntryProcessor.NAME, fulfillChecklistFormEntryProcessor);
 
         return new DefaultFormsEntryProcessorFactory(processors);
     }

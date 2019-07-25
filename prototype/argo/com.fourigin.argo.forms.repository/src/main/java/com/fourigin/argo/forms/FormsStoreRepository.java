@@ -26,6 +26,7 @@ public interface FormsStoreRepository {
     void updateProcessingState(FormsStoreEntryInfo info, ProcessingState state);
 
     // find
+    Collection<FormsStoreEntryInfo> findEntryInfosByCustomerId(String customerId);
     Collection<FormsStoreEntryInfo> findEntryInfosByProcessingState(ProcessingState state);
 
     // attachments

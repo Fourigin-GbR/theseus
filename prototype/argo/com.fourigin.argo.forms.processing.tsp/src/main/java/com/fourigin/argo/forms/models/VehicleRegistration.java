@@ -10,7 +10,6 @@ public class VehicleRegistration implements Serializable {
     private static final long serialVersionUID = -731726915018271494L;
 
     private String id;
-    private String customerId;
     private Vehicle vehicle;
     private BankAccount bankAccountForTaxPayment;
     private PaymentMethod servicePaymentMethod;
@@ -22,14 +21,6 @@ public class VehicleRegistration implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
     }
 
     public Vehicle getVehicle() {
@@ -70,7 +61,6 @@ public class VehicleRegistration implements Serializable {
         if (!(o instanceof VehicleRegistration)) return false;
         VehicleRegistration that = (VehicleRegistration) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(customerId, that.customerId) &&
             Objects.equals(vehicle, that.vehicle) &&
             Objects.equals(bankAccountForTaxPayment, that.bankAccountForTaxPayment) &&
             Objects.equals(servicePaymentMethod, that.servicePaymentMethod) &&
@@ -79,14 +69,13 @@ public class VehicleRegistration implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customerId, vehicle, bankAccountForTaxPayment, servicePaymentMethod, handoverOption);
+        return Objects.hash(id, vehicle, bankAccountForTaxPayment, servicePaymentMethod, handoverOption);
     }
 
     @Override
     public String toString() {
         return "VehicleRegistration{" +
             "id='" + id + '\'' +
-            ", customerId='" + customerId + '\'' +
             ", vehicle=" + vehicle +
             ", bankAccountForTaxPayment=" + bankAccountForTaxPayment +
             ", servicePaymentMethod=" + servicePaymentMethod +

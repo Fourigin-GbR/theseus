@@ -7,6 +7,7 @@ public class CustomerInfo implements Serializable {
     private static final long serialVersionUID = -6968376921820134356L;
 
     private String id;
+    private String entryId;
     private String firstName;
     private String lastName;
     private String email;
@@ -17,6 +18,14 @@ public class CustomerInfo implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
     }
 
     public String getFirstName() {
@@ -46,26 +55,28 @@ public class CustomerInfo implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CustomerInfo)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         CustomerInfo that = (CustomerInfo) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName) &&
-            Objects.equals(email, that.email);
+                Objects.equals(entryId, that.entryId) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email);
+        return Objects.hash(id, entryId, firstName, lastName, email);
     }
 
     @Override
     public String toString() {
         return "CustomerInfo{" +
-            "id='" + id + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            '}';
+                "id='" + id + '\'' +
+                ", entryId='" + entryId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
