@@ -166,12 +166,12 @@ function internalInitUsersTable(data) {
                 "data": "id",
                 "render": function(data, type, completeDataObject) {
                     var jWrapper = $("<div class='fieldActionForms'></div>");
-                    var jButtonForm1 = $("<form target='_blank' action='/form-benutzer-editieren.html'>\n" +
+                    var jButtonForm1 = $("<form target='_self' action='/form-benutzer-editieren.html'>\n" +
                         "                                        <input type=\"submit\" class=\"buttonCta\" value=\"Bearbeiten\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
                         "                                    </form>\n");
-                    var jButtonForm2 = $("<form class='action-remove-user' target='_blank' action='/benutzer-entfernen'>\n" +
+                    var jButtonForm2 = $("<form class='action-remove-user' target='_self' action='/benutzer-entfernen'>\n" +
                         "                                        <input type=\"submit\" class=\"buttonLca\" value=\"Entfernen\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"entry.id\" value=\"\"/>\n" +
                         "                                        <input type=\"hidden\" name=\"customer.id\" value=\"\"/>\n" +
@@ -407,7 +407,7 @@ function initUsersTable() {
 
 
     addUserButton.off().click(function () {
-        window.open('form-benutzer-anlegen.html', '_blank'); // TODO: fix it!
+        window.open('form-benutzer-anlegen.html', '_self'); // TODO: fix it!
     });
 }
 
@@ -523,11 +523,11 @@ function initRequestsTable() {
                         //
                         switch (currentStages.data[i].name) {
                             case "base-data-without-approved-nameplate":
-                                jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_blank");
+                                jStageEditButton.attr("action", "/form-kfz-editieren.html").attr("target", "_self");
                                 jStageEditButton.find("input[type=submit]").val("Basis-Daten eingeben");
                                 break;
                             case "final-data-with-approved-nameplate":
-                                jStageEditButton.attr("action", "/form-kfz-kennzeichen.html").attr("target", "_blank");
+                                jStageEditButton.attr("action", "/form-kfz-kennzeichen.html").attr("target", "_self");
                                 jStageEditButton.find("input[type=submit]").val("KFZ-Kennzeichen eingeben");
                                 break;
                             default:
@@ -639,7 +639,7 @@ function initRequestsTable() {
 
                 var form = $('<form></form>')
                     .prop('action', '/request-info.html')
-                    .prop('target', '_blank')
+                    .prop('target', '_self')
                     .append(infoButton)
                     .append(reqIdHidden);
 
@@ -658,7 +658,7 @@ function initRequestsTable() {
 
                         var a = $('<a></a>')
                             .prop('href', '/forms-dashboard/attachment?entryId=' + req.id + '&attachmentName=' + attachment.name + '&mimeType=' + attachment.mimeType)
-                            .prop('target', '_blank')
+                            .prop('target', '_self')
                             .append(attachment.filename);
 
                         var li = $('<li></li>')
