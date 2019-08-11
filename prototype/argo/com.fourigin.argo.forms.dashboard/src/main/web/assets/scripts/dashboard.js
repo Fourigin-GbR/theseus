@@ -854,4 +854,8 @@ $(document).ready(function(){
     $("#reloadUserTable").on("click", function () {
         refreshUserTable();
     });
+
+    if (window.location.href.indexOf("dev.tsp.") > -1) {
+        $("body").addClass("devContext");
+    }
 });

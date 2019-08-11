@@ -489,3 +489,9 @@ table.dataTable tr.group.closed td:first-of-type::before {
     display: inline-block;
     cursor: pointer;
 }
+
+
+
+body.devContext {
+    background-color: #9b59b6;
+}
