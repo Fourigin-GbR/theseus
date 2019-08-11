@@ -154,6 +154,7 @@ function internalInitUsersTable(data) {
 
     usersDataTable = table.DataTable({
         "data": data,
+        "stateSave": true,
         "rowId": function (data) {
             return data.id;
         },
@@ -830,6 +831,27 @@ var processAjaxForms = function() {
     });
 };
 
+var refreshRequestsTable = function() {
+    var jFilterByType = jQuery('#dataTableFilter');
+    var jFilterByStatus = jQuery('#dataTableStatusFilter');
+
+    requestsDataTable.destroy();
+    initRequestsTable();
+    jFilterByStatus.val("");
+    jFilterByType.val("");
+};
+
+var refreshUserTable = function() {
+    usersDataTable.destroy();
+    initUsersTable();
+};
+
 $(document).ready(function(){
     processAjaxForms();
+    $("#reloadRequestTable").on("click", function () {
+        refreshRequestsTable();
+    });
+    $("#reloadUserTable").on("click", function () {
+        refreshUserTable();
+    });
 });

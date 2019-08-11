@@ -478,3 +478,14 @@ table.dataTable tr.group.closed td:first-of-type::before {
 .DONE.statusIcon:before {
     background-color: #00b393;
 }
+
+
+
+.refreshTable {
+    font-size: 12px;
+    line-height: 1.2;
+    border-bottom: 1px solid #18beee;
+    margin: 0 0 20px 0;
+    display: inline-block;
+    cursor: pointer;
+}
