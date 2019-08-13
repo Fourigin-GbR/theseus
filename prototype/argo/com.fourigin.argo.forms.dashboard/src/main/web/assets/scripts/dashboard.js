@@ -110,20 +110,31 @@ function loadStagesRegisterCustomer() {
 
 function loadCustomers() {
     return $.ajax({
-        url: "/forms-dashboard/customers"
+        url: "/forms-dashboard/customers"+ "?t=" + Math.random()
     });
 }
 
 function loadRequests() {
     return $.ajax({
-        url: "/forms-dashboard/requests"
+        url: "/forms-dashboard/requests"+ "?t=" + Math.random()
     });
 }
 
 function deleteUser(userId) {
     $.ajax({
-        url: "forms-dashboard/delete-customer?customerId=" + userId
-    });
+        url: "forms-dashboard/delete-customer?customerId=" + userId + "&t=" + Math.random()
+    })
+        .done(
+            function() {
+                usersDataTable.destroy();
+                initUsersTable();
+            }
+        )
+        .fail(
+            function() {
+                alert("Entschuldigung! Beim Löschen ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu und versuchen es noch einmal.");
+            }
+        );
 }
 
 function resolveLanguageBundle(language) {
@@ -354,7 +365,7 @@ function internalInitRequestsTable(data) {
 function initUsersTable() {
     $.when(loadCustomers()).done(
         function (data) {
-            console.log(data);
+            console.log("Init users table:", data);
 
             var table = $('#users');
 
@@ -384,7 +395,7 @@ function initUsersTable() {
 
     requestControls.hide();
 
-    table.on("submit", "form.action-remove-user", function(e) {
+    table.off().on("submit", "form.action-remove-user", function(e) {
         e.preventDefault();
         e.stopPropagation();
         //
@@ -401,8 +412,6 @@ function initUsersTable() {
         }
         if (confirm("Sind Sie sicher, dass der Kunde " + customerId + " gelöscht werden soll?")) {
             deleteUser(entryId);
-            usersDataTable.destroy();
-            initUsersTable();
         }
     });
 
@@ -460,7 +469,7 @@ function initRequestsTable() {
             var requestDetails = $('#request-details');
             var jRequestStages = requestDetails.find(".request-stages");
 
-            requestDetails.on('click', '.close', function(e) {
+            requestDetails.off().on('click', '.close', function(e) {
                 e.stopPropagation();
                 requestDetails.hide();
             });
@@ -570,7 +579,7 @@ function initRequestsTable() {
                 requestDetails.show();
             });
 
-            table.find('tbody').on('click', 'tr.group', function () {
+            table.find('tbody').off().on('click', 'tr.group', function () {
                 var jThis = $(this);
                 if(jThis.hasClass('closed')) {
                     jThis.removeClass('closed');
