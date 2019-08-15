@@ -98,31 +98,36 @@ function init() {
 
 function loadStagesRegisterVehicle() {
     return $.ajax({
-        url: "/forms-dashboard/stages?formId=register-vehicle"
+        url: "/forms-dashboard/stages?formId=register-vehicle",
+        cache: false
     });
 }
 function loadStagesRegisterCustomer() {
     return $.ajax({
-        url: "/forms-dashboard/stages?formId=register-customer"
+        url: "/forms-dashboard/stages?formId=register-customer",
+        cache: false
     });
 }
 
 
 function loadCustomers() {
     return $.ajax({
-        url: "/forms-dashboard/customers"+ "?t=" + Math.random()
+        url: "/forms-dashboard/customers"+ "?t=" + Math.random(),
+        cache: false
     });
 }
 
 function loadRequests() {
     return $.ajax({
-        url: "/forms-dashboard/requests"+ "?t=" + Math.random()
+        url: "/forms-dashboard/requests"+ "?t=" + Math.random(),
+        cache: false
     });
 }
 
 function deleteUser(userId) {
     $.ajax({
-        url: "forms-dashboard/delete-customer?customerId=" + userId + "&t=" + Math.random()
+        url: "forms-dashboard/delete-customer?customerId=" + userId + "&t=" + Math.random(),
+        cache: false
     })
         .done(
             function() {
@@ -785,7 +790,8 @@ var applyChangeState = function () {
         $.ajax({
             method: "POST",
             url: jStateChangeForm.attr("action"),
-            data: jStateChangeForm.serializeArray()
+            data: jStateChangeForm.serializeArray(),
+            cache: false
         })
             .done(function (msg) {
                 window.location.reload();
@@ -827,6 +833,7 @@ var processAjaxForms = function() {
 
         $.ajax({
             url: jForm.attr('action'),
+            cache: false,
             type : "POST",
             dataType : 'json',
             data: ConvertFormToJSON(jForm),
