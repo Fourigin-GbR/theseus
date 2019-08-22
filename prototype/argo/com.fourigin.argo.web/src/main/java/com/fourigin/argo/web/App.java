@@ -8,16 +8,15 @@ import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
-import com.fourigin.argo.config.ProjectsConfiguration;
 import com.fourigin.argo.controller.assets.ThumbnailDimensions;
 import com.fourigin.argo.controller.assets.ThumbnailResolver;
 import com.fourigin.argo.forms.config.ProjectSpecificConfiguration;
 import com.fourigin.argo.models.template.Type;
+import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
-import com.fourigin.utilities.spring.scheduling.AutowiringSpringBeanJobFactory;
 import com.fourigin.argo.scheduling.CompileJob;
 import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
 import com.fourigin.argo.strategies.CompilerOutputStrategy;
@@ -34,6 +33,7 @@ import com.fourigin.argo.template.engine.InternalTemplateEngineFactory;
 import com.fourigin.argo.template.engine.ProcessingMode;
 import com.fourigin.argo.template.engine.ThymeleafArgoTemplateEngine;
 import com.fourigin.argo.template.engine.strategies.InternalLinkResolutionStrategy;
+import com.fourigin.utilities.spring.scheduling.AutowiringSpringBeanJobFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
@@ -106,7 +106,7 @@ public class App {
 
     private TemplateResolver templateResolver;
 
-    private ProjectsConfiguration projectsConfiguration;
+    private ProjectSpecificPathResolver projectSpecificPathResolver;
 
     private AssetResolver assetResolver;
     
@@ -127,7 +127,7 @@ public class App {
 
     @Bean
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
-        return new MappingDocumentRootResolverStrategy(projectsConfiguration.pathResolver(), documentRootBasePath);
+        return new MappingDocumentRootResolverStrategy(projectSpecificPathResolver, documentRootBasePath);
     }
 
     @Bean
@@ -172,7 +172,7 @@ public class App {
     public InternalTemplateEngineFactory internalTemplateEngineFactory(){
         InternalTemplateEngineFactory factory = new InternalTemplateEngineFactory();
 
-        factory.setPathResolver(projectsConfiguration.pathResolver());
+        factory.setPathResolver(projectSpecificPathResolver);
         factory.setTemplateBasePath(templateBasePath);
 
         return factory;
@@ -220,7 +220,7 @@ public class App {
             runtimeConfigurationResolverFactory,
             preparedContentRoot,
             contentPageProcessors(),
-            projectsConfiguration.pathResolver()
+            projectSpecificPathResolver
         );
     }
 
@@ -241,7 +241,7 @@ public class App {
         AssetsContentPageProcessor assetsContentPageProcessor = new AssetsContentPageProcessor();
         assetsContentPageProcessor.setAssetResolver(assetResolver);
         assetsContentPageProcessor.setProjectSpecificConfiguration(projectSpecificConfiguration());
-        assetsContentPageProcessor.setPathResolver(projectsConfiguration.pathResolver());
+        assetsContentPageProcessor.setPathResolver(projectSpecificPathResolver);
         assetsContentPageProcessor.setLoadBalancerBasePath(loadBalancerBasePath);
 
         return Collections.singletonList(
@@ -351,8 +351,8 @@ public class App {
     }
 
     @Autowired
-    public void setProjectsConfiguration(ProjectsConfiguration projectsConfiguration) {
-        this.projectsConfiguration = projectsConfiguration;
+    public void setProjectSpecificPathResolver(ProjectSpecificPathResolver projectSpecificPathResolver) {
+        this.projectSpecificPathResolver = projectSpecificPathResolver;
     }
 
     @Autowired
