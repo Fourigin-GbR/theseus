@@ -102,7 +102,13 @@ public class DashboardController {
                 continue;
             }
 
-            result.add(convert(entryInfo));
+            try {
+                ViewFormRequestInfo requestInfo = convert(entryInfo);
+                result.add(requestInfo);
+            }
+            catch(IllegalArgumentException | IllegalStateException ex) {
+                if (logger.isErrorEnabled()) logger.error("Unable to convert entry!", ex);
+            }
         }
 
         return result;
