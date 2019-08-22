@@ -9,9 +9,12 @@ import com.fourigin.argo.models.content.ContentPageManager;
 import com.fourigin.argo.models.content.ContentPagePrototype;
 import com.fourigin.argo.models.content.UnresolvableContentPathException;
 import com.fourigin.argo.models.content.elements.ContentElement;
+import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.repository.ContentRepository;
+import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.UnresolvableSiteStructurePathException;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
@@ -29,6 +32,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/{project}/editors")
 public class EditorsController {
@@ -37,11 +43,13 @@ public class EditorsController {
 
     private CmsRequestAggregationResolver cmsRequestAggregationResolver;
 
+    private ContentRepositoryFactory contentRepositoryFactory;
+
     @RequestMapping(value = "/prototype", method = RequestMethod.GET)
     public ContentPagePrototype retrievePrototype(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.SITE_PATH) String path
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.SITE_PATH) String path
     ) {
         if (logger.isDebugEnabled())
             logger.debug("Processing retrieve prototype request for language {} and sitePath {}", language, path);
@@ -55,12 +63,13 @@ public class EditorsController {
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
     public ContentElementResponse retrieve(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.SITE_PATH) String path,
-        @RequestParam(RequestParameters.CONTENT_PATH) String contentPath
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.SITE_PATH) String path,
+            @RequestParam(RequestParameters.CONTENT_PATH) String contentPath
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Processing retrieve request for {}:{}:{}.", language, path, contentPath);
+        if (logger.isDebugEnabled())
+            logger.debug("Processing retrieve request for {}:{}:{}.", language, path, contentPath);
 
         ContentElementResponse response = new ContentElementResponse();
         response.setLanguage(language);
@@ -68,9 +77,9 @@ public class EditorsController {
         response.setContentPath(contentPath);
 
         CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
-            project,
-            language,
-            path
+                project,
+                language,
+                path
         );
 
         ContentElement contentElement = resolveContentElement(response, aggregation);
@@ -83,8 +92,8 @@ public class EditorsController {
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
     public StatusAwareContentElementResponse isUpToDate(
-        @PathVariable String project,
-        @RequestBody UpToDateRequest request
+            @PathVariable String project,
+            @RequestBody UpToDateRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing up-to-date request {}.", request);
 
@@ -96,9 +105,9 @@ public class EditorsController {
             response.copyFrom(request);
 
             CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
-                project,
-                request.getLanguage(),
-                request.getPath()
+                    project,
+                    request.getLanguage(),
+                    request.getPath()
             );
 
             ContentElement contentElement = resolveContentElement(request, aggregation);
@@ -115,8 +124,7 @@ public class EditorsController {
             }
 
             return response;
-        }
-        finally {
+        } finally {
             MDC.remove("project");
             MDC.remove("locale");
         }
@@ -124,8 +132,8 @@ public class EditorsController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public StatusAwareContentElementResponse save(
-        @PathVariable String project,
-        @RequestBody SaveChangesRequest request
+            @PathVariable String project,
+            @RequestBody SaveChangesRequest request
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing save request {}.", request);
 
@@ -137,9 +145,9 @@ public class EditorsController {
             response.copyFrom(request);
 
             CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(
-                project,
-                request.getLanguage(),
-                request.getPath()
+                    project,
+                    request.getLanguage(),
+                    request.getPath()
             );
 
             ContentElement currentContentElement = resolveContentElement(request, aggregation);
@@ -154,19 +162,195 @@ public class EditorsController {
                 response.setStatus(true);
                 ContentElement modifiedContentElement = request.getModifiedContentElement();
                 updateContentElement(request, modifiedContentElement, aggregation);
-                if (logger.isDebugEnabled()) logger.debug("Modified content element is updated.");
+                if (logger.isDebugEnabled()) logger.debug("Modified content element has been updated.");
             }
 
             return response;
-        }
-        finally {
+        } finally {
             MDC.remove("project");
             MDC.remove("locale");
         }
     }
 
+    @RequestMapping(value = "/siteStructure", method = RequestMethod.GET)
+    public SiteStructure retrieveSiteStructure(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language
+    ) {
+        List<SiteStructureElement> structure = new ArrayList<>();
+
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+        DirectoryInfo root = contentRepository.resolveInfo(DirectoryInfo.class, "/");
+        List<SiteNodeInfo> nodes = root.getNodes();
+        processNodes(nodes, structure);
+
+        SiteStructure result = new SiteStructure();
+        result.setStructure(structure);
+        result.setOriginalChecksum(ChecksumGenerator.getChecksum(structure));
+        return result;
+    }
+
+    @RequestMapping(value = "/siteStructure", method = RequestMethod.POST)
+    public UpdateSiteStructureResponse updateSiteStructure(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestBody SiteStructure siteStructure
+    ) {
+        UpdateSiteStructureResponse result = new UpdateSiteStructureResponse();
+
+        List<SiteStructureElement> currentStructure = new ArrayList<>();
+
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+        DirectoryInfo root = contentRepository.resolveInfo(DirectoryInfo.class, "/");
+        List<SiteNodeInfo> nodes = root.getNodes();
+        processNodes(nodes, currentStructure);
+
+        String currentChecksum = ChecksumGenerator.getChecksum(currentStructure);
+
+        if(!siteStructure.getOriginalChecksum().equals(currentChecksum)) {
+            result.setStatus(false);
+            siteStructure.setOriginalChecksum(currentChecksum);
+            siteStructure.setStructure(currentStructure);
+            result.setSiteStructure(siteStructure);
+        }
+        else {
+            // TODO: update site structure!
+            if (logger.isWarnEnabled()) logger.warn("Update site structure not implemented yet!");
+
+            result.setStatus(true);
+            result.setSiteStructure(siteStructure);
+        }
+
+        return result;
+    }
+
+    private void processNodes(List<SiteNodeInfo> nodes, List<SiteStructureElement> structure) {
+        if (nodes == null || nodes.isEmpty()) {
+            return;
+        }
+
+        for (SiteNodeInfo info : nodes) {
+            SiteStructureElement element = new SiteStructureElement();
+
+            // type
+            if (DirectoryInfo.class.isAssignableFrom(info.getClass())) {
+                element.setType(SiteStructureElementType.DIRECTORY);
+
+                // process children
+                DirectoryInfo directory = (DirectoryInfo) info;
+                List<SiteStructureElement> subElements = new ArrayList<>();
+                processNodes(directory.getNodes(), subElements);
+                element.setChildren(subElements);
+            } else if (PageInfo.class.isAssignableFrom(info.getClass())) {
+                element.setType(SiteStructureElementType.PAGE);
+            } else {
+                element.setType(SiteStructureElementType.UNKNOWN);
+            }
+
+            // name
+            element.setName(info.getName());
+
+            structure.add(element);
+        }
+    }
+
+    @RequestMapping(value = "/siteNode", method = RequestMethod.GET)
+    public SiteNode retrieveSiteNode(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.SITE_PATH) String path
+    ) {
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+        SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, path);
+
+        SiteNodeContent nodeContent = convert(info);
+
+        SiteNode result = new SiteNode();
+        result.setPath(path);
+        result.setContent(nodeContent);
+        result.setOriginalChecksum(ChecksumGenerator.getChecksum(nodeContent));
+        return result;
+    }
+
+    @RequestMapping(value = "/siteNode", method = RequestMethod.POST)
+    public UpdateSiteNodeResponse updateSiteNode(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestBody SiteNode siteNode
+    ) {
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+
+        String path = siteNode.getPath();
+        SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, path);
+
+        SiteNodeContent nodeContent = siteNode.getContent();
+
+        UpdateSiteNodeResponse result = new UpdateSiteNodeResponse();
+
+        String currentChecksum = ChecksumGenerator.getChecksum(nodeContent);
+        if (!siteNode.getOriginalChecksum().equals(currentChecksum)) {
+            result.setStatus(false);
+            SiteNodeContent currentContent = convert(info);
+            siteNode.setContent(currentContent);
+            siteNode.setOriginalChecksum(currentChecksum);
+            result.setSiteNode(siteNode);
+
+            if (logger.isDebugEnabled())
+                logger.debug("Modified site element is not updated. Current checksum is '{}'.", currentChecksum);
+        }
+        else {
+            applyChanges(nodeContent, info);
+
+            contentRepository.updateInfo(path, info);
+
+            result.setStatus(true);
+            result.setSiteNode(siteNode);
+
+            if (logger.isDebugEnabled())
+                logger.debug("Modified content element has been updated.");
+        }
+
+        return result;
+    }
+
+    private SiteNodeContent convert(SiteNodeInfo info) {
+        SiteNodeContent nodeContent = new SiteNodeContent();
+        nodeContent.setName(info.getName());
+        nodeContent.setDisplayName(info.getDisplayName());
+        nodeContent.setLocalizedName(info.getLocalizedName());
+
+        if (DirectoryInfo.class.isAssignableFrom(info.getClass())) {
+            nodeContent.setType(SiteStructureElementType.DIRECTORY);
+        } else if (PageInfo.class.isAssignableFrom(info.getClass())) {
+            nodeContent.setType(SiteStructureElementType.PAGE);
+
+            PageInfo page = (PageInfo) info;
+            nodeContent.setTemplateReference(page.getTemplateReference());
+        } else {
+            nodeContent.setType(SiteStructureElementType.UNKNOWN);
+        }
+
+        return nodeContent;
+    }
+
+    private void applyChanges(SiteNodeContent nodeContent, SiteNodeInfo info) {
+        switch (nodeContent.getType()) {
+            case PAGE:
+                ((PageInfo) info).setTemplateReference(nodeContent.getTemplateReference());
+                break;
+            case DIRECTORY:
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown node type '" + nodeContent.getType() + "'!");
+        }
+
+        info.setName(nodeContent.getName());
+        info.setDisplayName(nodeContent.getDisplayName());
+        info.setLocalizedName(nodeContent.getLocalizedName());
+    }
+
     @ExceptionHandler({
-        UnresolvableContentPathException.class,
+            UnresolvableContentPathException.class,
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceErrorResponse unresolvableContentPath(Exception ex) {
@@ -176,7 +360,7 @@ public class EditorsController {
     }
 
     @ExceptionHandler({
-        UnresolvableSiteStructurePathException.class
+            UnresolvableSiteStructurePathException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceErrorResponse unresolvableSitePath(Exception ex) {
@@ -239,5 +423,10 @@ public class EditorsController {
     @Autowired
     public void setCmsRequestAggregationResolver(CmsRequestAggregationResolver cmsRequestAggregationResolver) {
         this.cmsRequestAggregationResolver = cmsRequestAggregationResolver;
+    }
+
+    @Autowired
+    public void setContentRepositoryFactory(ContentRepositoryFactory factory) {
+        this.contentRepositoryFactory = factory;
     }
 }
