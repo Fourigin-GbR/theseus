@@ -203,7 +203,6 @@
 		"vehicle-insurance.id": {
 			"type": "TEXT",
 			"validation": {
-				"mandatory": true,
 				"pattern": "evb-numbers"
 			},
 			"normalizer": "to-uppercase-normalizer"
@@ -240,7 +239,6 @@
 					"new-account-bankcode": {
 						"type": "TEXT",
 						"validation": {
-							"mandatory": true
 						}
 					},
 					"new-account-bankname": {
@@ -329,7 +327,6 @@
 					"new-account-bankcode": {
 						"type": "TEXT",
 						"validation": {
-							"mandatory": true
 						}
 					},
 					"new-account-bankname": {
