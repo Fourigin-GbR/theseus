@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.editors;
+package com.fourigin.argo.controller.editors.models;
 
 import java.io.Serializable;
 import java.util.List;

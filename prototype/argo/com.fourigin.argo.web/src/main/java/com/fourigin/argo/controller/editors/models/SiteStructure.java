@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.editors;
+package com.fourigin.argo.controller.editors.models;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,16 +7,7 @@ import java.util.Objects;
 public class SiteStructure implements Serializable {
     private static final long serialVersionUID = -20690181274046082L;
 
-    private String originalChecksum;
     private List<SiteStructureElement> structure;
-
-    public String getOriginalChecksum() {
-        return originalChecksum;
-    }
-
-    public void setOriginalChecksum(String originalChecksum) {
-        this.originalChecksum = originalChecksum;
-    }
 
     public List<SiteStructureElement> getStructure() {
         return structure;
@@ -31,20 +22,18 @@ public class SiteStructure implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SiteStructure that = (SiteStructure) o;
-        return Objects.equals(originalChecksum, that.originalChecksum) &&
-                Objects.equals(structure, that.structure);
+        return Objects.equals(structure, that.structure);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(originalChecksum, structure);
+        return Objects.hash(structure);
     }
 
     @Override
     public String toString() {
-        return "SiteStructureResponse{" +
-                "currentChecksum='" + originalChecksum + '\'' +
-                ", structure=" + structure +
+        return "SiteStructure{" +
+                "structure=" + structure +
                 '}';
     }
 }

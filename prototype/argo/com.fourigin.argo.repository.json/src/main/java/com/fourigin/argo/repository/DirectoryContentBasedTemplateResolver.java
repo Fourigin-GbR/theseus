@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,13 +57,14 @@ public class DirectoryContentBasedTemplateResolver implements TemplateResolver {
 
         final String templateBaseName = templateReference;
         File[] matchingFiles = baseDir.listFiles((dir, name) -> name.startsWith(templateBaseName) && name.endsWith(".html"));
-        if (logger.isDebugEnabled()) logger.debug("Found matching files: {}", (Object[]) matchingFiles);
 
         Map<String, String> checksums = new HashMap<>();
 
         // read all available variation files
         Set<TemplateVariation> variations = new HashSet<>();
         if(matchingFiles != null && matchingFiles.length > 0){
+            if (logger.isDebugEnabled()) logger.debug("Found matching files: {}", Arrays.asList(matchingFiles));
+
             for (File matchingFile : matchingFiles) {
                 String fileName = matchingFile.getName();
                 String variationName = TemplateVariation.DEFAULT_VARIATION_NAME;
@@ -120,5 +122,16 @@ public class DirectoryContentBasedTemplateResolver implements TemplateResolver {
         }
 
         return template;
+    }
+
+    @Override
+    public Set<Template> list(String projectId) {
+        if (logger.isDebugEnabled()) logger.debug("Listing templates for project '{}' ...", projectId);
+
+        File baseDir = new File(pathResolver.resolvePath(templateBasePath, projectId));
+        if (logger.isDebugEnabled()) logger.debug("baseDir: '{}'", baseDir);
+
+        // TODO: implement customer specific template packages
+        return null;
     }
 }

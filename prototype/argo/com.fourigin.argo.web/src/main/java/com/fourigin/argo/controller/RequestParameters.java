@@ -4,6 +4,7 @@ public interface RequestParameters {
     String LANGUAGE = "l";
     String SITE_PATH = "p";
     String CONTENT_PATH = "c";
+    String TEMPLATE_REF = "t";
     String FLUSH = "flush";
 
     String COMPILE_PROCESSING_MODE = "mode";

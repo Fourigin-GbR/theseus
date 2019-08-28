@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.system;
+package com.fourigin.argo.controller.system.models;
 
 import com.fourigin.argo.models.structure.PageState;
 

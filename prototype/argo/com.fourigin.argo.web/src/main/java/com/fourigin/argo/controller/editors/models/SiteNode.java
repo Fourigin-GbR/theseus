@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.editors;
+package com.fourigin.argo.controller.editors.models;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,9 +6,17 @@ import java.util.Objects;
 public class SiteNode implements Serializable {
     private static final long serialVersionUID = -1073811604906400190L;
 
+    private String language;
     private String path;
-    private String originalChecksum;
     private SiteNodeContent content;
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
     public String getPath() {
         return path;
@@ -16,14 +24,6 @@ public class SiteNode implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getOriginalChecksum() {
-        return originalChecksum;
-    }
-
-    public void setOriginalChecksum(String originalChecksum) {
-        this.originalChecksum = originalChecksum;
     }
 
     public SiteNodeContent getContent() {
@@ -39,21 +39,21 @@ public class SiteNode implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SiteNode siteNode = (SiteNode) o;
-        return Objects.equals(path, siteNode.path) &&
-                Objects.equals(originalChecksum, siteNode.originalChecksum) &&
+        return Objects.equals(language, siteNode.language) &&
+                Objects.equals(path, siteNode.path) &&
                 Objects.equals(content, siteNode.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(path, originalChecksum, content);
+        return Objects.hash(language, path, content);
     }
 
     @Override
     public String toString() {
         return "SiteNode{" +
-                "path='" + path + '\'' +
-                ", currentChecksum='" + originalChecksum + '\'' +
+                "language='" + language + '\'' +
+                ", path='" + path + '\'' +
                 ", content=" + content +
                 '}';
     }

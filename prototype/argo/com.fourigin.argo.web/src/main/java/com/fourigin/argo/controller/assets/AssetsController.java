@@ -74,7 +74,7 @@ public class AssetsController {
         this.dimensions = dimensions;
     }
 
-    @RequestMapping("/info")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
     public Asset resolveAsset(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
@@ -98,7 +98,7 @@ public class AssetsController {
         }
     }
 
-    @RequestMapping("/data")
+    @RequestMapping(value = "/data", method = RequestMethod.GET)
     public void resolveAsset(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
@@ -203,7 +203,7 @@ public class AssetsController {
         }
     }
 
-    @RequestMapping(value = "/uploadUrl")
+    @RequestMapping("/uploadUrl")
     public UploadAssetsResponse uploadUrl(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,

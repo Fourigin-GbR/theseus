@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.editors;
+package com.fourigin.argo.controller.editors.models;
 
 public enum SiteStructureElementType {
     PAGE,

@@ -1,6 +1,7 @@
 package com.fourigin.argo.controller.search;
 
 import com.fourigin.argo.controller.RequestParameters;
+import com.fourigin.argo.controller.search.request.SearchRequest;
 import com.fourigin.argo.models.datasource.index.DataSourceIndex;
 import com.fourigin.argo.models.datasource.index.DataSourceIndexProcessing;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
