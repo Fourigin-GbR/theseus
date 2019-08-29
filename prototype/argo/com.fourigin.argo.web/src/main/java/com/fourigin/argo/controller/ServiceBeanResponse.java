@@ -9,7 +9,7 @@ public class ServiceBeanResponse<T> extends ServiceResponse implements Serializa
     private String revision;
     private T payload;
 
-    public ServiceBeanResponse(T payload, String revision, int status) {
+    public ServiceBeanResponse(T payload, String revision, ServiceResponseStatus status) {
         super(status);
         this.payload = payload;
         this.revision = revision;

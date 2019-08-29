@@ -3,10 +3,10 @@ package com.fourigin.argo.controller.editors;
 import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.controller.RequestParameters;
-import com.fourigin.argo.controller.ResponseStatus;
 import com.fourigin.argo.controller.ServiceBeanRequest;
 import com.fourigin.argo.controller.ServiceBeanResponse;
 import com.fourigin.argo.controller.ServiceResponse;
+import com.fourigin.argo.controller.ServiceResponseStatus;
 import com.fourigin.argo.controller.editors.models.ContentContainer;
 import com.fourigin.argo.controller.editors.models.ContentReference;
 import com.fourigin.argo.controller.editors.models.SiteNode;
@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -127,7 +128,7 @@ public class EditorsController {
         container.setContentReference(contentReference);
         container.setContentElement(contentElement);
 
-        return new ServiceBeanResponse<>(container, currentChecksum, ResponseStatus.SUCCESS);
+        return new ServiceBeanResponse<>(container, currentChecksum, ServiceResponseStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
@@ -156,12 +157,12 @@ public class EditorsController {
             container.setContentReference(contentReference);
             container.setContentElement(contentElement);
 
-            int status;
+            ServiceResponseStatus status;
             if (currentChecksum.equals(request.getRevision())) {
-                status = ResponseStatus.UNMODIFIED;
+                status = ServiceResponseStatus.SUCCESSFUL_UPDATE_UNMODIFIED;
                 if (logger.isDebugEnabled()) logger.debug("Referenced content element is up-to-date.");
             } else {
-                status = ResponseStatus.FAILED_CONCURRENT_UPDATE;
+                status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
                 if (logger.isDebugEnabled())
                     logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
             }
@@ -196,15 +197,15 @@ public class EditorsController {
             ContentElement currentContentElement = resolveContentElement(contentReference, aggregation);
             String currentChecksum = buildChecksum(currentContentElement);
 
-            int status;
+            ServiceResponseStatus status;
             if (request.getRevision().equals(currentChecksum)) {
-                status = ResponseStatus.SUCCESSFUL_UPDATE;
+                status = ServiceResponseStatus.SUCCESSFUL_UPDATE;
                 ContentElement modifiedContentElement = container.getContentElement();
 
                 updateContentElement(contentReference, modifiedContentElement, aggregation);
                 if (logger.isDebugEnabled()) logger.debug("Modified content element has been updated.");
             } else {
-                status = ResponseStatus.FAILED_CONCURRENT_UPDATE;
+                status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
                 container.setContentElement(currentContentElement);
                 if (logger.isDebugEnabled())
                     logger.debug("Modified content element has been changed in the meantime. Current checksum is '{}'.", currentChecksum);
@@ -231,7 +232,7 @@ public class EditorsController {
 
         SiteStructure siteStructure = new SiteStructure();
         siteStructure.setStructure(structure);
-        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(structure), ResponseStatus.SUCCESS);
+        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(structure), ServiceResponseStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/siteStructure", method = RequestMethod.POST)
@@ -250,16 +251,16 @@ public class EditorsController {
         String currentChecksum = ChecksumGenerator.getChecksum(currentStructure);
 
         SiteStructure siteStructure;
-        int status;
+        ServiceResponseStatus status;
         if(request.getRevision().equals(currentChecksum)) {
-            status = ResponseStatus.SUCCESSFUL_UPDATE;
+            status = ServiceResponseStatus.SUCCESSFUL_UPDATE;
 
             siteStructure = request.getPayload();
             // TODO: update site structure!
             if (logger.isWarnEnabled()) logger.warn("Update site structure not implemented yet!");
         }
         else {
-            status = ResponseStatus.FAILED_CONCURRENT_UPDATE;
+            status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
             siteStructure = new SiteStructure();
             siteStructure.setStructure(currentStructure);
         }
@@ -311,7 +312,7 @@ public class EditorsController {
         SiteNode siteNode = new SiteNode();
         siteNode.setPath(path);
         siteNode.setContent(nodeContent);
-        return new ServiceBeanResponse<>(siteNode, ChecksumGenerator.getChecksum(nodeContent), ResponseStatus.SUCCESS);
+        return new ServiceBeanResponse<>(siteNode, ChecksumGenerator.getChecksum(nodeContent), ServiceResponseStatus.SUCCESS);
     }
 
     @RequestMapping(value = "/siteNode", method = RequestMethod.POST)
@@ -329,9 +330,9 @@ public class EditorsController {
 
         String currentChecksum = ChecksumGenerator.getChecksum(nodeContent);
 
-        int status;
+        ServiceResponseStatus status;
         if (request.getRevision().equals(currentChecksum)) {
-            status = ResponseStatus.SUCCESSFUL_UPDATE;
+            status = ServiceResponseStatus.SUCCESSFUL_UPDATE;
 
             applyChanges(nodeContent, info);
             contentRepository.updateInfo(path, info);
@@ -340,7 +341,7 @@ public class EditorsController {
                 logger.debug("Modified site node has been updated.");
         }
         else {
-            status = ResponseStatus.FAILED_CONCURRENT_UPDATE;
+            status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
 
             SiteNodeContent currentContent = convert(info);
             siteNode.setContent(currentContent);
@@ -359,7 +360,7 @@ public class EditorsController {
             @RequestBody SiteNode siteNode
     ) {
         // TODO: implement me!
-        return new ServiceResponse(ResponseStatus.SUCCESSFUL_CREATE);
+        return new ServiceResponse(ServiceResponseStatus.SUCCESSFUL_CREATE);
     }
 
     private SiteNodeContent convert(SiteNodeInfo info) {
@@ -401,7 +402,7 @@ public class EditorsController {
     @ExceptionHandler({
             UnresolvableContentPathException.class,
     })
-    @org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceErrorResponse unresolvableContentPath(Exception ex) {
         if (logger.isErrorEnabled()) logger.error("Unable to resolve the content path!", ex);
 
@@ -411,7 +412,7 @@ public class EditorsController {
     @ExceptionHandler({
             UnresolvableSiteStructurePathException.class
     })
-    @org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceErrorResponse unresolvableSitePath(Exception ex) {
         if (logger.isErrorEnabled()) logger.error("Unable to resolve the site path!", ex);
 
@@ -419,7 +420,7 @@ public class EditorsController {
     }
 
     @ExceptionHandler(InvalidParameterException.class)
-    @org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ServiceErrorResponse invalidParameter(InvalidParameterException ex) {
         if (logger.isErrorEnabled()) logger.error("Invalid parameter!", ex);
 

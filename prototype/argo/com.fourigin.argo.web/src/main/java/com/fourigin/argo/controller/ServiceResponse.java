@@ -6,13 +6,13 @@ import java.util.Objects;
 public class ServiceResponse implements Serializable {
     private static final long serialVersionUID = -3302269923322102550L;
 
-    private int status;
+    private ServiceResponseStatus status;
 
-    public ServiceResponse(int status) {
+    public ServiceResponse(ServiceResponseStatus status) {
         this.status = status;
     }
 
-    public int getStatus() {
+    public ServiceResponseStatus getStatus() {
         return status;
     }
 
@@ -20,8 +20,8 @@ public class ServiceResponse implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ServiceResponse that = (ServiceResponse) o;
-        return status == that.status;
+        ServiceResponse response = (ServiceResponse) o;
+        return status == response.status;
     }
 
     @Override
