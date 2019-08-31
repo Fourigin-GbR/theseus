@@ -11,6 +11,7 @@ import com.fourigin.argo.controller.editors.models.ContentContainer;
 import com.fourigin.argo.controller.editors.models.ContentReference;
 import com.fourigin.argo.controller.editors.models.SiteNode;
 import com.fourigin.argo.controller.editors.models.SiteNodeContent;
+import com.fourigin.argo.controller.editors.models.SiteNodes;
 import com.fourigin.argo.controller.editors.models.SiteStructure;
 import com.fourigin.argo.controller.editors.models.SiteStructureElement;
 import com.fourigin.argo.controller.editors.models.SiteStructureElementType;
@@ -47,6 +48,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fourigin.argo.controller.ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
+import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESS;
+import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESSFUL_CREATE;
+import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESSFUL_UPDATE;
+import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESSFUL_UPDATE_UNMODIFIED;
 
 @RestController
 @RequestMapping("/{project}/editors")
@@ -128,7 +135,7 @@ public class EditorsController {
         container.setContentReference(contentReference);
         container.setContentElement(contentElement);
 
-        return new ServiceBeanResponse<>(container, currentChecksum, ServiceResponseStatus.SUCCESS);
+        return new ServiceBeanResponse<>(container, currentChecksum, SUCCESS);
     }
 
     @RequestMapping(value = "/uptodate", method = RequestMethod.GET)
@@ -159,10 +166,10 @@ public class EditorsController {
 
             ServiceResponseStatus status;
             if (currentChecksum.equals(request.getRevision())) {
-                status = ServiceResponseStatus.SUCCESSFUL_UPDATE_UNMODIFIED;
+                status = SUCCESSFUL_UPDATE_UNMODIFIED;
                 if (logger.isDebugEnabled()) logger.debug("Referenced content element is up-to-date.");
             } else {
-                status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
+                status = FAILED_CONCURRENT_UPDATE;
                 if (logger.isDebugEnabled())
                     logger.debug("Referenced content element is not up-to-date. Current checksum is '{}'.", currentChecksum);
             }
@@ -199,13 +206,13 @@ public class EditorsController {
 
             ServiceResponseStatus status;
             if (request.getRevision().equals(currentChecksum)) {
-                status = ServiceResponseStatus.SUCCESSFUL_UPDATE;
+                status = SUCCESSFUL_UPDATE;
                 ContentElement modifiedContentElement = container.getContentElement();
 
                 updateContentElement(contentReference, modifiedContentElement, aggregation);
                 if (logger.isDebugEnabled()) logger.debug("Modified content element has been updated.");
             } else {
-                status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
+                status = FAILED_CONCURRENT_UPDATE;
                 container.setContentElement(currentContentElement);
                 if (logger.isDebugEnabled())
                     logger.debug("Modified content element has been changed in the meantime. Current checksum is '{}'.", currentChecksum);
@@ -232,7 +239,7 @@ public class EditorsController {
 
         SiteStructure siteStructure = new SiteStructure();
         siteStructure.setStructure(structure);
-        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(structure), ServiceResponseStatus.SUCCESS);
+        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(structure), SUCCESS);
     }
 
     @RequestMapping(value = "/siteStructure", method = RequestMethod.POST)
@@ -253,14 +260,14 @@ public class EditorsController {
         SiteStructure siteStructure;
         ServiceResponseStatus status;
         if(request.getRevision().equals(currentChecksum)) {
-            status = ServiceResponseStatus.SUCCESSFUL_UPDATE;
+            status = SUCCESSFUL_UPDATE;
 
             siteStructure = request.getPayload();
             // TODO: update site structure!
             if (logger.isWarnEnabled()) logger.warn("Update site structure not implemented yet!");
         }
         else {
-            status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
+            status = FAILED_CONCURRENT_UPDATE;
             siteStructure = new SiteStructure();
             siteStructure.setStructure(currentStructure);
         }
@@ -312,7 +319,7 @@ public class EditorsController {
         SiteNode siteNode = new SiteNode();
         siteNode.setPath(path);
         siteNode.setContent(nodeContent);
-        return new ServiceBeanResponse<>(siteNode, ChecksumGenerator.getChecksum(nodeContent), ServiceResponseStatus.SUCCESS);
+        return new ServiceBeanResponse<>(siteNode, ChecksumGenerator.getChecksum(nodeContent), SUCCESS);
     }
 
     @RequestMapping(value = "/siteNode", method = RequestMethod.POST)
@@ -332,7 +339,7 @@ public class EditorsController {
 
         ServiceResponseStatus status;
         if (request.getRevision().equals(currentChecksum)) {
-            status = ServiceResponseStatus.SUCCESSFUL_UPDATE;
+            status = SUCCESSFUL_UPDATE;
 
             applyChanges(nodeContent, info);
             contentRepository.updateInfo(path, info);
@@ -341,7 +348,7 @@ public class EditorsController {
                 logger.debug("Modified site node has been updated.");
         }
         else {
-            status = ServiceResponseStatus.FAILED_CONCURRENT_UPDATE;
+            status = FAILED_CONCURRENT_UPDATE;
 
             SiteNodeContent currentContent = convert(info);
             siteNode.setContent(currentContent);
@@ -360,7 +367,24 @@ public class EditorsController {
             @RequestBody SiteNode siteNode
     ) {
         // TODO: implement me!
-        return new ServiceResponse(ServiceResponseStatus.SUCCESSFUL_CREATE);
+        return new ServiceResponse(SUCCESSFUL_CREATE);
+    }
+
+    @RequestMapping(value = "/siteNodes", method = RequestMethod.PUT)
+    public ServiceBeanResponse<SiteStructure> addSiteNodes(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestBody SiteNodes request
+    ) {
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+
+        SiteStructure siteStructure = new SiteStructure();
+        siteStructure.setStructure(request.getStructure());
+
+        contentRepository.
+
+        // TODO: implement me!
+        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(siteStructure), SUCCESSFUL_CREATE);
     }
 
     private SiteNodeContent convert(SiteNodeInfo info) {
