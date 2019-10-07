@@ -83,7 +83,7 @@ public class EditorsController {
         return template.getPrototype();
     }
 
-    @RequestMapping(value = "/prototype", method = RequestMethod.GET)
+    @RequestMapping(value = "/prototypeByTemplate", method = RequestMethod.GET)
     public ContentPagePrototype retrievePrototype(
             @PathVariable String project,
             @RequestParam(RequestParameters.TEMPLATE_REF) String templateRef
@@ -376,12 +376,12 @@ public class EditorsController {
             @RequestParam(RequestParameters.LANGUAGE) String language,
             @RequestBody SiteNodes request
     ) {
-        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
-
         SiteStructure siteStructure = new SiteStructure();
         siteStructure.setStructure(request.getStructure());
 
-        contentRepository.
+//        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+//
+//        contentRepository.
 
         // TODO: implement me!
         return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(siteStructure), SUCCESSFUL_CREATE);

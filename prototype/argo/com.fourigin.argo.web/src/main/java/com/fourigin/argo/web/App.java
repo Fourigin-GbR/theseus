@@ -8,6 +8,7 @@ import com.fourigin.argo.compiler.datasource.DataSourcesResolver;
 import com.fourigin.argo.compiler.datasource.SiteStructureDataSource;
 import com.fourigin.argo.compiler.datasource.TimestampDataSource;
 import com.fourigin.argo.compiler.processor.ContentPageProcessor;
+import com.fourigin.argo.config.ProjectsConfiguration;
 import com.fourigin.argo.controller.assets.ThumbnailDimensions;
 import com.fourigin.argo.controller.assets.ThumbnailResolver;
 import com.fourigin.argo.forms.config.ProjectSpecificConfiguration;
@@ -83,6 +84,8 @@ public class App {
 
     private ApplicationContext applicationContext;
 
+    private ProjectsConfiguration projectsConfiguration;
+
     @Value("${template.engine.thymeleaf.base}")
     private String templateBasePath;
 
@@ -106,10 +109,15 @@ public class App {
 
     private TemplateResolver templateResolver;
 
-    private ProjectSpecificPathResolver projectSpecificPathResolver;
+    //private ProjectSpecificPathResolver projectSpecificPathResolver;
 
     private AssetResolver assetResolver;
-    
+
+    public App(ApplicationContext applicationContext, ProjectsConfiguration projectsConfiguration) {
+        this.applicationContext = applicationContext;
+        this.projectsConfiguration = projectsConfiguration;
+    }
+
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(App.class);
         app.addListeners(
@@ -127,6 +135,7 @@ public class App {
 
     @Bean
     public DocumentRootResolverStrategy documentRootResolverStrategy() {
+        ProjectSpecificPathResolver projectSpecificPathResolver = projectsConfiguration.pathResolver();
         return new MappingDocumentRootResolverStrategy(projectSpecificPathResolver, documentRootBasePath);
     }
 
@@ -172,6 +181,7 @@ public class App {
     public InternalTemplateEngineFactory internalTemplateEngineFactory(){
         InternalTemplateEngineFactory factory = new InternalTemplateEngineFactory();
 
+        ProjectSpecificPathResolver projectSpecificPathResolver = projectsConfiguration.pathResolver();
         factory.setPathResolver(projectSpecificPathResolver);
         factory.setTemplateBasePath(templateBasePath);
 
@@ -212,6 +222,8 @@ public class App {
     // *** COMPILER ***
     @Bean
     public DefaultPageCompilerFactory pageCompilerFactory() {
+        ProjectSpecificPathResolver projectSpecificPathResolver = projectsConfiguration.pathResolver();
+
         return new DefaultPageCompilerFactory(
             contentRepositoryFactory,
             templateEngineFactory,
@@ -238,6 +250,8 @@ public class App {
 
     @Bean
     public List<ContentPageProcessor> contentPageProcessors(){
+        ProjectSpecificPathResolver projectSpecificPathResolver = projectsConfiguration.pathResolver();
+
         AssetsContentPageProcessor assetsContentPageProcessor = new AssetsContentPageProcessor();
         assetsContentPageProcessor.setAssetResolver(assetResolver);
         assetsContentPageProcessor.setProjectSpecificConfiguration(projectSpecificConfiguration());
@@ -306,6 +320,23 @@ public class App {
         return new ProjectSpecificConfiguration();
     }
 
+    //    @Autowired
+//    public void setProjectSpecificPathResolver(ProjectSpecificPathResolver projectSpecificPathResolver) {
+//        this.projectSpecificPathResolver = projectSpecificPathResolver;
+//    }
+
+//    @Autowired
+//    public void setProjectsConfiguration(ProjectsConfiguration projectsConfiguration) {
+//        Objects.requireNonNull(projectsConfiguration, "ProjectConfiguration must not be null!");
+//        this.projectsConfiguration = projectsConfiguration;
+//    }
+//
+//    @Autowired
+//    public void setApplicationContext(ApplicationContext applicationContext) {
+//        Objects.requireNonNull(applicationContext, "ApplicationContext must not be null!");
+//        this.applicationContext = applicationContext;
+//    }
+
     //******* QUARTZ
     @Bean
     public JobDetailFactoryBean jobDetail() {
@@ -348,16 +379,6 @@ public class App {
         AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
         jobFactory.setApplicationContext(applicationContext);
         return jobFactory;
-    }
-
-    @Autowired
-    public void setProjectSpecificPathResolver(ProjectSpecificPathResolver projectSpecificPathResolver) {
-        this.projectSpecificPathResolver = projectSpecificPathResolver;
-    }
-
-    @Autowired
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
     }
 
     /*
