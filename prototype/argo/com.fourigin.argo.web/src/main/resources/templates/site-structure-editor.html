@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>argo - project site structure editor</title>
+    <link rel="stylesheet" href="assets/styles/cms-project-site-structure-editor.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Dosis|Economica|Roboto+Condensed|Saira+Condensed"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
+    <link rel="stylesheet" href="assets/libraries/animate-css/animate.min.css"/>
+
+    <script src="assets/libraries/jquery/jquery-3.3.1.min.js"></script>
+    <script src="assets/scripts/argo.js"></script>
+    <script src="assets/scripts/logger/logger.js"></script>
+</head>
+<body>
+<div class="argoCmsPageEditorHeader">
+    <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeader__section--header">
+        <div class="argoCmsPageEditorHeader__sectionContent">
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                argo
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <a href="cms-dashboard.html" class="linkButton">
+                    <i class="linkButton__icon fas fa-angle-left"></i>
+                </a>
+                <h1 class="argoCmsPageEditorHeader__title">
+                    Edit Project Site Structure
+                </h1>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <div class="userIconMenu">
+                    <div class="userIconMenu__userImage"
+                         style="background-image: url('assets/images/karsten-konzert-2012-dbg.jpg')"></div>
+                    <div class="userIconMenu__userName">kschaefer</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="argoCmsPageEditorHeader__section">
+        <div class="argoCmsPageEditorHeader__sectionContent siteMainActions">
+            <div class="argoCmsPageEditorHeader__sectionBlock siteCustomerBrand">
+                <div class="siteCustomerBrand__logo">
+                    <img src="assets/images/examples/tagesschau.png" alt="Tagesschau Logo"/>
+                </div>
+                <div class="siteCustomerBrand__name">
+                    Tagesschau ARD
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock sitePath">
+
+                <div class="editContentBox editContentBox--big">
+                    <div class="editContentBox__contentBoxWrapper">
+                        <div class="editContentBox__contentBox">
+                            <ul class="pathStructureLinkList" data-argo-element="pathStructureList">
+                                <li data-prototype="pathStructureItemDirectory">
+                                    <a href="#">
+                                        <i class="pathStructureLinkList__icon fas fa-folder-open"></i>
+                                        <span class="pathStructureLinkList__copy"></span>
+                                    </a>
+                                </li>
+                                <li data-prototype="pathStructureItemFile">
+                                    <a href="#">
+                                        <i class="pathStructureLinkList__icon fas fa-file"></i>
+                                        <span class="pathStructureLinkList__copy"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tooltip" data-tooltip-target-id="tt2">
+                            <i class="tooltip__icon fas fa-question"></i>
+                        </div>
+                    </div>
+                    <div class="editContentBox__label">
+                        Current page path
+                    </div>
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock pageMeta">
+                <div class="editContentGroups">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="argoBody">
+    <div class="argoBody__content">
+        <div class="projectSiteStructure sideBaredContent">
+            <div class="projectSiteStructure__selectionDetails fileEditableDetailsList sideBaredContent__sidebar">
+                <h2 class="sideBaredContent__sideElementTitle">Selection details</h2>
+                <form name="fileDetails">
+                    <input type="hidden" name="type" value="" />
+                    <input type="hidden" name="originalChecksum" value="" />
+                    <input type="hidden" name="path" value="" />
+                    <div class="fileEditableDetailsList__title">
+                        <div class="fileEditableDetailsList__titleIcon">
+                            <i class="far fa-file-code"></i>
+                        </div>
+                        <div data-element="selectedSiteStructureItemTitle" class="fileEditableDetailsList__titleCopy">
+                            The important things (html)
+                        </div>
+                    </div>
+                    <div class="fileEditableDetailsList__list">
+
+                        <!-- base name -->
+                        <div class="fileEditableDetailsList__group">
+                            <div class="editContentGroup editContentGroup--notHighlighted">
+                                <h3 class="editContentGroup__title">Basic name</h3>
+                                <div class="editContentGroup__items editContentGroup__items--columns">
+                                    <div class="editContentBox editContentGroup__item">
+                                        <div class="editContentBox__contentBoxWrapper">
+                                            <div class="editContentBox__contentBox">
+                                                <input autocomplete="off" id="name" type="text" name="name" value="">
+                                            </div>
+                                        </div>
+                                        <div class="editContentBox__label">
+                                            <label for="name">name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- localized name -->
+                        <fieldset class="fileEditableDetailsList__group" name="localizedName">
+                            <div class="editContentGroup editContentGroup--notHighlighted">
+                                <h3 class="editContentGroup__title">Localized name</h3>
+                                <div class="editContentGroup__items editContentGroup__items--columns">
+                                    <div data-argo-element="localizedNameEditItems">
+                                        <div data-argo-prototype="localizedNameEditItem" class="editContentBox editContentGroup__item">
+                                            <div class="editContentBox__contentBoxWrapper">
+                                                <div class="editContentBox__contentBox">
+                                                    <input autocomplete="off" id="localName_en" type="text" name="en" value="">
+                                                </div>
+                                            </div>
+                                            <div class="editContentBox__label">
+                                                <label for="localName_en">en</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div data-argo-element="detailListFieldsUnused" class="fileEditableDetailsList__subGroup">
+                                        <h4>
+                                            Unused content
+                                            <span class="tooltip" data-tooltip-target-id="unusedContent">
+                                                <i class="tooltip__icon fas fa-question"></i>
+                                            </span>
+                                        </h4>
+                                        <div data-argo-element="detailListFieldsUnusedListWrapper" class="fileEditableDetailsList__unusedFields">
+                                            <div data-argo-prototype="detailListFieldUnused" class="editContentBox editContentGroup__item">
+                                                <div class="editContentBox__contentBoxWrapper">
+                                                    <div class="editContentBox__contentBox">
+                                                        <input autocomplete="off" id="localNameUnusedName_a" type="text" name="" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="editContentBox__label">
+                                                    <label for="localNameUnusedName_a"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- display name -->
+                        <fieldset class="fileEditableDetailsList__group" name="displayName">
+                            <div class="editContentGroup editContentGroup--notHighlighted">
+                                <h3 class="editContentGroup__title">Display name</h3>
+                                <div class="editContentGroup__items editContentGroup__items--columns">
+                                    <div data-argo-element="displayNameEditItems">
+                                        <div data-argo-prototype="displayNameEditItem" class="editContentBox editContentGroup__item">
+                                            <div class="editContentBox__contentBoxWrapper">
+                                                <div class="editContentBox__contentBox">
+                                                    <input autocomplete="off" id="displayName_en" type="text" name="en" value="">
+                                                </div>
+                                            </div>
+                                            <div class="editContentBox__label">
+                                                <label for="displayName_en">en</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div data-argo-element="detailListFieldsUnused" class="fileEditableDetailsList__subGroup">
+                                        <h4>
+                                            Unused content
+                                            <span class="tooltip" data-tooltip-target-id="unusedContent">
+                                                <i class="tooltip__icon fas fa-question"></i>
+                                            </span>
+                                        </h4>
+                                        <div data-argo-element="detailListFieldsUnusedListWrapper" class="fileEditableDetailsList__unusedFields">
+                                            <div data-argo-prototype="detailListFieldUnused" class="editContentBox editContentGroup__item">
+                                                <div class="editContentBox__contentBoxWrapper">
+                                                    <div class="editContentBox__contentBox">
+                                                        <input autocomplete="off" id="displayNameUnused_a" type="text" name="" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="editContentBox__label">
+                                                    <label for="displayNameUnused_a"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- Templates -->
+                        <fieldset class="fileEditableDetailsList__group" name="templateReference">
+                            <div class="editContentGroup editContentGroup--notHighlighted">
+                                <h3 class="editContentGroup__title">Template reference</h3>
+                                <div class="editContentGroup__items editContentGroup__items--columns">
+
+                                    <div class="editContentBox editContentGroup__item">
+                                        <div class="editContentBox__contentBoxWrapper">
+                                            <div class="editContentBox__contentBox">
+                                                <input autocomplete="off" id="templateId" type="text" name="templateId" value="">
+                                            </div>
+                                        </div>
+                                        <div class="editContentBox__label">
+                                            <label for="templateId">Template id</label>
+                                        </div>
+                                    </div>
+                                    <div class="editContentBox editContentGroup__item">
+                                        <div class="editContentBox__contentBoxWrapper">
+                                            <div class="editContentBox__contentBox">
+                                                <input autocomplete="off"id="variationId" type="text" name="variationId" value="">
+                                            </div>
+                                        </div>
+                                        <div class="editContentBox__label">
+                                            <label for="variationId">Template variation id</label>
+                                        </div>
+                                    </div>
+                                    <div class="editContentBox editContentGroup__item">
+                                        <div class="editContentBox__contentBoxWrapper">
+                                            <div class="editContentBox__contentBox">
+                                                <input autocomplete="off"id="revision" type="text" name="revision" value="">
+                                            </div>
+                                        </div>
+                                        <div class="editContentBox__label">
+                                            <label for="revision">Revision</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="fileEditableDetailsList__actions">
+                        <button class="button button--cta" type="submit">Save</button>
+                    </div>
+                </form>
+                <div class="projectSiteStructure__selectionDetailsNothingSelected">
+                    Nothing selected.
+                </div>
+            </div>
+            <div class="projectSiteStructure__structure sideBaredContent__content">
+                <form name="siteStructure">
+                    <h2 class="sideBaredContent__sideElementTitle">Site structure</h2>
+                    <!-- Buttons -->
+                    <div class="projectSiteStructure__meta">
+                        <button data-argo-action="openAllDirectories" class="button button--light">
+                            <i class="fas fa-folder-open"></i>
+                            Open all
+                        </button>
+                        <button data-argo-action="closeAllDirectories" class="button button--light">
+                            <i class="fas fa-folder"></i>
+                            Close all
+                        </button>
+                        <button data-argo-action="reloadStructure" class="button button--light">
+                            <i class="fas fa-redo"></i>
+                            Reload
+                        </button>
+                    </div>
+                    <!-- Prototypes -->
+                    <div class="siteStructureItemsPrototypes">
+                        <!-- Directory -->
+                        <fieldset class="editableDirectoryList__entry" data-type="directory"
+                                  data-prototype="siteStructureItemDirectory">
+                            <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox" name="selected"/>
+                            <div class="editableDirectoryList__entryLabel">
+                                <i class="fas fa-chevron-right editableDirectoryList__entryButton"
+                                   data-action="openCloseDirectory"></i>
+                                <i class="fas fa-folder-open editableDirectoryList__entryIcon editableDirectoryList__entryIcon--directory"></i>
+                                <div class="editableDirectoryList__entryName">
+                                    <input autocomplete="off" disabled="disabled" class="editableDirectoryList__entryName" type="text" name="name" value=""/>
+                                </div>
+                                <div class="editableDirectoryList__entryActions subMenu">
+                                    <div class="subMenu__button">
+                                        <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
+                                    </div>
+                                    <div class="subMenu__overlay">
+                                        <div class="subMenu__entry" data-action="addInside">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                            <span class="subMenu__entryLabel">New...</span>
+                                        </div>
+                                        <div class="subMenu__entry" data-action="delete">
+                                            <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
+                                            <span class="subMenu__entryLabel">Remove</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset name="localizedName">
+                                <input data-prototype="localizedNameItem" autocomplete="off" type="hidden" name="en" value=""/>
+                            </fieldset>
+                            <fieldset name="displayName">
+                                <input data-prototype="displayNameItem" autocomplete="off" type="hidden" name="en" value=""/>
+                            </fieldset>
+                            <fieldset data-type="directoryChildren">
+                            </fieldset>
+                        </fieldset>
+                        <!-- Item / file -->
+                        <fieldset class="editableDirectoryList__entry" data-type="file"
+                                  data-prototype="siteStructureItemFile">
+                            <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox"
+                                   name="selected"/>
+                            <div class="editableDirectoryList__entryLabel">
+                                <i class="fas fa-file editableDirectoryList__entryIcon"></i>
+                                <div class="editableDirectoryList__entryName">
+                                    <input autocomplete="off" disabled="disabled" class="editableDirectoryList__entryName" type="text" name="name" value=""/>
+                                </div>
+                                <div class="editableDirectoryList__entryActions subMenu">
+                                    <div class="subMenu__button">
+                                        <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
+                                    </div>
+                                    <div class="subMenu__overlay">
+                                        <div class="subMenu__entry" data-action="addBefore">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                            <span class="subMenu__entryLabel">New before...</span>
+                                        </div>
+                                        <div class="subMenu__entry" data-action="addAfter">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                            <span class="subMenu__entryLabel">New after...</span>
+                                        </div>
+                                        <div class="subMenu__entry" data-action="delete">
+                                            <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
+                                            <span class="subMenu__entryLabel">Remove</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset name="localizedName">
+                                <input data-prototype="localizedNameItem" autocomplete="off" type="hidden" name="en" value=""/>
+                            </fieldset>
+                            <fieldset name="displayName">
+                                <input data-prototype="displayNameItem" autocomplete="off" type="hidden" name="en" value=""/>
+                            </fieldset>
+                            <fieldset name="templateReference">
+                                <input autocomplete="off" type="hidden" name="templateId" value=""/>
+                                <input autocomplete="off" type="hidden" name="variationId" value=""/>
+                                <input autocomplete="off" type="hidden" name="revision" value=""/>
+                            </fieldset>
+                        </fieldset>
+                    </div>
+                    <div class="editableDirectoryList">
+
+                    </div>
+                    <div class="projectSiteStructure__footer">
+
+                        <div class="projectSiteStructure__footerRow">
+                            <button class="button button--cta" type="submit">Save</button>
+
+                            <div data-argo-element="saveProcessStatus" class="saveProcessStatus">
+                                <div data-argo-element="saveProcessStatusUnsavedChanges" class="saveProcessStatus__item">
+                                    <div class="saveProcessStatus__statusIcon">
+                                        <i class="fas fa-marker"></i>
+                                    </div>
+                                    <div class="saveProcessStatus__statusCopy">
+                                        Please save.
+                                    </div>
+                                </div>
+                                <div data-argo-element="saveProcessStatusSaving" class="saveProcessStatus__item">
+                                    <div class="saveProcessStatus__statusIcon">
+                                        <i class="fas fa-file-upload"></i>
+                                    </div>
+                                    <div class="saveProcessStatus__statusCopy">
+                                        Saving data...
+                                    </div>
+                                </div>
+                                <div data-argo-element="saveProcessStatusSaved" class="saveProcessStatus__item">
+                                    <div class="saveProcessStatus__statusIcon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="saveProcessStatus__statusCopy">
+                                        All changes saved.
+                                    </div>
+                                </div>
+                                <div data-argo-element="saveProcessStatusSaveError" class="saveProcessStatus__item">
+                                    <div class="saveProcessStatus__statusIcon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="saveProcessStatus__statusCopy">
+                                        Could not save changes!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="argoActions">
+                                <div class="argoActions__amount"></div>
+                                unsaved changes.
+
+                                <button data-argo-action="reloadStructure" class="button button--light">
+                                    <i class="fas fa-redo"></i>
+                                    Revert all changes.
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="projectSiteStructure__footerRow moduleDetails" data-argo-element="actionDetails">
+                            <div class="moduleDetails__title">Actions</div>
+                            <div class="moduleDetails__body">
+                                <table class="moduleDetails_table">
+                                    <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Content</th>
+                                        <th>Time</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-argo-prototype="actionDetailTableRow">
+                                        <td data-argo-element="actionDetailType"></td>
+                                        <td data-argo-element="actionDetailContent"></td>
+                                        <td data-argo-element="actionDetailTimeStamp"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="argoBody__overlays">
+        <div data-argo-body-overlay-id="loadSiteStructure" class="argoBody__overlay">
+            <div class="argoBody__overlayContent">
+                <div class="argoBody__overlayContentTitle">
+                    <h4>Loading...</h4>
+                </div>
+                <div class="argoBody__overlayProcessBar processBar processBar--stateless">
+                    <span class="processBar__handle"></span>
+                </div>
+            </div>
+        </div>
+        <div data-argo-body-overlay-id="canNotGenerateSiteStructure" class="argoBody__overlay comicJoe">
+            <div class="argoBody__overlayContent">
+                <div class="argoBody__overlayContentTitle">
+                    <div class="bubbleMessages comicJoe__messages">
+                        <div class="bubbleMessage comicJoe__message">
+                            No! Don't click!!
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Sorry, nothing to do. Fix the error first!
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Autsch! Who clicked?
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Agaaain? That hurts...
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            I do aaaall my best for you... :-( but here I have to wait for you.... :-(
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Ehem...
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            I forget nothing!!
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            YOU need to FIX something FIRST! OK?
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Lux? Is it you?
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            You gonna flirt with me?! :-)
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            ...
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            No, I have no further information for you yet!!<br/>
+                            Why meeeee? Are you not able to find the problem on your own, ha??
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            You heard something about.... Altzheimer?
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Sorry, that was your last try. The systems gonna kick you out.
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Not my nose, not my nooose!!
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            OnOffOnOffOnOffOnOffOnOff
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            Yes!! Just read!! You make it!!
+                        </div>
+                        <div class="bubbleMessage comicJoe__message">
+                            I am watching you!!! :-x
+                        </div>
+                        <div class="bubbleMessage comicJoe__message" data-action="reloadPage">
+                            Ok!! You won. I will reload the page for you.<br/>
+                            But you will see: It will change NOTHING.
+                        </div>
+                    </div>
+                    <i class="far comicJoe__face fa-sad-tear"></i>
+                    <h4>Can not generate site structure</h4>
+                </div>
+                <div class="argoBody__overlayContentCopy">
+                    <p>
+                        There is a problem with some site-structure-objects.
+                    </p>
+                    <p>
+                        You need to get that fixed.
+                    </p>
+                    <p>
+                        <i class="flagIcon fas fa-question"></i>
+                        <a target="_blank" href="mailto:help@argo.com">help@argo.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="overlays">
+    <div data-argo-element="addNewSiteStructureItem" class="overlay overlayAddNewSiteStructureItem">
+        <div class="overlay__header">
+            <div class="overlay__content">
+                <h3 class="overlay__title">New</h3>
+                <div class="overlay__closeButton">
+                    <div class="iconButton iconButton--close">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay__body">
+            <div class="overlay__content">
+
+                <div class="addSiteStructureItem">
+                    <div data-argo-element="selectType" class="contentSwitcher">
+                        <h4>Select type...</h4>
+                        <div class="addSiteStructureItemSelectType">
+                            <form name="addSiteStructureItemType">
+                                <label>
+                                    <input autocomplete="off" type="radio" name="addSiteStructureItemType" value="page" />
+                                    Page
+                                </label>
+                                <label>
+                                    <input autocomplete="off" type="radio" name="addSiteStructureItemType" value="directory" />
+                                    Directory
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="newSiteStructureItem" data-argo-element="newSiteStructureItemPage">
+                        <div class="formFields">
+                            <form name="newSiteStructureItem" class="formFields__form">
+
+                                <input type="hidden" name="type" value="page" />
+
+                                <fieldset data-type="page">
+
+                                    <h4>Page</h4>
+
+                                    <div class="editContentGroup editContentGroup--notHighlighted">
+                                        <div class="editContentGroup__title">Master page name</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div class="editContentBox">
+                                                    <label>
+                                                    <span class="editContentBox__contentBoxWrapper">
+                                                        <span class="editContentBox__contentBox">
+                                                            <input autocomplete="off" type="text" name="name" value="" />
+                                                        </span>
+                                                    </span>
+                                                        <span class="editContentBox__errorMessage"></span>
+                                                        <span class="editContentBox__label">Page name</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the master file name for that site structure item.
+                                                    <br />
+                                                    Tipp: Use an abstract, clear name, who is describing the content.
+                                                    <br/>
+                                                    Avoid very long names and relative constructs.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="localizedName">
+                                        <div class="editContentGroup__title">Page names</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div data-argo-element="newItemLocalizedNames" class="editContentGroup__items editContentGroup__items--columns">
+
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the base name for that site structure item.
+                                                    <br />
+                                                    It has to be unique on the same level.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="displayName">
+                                        <div class="editContentGroup__title">Display names</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div data-argo-element="newItemDisplayNames" class="editContentGroup__items editContentGroup__items--columns">
+
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the display name for that site structure item.
+                                                    <br />
+                                                    It has to be unique on the same level.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="templateReference">
+                                        <div class="editContentGroup__title">Template reference</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div class="editContentGroup__items editContentGroup__items--columns">
+                                                    <div class="editContentGroup__item editContentBox">
+                                                        <label>
+                                                        <span class="editContentBox__contentBoxWrapper">
+                                                            <span class="editContentBox__contentBox">
+                                                                <input autocomplete="off" type="text" name="templateId" value="" />
+                                                            </span>
+                                                        </span>
+                                                            <span class="editContentBox__errorMessage"></span>
+                                                            <span class="editContentBox__label">Template id</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="editContentGroup__item editContentBox">
+                                                        <label>
+                                                        <span class="editContentBox__contentBoxWrapper">
+                                                            <span class="editContentBox__contentBox">
+                                                                <input autocomplete="off" type="text" name="variationId" value="" />
+                                                            </span>
+                                                        </span>
+                                                            <span class="editContentBox__errorMessage"></span>
+                                                            <span class="editContentBox__label">Variation id</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="editContentGroup__item editContentBox">
+                                                        <label>
+                                                        <span class="editContentBox__contentBoxWrapper">
+                                                            <span class="editContentBox__contentBox">
+                                                                <input autocomplete="off" type="text" name="revision" value="" />
+                                                            </span>
+                                                        </span>
+                                                            <span class="editContentBox__errorMessage"></span>
+                                                            <span class="editContentBox__label">Revision</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the base name for that site structure item.
+                                                    <br />
+                                                    It has to be unique on the same level.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+
+                                    <button class="button button--cta" type="submit">Add</button>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="newSiteStructureItem" data-argo-element="newSiteStructureItemDirectory">
+                        <div class="formFields">
+                            <form name="newSiteStructureItem" class="formFields__form">
+
+                                <input type="hidden" name="type" value="directory" />
+
+                                <fieldset data-type="directory">
+
+                                    <h4>Directory</h4>
+
+                                    <div class="editContentGroup editContentGroup--notHighlighted">
+                                        <div class="editContentGroup__title">Master directory name</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div class="editContentBox">
+                                                    <label>
+                                                    <span class="editContentBox__contentBoxWrapper">
+                                                        <span class="editContentBox__contentBox">
+                                                            <input autocomplete="off" type="text" name="name" value="" />
+                                                        </span>
+                                                    </span>
+                                                        <span class="editContentBox__errorMessage"></span>
+                                                        <span class="editContentBox__label">Directory name</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the master file name for that site structure item.
+                                                    <br />
+                                                    Tipp: Use an abstract, clear name, who is describing the content.
+                                                    <br/>
+                                                    Avoid very long names and relative constructs.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="localizedName">
+                                        <div class="editContentGroup__title">File names</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div data-argo-element="newItemLocalizedNames" class="editContentGroup__items editContentGroup__items--columns">
+                                                    <div data-argo-prototype="newItemLocalizedName" class="editContentGroup__item editContentBox">
+                                                        <label>
+                                                        <span class="editContentBox__contentBoxWrapper">
+                                                            <span class="editContentBox__contentBox">
+                                                                <input autocomplete="off" type="text" name="en" value="" />
+                                                            </span>
+                                                        </span>
+                                                            <span class="editContentBox__errorMessage"></span>
+                                                            <span class="editContentBox__label">en</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the base name for that site structure item.
+                                                    <br />
+                                                    It has to be unique on the same level.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="displayName">
+                                        <div class="editContentGroup__title">Display names</div>
+                                        <div class="editFieldsWithExplanation">
+                                            <div class="editFieldsWithExplanation__editFields">
+                                                <div data-argo-element="newItemDisplayNames" class="editContentGroup__items editContentGroup__items--columns">
+                                                    <div data-argo-prototype="newItemDisplayName" class="editContentGroup__item editContentBox">
+                                                        <label>
+                                                            <span class="editContentBox__contentBoxWrapper">
+                                                                <span class="editContentBox__contentBox">
+                                                                    <input autocomplete="off" type="text" name="en" value="" />
+                                                                </span>
+                                                            </span>
+                                                            <span class="editContentBox__errorMessage"></span>
+                                                            <span class="editContentBox__label">en</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="editFieldsWithExplanation__explanation">
+                                                <div class="editFieldsWithExplanation__copy">
+                                                    Edit the display name for that site structure item.
+                                                    <br />
+                                                    It has to be unique on the same level.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <button class="button button--cta" type="submit">Add</button>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tooltips">
+    <div class="tooltipOverlay" data-tooltip-id="unusedContent">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Unused content</h3>
+                <p>This lists content fields, who belong to a language which is not used / configured in the current project.</p>
+                <p>You can anyhow edit and delete it here.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt1">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Show favorites</h3>
+                <p>You can enable / disable to show the favorite content fields of the current page/template.</p>
+                <p>The favorites are defined by the template settings.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt2">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Page path query</h3>
+                <p>Here you see the full page of the current page inside the whole site-structure.</p>
+                <p><strong>It is not using the display-names (page-names), as you see it in a opage-navigation!</strong>
+                </p>
+                <p>You can click here also on every folder and directly will jump to that folder, in there to the first
+                    page.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt_state">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Change state</h3>
+                <p>Every page has a state: It can be live, in editing or not staged.</p>
+                <p>
+                    <img src="assets/images/tooltips/state.jpg" height="92" width="290"/>
+                </p>
+                <p>Only persons with the matching permissions can change the state.</p>
+                <p>If you make changes on a page, they have to chnaged the status to live.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="messages" data-argo-items="messages">
+
+</div>
+
+<div style="display: none;" data-argo-items="messages-prototypes">
+    <div data-prototype="messageError" class="message message--error">
+        <div class="message__header">
+            <div class="message__title"><i class="fas fa-exclamation-circle"></i> <span>Error</span></div>
+            <div class="message__closeButton">
+                <div class="iconButton iconButton--close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="message__headline"></div>
+        <div class="message__descriptionTeaser">
+
+        </div>
+        <div class="message__description">
+
+        </div>
+    </div>
+
+    <div data-prototype="messageWarning" class="message message--warning">
+        <div class="message__header">
+            <div class="message__title"><i class="far fa-bell"></i> <span>Warning</span></div>
+            <div class="message__closeButton">
+                <div class="iconButton iconButton--close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="message__headline"></div>
+        <div class="message__descriptionTeaser">
+
+        </div>
+        <div class="message__description">
+
+        </div>
+    </div>
+
+    <div data-prototype="messageInfo" class="message message--info">
+        <div class="message__header">
+            <div class="message__title"><i class="fas fa-info"></i> <span>Info</span></div>
+            <div class="message__closeButton">
+                <div class="iconButton iconButton--close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </div>
+        <div class="message__headline"></div>
+        <div class="message__descriptionTeaser">
+
+        </div>
+        <div class="message__description">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var argoMessages = new com.fourigin.argo.Messages(),
+        argoLogger = new iftrue.tools.logger.Logger();
+
+    let config = {
+        "languages": {
+            "de": "deutsch",
+            "en": "englisch",
+            "fr": "französisch"
+        },
+        "urlLoadSiteStructure": "examples/site-structure-productive.json",
+        "urlSaveSiteStructure": "examples/site-structure-productive.json",
+        "urlLoadItemDetails": "examples/site-structure-item-details.json",
+        "urlSaveItemDetails": "examples/site-structure-item-details.json",
+        /*"urlLoadSiteStructure": "http://www.argo.bestgreekestate.fourigin.com/cms/editors/siteStructure?l=DE"*/
+    };
+
+    new com.fourigin.argo.ProjectSiteStructureEditor(config);
+
+</script>
+
+<script src="assets/scripts/tooltips.js"></script>
+<script src="assets/scripts/overlays.js"></script>
+<script src="assets/scripts/overlay-submenus.js"></script>
+
+
+</body>
+</html>

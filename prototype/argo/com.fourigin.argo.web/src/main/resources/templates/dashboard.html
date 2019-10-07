@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>argo - dashboard</title>
+    <link rel="stylesheet" href="assets/styles/cms-dashboard.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Dosis|Economica|Roboto+Condensed|Saira+Condensed"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
+    <link rel="stylesheet" href="assets/libraries/animate-css/animate.min.css"/>
+
+    <script src="assets/libraries/jquery/jquery-3.3.1.min.js"></script>
+    <script src="assets/scripts/argo.js"></script>
+    <script src="assets/scripts/logger/logger.js"></script>
+
+</head>
+<body>
+<div class="argoCmsPageEditorHeader">
+    <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeader__section--header">
+        <div class="argoCmsPageEditorHeader__sectionContent">
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                argo
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <h1 class="argoCmsPageEditorHeader__title">
+                    Dashboard
+                </h1>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <div class="userIconMenu">
+                    <div class="userIconMenu__userImage"
+                         style="background-image: url('assets/images/karsten-konzert-2012-dbg.jpg')"></div>
+                    <div class="userIconMenu__userName">kschaefer</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="argoCmsPageEditorHeader__section">
+        <div class="argoCmsPageEditorHeader__sectionContent siteMainActions">
+            <div class="argoCmsPageEditorHeader__sectionBlock siteCustomerBrand">
+                <div class="siteCustomerBrand__logo">
+                    <img src="assets/images/examples/tagesschau.png" alt="Tagesschau Logo"/>
+                </div>
+                <div class="siteCustomerBrand__name">
+                    Tagesschau ARD
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock--currentProjectSelection">
+
+                <div class="editContentBox editContentBox--big">
+                    <div class="editContentBox__contentBoxWrapper">
+                        <div class="editContentBox__contentBox majorDropDown">
+                            ARD Tagesschau Website
+                        </div>
+                        <div class="tooltip" data-tooltip-target-id="currentProjectSelection">
+                            <i class="tooltip__icon fas fa-question"></i>
+                        </div>
+                    </div>
+                    <div class="editContentBox__label">
+                        Current project
+                    </div>
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__sectionBlock">
+                <a target="_blank" href="http://www.fourigin.de" class="actionLink actionLink--icon">
+                    <span class="actionLink__icon">
+                        <i class="fas fa-desktop"></i>
+                    </span>
+                    <span class="actionLink__label">
+                        See live website
+                    </span>
+                </a>
+
+                <a target="_blank" href="http://www.fourigin.de" class="actionLink actionLink--icon">
+                    <span class="actionLink__icon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <span class="actionLink__label">
+                        See preview website
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="argoBody" style="background-image: url('assets/images/background-screens/galaxy-1.webp')">
+    <div class="argoBody__content">
+        <div class="sideBaredContent">
+            <div class="sideBaredContent__sidebar">
+                <div class="smartCards">
+
+                    <div class="smartCard smartCard--icon smartCard--task">
+                        <div class="smartCard__icon">
+                            <i class="fas fa-helicopter"></i>
+                        </div>
+                        <div class="smartCard__copy">
+                            <div class="smartCard__title">
+                                Urgent tasks
+                            </div>
+                            <div class="smartCard__content">
+                                Nothing to do.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="smartCard smartCard--icon smartCard--attention">
+                        <div class="smartCard__icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="smartCard__copy">
+                            <div class="smartCard__title">
+                                Validation
+                            </div>
+                            <div class="smartCard__content">
+                                Everything fine.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="smartCard smartCard--icon smartCard--information smartCard--small">
+                        <div class="smartCard__copy">
+                            <div class="smartCard__smallTitle">
+                                Pages
+                            </div>
+                            <div class="smartCard__bigContent">
+                                152
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="smartCard smartCard--icon smartCard--information smartCard--small">
+                        <div class="smartCard__copy">
+                            <div class="smartCard__smallTitle">
+                                Total size
+                            </div>
+                            <div class="smartCard__bigContent">
+                                15 GB
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="smartCard smartCard--icon smartCard--information">
+                        <div class="smartCard__icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="smartCard__copy">
+                            <div class="smartCard__title">
+                                argo Help
+                            </div>
+                            <div class="smartCard__content">
+                                Help-Center
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="sideBaredContent__content">
+                <div class="dashboardSections">
+                    <div class="dashboardSection">
+                        <h2 class="dashboardSection__headline">
+                            <i class="fas fa-sitemap"></i>
+                            Project Site Structure
+                        </h2>
+
+                        <div class="dashboardSection__body">
+                            <div class="dashboardSection__actions">
+                                <div class="dashboardSection__action">
+                                    <div class="dashboardSection__actionIcon">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </div>
+                                    <div class="dashboardSection__actionName">
+                                        Edit
+                                    </div>
+                                    <div class="dashboardSection__actionDescription">
+                                        Add, move, remove and update items of the Site Structure.
+                                    </div>
+                                    <div class="dashboardSection__actionButtons">
+                                        <a class="button" href="cms-project-site-structure-editor-prototype.html">Go to editor</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dashboardSection__action">
+                                <div class="dashboardSection__actionIcon">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                                <div class="dashboardSection__actionName">
+                                    Delete
+                                </div>
+                                <div class="dashboardSection__actionDescription">
+                                    Delete the whole structure. This action is not reversible, <strong>you will loose the whole structure</strong>!
+                                </div>
+                                <div class="dashboardSection__actionButtons">
+                                    <a class="button" href="cms-page-editor-prototype-import-all.html">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboardSection">
+                        <h2 class="dashboardSection__headline">
+                            <i class="fas fa-file-alt"></i>
+                            Project Pages Content
+                        </h2>
+
+                        <div class="dashboardSection__body">
+                            <div class="dashboardSection__actions">
+                                <div class="dashboardSection__action">
+                                    <div class="dashboardSection__actionIcon">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </div>
+                                    <div class="dashboardSection__actionName">
+                                        Edit
+                                    </div>
+                                    <div class="dashboardSection__actionDescription">
+                                        Change content of the website pages. Just browse the pages as usual and easy edit content right on that page.
+                                    </div>
+                                    <div class="dashboardSection__actionButtons">
+                                        <a class="button" href="cms-page-editor-prototype-import-all.html">Go to editor</a>
+                                    </div>
+                                </div>
+
+                                <div class="dashboardSection__action">
+                                    <div class="dashboardSection__actionIcon">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </div>
+                                    <div class="dashboardSection__actionName">
+                                        Delete
+                                    </div>
+                                    <div class="dashboardSection__actionDescription">
+                                        Delete all content files. This action is not reversible, <strong>you will loose all contents</strong>!
+                                    </div>
+                                    <div class="dashboardSection__actionButtons">
+                                        <a class="button" href="cms-page-editor-prototype-import-all.html">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboardSection">
+                        <h2 class="dashboardSection__headline">
+                            <i class="fas fa-palette"></i>
+                            Themes
+                        </h2>
+
+                        <div class="dashboardSection__body">
+                            <div class="dashboardSection__actions">
+                                <div class="dashboardSection__action">
+                                    <div class="dashboardSection__actionIcon">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <div class="dashboardSection__actionName">
+                                        Change theme
+                                    </div>
+                                    <div class="dashboardSection__actionDescription">
+                                        Select a new theme for your current project.
+                                    </div>
+                                    <div class="dashboardSection__actionButtons">
+                                        <a class="button" href="cms-page-editor-prototype-import-all.html">Select theme</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboardSection">
+                        <h2 class="dashboardSection__headline">
+                            <i class="fas fa-users-cog"></i>
+                            User management
+                        </h2>
+
+                        <div class="dashboardSection__body">
+                            <div class="dashboardSection__actions">
+                                <div class="dashboardSection__action">
+                                    <div class="dashboardSection__actionIcon">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="dashboardSection__actionName">
+                                        Add
+                                    </div>
+                                    <div class="dashboardSection__actionDescription">
+                                        Add an user to the current project.
+                                    </div>
+                                    <div class="dashboardSection__actionButtons">
+                                        <a class="button" href="cms-page-editor-prototype-import-all.html">Add user</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="argoBody__overlays">
+
+    </div>
+</div>
+
+<div class="tooltips">
+    <div class="tooltipOverlay" data-tooltip-id="unusedContent">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Unused content</h3>
+                <p>This lists content fields, who belong to a language which is not used / configured in the current project.</p>
+                <p>You can anyhow edit and delete it here.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt1">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Show favorites</h3>
+                <p>You can enable / disable to show the favorite content fields of the current page/template.</p>
+                <p>The favorites are defined by the template settings.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="currentProjectSelection">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Current project</h3>
+                <p>
+                    Here you can see the currently selected project. If you have more than one projects,
+                    you can select here another project from that drop-down.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="tooltipOverlay" data-tooltip-id="tt_state">
+        <div class="tooltipOverlay__header">
+            <div class="iconButton iconButton--close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tooltipOverlay__body">
+            <div class="tooltipOverlay__sideBar">
+                <i class="tooltipOverlay__logo fas fa-question"></i>
+            </div>
+            <div class="tooltipOverlay__content">
+                <h3>Change state</h3>
+                <p>Every page has a state: It can be live, in editing or not staged.</p>
+                <p>
+                    <img alt="state" src="assets/images/tooltips/state.jpg" height="92" width="290"/>
+                </p>
+                <p>Only persons with the matching permissions can change the state.</p>
+                <p>If you make changes on a page, they have to chnaged the status to live.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="messages" data-argo-items="messages">
+
+</div>
+
+
+<script type="text/javascript">
+
+    var argoMessages = new com.fourigin.argo.Messages(),
+        logger = new iftrue.tools.logger.Logger();
+
+</script>
+
+<script src="assets/scripts/tooltips.js"></script>
+<script src="assets/scripts/overlays.js"></script>
+<script src="assets/scripts/overlay-submenus.js"></script>
+
+
+</body>
+</html>
