@@ -1,0 +1,19 @@
+{
+  "project": "Playground",
+  "type": "Website",
+  "languages": [
+    "de", "fr", "en"
+  ],
+  "customer": {
+    "name": "Fourigin",
+    "logo": {
+      "url": "logo.jpg",
+      "name": "Fourigin Logo"
+    },
+    "url": "http://www.fourigin.de"
+  },
+  "meta":{
+    "created": "2019-08-01",
+    "author": "vsatanovski"
+  }
+}
