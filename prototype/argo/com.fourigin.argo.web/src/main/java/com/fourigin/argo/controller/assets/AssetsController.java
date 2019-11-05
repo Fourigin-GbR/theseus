@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,6 +44,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @RestController
 @RequestMapping("/{project}/assets")
@@ -65,9 +69,9 @@ public class AssetsController {
     }
 
     public AssetsController(
-        AssetRepository assetRepository,
-        ThumbnailResolver thumbnailResolver,
-        ThumbnailDimensions dimensions
+            AssetRepository assetRepository,
+            ThumbnailResolver thumbnailResolver,
+            ThumbnailDimensions dimensions
     ) {
         this.assetRepository = assetRepository;
         this.thumbnailResolver = thumbnailResolver;
@@ -76,9 +80,9 @@ public class AssetsController {
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public Asset resolveAsset(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.ASSET_ID) String assetId
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.ASSET_ID) String assetId
     ) {
         if (logger.isDebugEnabled())
             logger.debug("Processing resolveAsset request for language {} and id {}", language, assetId);
@@ -100,10 +104,10 @@ public class AssetsController {
 
     @RequestMapping(value = "/data", method = RequestMethod.GET)
     public void resolveAsset(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.ASSET_ID) String assetId,
-        HttpServletResponse response
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.ASSET_ID) String assetId,
+            HttpServletResponse response
     ) {
         if (logger.isDebugEnabled())
             logger.debug("Processing resolveAssetData request for language {} and id {}", language, assetId);
@@ -129,32 +133,32 @@ public class AssetsController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public Map<String, Asset> searchAssets(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(value = "w", required = false) Integer width,
-        @RequestParam(value = "h", required = false) Integer height,
-        @RequestParam(value = "m", required = false) String mimeType,
-        @RequestParam(value = "t", required = false) Set<String> tags,
-        @RequestParam(value = "k", required = false) String keyword
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(value = "w", required = false) Integer width,
+            @RequestParam(value = "h", required = false) Integer height,
+            @RequestParam(value = "m", required = false) String mimeType,
+            @RequestParam(value = "t", required = false) Set<String> tags,
+            @RequestParam(value = "k", required = false) String keyword
     ) {
         if (logger.isDebugEnabled()) logger.debug("Processing search assets request for language {}", language);
 
         AssetSearchFilter filter = new AssetSearchFilter.Builder()
-            .withWidth(width)
-            .withHeight(height)
-            .withMimeType(mimeType)
-            .withTags(tags)
-            .withKeyword(keyword)
-            .build();
+                .withWidth(width)
+                .withHeight(height)
+                .withMimeType(mimeType)
+                .withTags(tags)
+                .withKeyword(keyword)
+                .build();
 
         return assetRepository.findAssets(language, filter);
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadAssetsResponse upload(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.ASSET_FILE) MultipartFile multipartFile
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.ASSET_FILE) MultipartFile multipartFile
     ) {
         Objects.requireNonNull(language, "language must not be null!");
 
@@ -166,7 +170,7 @@ public class AssetsController {
 
             String originalFileName = multipartFile.getOriginalFilename();
 
-            String contentType = multipartFile.getContentType();
+//            String contentType = multipartFile.getContentType();
 
             File tmp = null;
             try (InputStream is = multipartFile.getInputStream()) {
@@ -186,7 +190,7 @@ public class AssetsController {
 
             if (tmp != null) {
                 try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
-                    Asset asset = readAsset(language, originalFileName, multipartFile.getSize(), contentType, is);
+                    Asset asset = readAsset(language, originalFileName, multipartFile.getSize(), is);
 
                     result.registerSuccess(asset);
                 } catch (IOException | IllegalArgumentException ex) {
@@ -205,11 +209,10 @@ public class AssetsController {
 
     @RequestMapping("/uploadUrl")
     public UploadAssetsResponse uploadUrl(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.ASSET_FILENAME) String filename,
-        @RequestParam(RequestParameters.ASSET_CONTENT_TYPE) String contentType,
-        @RequestParam(RequestParameters.ASSET_SOURCE_URL) String sourceUrl
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.ASSET_FILENAME) String filename,
+            @RequestParam(RequestParameters.ASSET_SOURCE_URL) String sourceUrl
     ) {
         Objects.requireNonNull(language, "language must not be null!");
 
@@ -246,7 +249,7 @@ public class AssetsController {
 
             if (tmp != null) {
                 try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
-                    Asset asset = readAsset(language, filename, tmp.length(), contentType, is);
+                    Asset asset = readAsset(language, filename, tmp.length(), is);
 
                     result.registerSuccess(asset);
                 } catch (IOException | IllegalArgumentException ex) {
@@ -263,14 +266,78 @@ public class AssetsController {
         }
     }
 
+    @RequestMapping("/uploadBulk")
+    public UploadAssetsResponse uploadBulk(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.ASSET_SOURCE_URL) String sourceUrl
+    ) {
+        Objects.requireNonNull(language, "language must not be null!");
+
+        MDC.put("project", project);
+        MDC.put("language", language);
+
+        try {
+            UploadAssetsResponse result = new UploadAssetsResponse();
+
+            URL url;
+            try {
+                url = new URL(sourceUrl);
+            } catch (MalformedURLException ex) {
+                if (logger.isErrorEnabled()) logger.error("Invalid bulk source url '{}'!", sourceUrl, ex);
+                result.registerGeneralFailure(ex);
+                return result;
+            }
+
+            try (ZipInputStream zis = new ZipInputStream(url.openStream())) {
+                ZipEntry zipEntry = zis.getNextEntry();
+                while (zipEntry != null) {
+                    String filename = zipEntry.getName();
+
+                    ByteArrayOutputStream baos = null;
+                    ByteArrayInputStream bais = null;
+                    try {
+                        baos = new ByteArrayOutputStream();
+                        IOUtils.copyLarge(zis, baos);
+                        bais = new ByteArrayInputStream(baos.toByteArray());
+                        Asset asset = readAsset(language, filename, zipEntry.getSize(), bais);
+                        bais.close();
+                        baos.close();
+
+                        result.registerSuccess(asset);
+                    } catch (IllegalArgumentException ex) {
+                        if (logger.isErrorEnabled())
+                            logger.error("Unable to read bulk asset {}!", filename, ex);
+                        result.registerFail(filename, ex);
+                    }
+                    finally {
+                        IOUtils.closeQuietly(baos);
+                        IOUtils.closeQuietly(bais);
+                    }
+
+                    zipEntry = zis.getNextEntry();
+                }
+
+            } catch (IOException ex) {
+                if (logger.isWarnEnabled()) logger.warn("Error processing zip archive", ex);
+                result.registerGeneralFailure(ex);
+            }
+
+            return result;
+        } finally {
+            MDC.remove("language");
+            MDC.remove("project");
+        }
+    }
+
     @RequestMapping(value = "/thumbnail/{dimension}", method = RequestMethod.GET)
     public void getThumbnail(
-        @PathVariable String project,
-        @PathVariable(RequestParameters.ASSET_DIMENSION) String dimensionName,
-        @RequestParam(RequestParameters.LANGUAGE) String language,
-        @RequestParam(RequestParameters.ASSET_ID) String assetId,
-        @RequestHeader(value = RequestResponseConstants.IF_NONE_MATCH_REQUEST_HEADER, required = false) String etag,
-        HttpServletResponse response
+            @PathVariable String project,
+            @PathVariable(RequestParameters.ASSET_DIMENSION) String dimensionName,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
+            @RequestParam(RequestParameters.ASSET_ID) String assetId,
+            @RequestHeader(value = RequestResponseConstants.IF_NONE_MATCH_REQUEST_HEADER, required = false) String etag,
+            HttpServletResponse response
     ) throws IOException {
 
         MDC.put("project", project);
@@ -315,16 +382,15 @@ public class AssetsController {
     }
 
     private Asset readAsset(
-        String language,
-        String originalFileName,
-        long fileSize,
-        String contentType,
-        InputStream inputStream
+            String language,
+            String originalFileName,
+            long fileSize,
+            InputStream inputStream
     ) {
         String fileName = Assets.resolveSanitizedBasename(originalFileName);
         String mimeType = MimeTypes.resolveMimeType(originalFileName);
         if (logger.isDebugEnabled())
-            logger.debug("Reading asset from file '{}' (mimeType: {}, contentType: {})", originalFileName, mimeType, contentType);
+            logger.debug("Reading asset from file '{}' (mimeType: {})", originalFileName, mimeType);
 
         // Empty file name
         if (fileName == null || fileName.isEmpty()) {
@@ -419,5 +485,38 @@ public class AssetsController {
         if (logger.isDebugEnabled()) logger.debug("New asset: {}", asset);
 
         return asset;
+    }
+
+    public static void main(String[] args) {
+        StringBuilder builder = new StringBuilder();
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream("/tmp/zip/files.zip"))) {
+            ZipEntry zipEntry = zis.getNextEntry();
+            while (zipEntry != null) {
+                String filename = zipEntry.getName();
+                builder.append("\tfilename: ").append(filename);
+                String sanitizedName = Assets.resolveSanitizedBasename(filename);
+                builder.append(", sanitizedName: ").append(sanitizedName);
+
+                String mimeType = MimeTypes.resolveMimeType(filename);
+                Objects.requireNonNull(mimeType, "mimeType must not be null!");
+                String fileExtension = MimeTypes.resolveFileExtension(mimeType);
+                Objects.requireNonNull(fileExtension, "fileExtension must not be null!");
+
+                File file = new File("/tmp/zip/" + sanitizedName + "." + fileExtension);
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    IOUtils.copyLarge(zis, fos);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                builder.append(".\n");
+
+                zipEntry = zis.getNextEntry();
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        System.out.println(builder.toString());
     }
 }
