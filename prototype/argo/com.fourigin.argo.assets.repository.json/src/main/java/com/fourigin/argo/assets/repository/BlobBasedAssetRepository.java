@@ -397,8 +397,7 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
             throw new IllegalArgumentException("An incompatible asset exists for id '" + blobId + "' and is of type '" + existingClass.getName() + "'!");
         }
 
-        //noinspection unchecked
-        return (T) existingAsset;
+        return clazz.cast(existingAsset);
     }
 
     @Override
