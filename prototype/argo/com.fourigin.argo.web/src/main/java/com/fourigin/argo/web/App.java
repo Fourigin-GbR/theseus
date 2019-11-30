@@ -17,8 +17,8 @@ import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.RuntimeConfigurationResolverFactory;
 import com.fourigin.argo.repository.TemplateResolver;
-import com.fourigin.argo.repository.action.ActionRepository;
-import com.fourigin.argo.repository.action.InMemoryActionRepository;
+import com.fourigin.argo.repository.action.ActionRepositoryFactory;
+import com.fourigin.argo.repository.action.InMemoryActionRepositoryFactory;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
 import com.fourigin.argo.scheduling.CompileJob;
 import com.fourigin.argo.strategies.CmsInternalLinkResolutionStrategy;
@@ -131,8 +131,8 @@ public class App {
     // *** STRATEGIES ***
 
     @Bean
-    public ActionRepository actionRepository() {
-        return new InMemoryActionRepository();
+    public ActionRepositoryFactory actionRepositoryFactory() {
+        return new InMemoryActionRepositoryFactory();
     }
 
     @Bean

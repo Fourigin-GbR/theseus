@@ -5,7 +5,19 @@ public class ApplyActionStatus {
 
     private String message;
 
-    public ApplyActionStatus(boolean failed, String message) {
+    public static ApplyActionStatus SUCCESS() {
+        return SUCCESS(null);
+    }
+
+    public static ApplyActionStatus SUCCESS(String message) {
+        return new ApplyActionStatus(false, message);
+    }
+
+    public static ApplyActionStatus FAILED(String message) {
+        return new ApplyActionStatus(true, message);
+    }
+
+    private ApplyActionStatus(boolean failed, String message) {
         this.failed = failed;
         this.message = message;
     }
