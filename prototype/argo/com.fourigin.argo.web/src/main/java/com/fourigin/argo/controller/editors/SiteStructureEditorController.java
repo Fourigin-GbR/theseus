@@ -142,6 +142,7 @@ public class SiteStructureEditorController {
 
     /**
      * Applies user action(s).
+     * @param project current project code
      * @param actions user actions to apply
      * @param ssmRevision current SSM-Revision
      * @return status of applied actions
@@ -163,7 +164,7 @@ public class SiteStructureEditorController {
                 // TODO: Apply the action
                 newSsmRevision = ""; // TODO: calculate current revision after applying the action
                 actionRepository.addAction(newSsmRevision, action);
-                status.put(action.getId(), ApplyActionStatus.SUCCESS());
+                status.put(action.getId(), ApplyActionStatus.success());
             }
         }
 
@@ -172,6 +173,7 @@ public class SiteStructureEditorController {
 
     /**
      * Retrieves an actions diff for specified SSM revisions.
+     * @param project current project code
      * @param fromSsmRevision start SSM-Revision
      * @param toSsmRevision end SSM-Revision
      * @return the actions diff

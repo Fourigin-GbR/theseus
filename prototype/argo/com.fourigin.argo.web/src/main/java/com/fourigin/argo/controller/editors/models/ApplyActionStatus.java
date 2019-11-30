@@ -1,19 +1,19 @@
 package com.fourigin.argo.controller.editors.models;
 
-public class ApplyActionStatus {
+public final class ApplyActionStatus {
     private boolean failed;
 
     private String message;
 
-    public static ApplyActionStatus SUCCESS() {
-        return SUCCESS(null);
+    public static ApplyActionStatus success() {
+        return success(null);
     }
 
-    public static ApplyActionStatus SUCCESS(String message) {
+    public static ApplyActionStatus success(String message) {
         return new ApplyActionStatus(false, message);
     }
 
-    public static ApplyActionStatus FAILED(String message) {
+    public static ApplyActionStatus fail(String message) {
         return new ApplyActionStatus(true, message);
     }
 
