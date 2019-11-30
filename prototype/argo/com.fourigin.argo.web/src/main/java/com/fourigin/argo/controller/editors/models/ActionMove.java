@@ -15,7 +15,7 @@ public class ActionMove implements Action {
 
     private String targetFolderPath;
 
-    private int targetPosition;
+    private int insertionPath;
 
     public ActionMove(String id, long timestamp) {
         this.base = new BaseAction(id, timestamp);
@@ -62,12 +62,12 @@ public class ActionMove implements Action {
         this.targetFolderPath = targetFolderPath;
     }
 
-    public int getTargetPosition() {
-        return targetPosition;
+    public int getInsertionPath() {
+        return insertionPath;
     }
 
-    public void setTargetPosition(int targetPosition) {
-        this.targetPosition = targetPosition;
+    public void setInsertionPath(int insertionPath) {
+        this.insertionPath = insertionPath;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ActionMove implements Action {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ActionMove that = (ActionMove) o;
-        return targetPosition == that.targetPosition &&
+        return insertionPath == that.insertionPath &&
                 Objects.equals(base, that.base) &&
                 Objects.equals(originPath, that.originPath) &&
                 Objects.equals(targetFolderPath, that.targetFolderPath);
@@ -83,7 +83,7 @@ public class ActionMove implements Action {
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, originPath, targetFolderPath, targetPosition);
+        return Objects.hash(base, originPath, targetFolderPath, insertionPath);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ActionMove implements Action {
                 "base=" + base +
                 ", originPath='" + originPath + '\'' +
                 ", targetFolderPath='" + targetFolderPath + '\'' +
-                ", targetPosition=" + targetPosition +
+                ", insertionPath=" + insertionPath +
                 '}';
     }
 }
