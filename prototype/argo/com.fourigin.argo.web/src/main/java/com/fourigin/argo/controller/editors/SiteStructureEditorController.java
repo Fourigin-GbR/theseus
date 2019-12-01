@@ -4,6 +4,7 @@ import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.controller.ServiceBeanResponse;
+import com.fourigin.argo.controller.editors.models.ActionCreate;
 import com.fourigin.argo.controller.editors.models.ApplyActionStatus;
 import com.fourigin.argo.controller.editors.models.SiteNode;
 import com.fourigin.argo.controller.editors.models.SiteNodeContent;
@@ -12,6 +13,7 @@ import com.fourigin.argo.controller.editors.models.SiteStructureElement;
 import com.fourigin.argo.controller.editors.models.SiteStructureElementType;
 import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.action.Action;
+import com.fourigin.argo.models.action.ActionType;
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
@@ -161,7 +163,30 @@ public class SiteStructureEditorController {
         Map<String, ApplyActionStatus> status = new HashMap<>();
         if (actions != null && !actions.isEmpty()) {
             for (Action action : actions) {
-                // TODO: Apply the action
+                // Apply the action
+                String actionId = action.getId();
+                long actionTimestamp = action.getTimestamp();
+                ActionType actionType = action.getActionType();
+                if (logger.isInfoEnabled()) logger.info("Applying action {} (timestamp: {}) of type {}",
+                        actionId, actionTimestamp, actionType);
+
+                switch (actionType) {
+                    case CREATE:
+                        ActionCreate actionCreate = (ActionCreate) action;
+                        String targetFolder = actionCreate.getFolderPath();
+                        String insertionPath = actionCreate.getInsertionPath();
+
+                        break;
+                    case UPDATE:
+                        break;
+                    case DELETE:
+                        break;
+                    case MOVE:
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unsupported action type '" + actionType + "'!");
+                }
+
                 newSsmRevision = ""; // TODO: calculate current revision after applying the action
                 actionRepository.addAction(newSsmRevision, action);
                 status.put(action.getId(), ApplyActionStatus.success());

@@ -13,7 +13,7 @@ public class ActionCreate implements Action {
 
     private String folderPath;
 
-    private int targetPosition;
+    private String insertionPath;
 
     private SiteNode item;
 
@@ -54,12 +54,12 @@ public class ActionCreate implements Action {
         this.folderPath = folderPath;
     }
 
-    public int getTargetPosition() {
-        return targetPosition;
+    public String getInsertionPath() {
+        return insertionPath;
     }
 
-    public void setTargetPosition(int targetPosition) {
-        this.targetPosition = targetPosition;
+    public void setInsertionPath(String insertionPath) {
+        this.insertionPath = insertionPath;
     }
 
     public SiteNode getItem() {
@@ -75,15 +75,15 @@ public class ActionCreate implements Action {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ActionCreate that = (ActionCreate) o;
-        return targetPosition == that.targetPosition &&
-                Objects.equals(base, that.base) &&
+        return Objects.equals(base, that.base) &&
                 Objects.equals(folderPath, that.folderPath) &&
+                Objects.equals(insertionPath, that.insertionPath) &&
                 Objects.equals(item, that.item);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(base, folderPath, targetPosition, item);
+        return Objects.hash(base, folderPath, insertionPath, item);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ActionCreate implements Action {
         return "ActionCreate{" +
                 "base=" + base +
                 ", folderPath='" + folderPath + '\'' +
-                ", targetPosition=" + targetPosition +
+                ", insertionPath='" + insertionPath + '\'' +
                 ", item=" + item +
                 '}';
     }

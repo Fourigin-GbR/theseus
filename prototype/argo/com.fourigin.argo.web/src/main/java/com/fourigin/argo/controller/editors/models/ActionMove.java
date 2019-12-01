@@ -15,7 +15,7 @@ public class ActionMove implements Action {
 
     private String targetFolderPath;
 
-    private int insertionPath;
+    private String insertionPath;
 
     public ActionMove(String id, long timestamp) {
         this.base = new BaseAction(id, timestamp);
@@ -62,11 +62,11 @@ public class ActionMove implements Action {
         this.targetFolderPath = targetFolderPath;
     }
 
-    public int getInsertionPath() {
+    public String getInsertionPath() {
         return insertionPath;
     }
 
-    public void setInsertionPath(int insertionPath) {
+    public void setInsertionPath(String insertionPath) {
         this.insertionPath = insertionPath;
     }
 
@@ -75,10 +75,10 @@ public class ActionMove implements Action {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ActionMove that = (ActionMove) o;
-        return insertionPath == that.insertionPath &&
-                Objects.equals(base, that.base) &&
+        return Objects.equals(base, that.base) &&
                 Objects.equals(originPath, that.originPath) &&
-                Objects.equals(targetFolderPath, that.targetFolderPath);
+                Objects.equals(targetFolderPath, that.targetFolderPath) &&
+                Objects.equals(insertionPath, that.insertionPath);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ActionMove implements Action {
                 "base=" + base +
                 ", originPath='" + originPath + '\'' +
                 ", targetFolderPath='" + targetFolderPath + '\'' +
-                ", insertionPath=" + insertionPath +
+                ", insertionPath='" + insertionPath + '\'' +
                 '}';
     }
 }
