@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class PageInfo implements SiteNodeInfo {
+    private static final long serialVersionUID = -625960974528145152L;
+
     private String path;
     private String name;
     private Map<String, String> localizedName;
