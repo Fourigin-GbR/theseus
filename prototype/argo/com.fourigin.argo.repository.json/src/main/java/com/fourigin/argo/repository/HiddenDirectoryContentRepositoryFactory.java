@@ -32,8 +32,12 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
 
     private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepositoryFactory.class);
 
-    public HiddenDirectoryContentRepositoryFactory() throws IOException {
-        baseTempPath = File.createTempFile("transactional-base", getClass().getName()).getPath();
+    public HiddenDirectoryContentRepositoryFactory() {
+        try {
+            baseTempPath = File.createTempFile("transactional-base", getClass().getName()).getPath();
+        } catch (IOException ex) {
+            throw new IllegalStateException("Unable to create a temp directory!", ex);
+        }
     }
 
     @Override
