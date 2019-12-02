@@ -4,7 +4,6 @@ import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.controller.ServiceBeanResponse;
-import com.fourigin.argo.controller.editors.models.ActionCreate;
 import com.fourigin.argo.controller.editors.models.ApplyActionStatus;
 import com.fourigin.argo.controller.editors.models.SiteNode;
 import com.fourigin.argo.controller.editors.models.SiteNodeContent;
@@ -33,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ import java.util.Map;
 import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESS;
 
 @RestController
-@RequestMapping("/{project}/sse")
+@RequestMapping("/{project}/site-structure")
 public class SiteStructureEditorController {
 
     private final Logger logger = LoggerFactory.getLogger(SiteStructureEditorController.class);
@@ -57,6 +57,38 @@ public class SiteStructureEditorController {
     ) {
         this.contentRepositoryFactory = contentRepositoryFactory;
         this.actionRepositoryFactory = actionRepositoryFactory;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView overview(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language
+    ) {
+        if (logger.isDebugEnabled()) logger.debug("Processing overview request for language {}.", language);
+
+        // create result
+        ModelAndView modelAndView = new ModelAndView("site-structure");
+
+        modelAndView.addObject("project", project);
+        modelAndView.addObject("language", language);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView editor(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language
+    ) {
+        if (logger.isDebugEnabled()) logger.debug("Processing editor request for language {}.", language);
+
+        // create result
+        ModelAndView modelAndView = new ModelAndView("site-structure-editor");
+
+        modelAndView.addObject("project", project);
+        modelAndView.addObject("language", language);
+
+        return modelAndView;
     }
 
     /**
@@ -172,9 +204,9 @@ public class SiteStructureEditorController {
 
                 switch (actionType) {
                     case CREATE:
-                        ActionCreate actionCreate = (ActionCreate) action;
-                        String targetFolder = actionCreate.getFolderPath();
-                        String insertionPath = actionCreate.getInsertionPath();
+//                        ActionCreate actionCreate = (ActionCreate) action;
+//                        String targetFolder = actionCreate.getFolderPath();
+//                        String insertionPath = actionCreate.getInsertionPath();
 
                         break;
                     case UPDATE:
