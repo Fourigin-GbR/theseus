@@ -61,6 +61,8 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
 
     private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepository.class);
 
+    private String id;
+
     private ObjectMapper objectMapper;
 
     private String contentRoot;
@@ -70,6 +72,11 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
     private Date initTimestamp;
 
     private PageInfoTraversingStrategy defaultTraversingStrategy;
+
+    @Override
+    public String getId() {
+        return id;
+    }
 
     @Override
     public TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> getDefaultTraversingStrategy() {
@@ -1211,6 +1218,10 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
     }
 
     //******* setters *******//
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
