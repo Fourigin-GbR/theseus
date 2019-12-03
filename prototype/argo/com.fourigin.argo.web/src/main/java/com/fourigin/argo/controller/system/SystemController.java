@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/{project}/system")
+@RequestMapping("/{project}/")
 public class SystemController {
 
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
@@ -46,16 +46,17 @@ public class SystemController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView dashboard(
-        @PathVariable String project,
-        @RequestParam(RequestParameters.LANGUAGE) String language
+        @PathVariable String project
     ) {
+        String language = "EN";
+
         if (logger.isDebugEnabled())
             logger.debug("Processing system request for project '{}' and language '{}'.", project, language);
 
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
         SiteNodeContainerInfo root = contentRepository.resolveInfo(SiteNodeContainerInfo.class, "/");
 
-        ModelAndView modelAndView = new ModelAndView("system");
+        ModelAndView modelAndView = new ModelAndView("dashboard");
 
         modelAndView.addObject("system", new ArgoSystem.Builder()
             .withProject(project)
@@ -67,8 +68,31 @@ public class SystemController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/system", method = RequestMethod.GET)
+    public ModelAndView dashboard(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language
+    ) {
+        if (logger.isDebugEnabled())
+            logger.debug("Processing system request for project '{}' and language '{}'.", project, language);
+
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+        SiteNodeContainerInfo root = contentRepository.resolveInfo(SiteNodeContainerInfo.class, "/");
+
+        ModelAndView modelAndView = new ModelAndView("system");
+
+        modelAndView.addObject("system", new ArgoSystem.Builder()
+                .withProject(project)
+                .withLanguage(language)
+                .withRoot(root)
+                .build()
+        );
+
+        return modelAndView;
+    }
+
     @ResponseBody
-    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    @RequestMapping(value = "/system/tree", method = RequestMethod.GET)
     public List<TreeItem> resolveTree(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language
@@ -96,7 +120,7 @@ public class SystemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/system/info", method = RequestMethod.GET)
     public TreeItemInfo resolveInfo(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,
@@ -147,7 +171,7 @@ public class SystemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updateState", method = RequestMethod.GET)
+    @RequestMapping(value = "/system/updateState", method = RequestMethod.GET)
     public UpdateResult resolveInfo(
         @PathVariable String project,
         @RequestParam(RequestParameters.LANGUAGE) String language,

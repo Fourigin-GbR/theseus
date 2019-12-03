@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Objects;
 
 public class JsonInfoList {
     private String path;
-    private List<JsonInfo> children;
+    private List<JsonInfo<? extends SiteNodeInfo>> children;
 
     public JsonInfoList() {
     }
@@ -28,21 +29,21 @@ public class JsonInfoList {
         this.path = path;
     }
 
-    public List<JsonInfo> getChildren() {
+    public List<JsonInfo<? extends SiteNodeInfo>> getChildren() {
         return children;
     }
 
-    public void setChildren(List<JsonInfo> children) {
+    public void setChildren(List<JsonInfo<? extends SiteNodeInfo>> children) {
         this.children = children;
 
     }
 
     @JsonIgnore
-    public Map<String, JsonInfo> getLookup() {
-        Map<String, JsonInfo> lookup = new HashMap<>();
+    public Map<String, JsonInfo<? extends SiteNodeInfo>> getLookup() {
+        Map<String, JsonInfo<? extends SiteNodeInfo>> lookup = new HashMap<>();
 
         if(children != null && !children.isEmpty()) {
-            for (JsonInfo child : children) {
+            for (JsonInfo<? extends SiteNodeInfo> child : children) {
                 lookup.put(child.getName(), child);
             }
         }

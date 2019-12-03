@@ -9,7 +9,7 @@ public final class DataSourceQueryFactory {
     private DataSourceQueryFactory(){
     }
 
-    public static DataSourceQuery buildFromMap(DataSource<DataSourceQuery> dataSource, Map<String, Object> values){
+    public static <T extends DataSourceQuery> DataSourceQuery buildFromMap(DataSource<T> dataSource, Map<String, Object> values){
         if(builders == null || builders.isEmpty()){
             throw new DataSourceQueryCreationException("No query builders defined! Check configuration!", values);
         }

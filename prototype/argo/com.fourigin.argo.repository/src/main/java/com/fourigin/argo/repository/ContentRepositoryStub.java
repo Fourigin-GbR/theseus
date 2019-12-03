@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class ContentRepositoryStub implements ContentRepository {
+
+    private String id;
+
     private Map<String, String> siteAttributes;
 
     private Map<String, SiteNodeInfo> infos;
@@ -34,17 +37,23 @@ public class ContentRepositoryStub implements ContentRepository {
     }
 
     public ContentRepositoryStub(
-        Map<String, String> siteAttributes,
-        Map<String, SiteNodeInfo> infos,
-        Map<PageInfo, ContentPage> pages,
-        Map<PageInfo, PageState> states,
-        Map<PageInfo, Map<String, DataSourceIndex>> indexes
+            String id,
+            Map<String, String> siteAttributes,
+            Map<String, SiteNodeInfo> infos,
+            Map<PageInfo, ContentPage> pages,
+            Map<PageInfo, PageState> states,
+            Map<PageInfo, Map<String, DataSourceIndex>> indexes
     ) {
+        this.id = id;
         this.siteAttributes = siteAttributes;
         this.infos = infos;
         this.pages = pages;
         this.states = states;
         this.indexes = indexes;
+    }
+
+    public String getId(){
+        return id;
     }
 
     @Override

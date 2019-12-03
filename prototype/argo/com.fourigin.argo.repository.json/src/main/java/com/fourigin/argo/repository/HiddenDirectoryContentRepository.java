@@ -61,6 +61,8 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
 
     private final Logger logger = LoggerFactory.getLogger(HiddenDirectoryContentRepository.class);
 
+    private String id;
+
     private ObjectMapper objectMapper;
 
     private String contentRoot;
@@ -70,6 +72,11 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
     private Date initTimestamp;
 
     private PageInfoTraversingStrategy defaultTraversingStrategy;
+
+    @Override
+    public String getId() {
+        return id;
+    }
 
     @Override
     public TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> getDefaultTraversingStrategy() {
@@ -192,6 +199,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
 
         if (pathPointer.isDirectory()) {
             SiteNodeContainerInfo dirInfo = (SiteNodeContainerInfo) pathPointer.getNodeInfo();
+            //noinspection unchecked
             return (Collection<SiteNodeInfo>) traversingStrategy.collect(dirInfo);
         }
 
@@ -263,7 +271,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
                 infoList = new JsonInfoList(parentPath);
             }
 
-            List<JsonInfo> oldChildren = infoList.getChildren();
+            List<JsonInfo<? extends SiteNodeInfo>> oldChildren = infoList.getChildren();
             if (node instanceof PageInfo) {
                 oldChildren.add(new JsonFileInfo((PageInfo) node));
             } else if (node instanceof DirectoryInfo) {
@@ -347,12 +355,12 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
             File dirInfoFile = getDirectoryInfoFile(hiddenDir);
 
             JsonInfoList infoList = readDirectoryInfoFile(dirInfoFile);
-            List<JsonInfo> oldChildren = infoList.getChildren();
+            List<JsonInfo<? extends SiteNodeInfo>> oldChildren = infoList.getChildren();
 
-            List<JsonInfo> newChildren = new ArrayList<>();
-            for (JsonInfo child : oldChildren) {
+            List<JsonInfo<? extends SiteNodeInfo>> newChildren = new ArrayList<>();
+            for (JsonInfo<? extends SiteNodeInfo> child : oldChildren) {
                 if (child.getName().equals(node.getName())) {
-                    JsonInfo changedInfo = null;
+                    JsonInfo<? extends SiteNodeInfo> changedInfo = null;
 
                     if (node instanceof PageInfo) {
                         changedInfo = new JsonFileInfo((PageInfo) node);
@@ -447,10 +455,10 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
             File dirInfoFile = getDirectoryInfoFile(hiddenDir);
 
             JsonInfoList infoList = readDirectoryInfoFile(dirInfoFile);
-            List<JsonInfo> oldChildren = infoList.getChildren();
+            List<JsonInfo<? extends SiteNodeInfo>> oldChildren = infoList.getChildren();
 
-            List<JsonInfo> newChildren = new ArrayList<>();
-            for (JsonInfo child : oldChildren) {
+            List<JsonInfo<? extends SiteNodeInfo>> newChildren = new ArrayList<>();
+            for (JsonInfo<? extends SiteNodeInfo> child : oldChildren) {
                 if (child.getName().equals(nodeName)) {
                     continue;
                 }
@@ -1102,7 +1110,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
         if (logger.isDebugEnabled()) logger.debug("Content of the info file: {}", infoList);
 
         Map<String, SiteNodeInfo> infos = new HashMap<>();
-        Map<String, JsonInfo> infoListLookup = infoList.getLookup();
+        Map<String, JsonInfo<? extends SiteNodeInfo>> infoListLookup = infoList.getLookup();
 
         for (File file : files) {
             String fileName = file.getName();
@@ -1125,7 +1133,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
                 dirInfo.setName(fileName);
                 // TODO: fill other fields
 
-                JsonInfo info = infoListLookup.get(fileName);
+                JsonInfo<? extends SiteNodeInfo> info = infoListLookup.get(fileName);
                 if(info != null) {
                     dirInfo.setDescription(info.getDescription());
                     dirInfo.setDisplayName(info.getDisplayName());
@@ -1146,7 +1154,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
                 pageInfo.setName(pageName);
                 // TODO: fill other fields
 
-                JsonInfo info = infoListLookup.get(pageName);
+                JsonInfo<? extends SiteNodeInfo> info = infoListLookup.get(pageName);
                 if(info != null) {
                     pageInfo.setDescription(info.getDescription());
                     pageInfo.setDisplayName(info.getDisplayName());
@@ -1166,9 +1174,9 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
 
         // sort entries corresponding to the previous stored list
         List<SiteNodeInfo> children = new ArrayList<>();
-        List<JsonInfo> changedInfoList = new ArrayList<>();
+        List<JsonInfo<? extends SiteNodeInfo>> changedInfoList = new ArrayList<>();
 
-        for (JsonInfo childInfo : infoList.getChildren()) {
+        for (JsonInfo<? extends SiteNodeInfo> childInfo : infoList.getChildren()) {
             String fileName = childInfo.getName();
             SiteNodeInfo infoNode = infos.remove(fileName);
             changedInfoList.add(childInfo);
@@ -1210,6 +1218,10 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
     }
 
     //******* setters *******//
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;

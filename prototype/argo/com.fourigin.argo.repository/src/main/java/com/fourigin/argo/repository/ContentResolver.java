@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ContentResolver extends Flushable {
+    String getId();
+
     TraversingStrategy<? extends SiteNodeInfo, SiteNodeContainerInfo> getDefaultTraversingStrategy();
 
     Map<String, String> resolveSiteAttributes();

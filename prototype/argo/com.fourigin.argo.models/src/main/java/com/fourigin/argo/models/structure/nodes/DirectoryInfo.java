@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
+    private static final long serialVersionUID = -6416204966082136735L;
+
     private String path;
     private String name;
     private Map<String, String> localizedName;

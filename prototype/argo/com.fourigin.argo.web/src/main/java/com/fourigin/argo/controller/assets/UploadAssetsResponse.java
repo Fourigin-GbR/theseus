@@ -9,8 +9,13 @@ import java.util.Map;
 public class UploadAssetsResponse implements Serializable {
     private static final long serialVersionUID = -6081563516514105371L;
 
+    private Throwable generalFailure;
     private Map<String, String> successful;
     private Map<String, Throwable> failed;
+
+    public void registerGeneralFailure(Throwable th) {
+        this.generalFailure = th;
+    }
 
     public void registerSuccess(Asset asset){
         if(successful == null){
@@ -26,6 +31,14 @@ public class UploadAssetsResponse implements Serializable {
         }
 
         failed.put(name, cause);
+    }
+
+    public Throwable getGeneralFailure() {
+        return generalFailure;
+    }
+
+    public void setGeneralFailure(Throwable generalFailure) {
+        this.generalFailure = generalFailure;
     }
 
     public Map<String, String> getSuccessful() {

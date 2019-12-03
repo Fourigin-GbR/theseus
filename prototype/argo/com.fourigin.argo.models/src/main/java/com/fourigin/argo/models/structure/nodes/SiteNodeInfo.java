@@ -1,8 +1,9 @@
 package com.fourigin.argo.models.structure.nodes;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public interface SiteNodeInfo {
+public interface SiteNodeInfo extends Serializable {
     String getPath();
     void setPath(String path);
 

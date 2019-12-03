@@ -379,18 +379,17 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
 
         String blobId;
 
-        try (InputStream is = inputStream) {
-            blobId = blobRepository.put(is);
+        try {
+            blobId = blobRepository.put(inputStream);
         } catch (IOException ex) {
             throw new IllegalArgumentException("Error writing data to the blob repository!", ex);
         }
 
         Asset existingAsset = retrieveAsset(language, blobId);
         if (existingAsset == null) {
-            Asset asset = AssetFactory.createEmpty(clazz);
+            T asset = AssetFactory.createEmpty(clazz);
             asset.setId(blobId);
-            //noinspection unchecked
-            return (T) asset;
+            return asset;
         }
 
         Class<? extends Asset> existingClass = existingAsset.getClass();
@@ -398,8 +397,7 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
             throw new IllegalArgumentException("An incompatible asset exists for id '" + blobId + "' and is of type '" + existingClass.getName() + "'!");
         }
 
-        //noinspection unchecked
-        return (T) existingAsset;
+        return clazz.cast(existingAsset);
     }
 
     @Override
