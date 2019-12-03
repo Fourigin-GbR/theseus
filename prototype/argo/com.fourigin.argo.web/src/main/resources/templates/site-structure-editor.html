@@ -12,6 +12,7 @@
     <script src="/global-assets/libraries/jquery/jquery-3.3.1.min.js"></script>
     <script src="/global-assets/scripts/argo.js"></script>
     <script src="/global-assets/scripts/logger/logger.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 <div class="argoCmsPageEditorHeader">
@@ -262,18 +263,18 @@
                     <h2 class="sideBaredContent__sideElementTitle">Site structure</h2>
                     <!-- Buttons -->
                     <div class="projectSiteStructure__meta">
-                        <button data-argo-action="openAllDirectories" class="button button--light">
+                        <a data-argo-action="openAllDirectories" class="button button--small">
                             <i class="fas fa-folder-open"></i>
                             Open all
-                        </button>
-                        <button data-argo-action="closeAllDirectories" class="button button--light">
+                        </a>
+                        <a data-argo-action="closeAllDirectories" class="button button--small">
                             <i class="fas fa-folder"></i>
                             Close all
-                        </button>
-                        <button data-argo-action="reloadStructure" class="button button--light">
+                        </a>
+                        <a data-argo-action="reloadStructure" class="button button--small">
                             <i class="fas fa-redo"></i>
                             Reload
-                        </button>
+                        </a>
                     </div>
                     <!-- Prototypes -->
                     <div class="siteStructureItemsPrototypes">
@@ -297,9 +298,23 @@
                                             <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
                                             <span class="subMenu__entryLabel">New...</span>
                                         </div>
+                                        <div class="subMenu__entry subMenu__entry--separator"></div>
                                         <div class="subMenu__entry" data-action="delete">
                                             <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
                                             <span class="subMenu__entryLabel">Remove</span>
+                                        </div>
+                                        <div class="subMenu__entry subMenu__entry--separator"></div>
+                                        <div class="subMenu__entry" data-action="moveTo">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-departure"></i></span>
+                                            <span class="subMenu__entryLabel">Move to...</span>
+                                        </div>
+                                        <div class="subMenu__entry" data-action="moveToHereAfter">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-arrival"></i></span>
+                                            <span class="subMenu__entryLabel">...move after here</span>
+                                        </div>
+                                        <div class="subMenu__entry" data-action="moveToHereInside">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-arrival"></i></span>
+                                            <span class="subMenu__entryLabel">...move inside here</span>
                                         </div>
                                     </div>
                                 </div>
@@ -336,9 +351,26 @@
                                             <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
                                             <span class="subMenu__entryLabel">New after...</span>
                                         </div>
+                                        <div class="subMenu__entry subMenu__entry--separator"></div>
                                         <div class="subMenu__entry" data-action="delete">
                                             <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
                                             <span class="subMenu__entryLabel">Remove</span>
+                                        </div>
+                                        <div class="subMenu__entry subMenu__entry--separator"></div>
+                                        <div class="subMenu__entry" data-action="moveTo">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-departure"></i></span>
+                                            <span class="subMenu__entryLabel">Move to...</span>
+                                        </div>
+                                        <div class="subMenu__entry" data-action="moveToHereAfter">
+                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-arrival"></i></span>
+                                            <span class="subMenu__entryLabel">...move after here</span>
+                                        </div>
+                                        <div class="subMenu__entry subMenu__entry--separator"></div>
+                                        <div class="subMenu__entry subMenu__entry--link">
+                                            <a class="subMenu__entryLink" href="cms-page-editor-prototype-import-all.html">
+                                                <span class="subMenu__entryIcon"><i class="fas fa-pencil-alt"></i></span>
+                                                <span class="subMenu__entryLabel">Edit page content</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -356,18 +388,21 @@
                             </fieldset>
                         </fieldset>
                     </div>
-                    <div class="editableDirectoryList">
+                    <div class="editableDirectoryList" data-type="rootDirectory">
 
                     </div>
                     <div class="projectSiteStructure__footer">
 
+                        <!--
                         <div class="projectSiteStructure__footerRow">
-                            <button class="button button--cta" type="submit">Save</button>
+                            <div class="projectSiteStructure__footerRowMainActions">
+                                <button class="button button--cta" type="submit">Save</button>
+                            </div>
 
                             <div data-argo-element="saveProcessStatus" class="saveProcessStatus">
                                 <div data-argo-element="saveProcessStatusUnsavedChanges" class="saveProcessStatus__item">
                                     <div class="saveProcessStatus__statusIcon">
-                                        <i class="fas fa-marker"></i>
+                                        <i class="fas fa-save"></i>
                                     </div>
                                     <div class="saveProcessStatus__statusCopy">
                                         Please save.
@@ -399,37 +434,89 @@
                                 </div>
                             </div>
 
-                            <div class="argoActions">
-                                <div class="argoActions__amount"></div>
-                                unsaved changes.
-
-                                <button data-argo-action="reloadStructure" class="button button--light">
-                                    <i class="fas fa-redo"></i>
-                                    Revert all changes.
-                                </button>
+                            <div class="tabContent__tab" data-element="actionsTab">
+                                <div class="tabContent__label">
+                                    <div>Unsaved changes</div>
+                                    <div class="badge" data-element="actionsAmount"></div>
+                                </div>
+                                <div class="tabContent__tabIcon">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
                             </div>
+
                         </div>
+                        -->
 
-                        <div class="projectSiteStructure__footerRow moduleDetails" data-argo-element="actionDetails">
-                            <div class="moduleDetails__title">Actions</div>
-                            <div class="moduleDetails__body">
-                                <table class="moduleDetails_table">
-                                    <thead>
-                                    <tr>
-                                        <th>Action</th>
-                                        <th>Content</th>
-                                        <th>Time</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr data-argo-prototype="actionDetailTableRow">
-                                        <td data-argo-element="actionDetailType"></td>
-                                        <td data-argo-element="actionDetailContent"></td>
-                                        <td data-argo-element="actionDetailTimeStamp"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                        <div class="tabbedContent">
+
+                            <div class="buttonsTabsBar">
+                                <div class="buttonsTabsBar__buttons">
+                                    <button class="button button--cta">
+                                        Save
+                                    </button>
+                                </div>
+                                <div class="buttonsTabsBar__tabs">
+                                    <div class="buttonsTabsBar__tabsWrapper">
+                                        <div class="tabbedContent__tab tab">
+                                            <label class="tabbedContent__tabLabel" for="tabContent1">
+                                                <span class="tab__copy">Unsaved changes</span>
+                                                <span class="tab__icon">
+                                                <i class="fas fa-angle-down"></i>
+                                            </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+
+                            <div class="tabContents">
+                                <div class="tabContents__item">
+                                    <input autocomplete="off" class="tabContents__checkbox" id="tabContent1" type="checkbox" name="tabContent" />
+                                    <div class="tabContents__card" data-argo-element="actionDetails">
+                                        <div class="tabCard">
+                                            <div class="tabCard__title">Unsaved changes (actions)</div>
+                                            <div class="tabCard__actions">
+                                            <span class="button button--small" data-argo-action="revertAllActions">
+                                                <span class="button__icon">
+                                                    <i class="fas fa-redo"></i>
+                                                </span>
+                                                Revert all changes
+                                            </span>
+                                            </div>
+                                            <div class="tabCard__body">
+                                                <table class="table" data-element="actionsCacheTable">
+                                                    <thead class="table__header">
+                                                    <tr>
+                                                        <th class="table__headerCell">Action</th>
+                                                        <th class="table__headerCell">Item</th>
+                                                        <th class="table__headerCell">Path</th>
+                                                        <th class="table__headerCell">Time</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="table__body" data-element="actionsCacheList">
+                                                    <tr data-argo-prototype="actionDetailTableRow">
+                                                        <td data-argo-element="actionDetailType" class="table__cell"></td>
+                                                        <td data-argo-element="actionDetailItem" class="table__cell"></td>
+                                                        <td data-argo-element="actionDetailPath" class="table__cell"></td>
+                                                        <td data-argo-element="actionDetailTimeStamp" class="table__cell">----</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tbody class="table__bodyEmpty">
+                                                    <tr>
+                                                        <td colspan="3" class="table__cell table__cell--empty">
+                                                            No content.
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </form>
@@ -437,16 +524,28 @@
         </div>
     </div>
     <div class="argoBody__overlays">
-        <div data-argo-body-overlay-id="loadSiteStructure" class="argoBody__overlay">
-            <div class="argoBody__overlayContent">
-                <div class="argoBody__overlayContentTitle">
+        <div data-argo-body-overlay-id="loadSiteStructure" class="argoBody__overlay loader loader--active">
+            <div class="loader__content">
+                <div class="loader__title">
                     <h4>Loading...</h4>
                 </div>
-                <div class="argoBody__overlayProcessBar processBar processBar--stateless">
+                <div class="loader__processBar processBar processBar--stateless">
                     <span class="processBar__handle"></span>
                 </div>
             </div>
         </div>
+
+        <div data-argo-body-overlay-id="saveSiteStructure" class="argoBody__overlay loader loader--active">
+            <div class="loader__content">
+                <div class="loader__title">
+                    <h4>Saving...</h4>
+                </div>
+                <div class="loader__processBar processBar processBar--stateless">
+                    <span class="processBar__handle"></span>
+                </div>
+            </div>
+        </div>
+
         <div data-argo-body-overlay-id="canNotGenerateSiteStructure" class="argoBody__overlay comicJoe">
             <div class="argoBody__overlayContent">
                 <div class="argoBody__overlayContentTitle">
@@ -525,6 +624,29 @@
                         <i class="flagIcon fas fa-question"></i>
                         <a target="_blank" href="mailto:help@argo.com">help@argo.com</a>
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="argoBody__informationBars">
+        <div data-argo-body-information-bar-id="newSiteStructureVersionAvailable" class="argoBody__informationBar informationBar">
+            <div class="informationBar__content">
+                <div class="informationBar__icon">
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="informationBar__copy">
+                    <div class="informationBar__title">
+                        New site-structure version available
+                    </div>
+                    <div class="informationBar__description">
+                        The site-structure was updated on the CMS in the meantime. You need to load the new version.
+                        <br/><br/>
+                        <strong>Attention: </strong> You will not be able to edit item-details on your current version. <br />
+                        Your current unsaved actions will be applied again.
+                    </div>
+                </div>
+                <div class="informationBar__actions">
+                    <a class="button button--lightStyle" data-argo-action="reloadStructure">Load new version</a>
                 </div>
             </div>
         </div>
@@ -950,16 +1072,19 @@
         "languages": {
             "de": "deutsch",
             "en": "englisch",
-            "fr": "französisch"
+            "fr": "französisch",
+            "gr": "griechisch",
+            "dk": "dänisch"
         },
-        "urlLoadSiteStructure": "editors/siteStructure?l=en",
-        "urlSaveSiteStructure": "examples/site-structure-productive.json",
+        "urlLoadSiteStructure": "/cms/site-structure/ssm?l=DE",
+        "urlSaveSiteStructure": "/site-structure/save",
         "urlLoadItemDetails": "examples/site-structure-item-details.json",
-        "urlSaveItemDetails": "examples/site-structure-item-details.json",
+        "urlSaveItemDetails": "examples/site-structure-item-details-response.json",
+        "urlUpToDateCheckSiteStructure": "examples/up-to-date-site-structure.json"
         /*"urlLoadSiteStructure": "http://www.argo.bestgreekestate.fourigin.com/cms/editors/siteStructure?l=DE"*/
     };
 
-    new com.fourigin.argo.ProjectSiteStructureEditor(config);
+    var myArgo = new com.fourigin.argo.ProjectSiteStructureEditor(config, jQuery(".editableDirectoryList"));
 
 </script>
 
