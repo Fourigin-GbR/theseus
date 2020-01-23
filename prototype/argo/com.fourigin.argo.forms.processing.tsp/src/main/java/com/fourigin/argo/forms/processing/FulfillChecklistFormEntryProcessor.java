@@ -26,7 +26,17 @@ public class FulfillChecklistFormEntryProcessor extends BaseFulfillFormEntryProc
 
     public static final String FORM_ATTACHMENT_NAME = "checklist";
 
+    // TODO: replace with LocalDate
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
+
+    // form fields (should be externalized)
+    public static final String SALUTATION = "text_salutation";
+    public static final String DATE = "text_date";
+    public static final String CHECK_PASS = "check_pass";
+    public static final String CHECK_BRIEF = "check_brief";
+    public static final String CHECK_HU = "check_hu";
+    public static final String CHECK_AU = "check_au";
+    public static final String CHECK_NAMEPLATE = "check_nameplate";
 
     public FulfillChecklistFormEntryProcessor(
         FormsStoreRepository formsStoreRepository,
@@ -65,21 +75,21 @@ public class FulfillChecklistFormEntryProcessor extends BaseFulfillFormEntryProc
         }
         salutation.append(customer.getLastname()).append(",");
 
-        PDTextField salutationField = doc.getTextField("text_salutation");
+        PDTextField salutationField = doc.getTextField(SALUTATION);
         applyTextFieldAppearance(salutationField);
         salutationField.setValue(salutation.toString());
 
         // date
         Date now = new Date();
-        PDTextField dateField = doc.getTextField("text_date");
+        PDTextField dateField = doc.getTextField(DATE);
         applyTextFieldAppearance(dateField);
         dateField.setValue(DATE_FORMAT.format(now));
 
-        doc.getCheckboxField("check_pass").check();
-        doc.getCheckboxField("check_brief").check();
-        doc.getCheckboxField("check_hu").check();
-        doc.getCheckboxField("check_au").check();
-        doc.getCheckboxField("check_nameplate").unCheck();
+        doc.getCheckboxField(CHECK_PASS).check();
+        doc.getCheckboxField(CHECK_BRIEF).check();
+        doc.getCheckboxField(CHECK_HU).check();
+        doc.getCheckboxField(CHECK_AU).check();
+        doc.getCheckboxField(CHECK_NAMEPLATE).unCheck();
     }
 
     private void applyTextFieldAppearance(PDTextField textField){

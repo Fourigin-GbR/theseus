@@ -22,6 +22,18 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
 
     public static final String FORM_ATTACHMENT_NAME = "tax-payment-form";
 
+    // form fields (should be externalized)
+    public static final String FIRSTNAME_LASTNAME = "Vorname / Nachname Zahler";
+    public static final String STREET_HOUSE_NUMBER = "Straße / Hausnummer Zahler";
+    public static final String ZIP_CODE = "PLZ";
+    public static final String CITY = "Ort";
+    public static final String COUNTRY = "Land";
+    public static final String BANK_ACCOUNT = "IBAN";
+    public static final String BANK_CODE = "BIC";
+    public static final String BANK_NAME = "Name der Bank";
+    public static final String OWNER_FIRSTNAME_LASTNAME = "Vorname / Nachname Halter";
+    public static final String NAMEPLATE = "Kennzeichen";
+
     public FulfillTaxPaymentFormEntryProcessor(
         FormsStoreRepository formsStoreRepository,
         CustomerRepository customerRepository,
@@ -54,13 +66,13 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
         BankAccount account = registration.getBankAccountForTaxPayment();
 
         // fist name + last name
-        PDTextField nameField = doc.getTextField("Vorname / Nachname Zahler");
+        PDTextField nameField = doc.getTextField(FIRSTNAME_LASTNAME);
         nameField.setValue(account.getAccountHolder());
 
         Address address = account.getAccountHolderAddress();
 
         // street + house number
-        PDTextField streetHouseField = doc.getTextField("Straße / Hausnummer Zahler");
+        PDTextField streetHouseField = doc.getTextField(STREET_HOUSE_NUMBER);
         String streetValue = address.getStreet() + " " + address.getHouseNumber();
         if(address.getAdditionalInfo() != null){
             streetValue += " " + address.getAdditionalInfo();
@@ -68,35 +80,35 @@ public class FulfillTaxPaymentFormEntryProcessor extends BaseFulfillFormEntryPro
         streetHouseField.setValue(streetValue);
 
         // zip
-        PDTextField zipField = doc.getTextField("PLZ");
+        PDTextField zipField = doc.getTextField(ZIP_CODE);
         zipField.setValue(address.getZipCode());
 
         // city
-        PDTextField cityField = doc.getTextField("Ort");
+        PDTextField cityField = doc.getTextField(CITY);
         cityField.setValue(address.getCity());
 
         // country
-        PDTextField countryField = doc.getTextField("Land");
+        PDTextField countryField = doc.getTextField(COUNTRY);
         countryField.setValue(address.getCountry());
 
         // iban
-        PDTextField ibanField = doc.getTextField("IBAN");
+        PDTextField ibanField = doc.getTextField(BANK_ACCOUNT);
         ibanField.setValue(account.getIban());
 
         // bic
-        PDTextField bicField = doc.getTextField("BIC");
+        PDTextField bicField = doc.getTextField(BANK_CODE);
         bicField.setValue(account.getBic());
 
         // bank name
-        PDTextField bankNameField = doc.getTextField("Name der Bank");
+        PDTextField bankNameField = doc.getTextField(BANK_NAME);
         bankNameField.setValue(account.getBankName());
 
         // bank account holder
-        PDTextField accountHolderField = doc.getTextField("Vorname / Nachname Halter");
+        PDTextField accountHolderField = doc.getTextField(OWNER_FIRSTNAME_LASTNAME);
         accountHolderField.setValue(customer.getFirstname() + " " + customer.getLastname());
 
         // nameplate
-        PDTextField nameplateField = doc.getTextField("Kennzeichen");
+        PDTextField nameplateField = doc.getTextField(NAMEPLATE);
         String nameplateValue = resolveNameplateToUse(vehicle);
         if(nameplateValue != null){
             nameplateField.setValue(nameplateValue);
