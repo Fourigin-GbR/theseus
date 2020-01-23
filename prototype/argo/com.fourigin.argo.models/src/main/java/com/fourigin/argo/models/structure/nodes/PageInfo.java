@@ -89,7 +89,7 @@ public class PageInfo implements SiteNodeInfo {
         this.templateReference = templateReference;
     }
 
-    public class ContentPageReference {
+    public static class ContentPageReference {
         private String parentPath;
         private String contentId;
 

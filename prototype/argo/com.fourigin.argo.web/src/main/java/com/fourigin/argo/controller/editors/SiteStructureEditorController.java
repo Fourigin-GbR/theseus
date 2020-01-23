@@ -4,6 +4,10 @@ import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.controller.ServiceBeanResponse;
+import com.fourigin.argo.controller.editors.models.ActionCreate;
+import com.fourigin.argo.controller.editors.models.ActionDelete;
+import com.fourigin.argo.controller.editors.models.ActionMove;
+import com.fourigin.argo.controller.editors.models.ActionUpdate;
 import com.fourigin.argo.controller.editors.models.ApplyActionStatus;
 import com.fourigin.argo.controller.editors.models.SiteNode;
 import com.fourigin.argo.controller.editors.models.SiteNodeContent;
@@ -11,11 +15,14 @@ import com.fourigin.argo.controller.editors.models.SiteStructure;
 import com.fourigin.argo.controller.editors.models.SiteStructureElement;
 import com.fourigin.argo.controller.editors.models.SiteStructureElementType;
 import com.fourigin.argo.models.ChecksumGenerator;
+import com.fourigin.argo.models.InvalidSiteStructurePathException;
 import com.fourigin.argo.models.action.Action;
 import com.fourigin.argo.models.action.ActionType;
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.UnresolvableSiteStructurePathException;
@@ -93,7 +100,8 @@ public class SiteStructureEditorController {
 
     /**
      * Retrieves Site Structure Model (SSM).
-     * @param project current project
+     *
+     * @param project  current project
      * @param language current language
      * @return actual Site Structure Model with its current revision (checksum)
      */
@@ -150,9 +158,10 @@ public class SiteStructureEditorController {
 
     /**
      * Retrieves Site Structure Item (SSI).
-     * @param project current project
+     *
+     * @param project  current project
      * @param language current language
-     * @param path site structure path
+     * @param path     site structure path
      * @return referenced Site Structure Item with its revision (checksum)
      */
     @RequestMapping(value = "/ssi", method = RequestMethod.GET)
@@ -176,14 +185,17 @@ public class SiteStructureEditorController {
 
     /**
      * Applies user action(s).
-     * @param project current project code
-     * @param actions user actions to apply
+     *
+     * @param project     current project code
+     * @param language    current language
+     * @param actions     user actions to apply
      * @param ssmRevision current SSM-Revision
      * @return status of applied actions
      */
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public ServiceBeanResponse<Map<String, ApplyActionStatus>> applyActions(
             @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language,
             @RequestParam("ssm-revision") String ssmRevision,
             @RequestBody List<Action> actions
     ) {
@@ -194,45 +206,292 @@ public class SiteStructureEditorController {
         String newSsmRevision = null;
         Map<String, ApplyActionStatus> status = new HashMap<>();
         if (actions != null && !actions.isEmpty()) {
-            for (Action action : actions) {
-                // Apply the action
-                String actionId = action.getId();
-                long actionTimestamp = action.getTimestamp();
-                ActionType actionType = action.getActionType();
-                if (logger.isInfoEnabled()) logger.info("Applying action {} (timestamp: {}) of type {}",
-                        actionId, actionTimestamp, actionType);
+            ContentRepository txRepository = contentRepositoryFactory.getInstanceForTransaction(project, language);
+            try {
+                for (Action action : actions) {
+                    // Apply the action
+                    String actionId = action.getId();
+                    long actionTimestamp = action.getTimestamp();
+                    ActionType actionType = action.getActionType();
+                    if (logger.isInfoEnabled()) logger.info("Applying action {} (timestamp: {}) of type {}",
+                            actionId, actionTimestamp, actionType);
 
-                switch (actionType) {
-                    case CREATE:
-//                        ActionCreate actionCreate = (ActionCreate) action;
-//                        String targetFolder = actionCreate.getFolderPath();
-//                        String insertionPath = actionCreate.getInsertionPath();
+                    switch (actionType) {
+                        case CREATE:
+                            if (logger.isDebugEnabled()) logger.debug("Applying CREATE acton");
+                            ActionCreate actionCreate = (ActionCreate) action;
+                            applyCreateAction(actionCreate, txRepository);
+                            break;
+                        case UPDATE:
+                            if (logger.isDebugEnabled()) logger.debug("Applying UPDATE acton");
+                            ActionUpdate actionUpdate = (ActionUpdate) action;
+                            applyUpdateAction(actionUpdate, txRepository);
+                            break;
+                        case DELETE:
+                            if (logger.isDebugEnabled()) logger.debug("Applying DELETE acton");
+                            ActionDelete actionDelete = (ActionDelete) action;
+                            applyDeleteAction(actionDelete, txRepository);
+                            break;
+                        case MOVE:
+                            if (logger.isDebugEnabled()) logger.debug("Applying MOVE acton");
+                            ActionMove actionMove = (ActionMove) action;
+                            applyMoveAction(actionMove, txRepository);
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unsupported action type '" + actionType + "'!");
+                    }
 
-                        break;
-                    case UPDATE:
-                        break;
-                    case DELETE:
-                        break;
-                    case MOVE:
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Unsupported action type '" + actionType + "'!");
+                    newSsmRevision = ""; // TODO: calculate current revision after applying the action
+                    actionRepository.addAction(newSsmRevision, action);
+                    status.put(action.getId(), ApplyActionStatus.success());
                 }
 
-                newSsmRevision = ""; // TODO: calculate current revision after applying the action
-                actionRepository.addAction(newSsmRevision, action);
-                status.put(action.getId(), ApplyActionStatus.success());
+                if (logger.isInfoEnabled()) logger.info("Committing changes");
+                contentRepositoryFactory.commitChanges(project, language, txRepository);
+            } catch (Exception ex) {
+                if (logger.isErrorEnabled()) logger.error("Error occurred while applying actions!", ex);
+                contentRepositoryFactory.rollbackChanges(project, language, txRepository);
             }
         }
 
         return new ServiceBeanResponse<>(status, newSsmRevision, SUCCESS);
     }
 
+    private void applyCreateAction(ActionCreate actionCreate, ContentRepository contentRepository) {
+        String targetFolder = actionCreate.getFolderPath();
+        String insertionPath = actionCreate.getInsertionPath();
+        SiteNode ssi = actionCreate.getItem();
+        SiteNodeContent ssiContent = ssi.getContent();
+
+        DirectoryInfo folder = contentRepository.resolveInfo(DirectoryInfo.class, targetFolder);
+
+        // TODO: check if the SSI already exists
+
+        switch (ssiContent.getType()) {
+            case PAGE:
+                PageInfo pageInfo = new PageInfo.Builder()
+                        .withName(ssiContent.getName())
+                        .withPath(ssi.getPath())
+                        .withParent(folder)
+                        .withDisplayName(ssiContent.getDisplayName())
+                        .withLocalizedName(ssiContent.getLocalizedName())
+                        .withTemplateReference(ssiContent.getTemplateReference())
+                        .build();
+
+                contentRepository.createInfo(targetFolder, pageInfo);
+
+                // TODO: also create a Page object?!
+
+                break;
+            case DIRECTORY:
+                DirectoryInfo dirInfo = new DirectoryInfo.Builder()
+                        .withName(ssiContent.getName())
+                        .withPath(ssi.getPath())
+                        .withParent(folder)
+                        .withDisplayName(ssiContent.getDisplayName())
+                        .withLocalizedName(ssiContent.getLocalizedName())
+                        .build();
+
+                contentRepository.createInfo(targetFolder, dirInfo);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported node type '" + ssiContent.getType() + "'!");
+        }
+
+        List<SiteNodeInfo> nodes = folder.getNodes();
+        int insertPos = -1;
+        int foundPos = -1;
+
+        String ssiName = ssiContent.getName();
+        for (int i = 0; i < nodes.size(); i++) {
+            if (insertPos >= 0 && foundPos >= 0) {
+                // both positions found
+                break;
+            }
+
+            SiteNodeInfo node = nodes.get(i);
+
+            if (insertionPath.equals(node.getName())) {
+                insertPos = i;
+                continue;
+            }
+
+            if (ssiName.equals(node.getName())) {
+                foundPos = i;
+            }
+        }
+
+        if (insertPos == -1) {
+            throw new IllegalStateException("No item found for name '" + insertionPath + "'!");
+        }
+        if (foundPos == -1) {
+            throw new IllegalStateException("No item to insert found (" + ssiName + ") in the directory after creating!");
+        }
+
+        SiteNodeInfo newSSI = nodes.remove(foundPos);
+        nodes.add(insertPos + 1, newSSI);
+        folder.setNodes(nodes);
+        contentRepository.updateInfo(targetFolder, folder);
+    }
+
+    private void applyUpdateAction(ActionUpdate actionUpdate, ContentRepository contentRepository) {
+        String path = actionUpdate.getPath();
+        SiteNode ssi = actionUpdate.getItem();
+        SiteNodeContent ssiContent = ssi.getContent();
+
+        String name = ssiContent.getName();
+        Map<String, String> displayName = ssiContent.getDisplayName();
+        Map<String, String> localizedName = ssiContent.getLocalizedName();
+        TemplateReference templateReference = ssiContent.getTemplateReference();
+
+        try {
+            boolean changed = false;
+            switch (ssiContent.getType()) {
+                case DIRECTORY:
+                    DirectoryInfo dirInfo = contentRepository.resolveInfo(DirectoryInfo.class, path);
+
+                    if (!dirInfo.getName().equals(name)) {
+                        changed = true;
+                        dirInfo.setName(name);
+                    }
+
+                    if (!dirInfo.getDisplayName().equals(displayName)) {
+                        changed = true;
+                        dirInfo.setDisplayName(displayName);
+                    }
+
+                    if (!dirInfo.getLocalizedName().equals(localizedName)) {
+                        changed = true;
+                        dirInfo.setLocalizedName(localizedName);
+                    }
+
+                    if (changed) {
+                        contentRepository.updateInfo(path, dirInfo);
+                    }
+                    break;
+                case PAGE:
+                    PageInfo pageInfo = contentRepository.resolveInfo(PageInfo.class, path);
+
+                    if (!pageInfo.getName().equals(name)) {
+                        changed = true;
+                        pageInfo.setName(name);
+                    }
+
+                    if (!pageInfo.getDisplayName().equals(displayName)) {
+                        changed = true;
+                        pageInfo.setDisplayName(displayName);
+                    }
+
+                    if (!pageInfo.getLocalizedName().equals(localizedName)) {
+                        changed = true;
+                        pageInfo.setLocalizedName(localizedName);
+                    }
+
+                    if (!pageInfo.getTemplateReference().equals(templateReference)) {
+                        changed = true;
+                        pageInfo.setTemplateReference(templateReference);
+                    }
+
+                    // TODO: also update a Page object?!
+
+                    if (changed) {
+                        contentRepository.updateInfo(path, pageInfo);
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported node type '" + ssiContent.getType() + "'!");
+            }
+        } catch (InvalidSiteStructurePathException ex) {
+            throw new IllegalArgumentException("No item found to update for path '" + path + "'!");
+        }
+    }
+
+    private void applyDeleteAction(ActionDelete actionDelete, ContentRepository contentRepository) {
+        String path = actionDelete.getPath();
+
+        contentRepository.deleteInfo(path);
+    }
+
+    private void applyMoveAction(ActionMove actionMove, ContentRepository contentRepository) {
+        String originPath = actionMove.getOriginPath();
+        String targetFolderPath = actionMove.getTargetFolderPath();
+        String insertionPath = actionMove.getInsertionPath();
+
+        DirectoryInfo targetFolder = contentRepository.resolveInfo(DirectoryInfo.class, targetFolderPath);
+
+        SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, originPath);
+        SiteNodeContainerInfo parentFolder = info.getParent();
+
+//        if (DirectoryInfo.class.isAssignableFrom(info.getClass())) {
+//            DirectoryInfo dirInfo = (DirectoryInfo) info;
+//        } else if (PageInfo.class.isAssignableFrom(info.getClass())) {
+//            PageInfo pageInfo = (PageInfo) info;
+//        } else {
+//            throw new IllegalArgumentException("Unsupported node class '" + info.getClass() + "'!");
+//        }
+
+        // remove original info from parent
+        List<SiteNodeInfo> nodes = parentFolder.getNodes();
+
+        int index = -1;
+        for (int i = 0; i < nodes.size(); i++) {
+            SiteNodeInfo node = nodes.get(i);
+
+            if (node.getName().equals(info.getName())) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            throw new IllegalStateException("No item found for name (" + info.getName() + ") in the original directory!");
+        }
+        nodes.remove(index);
+        parentFolder.setNodes(nodes);
+        contentRepository.updateInfo(parentFolder.getPath(), parentFolder);
+
+        // insert original info into target folder at the specified location
+        contentRepository.createInfo(targetFolder, info);
+
+        int insertPos = -1;
+        int foundPos = -1;
+
+        nodes = targetFolder.getNodes();
+        for (int i = 0; i < nodes.size(); i++) {
+            if (insertPos >= 0 && foundPos >= 0) {
+                // both positions found
+                break;
+            }
+
+            SiteNodeInfo node = nodes.get(i);
+            if (node.getName().equals(insertionPath)) {
+                insertPos = i;
+                continue;
+            }
+
+            if (info.getName().equals(node.getName())) {
+                foundPos = i;
+            }
+        }
+
+        if (insertPos == -1) {
+            throw new IllegalStateException("No item found for name '" + insertionPath + "'!");
+        }
+
+        SiteNodeInfo newSSI = nodes.remove(foundPos);
+        nodes.add(insertPos + 1, newSSI);
+        targetFolder.setNodes(nodes);
+        contentRepository.updateInfo(targetFolder, targetFolder);
+
+        // TODO: also move content files?!
+    }
+
     /**
      * Retrieves an actions diff for specified SSM revisions.
-     * @param project current project code
+     *
+     * @param project         current project code
      * @param fromSsmRevision start SSM-Revision
-     * @param toSsmRevision end SSM-Revision
+     * @param toSsmRevision   end SSM-Revision
      * @return the actions diff
      */
     @RequestMapping(value = "/diff", method = RequestMethod.GET)
@@ -241,7 +500,8 @@ public class SiteStructureEditorController {
             @RequestParam("from-ssm-revision") String fromSsmRevision,
             @RequestParam("to-ssm-revision") String toSsmRevision
     ) {
-        if (logger.isDebugEnabled()) logger.debug("Resolving DIFF between revisions '{}' and '{}'", fromSsmRevision, toSsmRevision);
+        if (logger.isDebugEnabled())
+            logger.debug("Resolving DIFF between revisions '{}' and '{}'", fromSsmRevision, toSsmRevision);
 
         ActionRepository actionRepository = actionRepositoryFactory.getInstance(project);
         List<Action> diff = actionRepository.resolveDiff(fromSsmRevision, toSsmRevision);
@@ -363,22 +623,6 @@ public class SiteStructureEditorController {
 
         return nodeContent;
     }
-
-//    private void applyChanges(SiteNodeContent nodeContent, SiteNodeInfo info) {
-//        switch (nodeContent.getType()) {
-//            case PAGE:
-//                ((PageInfo) info).setTemplateReference(nodeContent.getTemplateReference());
-//                break;
-//            case DIRECTORY:
-//                break;
-//            default:
-//                throw new UnsupportedOperationException("Unknown node type '" + nodeContent.getType() + "'!");
-//        }
-//
-//        info.setName(nodeContent.getName());
-//        info.setDisplayName(nodeContent.getDisplayName());
-//        info.setLocalizedName(nodeContent.getLocalizedName());
-//    }
 
     @ExceptionHandler({
             UnresolvableSiteStructurePathException.class
