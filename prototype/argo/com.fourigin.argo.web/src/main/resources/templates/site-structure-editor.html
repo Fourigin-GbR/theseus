@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/global-assets/styles/cms-project-site-structure-editor.css"/>
     <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Dosis|Economica|Roboto+Condensed|Saira+Condensed"
           rel="stylesheet"/>
-    <link rel="stylesheet" href="/global-assets/libraries/fontawesome-free-5.7.2-web/css/all.css"/>
+    <link rel="stylesheet" href="/global-assets/libraries/fontawesome-free-5.12.0-web/css/all.css"/>
     <link rel="stylesheet" href="/global-assets/libraries/animate-css/animate.min.css"/>
 
     <script src="/global-assets/libraries/jquery/jquery-3.3.1.min.js"></script>
@@ -15,638 +15,503 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
-<div class="argoCmsPageEditorHeader">
-    <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeader__section--header">
-        <div class="argoCmsPageEditorHeader__sectionContent">
-            <div class="argoCmsPageEditorHeader__sectionBlock">
-                argo
-            </div>
-            <div class="argoCmsPageEditorHeader__sectionBlock">
-                <a href="cms-dashboard.html" class="linkButton">
-                    <i class="linkButton__icon fas fa-angle-left"></i>
-                </a>
-                <h1 class="argoCmsPageEditorHeader__title">
-                    Edit Project Site Structure
-                </h1>
-            </div>
-            <div class="argoCmsPageEditorHeader__sectionBlock">
-                <div class="userIconMenu">
-                    <div class="userIconMenu__userImage"
-                         style="background-image: url('/global-assets/images/karsten-konzert-2012-dbg.jpg')"></div>
-                    <div class="userIconMenu__userName">kschaefer</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="argoCmsPageEditorHeader__section">
-        <div class="argoCmsPageEditorHeader__sectionContent siteMainActions">
-            <div class="argoCmsPageEditorHeader__sectionBlock siteCustomerBrand">
-                <div class="siteCustomerBrand__logo">
-                    <img src="/global-assets/images/examples/tagesschau.png" alt="Tagesschau Logo"/>
-                </div>
-                <div class="siteCustomerBrand__name">
-                    Tagesschau ARD
-                </div>
-            </div>
-            <div class="argoCmsPageEditorHeader__sectionBlock sitePath">
 
-                <div class="editContentBox editContentBox--big">
-                    <div class="editContentBox__contentBoxWrapper">
-                        <div class="editContentBox__contentBox">
-                            <ul class="pathStructureLinkList" data-argo-element="pathStructureList">
-                                <li data-prototype="pathStructureItemDirectory">
-                                    <a href="#">
-                                        <i class="pathStructureLinkList__icon fas fa-folder-open"></i>
-                                        <span class="pathStructureLinkList__copy"></span>
-                                    </a>
-                                </li>
-                                <li data-prototype="pathStructureItemFile">
-                                    <a href="#">
-                                        <i class="pathStructureLinkList__icon fas fa-file"></i>
-                                        <span class="pathStructureLinkList__copy"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tooltip" data-tooltip-target-id="tt2">
-                            <i class="tooltip__icon fas fa-question"></i>
-                        </div>
+<div class="grid grid--viewportRoot grid--headerMain">
+    <div class="grid__header">
+        <div class="argoCmsPageEditorHeader section section--header">
+            <div class="argoCmsPageEditorHeader__section argoCmsPageEditorHeader__section--header">
+                <div class="argoCmsPageEditorHeader__sectionContent">
+                    <div class="argoCmsPageEditorHeader__sectionBlock">
+                        argo
                     </div>
-                    <div class="editContentBox__label">
-                        Current page path
-                    </div>
-                </div>
-            </div>
-            <div class="argoCmsPageEditorHeader__sectionBlock pageMeta">
-                <div class="editContentGroups">
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-</div>
-
-<div class="argoBody">
-    <div class="argoBody__content">
-        <div class="projectSiteStructure sideBaredContent">
-            <div class="projectSiteStructure__selectionDetails fileEditableDetailsList sideBaredContent__sidebar">
-                <h2 class="sideBaredContent__sideElementTitle">Selection details</h2>
-                <form name="fileDetails">
-                    <input type="hidden" name="type" value="" />
-                    <input type="hidden" name="originalChecksum" value="" />
-                    <input type="hidden" name="path" value="" />
-                    <div class="fileEditableDetailsList__title">
-                        <div class="fileEditableDetailsList__titleIcon">
-                            <i class="far fa-file-code"></i>
-                        </div>
-                        <div data-element="selectedSiteStructureItemTitle" class="fileEditableDetailsList__titleCopy">
-                            The important things (html)
-                        </div>
-                    </div>
-                    <div class="fileEditableDetailsList__list">
-
-                        <!-- base name -->
-                        <div class="fileEditableDetailsList__group">
-                            <div class="editContentGroup editContentGroup--notHighlighted">
-                                <h3 class="editContentGroup__title">Basic name</h3>
-                                <div class="editContentGroup__items editContentGroup__items--columns">
-                                    <div class="editContentBox editContentGroup__item">
-                                        <div class="editContentBox__contentBoxWrapper">
-                                            <div class="editContentBox__contentBox">
-                                                <input autocomplete="off" id="name" type="text" name="name" value="">
-                                            </div>
-                                        </div>
-                                        <div class="editContentBox__label">
-                                            <label for="name">name</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- localized name -->
-                        <fieldset class="fileEditableDetailsList__group" name="localizedName">
-                            <div class="editContentGroup editContentGroup--notHighlighted">
-                                <h3 class="editContentGroup__title">Localized name</h3>
-                                <div class="editContentGroup__items editContentGroup__items--columns">
-                                    <div data-argo-element="localizedNameEditItems">
-                                        <div data-argo-prototype="localizedNameEditItem" class="editContentBox editContentGroup__item">
-                                            <div class="editContentBox__contentBoxWrapper">
-                                                <div class="editContentBox__contentBox">
-                                                    <input autocomplete="off" id="localName_en" type="text" name="en" value="">
-                                                </div>
-                                            </div>
-                                            <div class="editContentBox__label">
-                                                <label for="localName_en">en</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div data-argo-element="detailListFieldsUnused" class="fileEditableDetailsList__subGroup">
-                                        <h4>
-                                            Unused content
-                                            <span class="tooltip" data-tooltip-target-id="unusedContent">
-                                                <i class="tooltip__icon fas fa-question"></i>
-                                            </span>
-                                        </h4>
-                                        <div data-argo-element="detailListFieldsUnusedListWrapper" class="fileEditableDetailsList__unusedFields">
-                                            <div data-argo-prototype="detailListFieldUnused" class="editContentBox editContentGroup__item">
-                                                <div class="editContentBox__contentBoxWrapper">
-                                                    <div class="editContentBox__contentBox">
-                                                        <input autocomplete="off" id="localNameUnusedName_a" type="text" name="" value="">
-                                                    </div>
-                                                </div>
-                                                <div class="editContentBox__label">
-                                                    <label for="localNameUnusedName_a"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <!-- display name -->
-                        <fieldset class="fileEditableDetailsList__group" name="displayName">
-                            <div class="editContentGroup editContentGroup--notHighlighted">
-                                <h3 class="editContentGroup__title">Display name</h3>
-                                <div class="editContentGroup__items editContentGroup__items--columns">
-                                    <div data-argo-element="displayNameEditItems">
-                                        <div data-argo-prototype="displayNameEditItem" class="editContentBox editContentGroup__item">
-                                            <div class="editContentBox__contentBoxWrapper">
-                                                <div class="editContentBox__contentBox">
-                                                    <input autocomplete="off" id="displayName_en" type="text" name="en" value="">
-                                                </div>
-                                            </div>
-                                            <div class="editContentBox__label">
-                                                <label for="displayName_en">en</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div data-argo-element="detailListFieldsUnused" class="fileEditableDetailsList__subGroup">
-                                        <h4>
-                                            Unused content
-                                            <span class="tooltip" data-tooltip-target-id="unusedContent">
-                                                <i class="tooltip__icon fas fa-question"></i>
-                                            </span>
-                                        </h4>
-                                        <div data-argo-element="detailListFieldsUnusedListWrapper" class="fileEditableDetailsList__unusedFields">
-                                            <div data-argo-prototype="detailListFieldUnused" class="editContentBox editContentGroup__item">
-                                                <div class="editContentBox__contentBoxWrapper">
-                                                    <div class="editContentBox__contentBox">
-                                                        <input autocomplete="off" id="displayNameUnused_a" type="text" name="" value="">
-                                                    </div>
-                                                </div>
-                                                <div class="editContentBox__label">
-                                                    <label for="displayNameUnused_a"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <!-- Templates -->
-                        <fieldset class="fileEditableDetailsList__group" name="templateReference">
-                            <div class="editContentGroup editContentGroup--notHighlighted">
-                                <h3 class="editContentGroup__title">Template reference</h3>
-                                <div class="editContentGroup__items editContentGroup__items--columns">
-
-                                    <div class="editContentBox editContentGroup__item">
-                                        <div class="editContentBox__contentBoxWrapper">
-                                            <div class="editContentBox__contentBox">
-                                                <input autocomplete="off" id="templateId" type="text" name="templateId" value="">
-                                            </div>
-                                        </div>
-                                        <div class="editContentBox__label">
-                                            <label for="templateId">Template id</label>
-                                        </div>
-                                    </div>
-                                    <div class="editContentBox editContentGroup__item">
-                                        <div class="editContentBox__contentBoxWrapper">
-                                            <div class="editContentBox__contentBox">
-                                                <input autocomplete="off"id="variationId" type="text" name="variationId" value="">
-                                            </div>
-                                        </div>
-                                        <div class="editContentBox__label">
-                                            <label for="variationId">Template variation id</label>
-                                        </div>
-                                    </div>
-                                    <div class="editContentBox editContentGroup__item">
-                                        <div class="editContentBox__contentBoxWrapper">
-                                            <div class="editContentBox__contentBox">
-                                                <input autocomplete="off"id="revision" type="text" name="revision" value="">
-                                            </div>
-                                        </div>
-                                        <div class="editContentBox__label">
-                                            <label for="revision">Revision</label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="fileEditableDetailsList__actions">
-                        <button class="button button--cta" type="submit">Save</button>
-                    </div>
-                </form>
-                <div class="projectSiteStructure__selectionDetailsNothingSelected">
-                    Nothing selected.
-                </div>
-            </div>
-            <div class="projectSiteStructure__structure sideBaredContent__content">
-                <form name="siteStructure">
-                    <h2 class="sideBaredContent__sideElementTitle">Site structure</h2>
-                    <!-- Buttons -->
-                    <div class="projectSiteStructure__meta">
-                        <a data-argo-action="openAllDirectories" class="button button--small">
-                            <i class="fas fa-folder-open"></i>
-                            Open all
+                    <div class="argoCmsPageEditorHeader__sectionBlock">
+                        <a href="cms-dashboard.html" class="linkButton">
+                            <i class="linkButton__icon fas fa-angle-left"></i>
                         </a>
-                        <a data-argo-action="closeAllDirectories" class="button button--small">
-                            <i class="fas fa-folder"></i>
-                            Close all
-                        </a>
-                        <a data-argo-action="reloadStructure" class="button button--small">
-                            <i class="fas fa-redo"></i>
-                            Reload
-                        </a>
+                        <h1 class="argoCmsPageEditorHeader__title">
+                            Edit Project Site Structure
+                        </h1>
                     </div>
-                    <!-- Prototypes -->
-                    <div class="siteStructureItemsPrototypes">
-                        <!-- Directory -->
-                        <fieldset class="editableDirectoryList__entry" data-type="directory"
-                                  data-prototype="siteStructureItemDirectory">
-                            <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox" name="selected"/>
-                            <div class="editableDirectoryList__entryLabel">
-                                <i class="fas fa-chevron-right editableDirectoryList__entryButton"
-                                   data-action="openCloseDirectory"></i>
-                                <i class="fas fa-folder-open editableDirectoryList__entryIcon editableDirectoryList__entryIcon--directory"></i>
-                                <div class="editableDirectoryList__entryName">
-                                    <input autocomplete="off" disabled="disabled" class="editableDirectoryList__entryName" type="text" name="name" value=""/>
-                                </div>
-                                <div class="editableDirectoryList__entryActions subMenu">
-                                    <div class="subMenu__button">
-                                        <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
-                                    </div>
-                                    <div class="subMenu__overlay">
-                                        <div class="subMenu__entry" data-action="addInside">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
-                                            <span class="subMenu__entryLabel">New...</span>
-                                        </div>
-                                        <div class="subMenu__entry subMenu__entry--separator"></div>
-                                        <div class="subMenu__entry" data-action="delete">
-                                            <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
-                                            <span class="subMenu__entryLabel">Remove</span>
-                                        </div>
-                                        <div class="subMenu__entry subMenu__entry--separator"></div>
-                                        <div class="subMenu__entry" data-action="moveTo">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-departure"></i></span>
-                                            <span class="subMenu__entryLabel">Move to...</span>
-                                        </div>
-                                        <div class="subMenu__entry" data-action="moveToHereAfter">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-arrival"></i></span>
-                                            <span class="subMenu__entryLabel">...move after here</span>
-                                        </div>
-                                        <div class="subMenu__entry" data-action="moveToHereInside">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-arrival"></i></span>
-                                            <span class="subMenu__entryLabel">...move inside here</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <fieldset name="localizedName">
-                                <input data-prototype="localizedNameItem" autocomplete="off" type="hidden" name="en" value=""/>
-                            </fieldset>
-                            <fieldset name="displayName">
-                                <input data-prototype="displayNameItem" autocomplete="off" type="hidden" name="en" value=""/>
-                            </fieldset>
-                            <fieldset data-type="directoryChildren">
-                            </fieldset>
-                        </fieldset>
-                        <!-- Item / file -->
-                        <fieldset class="editableDirectoryList__entry" data-type="file"
-                                  data-prototype="siteStructureItemFile">
-                            <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox"
-                                   name="selected"/>
-                            <div class="editableDirectoryList__entryLabel">
-                                <i class="fas fa-file editableDirectoryList__entryIcon"></i>
-                                <div class="editableDirectoryList__entryName">
-                                    <input autocomplete="off" disabled="disabled" class="editableDirectoryList__entryName" type="text" name="name" value=""/>
-                                </div>
-                                <div class="editableDirectoryList__entryActions subMenu">
-                                    <div class="subMenu__button">
-                                        <span class="button__icon"><i class="fas fa-ellipsis-v"></i></span>
-                                    </div>
-                                    <div class="subMenu__overlay">
-                                        <div class="subMenu__entry" data-action="addBefore">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
-                                            <span class="subMenu__entryLabel">New before...</span>
-                                        </div>
-                                        <div class="subMenu__entry" data-action="addAfter">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
-                                            <span class="subMenu__entryLabel">New after...</span>
-                                        </div>
-                                        <div class="subMenu__entry subMenu__entry--separator"></div>
-                                        <div class="subMenu__entry" data-action="delete">
-                                            <span class="subMenu__entryIcon"><i class="far fa-trash-alt"></i></span>
-                                            <span class="subMenu__entryLabel">Remove</span>
-                                        </div>
-                                        <div class="subMenu__entry subMenu__entry--separator"></div>
-                                        <div class="subMenu__entry" data-action="moveTo">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-departure"></i></span>
-                                            <span class="subMenu__entryLabel">Move to...</span>
-                                        </div>
-                                        <div class="subMenu__entry" data-action="moveToHereAfter">
-                                            <span class="subMenu__entryIcon"><i class="fas fa-plane-arrival"></i></span>
-                                            <span class="subMenu__entryLabel">...move after here</span>
-                                        </div>
-                                        <div class="subMenu__entry subMenu__entry--separator"></div>
-                                        <div class="subMenu__entry subMenu__entry--link">
-                                            <a class="subMenu__entryLink" href="cms-page-editor-prototype-import-all.html">
-                                                <span class="subMenu__entryIcon"><i class="fas fa-pencil-alt"></i></span>
-                                                <span class="subMenu__entryLabel">Edit page content</span>
+                    <div class="argoCmsPageEditorHeader__sectionBlock">
+                        <div class="userIconMenu">
+                            <div class="userIconMenu__userImage"
+                                 style="background-image: url('/global-assets/images/karsten-konzert-2012-dbg.jpg')"></div>
+                            <div class="userIconMenu__userName">kschaefer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="argoCmsPageEditorHeader__section">
+                <div class="argoCmsPageEditorHeader__sectionContent siteMainActions">
+                    <div class="argoCmsPageEditorHeader__sectionBlock siteCustomerBrand">
+                        <div class="siteCustomerBrand__logo">
+                            <img src="/global-assets/images/examples/tagesschau.png" alt="Tagesschau Logo"/>
+                        </div>
+                        <div class="siteCustomerBrand__name">
+                            Tagesschau ARD
+                        </div>
+                    </div>
+                    <div class="argoCmsPageEditorHeader__sectionBlock sitePath">
+
+                        <div class="editContentBox editContentBox--big">
+                            <div class="editContentBox__contentBoxWrapper">
+                                <div class="editContentBox__contentBox">
+                                    <ul class="pathStructureLinkList" data-argo-element="pathStructureList">
+                                        <li data-prototype="pathStructureItemDirectory">
+                                            <a href="#">
+                                                <i class="pathStructureLinkList__icon fas fa-folder-open"></i>
+                                                <span class="pathStructureLinkList__copy"></span>
                                             </a>
-                                        </div>
-                                    </div>
+                                        </li>
+                                        <li data-prototype="pathStructureItemFile">
+                                            <a href="#">
+                                                <i class="pathStructureLinkList__icon fas fa-file"></i>
+                                                <span class="pathStructureLinkList__copy"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tooltip" data-tooltip-target-id="tt2">
+                                    <i class="tooltip__icon fas fa-question"></i>
                                 </div>
                             </div>
-                            <fieldset name="localizedName">
-                                <input data-prototype="localizedNameItem" autocomplete="off" type="hidden" name="en" value=""/>
-                            </fieldset>
-                            <fieldset name="displayName">
-                                <input data-prototype="displayNameItem" autocomplete="off" type="hidden" name="en" value=""/>
-                            </fieldset>
-                            <fieldset name="templateReference">
-                                <input autocomplete="off" type="hidden" name="templateId" value=""/>
-                                <input autocomplete="off" type="hidden" name="variationId" value=""/>
-                                <input autocomplete="off" type="hidden" name="revision" value=""/>
-                            </fieldset>
-                        </fieldset>
+                            <div class="editContentBox__label">
+                                Current page path
+                            </div>
+                        </div>
                     </div>
-                    <div class="editableDirectoryList" data-type="rootDirectory">
-
-                    </div>
-                    <div class="projectSiteStructure__footer">
-
-                        <!--
-                        <div class="projectSiteStructure__footerRow">
-                            <div class="projectSiteStructure__footerRowMainActions">
-                                <button class="button button--cta" type="submit">Save</button>
-                            </div>
-
-                            <div data-argo-element="saveProcessStatus" class="saveProcessStatus">
-                                <div data-argo-element="saveProcessStatusUnsavedChanges" class="saveProcessStatus__item">
-                                    <div class="saveProcessStatus__statusIcon">
-                                        <i class="fas fa-save"></i>
-                                    </div>
-                                    <div class="saveProcessStatus__statusCopy">
-                                        Please save.
-                                    </div>
-                                </div>
-                                <div data-argo-element="saveProcessStatusSaving" class="saveProcessStatus__item">
-                                    <div class="saveProcessStatus__statusIcon">
-                                        <i class="fas fa-file-upload"></i>
-                                    </div>
-                                    <div class="saveProcessStatus__statusCopy">
-                                        Saving data...
-                                    </div>
-                                </div>
-                                <div data-argo-element="saveProcessStatusSaved" class="saveProcessStatus__item">
-                                    <div class="saveProcessStatus__statusIcon">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="saveProcessStatus__statusCopy">
-                                        All changes saved.
-                                    </div>
-                                </div>
-                                <div data-argo-element="saveProcessStatusSaveError" class="saveProcessStatus__item">
-                                    <div class="saveProcessStatus__statusIcon">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </div>
-                                    <div class="saveProcessStatus__statusCopy">
-                                        Could not save changes!
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tabContent__tab" data-element="actionsTab">
-                                <div class="tabContent__label">
-                                    <div>Unsaved changes</div>
-                                    <div class="badge" data-element="actionsAmount"></div>
-                                </div>
-                                <div class="tabContent__tabIcon">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </div>
+                    <div class="argoCmsPageEditorHeader__sectionBlock pageMeta">
+                        <div class="editContentGroups">
 
                         </div>
-                        -->
 
-                        <div class="tabbedContent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="grid__main">
+        <div class="section section--main">
+            <div class="grid__module grid__module--mainSideBar">
+                <div class="panel panel--headerContentFooter panel--sideBar itemDetailsEditor itemDetailsEditor--empty fileEditableDetailsList">
+                    <div class="panel__header">
+                        <h2 class="panel__title">Selection details</h2>
+                    </div>
+                    <div class="panel__content overflowScrollBox">
+                        <div class="overflowScrollBox__content">
+                            <form id="fileDetails" name="fileDetails" class="itemDetailsEditor__form">
+                                <input type="hidden" name="type" value=""/>
+                                <input type="hidden" name="revision" value=""/>
+                                <input type="hidden" name="path" value=""/>
+                                <div class="fileEditableDetailsList__title">
+                                    <div class="fileEditableDetailsList__titleIcon">
+                                        <i class="far fa-file-code"></i>
+                                    </div>
+                                    <div data-element="selectedSiteStructureItemTitle"
+                                         class="fileEditableDetailsList__titleCopy">
+                                        The important things (html)
+                                    </div>
+                                </div>
+                                <div class="formFields fileEditableDetailsList__list">
+                                    <!-- base name -->
+                                    <div class="fileEditableDetailsList__group">
+                                        <div class="editContentGroup editContentGroup--notHighlighted">
+                                            <h3 class="editContentGroup__title">Basic name</h3>
+                                            <div class="editContentGroup__items editContentGroup__items--columns">
+                                                <div class="editContentBox editContentGroup__item">
+                                                    <div class="editContentBox__contentBoxWrapper">
+                                                        <div class="editContentBox__contentBox">
+                                                            <input autocomplete="off" id="name" type="text"
+                                                                   name="name" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="editContentBox__label">
+                                                        <label for="name">name</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- localized name -->
+                                    <fieldset class="fileEditableDetailsList__group" name="localizedName">
+                                        <div class="editContentGroup editContentGroup--notHighlighted">
+                                            <h3 class="editContentGroup__title">Localized name</h3>
+                                            <div class="editContentGroup__items editContentGroup__items--columns">
+                                                <div data-argo-element="localizedNameEditItems">
+                                                    <div data-argo-prototype="localizedNameEditItem"
+                                                         class="editContentBox editContentGroup__item">
+                                                        <div class="editContentBox__contentBoxWrapper">
+                                                            <div class="editContentBox__contentBox">
+                                                                <input autocomplete="off" id="localName_en"
+                                                                       type="text" name="en" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="editContentBox__label">
+                                                            <label for="localName_en">en</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <!-- display name -->
+                                    <fieldset class="fileEditableDetailsList__group" name="displayName">
+                                        <div class="editContentGroup editContentGroup--notHighlighted">
+                                            <h3 class="editContentGroup__title">Display name</h3>
+                                            <div class="editContentGroup__items editContentGroup__items--columns">
+                                                <div data-argo-element="displayNameEditItems">
+                                                    <div data-argo-prototype="displayNameEditItem"
+                                                         class="editContentBox editContentGroup__item">
+                                                        <div class="editContentBox__contentBoxWrapper">
+                                                            <div class="editContentBox__contentBox">
+                                                                <input autocomplete="off" id="displayName_en"
+                                                                       type="text" name="en" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="editContentBox__label">
+                                                            <label for="displayName_en">en</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <!-- Templates -->
+                                    <fieldset class="fileEditableDetailsList__group" name="templateReference">
+                                        <div class="editContentGroup editContentGroup--notHighlighted">
+                                            <h3 class="editContentGroup__title">Template reference</h3>
+                                            <div class="editContentGroup__items editContentGroup__items--columns">
+
+                                                <div class="editContentBox editContentGroup__item">
+                                                    <div class="editContentBox__contentBoxWrapper">
+                                                        <div class="editContentBox__contentBox">
+                                                            <input autocomplete="off" id="templateId" type="text"
+                                                                   name="templateId" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="editContentBox__label">
+                                                        <label for="templateId">Template id</label>
+                                                    </div>
+                                                </div>
+                                                <div class="editContentBox editContentGroup__item">
+                                                    <div class="editContentBox__contentBoxWrapper">
+                                                        <div class="editContentBox__contentBox">
+                                                            <input autocomplete="off" id="variationId" type="text"
+                                                                   name="variationId" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="editContentBox__label">
+                                                        <label for="variationId">Template variation id</label>
+                                                    </div>
+                                                </div>
+                                                <div class="editContentBox editContentGroup__item">
+                                                    <div class="editContentBox__contentBoxWrapper">
+                                                        <div class="editContentBox__contentBox">
+                                                            <input autocomplete="off" id="revision" type="text"
+                                                                   name="revision" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="editContentBox__label">
+                                                        <label for="revision">Revision</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </form>
+                            <div class="itemDetailsEditor__nothingSelected projectSiteStructure__selectionDetailsNothingSelected">
+                                <div class="messageArea messageArea--small">
+                                    <div class="messageArea__icon">
+                                        <i class="fas fa-border-style"></i>
+                                    </div>
+                                    <div class="messageArea__copy">
+                                        Nothing selected.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel__footer">
+                        <div class="panel__footerContent">
                             <div class="buttonsTabsBar">
                                 <div class="buttonsTabsBar__buttons">
-                                    <button class="button button--cta">
-                                        Save
-                                    </button>
+                                    <button form="fileDetails" class="button button--cta" type="submit">Save</button>
                                 </div>
-                                <div class="buttonsTabsBar__tabs">
-                                    <div class="buttonsTabsBar__tabsWrapper">
-                                        <div class="tabbedContent__tab tab">
-                                            <label class="tabbedContent__tabLabel" for="tabContent1">
-                                                <span class="tab__copy">Unsaved changes</span>
-                                                <span class="tab__icon">
-                                                <i class="fas fa-angle-down"></i>
-                                            </span>
-                                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel--headerContentFooter">
+                    <div class="panel__header">
+                        <h2 class="panel__title">Site structure</h2>
+                    </div>
+                    <div class="panel__content overflowScrollBox">
+                        <div class="overflowScrollBox__content siteStructureEditor">
+
+                            <form id="siteStructure" name="siteStructure">
+                                <!-- Buttons -->
+                                <div class="projectSiteStructure__meta">
+                                    <a data-argo-action="openAllDirectories" class="button button--small">
+                                        <span class="button__icon">
+                                            <i class="fas fa-folder-open"></i>
+                                        </span>
+                                        Open all
+                                    </a>
+                                    <a data-argo-action="closeAllDirectories" class="button button--small">
+                                        <span class="button__icon">
+                                            <i class="fas fa-folder"></i>
+                                        </span>
+                                        Close all
+                                    </a>
+                                    <a data-argo-action="reloadStructure" class="button button--small">
+                                        <span class="button__icon">
+                                            <i class="fas fa-redo"></i>
+                                        </span>
+                                        Reload
+                                    </a>
+                                </div>
+                                <!-- Prototypes -->
+                                <div class="siteStructureItemsPrototypes">
+                                    <!-- Directory -->
+                                    <fieldset class="editableDirectoryList__entry" data-type="directory"
+                                              data-prototype="siteStructureItemDirectory">
+                                        <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox"
+                                               name="selected"/>
+                                        <div class="editableDirectoryList__entryLabel">
+                                            <i class="fas fa-chevron-right editableDirectoryList__entryButton"
+                                               data-action="openCloseDirectory"></i>
+                                            <i class="fas fa-folder-open editableDirectoryList__entryIcon editableDirectoryList__entryIcon--directory"></i>
+                                            <div class="editableDirectoryList__entryName">
+                                                <input autocomplete="off" disabled="disabled"
+                                                       class="editableDirectoryList__entryName" type="text"
+                                                       name="name" value=""/>
+                                            </div>
+                                            <div class="editableDirectoryList__entryActions subMenu">
+                                                <div class="subMenu__button">
+                                                    <span class="button__icon"><i
+                                                            class="fas fa-ellipsis-v"></i></span>
+                                                </div>
+                                                <div class="subMenu__overlay">
+                                                    <div class="subMenu__entry" data-action="addInside">
+                                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                                        <span class="subMenu__entryLabel">New...</span>
+                                                    </div>
+                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
+                                                    <div class="subMenu__entry" data-action="delete">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="far fa-trash-alt"></i></span>
+                                                        <span class="subMenu__entryLabel">Remove</span>
+                                                    </div>
+                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
+                                                    <div class="subMenu__entry" data-action="moveTo">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-departure"></i></span>
+                                                        <span class="subMenu__entryLabel">Move to...</span>
+                                                    </div>
+                                                    <div class="subMenu__entry" data-action="moveToHereAfter">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-arrival"></i></span>
+                                                        <span class="subMenu__entryLabel">...move after here</span>
+                                                    </div>
+                                                    <div class="subMenu__entry" data-action="moveToHereInside">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-arrival"></i></span>
+                                                        <span class="subMenu__entryLabel">...move inside here</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <fieldset name="localizedName">
+                                            <input data-prototype="localizedNameItem" autocomplete="off"
+                                                   type="hidden" name="en" value=""/>
+                                        </fieldset>
+                                        <fieldset name="displayName">
+                                            <input data-prototype="displayNameItem" autocomplete="off" type="hidden"
+                                                   name="en" value=""/>
+                                        </fieldset>
+                                        <fieldset data-type="directoryChildren">
+                                        </fieldset>
+                                    </fieldset>
+                                    <!-- Item / file -->
+                                    <fieldset class="editableDirectoryList__entry" data-type="file"
+                                              data-prototype="siteStructureItemFile">
+                                        <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox"
+                                               name="selected"/>
+                                        <div class="editableDirectoryList__entryLabel">
+                                            <i class="fas fa-file editableDirectoryList__entryIcon"></i>
+                                            <div class="editableDirectoryList__entryName">
+                                                <input autocomplete="off" disabled="disabled"
+                                                       class="editableDirectoryList__entryName" type="text"
+                                                       name="name" value=""/>
+                                            </div>
+                                            <div class="editableDirectoryList__entryActions subMenu">
+                                                <div class="subMenu__button">
+                                                    <span class="button__icon"><i
+                                                            class="fas fa-ellipsis-v"></i></span>
+                                                </div>
+                                                <div class="subMenu__overlay">
+                                                    <div class="subMenu__entry" data-action="addBefore">
+                                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                                        <span class="subMenu__entryLabel">New before...</span>
+                                                    </div>
+                                                    <div class="subMenu__entry" data-action="addAfter">
+                                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+                                                        <span class="subMenu__entryLabel">New after...</span>
+                                                    </div>
+                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
+                                                    <div class="subMenu__entry" data-action="delete">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="far fa-trash-alt"></i></span>
+                                                        <span class="subMenu__entryLabel">Remove</span>
+                                                    </div>
+                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
+                                                    <div class="subMenu__entry" data-action="moveTo">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-departure"></i></span>
+                                                        <span class="subMenu__entryLabel">Move to...</span>
+                                                    </div>
+                                                    <div class="subMenu__entry" data-action="moveToHereAfter">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-arrival"></i></span>
+                                                        <span class="subMenu__entryLabel">...move after here</span>
+                                                    </div>
+                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
+                                                    <div class="subMenu__entry subMenu__entry--link">
+                                                        <a class="subMenu__entryLink"
+                                                           href="cms-page-editor-prototype-import-all.html">
+                                                            <span class="subMenu__entryIcon"><i
+                                                                    class="fas fa-pencil-alt"></i></span>
+                                                            <span class="subMenu__entryLabel">Edit page content</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <fieldset name="localizedName">
+                                            <input data-prototype="localizedNameItem" autocomplete="off"
+                                                   type="hidden" name="en" value=""/>
+                                        </fieldset>
+                                        <fieldset name="displayName">
+                                            <input data-prototype="displayNameItem" autocomplete="off" type="hidden"
+                                                   name="en" value=""/>
+                                        </fieldset>
+                                        <fieldset name="templateReference">
+                                            <input autocomplete="off" type="hidden" name="templateId" value=""/>
+                                            <input autocomplete="off" type="hidden" name="variationId" value=""/>
+                                            <input autocomplete="off" type="hidden" name="revision" value=""/>
+                                        </fieldset>
+                                    </fieldset>
+                                </div>
+                                <div class="siteStructureEditor__structureList editableDirectoryList" data-type="rootDirectory">
+
+                                </div>
+
+                                <!-- Empty list panel -->
+                                <div class="siteStructureEditor__emptyStructureMessage">
+                                    <div class="messageArea">
+                                        <div class="messageArea__icon">
+                                            <i class="fas fa-border-style"></i>
+                                        </div>
+                                        <div class="messageArea__copy">
+                                            The structure is empty. Create items to build your site-structure.
+                                        </div>
+                                        <div class="messageArea__actions">
+                                            <div data-argo-action="addNewItemInRoot" class="button button--cta">Create site-structure item</div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
 
+                        </div>
+                    </div>
+                    <div class="panel__footer">
+                        <div class="panel__footerContent">
+                            <div class="tabbedContent">
 
-                            <div class="tabContents">
-                                <div class="tabContents__item">
-                                    <input autocomplete="off" class="tabContents__checkbox" id="tabContent1" type="checkbox" name="tabContent" />
-                                    <div class="tabContents__card" data-argo-element="actionDetails">
-                                        <div class="tabCard">
-                                            <div class="tabCard__title">Unsaved changes (actions)</div>
-                                            <div class="tabCard__actions">
-                                            <span class="button button--small" data-argo-action="revertAllActions">
-                                                <span class="button__icon">
-                                                    <i class="fas fa-redo"></i>
+                                <div class="buttonsTabsBar">
+                                    <div class="buttonsTabsBar__buttons">
+                                        <button form="siteStructure" class="button button--cta">
+                                            Save
+                                        </button>
+                                    </div>
+                                    <div class="buttonsTabsBar__tabs">
+                                        <div class="buttonsTabsBar__tabsWrapper">
+                                            <div class="tabbedContent__tab tab">
+                                                <label class="tabbedContent__tabLabel" for="tabContent1">
+                                                    <span class="tab__copy">Unsaved changes...</span>
+                                                    <span class="tab__badge"><span class="badge badge--shortHint" data-argo-element="siteStructureChangesAmount">0</span></span>
+                                                    <span class="tab__icon">
+                                                    <i class="fas fa-angle-down"></i>
                                                 </span>
-                                                Revert all changes
-                                            </span>
-                                            </div>
-                                            <div class="tabCard__body">
-                                                <table class="table" data-element="actionsCacheTable">
-                                                    <thead class="table__header">
-                                                    <tr>
-                                                        <th class="table__headerCell">Action</th>
-                                                        <th class="table__headerCell">Item</th>
-                                                        <th class="table__headerCell">Path</th>
-                                                        <th class="table__headerCell">Time</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody class="table__body" data-element="actionsCacheList">
-                                                    <tr data-argo-prototype="actionDetailTableRow">
-                                                        <td data-argo-element="actionDetailType" class="table__cell"></td>
-                                                        <td data-argo-element="actionDetailItem" class="table__cell"></td>
-                                                        <td data-argo-element="actionDetailPath" class="table__cell"></td>
-                                                        <td data-argo-element="actionDetailTimeStamp" class="table__cell">----</td>
-                                                    </tr>
-                                                    </tbody>
-                                                    <tbody class="table__bodyEmpty">
-                                                    <tr>
-                                                        <td colspan="3" class="table__cell table__cell--empty">
-                                                            No content.
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+
+                                <div class="tabContents">
+                                    <div class="tabContents__item">
+                                        <input autocomplete="off" class="tabContents__checkbox" id="tabContent1"
+                                               type="checkbox" name="tabContent"/>
+                                        <div class="tabContents__card"
+                                             data-argo-element="siteStructureChangesDetails">
+                                            <div class="tabCard">
+                                                <div class="tabCard__title">Unsaved changes</div>
+                                                <div class="tabCard__actions">
+                                                <span class="button button--small" data-argo-action="revertAllChanges">
+                                                    <span class="button__icon">
+                                                        <i class="fas fa-redo"></i>
+                                                    </span>
+                                                    Revert all changes
+                                                </span>
+                                                </div>
+                                                <div class="tabCard__body">
+                                                    <table class="table"
+                                                           data-element="siteStructureChangesCacheTable">
+                                                        <thead class="table__header">
+                                                        <tr>
+                                                            <th class="table__headerCell">Type</th>
+                                                            <th class="table__headerCell">Item</th>
+                                                            <th class="table__headerCell">Path</th>
+                                                            <th class="table__headerCell">Time</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table__body"
+                                                               data-element="siteStructureChangesCacheList">
+                                                        <tr data-argo-prototype="siteStructureChangesDetailTableRow">
+                                                            <td data-argo-element="siteStructureChangesDetailType"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="siteStructureChangesDetailItem"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="siteStructureChangesDetailPath"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="siteStructureChangesDetailTime"
+                                                                class="table__cell"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tbody class="table__bodyEmpty">
+                                                        <tr>
+                                                            <td colspan="3" class="table__cell table__cell--empty">
+                                                                No content.
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="argoBody__overlays">
-        <div data-argo-body-overlay-id="loadSiteStructure" class="argoBody__overlay loader loader--active">
-            <div class="loader__content">
-                <div class="loader__title">
-                    <h4>Loading...</h4>
-                </div>
-                <div class="loader__processBar processBar processBar--stateless">
-                    <span class="processBar__handle"></span>
-                </div>
-            </div>
-        </div>
-
-        <div data-argo-body-overlay-id="saveSiteStructure" class="argoBody__overlay loader loader--active">
-            <div class="loader__content">
-                <div class="loader__title">
-                    <h4>Saving...</h4>
-                </div>
-                <div class="loader__processBar processBar processBar--stateless">
-                    <span class="processBar__handle"></span>
-                </div>
-            </div>
-        </div>
-
-        <div data-argo-body-overlay-id="canNotGenerateSiteStructure" class="argoBody__overlay comicJoe">
-            <div class="argoBody__overlayContent">
-                <div class="argoBody__overlayContentTitle">
-                    <div class="bubbleMessages comicJoe__messages">
-                        <div class="bubbleMessage comicJoe__message">
-                            No! Don't click!!
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Sorry, nothing to do. Fix the error first!
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Autsch! Who clicked?
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Agaaain? That hurts...
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            I do aaaall my best for you... :-( but here I have to wait for you.... :-(
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Ehem...
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            I forget nothing!!
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            YOU need to FIX something FIRST! OK?
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Lux? Is it you?
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            You gonna flirt with me?! :-)
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            ...
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            No, I have no further information for you yet!!<br/>
-                            Why meeeee? Are you not able to find the problem on your own, ha??
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            You heard something about.... Altzheimer?
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Sorry, that was your last try. The systems gonna kick you out.
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Not my nose, not my nooose!!
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            OnOffOnOffOnOffOnOffOnOff
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            Yes!! Just read!! You make it!!
-                        </div>
-                        <div class="bubbleMessage comicJoe__message">
-                            I am watching you!!! :-x
-                        </div>
-                        <div class="bubbleMessage comicJoe__message" data-action="reloadPage">
-                            Ok!! You won. I will reload the page for you.<br/>
-                            But you will see: It will change NOTHING.
-                        </div>
-                    </div>
-                    <i class="far comicJoe__face fa-sad-tear"></i>
-                    <h4>Can not generate site structure</h4>
-                </div>
-                <div class="argoBody__overlayContentCopy">
-                    <p>
-                        There is a problem with some site-structure-objects.
-                    </p>
-                    <p>
-                        You need to get that fixed.
-                    </p>
-                    <p>
-                        <i class="flagIcon fas fa-question"></i>
-                        <a target="_blank" href="mailto:help@argo.com">help@argo.com</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="argoBody__informationBars">
-        <div data-argo-body-information-bar-id="newSiteStructureVersionAvailable" class="argoBody__informationBar informationBar">
-            <div class="informationBar__content">
-                <div class="informationBar__icon">
-                    <i class="fas fa-sync"></i>
-                </div>
-                <div class="informationBar__copy">
-                    <div class="informationBar__title">
-                        New site-structure version available
-                    </div>
-                    <div class="informationBar__description">
-                        The site-structure was updated on the CMS in the meantime. You need to load the new version.
-                        <br/><br/>
-                        <strong>Attention: </strong> You will not be able to edit item-details on your current version. <br />
-                        Your current unsaved actions will be applied again.
-                    </div>
-                </div>
-                <div class="informationBar__actions">
-                    <a class="button button--lightStyle" data-argo-action="reloadStructure">Load new version</a>
                 </div>
             </div>
         </div>
@@ -674,11 +539,13 @@
                         <div class="addSiteStructureItemSelectType">
                             <form name="addSiteStructureItemType">
                                 <label>
-                                    <input autocomplete="off" type="radio" name="addSiteStructureItemType" value="page" />
+                                    <input autocomplete="off" type="radio" name="addSiteStructureItemType"
+                                           value="page"/>
                                     Page
                                 </label>
                                 <label>
-                                    <input autocomplete="off" type="radio" name="addSiteStructureItemType" value="directory" />
+                                    <input autocomplete="off" type="radio" name="addSiteStructureItemType"
+                                           value="directory"/>
                                     Directory
                                 </label>
                             </form>
@@ -689,7 +556,7 @@
                         <div class="formFields">
                             <form name="newSiteStructureItem" class="formFields__form">
 
-                                <input type="hidden" name="type" value="page" />
+                                <input type="hidden" name="type" value="page"/>
 
                                 <fieldset data-type="page">
 
@@ -703,7 +570,7 @@
                                                     <label>
                                                     <span class="editContentBox__contentBoxWrapper">
                                                         <span class="editContentBox__contentBox">
-                                                            <input autocomplete="off" type="text" name="name" value="" />
+                                                            <input autocomplete="off" type="text" name="name" value=""/>
                                                         </span>
                                                     </span>
                                                         <span class="editContentBox__errorMessage"></span>
@@ -714,7 +581,7 @@
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the master file name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     Tipp: Use an abstract, clear name, who is describing the content.
                                                     <br/>
                                                     Avoid very long names and relative constructs.
@@ -724,36 +591,40 @@
                                     </div>
 
 
-                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="localizedName">
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted"
+                                              name="localizedName">
                                         <div class="editContentGroup__title">Page names</div>
                                         <div class="editFieldsWithExplanation">
                                             <div class="editFieldsWithExplanation__editFields">
-                                                <div data-argo-element="newItemLocalizedNames" class="editContentGroup__items editContentGroup__items--columns">
+                                                <div data-argo-element="newItemLocalizedNames"
+                                                     class="editContentGroup__items editContentGroup__items--columns">
 
                                                 </div>
                                             </div>
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the base name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     It has to be unique on the same level.
                                                 </div>
                                             </div>
                                         </div>
                                     </fieldset>
 
-                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="displayName">
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted"
+                                              name="displayName">
                                         <div class="editContentGroup__title">Display names</div>
                                         <div class="editFieldsWithExplanation">
                                             <div class="editFieldsWithExplanation__editFields">
-                                                <div data-argo-element="newItemDisplayNames" class="editContentGroup__items editContentGroup__items--columns">
+                                                <div data-argo-element="newItemDisplayNames"
+                                                     class="editContentGroup__items editContentGroup__items--columns">
 
                                                 </div>
                                             </div>
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the display name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     It has to be unique on the same level.
                                                 </div>
                                             </div>
@@ -761,7 +632,8 @@
                                     </fieldset>
 
 
-                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="templateReference">
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted"
+                                              name="templateReference">
                                         <div class="editContentGroup__title">Template reference</div>
                                         <div class="editFieldsWithExplanation">
                                             <div class="editFieldsWithExplanation__editFields">
@@ -770,7 +642,8 @@
                                                         <label>
                                                         <span class="editContentBox__contentBoxWrapper">
                                                             <span class="editContentBox__contentBox">
-                                                                <input autocomplete="off" type="text" name="templateId" value="" />
+                                                                <input autocomplete="off" type="text" name="templateId"
+                                                                       value=""/>
                                                             </span>
                                                         </span>
                                                             <span class="editContentBox__errorMessage"></span>
@@ -781,7 +654,8 @@
                                                         <label>
                                                         <span class="editContentBox__contentBoxWrapper">
                                                             <span class="editContentBox__contentBox">
-                                                                <input autocomplete="off" type="text" name="variationId" value="" />
+                                                                <input autocomplete="off" type="text" name="variationId"
+                                                                       value=""/>
                                                             </span>
                                                         </span>
                                                             <span class="editContentBox__errorMessage"></span>
@@ -792,7 +666,8 @@
                                                         <label>
                                                         <span class="editContentBox__contentBoxWrapper">
                                                             <span class="editContentBox__contentBox">
-                                                                <input autocomplete="off" type="text" name="revision" value="" />
+                                                                <input autocomplete="off" type="text" name="revision"
+                                                                       value=""/>
                                                             </span>
                                                         </span>
                                                             <span class="editContentBox__errorMessage"></span>
@@ -804,7 +679,7 @@
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the base name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     It has to be unique on the same level.
                                                 </div>
                                             </div>
@@ -822,7 +697,7 @@
                         <div class="formFields">
                             <form name="newSiteStructureItem" class="formFields__form">
 
-                                <input type="hidden" name="type" value="directory" />
+                                <input type="hidden" name="type" value="directory"/>
 
                                 <fieldset data-type="directory">
 
@@ -836,7 +711,7 @@
                                                     <label>
                                                     <span class="editContentBox__contentBoxWrapper">
                                                         <span class="editContentBox__contentBox">
-                                                            <input autocomplete="off" type="text" name="name" value="" />
+                                                            <input autocomplete="off" type="text" name="name" value=""/>
                                                         </span>
                                                     </span>
                                                         <span class="editContentBox__errorMessage"></span>
@@ -847,7 +722,7 @@
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the master file name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     Tipp: Use an abstract, clear name, who is describing the content.
                                                     <br/>
                                                     Avoid very long names and relative constructs.
@@ -857,16 +732,20 @@
                                     </div>
 
 
-                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="localizedName">
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted"
+                                              name="localizedName">
                                         <div class="editContentGroup__title">File names</div>
                                         <div class="editFieldsWithExplanation">
                                             <div class="editFieldsWithExplanation__editFields">
-                                                <div data-argo-element="newItemLocalizedNames" class="editContentGroup__items editContentGroup__items--columns">
-                                                    <div data-argo-prototype="newItemLocalizedName" class="editContentGroup__item editContentBox">
+                                                <div data-argo-element="newItemLocalizedNames"
+                                                     class="editContentGroup__items editContentGroup__items--columns">
+                                                    <div data-argo-prototype="newItemLocalizedName"
+                                                         class="editContentGroup__item editContentBox">
                                                         <label>
                                                         <span class="editContentBox__contentBoxWrapper">
                                                             <span class="editContentBox__contentBox">
-                                                                <input autocomplete="off" type="text" name="en" value="" />
+                                                                <input autocomplete="off" type="text" name="en"
+                                                                       value=""/>
                                                             </span>
                                                         </span>
                                                             <span class="editContentBox__errorMessage"></span>
@@ -878,23 +757,27 @@
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the base name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     It has to be unique on the same level.
                                                 </div>
                                             </div>
                                         </div>
                                     </fieldset>
 
-                                    <fieldset class="editContentGroup editContentGroup--notHighlighted" name="displayName">
+                                    <fieldset class="editContentGroup editContentGroup--notHighlighted"
+                                              name="displayName">
                                         <div class="editContentGroup__title">Display names</div>
                                         <div class="editFieldsWithExplanation">
                                             <div class="editFieldsWithExplanation__editFields">
-                                                <div data-argo-element="newItemDisplayNames" class="editContentGroup__items editContentGroup__items--columns">
-                                                    <div data-argo-prototype="newItemDisplayName" class="editContentGroup__item editContentBox">
+                                                <div data-argo-element="newItemDisplayNames"
+                                                     class="editContentGroup__items editContentGroup__items--columns">
+                                                    <div data-argo-prototype="newItemDisplayName"
+                                                         class="editContentGroup__item editContentBox">
                                                         <label>
                                                             <span class="editContentBox__contentBoxWrapper">
                                                                 <span class="editContentBox__contentBox">
-                                                                    <input autocomplete="off" type="text" name="en" value="" />
+                                                                    <input autocomplete="off" type="text" name="en"
+                                                                           value=""/>
                                                                 </span>
                                                             </span>
                                                             <span class="editContentBox__errorMessage"></span>
@@ -906,7 +789,7 @@
                                             <div class="editFieldsWithExplanation__explanation">
                                                 <div class="editFieldsWithExplanation__copy">
                                                     Edit the display name for that site structure item.
-                                                    <br />
+                                                    <br/>
                                                     It has to be unique on the same level.
                                                 </div>
                                             </div>
@@ -938,7 +821,8 @@
             </div>
             <div class="tooltipOverlay__content">
                 <h3>Unused content</h3>
-                <p>This lists content fields, who belong to a language which is not used / configured in the current project.</p>
+                <p>This lists content fields, who belong to a language which is not used / configured in the current
+                    project.</p>
                 <p>You can anyhow edit and delete it here.</p>
             </div>
         </div>
@@ -1003,62 +887,130 @@
     </div>
 </div>
 
-<div class="messages" data-argo-items="messages">
+<div class="alerts">
+    <!-- Alert are blocking the app -->
 
+    <!-- Saving changes, generating new revision-id -->
+    <div data-argo-element="alertSaveChanges" class="alert">
+        <div class="alert__blockingLayer"></div>
+        <div class="alert__box">
+            <div class="alert__icon">
+                <i class="fas fa-save"></i>
+            </div>
+            <div class="alert__title">
+                Save changes
+            </div>
+            <div class="alert__details">
+                We need a little bit more time...
+                <br />
+                <br />
+                Your changes are going to be saved. Please wait...
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="notificationCentre">
+    <div class="messages overflowScrollBox">
+        <div class="messages__items overflowScrollBox__content" data-argo-items="messages">
+
+        </div>
+    </div>
+    <div class="notificationCentre__badgeMoreNotifications">
+        <div class="badge">
+            <div class="badge__icon">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            More messages...
+        </div>
+    </div>
 </div>
 
 <div style="display: none;" data-argo-items="messages-prototypes">
-    <div data-prototype="messageError" class="message message--error">
-        <div class="message__header">
-            <div class="message__title"><i class="fas fa-exclamation-circle"></i> <span>Error</span></div>
+    <div data-prototype="messageError" class="messages__item">
+        <div class="message message--error active">
+            <div class="message__header">
+                <div class="message__icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="message__title">
+                    <div class="message__headline">
+
+                    </div>
+                    <div class="message__teaser">
+
+                    </div>
+                </div>
+            </div>
             <div class="message__closeButton">
-                <div class="iconButton iconButton--close">
+                <div class="closeButton">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-        </div>
-        <div class="message__headline"></div>
-        <div class="message__descriptionTeaser">
+            <div class="message__openDetailsButton">
+                <i class="fas fa-angle-down"></i>
+            </div>
+            <div class="message__details">
 
-        </div>
-        <div class="message__description">
-
+            </div>
         </div>
     </div>
 
-    <div data-prototype="messageWarning" class="message message--warning">
-        <div class="message__header">
-            <div class="message__title"><i class="far fa-bell"></i> <span>Warning</span></div>
+    <div data-prototype="messageWarning" class="messages__item">
+        <div class="message message--warning active">
+            <div class="message__header">
+                <div class="message__icon">
+                    <i class="far fa-bell"></i>
+                </div>
+                <div class="message__title">
+                    <div class="message__headline">
+
+                    </div>
+                    <div class="message__teaser">
+
+                    </div>
+                </div>
+            </div>
             <div class="message__closeButton">
-                <div class="iconButton iconButton--close">
+                <div class="closeButton">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-        </div>
-        <div class="message__headline"></div>
-        <div class="message__descriptionTeaser">
+            <div class="message__openDetailsButton">
+                <i class="fas fa-angle-down"></i>
+            </div>
+            <div class="message__details">
 
-        </div>
-        <div class="message__description">
-
+            </div>
         </div>
     </div>
 
-    <div data-prototype="messageInfo" class="message message--info">
-        <div class="message__header">
-            <div class="message__title"><i class="fas fa-info"></i> <span>Info</span></div>
+    <div data-prototype="messageInfo" class="messages__item">
+        <div class="message message--info active">
+            <div class="message__header">
+                <div class="message__icon">
+                    <i class="fas fa-info"></i>
+                </div>
+                <div class="message__title">
+                    <div class="message__headline">
+
+                    </div>
+                    <div class="message__teaser">
+
+                    </div>
+                </div>
+            </div>
             <div class="message__closeButton">
-                <div class="iconButton iconButton--close">
+                <div class="closeButton">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-        </div>
-        <div class="message__headline"></div>
-        <div class="message__descriptionTeaser">
+            <div class="message__openDetailsButton">
+                <i class="fas fa-angle-down"></i>
+            </div>
+            <div class="message__details">
 
-        </div>
-        <div class="message__description">
-
+            </div>
         </div>
     </div>
 </div>
@@ -1078,7 +1030,7 @@
         },
         "urlLoadSiteStructure": "/cms/site-structure/ssm?l=DE",
         "urlSaveSiteStructure": "/site-structure/save",
-        "urlLoadItemDetails": "examples/site-structure-item-details.json",
+        "urlLoadItemDetails": "/cms/site-structure/ssi",
         "urlSaveItemDetails": "examples/site-structure-item-details-response.json",
         "urlUpToDateCheckSiteStructure": "examples/up-to-date-site-structure.json"
         /*"urlLoadSiteStructure": "http://www.argo.bestgreekestate.fourigin.com/cms/editors/siteStructure?l=DE"*/
