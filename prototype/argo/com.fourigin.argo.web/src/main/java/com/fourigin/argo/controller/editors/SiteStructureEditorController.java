@@ -18,19 +18,24 @@ import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.InvalidSiteStructurePathException;
 import com.fourigin.argo.models.action.Action;
 import com.fourigin.argo.models.action.ActionType;
+import com.fourigin.argo.models.content.ContentPage;
+import com.fourigin.argo.models.content.ContentPagePrototype;
 import com.fourigin.argo.models.structure.nodes.DirectoryInfo;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
+import com.fourigin.argo.models.template.Template;
 import com.fourigin.argo.models.template.TemplateReference;
 import com.fourigin.argo.repository.ContentRepository;
 import com.fourigin.argo.repository.ContentRepositoryFactory;
+import com.fourigin.argo.repository.TemplateResolver;
 import com.fourigin.argo.repository.UnresolvableSiteStructurePathException;
 import com.fourigin.argo.repository.action.ActionRepository;
 import com.fourigin.argo.repository.action.ActionRepositoryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +43,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -48,7 +52,7 @@ import java.util.Map;
 
 import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESS;
 
-@RestController
+@Controller
 @RequestMapping("/{project}/site-structure")
 public class SiteStructureEditorController {
 
@@ -58,12 +62,16 @@ public class SiteStructureEditorController {
 
     private ActionRepositoryFactory actionRepositoryFactory;
 
+    private TemplateResolver templateResolver;
+
     public SiteStructureEditorController(
             ContentRepositoryFactory contentRepositoryFactory,
-            ActionRepositoryFactory actionRepositoryFactory
+            ActionRepositoryFactory actionRepositoryFactory,
+            TemplateResolver templateResolver
     ) {
         this.contentRepositoryFactory = contentRepositoryFactory;
         this.actionRepositoryFactory = actionRepositoryFactory;
+        this.templateResolver = templateResolver;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -220,7 +228,7 @@ public class SiteStructureEditorController {
                         case CREATE:
                             if (logger.isDebugEnabled()) logger.debug("Applying CREATE acton");
                             ActionCreate actionCreate = (ActionCreate) action;
-                            applyCreateAction(actionCreate, txRepository);
+                            applyCreateAction(actionCreate, txRepository, project);
                             break;
                         case UPDATE:
                             if (logger.isDebugEnabled()) logger.debug("Applying UPDATE acton");
@@ -257,7 +265,7 @@ public class SiteStructureEditorController {
         return new ServiceBeanResponse<>(status, newSsmRevision, SUCCESS);
     }
 
-    private void applyCreateAction(ActionCreate actionCreate, ContentRepository contentRepository) {
+    private void applyCreateAction(ActionCreate actionCreate, ContentRepository contentRepository, String project) {
         String targetFolder = actionCreate.getFolderPath();
         String insertionPath = actionCreate.getInsertionPath();
         SiteNode ssi = actionCreate.getItem();
@@ -269,18 +277,24 @@ public class SiteStructureEditorController {
 
         switch (ssiContent.getType()) {
             case PAGE:
+                TemplateReference templateReference = ssiContent.getTemplateReference();
                 PageInfo pageInfo = new PageInfo.Builder()
                         .withName(ssiContent.getName())
                         .withPath(ssi.getPath())
                         .withParent(folder)
                         .withDisplayName(ssiContent.getDisplayName())
                         .withLocalizedName(ssiContent.getLocalizedName())
-                        .withTemplateReference(ssiContent.getTemplateReference())
+                        .withTemplateReference(templateReference)
                         .build();
 
                 contentRepository.createInfo(targetFolder, pageInfo);
 
-                // TODO: also create a Page object?!
+                // also create a Page object
+                Template template = templateResolver.retrieve(project, templateReference.getTemplateId());
+                ContentPagePrototype contentPagePrototype = template.getPrototype();
+                ContentPage contentPage = contentPagePrototype.getContentPrototype();
+//                contentPage.setId("");
+                contentRepository.create(pageInfo, contentPage);
 
                 break;
             case DIRECTORY:
@@ -346,7 +360,7 @@ public class SiteStructureEditorController {
 
         try {
             boolean changed = false;
-            switch (ssiContent.getType()) {
+            switch (ssiContent.getType()) { // NOPMD
                 case DIRECTORY:
                     DirectoryInfo dirInfo = contentRepository.resolveInfo(DirectoryInfo.class, path);
 
@@ -392,8 +406,6 @@ public class SiteStructureEditorController {
                         pageInfo.setTemplateReference(templateReference);
                     }
 
-                    // TODO: also update a Page object?!
-
                     if (changed) {
                         contentRepository.updateInfo(path, pageInfo);
                     }
@@ -402,7 +414,7 @@ public class SiteStructureEditorController {
                     throw new IllegalArgumentException("Unsupported node type '" + ssiContent.getType() + "'!");
             }
         } catch (InvalidSiteStructurePathException ex) {
-            throw new IllegalArgumentException("No item found to update for path '" + path + "'!");
+            throw new IllegalArgumentException("No item found to update for path '" + path + "'!", ex);
         }
     }
 
