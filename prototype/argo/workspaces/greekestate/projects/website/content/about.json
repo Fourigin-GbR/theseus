@@ -1,0 +1,411 @@
+{
+  "id" : "about",
+  "metaData" : {
+    "title" : "GreekEstate - About",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : {
+      "de" : "Über uns",
+      "ru" : "О компании",
+      "en" : "About us"
+    }
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : {
+      "de" : "<p>Die Firma <b>GREEKESTATE</b> operiert seit mehr als 20 Jahren auf dem Immobilienmarkt im Kurort Loutraki (Region Korinth, Griechenland). Wir bieten verschiedenste Immobilienobjekte an - von einfachen Einzimmerwohnungen bis hin zu Elite-Villen.</p>\n<p>Für unsere Kunden bieten wir folgende Dienstleistungen an:\n<ul>\n\t<li>Kostenlose Beratung zum Erwerb einer Immobilie</li>\n\t<li>Suche nach Immobilien, welche den Kundenwünsche am besten entsprechen würden</li>\n\t<li>Juristische Konsultationen</li>\n\t<li>Planung und Durschführung der Sanierungs- und Bauarbeiten</li>\n\t<li>Verwaltung der Immobilie während der Abwesenheit des Besitzers</li>\n</ul>\n</p>\n<p><strong>Wir würden und sehr freuen, Ihr Traumhaus zu finden!</strong></p>",
+      "ru" : "<p>Компания <b>GREEKESTATE</b> более 20 лет активно работает на рынке недвижимости в курортном городе Лутраки, Коринфия, Греция. Мы предлагаем широкий выбор вариантов недвижимости от недорогих однокомнатных квартир до элитных вилл.</p>\n<p>Нашим клиентам мы предоставляем следующие услуги:\n<ul>\n\t<li>Бесплатные консультации по вопросам приобретения недвижимости</li>\n\t<li>Подбор объекта недвижимости по заявке покупателя</li>\n\t<li>Юридическое сопровождение сделки</li>\n\t<li>Ремонтно-строительные работы</li>\n\t<li>Управление недвижимостью в период отсутствия владельца (охрана, присмотр, уход, сдача в аренду)</li>\n\t<li>Оказываем содействие в получение ВНЖ для владельцев недвижимости\n</ul>\n</p>\n<p><strong>Мы будем рады помочь вам найти квартиру или дом своей мечты!</strong></p>",
+      "en" : "<p>The <b>GREEKESTATE</b> company is more than 20 years operating on the property market of the health resort Loutraki (region Corinth, Greece). We offer property objects from the simplest studios up to elite villas.</p>\n<p>For our clients we offer the following services:\n<ul>\n\t<li>Free consultations while purchasing a property</li>\n\t<li>Search for a property matching to client's requirements</li>\n\t<li>Legal consultations</li>\n\t<li>Planning and implementation of renovation and construction projects</li>\n\t<li>Management of the property during the absence of the owner</li>\n</ul>\n</p>\n<p><strong>We would be happy to help you to find your dream home!</strong></p>"
+    }
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : true,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "6F9F797A56F94A8EC35E8079B034578D"
+    },
+    "content" : [ {
+      "type" : "data",
+      "name" : "processedOn",
+      "content" : "2019.09.26 15:51:46 +0000",
+      "dataType" : "DATE"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/home" : "1",
+        "/search" : "1",
+        "/contact" : "1",
+        "/about" : "1",
+        "/common" : "1",
+        "/impressum" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/",
+        "NON_RECURSIVE" : true,
+        "VERBOSE" : true
+      },
+      "checksum" : "AFC2F97D9F6FDBBBA9686DFBD0261484"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "false",
+          "info.localizedName.ru" : "home",
+          "info.state.compileState.message" : "./workspaces/greekestate/templates/greekestate/base.html (Datei oder Verzeichnis nicht gefunden)",
+          "info.state.revision" : "1",
+          "info.localizedName." : "home",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "" : "Home",
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "search",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Suche",
+          "ru" : "Поиск",
+          "en" : "Search"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции",
+          "en" : "Regions of Greece"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Objekte",
+          "ru" : "Объекты",
+          "en" : "Objects"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "contact",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт",
+          "en" : "Contact"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "about",
+          "info.state.compileState.compiled" : "false",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.compileState.message" : "null",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Über uns",
+          "ru" : "О нас",
+          "en" : "About us"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "common content",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name",
+        "content" : { }
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "impressum",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум",
+          "en" : "Impressum"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/links-and-ctas, /properties"
+      },
+      "checksum" : "8968FCC11D54ADE1AA4C2C838D314EEF"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : { }
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению",
+            "en" : "To the offer"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить",
+            "en" : "Request"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска",
+            "en" : "Back to search result"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Искать",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость",
+            "en" : "Bill a property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать",
+            "en" : "Rent a property"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : {
+            "de" : "Code",
+            "ru" : "Код",
+            "en" : "Code"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : {
+            "de" : "Fläche",
+            "ru" : "Площадь",
+            "en" : "Area"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : {
+            "de" : "Typ",
+            "ru" : "Тип",
+            "en" : "Type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : {
+            "de" : "Region",
+            "ru" : "Регион",
+            "en" : "Region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец",
+            "en" : "Owner"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт",
+            "en" : "Contact"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки",
+            "en" : "Pages"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : {
+            "de" : "Telefon",
+            "ru" : "Тел.",
+            "en" : "Phone"
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : {
+            "de" : "Mobil",
+            "ru" : "Моб.",
+            "en" : "Mobile"
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : {
+            "de" : "Fax",
+            "ru" : "Факс",
+            "en" : "Fax"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта",
+            "en" : "E-Mail"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

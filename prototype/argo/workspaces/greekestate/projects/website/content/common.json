@@ -1,0 +1,366 @@
+{
+	"id": "contact",
+	"metaData": {
+		"title": "GreekEstate Kontakt",
+		"attributes": {
+			"key-1": "value-1",
+			"key-2": "value-2",
+			"key-3": "value-3"
+		}
+	},
+	"content": [
+		{
+			"type": "group",
+			"name": "general-headlines",
+			"elements": [
+				{
+					"type": "text",
+					"name": "description",
+					"content": {
+						"en": "Description",
+						"de": "Beschreibung",
+						"ru": "Описание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "map",
+					"content": {
+						"en": "Map",
+						"de": "Karte",
+						"ru": "Карта"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search",
+					"content": {
+						"en": "Search",
+						"de": "Suchen",
+						"ru": "Поиск"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search-in-region",
+					"content": {
+						"en": "Search in the region",
+						"de": "Suche in der Region",
+						"ru": "Поиск в регионе"
+					}
+				},
+				{
+					"type": "text",
+					"name": "matching-objects-found",
+					"content": {
+						"en": "{0} properties found.",
+						"de": "{0} Immobilien gefunden.",
+						"ru": "Объектов найдено: {0}"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type",
+					"content": {
+						"en": "Object type",
+						"de": "Typ des Objektes",
+						"ru": "Тип объекта"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:apartment",
+					"content": {
+						"en": "Apartment",
+						"de": "Wohnung",
+						"ru": "Квартира"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:land-plot",
+					"content": {
+						"en": "Land plot",
+						"de": "Grundstück",
+						"ru": "Земельный участок"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:building",
+					"content": {
+						"en": "Building",
+						"de": "Gebäude",
+						"ru": "Здание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:hotel",
+					"content": {
+						"en": "Hotel",
+						"de": "Hotel",
+						"ru": "Гостиница"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:villa",
+					"content": {
+						"en": "Villa",
+						"de": "Villa",
+						"ru": "Вилла"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:detached-house",
+					"content": {
+						"en": "Detached house",
+						"de": "Freistehendes Haus",
+						"ru": "Дом"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:office",
+					"content": {
+						"en": "Office",
+						"de": "Büro",
+						"ru": "Офис"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:farm-parcel",
+					"content": {
+						"en": "Farm parcel",
+						"de": "Landparzelle",
+						"ru": "Сельскохозяйственный участок"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:store",
+					"content": {
+						"en": "Store",
+						"de": "Geschäft",
+						"ru": "Магазин"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:business-building",
+					"content": {
+						"en": "Business building",
+						"de": "Industriegebäude",
+						"ru": "Индустриальное здание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:various-other-property",
+					"content": {
+						"en": "Various other property",
+						"de": "Sonstige Immobilie",
+						"ru": "Прочая недвижимость"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:parking",
+					"content": {
+						"en": "Parking",
+						"de": "Parkplatz",
+						"ru": "Парковка"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:other-land-property",
+					"content": {
+						"en": "Other land property",
+						"de": "Sonstige Grundstücke",
+						"ru": "Прочие земельные участки"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:maisonette",
+					"content": {
+						"en": "Maisonette",
+						"de": "Maisonette",
+						"ru": "Двухуровневая квартира"
+					}
+				}
+			]
+		},
+		{
+			"type": "group",
+			"name": "properties",
+			"elements": [
+				{
+					"type": "text",
+					"name": "code",
+					"content": {
+						"en": "Code",
+						"de": "Code",
+						"ru": "Код"
+					}
+				},
+				{
+					"type": "text",
+					"name": "area",
+					"content": {
+						"en": "Area",
+						"de": "Fläche",
+						"ru": "Площадь"
+					}
+				},
+				{
+					"type": "text",
+					"name": "type",
+					"content": {
+						"en": "Type",
+						"de": "Typ",
+						"ru": "Тип"
+					}
+				},
+				{
+					"type": "text",
+					"name": "region",
+					"content": {
+						"en": "Region",
+						"de": "Region",
+						"ru": "Регион"
+					}
+				},
+				{
+					"type": "text",
+					"name": "owner",
+					"content": {
+						"en": "Owner",
+						"de": "Inhaber",
+						"ru": "Владелец"
+					}
+				},
+				{
+					"type": "text",
+					"name": "contact",
+					"content": {
+						"en": "Contact",
+						"de": "Kontakt",
+						"ru": "Контакт"
+					}
+				},
+				{
+					"type": "text",
+					"name": "pages",
+					"content": {
+						"en": "Pages",
+						"de": "Seiten",
+						"ru": "Ссылки"
+					}
+				},
+				{
+					"type": "text",
+					"name": "phone",
+					"content": {
+						"en": "Phone",
+						"de": "Telefon",
+						"ru": "Тел."
+					}
+				},
+				{
+					"type": "text",
+					"name": "mobile",
+					"content": {
+						"en": "Mobile",
+						"de": "Mobil",
+						"ru": "Моб."
+					}
+				},
+				{
+					"type": "text",
+					"name": "fax",
+					"content": {
+						"en": "Fax",
+						"de": "Fax",
+						"ru": "Факс"
+					}
+				},
+				{
+					"type": "text",
+					"name": "email",
+					"content": {
+						"en": "E-Mail",
+						"de": "E-Mail",
+						"ru": "Эл. почта"
+					}
+				}
+			]
+		},
+		{
+			"type": "group",
+			"name": "links-and-ctas",
+			"elements": [
+				{
+					"type": "text",
+					"name": "go-to-offer",
+					"content": {
+						"en": "To the offer",
+						"de": "Zum Angebot",
+						"ru": "К предложению"
+					}
+				},
+				{
+					"type": "text",
+					"name": "contact-request",
+					"content": {
+						"en": "Request",
+						"de": "Anfragen",
+						"ru": "Запросить"
+					}
+				},
+				{
+					"type": "text",
+					"name": "back-to-search-result",
+					"content": {
+						"en": "Back to search result",
+						"de": "Zurück zu Suchergebnissen",
+						"ru": "Обратно к результатам поиска"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search",
+					"content": {
+						"en": "Search",
+						"de": "Suchen",
+						"ru": "Искать"
+					}
+				},
+				{
+					"type": "text",
+					"name": "bill-property",
+					"content": {
+						"en": "Bill a property",
+						"de": "Immobilie kaufen",
+						"ru": "Купить недвижимость"
+					}
+				},
+				{
+					"type": "text",
+					"name": "rent-property",
+					"content": {
+						"en": "Rent a property",
+						"de": "Feriendomizil mieten",
+						"ru": "Арендовать"
+					}
+				}
+			]
+		}
+	],
+	"dataSourceContents": [
+	]
+}

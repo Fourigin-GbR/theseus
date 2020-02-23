@@ -1,0 +1,1678 @@
+{
+  "id" : "overview",
+  "metaData" : {
+    "title" : "GreekEstate - Regions",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "Loutraki",
+    "contextSpecificContent" : {
+      "de" : "Loutraki",
+      "ru" : "Регионы Греции"
+    }
+  }, {
+    "type" : "text",
+    "name" : "short-description",
+    "content" : "# Loutraki ist die schönste Stadt der Welt. <br />Das müssen Sie sehen!"
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten. Damit man möglichst viel von der Vielfalt.",
+    "contextSpecificContent" : {
+      "de" : "Die Städte und Regionen in Griechenland bieten alles, denn von Großstadt bis zum gemütlichen Fischerdorf ist alles dabei. Jeder Schritt in den Straßen und Gassen der Orte bringt andere Eindrücke und ein Spaziergang am Hafen oder im Umland der Städte zeigt das typisch griechische Leben. Einen Besuch wert sind auch die vielen Restaurants oder Cafes, die in den teilweise sehr verschlafenen Dörfern Griechenlands auf die Besucher warten.",
+      "ru" : "Города и регионы Греции предлагают все - от мегаполисов до маленьких уютных рыбацких поселков. Каждый шаг по улицам и переулкам открывает что-то новое, а прогулка в портовой зоне или по окраинам городов показывает настоящую греческую жизнь. Стоить обязательно посетить рестораны и кафе, ожидающие посетителей в маленьких заспанных деревнях Греции."
+    }
+  }, {
+    "type" : "object",
+    "name" : "region-image",
+    "referenceId" : "1234567",
+    "source" : "//argo.greekestate.fourigin.com/assets/shared/greekestate/assets/images/regions/loutraki-1.jpg",
+    "alternateText" : "Image one",
+    "mimeType" : "jpg"
+  }, {
+    "type" : "list",
+    "name" : "stage-images",
+    "elements" : [ {
+      "type" : "list-group",
+      "elements" : [ {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "alternateText" : "Image one",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "alternateText" : "Image two",
+        "mimeType" : "jpg"
+      }, {
+        "type" : "object",
+        "name" : "image",
+        "referenceId" : "1234567",
+        "alternateText" : "Image three",
+        "mimeType" : "jpg"
+      } ]
+    } ]
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "8C78FA6EE083443DA32646CD0645D891"
+    },
+    "content" : [ {
+      "type" : "text",
+      "name" : "processedOn",
+      "content" : "2019.04.09 12:34:16 +0000"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/home" : "1",
+        "/search" : "1",
+        "/contact" : "1",
+        "/about" : "1",
+        "/common" : "1",
+        "/impressum" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/",
+        "NON_RECURSIVE" : true,
+        "VERBOSE" : true
+      },
+      "checksum" : "8127FABE9068FB9EBB340A78F8706321"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "greekestate.index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "home",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "home",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Home",
+        "contextSpecificContent" : {
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.localizedName" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : "Search",
+        "contextSpecificContent" : {
+          "de" : "Suche",
+          "ru" : "Поиск"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : "Regions of Greece",
+        "contextSpecificContent" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : "Objects",
+        "contextSpecificContent" : {
+          "de" : "Objekte",
+          "ru" : "Объекты"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "contact",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Contact",
+        "contextSpecificContent" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "about",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "About us",
+        "contextSpecificContent" : {
+          "de" : "Über uns",
+          "ru" : "О нас"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.localizedName" : "common content",
+          "info.content.parent" : "/",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name"
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "greekestate.article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.localizedName" : "impressum",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : "Impressum",
+        "contextSpecificContent" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "region-site-structure",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/regions/overview" : "1",
+        "/regions/loutraki/about_casino_loutraki" : "1",
+        "/regions/loutraki/about_corinth_canal" : "1",
+        "/regions/loutraki/about_thermal_spa_loutraki" : "1",
+        "/regions/loutraki/distances_loutraki_historical_monuments" : "1",
+        "/regions/loutraki/way_airport_loutraki" : "1",
+        "/regions/__deprecated__salamina" : "1",
+        "/regions/__deprecated__athen" : "1",
+        "/regions/__deprecated__loutraki" : "1",
+        "/regions/about_loutraki" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/regions/loutraki",
+        "IGNORE_OWNER_PAGE" : "true",
+        "INCLUDE_CONTENT" : "/headline, /short-description, /body, /properties, /stage"
+      },
+      "index" : {
+        "name" : "objects-to-sale",
+        "categories" : {
+          "region" : "/properties/region",
+          "type" : "/properties/type"
+        },
+        "fields" : [ {
+          "name" : "code",
+          "path" : "/properties/code",
+          "type" : "TEXT"
+        }, {
+          "name" : "distance",
+          "path" : "/properties/distance-to-sea",
+          "type" : "NUMBER"
+        }, {
+          "name" : "number-of-rooms",
+          "path" : "/properties/number-of-rooms",
+          "type" : "NUMBER"
+        }, {
+          "name" : "price",
+          "path" : "/properties/price",
+          "type" : "PRICE"
+        } ],
+        "fullTextSearch" : [ "/short-description", "/headline", "/long-description", "/properties/region" ],
+        "keywords" : [ "athen", "promenade", "spa", "ruhig", "villa", "loutraki", "supermarkt", "schwimmbad" ]
+      },
+      "checksum" : "EE44E9DE4EFB42A2DAF3806C6ED2C03D"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "about_casino_loutraki",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Casino Loutraki",
+        "contextSpecificContent" : {
+          "de" : "Casino Loutraki",
+          "ru" : "Casino Loutraki"
+        }
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "",
+        "contextSpecificContent" : {
+          "de" : "",
+          "ru" : ""
+        }
+      }, {
+        "type" : "text",
+        "name" : "body",
+        "content" : "The resort town of Loutraki is the center of the gambling business, in which operates the largest casino in Europe. <br /> <br /> Casino &quot;Loutraki&quot; was opened in 1996 and is extremely popular with tourists. This contributes to a great atmosphere and non-stop operation of the casino. <br /> In the Casino presents all the most popular games and entertainment: blackjack, poker, slot machines and a traditional roulette. Все это находится в просторных залах. <br /> <br /> It offers guests about 80 gaming tables, including: about 40 tables for American Roulette, 30 tables for blackjack, tables for craps and poker, as well as more than 1.000 slot machines. <br /> There is a separate VIP-zone for the privileged players. <br /> For newcomers is offered program, which includes bonus and gift glasses, with the possibility of obtaining a free alcoholic beverage. <br /> A pleasant surprise - the cards on the buffet with a wide variety of dishes. Give out two cards. This allows for two days is free eat or to invite for dinner or lunch guest. <br /> <br /> On all territory the magnificent complex Casino &quot;Loutraki&quot; reigns combination of luxury and elegance. On furniture and items situation there are the signatures such greatest creators as Le Corbusier and Philip Starck. <br /> The unique comfort and beautiful design will make stay at the Casino a memorable. <br /> On the territory adjacent to the Casino, there is the palm garden and grows 75.000 different flowers and trees. <br /> <br /> In the complex there is: business center (there is access to the Internet, fax, printer), shops, boutiques, крытый и открытый бассейны, restaurant &laquo;Deep Blue&raquo; with Greek and international cuisine, a restaurant &laquo;Aquarius&raquo; with Italian cuisine, Mediterranean restaurant &laquo;Oceanos&raquo;, bar &laquo;Black &amp; Gold&raquo;, bar &laquo;Admiral&raquo;, beach bar &laquo;Dolphins&raquo;, pool bar, cafe. <br /> The complex also includes a fitness center &laquo;Oasis&raquo;, hairdresser, beauty salon, gym, massage room, Jacuzzi. <br /> On a sandy beach there is: windsurfing, water skiing, canoeing, pedalo.",
+        "contextSpecificContent" : {
+          "de" : "Der Kurstadt Loutraki ist das Spielzentrum, in dem am größte Casino in Europa betreibt. <br /> Casino &quot;Loutraki&quot; wurde im Jahr 1996 eröffnet und ist sehr beliebt bei Touristen. Diesem trägt zu einer großartigen Atmosphäre in Casino und Non-Stop-Betrieb. <br /> In das Casino gibt es alle die beliebtesten Spiele und Unterhaltung: Black Jack, Poker, Spielautomaten und ein traditionelles Roulette. All dies ist in den geräumigen Hallen entfernt. <br /> Casino bietet seinen Gästen über 80 Spieltischen, darunter: etwa 40 Tabellen für American Roulette, 30 Tische für Black Jack, Tischen für Spiele in Gebeine und Poker, sowie mehr als 1.000 Spielautomaten. Es gibt separate VIP-Zone für die privilegierten Spieler. <br /> Für Anfänger wird das Programm angeboten, die Bonus-und Geschenkgläser, mit der Möglichkeit der Erlangung einer freien alkoholischen Getränk enthält. <br /> Eine angenehme Überraschung - die Karten für dem Buffet mit einer großen Auswahl an Gerichten. Jeder bekommt zwei Karten. Dies ermöglicht es, zwei Tage lang kostenlos zu essen, oder ein Gast zum Abendessen oder Mittagessen einzuladen. <br /> <br /> An die schöne Anlage des Casino &quot;Loutraki&quot; herrscht Kombination von Luxus und Eleganz. An Möbel und Einrichtungsgegenstände stehn Unterschrift der größten Schöpfer, wie Le Corbusier и Philip Starck. Die einzigartigen Komfort und schönes Design wird Ihren Aufenthalt im Casino unvergesslich machen. <br /> Neben dem Casino ist der Palmengarten und wächst 75.000 verschiedenen Blumen und Bäumen. <br /> Das Casino-Gebäude verfügt über Business Center (Internet, Fax, Drucker), Geschäfte, Boutiquen, Innen- und Außenpools, Restaurant &laquo;Deep Blue&raquo; mit griechischer und internationaler Küche, ein Restaurant &laquo;Aquarius&raquo; mit italienischer Küche, mediterranes Restaurant &laquo;Oceanos&raquo;, Bar &laquo;Black &amp; Gold&raquo;, Bar &laquo;Admiral&raquo;, Bar am Strand &laquo;Dolphins&raquo;, Pool-Bar, Caf&eacute;. <br /> Der Komplex umfasst auch ein Fitnesscenter &laquo;Oasis&raquo;, Friseur, Schönheitssalon, Fitnessraum, Massageraum, Jacuzzi. <br /> An Strand gibt es Dienstleistungen: Windsurfen, Wasserski, Kanu, Pedalo.",
+          "ru" : "Казино &laquo;Лутраки&raquo; <br /> <br /> Курортный город Лутраки является центром игорного бизнеса, в котором функционирует самое крупное Казино в Европе. <br /> Казино &laquo;Лутраки&raquo; было открыто в 1996 году и пользуется бешеной популярностью у туристов. Этому в немалой степени способствует отличная атмосфера заведения и круглосуточный режим работы. <br /> В Казино представлены все наиболее популярные азартные игры и развлечения - блэкдже́к, покер, игровые автоматы, ну и, конечно же, традиционная рулетка. Всё это размещается в нескольких просторных залах. <br /> К услугам отдыхающих около 80-ти игровых столов, из которых: порядка 40 столов для игры в американскую рулетку, 30 столиков для блэкдже́ка, столики для игры в кости и покер, а также более 1.000 игровых автоматов. Для привилегированных игроков существуют отдельные VIP-зоны. <br /> Новичкам предлагается программа, в которую входят бонусные и подарочные очки, предоставляющие возможность получения бесплатного алкогольного напитка. <br /> Приятной неожиданностью являются карточки на шведский стол с большим разнообразием блюд. Их дают по две, что позволяет два дня бесплатно кушать либо пригласить на ужин или обед гостя. <br /> <br /> Сочетание роскоши и элегантности царит на всей территории великолепного комплекса Казино &laquo;Лутраки&raquo;. Его мебель и предметы обстановки несут на себе подпись таких величайших создателей, как Le Corbusier и Philip Starck. Уникальный комфорт, красивое оформление делают пребывание в Казино незабываемым. <br /> На прилежащей к Казино территории расположен пальмовый сад, а также произрастает 75.000 различных цветов и деревьев. <br /> В здании комплекса работает бизнес-центр (имеется доступ к Интернету, факс, принтер), магазины, бутики, открытый и закрытый бассейны, ресторан Deep Blue с греческой и интернациональной кухней, ресторан Aquarius с итальянской кухней, ресторан Oceanos со средиземноморской кухней, бар Black &amp; Gold, бар Admiral, бар на пляже Dolphins, бар у бассейна, кафе. <br /> Также на территории комплекса работает фитнес-центр Oasis, парикмахерская, косметический салон, спортзал, массажный кабинет, джакузи. <br /> На песчаном пляже предоставляются услуги: виндсерфинг, водные лыжи, каноэ, водный велосипед."
+        }
+      }, {
+        "type" : "list",
+        "name" : "stage",
+        "elements" : [ {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "9fbff77bb6b70afeed0dd9fe2c3243d61fed7fab",
+            "source" : "//images.bestgreekestate.com/9f/bff77bb6b70afeed0dd9fe2c3243d61fed7fab/82056228_900x675.jpeg",
+            "alternateText" : "Photo 82058258",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "Das wunderbarste Casino! Immer ein Gewinn Wert!"
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "3141362617d915918083d4d303b5efb1f4e6bbfe",
+            "source" : "//images.bestgreekestate.com/31/41362617d915918083d4d303b5efb1f4e6bbfe/82057514_900x675.jpeg",
+            "alternateText" : "Photo 82058261",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "3ebed40835fc7fc077fd1b05f84bd4d1d7f17477",
+            "source" : "//images.bestgreekestate.com/3e/bed40835fc7fc077fd1b05f84bd4d1d7f17477/82057521_900x675.jpeg",
+            "alternateText" : "Photo 82058265",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "44cba3f31799dce1f4dcc2f5fee35471e88683f2",
+            "source" : "//images.bestgreekestate.com/44/cba3f31799dce1f4dcc2f5fee35471e88683f2/82057532_900x675.jpeg",
+            "alternateText" : "Photo 82058252",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "c5df3575962301ecccfa597228a4bc3ee6078139",
+            "source" : "//images.bestgreekestate.com/c5/df3575962301ecccfa597228a4bc3ee6078139/82057523_900x675.jpeg",
+            "alternateText" : "Photo 82058271",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "25764fe09eedbac620fb9ce5c038bbc282b29cb8",
+            "source" : "//images.bestgreekestate.com/25/764fe09eedbac620fb9ce5c038bbc282b29cb8/82057538_900x675.jpeg",
+            "alternateText" : "Photo 82058276",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "ac4148e456ea7e9da520c84d7742059df5fdc533",
+            "source" : "//images.bestgreekestate.com/ac/4148e456ea7e9da520c84d7742059df5fdc533/82057545_900x675.jpeg",
+            "alternateText" : "Photo 82058283",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "d7ecca94b86a7746e639c773baf7c5432f5628c5",
+            "source" : "//images.bestgreekestate.com/d7/ecca94b86a7746e639c773baf7c5432f5628c5/82057553_900x675.jpeg",
+            "alternateText" : "Photo 82058288",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "eb822c4577c4508fba64e5548447e566eedc5ec8",
+            "source" : "//images.bestgreekestate.com/eb/822c4577c4508fba64e5548447e566eedc5ec8/82057561_900x675.jpeg",
+            "alternateText" : "Photo 82058292",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "3a1021765588e38292d1ee1bd146a974964f0cee",
+            "source" : "//images.bestgreekestate.com/3a/1021765588e38292d1ee1bd146a974964f0cee/82057563_900x675.jpeg",
+            "alternateText" : "Photo 82058298",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#..."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "997ff642b6e9b88bfc8c08e32a24d0f715c1396d",
+            "source" : "//images.bestgreekestate.com/99/7ff642b6e9b88bfc8c08e32a24d0f715c1396d/82057571_900x675.jpeg",
+            "alternateText" : "Photo 82058304",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : ""
+          } ]
+        } ]
+      } ],
+      "target" : "/regions/loutraki/about_casino_loutraki"
+    }, {
+      "type" : "link",
+      "name" : "about_corinth_canal",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Corinth Canal",
+        "contextSpecificContent" : {
+          "de" : "Corinth Canal",
+          "ru" : "Corinth Canal"
+        }
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "",
+        "contextSpecificContent" : {
+          "de" : "",
+          "ru" : ""
+        }
+      }, {
+        "type" : "text",
+        "name" : "body",
+        "content" : "Corinth Canal <br /> <br /> History <br /> Principal engineer: Istv&aacute;n T&uuml;rr and B&eacute;la Gerster <br /> Construction began: 1881 <br /> Date of first use: July 25, 1893 <br /> <br /> The Corinth Canal (greek. Dhioryga tis Korinthou) is a canal that connects the Gulf of Corinth with the Saronic Gulf in the Aegean Sea. It cuts through the narrow Isthmus of Corinth and separates the Peloponnese from the Greek mainland, thus effectively making the former peninsula an island. The builders dug the canal through the Isthmus at sea level; no locks are employed. It is 6.4 kilometres (4 mi) in length and only 21.4 metres (70 ft) wide at its base, making it impassable for most modern ships. It now has little economic importance. <br /> The canal was mooted in classical times and an abortive effort was made to build it in the 1st century AD. Construction finally got under way in 1881 but was hampered by geological and financial problems that bankrupted the original builders. It was completed in 1893 but, due to the canal's narrowness, navigational problems and periodic closures to repair landslides from its steep walls, it failed to attract the level of traffic expected by its operators. It is now used mainly for tourist traffic. <br /> <br /> Ancient attempts <br /> Several rulers in antiquity dreamed of digging a cutting through the Isthmus. The first to propose such an undertaking was the tyrant Periander in the 7th century BC. The project was abandoned and Periander instead constructed a simpler and less costly overland portage road, named the Diolkos or stone carriageway, along which ships could be towed from one side of the isthmus to the other. Periander's change of heart is attributed variously to the great expense of the project, a lack of labour or a fear that a canal would have robbed Corinth of its dominant role as an entrep&ocirc;t for goods. Remnants of the Diolkos still exist next to the modern canal. <br /> The Diadoch Demetrius Poliorcetes (336-283 BC) planned to construct a canal as a means to improve his communication lines, but dropped the plan after his surveyors, miscalculating the levels of the adjacent seas, feared heavy floods. <br /> The philosopher Apollonius of Tyana prophesied that ill would befall anyone who proposed to dig a Corinthian canal. Three Roman rulers considered the idea but all suffered violent deaths; the historian Suetonius tells us that the Roman dictator Julius Caesar considered digging a canal through the isthmus but was assassinated before he could commence the project. Caligula, his successor as the third Roman Emperor, commissioned a study in AD 40 from Egyptian experts who claimed incorrectly that the Corinthian Gulf was higher than the Saronic Gulf. As a result, they concluded, if a canal was dug the island of Aegina would be inundated. Caligula's interest in the idea got no further as he too was assassinated. <br /> The emperor Nero was the first to actually attempt to construct the canal, personally breaking the ground with a pickaxe and removing the first basket-load of soil in AD 67, but the project was abandoned when he died shortly afterwards. The Roman workforce, consisting of 6,000 Jewish prisoners of war, started digging 40-50 m (130-160 ft) wide trenches from both sides, while a third group at the ridge drilled deep shafts for probing the quality of the rock (which were reused in 1881 for the same purpose). According to Suetonius, the canal was dug to a distance of four stades (approximately 700 metres (2,300 ft), in other words about a tenth of the total distance across the isthmus). A memorial of the attempt in the form of a relief of Hercules was left by Nero's workers and can still be seen in the canal cutting today. Other than this, as the modern canal follows the same course as Nero's, no remains have survived. <br /> The philosopher and Roman senator Herodes Atticus is also known to have considered digging a canal in the 2nd century AD, but did not manage to get a project under way. The Venetians also considered it in 1687 after their conquest of the Peloponnese but likewise did not initiate a project. <br /> <br /> Construction of the modern canal <br /> The idea of a Corinth Canal was revived after Greece gained formal independence from the Ottoman Empire in 1830. The Greek statesman Ioannis Kapodistrias asked a French engineer to assess the feasibility of the project but had to abandon it when its cost was assessed at some 40 million gold francs-far too expensive for the newly independent country. Fresh impetus was given by the opening of the Suez Canal in 1869 and the following year, the government of Prime Minister Thrasyvoulos Zaimis passed a law authorising the construction of a Corinth Canal. French entrepreneurs were put in charge but, following the bankruptcy of the French company that dug the Panama Canal, French banks refused to lend money and the company went bankrupt too.",
+        "contextSpecificContent" : {
+          "de" : "Der Kanal von Korinth trennt das griechische Festland von der Halbinsel Peloponnes. <br /> <br /> Bau und Nutzung <br /> Für den in den Jahren 1881 bis 1893 gebauten, 6.346 m langen Kanal durchgrub man die Landenge von Korinth, den so genannten Isthmus von Korinth, an ihrer schmalsten Stelle. Der Bau des Kanals erfolgte unter der Aufsicht der ungarischen Ingenieure Istv&aacute;n Türrund Bela Gerster. In Erinnerung an die ungarischen Erbauer sind die beiden Steintafeln am Kanal auch auf Ungarisch beschriftet. Seitdem verbindet der Kanal von Korinth den Saronischen Golf mit dem Golf von Korinth. Um diese Durchfahrtsmöglichkeit zu schaffen und dem Schiffsverkehr so die etwa 400 km lange Fahrt rund um die Peloponnes zu ersparen, nahm man es auf sich, sich bis zu 84 m in die Tiefe durch Felsgestein hindurchzuarbeiten. Dadurch erreichte man eine Wassertiefe von etwa 8 m. Das Kanalbett ist im Niveau des Wasserspiegels etwa 24,6 m breit, verengt sich jedoch bis zum Grund auf ca. 21 m, während die obere lichte Weite des Geländeeinschnitts durchschnittlich 75 m beträgt. Die Steilwände am Kanal im Winkel von 71-77 ragen bis zu 79 m in die Höhe. Auf der Höhenlage kreuzen fünf Brücken den Kanal. <br /> Beachtenswert sind weiterhin die absenkbaren Brücken an beiden flachliegenden Enden des Kanals. Wenn sich ein Schiff nähert, werden diese durch ein motorengetriebenes Gestänge im Kanal versenkt. <br /> <br /> Zerstörung 1944 und Wiederaufbau <br /> 1944 sprengte die deutsche Wehrmacht einen Teil der Steilwand und alle Brücken über den Kanal. Um einen späteren Wiederaufbau zu erschweren, wurden zusätzlich Lokomotiven und Eisenbahnwagen in den Kanal geworfen und Minen platziert. Der Wiederaufbau wurde mit Hilfe des United States Army Corps of Engineers 1946 begonnen und bereits im November 1948 abgeschlossen; dabei mussten mehrere hunderttausend Tonnen Geröll beseitigt werden. <br /> <br /> Heutige Bedeutung <br /> Brachte der Kanal zur Zeit seiner Erbauung eine enorme Erleichterung für die Seefahrt mit sich, weil durch ihn die gefährliche Umfahrt der Peloponnes um Kap Malea gespart wurde, so hat er heute an Bedeutung verloren. Gründe dafür sind: <br /> • Die Dimensionen des Kanals erlauben nur die Passage kleinerer Schiffe. <br /> • Die Umfahrt der Peloponnes erfolgt jetzt auf Kursen, die weiter vor der Küste verlaufen; daher ist sie längst nicht mehr so gefahrvoll, und die Motorisierung der Schiffe minimiert den Zeitgewinn. <br /> • Das weiche Gestein der Kanalwände bedarf einer Stabilisierung, und die östliche Einfahrt (am Saronischen Golf) muss dringend ausgebessert werden. <br /> Dennoch ist das Verkehrsaufkommen im Kanal beachtlich. Trotz der relativ hohen Durchfahrtsgebühren (bei privaten Yachten 80 Euro bis 9 m Länge (Lüa), jeder weitere Meter 23-27 Euro (2012) wird diese schnurgerade Wasserstraße noch heute von etwa 30 Schiffen täglich, also rund 11.000 Schiffen im Jahr, passiert. Ein Großteil davon sind Fähren und Touristenschiffe. <br /> Dieses Bauwerk aus der Froschperspektive mit seinen steilen und zum Greifen nahen Felswänden zu beobachten, ist ein besonderes Erlebnis, das auch zum Angebot von zahlreichen Griechenland-Kreuzfahrten gehört. <br /> <br /> Vorgeschichte <br /> Die Idee eines Kanals von Korinth kann auf eine rund 2.600-jährige Geschichte zurückblicken. Am - überlieferten - Anfang steht wohl der Tyrann Periander von Korinth. Allerdings hat er niemals einen Versuch gewagt. Stattdessen bot im 6. und 5. Jahrhundert v. Chr. ein Schiffskarrenweg, der so genannte Diolkos, die Möglichkeit, eine Umschiffung der Halbinsel zu vermeiden. <br /> In römischer Zeit griff man den Gedanken eines Kanals zur Verbindung des Saronischen mit dem Korinthischen Golf erneut auf. Pläne wurden unter Caesar, Caligula (37-41 n. Chr.), Nero (54-68 n. Chr.) und Hadrian (117-138 n. Chr.) ausgearbeitet. Während es bei Caesar und Hadrian nur bei ersten Entwürfen blieb, gingen die Aktionen der beiden anderen römischen Kaiser weiter: <br /> • 40 n. Chr. entsandte Caligula einige seiner Ingenieure zum Isthmus von Korinth, um konkrete Messungen durchzuführen. Allerdings war das Ergebnis niederschmetternd: Man kam zu der Überzeugung, dass der Wasserspiegel des Korinthischen Golfes um einiges höher sei als der des Saronischen Golfes, sodass bei einem Durchbruch ganz sicherlich die Insel Ägina und vielleicht sogar noch Teile von Attika überschwemmt würden. Das Projekt wurde vorsichtshalber fallen gelassen. <br /> • 67 n. Chr. beorderte Nero mehrere tausend Arbeiter - es ist die Rede von etwa 6.000 jüdischen Sklaven - zum Isthmus. Angeblich soll er mit einer vergoldeten Schaufel den ersten Stich gemacht haben. Der Plan sah vor, dass die Arbeiter von zwei Seiten herkommend sich zur Mitte der Landenge vorarbeiten sollten, um sich hier dann zu treffen und den endgültigen Durchbruch zu schaffen. Nach drei Monaten wurde jedoch die Arbeit eingestellt, da Nero inzwischen verstorben war und seinen Nachfolgern Galba (68 n. Chr.) und Otho (69 n. Chr.) das Projekt zu riskant und zu teuer erschien. Die Überreste wurden beim Bau des heutigen Kanals überformt und sind nicht mehr sichtbar.",
+          "ru" : "Кори́нфский кана́л - канал в Греции, соединяющий Саронический залив Эгейского и Коринфский залив Ионического морей. Прорыт через Коринфский перешеек, соединяющий полуостров Пелопоннес с материком. Название получил в честь города Коринфа, расположенного у западной оконечности канала. Длина канала составляет 6 километров, глубина 8 метров. Стены канала естественного происхождения, главным образом из известняка, высота стен достигает 76 метров. Ширина канала на уровне моря составляет 25 метров, а на дне моря - 21 метр. Через канал перекинуты один железнодорожный и три автомобильных моста. Дополнительно с обеих сторон канала функционируют погружные мосты. <br /> <br /> История <br /> С древних времён делались попытки построить канал в этом месте. Первое упоминание относится к VII веку до н. э., когда коринфский тиран Периандр, причисляемый к семи мудрецам древней Греции, попытался прорыть водный путь, но остановил работы. Причиной прекращения работ являлись опасения Периандра, что из-за несоответствия уровней Эгейского и Ионического морей возможно затопление земель. По другой версии, он боялся возбудить гнев богов, потому что оракул жрицы Пифии в Дельфах провозгласил: &laquo;Не снабжай перешейка башней, и не прорывай его (не пересекай его каналом)&raquo;. По предположениям, это прорицание исходило от жрецов коринфских храмов, боявшихся, что вследствие открытия канала для быстрого прохода судов они лишатся щедрых приношений и подарков, потому что у купцов не было бы больше поводов оставаться в Коринфе. Вместо канала тиран создал более простой и менее дорогостоящий каменный волок, получивший название &laquo;Диолк&raquo;. Остатки Диолка в настоящее время существуют рядом с каналом. <br /> <br /> О возможности прокладки канала думал Деметрий Полиоркет в 307 году до н. э. Но и он оставил эту мысль, когда египетские инженеры, которых он нанял чтобы осуществить задуманное, уверили его, что существует одна проблема. По их словам, уровень воды в Коринфском заливе и в Сароническом заливе неодинаков, инженеры предупреждали, что, если прорыть полосу суши, воды Коринфского залива хлынут в Саронический залив, затопят всю область и смоют соседние острова. <br /> <br /> Когда Коринф перешёл под власть римлян, Юлий Цезарь и позже Калигула тоже разрабатывали такие планы. В 67 году нашей эры император Нерон предпринял третью попытку прорыть канал, привлекая к работе 6.000 рабов и каторжников. Эта попытка провалилась, когда Нерону пришлось вернуться в Рим, где вспыхнуло восстание против него. Вскоре после смерти Нерона его преемник Гальба остановил дорогостоящий проект. В последующие годы Ирод Аттик и позже византийцы старались пересечь перешеек, но и их усилия не увенчались успехом. То же самое можно сказать о венецианцах, которые начали работы, но вскоре опять сдались. <br /> <br /> После Греческой революции в 1821 году первый президент Греции Иоаннис Каподистрия также строил планы строительства Коринфского канала, видя его значение для развития Греции. Он поручил разработку проекта французскому инженеру, но по экономическим причинам от этих планов пришлось отказаться. <br /> После открытия Суэцкого канала греческое правительство в ноябре 1869 года издало закон о &laquo;пересечении каналом Коринфского перешейка&raquo;. Проектирование канала было поручено венгерским архитекторам Иштвану Тюрру и Белу Герстеру, подготовившими ранее проект Панамского канала. 5 мая 1882 года, после длительных переговоров, начались работы по постройке канала. Строительство канала было начато французской компанией, которая прекратила работу из-за финансовых трудностей, так и не закончив работы. Греческая компания во главе с греческим банкиром и филантропом Андреасом Сингру подхватила проект и закончила объект в рекордные сроки. Эксплуатация канала началась в 1893 году. Канал позволял судам, огибавшим Пелопоннес, сократить путь более чем на 400 километров. <br /> <br /> Строительство <br /> Коринфский канал <br /> Строительство Коринфского канала велось более десяти лет (1881-1893) силами двух с половиной тысяч рабочих. 7 августа 1893 года было устроено торжество по случаю открытия Коринфского канала. <br /> <br /> Канал сегодня <br /> В настоящее время канал отчасти утратил экономическое значение. Из-за узости водного пути в нём организовано реверсивное движение. Канал не могут проходить крупные океанские суда, ширина которых приближается к 20 метрам. Крупнотоннажные суда проходят канал на буксире, так как возникает опасность размыва стен. В год через канал проходят 11.000 судов. <br /> На мостах канала практикуется Банджи-джампинг. <br /> <br /> В древности через узкий Коринфский перешеек суда перетаскивали волоком, путь назывался Диолком, а в начале прошлого века в скале пробили этот канал. Цвет воды – феерический, а высота – довольно большая."
+        }
+      }, {
+        "type" : "list",
+        "name" : "stage",
+        "elements" : [ {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "a7d8bade59920f8b217a8861a5bad679e62735a6",
+            "source" : "//images.bestgreekestate.com/a7/d8bade59920f8b217a8861a5bad679e62735a6/82064127_900x675.jpeg",
+            "alternateText" : "Photo 82064127",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Kanal ist kanal."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "074bc11a9080d44e11e3b5ef12e4610d7e6de471",
+            "source" : "//images.bestgreekestate.com/07/4bc11a9080d44e11e3b5ef12e4610d7e6de471/82064134_900x675.jpeg",
+            "alternateText" : "Photo 82064134",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : ""
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "5766cba7d179860ccb3ef255f40673904c78fb79",
+            "source" : "//images.bestgreekestate.com/57/66cba7d179860ccb3ef255f40673904c78fb79/82064137_900x675.jpeg",
+            "alternateText" : "Photo 82064137",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : ""
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "23bee2aca6b8a866c68f732aa1a1d657f96c2f76",
+            "source" : "//images.bestgreekestate.com/23/bee2aca6b8a866c68f732aa1a1d657f96c2f76/82064145_900x675.jpeg",
+            "alternateText" : "Photo 82064145",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : ""
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "ae8d2a3a78956a99dd5c977f1e15e697bbb6d0cf",
+            "source" : "//images.bestgreekestate.com/ae/8d2a3a78956a99dd5c977f1e15e697bbb6d0cf/82064149_900x675.jpeg",
+            "alternateText" : "Photo 82064149",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : ""
+          } ]
+        } ]
+      } ],
+      "target" : "/regions/loutraki/about_corinth_canal"
+    }, {
+      "type" : "link",
+      "name" : "about_thermal_spa_loutraki",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Loutraki Thermal Spa",
+        "contextSpecificContent" : {
+          "de" : "Loutraki Thermal Spa",
+          "ru" : "Loutraki Thermal Spa"
+        }
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "",
+        "contextSpecificContent" : {
+          "de" : "",
+          "ru" : ""
+        }
+      }, {
+        "type" : "text",
+        "name" : "body",
+        "content" : "LOUTRAKI THERMAL SPA is located in the city of Loutraki, in the north cove of the Corinthian Gulf. It has been a famous place for its healing waters since the ancient times, then called &laquo;Thermae&raquo; and owes its name to the thermal baths which took place in the curative springs. The ancient city of &laquo;hot springs&raquo; owes its name to the &laquo;THERMAL&raquo; ARTEMIDA, protector of the hot thermal springs and is the favorite city of the gods. There, APOLLO, god of the sun and the tranquility and the mother of the gods IRA had temples for their worship. <br /> The well known from the ancient times healing and beneficial properties of the waters of Loutraki, provided and still provide through the centuries, prevention and treatment for many diseases, musculoskeletal, skin and other diseases of the human body. Since the time of Hippocrates, it was found that hydrotherapy in warm water (30-31&deg;C), promotes muscle relaxation reducing sensitivity to pain. While the properties of spa water in conjunction with temperature, decrease the level of stress hormone in humans. <br /> <br /> The miraculous waters of Loutraki, have linked their name since the ancient times with the treatment of many eminent personalities, among them the Roman military and political Lucius Cornelius Sulla (138 BC-78 BC), who, with the use of thermal waters of Loutraki, was healed from a serious skin disease. <br /> <br /> The beneficial effects of thermal water of Loutraki were well known much earlier in the ancient world, since the first reference for their beneficial properties had already been done by the historian Xenophon, who in his works &quot;Greek&quot;, states that Spartan soldiers after battles resorted to the curative waters of the Thermae to rest and rejuvenate, in the today’s city of Loutraki. <br /> <br /> The use of thermal waters of Loutraki with the beneficial effects continued throughout the era of Byzantine and post Byzantine years and then Loutraki, with reference to the thermal baths, was identified as a metropolitan center of tourism in Greece and the first treatment station. <br /> <br /> Through the depth of centuries the curative water of Loutraki, has been established as a symbol of natural healthy living, welfare and rejuvenation and accurately this unique gift of nature has been characterized as &laquo;The water of life.&raquo; <br /> <br /> Loutraki is the birthplace of the Greek thermalism and it’s characterized as the premier spa resort of Greece. It has been working as a structured organized thermalism since 1914 while the Greek state was still in the preparatory work of Greek tourism. <br /> The modern history of Loutraki begins in 1847, when the first analysis of mineral waters was made by Professor Giovanni Battista Delvinioti. <br /> In 1855 the first wooden building bath was built with 10 baths, while in 1874 it was replaced by a stone building . <br /> In 1855, the first municipal company operating spas was created in Loutraki, which offered efficient services to the Department of Health Tourism. <br /> In 1899 a new modern one for those times was built with 22 baths, on the location where now the modern new spa is, which was ultimately demolished in 1967. <br /> In 1934 the exquisite classical architectural building of luxury bath was built which was renovated in 2009 and was connected harmoniously with modern facilities of the new building which is now called LOUTRAKI THERMAL SPA. <br /> <br /> &laquo;LOUTRAKI THERMAL SPA&raquo; is located in the historic and cosmopolitan spa town of Loutraki, within the territories of the old spa town, at 24 G. Lekas street, nearly opposite the beautiful coastal city park. It belongs to the administration of the Municipality of Loutraki - St. Theodore in the prefecture of Corinth of the Peloponnese region. <br /> Loutraki, where LOUTRAKI THERMAL SPA is located, is the first Greek resort which gained international reputation, mainly because of the famous spa and table water. There is a unique diversity of natural scenery and mild climate conditions in the region, with sunshine over 300 days a year. <br /> Modern LOUTRAKI THERMAL SPA spread over an area of 5.000 sq.m. in a unique environment, luxury and great hospitality, competes successfully not only with the other Greek spa centers but also the relevant international spa resorts. <br /> <br /> City of Loutraki and &laquo;LOUTRAKI THERMAL SPA&raquo; are just 5 km from the Corinthian Canal of the Isthmus, just 80 km away from the capital of Greece Athens within easy access from the airport, just one hour’s drive. Access to Loutraki is also easy from the city of Patras, which is the gateway of southern Greece for the guests who prefer the sea route from Western Europe. <br /> In the Loutraki Spa center, you can drive very easily with your private car, or you can use the bus Kifissos performing very frequent routes to the city center. You may also reach it by the Suburban Railway. <br /> From the town of Loutraki, access to &laquo;LOUTRAKI THERMAL SPA&raquo;, is really very easy. You can just walk about 500 meters, using the coastal footpath and enjoy the pristine beach and the majestic mountains of Gerania embracing this beautiful place or take a taxi.",
+        "contextSpecificContent" : {
+          "de" : "LOUTRAKI THERMAL SPA is located in the city of Loutraki, in the north cove of the Corinthian Gulf. It has been a famous place for its healing waters since the ancient times, then called &laquo;Thermae&raquo; and owes its name to the thermal baths which took place in the curative springs. The ancient city of &laquo;hot springs&raquo; owes its name to the &laquo;THERMAL&raquo; ARTEMIDA, protector of the hot thermal springs and is the favorite city of the gods. There, APOLLO, god of the sun and the tranquility and the mother of the gods IRA had temples for their worship. <br /> The well known from the ancient times healing and beneficial properties of the waters of Loutraki, provided and still provide through the centuries, prevention and treatment for many diseases, musculoskeletal, skin and other diseases of the human body. Since the time of Hippocrates, it was found that hydrotherapy in warm water (30-31&deg;C), promotes muscle relaxation reducing sensitivity to pain. While the properties of spa water in conjunction with temperature, decrease the level of stress hormone in humans. <br /> <br /> The miraculous waters of Loutraki, have linked their name since the ancient times with the treatment of many eminent personalities, among them the Roman military and political Lucius Cornelius Sulla (138 BC-78 BC), who, with the use of thermal waters of Loutraki, was healed from a serious skin disease. <br /> <br /> The beneficial effects of thermal water of Loutraki were well known much earlier in the ancient world, since the first reference for their beneficial properties had already been done by the historian Xenophon, who in his works &quot;Greek&quot;, states that Spartan soldiers after battles resorted to the curative waters of the Thermae to rest and rejuvenate, in the today’s city of Loutraki. <br /> <br /> The use of thermal waters of Loutraki with the beneficial effects continued throughout the era of Byzantine and post Byzantine years and then Loutraki, with reference to the thermal baths, was identified as a metropolitan center of tourism in Greece and the first treatment station. <br /> <br /> Through the depth of centuries the curative water of Loutraki, has been established as a symbol of natural healthy living, welfare and rejuvenation and accurately this unique gift of nature has been characterized as &laquo;The water of life.&raquo; <br /> <br /> Loutraki is the birthplace of the Greek thermalism and it’s characterized as the premier spa resort of Greece. It has been working as a structured organized thermalism since 1914 while the Greek state was still in the preparatory work of Greek tourism. <br /> The modern history of Loutraki begins in 1847, when the first analysis of mineral waters was made by Professor Giovanni Battista Delvinioti. <br /> In 1855 the first wooden building bath was built with 10 baths, while in 1874 it was replaced by a stone building . <br /> In 1855, the first municipal company operating spas was created in Loutraki, which offered efficient services to the Department of Health Tourism. <br /> In 1899 a new modern one for those times was built with 22 baths, on the location where now the modern new spa is, which was ultimately demolished in 1967. <br /> In 1934 the exquisite classical architectural building of luxury bath was built which was renovated in 2009 and was connected harmoniously with modern facilities of the new building which is now called LOUTRAKI THERMAL SPA. <br /> <br /> &laquo;LOUTRAKI THERMAL SPA&raquo; is located in the historic and cosmopolitan spa town of Loutraki, within the territories of the old spa town, at 24 G. Lekas street, nearly opposite the beautiful coastal city park. It belongs to the administration of the Municipality of Loutraki - St. Theodore in the prefecture of Corinth of the Peloponnese region. <br /> Loutraki, where LOUTRAKI THERMAL SPA is located, is the first Greek resort which gained international reputation, mainly because of the famous spa and table water. There is a unique diversity of natural scenery and mild climate conditions in the region, with sunshine over 300 days a year. <br /> Modern LOUTRAKI THERMAL SPA spread over an area of 5.000 sq.m. in a unique environment, luxury and great hospitality, competes successfully not only with the other Greek spa centers but also the relevant international spa resorts. <br /> <br /> City of Loutraki and &laquo;LOUTRAKI THERMAL SPA&raquo; are just 5 km from the Corinthian Canal of the Isthmus, just 80 km away from the capital of Greece Athens within easy access from the airport, just one hour’s drive. Access to Loutraki is also easy from the city of Patras, which is the gateway of southern Greece for the guests who prefer the sea route from Western Europe. <br /> In the Loutraki Spa center, you can drive very easily with your private car, or you can use the bus Kifissos performing very frequent routes to the city center. You may also reach it by the Suburban Railway. <br /> From the town of Loutraki, access to &laquo;LOUTRAKI THERMAL SPA&raquo;, is really very easy. You can just walk about 500 meters, using the coastal footpath and enjoy the pristine beach and the majestic mountains of Gerania embracing this beautiful place or take a taxi.",
+          "ru" : "Термальный гидротерапевтический СПА центр &laquo;Лутраки&raquo; <br /> <br /> Курорт Лутраки занимает одно из первых мест в международном каталоге центров лечебного туризма, благодаря своим термальным источникам, бьющим из прибрежной 750-метровой зоны. Эти естественные источники выходят на поверхность уже на протяжении нескольких тысячелетий. <br /> В недрах земли воды фильтруются, встречающимися на их пути разнообразными земляными породами, обогащаются редкими металлами и минералами, которые делают их особенно ценными для здоровья. <br /> <br /> Характеристика воды: термальная -Cl-Na-Mg-Br-металлическая-гипотоническая. <br /> Температура воды: 30,4-32 С&deg;. <br /> <br /> Эта вода используется в суперсовременной водолечебнице с прекрасным оснащением для принятия ванн и проведения физиотерапии. <br /> <br /> Вода &laquo;Лутраки&raquo; оказывает лечебные действия при ревматизме, артрите, артрозе, радикулите, ишиасе (воспаление седалищного нерва), подагре, болезнях опорно-двигательного аппарата, дерматологических заболеваниях (экземах, псориазе, др.), заболеваниях нервной системы (невралгия, бессонница), гинекологических патологиях, а также снимает напряжение и стресс. <br /> В СПА центре &laquo;Лутраки&raquo; можно расслабиться и отдохнуть, как это делали древние греки 2.500 лет назад. <br /> <br /> Эффект лечения усиливается при сочетании процедур в водолечебнице &laquo;Лутраки&raquo; (гидромассаж минеральной радоновой водой в бассейне или ванне &laquo;Джакузи&raquo;, душ Шарко, сауна, хамам, грязелечение, ароматерапия, лечебный и расслабляющий массаж лица и тела, разнообразные программы по уходу лица и тела) с купанием в чистом море, насыщённом йодом. <br /> <br /> Радоновый источник, предназначенный для питья, помогает при заболеваниях почек, жёлчнокаменной болезни, артритах, выводит из почек песок и даже камни. <br /> <br /> Лечебные воды &laquo;Лутраки&raquo; также подходят и молодым, современным, здоровым людям. В СПА центре они могут просто расслабиться, освободиться от стресса и провести несколько дней в роскошной обстановке, пользуясь услугами гимнастического зала, сауны, парной бани, джакузи и т.д.. <br /> Женщинам предоставляется шанс насладиться курсом терапии &laquo;Здоровье и красота&raquo;, который поможет омоложению организма и даст новый заряд здоровья и бодрости."
+        }
+      }, {
+        "type" : "list",
+        "name" : "stage",
+        "elements" : [ {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "49764aa0aad985b93a5d9112a57fde11a94774b0",
+            "source" : "//images.bestgreekestate.com/49/764aa0aad985b93a5d9112a57fde11a94774b0/134240074_900x675.jpeg",
+            "alternateText" : "Photo 134240074",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "0e27420c75df477e56f6c43bc6036ac3aa510c81",
+            "source" : "//images.bestgreekestate.com/0e/27420c75df477e56f6c43bc6036ac3aa510c81/82050301_900x675.jpeg",
+            "alternateText" : "Photo 82050301",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "a5b7c849644c9b84632eeaaae1c17290eebc2418",
+            "source" : "//images.bestgreekestate.com/a5/b7c849644c9b84632eeaaae1c17290eebc2418/82050286_900x675.jpeg",
+            "alternateText" : "Photo 82050286",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "fe3218c347ad2b3b9583aba63bbcfba611f3a4e4",
+            "source" : "//images.bestgreekestate.com/fe/3218c347ad2b3b9583aba63bbcfba611f3a4e4/82050289_900x675.jpeg",
+            "alternateText" : "Photo 82050289",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "6079dcac05c89fa17b4459f0ed1418ecc31c77ed",
+            "source" : "//images.bestgreekestate.com/60/79dcac05c89fa17b4459f0ed1418ecc31c77ed/82050294_900x675.jpeg",
+            "alternateText" : "Photo 82050294",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "f73f1067143ced2fb89ab59f538c2e58ea1e88ea",
+            "source" : "//images.bestgreekestate.com/f7/3f1067143ced2fb89ab59f538c2e58ea1e88ea/82050295_900x675.jpeg",
+            "alternateText" : "Photo 82050295",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "f5b402d330999d4e4a44e65096f4bc2f71e9535c",
+            "source" : "//images.bestgreekestate.com/f5/b402d330999d4e4a44e65096f4bc2f71e9535c/82050299_900x675.jpeg",
+            "alternateText" : "Photo 82050299",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Der Spa ist spa."
+          } ]
+        } ]
+      } ],
+      "target" : "/regions/loutraki/about_thermal_spa_loutraki"
+    }, {
+      "type" : "link",
+      "name" : "distances_loutraki_historical_monuments",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "Distances to Loutraki",
+        "contextSpecificContent" : {
+          "de" : "Entfernungen nach Loutraki",
+          "ru" : "Расстояния до Лутраки"
+        }
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "",
+        "contextSpecificContent" : {
+          "de" : "",
+          "ru" : ""
+        }
+      }, {
+        "type" : "text",
+        "name" : "body",
+        "content" : "Distances from the resort town of Loutraki to the main historical monuments of ancient Greece <br /> <br /> The resort town of Loutraki there is a flawless infrastructure tourist service that allows you to visit the main attractions and historical monuments of ancient Greece: <br /> <br /> • Bridge over the Corinth Canal (10 km). <br /> &nbsp; From the bridge it offers stunning views of one of the wonders of the construction - Corinth Canal. <br /> &nbsp; The canal connects the Aegean and Ionian Sea and separates Attica from the peninsula Peloponnese. <br /> &nbsp; Near the bridge there are souvenir shops, children's water park and a large supermarket. <br /> • The ancient city of Corinth (10 km). <br /> • The city of Corinth (6 km). <br /> • The ancient town of Corinth (23 km), where in 51 A.D. the apostle Paul spoke to the residents of the city. <br /> • The monastery of St. Potapius (14 km). <br /> • The blue salt lake &laquo;Ireon&raquo; (Vouliagmeni) (35 km), on the bottom of which is a sunken city. <br /> • The excavation of the sanctuary of the goddess Hera and the lighthouse at the Cape Meligavi (40 km). <br /> • The ancient theater of Epidauros (80 km) with amazing acoustics. <br /> • The ancient city of Patras (130 км). <br /> • The city of Nafplio (90 km) - the first capital of Greece in 1828-1833 years. <br /> • The ancient city of Nemea (40 km). <br /> • The ancient city museum - Mycenae (50 km). <br /> • The city of Sparta (140 km), with located in the vicinity the ruins of ancient Sparta. <br /> • City of Sparta, with located in her surroundings Ruins of ancient Sparta (130 km). <br /> • The medieval town of Mystras (150 km). <br /> • The Byzantine fortress town of Monemvasia (220 km). <br /> • Olympia (230 km) - one of the largest sanctuaries of ancient Greece. <br /> • The ancient city of Delphi (260 km). <br /> • The Cape Sounion at the southern tip of Attica (150 km) on which preserved Ruins of the Temple of Poseidon. <br /> • The city of Athens (85 km). <br /> <br /> Rent an apartment in Loutraki <br /> <br /> Buy an apartment or house in Loutraki <br /> <br /> How to get from Athens airport to Loutraki <br /> Urban public transport",
+        "contextSpecificContent" : {
+          "de" : "Entfernungen zu den wichtigsten historischen Denkmäler der antiken Griechenland <br /> <br /> <br /> Kurstadt Loutraki verfügt über eine hervorragende Infrastruktur von dem touristische Service. <br /> Loutraki befindet sich in der Nähe zu den wichtigsten Sehenswürdigkeiten und historischen Denkmälern des antiken Griechenland, dass die Möglichkeit gibt, zu besuchen: <br /> <br /> • Brücke über den Kanal von Korinth (10 km). <br /> &nbsp; Von der Brücke gibt es einen atemberaubenden Ausblick an eines der Bauwunder - Kanal von Korinth. <br /> &nbsp; Der Kanal verbindet die Ägäis Meer mit dem Ionische Meer und trennt Attika von den Peloponnes. <br /> &nbsp; In der Nähe der Brücke sind Souvenirläden, Kinderwasserpark und ein großer Supermarkt. <br /> • Die Stadt Korinth (6 km). <br /> • Die antike Stadt Korinth (23 km). <br /> • Der Kloster vom heiligen Potapius (14 km). <br /> • Die blau Meerwasser-See &laquo;Ireon&raquo; (Vouliagmeni) (35 km). <br /> • Die Ausgrabung des Heiligtum von Göttin Hera und der Leuchtturm am Kap Meligavi (40 km). <br /> • Das antiken Theater von Epidauros (80 km) mit erstaunlichen Akustik. <br /> • Die antike Stadt Patras (130 km). <br /> • Die Stadt Nafplio (90 km) – die erste Hauptstadt von Griechenland in 1828-1833 Jahren. <br /> • Die antiken Stadt Nemea (40 km). <br /> • Die antike Stadt-Museum – Mykene (50 km). <br /> • Die Stadt Sparta und die Ruinen des antiken Sparta (140 km). <br /> • Die mittelalterliche Stadt Mystras (150 km). <br /> • Die byzantinische Festungsstadt Monemvasia (220 km). <br /> • Olympia (230 km) – einer der größten Heiligtümer des antiken Griechenland. <br /> • Die antike Stadt Delphi (260 km). <br /> • Der Kap Sounion an der Südspitze Attikas (150 km), wo die Ruinen des Tempels von Poseidon. <br /> • Die Stadt Athen (85 km). <br /> <br /> <br /> Wie kann man von Flughafen Athen nach Loutraki gelangen <br /> Städtische öffentliche Verkehrsmittel <br /> <br /> Mieten eine Wohnung in Loutraki <br /> <br /> Kaufen eine Wohnung oder ein Haus in Loutraki",
+          "ru" : "Расстояния от города Лутраки до основных исторических памятников античной Греции <br /> <br /> Курортный город Лутраки располагает безупречной инфраструктурой туристического сервиса. <br /> Близость расположения Лутраки от основных исторических памятников античной Греции позволяет посетить: <br /> <br /> • Мост через Коринфский канал (10 км). <br /> &nbsp; С моста открывается потрясающий вид на одно из чудес строительства – Коринфский канал. <br /> &nbsp; Коринфский канал соединяет Эгейское и Ионическое моря и разделяет Аттику и Пелопоннес. <br /> &nbsp; Рядом с мостом работают сувенирные магазины, большой супермаркет и детский аквапарк. <br /> • Город Коринф (6 км). <br /> • Древний город Коринф (23 км), где в 51 году н.э. выступал перед жителями Апостол Павел. <br /> • Монастырь Святого Потапия (14 км). <br /> • Голубое морское озеро &laquo;Иреон&raquo; (Вульягмени) (35 км), на дне которого находится затонувший город. <br /> • Раскопки святилища богини Геры и маяк на мысе Мелигави (40 км). <br /> • Древний театр Эпидавра (80 км) с удивительной акустикой. <br /> • Древний город Патры (130 км). <br /> • Город Нафплио (90 км) – первая столица Греции в 1828-1833 годах. <br /> • Древний город Немея (40 км). <br /> • Древнейший город-музей Микены (50 км). <br /> • Город Спарта (140 км), с расположенными в его окрестностях руинами Древней Спарты. <br /> • Средневековый город Мистра (150 км). <br /> • Византийский город-крепость Монемвасия (220 км). <br /> • Олимпию (230 км) – одно из крупнейших святилищ Древней Греции. <br /> • Древнегреческий город Дельфы (260 км). <br /> • Мыс Сунион на южной оконечности Аттики (150 км), на котором сохранились руины храма Посейдона. <br /> • Город Афины (85 км). <br /> <br /> <br /> Как добраться из аэропорта Афины в Лутраки <br /> Городской общественный транспорт <br /> <br /> Арендовать квартиру в Лутраки <br /> <br /> Купить квартиру или дом в Лутраки"
+        }
+      }, {
+        "type" : "list",
+        "name" : "stage",
+        "elements" : [ {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "91cfe0248ab6330483b9a97a7a15bf4c5bbfcf71",
+            "source" : "//images.bestgreekestate.com/91/cfe0248ab6330483b9a97a7a15bf4c5bbfcf71/99482583_900x675.jpeg",
+            "alternateText" : "Photo 99482583",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "d82040638c6cbe29cee9112408098df83c99a967",
+            "source" : "//images.bestgreekestate.com/d8/2040638c6cbe29cee9112408098df83c99a967/99482584_900x675.jpeg",
+            "alternateText" : "Photo 99482584",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "3e06dd4c49032e7e448bde20cb75aca8ba4b97c9",
+            "source" : "//images.bestgreekestate.com/3e/06dd4c49032e7e448bde20cb75aca8ba4b97c9/99482585_900x675.jpeg",
+            "alternateText" : "Photo 99482585",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "f81116b91f40d630055b0d1735dcfe2907ebe3a4",
+            "source" : "//images.bestgreekestate.com/f8/1116b91f40d630055b0d1735dcfe2907ebe3a4/99482586_900x675.jpeg",
+            "alternateText" : "Photo 99482586",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "cede5f59f7a2b01dac540486b8cbb28e9e30452f",
+            "source" : "//images.bestgreekestate.com/ce/de5f59f7a2b01dac540486b8cbb28e9e30452f/99482588_900x675.jpeg",
+            "alternateText" : "Photo 99482588",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "e29a465dd0235c2f9f685cdf53c5965f6a4c0a00",
+            "source" : "//images.bestgreekestate.com/e2/9a465dd0235c2f9f685cdf53c5965f6a4c0a00/99482590_900x675.jpeg",
+            "alternateText" : "Photo 99482590",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "f9b8caef7d446b1f6ce571ac6e4c6d04e6a52633",
+            "source" : "//images.bestgreekestate.com/f9/b8caef7d446b1f6ce571ac6e4c6d04e6a52633/99482591_900x675.jpeg",
+            "alternateText" : "Photo 99482591",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "a85e21d2b0e7f16dfa485721eb24b34db8cdf4bd",
+            "source" : "//images.bestgreekestate.com/a8/5e21d2b0e7f16dfa485721eb24b34db8cdf4bd/99482593_900x675.jpeg",
+            "alternateText" : "Photo 99482593",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "4ae76f45547c2b19c1c1e8bf11501d5215f3f62f",
+            "source" : "//images.bestgreekestate.com/4a/e76f45547c2b19c1c1e8bf11501d5215f3f62f/99482594_900x675.jpeg",
+            "alternateText" : "Photo 99482594",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "3b6fb99fc20882107081ce05558c2aa7f14f1b83",
+            "source" : "//images.bestgreekestate.com/3b/6fb99fc20882107081ce05558c2aa7f14f1b83/99482596_900x675.jpeg",
+            "alternateText" : "Photo 99482596",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "9f846903af176c344108fb1e0d3b2f668b0fae57",
+            "source" : "//images.bestgreekestate.com/9f/846903af176c344108fb1e0d3b2f668b0fae57/99482597_900x675.jpeg",
+            "alternateText" : "Photo 99482597",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "9b0e8bf1f495b611567ac5be7156bea7e351e61f",
+            "source" : "//images.bestgreekestate.com/9b/0e8bf1f495b611567ac5be7156bea7e351e61f/99482598_900x675.jpeg",
+            "alternateText" : "Photo 99482598",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "1eb1b7d901303c2679a150e6b6d9e341d007673e",
+            "source" : "//images.bestgreekestate.com/1e/b1b7d901303c2679a150e6b6d9e341d007673e/99482600_900x675.jpeg",
+            "alternateText" : "Photo 99482600",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "d8780a2c2dba9a2283cf4772bd7e387090569463",
+            "source" : "//images.bestgreekestate.com/d8/780a2c2dba9a2283cf4772bd7e387090569463/99482602_900x675.jpeg",
+            "alternateText" : "Photo 99482602",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "dac55f88f3697afaf9fb0c209fac7d37e23d898b",
+            "source" : "//images.bestgreekestate.com/da/c55f88f3697afaf9fb0c209fac7d37e23d898b/99482603_900x675.jpeg",
+            "alternateText" : "Photo 99482603",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "9b2ba0f33895fa1aabf04a7fd1a1bfda9d613de0",
+            "source" : "//images.bestgreekestate.com/9b/2ba0f33895fa1aabf04a7fd1a1bfda9d613de0/99482605_900x675.jpeg",
+            "alternateText" : "Photo 99482605",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "5ece7c0a007e1262586e30694dca02ca61a5d450",
+            "source" : "//images.bestgreekestate.com/5e/ce7c0a007e1262586e30694dca02ca61a5d450/99482607_900x675.jpeg",
+            "alternateText" : "Photo 99482607",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "0e17d82a2a7cc0838603d9e6187ae0c14fc0e361",
+            "source" : "//images.bestgreekestate.com/0e/17d82a2a7cc0838603d9e6187ae0c14fc0e361/99482608_900x675.jpeg",
+            "alternateText" : "Photo 99482608",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "bfd3ad2a0d3283457936fe7fac880fafdee8e64e",
+            "source" : "//images.bestgreekestate.com/bf/d3ad2a0d3283457936fe7fac880fafdee8e64e/99482611_900x675.jpeg",
+            "alternateText" : "Photo 99482611",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "23ef97676a28c978ed2555491aecee6e94461737",
+            "source" : "//images.bestgreekestate.com/23/ef97676a28c978ed2555491aecee6e94461737/99482613_900x675.jpeg",
+            "alternateText" : "Photo 99482613",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "754f2377f68c5312f8523d292fbc4b894e8ac19f",
+            "source" : "//images.bestgreekestate.com/75/4f2377f68c5312f8523d292fbc4b894e8ac19f/99482615_900x675.jpeg",
+            "alternateText" : "Photo 99482615",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Entfernungen sind entfernt."
+          } ]
+        } ]
+      } ],
+      "target" : "/regions/loutraki/distances_loutraki_historical_monuments"
+    }, {
+      "type" : "link",
+      "name" : "way_airport_loutraki",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "text",
+        "name" : "headline",
+        "content" : "From airport to Loutraki",
+        "contextSpecificContent" : {
+          "de" : "Vom Flughaven nach Loutraki",
+          "ru" : "От аэропорта до Лутраки"
+        }
+      }, {
+        "type" : "text",
+        "name" : "short-description",
+        "content" : "",
+        "contextSpecificContent" : {
+          "de" : "",
+          "ru" : ""
+        }
+      }, {
+        "type" : "text",
+        "name" : "body",
+        "content" : "How to get from Athens airport to Loutraki <br /> <br /> <br /> There are 4 possible of arrival from the airport to the resort of Loutraki <br /> <br /> 1. By express train (Proastiako) <br /> Movement direction: Kiato <br /> Destination: train station &laquo;K&oacute;rinthos&raquo; <br /> Travel time: 1 hour 22 minutes <br /> Interval of trains: 1 hour (the first at 5:44, the last at 21:44) <br /> The ticket price: <br /> • for one adult 12 € (when buying a ticket &laquo;back and forth&raquo; - 18 €) <br /> • for passengers from 6 to 18 years old and older than 65 years: 6 € <br /> • for children up to 6 years old: free travel <br /> <br /> From the train station &laquo;K&oacute;rinthos&raquo; to Loutraki is possible reached only by taxi <br /> Depending on the time of a day the price: 15~18 € <br /> <br /> <br /> 2. On express bus &laquo;Х93&raquo; <br /> Movement direction: bus station KTEL Kifisou (Kifisu – accent on the letter &laquo;u&raquo;) <br /> Departure time: 00:10; 00:55; 01:45; 02:35; 03:35; 04:15; 05:15; 06:05; 06:35; 07:05; 07:30; 08:00; 08:30; 09:00; 09:30; 09:55; 10:25; 10:55; 11:25; 11:55; 12:25; 12:50; 13:20; 13:50; 14:20; 14:50; 15:20; 15:50; 16:15; 16:45; 17:15; 17:50; 18:25; 19:00; 19:35; 20:05; 20:35; 21:05; 21:40; 22:15; 22:50; 23:30 <br /> Travel time: 1 hour <br /> The ticket price: <br /> • for one adult: 6 € <br /> • for passengers from 6 to 18 years old and older than 65 years: 3 € <br /> • for children up to 6 years old: free travel <br /> <br /> From the bus station KTEL Kifisou (from terminal &laquo;А&raquo;) to Loutraki there is a bus route <br /> Departure time: 7:30; 8:30; 9:30; 10:30; 12:30; 14:30; 16:30; 18:10; 19:30; 21:00 <br /> Travel time: 1 hour 15 minutes <br /> The ticket price: <br /> • for one adult 9,30 € (when buying a ticket &laquo;back and forth&raquo; - 16,50 €) <br /> • for passengers from 6 to 18 years old and older than 65 years: 4 € <br /> • for children up to 6 years old: free travel <br /> <br /> <br /> 3. By taxi <br /> Travel time: 1 hour <br /> Depending on the time of a day the price: 130~150 € <br /> If you wish, we can send a car for you <br /> <br /> <br /> 4. On leased car <br /> Movement direction: K&oacute;rinthos <br /> Distance along the toll speed road from the airport to the exit &laquo;Loutraki&raquo;: 110 km <br /> Fare: 6.70 € <br /> The distance from the exit of the highway &laquo;Loutraki&raquo; to the center of the city Loutraki: 10 km <br /> <br /> It is best to book the car online at Athens Airport. The car can be very useful for sightseeing and historical monuments of ancient Greece. <br /> <br /> <br /> Urban public transport <br /> In the city center there is a bus station. From the bus station you can drive to the cities of Athens, Corinth, various villages, Casino Loutraki and to the central bus station. The central bus station is located near from the bridge over the Corinth Canal (near are souvenir shops, a children's water park and a large supermarket). <br /> Bus departs every half hour (the first at 6:00, the last at 21:00) <br /> Travel time: 10 minutes <br /> Price of travel: 1,90 € <br /> From the central bus station can be reached in all cities of Greece <br /> <br /> Rent an apartment in Loutraki <br /> <br /> Buy an apartment or house in Loutraki <br /> <br /> Distances from the resort of Loutraki to the main historical monuments of ancient Greece",
+        "contextSpecificContent" : {
+          "de" : "Wie kann man von Flughafen Athen nach Loutraki gelangen <br /> <br /> <br /> Es gibt 4 Möglichkeiten der Ankunft vom Flughafen nach Kurort Loutraki. <br /> <br /> <br /> 1. mit dem S-Bahn (Proastiako) <br /> Die Richtung: Kiato. <br /> Reiseziel: Bahnhaltestelle &laquo;K&oacute;rinthos&raquo;. <br /> Fahrzeit: 1. Std. 22 Min. <br /> Der Zug fährt mit einem Intervall von 1 Stunde (der erster um 5:44; der letzter um 21:44) <br /> Der Ticketpreis: <br /> • für einen Erwachsenen: 12 € (beim Kauf einer Fahrkarte &laquo;hin und her&raquo;: 18 €) <br /> • für Passagiere von 6 bis 18 Jahren alt und über 65 Jahre alt: 6 € <br /> • für Kinder bis 6 Jahre alt: kostenlose Fahrt <br /> <br /> Von der Bahnhaltestelle &laquo;K&oacute;rinthos&raquo; nach Loutraki gibt es nur mit dem Taxi fahren. <br /> Fahrpreis je nach Tageszeit: 15~18 € <br /> <br /> <br /> 2. mit dem Express-Bus &laquo;Х93&raquo; <br /> Reiseziel: Busbahnhof KTEL Kifisou (Kifisu – Akzent auf dem Buchstabe &laquo;u&raquo;) <br /> Abfahrtszeit: 00:10; 00:55; 01:45; 02:35; 03:35; 04:15; 05:15; 06:05; 06:35; 07:05; 07:30; 08:00; 08:30; 09:00; 09:30; 09:55; 10:25; 10:55; 11:25; 11:55; 12:25; 12:50; 13:20; 13:50; 14:20; 14:50; 15:20; 15:50; 16:15; 16:45; 17:15; 17:50; 18:25; 19:00; 19:35; 20:05; 20:35; 21:05; 21:40; 22:15; 22:50; 23:30 <br /> Fahrzeit: 1 Std. <br /> Der Ticketpreis: <br /> • für einen Erwachsenen: 6 € <br /> • für Passagiere von 6 bis 18 Jahren alt und über 65 Jahre alt: 3 € <br /> • für Kinder bis 6 Jahre alt: kostenlose Fahrt <br /> <br /> Vom Busbahnhof KTEL Kifisou (vom Terminal &laquo;А&raquo;) nach Loutraki gibt es ein Bus Route <br /> Abfahrtszeit: 7:30; 8:30; 9:30; 10:30; 12:30; 14:30; 16:30; 18:10; 19:30; 21:00 <br /> Fahrzeit: 1 Std. 15 Min. <br /> Der Ticketpreis: <br /> • für einen Erwachsenen: 9,30 € (beim Kauf einer Fahrkarte &laquo;hin und her&raquo;: 16,50 €) <br /> • für Passagiere von 6 bis 18 Jahren alt und über 65 Jahre alt: 4 € <br /> • für Kinder bis 6 Jahre alt: kostenlose Fahrt <br /> <br /> <br /> 3. mit dem Taxi&raquo; <br /> Fahrzeit: 1 Stunde <br /> Je nach Tageszeit kostet Reise 130~150 € <br /> <br /> Bei wünsch, können wir ein Auto für Sie schicken <br /> Dienstleistungskosten: 100 € <br /> <br /> <br /> 4. mit einem Mietwagen <br /> Bewegungsrichtung: K&oacute;rinthos <br /> Die Entfernung (auf Autobahn) von Flughafen bis Ausfahrt &laquo;Loutraki&raquo;: 110 km <br /> Autobahngebühren: 6,70 € <br /> Die Entfernung von Autobahnausfahrt &laquo;Loutraki&raquo; bis Zentrum des Kurorts Loutraki: 10 km <br /> <br /> Es ist am besten, das Auto online im Flughafen Athen zu buchen. <br /> Das Auto kann sehr nützlich für die Besichtigungen der Sehenswürdigkeiten und historische Denkmäler des antiken Griechenlands sein. <br /> <br /> <br /> Städtische öffentliche Verkehrsmittel <br /> Im Stadtzentrum gibt es Busbahnhof. Von dort aus kann man in die Städte Athen, Korinth, verschiedene Dörfer, &laquo;Casino Loutraki&raquo; und zum Hauptbusbahnhof fahren. Der Hauptbusbahnhof liegt in der Nähe der Brücke über dem &laquo;Kanal von Korinth&raquo; (in der Nähe sind Souvenirläden, Kinderwasserpark und ein großer Supermarkt). <br /> Bus fährt jede halbe Stunde ab (der erster um 6:00; der letzter um 21:00). <br /> Fahrzeit: 10 Min. <br /> Fahrpreis: 1,90 €. <br /> Vom Hauptbusbahnhof aus kann man in alle Städte von Griechenland fahren. <br /> <br /> <br /> Mieten eine Wohnung in Loutraki <br /> <br /> Kaufen eine Wohnung oder ein Haus in Loutraki",
+          "ru" : "Как добраться из аэропорта Афины в Лутраки <br /> <br /> Существует 4 возможности приезда из аэропорта Афины в курортный город Лутраки. <br /> <br /> 1. на пригородной электричке (греч. &laquo;проастиако&raquo;) <br /> Направление движения: Kiato <br /> Пункт назначения: железнодорожная станция &laquo;K&oacute;rinthos&raquo; (К&oacute;ринтос) <br /> Время в пути: 1 час 22 минуты <br /> Интервал движения поездов: 1 час (первый в 5:44; последний в 21:44) <br /> Цена билета: <br /> • для одного взрослого 12 евро (при покупке билета &laquo;туда-обратно&raquo; – 18 евро) <br /> • для пассажиров в возрасте от 6 до 18 лет и старше 65 лет: 6 евро <br /> • для детей в возрасте до 6-ти лет: проезд бесплатный <br /> <br /> От станции &laquo;K&oacute;rinthos&raquo; в Лутраки можно доехать только на такси <br /> В зависимости от времени суток стоимость проезда: 15~18 евро <br /> <br /> <br /> 2. на круглосуточном автобусном экспрессе &laquo;Х93&raquo; <br /> Пункт назначения: автовокзал KTEL Kifisou (Кифису – ударение на букву &laquo;у&raquo;) <br /> Время отправления: 00:10; 00:55; 01:45; 02:35; 03:35; 04:15; 05:15; 06:05; 06:35; 07:05; 07:30; 08:00; 08:30; 09:00; 09:30; 09:55; 10:25; 10:55; 11:25; 11:55; 12:25; 12:50; 13:20; 13:50; 14:20; 14:50; 15:20; 15:50; 16:15; 16:45; 17:15; 17:50; 18:25; 19:00; 19:35; 20:05; 20:35; 21:05; 21:40; 22:15; 22:50; 23:30 <br /> Время в пути: 1 час <br /> Цена билета на проезд: <br /> • для одного взрослого: 6 евро <br /> • для пассажиров в возрасте от 6 до 18 лет и старше 65 лет: 3 евро <br /> • для детей в возрасте до 6-ти лет: проезд бесплатный <br /> <br /> С автовокзала KTEL Кифису, с терминала &laquo;А&raquo; в Лутраки ходит маршрутный автобус <br /> Время отправления: 7:30; 8:30; 9:30; 10:30; 12:30; 14:30; 16:30; 18:10; 19:30; 21:00 <br /> Время в пути: 1 час 15 минут <br /> Цена билета на проезд: <br /> • для одного взрослого: 9,30 евро (при покупке билета &laquo;туда-обратно&raquo; – 16,50 евро) <br /> • для пассажиров в возрасте от 6 до 18 лет и старше 65 лет: 4 евро <br /> • для детей в возрасте до 6-ти лет: проезд бесплатный <br /> <br /> <br /> 3. на такси <br /> Продолжительность поездки: 1 час <br /> В зависимости от времени суток стоимость проезда: 130~150 евро <br /> <br /> При желании, мы можем прислать автомобиль с русскоговорящим водителем <br /> Стоимость услуги: 100 евро <br /> <br /> <br /> 4. на арендованном автомобиле <br /> Направление движения: K&oacute;rinthos <br /> Расстояние по платной скоростной дороге до съезда &laquo;Лутраки&raquo;: 110 км <br /> Плата за проезд: 6,70 евро <br /> Расстояние от съезда &laquo;Лутраки&raquo; до центра города Лутраки: 10 км <br /> <br /> Арендовать автомобиль лучше в аэропорту Афины, сделав это заранее из дома по Интернету. <br /> В дальнейшем автомобиль очень пригодится для осмотра окрестных достопримечательностей и основных исторических памятников античной Греции. <br /> <br /> <br /> Городской общественный транспорт <br /> В центре города есть автостанция, с которой можно доехать в города Афины, Коринф, близлежащие деревушки, &laquo;Казино Лутраки&raquo; и к центральному автовокзалу, который находится около моста через Кори́нфский кана́л (рядом - сувенирные магазины, детский аквапарк и большой супермаркет). <br /> Интервал движения автобусов: 30 мин. (первый в 6:00; последний в 21:00). <br /> Время в пути: 10 мин. <br /> Стоимость проезда: 1,90 €. <br /> С центрального автовокзала можно доехать до всех городов Греции. <br /> <br /> <br /> Арендовать квартиру в Лутраки <br /> <br /> Купить квартиру или дом в Лутраки"
+        }
+      }, {
+        "type" : "list",
+        "name" : "stage",
+        "elements" : [ {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "c2f6ccce6722c262b0e2d0b92a62523b27f517c4",
+            "source" : "//images.bestgreekestate.com/c2/f6ccce6722c262b0e2d0b92a62523b27f517c4/97959342_900x675.jpeg",
+            "alternateText" : "Photo 98139895",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "4ce94ba9f6d0476910e3bfd3301b3c37d5239336",
+            "source" : "//images.bestgreekestate.com/4c/e94ba9f6d0476910e3bfd3301b3c37d5239336/97959344_900x675.jpeg",
+            "alternateText" : "Photo 98139897",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "2993cd6ebeb97bcfbc4f1f6b14d25032b35976aa",
+            "source" : "//images.bestgreekestate.com/29/93cd6ebeb97bcfbc4f1f6b14d25032b35976aa/97959335_900x675.jpeg",
+            "alternateText" : "Photo 98139892",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "0fd19217e4aa2a75b33676a43965ad1bb540f9b0",
+            "source" : "//images.bestgreekestate.com/0f/d19217e4aa2a75b33676a43965ad1bb540f9b0/97959337_900x675.jpeg",
+            "alternateText" : "Photo 98139894",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "f08e20a2e18929be0d0ae9abb29ba4653b9cf39b",
+            "source" : "//images.bestgreekestate.com/f0/8e20a2e18929be0d0ae9abb29ba4653b9cf39b/97959347_900x675.jpeg",
+            "alternateText" : "Photo 98139899",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "2097e2e2314a6c7bf986ec39c521ffe842d9c346",
+            "source" : "//images.bestgreekestate.com/20/97e2e2314a6c7bf986ec39c521ffe842d9c346/97959348_900x675.jpeg",
+            "alternateText" : "Photo 98139901",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "42a846c52147a6c2cc2611a9f24ca95b10a3f1a1",
+            "source" : "//images.bestgreekestate.com/42/a846c52147a6c2cc2611a9f24ca95b10a3f1a1/97959351_900x675.jpeg",
+            "alternateText" : "Photo 98139903",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "d48c6e1e07d7244dabcd3f50536f73216642284f",
+            "source" : "//images.bestgreekestate.com/d4/8c6e1e07d7244dabcd3f50536f73216642284f/97959354_900x675.jpeg",
+            "alternateText" : "Photo 98139904",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "a59d747e3c1e5dc60b1f76f7f59b3c512c00338d",
+            "source" : "//images.bestgreekestate.com/a5/9d747e3c1e5dc60b1f76f7f59b3c512c00338d/97959357_900x675.jpeg",
+            "alternateText" : "Photo 98139906",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "fdfb36edd6cf335e5578c175a68490b705e52f13",
+            "source" : "//images.bestgreekestate.com/fd/fb36edd6cf335e5578c175a68490b705e52f13/97959361_900x675.jpeg",
+            "alternateText" : "Photo 98139908",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "72a6b16dc89c6b9e2ec9d08c767c2c050302c017",
+            "source" : "//images.bestgreekestate.com/72/a6b16dc89c6b9e2ec9d08c767c2c050302c017/97959362_900x675.jpeg",
+            "alternateText" : "Photo 98139909",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "9eeb07bca47107eebd580b55f6adefa623b042f3",
+            "source" : "//images.bestgreekestate.com/9e/eb07bca47107eebd580b55f6adefa623b042f3/98960604_900x675.jpeg",
+            "alternateText" : "Photo 98139910",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "d56ebd75993e60a12a46fa802fbad4f3cf669fd5",
+            "source" : "//images.bestgreekestate.com/d5/6ebd75993e60a12a46fa802fbad4f3cf669fd5/98960607_900x675.jpeg",
+            "alternateText" : "Photo 98139912",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "78a6e5e3445508c903690a597ed7f66f2b36ea36",
+            "source" : "//images.bestgreekestate.com/78/a6e5e3445508c903690a597ed7f66f2b36ea36/97959366_900x675.jpeg",
+            "alternateText" : "Photo 98139913",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "feebac0efce257f347377a376a3c5a2b68d658b8",
+            "source" : "//images.bestgreekestate.com/fe/ebac0efce257f347377a376a3c5a2b68d658b8/97959369_900x675.jpeg",
+            "alternateText" : "Photo 98139915",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        }, {
+          "type" : "list-group",
+          "elements" : [ {
+            "type" : "object",
+            "name" : "image",
+            "referenceId" : "d593f8fa2a26f1626a8e9c0fcd093fe5652c96fe",
+            "source" : "//images.bestgreekestate.com/d5/93f8fa2a26f1626a8e9c0fcd093fe5652c96fe/97959372_900x675.jpeg",
+            "alternateText" : "Photo 98139917",
+            "mimeType" : "image/jpeg"
+          }, {
+            "type" : "text",
+            "name" : "teaser",
+            "content" : "#Flughafen ist.... groß."
+          } ]
+        } ]
+      } ],
+      "target" : "/regions/loutraki/way_airport_loutraki"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/general-headlines, /links-and-ctas, /properties"
+      },
+      "checksum" : "C1321A1B562C709477024FE48F759158"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "group",
+        "name" : "general-headlines",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "description",
+          "content" : "Description",
+          "contextSpecificContent" : {
+            "de" : "Beschreibung",
+            "ru" : "Описание"
+          }
+        }, {
+          "type" : "text",
+          "name" : "map",
+          "content" : "Map",
+          "contextSpecificContent" : {
+            "de" : "Karte",
+            "ru" : "Карта"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : "Search",
+          "contextSpecificContent" : {
+            "de" : "Suchen",
+            "ru" : "Поиск"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search-in-region",
+          "content" : "Search in the region",
+          "contextSpecificContent" : {
+            "de" : "Suche in der Region",
+            "ru" : "Поиск в регионе"
+          }
+        }, {
+          "type" : "text",
+          "name" : "matching-objects-found",
+          "content" : "{0} properties found.",
+          "contextSpecificContent" : {
+            "de" : "{0} Immobilien gefunden.",
+            "ru" : "Объектов найдено: {0}"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type",
+          "content" : "Object type",
+          "contextSpecificContent" : {
+            "de" : "Typ des Objektes",
+            "ru" : "Тип объекта"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:apartment",
+          "content" : "Apartment",
+          "contextSpecificContent" : {
+            "de" : "Wohnung",
+            "ru" : "Квартира"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:land-plot",
+          "content" : "Land plot",
+          "contextSpecificContent" : {
+            "de" : "Grundstück",
+            "ru" : "Земельный участок"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:building",
+          "content" : "Building",
+          "contextSpecificContent" : {
+            "de" : "Gebäude",
+            "ru" : "Здание"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:hotel",
+          "content" : "Hotel",
+          "contextSpecificContent" : {
+            "de" : "Hotel",
+            "ru" : "Гостиница"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:villa",
+          "content" : "Villa",
+          "contextSpecificContent" : {
+            "de" : "Villa",
+            "ru" : "Вилла"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:detached-house",
+          "content" : "Detached house",
+          "contextSpecificContent" : {
+            "de" : "Freistehendes Haus",
+            "ru" : "Дом"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:office",
+          "content" : "Office",
+          "contextSpecificContent" : {
+            "de" : "Büro",
+            "ru" : "Офис"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:farm-parcel",
+          "content" : "Farm parcel",
+          "contextSpecificContent" : {
+            "de" : "Landparzelle",
+            "ru" : "Сельскохозяйственный участок"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:store",
+          "content" : "Store",
+          "contextSpecificContent" : {
+            "de" : "Geschäft",
+            "ru" : "Магазин"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:business-building",
+          "content" : "Business building",
+          "contextSpecificContent" : {
+            "de" : "Industriegebäude",
+            "ru" : "Индустриальное здание"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:various-other-property",
+          "content" : "Various other property",
+          "contextSpecificContent" : {
+            "de" : "Sonstige Immobilie",
+            "ru" : "Прочая недвижимость"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:parking",
+          "content" : "Parking",
+          "contextSpecificContent" : {
+            "de" : "Parkplatz",
+            "ru" : "Парковка"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:other-land-property",
+          "content" : "Other land property",
+          "contextSpecificContent" : {
+            "de" : "Sonstige Grundstücke",
+            "ru" : "Прочие земельные участки"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:maisonette",
+          "content" : "Maisonette",
+          "contextSpecificContent" : {
+            "de" : "Maisonette",
+            "ru" : "Двухуровневая квартира"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : "To the offer",
+          "contextSpecificContent" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : "Request",
+          "contextSpecificContent" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : "Back to search result",
+          "contextSpecificContent" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : "Search",
+          "contextSpecificContent" : {
+            "de" : "Suchen",
+            "ru" : "Искать"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : "Bill a property",
+          "contextSpecificContent" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : "Rent a property",
+          "contextSpecificContent" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "Code",
+          "contextSpecificContent" : {
+            "de" : "Code",
+            "ru" : "Код"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "Area",
+          "contextSpecificContent" : {
+            "de" : "Fläche",
+            "ru" : "Площадь"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : "Type",
+          "contextSpecificContent" : {
+            "de" : "Typ",
+            "ru" : "Тип"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "Region",
+          "contextSpecificContent" : {
+            "de" : "Region",
+            "ru" : "Регион"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : "Owner",
+          "contextSpecificContent" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : "Contact",
+          "contextSpecificContent" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : "Pages",
+          "contextSpecificContent" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : "Phone",
+          "contextSpecificContent" : {
+            "de" : "Telefon",
+            "ru" : "Тел."
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : "Mobile",
+          "contextSpecificContent" : {
+            "de" : "Mobil",
+            "ru" : "Моб."
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : "Fax",
+          "contextSpecificContent" : {
+            "de" : "Fax",
+            "ru" : "Факс"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : "E-Mail",
+          "contextSpecificContent" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

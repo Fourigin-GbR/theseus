@@ -1,0 +1,48 @@
+{
+  "path" : "/objects",
+  "children" : [ {
+    "type" : "file",
+    "name" : "search",
+    "localizedName" : {
+      "en" : "search",
+      "de" : "suche",
+      "ru" : "poisk"
+    },
+    "displayName" : {
+      "en" : "Search",
+      "de" : "Suche",
+      "ru" : "Поиск"
+    },
+    "templateReference" : {
+      "templateId" : "object-specific-search",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "dir",
+    "name" : "sale",
+    "localizedName" : {
+      "en" : "sale",
+      "de" : "verkauf",
+      "ru" : "prodazha"
+    },
+    "displayName" : {
+      "en" : "Sale",
+      "de" : "Verkauf",
+      "ru" : "Продажа"
+    }
+  }, {
+    "type" : "dir",
+    "name" : "rent",
+    "localizedName" : {
+      "en" : "rent",
+      "de" : "miete",
+      "ru" : "arenda"
+    },
+    "displayName" : {
+      "en" : "Rent",
+      "de" : "Miete",
+      "ru" : "Аренда"
+    }
+  } ]
+}

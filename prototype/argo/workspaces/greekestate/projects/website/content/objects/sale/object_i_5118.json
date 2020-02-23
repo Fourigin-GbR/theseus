@@ -1,0 +1,363 @@
+{
+  "id": "object_i_5118",
+  "contentFormatVersion": "2.0",
+  "metaData": {
+    "title": "Sale object #I-5118 - BestGreekEstate",
+    "contextSpecificTitles": {
+      "de": "Verkaufsobjekt #I-5118 - BestGreekEstate",
+      "ru": "Объект #I-5118 на продажу - BestGreekEstate"
+    },
+    "attributes": {
+    }
+  },
+  "content": [
+    {
+      "type": "text",
+      "name": "headline",
+      "content": {
+        "de": "Einfamilienhaus in Loutraki (Loutraki-Perachora)",
+        "ru": "Частный дом в Loutraki (Loutraki-Perachora)",
+        "en": "Detached House in Loutraki (Loutraki-Perachora)"
+      }
+    },
+    {
+      "type": "text",
+      "name": "short-description",
+      "content": {
+        "de": "Entfernung zum Meer: <span class=\"text-red\">500</span>, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
+        "ru": "Расстояние до моря: <span class=\"text-red\">200</span>, Подъезд по: <span class=\"text-red\">Асфальт</span>",
+        "en": "Distance from sea: <span class=\"text-red\">500</span>, Road type: <span class=\"text-red\">Asphalt</span>"
+      }
+    },
+    {
+      "type": "group",
+      "name": "properties",
+      "elements": [
+        {
+          "type": "data",
+          "name": "code",
+          "content": "I-5118",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "area",
+          "content": "25",
+          "dataType": "INTEGER"
+        },
+        {
+          "type": "data",
+          "name": "price",
+          "content": "44990",
+          "dataType": "FLOAT"
+        },
+        {
+          "type": "data",
+          "name": "type",
+          "content": "apartment",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "region",
+          "content": "loutraki",
+          "dataType": "STRING"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "long-description",
+      "content": {
+        "de": "
+		Zu verkaufen eine prächtige 1-Zimmer-Wohnung mit Fläche von 25 м<sup>2</sup>.<br/>
+		Die Wohnung befindet sich im 1. Stock eines 5-stöckigen Hauses mit einem Aufzug.<br/>
+		Das Niveau der ersten Etage ist sehr hoch und entspricht einer vollen zweiten Etage!<br/>
+		Die Wohnung befindet sich an der Seite des Hauses, die in einen ruhigen Innenhof „blickt“ (die Wohnung ist sehr ruhig und komfortabel zum Entspannen).<br/>
+		Die Wohnung verfügt über einen Flur, ein Badezimmer und ein Wohnzimmer mit Balkon. Der Balkon befindet sich in einer Höhe von mehr als 3 Metern über dem Erden. Im Zimmer ist eine sehr schöne Küche installiert.<br/>
+		Die Deckenhöhe in der Wohnung: 3,1 m.<br/>
+		Das Baujahr: 1976.<br/>
+		Die Entfernung zur Strandpromenade und zum Strand: 200 m.<br/>
+		Das Haus befindet sich an einer ruhigen Ipsilantou Straße im Zentrum der Kurstadt Loutraki.<br/>
+		<br/>
+		<br/>
+		Beschreibung<br/>
+		Die Wohnung ist renoviert:
+		<ul>
+			<li>Wasser- und Kanalisationsrohre wurden ersetzt;</li>
+			<li>Verkabelung wurde ersetzt;</li>
+			<li>neue Eingangstür mit Geheimverriegelung wurde installiert;</li>
+			<li>Aluminium-Balkontür mit Antimoskitonetzen wurden eingebaut;</li>
+			<li>im Flur befindet sich ein Kleiderschrank mit Spiegelschiebetüren;</li>
+			<li>die Böden in der Wohnung sind mit Keramikfliesen mit Parkettmuster ausgelegt;</li>
+			<li>im Badezimmer ist eine Duschekabine mit Glasschiebetür montiert;</li>
+			<li>in der Wohnung installierte schöne Küchenmöbel mit polierten Türen und LED-Hintergrundbeleuchtung;</li>
+			<li>in der Küche werden neue Elektrogeräte installiert (großer Kühlschrank mit Gefrierfach, 2-Plattenherd mit Glaskeramik Arbeitsplatte, Kompaktbackofen mit zehn Funktionen, inkl. mit Grill- und Mikrowellenfunktionen, Geschirrspüler und Waschmaschine);</li>
+			<li>die Wohnung verfügt über Klimaanlage, Durchlauferhitzer und LED-Leuchten;</li>
+			<li>unter der Decke am Umfang des Zimmers ist eine LED-Hintergrundbeleuchtung installiert.</li>
+		</ul>
+		<br/>
+ 	    <br/>
+		Zustand und Verkaufsbedingungen
+		<ul>
+			<li>Der Wohnungszustand: sehr gut!</li>
+			<li>Die Wohnung wird mit Möbeln und elektrische Haushaltsgeräten verkauft, die in der Wohnung sind.</li>
+			<li>Die Kosten beim Wohnungskauf (Einkaufssteuer, Anmeldegebühr, notarielle Dienstleistungen): bis zu 1.300 €.</li>
+			<li>Die jährliche Grundsteuer: bis zu 100 €.</li>
+			<li>Die Nebenkosten: 10-15 € pro Monat.</li>
+		</ul>
+		",
+        "ru": "
+		Продаётся прекрасная однокомнатная квартира площадью 25 м<sup>2</sup>.<br/>
+		Квартира находится на высоком 1-м этаже 5-ти этажного дома с лифтом.<br/>
+		Уровень первого этажа - очень высокий и соответствует полноценному второму этажу!<br/>
+		Квартира расположена со стороны дома, которая «выходит» в тихий двор (квартира является очень тихой и комфортной для отдыха!).<br/>
+		В квартире есть коридор, душевая комната и жилая комната с балконом. Балкон расположен на высоте более 3-х метров от уровня земли. В комнате установлена очень красивая кухня.<br/>
+		Высота потолков в квартире: 3,1 м.<br/>
+		Год постройки дома: 1976.<br/>
+		Расстояние до набережной и пляжа: 200 м.<br/>
+		Дом расположен на тихой улице Ipsilantou, в центре курортного города Лутраки.<br/>
+		<br/>
+		<br/>
+		Описание квартиры <br/>
+		В квартире сделан капитальный ремонт:
+		<ul>
+		  <li>заменены водопроводные и канализационные трубы;</li>
+		  <li>заменена электропроводка;</li>
+		  <li>установлена входная усиленная дверь с секретным замком;</li>
+		  <li>установлена алюминиевая балконная дверь с антимоскитной сеткой;</li>
+		  <li>в коридоре установлен шкаф-купе с раздвижными зеркальными дверями;</li>
+		  <li>полы в квартире выложены керамической плиткой с паркетным рисунком;</li>
+		  <li>в ванной комнате смонтирована душевая кабина с раздвижной стеклянной дверью;</li>
+		  <li>в квартире установлена красивая кухонная мебель с полированными дверцами и светодиодной подсветкой;</li>
+		  <li>в кухне установлены новые электрические бытовые приборы (большой холодильник с морозильной камерой, 2-х конфорочная варочная панель со стеклокерамической рабочей поверхностью, компактный духовой шкаф с десятью функциями, в т.ч. с функциями гриля и микроволновой печи, посудомоечная и стиральная машины);</li>
+		  <li>на крыше дома установлена спутниковая тарелка для приёма российских телеканалов;</li>
+		  <li>в квартире установлен кондиционер, проточный водонагреватель и светильники LED;</li>
+		  <li>под потолком по периметру комнаты установлена ленточная светодиодная подсветка.</li>
+ 	   	</ul>
+		<br/>
+		<br/>
+		Состояние квартиры и условия продажи
+		<ul>
+		  <li>Состояние квартиры: прекрасное!</li>
+		  <li>Квартира продаётся с мебелью и бытовыми электроприборами, указанными в описании.</li>
+		  <li>Переоформление квартиры (налог на покупку, регистрационная пошлина, услуги нотариуса и пр.): до 1.300 €.</li>
+		  <li>Ежегодный налог на недвижимость: до 100 €.</li>
+		  <li>Расходы по содержанию дома (освещение и уборка подъезда, обслуживание лифта и пр.): 10-15 € в месяц.</li>
+ 		</ul>
+ 	    <br/>
+		<br/>
+		<b>Покупателю квартиры и членам его семьи поможем в получении ВНЖ</b>
+		",
+        "en": "
+		For sale: a furnished 1-room apartment with an area of 25 sq m.<br/>
+		The apartment is located on the 1st floor of a 5-storey house with an elevator.<br/>
+		The level of the first floor is very high and corresponds to a full second floor!<br/>
+		The apartment is located on the side of the house, which &quot;looks&quot; at a quiet courtyard (the apartment is very quiet and comfortable for relaxing!).<br/>
+		The apartment there is a corridor, a shower room and a living room with a balcony. The balcony is located at a height of more than three meters from ground level. In the living room is a very nice kitchen installed.<br/>
+		The height of the ceiling in the apartment: 3,1 m. In the room is installed a very beautiful kitchen furniture.<br/>
+		The year of construction of the house: 1976.<br/>
+		Distance to the beach promenade and the beach: 200 m.<br/>
+		The house is located on a quiet street Ipsilantou, in the center of the resort town of Loutraki.<br/>
+ 	    <br/>
+ 	    <br/>
+		Description<br/>
+		The apartment is overhauled:
+		<ul>
+		  <li>replaced water and sewer pipes;</li>
+		  <li>replaced wiring;</li>
+		  <li>installed reinforced entrance door with a secret lock;</li>
+		  <li>installed aluminum balcony door with anti mosquito net;</li>
+		  <li>in the corridor there is a wardrobe with sliding mirrored doors;</li>
+		  <li>the floors in the apartment are tiled with ceramic tiles with parquet pattern;</li>
+		  <li>in the bathroom is mounted shower cabin with sliding glass door;</li>
+		  <li>in the apartment installed a beautiful kitchen furniture with polished doors;</li>
+		  <li>in the kitchen are installed new electric appliances (large fridge with freezer, 2-ring hob with glass ceramic work surface, compact oven with ten functions, including those with grill and microwave, dishwasher and washing a machine);</li>
+		  <li>in the apartment installed air conditioning, instantaneous water heater and LED chandeliers;</li>
+		  <li>under the ceiling around of the perimeter of the room is installed LED strip light.</li>
+		</ul>
+ 	    <br/>
+ 	    <br/>
+		Condition of the apartment and terms of sale
+		<ul>		
+		  <li>The condition of the apartment: very good!</li>
+		  <li>The apartment is sold with the furniture and household electrical appliances that are in the apartment.</li>
+		  <li>The cost of buying of the apartment (purchase tax, registration fee, notary services ...): up to 1.300 €.</li>
+		  <li>The property tax: up to 100 € per year.</li>
+		  <li>The home maintenance costs: 10-15 € per month.</li>
+		</ul>
+		"
+      }
+    },
+    {
+      "type": "list",
+      "name": "images",
+      "elements": [
+        {
+          "type": "list-object",
+          "referenceId": "b61a3bcf40d4d21516fe8b4b5a6de5854865ad85"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "4b47f531d18f185bed9c174aea5374271279e82a"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "5081632fa53dc143c5c33ade29f3cbd4348ca2f2"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "f8e92d95d4baa303ebdfe03b5bb643ba0890197c"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "fed52b818536220f7e6fdbe0e2045afd64a71842"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "2b0dbf032dd580b27b8a42f3ebaedadb6454cd11"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "484ce56917ceaf357d80b81f4ab028cbeeaf7616"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "cca30eac37346fc685c1feeda476cd68b84c3114"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "d3d3b1842713f1f898207791657e8563b2d48ceb"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "a943e0d4cbcc1a021a26ea614d76be0cd79daae1"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "9bd2979c5e1ef6f5d840f68956ece445e7b59a88"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "36cf7b63011dac7d5da2b5218d7b60785d433d97"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "64dff0326533089478a4890cf7f327acd0b0a90e"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "64ef4834c74d8952c85b8a74b2b6d16d0c949086"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "83dd87dd38ce6c72a733582b66440140626730f3"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "37d6ad3cb57f8f851c995f097b914717ebf752ee"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "c28a93e0c4930b8d8981117231cc79d96473e48c"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "56766a97b3854b6eeb169c336a0db4786cb4cb94"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "939dce809e74085b3900798a61b17464d824541e"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "05e60dcb116cbf3d8b1515c714609a4593dbc61c"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "4181e840edadb35f65ee86a12b515ab03f550863"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "31d9072807fbd40aa4ed28bec42f942e2e9cabfd"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "707ff7fefb0f3baf99498bf2824c5798f5da6880"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "839eaddaee135f7c4ecb53aea9a54c09733f6af1"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "geo-position",
+      "elements": [
+		  {
+		            "type": "data",
+		            "name": "latitude",
+		            "content": "0.0",
+		            "dataType": "FLOAT"
+		          },
+		          {
+		            "type": "data",
+		            "name": "longitude",
+		            "content": "0.0",
+		            "dataType": "FLOAT"
+		          }
+      ]
+    }
+  ],
+  "dataSourceContents": [
+    {
+      "name": "timestamp",
+      "transientContent": false,
+      "identifier": {
+        "type": "TIMESTAMP",
+        "checksum": ""
+      },
+      "content": [
+        {
+          "type": "data",
+          "name": "processedOn",
+          "content": "2019.07.14 17:43:48 +0000",
+          "dataType": "DATE"
+        }
+      ]
+    },
+    {
+      "name": "top-level-navigation",
+      "transientContent": false,
+      "identifier": {
+        "type": "SITE",
+        "revisions": {
+        },
+        "query": {
+          "NON_RECURSIVE": true,
+          "INFO_PATH": "/",
+          "VERBOSE": true
+        },
+        "checksum": ""
+      },
+      "content": [
+      ]
+    },
+    {
+      "name": "common-content",
+      "transientContent": false,
+      "identifier": {
+        "type": "COMMON-CONTENT",
+        "revisions": {
+        },
+        "query": {
+          "INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties"
+        },
+        "checksum": ""
+      },
+      "content": [
+      ]
+    }
+  ]
+}

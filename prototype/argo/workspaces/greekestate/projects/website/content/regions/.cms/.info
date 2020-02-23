@@ -1,0 +1,30 @@
+{
+  "path" : "/regions",
+  "children" : [ {
+    "type" : "file",
+    "name" : "overview",
+    "localizedName" : {
+      "" : "overview",
+      "de" : "Übersicht",
+      "ru" : "overview"
+    },
+    "templateReference" : {
+      "templateId" : "regions-overview",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "dir",
+    "name" : "loutraki",
+    "localizedName" : {
+      "" : "loutraki",
+      "de" : "loutraki",
+      "ru" : "loutraki"
+    },
+    "displayName" : {
+      "" : "Region Loutraki",
+      "de" : "Region Loutraki",
+      "ru" : "Region Loutraki"
+    }
+  } ]
+}

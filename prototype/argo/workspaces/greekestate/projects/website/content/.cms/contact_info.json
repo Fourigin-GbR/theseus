@@ -1,0 +1,20 @@
+{
+  "staged" : true,
+  "live" : true,
+  "timestampLiveSwitch" : 1548197470912,
+  "compileState" : {
+    "checksum" : "0BB9E4E62FDD10560B80B0A7740782B8-85A40FB90563D4251ABAC43B3D081426-34BC0D169FE709A0FE38EF949B458997-4BD9A9B5DFC3D5D87ECA9B116D85F801-A3700F8F1B34FCDBEC47EF7B55232659",
+    "compiled" : true,
+    "timestamp" : 1559308503736
+  },
+  "checksum" : {
+    "metaDataValue" : "0BB9E4E62FDD10560B80B0A7740782B8",
+    "contentValue" : "85A40FB90563D4251ABAC43B3D081426",
+    "dataSourceValues" : {
+      "top-level-navigation" : "A3700F8F1B34FCDBEC47EF7B55232659",
+      "common-content" : "34BC0D169FE709A0FE38EF949B458997",
+      "timestamp" : "4BD9A9B5DFC3D5D87ECA9B116D85F801"
+    }
+  },
+  "revision" : "1"
+}

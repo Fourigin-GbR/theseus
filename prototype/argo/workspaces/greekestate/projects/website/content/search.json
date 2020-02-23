@@ -1,0 +1,1829 @@
+{
+  "id" : "search",
+  "metaData" : {
+    "title" : "GreekEstate - Search",
+    "attributes" : {
+      "key-1" : "value-1",
+      "key-2" : "value-2",
+      "key-3" : "value-3"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : "Suche"
+  }, {
+    "type" : "text",
+    "name" : "body",
+    "content" : "Lorem ipsum ..."
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "1ACFEEEE9366A15B43D0A485E310CB8E"
+    },
+    "content" : [ {
+      "type" : "text",
+      "name" : "processedOn",
+      "content" : "2019.01.21 10:36:12 +0000"
+    } ]
+  }, {
+    "name" : "site-structure",
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/objects/sale/object_5459508" : "1",
+        "/objects/sale/object_6671859" : "1",
+        "/objects/sale/object_3813196" : "1",
+        "/objects/sale/object_3813230" : "1",
+        "/objects/sale/object_3813197" : "1",
+        "/objects/sale/object_3813231" : "1",
+        "/objects/sale/object_5350928" : "1",
+        "/objects/rent/object_4508203" : "1",
+        "/about" : "1",
+        "/objects/sale/object_4498581" : "1",
+        "/objects/sale/object_3813194" : "1",
+        "/objects/sale/object_3813236" : "1",
+        "/objects/sale/object_3813357" : "1",
+        "/objects/sale/object_3813115" : "1",
+        "/objects/sale/object_3813359" : "1",
+        "/objects/sale/object_4851281" : "1",
+        "/objects/sale/object_3813353" : "1",
+        "/objects/sale/object_3813233" : "1",
+        "/objects/rent/object_3813291" : "1",
+        "/objects/rent/object_3813170" : "1",
+        "/objects/sale/object_3813356" : "1",
+        "/objects/sale/object_3813114" : "1",
+        "/objects/rent/object_4507076" : "1",
+        "/objects/sale/object_6250728" : "1",
+        "/objects/rent/object_4264249" : "1",
+        "/objects/rent/object_3813331" : "1",
+        "/contact" : "1",
+        "/objects/rent/object_4810959" : "1",
+        "/objects/sale/object_3813185" : "1",
+        "/objects/sale/object_3813340" : "1",
+        "/objects/sale/object_3813187" : "1",
+        "/objects/sale/object_3813104" : "1",
+        "/objects/sale/object_3813348" : "1",
+        "/objects/sale/object_3813227" : "1",
+        "/objects/sale/object_3813106" : "1",
+        "/objects/sale/object_3813349" : "1",
+        "/objects/sale/object_3813228" : "1",
+        "/objects/sale/object_3813101" : "1",
+        "/objects/sale/object_3813344" : "1",
+        "/objects/sale/object_3813223" : "1",
+        "/objects/sale/object_6049179" : "1",
+        "/objects/rent/object_5016263" : "1",
+        "/objects/rent/object_3813164" : "1",
+        "/objects/rent/object_4258025" : "1",
+        "/objects/sale/object_4867874" : "1",
+        "/objects/rent/object_3813326" : "1",
+        "/objects/sale/object_3813250" : "1",
+        "/objects/sale/object_4586222" : "1",
+        "/objects/sale/object_3813372" : "1",
+        "/objects/sale/object_3813097" : "1",
+        "/objects/sale/object_3813093" : "1",
+        "/objects/sale/object_3813379" : "1",
+        "/objects/sale/object_3813258" : "1",
+        "/objects/rent/object_4268351" : "1",
+        "/home" : "1",
+        "/objects/rent/object_5570426" : "1",
+        "/objects/rent/object_6071136" : "1",
+        "/objects/sale/object_3813256" : "1",
+        "/objects/sale/object_3813377" : "1",
+        "/objects/sale/object_3813135" : "1",
+        "/objects/sale/object_5550049" : "1",
+        "/objects/rent/object_4268864" : "1",
+        "/objects/sale/object_4989846" : "1",
+        "/objects/sale/object_4743717" : "1",
+        "/objects/rent/object_4365056" : "1",
+        "/objects/sale/object_6206477" : "1",
+        "/objects/rent/object_5245597" : "1",
+        "/impressum" : "1",
+        "/objects/rent/object_4268908" : "1",
+        "/common" : "1",
+        "/objects/sale/object_3813362" : "1",
+        "/objects/sale/object_3813241" : "1",
+        "/objects/rent/object_5210967" : "1",
+        "/objects/sale/object_3813084" : "1",
+        "/objects/sale/object_3813368" : "1",
+        "/objects/sale/object_3813126" : "1",
+        "/objects/sale/object_5341566" : "1",
+        "/objects/sale/object_3813128" : "1",
+        "/objects/sale/object_3813122" : "1",
+        "/objects/sale/object_3813089" : "1",
+        "/objects/sale/object_3813364" : "1",
+        "/objects/sale/object_3813365" : "1",
+        "/objects/sale/object_4893686" : "1",
+        "/objects/sale/object_6408177" : "1",
+        "/objects/rent/object_4268479" : "1",
+        "/objects/rent/object_4156691" : "1",
+        "/objects/rent/object_4378402" : "1",
+        "/objects/rent/object_3813068" : "1",
+        "/objects/sale/object_5964668" : "1",
+        "/objects/rent/object_4365100" : "1",
+        "/objects/sale/object_4498514" : "1",
+        "/objects/sale/object_3813151" : "1",
+        "/objects/sale/object_3813152" : "1",
+        "/objects/rent/object_5377461" : "1",
+        "/objects/sale/object_3813395" : "1",
+        "/objects/sale/object_3813154" : "1",
+        "/objects/rent/object_4509458" : "1",
+        "/objects/sale/object_3813270" : "1",
+        "/objects/sale/object_3813150" : "1",
+        "/objects/sale/object_3813314" : "1",
+        "/objects/rent/object_4264170" : "1",
+        "/objects/sale/object_3813155" : "1",
+        "/objects/rent/object_5126418" : "1",
+        "/objects/rent/object_4268651" : "1",
+        "/objects/rent/object_5498563" : "1",
+        "/objects/rent/object_4975710" : "1",
+        "/objects/sale/object_6064641" : "1",
+        "/objects/sale/object_3813279" : "1",
+        "/objects/rent/search" : "1",
+        "/regions/salamina" : "1",
+        "/objects/rent/object_4351773" : "1",
+        "/objects/rent/object_4654786" : "1",
+        "/objects/sale/object_5444696" : "1",
+        "/objects/sale/object_5010256" : "1",
+        "/regions/index" : "1",
+        "/objects/sale/object_3813263" : "1",
+        "/objects/sale/object_4888990" : "1",
+        "/objects/sale/object_3813381" : "1",
+        "/search" : "1",
+        "/objects/sale/object_3813304" : "1",
+        "/objects/sale/object_3813387" : "1",
+        "/objects/rent/object_5182805" : "1",
+        "/objects/rent/object_5255415" : "1",
+        "/objects/sale/object_3813300" : "1",
+        "/objects/sale/object_3813388" : "1",
+        "/objects/rent/object_4818128" : "1",
+        "/objects/rent/object_5241303" : "1",
+        "/objects/rent/object_5821557" : "1",
+        "/objects/rent/object_4263923" : "1",
+        "/objects/search" : "1",
+        "/objects/sale/object_3813296" : "1",
+        "/objects/sale/object_3813176" : "1",
+        "/objects/sale/object_3813297" : "1",
+        "/objects/sale/object_3813290" : "1",
+        "/objects/sale/object_3813292" : "1",
+        "/objects/sale/object_3813293" : "1",
+        "/objects/sale/object_4761179" : "1",
+        "/objects/sale/object_3813336" : "1",
+        "/objects/sale/object_3813216" : "1",
+        "/objects/sale/object_3813337" : "1",
+        "/objects/sale/object_3813210" : "1",
+        "/objects/sale/object_3813177" : "1",
+        "/objects/rent/object_4264195" : "1",
+        "/objects/sale/object_3813211" : "1",
+        "/objects/rent/object_4264230" : "1",
+        "/objects/sale/search" : "1",
+        "/objects/sale/object_3813213" : "1",
+        "/objects/rent/object_4264101" : "1",
+        "/objects/rent/object_4268704" : "1",
+        "/objects/rent/object_3813156" : "1",
+        "/objects/rent/object_3813312" : "1",
+        "/objects/sale/object_5437094" : "1",
+        "/objects/sale/object_6169045" : "1",
+        "/objects/sale/object_6171631" : "1",
+        "/objects/sale/object_5043382" : "1",
+        "/objects/sale/object_3813161" : "1",
+        "/objects/sale/object_3813203" : "1",
+        "/objects/sale/object_3813204" : "1",
+        "/objects/sale/object_5289014" : "1",
+        "/objects/sale/object_3813205" : "1",
+        "/objects/sale/object_3813200" : "1",
+        "/objects/sale/object_3813201" : "1",
+        "/objects/sale/object_3813289" : "1",
+        "/objects/rent/object_4997503" : "1",
+        "/objects/sale/object_6269085" : "1",
+        "/objects/sale/object_3813202" : "1",
+        "/objects/rent/object_4264240" : "1",
+        "/objects/rent/object_5258351" : "1",
+        "/objects/rent/object_4264077" : "1",
+        "/regions/loutraki" : "1",
+        "/objects/sale/object_3813328" : "1",
+        "/objects/sale/object_3813207" : "1",
+        "/objects/sale/object_3813209" : "1",
+        "/objects/rent/object_4268712" : "1",
+        "/objects/sale/object_4537108" : "1",
+        "/objects/rent/object_3813389" : "1",
+        "/regions/athen" : "1",
+        "/objects/rent/object_4365141" : "1",
+        "/objects/sale/object_4904306" : "1",
+        "/objects/rent/object_4906387" : "1",
+        "/objects/sale/object_4627885" : "1",
+        "/objects/sale/object_4884255" : "1",
+        "/objects/sale/object_4498435" : "1"
+      },
+      "query" : {
+        "INFO_PATH" : "/"
+      },
+      "checksum" : "91D6CD2C8A5B0AC842546CFF4D6E980C"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "Главная"
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "Поиск"
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "athen",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/athen"
+    }, {
+      "type" : "link",
+      "name" : "index",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/index"
+    }, {
+      "type" : "link",
+      "name" : "salamina",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/salamina"
+    }, {
+      "type" : "link",
+      "name" : "loutraki",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/regions/loutraki"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/search"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/search"
+    }, {
+      "type" : "link",
+      "name" : "object_6671859",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6671859"
+    }, {
+      "type" : "link",
+      "name" : "object_6049179",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6049179"
+    }, {
+      "type" : "link",
+      "name" : "object_6408177",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6408177"
+    }, {
+      "type" : "link",
+      "name" : "object_6269085",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6269085"
+    }, {
+      "type" : "link",
+      "name" : "object_3813362",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813362"
+    }, {
+      "type" : "link",
+      "name" : "object_3813161",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813161"
+    }, {
+      "type" : "link",
+      "name" : "object_3813250",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813250"
+    }, {
+      "type" : "link",
+      "name" : "object_4743717",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4743717"
+    }, {
+      "type" : "link",
+      "name" : "object_6206477",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6206477"
+    }, {
+      "type" : "link",
+      "name" : "object_3813336",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813336"
+    }, {
+      "type" : "link",
+      "name" : "object_6250728",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6250728"
+    }, {
+      "type" : "link",
+      "name" : "object_5964668",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5964668"
+    }, {
+      "type" : "link",
+      "name" : "object_6171631",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6171631"
+    }, {
+      "type" : "link",
+      "name" : "object_6169045",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6169045"
+    }, {
+      "type" : "link",
+      "name" : "object_4893686",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4893686"
+    }, {
+      "type" : "link",
+      "name" : "object_3813084",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813084"
+    }, {
+      "type" : "link",
+      "name" : "object_3813368",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813368"
+    }, {
+      "type" : "link",
+      "name" : "object_5010256",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5010256"
+    }, {
+      "type" : "link",
+      "name" : "object_3813122",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813122"
+    }, {
+      "type" : "link",
+      "name" : "object_6064641",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_6064641"
+    }, {
+      "type" : "link",
+      "name" : "object_4586222",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4586222"
+    }, {
+      "type" : "link",
+      "name" : "object_4989846",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4989846"
+    }, {
+      "type" : "link",
+      "name" : "object_3813202",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813202"
+    }, {
+      "type" : "link",
+      "name" : "object_3813270",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813270"
+    }, {
+      "type" : "link",
+      "name" : "object_3813395",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813395"
+    }, {
+      "type" : "link",
+      "name" : "object_4851281",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4851281"
+    }, {
+      "type" : "link",
+      "name" : "object_5437094",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5437094"
+    }, {
+      "type" : "link",
+      "name" : "object_5289014",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5289014"
+    }, {
+      "type" : "link",
+      "name" : "object_3813356",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813356"
+    }, {
+      "type" : "link",
+      "name" : "object_5341566",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5341566"
+    }, {
+      "type" : "link",
+      "name" : "object_3813185",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813185"
+    }, {
+      "type" : "link",
+      "name" : "object_5350928",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5350928"
+    }, {
+      "type" : "link",
+      "name" : "object_4627885",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4627885"
+    }, {
+      "type" : "link",
+      "name" : "object_4904306",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4904306"
+    }, {
+      "type" : "link",
+      "name" : "object_4884255",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4884255"
+    }, {
+      "type" : "link",
+      "name" : "object_4888990",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4888990"
+    }, {
+      "type" : "link",
+      "name" : "object_3813126",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813126"
+    }, {
+      "type" : "link",
+      "name" : "object_3813114",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813114"
+    }, {
+      "type" : "link",
+      "name" : "object_3813150",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813150"
+    }, {
+      "type" : "link",
+      "name" : "object_5459508",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5459508"
+    }, {
+      "type" : "link",
+      "name" : "object_5550049",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5550049"
+    }, {
+      "type" : "link",
+      "name" : "object_5444696",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5444696"
+    }, {
+      "type" : "link",
+      "name" : "object_3813279",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813279"
+    }, {
+      "type" : "link",
+      "name" : "object_3813256",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813256"
+    }, {
+      "type" : "link",
+      "name" : "object_3813203",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813203"
+    }, {
+      "type" : "link",
+      "name" : "object_4498581",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4498581"
+    }, {
+      "type" : "link",
+      "name" : "object_3813381",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813381"
+    }, {
+      "type" : "link",
+      "name" : "object_3813372",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813372"
+    }, {
+      "type" : "link",
+      "name" : "object_3813155",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813155"
+    }, {
+      "type" : "link",
+      "name" : "object_3813349",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813349"
+    }, {
+      "type" : "link",
+      "name" : "object_3813216",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813216"
+    }, {
+      "type" : "link",
+      "name" : "object_3813213",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813213"
+    }, {
+      "type" : "link",
+      "name" : "object_3813211",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813211"
+    }, {
+      "type" : "link",
+      "name" : "object_3813210",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813210"
+    }, {
+      "type" : "link",
+      "name" : "object_3813296",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813296"
+    }, {
+      "type" : "link",
+      "name" : "object_3813241",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813241"
+    }, {
+      "type" : "link",
+      "name" : "object_3813377",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813377"
+    }, {
+      "type" : "link",
+      "name" : "object_3813359",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813359"
+    }, {
+      "type" : "link",
+      "name" : "object_3813231",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813231"
+    }, {
+      "type" : "link",
+      "name" : "object_3813201",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813201"
+    }, {
+      "type" : "link",
+      "name" : "object_3813200",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813200"
+    }, {
+      "type" : "link",
+      "name" : "object_3813304",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813304"
+    }, {
+      "type" : "link",
+      "name" : "object_3813176",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813176"
+    }, {
+      "type" : "link",
+      "name" : "object_3813135",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813135"
+    }, {
+      "type" : "link",
+      "name" : "object_3813379",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813379"
+    }, {
+      "type" : "link",
+      "name" : "object_3813348",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813348"
+    }, {
+      "type" : "link",
+      "name" : "object_3813340",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813340"
+    }, {
+      "type" : "link",
+      "name" : "object_3813314",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813314"
+    }, {
+      "type" : "link",
+      "name" : "object_3813292",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813292"
+    }, {
+      "type" : "link",
+      "name" : "object_3813387",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813387"
+    }, {
+      "type" : "link",
+      "name" : "object_3813337",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813337"
+    }, {
+      "type" : "link",
+      "name" : "object_3813233",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813233"
+    }, {
+      "type" : "link",
+      "name" : "object_3813328",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813328"
+    }, {
+      "type" : "link",
+      "name" : "object_3813227",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813227"
+    }, {
+      "type" : "link",
+      "name" : "object_3813207",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813207"
+    }, {
+      "type" : "link",
+      "name" : "object_3813151",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813151"
+    }, {
+      "type" : "link",
+      "name" : "object_3813344",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813344"
+    }, {
+      "type" : "link",
+      "name" : "object_3813300",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813300"
+    }, {
+      "type" : "link",
+      "name" : "object_3813236",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813236"
+    }, {
+      "type" : "link",
+      "name" : "object_3813204",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813204"
+    }, {
+      "type" : "link",
+      "name" : "object_3813258",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813258"
+    }, {
+      "type" : "link",
+      "name" : "object_3813230",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813230"
+    }, {
+      "type" : "link",
+      "name" : "object_3813223",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813223"
+    }, {
+      "type" : "link",
+      "name" : "object_3813209",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813209"
+    }, {
+      "type" : "link",
+      "name" : "object_3813353",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813353"
+    }, {
+      "type" : "link",
+      "name" : "object_3813293",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813293"
+    }, {
+      "type" : "link",
+      "name" : "object_3813152",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813152"
+    }, {
+      "type" : "link",
+      "name" : "object_3813089",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813089"
+    }, {
+      "type" : "link",
+      "name" : "object_3813357",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813357"
+    }, {
+      "type" : "link",
+      "name" : "object_3813115",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813115"
+    }, {
+      "type" : "link",
+      "name" : "object_3813093",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813093"
+    }, {
+      "type" : "link",
+      "name" : "object_3813289",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813289"
+    }, {
+      "type" : "link",
+      "name" : "object_3813128",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813128"
+    }, {
+      "type" : "link",
+      "name" : "object_3813228",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813228"
+    }, {
+      "type" : "link",
+      "name" : "object_3813196",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813196"
+    }, {
+      "type" : "link",
+      "name" : "object_3813104",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813104"
+    }, {
+      "type" : "link",
+      "name" : "object_3813263",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813263"
+    }, {
+      "type" : "link",
+      "name" : "object_3813187",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813187"
+    }, {
+      "type" : "link",
+      "name" : "object_3813101",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813101"
+    }, {
+      "type" : "link",
+      "name" : "object_3813388",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813388"
+    }, {
+      "type" : "link",
+      "name" : "object_3813364",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813364"
+    }, {
+      "type" : "link",
+      "name" : "object_3813205",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813205"
+    }, {
+      "type" : "link",
+      "name" : "object_3813194",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813194"
+    }, {
+      "type" : "link",
+      "name" : "object_3813097",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813097"
+    }, {
+      "type" : "link",
+      "name" : "object_4498435",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4498435"
+    }, {
+      "type" : "link",
+      "name" : "object_4498514",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4498514"
+    }, {
+      "type" : "link",
+      "name" : "object_3813197",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813197"
+    }, {
+      "type" : "link",
+      "name" : "object_3813177",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813177"
+    }, {
+      "type" : "link",
+      "name" : "object_4537108",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4537108"
+    }, {
+      "type" : "link",
+      "name" : "object_3813365",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813365"
+    }, {
+      "type" : "link",
+      "name" : "object_4867874",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4867874"
+    }, {
+      "type" : "link",
+      "name" : "object_3813297",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813297"
+    }, {
+      "type" : "link",
+      "name" : "object_3813106",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813106"
+    }, {
+      "type" : "link",
+      "name" : "object_5043382",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_5043382"
+    }, {
+      "type" : "link",
+      "name" : "object_3813154",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813154"
+    }, {
+      "type" : "link",
+      "name" : "object_3813290",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_3813290"
+    }, {
+      "type" : "link",
+      "name" : "object_4761179",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/sale/object_4761179"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/search"
+    }, {
+      "type" : "link",
+      "name" : "object_5821557",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5821557"
+    }, {
+      "type" : "link",
+      "name" : "object_4268864",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268864"
+    }, {
+      "type" : "link",
+      "name" : "object_4268351",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268351"
+    }, {
+      "type" : "link",
+      "name" : "object_4268704",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268704"
+    }, {
+      "type" : "link",
+      "name" : "object_4268908",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268908"
+    }, {
+      "type" : "link",
+      "name" : "object_4268651",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268651"
+    }, {
+      "type" : "link",
+      "name" : "object_4268712",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268712"
+    }, {
+      "type" : "link",
+      "name" : "object_4268479",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4268479"
+    }, {
+      "type" : "link",
+      "name" : "object_4264170",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264170"
+    }, {
+      "type" : "link",
+      "name" : "object_5377461",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5377461"
+    }, {
+      "type" : "link",
+      "name" : "object_5258351",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5258351"
+    }, {
+      "type" : "link",
+      "name" : "object_4818128",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4818128"
+    }, {
+      "type" : "link",
+      "name" : "object_4264195",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264195"
+    }, {
+      "type" : "link",
+      "name" : "object_6071136",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_6071136"
+    }, {
+      "type" : "link",
+      "name" : "object_4810959",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4810959"
+    }, {
+      "type" : "link",
+      "name" : "object_3813068",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813068"
+    }, {
+      "type" : "link",
+      "name" : "object_5241303",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5241303"
+    }, {
+      "type" : "link",
+      "name" : "object_5570426",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5570426"
+    }, {
+      "type" : "link",
+      "name" : "object_3813326",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813326"
+    }, {
+      "type" : "link",
+      "name" : "object_5498563",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5498563"
+    }, {
+      "type" : "link",
+      "name" : "object_4264101",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264101"
+    }, {
+      "type" : "link",
+      "name" : "object_4509458",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4509458"
+    }, {
+      "type" : "link",
+      "name" : "object_4507076",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4507076"
+    }, {
+      "type" : "link",
+      "name" : "object_4508203",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4508203"
+    }, {
+      "type" : "link",
+      "name" : "object_4264240",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264240"
+    }, {
+      "type" : "link",
+      "name" : "object_4264230",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264230"
+    }, {
+      "type" : "link",
+      "name" : "object_5182805",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5182805"
+    }, {
+      "type" : "link",
+      "name" : "object_4156691",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4156691"
+    }, {
+      "type" : "link",
+      "name" : "object_4654786",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4654786"
+    }, {
+      "type" : "link",
+      "name" : "object_4258025",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4258025"
+    }, {
+      "type" : "link",
+      "name" : "object_3813389",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813389"
+    }, {
+      "type" : "link",
+      "name" : "object_5255415",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5255415"
+    }, {
+      "type" : "link",
+      "name" : "object_5245597",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5245597"
+    }, {
+      "type" : "link",
+      "name" : "object_3813164",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813164"
+    }, {
+      "type" : "link",
+      "name" : "object_3813156",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813156"
+    }, {
+      "type" : "link",
+      "name" : "object_3813291",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813291"
+    }, {
+      "type" : "link",
+      "name" : "object_3813312",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813312"
+    }, {
+      "type" : "link",
+      "name" : "object_3813170",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813170"
+    }, {
+      "type" : "link",
+      "name" : "object_4365141",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4365141"
+    }, {
+      "type" : "link",
+      "name" : "object_4365056",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4365056"
+    }, {
+      "type" : "link",
+      "name" : "object_4378402",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4378402"
+    }, {
+      "type" : "link",
+      "name" : "object_4365100",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4365100"
+    }, {
+      "type" : "link",
+      "name" : "object_4264249",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264249"
+    }, {
+      "type" : "link",
+      "name" : "object_4975710",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4975710"
+    }, {
+      "type" : "link",
+      "name" : "object_4263923",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4263923"
+    }, {
+      "type" : "link",
+      "name" : "object_3813331",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_3813331"
+    }, {
+      "type" : "link",
+      "name" : "object_4906387",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4906387"
+    }, {
+      "type" : "link",
+      "name" : "object_5016263",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5016263"
+    }, {
+      "type" : "link",
+      "name" : "object_4997503",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4997503"
+    }, {
+      "type" : "link",
+      "name" : "object_4264077",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4264077"
+    }, {
+      "type" : "link",
+      "name" : "object_5126418",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5126418"
+    }, {
+      "type" : "link",
+      "name" : "object_4351773",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_4351773"
+    }, {
+      "type" : "link",
+      "name" : "object_5210967",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/objects/rent/object_5210967"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "Контакт"
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "О нас"
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : "Импрессум"
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/links-and-ctas, /properties"
+      },
+      "checksum" : "84450622140BC6C3FA4525CD2AEB9A7E"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name"
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : "To the offer",
+          "contextSpecificContent" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : "Request",
+          "contextSpecificContent" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : "Back to search result",
+          "contextSpecificContent" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : "Search",
+          "contextSpecificContent" : {
+            "de" : "Suchen",
+            "ru" : "Искать"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : "Bill a property",
+          "contextSpecificContent" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : "Rent a property",
+          "contextSpecificContent" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : "Code",
+          "contextSpecificContent" : {
+            "de" : "Code",
+            "ru" : "Код"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : "Area",
+          "contextSpecificContent" : {
+            "de" : "Fläche",
+            "ru" : "Площадь"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : "Type",
+          "contextSpecificContent" : {
+            "de" : "Typ",
+            "ru" : "Тип"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : "Region",
+          "contextSpecificContent" : {
+            "de" : "Region",
+            "ru" : "Регион"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : "Owner",
+          "contextSpecificContent" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : "Phone",
+          "contextSpecificContent" : {
+            "de" : "Telefon",
+            "ru" : "Телефон"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : "E-Mail",
+          "contextSpecificContent" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

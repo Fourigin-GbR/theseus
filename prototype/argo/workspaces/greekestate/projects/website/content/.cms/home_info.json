@@ -1,0 +1,21 @@
+{
+  "staged" : false,
+  "live" : false,
+  "timestampLiveSwitch" : 0,
+  "compileState" : {
+    "checksum" : "4EDAE15E8292C8A356ACD5EE5675074E-B5FE6672AF85B9A989CB514D764AA4C3-C0A5C4435BEDD2565A2780BB6F37405C-4A55B5E26C061BD13BEA9036B1E4D836-1BC2D2EBDA4DF44541DF295A9620A132",
+    "compiled" : true,
+    "timestamp" : -1,
+    "message" : "./workspaces/greekestate/templates/greekestate/base.html (Datei oder Verzeichnis nicht gefunden)"
+  },
+  "checksum" : {
+    "metaDataValue" : "4EDAE15E8292C8A356ACD5EE5675074E",
+    "contentValue" : "B5FE6672AF85B9A989CB514D764AA4C3",
+    "dataSourceValues" : {
+      "top-level-navigation" : "1BC2D2EBDA4DF44541DF295A9620A132",
+      "site-structure" : "4A55B5E26C061BD13BEA9036B1E4D836",
+      "common-content" : "C0A5C4435BEDD2565A2780BB6F37405C"
+    }
+  },
+  "revision" : "1"
+}

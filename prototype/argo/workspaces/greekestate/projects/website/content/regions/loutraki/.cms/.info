@@ -1,0 +1,62 @@
+{
+  "path" : "/regions/loutraki",
+  "children" : [ {
+    "type" : "file",
+    "name" : "overview",
+    "localizedName" : {
+      "" : "Loutraki",
+      "de" : "Loutraki",
+      "ru" : "Лутраки"
+    },
+    "templateReference" : {
+      "templateId" : "region-overview",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    }
+  }, {
+    "type" : "file",
+    "name" : "about_casino_loutraki",
+    "localizedName" : {
+      "" : "Casino Loutraki",
+      "de" : "Casino Loutraki",
+      "ru" : "Казино Лутраки"
+    },
+    "templateReference" : {
+      "templateId" : "stage-article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    }
+  }, {
+    "type" : "file",
+    "name" : "about_corinth_canal",
+    "templateReference" : {
+      "templateId" : "stage-article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    }
+  }, {
+    "type" : "file",
+    "name" : "about_thermal_spa_loutraki",
+    "templateReference" : {
+      "templateId" : "stage-article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    }
+  }, {
+    "type" : "file",
+    "name" : "distances_loutraki_historical_monuments",
+    "templateReference" : {
+      "templateId" : "stage-article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    }
+  }, {
+    "type" : "file",
+    "name" : "way_airport_loutraki",
+    "templateReference" : {
+      "templateId" : "stage-article-text",
+      "variationId" : "default",
+      "revision" : "unspecified"
+    }
+  } ]
+}

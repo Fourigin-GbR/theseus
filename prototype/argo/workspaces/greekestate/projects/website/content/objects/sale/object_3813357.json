@@ -1,0 +1,753 @@
+{
+  "id" : "object_3813357",
+  "contentFormatVersion" : "2.0",
+  "metaData" : {
+    "title" : "Sale object #P-3924 - BestGreekEstate",
+    "contextSpecificTitles" : {
+      "de" : "Verkaufsobjekt #P-3924 - BestGreekEstate",
+      "ru" : "Объект #P-3924 на продажу - BestGreekEstate"
+    },
+    "attributes" : {
+      "converted on" : "2019-04-17 16:08:48"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : {
+      "de" : "Apartment in Loutraki-Perachora",
+      "ru" : "Квартира в Loutraki-Perachora",
+      "en" : "Apartment in Loutraki-Perachora"
+    }
+  }, {
+    "type" : "text",
+    "name" : "short-description",
+    "content" : {
+      "de" : "Entfernung zum Meer: <span class=\"text-red\">650</span>, ohne Nebenkosten, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
+      "ru" : "Расстояние до моря: <span class=\"text-red\">650</span>, Без коммунальных услуг, Подъезд по: <span class=\"text-red\">Асфальт</span>",
+      "en" : "Distance from sea: <span class=\"text-red\">650</span>, Without Monthly shared expenses, Road type: <span class=\"text-red\">Asphalt</span>"
+    }
+  }, {
+    "type" : "group",
+    "name" : "properties",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "code",
+      "content" : "P-3924",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "area",
+      "content" : "173",
+      "dataType" : "INTEGER"
+    }, {
+      "type" : "data",
+      "name" : "price",
+      "content" : "399990",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "type",
+      "content" : "apartment",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "region",
+      "content" : "loutraki",
+      "dataType" : "STRING"
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "long-description",
+    "content" : {
+      "de" : "Verkauf 4-Zimmer-Wohnung, &quot;Lux&quot;, eine Fläche von 173,5 m? im 4. Stock des vierstöckigen Luxushäuser <br /> <br /> Die Wohnung verfügt über: <br /> Grosses Wohnzimmer mit Kamin <br /> 3 Schlafzimmer mit Einbauschränken <br /> Badezimmer mit Jacuzzi-Badewanne und <br /> Dusche mit WC <br /> 4 große Balkone <br /> <br /> Schränke und Küche sind aus Naturholz <br /> Arbeitsplatte aus Granit <br /> Die Küche ist professionell und multifunktionale Elektroherd Kühlschrank gesetzt, made ​​in USA <br /> Die Halle ist sehr schön Kamin gesetzt, made ​​in USA <br /> Das Schlafzimmer verfügt über ein Bett, verschiedene Bestimmungen, die die Systemsteuerung zu regulieren. Bett, made ​​in USA <br /> Der Preis der Wohnung umfasst mehrere Möbel-Sets: <br /> Essecke (Esstisch, 6 Stühle, eine Rutsche, eine Kommode) <br /> Couch aus Leder (Sofa Dreifach-, Doppel-Sofa, Stuhl) Funktion ohne Bett gemacht <br /> Couch aus Leder (Sofa Dreifach-, Doppel-Sofa) mit der Funktion des Bettes gemacht <br /> <br /> Das Haus verfügt über autonome Heizung <br /> Das Haus verfügt über einen Aufzug <br /> Im Hof ​​gibt es einen großen Pool, der nur Mietern genutzt werden kann <br /> Auf dem Dach Solarpanel installiert <br /> Auf dem Dach Gericht für den Empfang von Satellitenfernsehen installiert <br /> Alle Zimmer sind klimatisiert <br /> Balkontüren sind doppelt verglast <br /> Balkon Öffnungen Metall Sicherheits-Rollläden und Gitter aus dem Betreten der Wohnung Insekten <br /> Die Wohnung wurde Tür mit Sicherheitsschloss verstärkt <br /> Die Wohnung verfügt über ein Alarmsystem <br /> Die Wohnung ist an die Telefonanlage angeschlossen und hat Zugang zum Internet <br /> Die Wohnung verfügt über die Möglichkeit, mit dem Internet zu verbinden TV <br /> Die Balkone sind mit elektrischen Markisen <br /> Mit einem Balkon mit Blick auf das Meer und die Berge <br /> Marmorböden in der Wohnung <br /> Im Untergeschoss des Hauses befinden sich zwei große Lagerräume <br /> Deckenhöhe: 2,60 m <br /> <br /> Jahr der Gebäude: 2005 <br /> Im Erdgeschoss gibt es einen Platz für das Abstellen von zwei Autos. <br /> Der Parkplatz Videoüberwachungskameras installiert, die ein Signal vom Monitor in der Wohnung angezeigt <br /> <br /> Das Haus liegt in einer ruhigen Wohngegend von Loutraki <br /> Entfernung zum Zentrum 400 m <br /> Entfernung zum Strand 650 m",
+      "ru" : "Описание: <br /> <br /> Продаётся 4-х комнатная меблированная квартира класса ?Люкс?, площадью 173,5 м? на 4-ом этаже четырёхэтажного элитного дома <br /> <br /> В квартире есть: <br /> Большой зал с камином <br /> 3 спальни со встроенными шкафами <br /> Ванная комната с Jacuzzi и санузлом <br /> Душевая комната с санузлом <br /> 4 больших балкона <br /> <br /> Шкафы и кухня изготовлены из натурального дерева <br /> Рабочая плита кухни изготовлена из гранита <br /> В кухне установлена профессиональная электрическая плита и многофункциональный холодильник, производства США <br /> В зале установлен очень красивый камин, производства США <br /> В спальне есть кровать, различные положения которой регулируются пультом управления. Кровать, производства США <br /> В цену квартиры включены несколько мебельных гарнитуров: <br /> Столовый гарнитур (обеденный стол, 6 стульев, горка, комод) <br /> Мягкий уголок из натуральной кожи (диван тройной, диван двойной, кресло) без функции кровати <br /> Мягкий уголок из натуральной кожи (диван тройной, диван двойной) с функцией кровати <br /> <br /> В доме установлена автономная система отопления <br /> В доме имеется лифт <br /> Во дворе дома имеется большой бассейн, которым могут пользоваться только жильцы дома <br /> На крыше дома установлена солнечная батарея <br /> На крыше дома установлена тарелка для приёма спутникового телевидения <br /> Во всех комнатах установлены кондиционеры <br /> Балконные двери имеют двойное остекление <br /> Балконные проёмы имеют металлические защитные жалюзи и сетку от проникновения в квартиру насекомых <br /> В квартире установлена усиленная дверь с секретным замком <br /> В квартире установлена сигнализация <br /> Квартира подключена к телефонной станции и имеет доступ в сеть Интернет <br /> В квартире имеется возможность для подключения к Интернет телевидению <br /> На балконах установлены электрические солнцезащитные тенты <br /> С балкона открывается вид на море и горы <br /> Полы в квартире мраморные <br /> В подвале дома имеется два больших подсобных помещения <br /> Высота потолка: 2,60 м <br /> <br /> Год постройки дома: 2005 <br /> На цокольном этаже дома имеется место для парковки двух автомобилей. <br /> Над парковочным местом установлена камера видео наблюдения, сигнал от которой выведен на монитор в квартире <br /> <br /> Дом находится в тихом, спальном районе города Лутраки <br /> Расстояние до центра города 400 м <br /> Расстояние до пляжа 650 м",
+      "en" : "Large living room with fireplace <br /> 3 bedrooms with fitted wardrobes <br /> Bathroom with Jacuzzi bath and <br /> Shower room with WC <br /> 4 large balconies <br /> <br /> Cabinets and kitchen are made of natural wood <br /> Kitchen Worktop made ​​of granite <br /> The kitchen is set professional and multifunctional electric cooker fridge, made ​​in USA <br /> The hall is set very beautiful fireplace, made ​​in USA <br /> The bedroom has a bed, various provisions that regulate the control panel. Bed, made ​​in USA <br /> The price of the apartment includes several furniture sets: <br /> Dinette area (dining table, 6 chairs, a slide, a chest of drawers) <br /> Couch made ​​of leather (sofa triple, double sofa, chair) function without bed <br /> Couch made ​​of leather (sofa triple, double sofa) with the function of the bed <br /> <br /> The house has autonomous heating system <br /> The house has an elevator <br /> In the courtyard there is a large swimming pool, which can be used only tenants <br /> Installed on the roof solar panel <br /> Installed on the roof dish for receiving satellite television <br /> All rooms are air-conditioned <br /> Balcony doors are double glazed <br /> Balcony openings have metal security shutters and grid from entering the apartment insects <br /> The apartment has reinforced door with security lock <br /> The apartment has an alarm system <br /> The apartment is connected to the telephone exchange and has access to the Internet <br /> The apartment has an opportunity to connect to the Internet TV <br /> The balconies have electric sun awnings <br /> With a balcony overlooking the sea and mountains <br /> Marble floors in the apartment <br /> In the basement of the house there are two large storage rooms <br /> Ceiling Height: 2.60 m <br /> <br /> Year of building: 2005 <br /> On the ground floor there is a place for parking of two cars. <br /> The parking space installed video surveillance cameras, which displayed a signal from the monitor in the apartment <br /> <br /> The house is located in a quiet residential area of Loutraki <br /> Distance to town center 400 m <br /> Distance to the beach 650 m"
+    }
+  }, {
+    "type" : "list",
+    "name" : "images",
+    "elements" : [ {
+      "type" : "list-object",
+      "referenceId" : "510ec1025bfb40d588308b20534c285ab6f512e7",
+      "source" : "//images.bestgreekestate.com/51/0ec1025bfb40d588308b20534c285ab6f512e7/77531874_900x675.jpeg",
+      "alternateText" : "Photo 77531874",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "abbaa196ab81f238f5570dd1c15586bcb448ba2b",
+      "source" : "//images.bestgreekestate.com/ab/baa196ab81f238f5570dd1c15586bcb448ba2b/77531875_900x675.jpeg",
+      "alternateText" : "Photo 77531875",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "7ac187b9c82faeb6fee2f4c8f9193604aeba901c",
+      "source" : "//images.bestgreekestate.com/7a/c187b9c82faeb6fee2f4c8f9193604aeba901c/77531876_900x675.jpeg",
+      "alternateText" : "Photo 77531876",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "c73982774c4100ff6b873205b44586af0568ac51",
+      "source" : "//images.bestgreekestate.com/c7/3982774c4100ff6b873205b44586af0568ac51/77531877_900x675.jpeg",
+      "alternateText" : "Photo 77531877",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "d68df0ff9a1c8466c0adebc26b3c777a91d3f201",
+      "source" : "//images.bestgreekestate.com/d6/8df0ff9a1c8466c0adebc26b3c777a91d3f201/77531882_900x675.jpeg",
+      "alternateText" : "Photo 77531882",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "4ef372f154634e1c020e3bd092e38f031c686abe",
+      "source" : "//images.bestgreekestate.com/4e/f372f154634e1c020e3bd092e38f031c686abe/77531884_900x675.jpeg",
+      "alternateText" : "Photo 77531884",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "122abdf91b9fe87771959e1874728e2fe9348239",
+      "source" : "//images.bestgreekestate.com/12/2abdf91b9fe87771959e1874728e2fe9348239/77531886_900x675.jpeg",
+      "alternateText" : "Photo 77531886",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "d736e5c19d4d7feb236d998cd71c982c1945ba15",
+      "source" : "//images.bestgreekestate.com/d7/36e5c19d4d7feb236d998cd71c982c1945ba15/77531888_900x675.jpeg",
+      "alternateText" : "Photo 77531888",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "14690af1f093119d68699f8c6a3bbc4245836eaf",
+      "source" : "//images.bestgreekestate.com/14/690af1f093119d68699f8c6a3bbc4245836eaf/77531890_900x675.jpeg",
+      "alternateText" : "Photo 77531890",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "cf9b6dede398f38209f414e6b9f763d9ba680990",
+      "source" : "//images.bestgreekestate.com/cf/9b6dede398f38209f414e6b9f763d9ba680990/77531892_900x675.jpeg",
+      "alternateText" : "Photo 77531892",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "0242963b9d69d68ac7c5f77a234b36ed40893173",
+      "source" : "//images.bestgreekestate.com/02/42963b9d69d68ac7c5f77a234b36ed40893173/77531894_900x675.jpeg",
+      "alternateText" : "Photo 77531894",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "631d640abc46e81a4bfca885e4753084818bf6d2",
+      "source" : "//images.bestgreekestate.com/63/1d640abc46e81a4bfca885e4753084818bf6d2/77531895_900x675.jpeg",
+      "alternateText" : "Photo 77531895",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "5bd18651bf3f5f30e2ea55ac2a152922b19f786f",
+      "source" : "//images.bestgreekestate.com/5b/d18651bf3f5f30e2ea55ac2a152922b19f786f/77531897_900x675.jpeg",
+      "alternateText" : "Photo 77531897",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "bf20dc225e756ab24b27e1dba048cc7ddfdca6d9",
+      "source" : "//images.bestgreekestate.com/bf/20dc225e756ab24b27e1dba048cc7ddfdca6d9/77531899_900x675.jpeg",
+      "alternateText" : "Photo 77531899",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "b806b3553465cb62d006f3f3f24f7b1371085d9b",
+      "source" : "//images.bestgreekestate.com/b8/06b3553465cb62d006f3f3f24f7b1371085d9b/77531900_900x675.jpeg",
+      "alternateText" : "Photo 77531900",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "46ffff025ca9629c13e9f3306b4499f0238c0d5c",
+      "source" : "//images.bestgreekestate.com/46/ffff025ca9629c13e9f3306b4499f0238c0d5c/77531901_900x675.jpeg",
+      "alternateText" : "Photo 77531901",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "afc99885d64c12f26e6a98e79d18e66241d9dc23",
+      "source" : "//images.bestgreekestate.com/af/c99885d64c12f26e6a98e79d18e66241d9dc23/77531902_900x675.jpeg",
+      "alternateText" : "Photo 77531902",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "d9409c9cb61f34dd984e6a14168353fefc92de98",
+      "source" : "//images.bestgreekestate.com/d9/409c9cb61f34dd984e6a14168353fefc92de98/77531903_900x675.jpeg",
+      "alternateText" : "Photo 77531903",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "f4746e451b6b0c9cd57a446db509c2e976682d31",
+      "source" : "//images.bestgreekestate.com/f4/746e451b6b0c9cd57a446db509c2e976682d31/77531904_900x675.jpeg",
+      "alternateText" : "Photo 77531904",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "662fb54c661286316d5a2434dc8fca3015508ce5",
+      "source" : "//images.bestgreekestate.com/66/2fb54c661286316d5a2434dc8fca3015508ce5/77531905_900x675.jpeg",
+      "alternateText" : "Photo 77531905",
+      "mimeType" : "image/jpeg"
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "geo-position",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "latitude",
+      "content" : "0.0",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "longitude",
+      "content" : "0.0",
+      "dataType" : "FLOAT"
+    } ]
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "D752B6644EF4C00C17B166D69C099D74"
+    },
+    "content" : [ {
+      "type" : "data",
+      "name" : "processedOn",
+      "content" : "2019.07.14 17:43:52 +0000",
+      "dataType" : "DATE"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/about" : "1",
+        "/search" : "1",
+        "/home" : "1",
+        "/impressum" : "1",
+        "/common" : "1",
+        "/contact" : "1"
+      },
+      "query" : {
+        "NON_RECURSIVE" : true,
+        "INFO_PATH" : "/",
+        "VERBOSE" : true
+      },
+      "checksum" : "F218B260A7A592AD538523245E323FC6"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "home",
+          "info.state.compileState.message" : "./workspaces/greekestate/templates/greekestate/base.html (Datei oder Verzeichnis nicht gefunden)",
+          "info.state.revision" : "1",
+          "info.localizedName." : "home",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "" : "Home",
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "search",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Suche",
+          "ru" : "Поиск",
+          "en" : "Search"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции",
+          "en" : "Regions of Greece"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Objekte",
+          "ru" : "Объекты",
+          "en" : "Objects"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "contact",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт",
+          "en" : "Contact"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "about",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Über uns",
+          "ru" : "О нас",
+          "en" : "About us"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "common content",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name",
+        "content" : { }
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "impressum",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум",
+          "en" : "Impressum"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/general-headlines, /links-and-ctas, /properties"
+      },
+      "checksum" : "1E615A3F642213882518011D5748689F"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : { }
+      }, {
+        "type" : "group",
+        "name" : "general-headlines",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "description",
+          "content" : {
+            "de" : "Beschreibung",
+            "ru" : "Описание",
+            "en" : "Description"
+          }
+        }, {
+          "type" : "text",
+          "name" : "map",
+          "content" : {
+            "de" : "Karte",
+            "ru" : "Карта",
+            "en" : "Map"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Поиск",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search-in-region",
+          "content" : {
+            "de" : "Suche in der Region",
+            "ru" : "Поиск в регионе",
+            "en" : "Search in the region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "matching-objects-found",
+          "content" : {
+            "de" : "{0} Immobilien gefunden.",
+            "ru" : "Объектов найдено: {0}",
+            "en" : "{0} properties found."
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type",
+          "content" : {
+            "de" : "Typ des Objektes",
+            "ru" : "Тип объекта",
+            "en" : "Object type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:apartment",
+          "content" : {
+            "de" : "Wohnung",
+            "ru" : "Квартира",
+            "en" : "Apartment"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:land-plot",
+          "content" : {
+            "de" : "Grundstück",
+            "ru" : "Земельный участок",
+            "en" : "Land plot"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:building",
+          "content" : {
+            "de" : "Gebäude",
+            "ru" : "Здание",
+            "en" : "Building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:hotel",
+          "content" : {
+            "de" : "Hotel",
+            "ru" : "Гостиница",
+            "en" : "Hotel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:villa",
+          "content" : {
+            "de" : "Villa",
+            "ru" : "Вилла",
+            "en" : "Villa"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:detached-house",
+          "content" : {
+            "de" : "Freistehendes Haus",
+            "ru" : "Дом",
+            "en" : "Detached house"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:office",
+          "content" : {
+            "de" : "Büro",
+            "ru" : "Офис",
+            "en" : "Office"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:farm-parcel",
+          "content" : {
+            "de" : "Landparzelle",
+            "ru" : "Сельскохозяйственный участок",
+            "en" : "Farm parcel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:store",
+          "content" : {
+            "de" : "Geschäft",
+            "ru" : "Магазин",
+            "en" : "Store"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:business-building",
+          "content" : {
+            "de" : "Industriegebäude",
+            "ru" : "Индустриальное здание",
+            "en" : "Business building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:various-other-property",
+          "content" : {
+            "de" : "Sonstige Immobilie",
+            "ru" : "Прочая недвижимость",
+            "en" : "Various other property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:parking",
+          "content" : {
+            "de" : "Parkplatz",
+            "ru" : "Парковка",
+            "en" : "Parking"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:other-land-property",
+          "content" : {
+            "de" : "Sonstige Grundstücke",
+            "ru" : "Прочие земельные участки",
+            "en" : "Other land property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:maisonette",
+          "content" : {
+            "de" : "Maisonette",
+            "ru" : "Двухуровневая квартира",
+            "en" : "Maisonette"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению",
+            "en" : "To the offer"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить",
+            "en" : "Request"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска",
+            "en" : "Back to search result"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Искать",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость",
+            "en" : "Bill a property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать",
+            "en" : "Rent a property"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : {
+            "de" : "Code",
+            "ru" : "Код",
+            "en" : "Code"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : {
+            "de" : "Fläche",
+            "ru" : "Площадь",
+            "en" : "Area"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : {
+            "de" : "Typ",
+            "ru" : "Тип",
+            "en" : "Type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : {
+            "de" : "Region",
+            "ru" : "Регион",
+            "en" : "Region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец",
+            "en" : "Owner"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт",
+            "en" : "Contact"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки",
+            "en" : "Pages"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : {
+            "de" : "Telefon",
+            "ru" : "Тел.",
+            "en" : "Phone"
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : {
+            "de" : "Mobil",
+            "ru" : "Моб.",
+            "en" : "Mobile"
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : {
+            "de" : "Fax",
+            "ru" : "Факс",
+            "en" : "Fax"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта",
+            "en" : "E-Mail"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

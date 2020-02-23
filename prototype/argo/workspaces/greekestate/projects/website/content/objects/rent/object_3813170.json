@@ -1,0 +1,753 @@
+{
+  "id" : "object_3813170",
+  "contentFormatVersion" : "2.0",
+  "metaData" : {
+    "title" : "Rent object #J-1806 - BestGreekEstate",
+    "contextSpecificTitles" : {
+      "de" : "Mietobjekt #J-1806 - BestGreekEstate",
+      "ru" : "Объект #J-1806 для аренды - BestGreekEstate"
+    },
+    "attributes" : {
+      "converted on" : "2019-04-17 16:08:48"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : {
+      "de" : "Apartment in Kato Almiri (Saronikos)",
+      "ru" : "Квартира в Kato Almiri (Saronikos)",
+      "en" : "Apartment in Kato Almiri (Saronikos)"
+    }
+  }, {
+    "type" : "text",
+    "name" : "short-description",
+    "content" : {
+      "de" : "Entfernung zum Meer: <span class=\"text-red\">30</span>, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
+      "ru" : "Расстояние до моря: <span class=\"text-red\">30</span>, Подъезд по: <span class=\"text-red\">Асфальт</span>",
+      "en" : "Distance from sea: <span class=\"text-red\">30</span>, Road type: <span class=\"text-red\">Asphalt</span>"
+    }
+  }, {
+    "type" : "group",
+    "name" : "properties",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "code",
+      "content" : "J-1806",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "area",
+      "content" : "60",
+      "dataType" : "INTEGER"
+    }, {
+      "type" : "data",
+      "name" : "price",
+      "content" : "20",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "type",
+      "content" : "apartment",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "region",
+      "content" : "kato almiri",
+      "dataType" : "STRING"
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "long-description",
+    "content" : {
+      "de" : "Almiri <br /> – &gt; Datum &lt; – &gt; Preisliste &lt; – &gt; Preis &lt; – <br /> 30.04 - 31.05 &lt; – – – – – – &gt; 25 € pro Tag <br /> 01.06 - 30.06 &lt; – – – – – – &gt; 30 € <br /> 01.07 - 18.09 &lt; – – – – – – &gt; 35 € <br /> 19.09 - 30.10 &lt; – – – – – – &gt; 25 € <br /> 31.10 - 28.12 &lt; – – – – – – &gt; 20 € <br /> <br /> 1. Preise gültig für Mietdauer ab 7 Tagen <br /> Bei Mietdauer weniger als 7 Tage - Aufpreis 5 € pro Tag. <br /> 2. Preise gelten bis zu zwei Personen; jede weitere Person (auch Kind): 5 € pro Tag mehr. <br /> 3. Stromkosten - im Mietpreis enthalten (bei Durchschnittsverbrauch: 10 kW/Tag. <br /> Mehrverbrauch wird extra berechnet (0,25 €/kW). <br /> 4. Waschen und Bügeln (pro Satz Bettwäsche und Handtücher): 5 €. <br /> 5. Reinigungspauschale: 50 €. <br /> 6. Kaution für mögl. Schäden: 200 €. <br /> 7. Haustiere: 5 € pro Tag pro Tier. <br /> 8. Rauchen in der Wohnung ist gestattet. <br /> 9. Wohnung ist geeignet für Menschen mit Behinderungen nicht. <br /> 10. Lieferung von Babybett: 20 €. <br /> <br /> <br /> 3-Zimmer-Wohnung mit Gesamtfläche von 60 m<sup>2</sup>. <br /> Die Wohnung befindet sich auf 2. Stock des 2-stöckigen Hauses in der Kurstadt Almiri. <br /> Die Wohnung verfügt über 4 Schlafplätze + 2 Schlafplätze für Kinder unter dem Alter von 12 Jahren. <br /> <br /> <br /> Wohnungslayout <br /> • Wohnzimmer mit eine Veranda mit dem Meerblick; <br /> • Küche; <br /> • 2 Schlafzimmern mit Klimaanlagen und mit Balkonen; <br /> • Badezimmer/WC. <br /> <br /> <br /> Beschreibung <br /> • Im Wohnzimmer: 2 Sofas (2 Schlafplätze für Kinder), ein Tisch mit Stühlen, TV. <br /> Auf der Veranda können Sie Frühstück, Mittagessen und Abendessen. <br /> • In der Küche: Kühlschrank, Elektroherd, Spülmaschine, Wasserkocher, Mikrowelle. <br /> • Ins erste Schlafzimmer: Doppelbett. <br /> • Ins zweite Schlafzimmer: 2 Klappbetten und Kleiderschrank. <br /> Falls erforderlich, es ist möglich, ein Schlafsofa liefern. <br /> <br /> <br /> Ausstattung <br /> • Bügeleisen; <br /> • Waschmaschine; <br /> • Boiler; <br /> • Auf den Balkontüren installiert Jalousien und Antimoskitonetze. <br /> <br /> <br /> Interaktion mit Gästen <br /> Wir können helfen: <br /> • Arzt zu besuchen; <br /> • Dienstapotheke zu finden; <br /> • Auto mit Fahrer zu bestellen, damit Sehenswürdigkeiten und historischen Denkmäler der antiken Griechenland zu besuchen; <br /> • Putzfrau, Friseur und Nageldesigner zu Wohnung zu senden; <br /> <br /> <br /> Lage <br /> Die Wohnung befindet sich in einem Haus, das in der Kurstadt Almiri befindet. <br /> Entfernung bis/zu: <br /> • Strand: 30 m. <br /> An der Strandpromenade gibt es verschiedene Bars und Caf&eacute;s, Restaurants und Tavernen. <br /> Meisten von ihnen stellen Sonnenliegen und Sonnenschirme ohne Gebühr auf Strand auf. <br /> Kellner bieten regelmäßig verschiedene Getränke, Eis und Snacks an. <br /> In der Nähe des Hauses gibt es einen Minimarkt. <br /> • Stadtzentrum Almiri: 500 m. <br /> Ins Stadtzentrum befindet sich Supermarkt, Fleisch, Fisch und Gemüseläden, Bäckereien und Konditoreien. <br /> • Straßenmarkt, die in Almiri 2 Mal pro Woche geöffnet ist: 650 m. <br /> • Bushaltestelle: 550 m. <br /> <br /> <br /> Sehenswürdigkeiten und historischen Denkmälern des antiken Griechenland in der Nähe von Almiri <br /> • Brücke über den Kanal von Korinth (5 km); <br /> Der Kanal verbindet die Ägäis und im Ionischen Meer und trennt Attika von dem Peloponnes. <br /> • die antike Stadt Korinth (10 km); <br /> • das antike Theater von Epidaurus (60 km); <br /> • Ausgrabung des Hera-Tempel, in der Nähe des &laquo;Blue Lake Ireon&raquo; (50 km); <br /> • die antike Stadt Patras (130 km); <br /> • Stadt Nafplion - die erste Hauptstadt von Griechenland in 1828-1833 Jahren (80 km); <br /> • die antike Stadt Nemea (40 km); <br /> • die antike Stadt Mykene (50 km); <br /> • City of Sparta, mit gelegen in seine Umgebung die Ruinen der antiken Sparta (130 km); <br /> • die mittelalterliche Stadt Mystras (140 km); <br /> • Byzantinische Festungsstadt Monemvasia (220 km); <br /> • Olympia - einer der größten Schrein des antiken Griechenland (200 km); <br /> • die alte Stadt von Delphi (270 km); <br /> • Kap Sounion, wo die Ruinen der Tempel von Poseidon (140 km); <br /> • Stadt Athens (85 km). <br /> <br /> <br /> Verkehrsmittel <br /> • Im Stadtzentrum Stadt Almiri befindet sich Bushaltestelle, von dem Sie die Städte Isthmia, K&oacute;rinth, Loutra Elenis, Galataki erreichen können. <br /> Auch können Sie zum zentralen Busbahnhof (6 km) fahren, welche liegt in Nähe der Brücke über Kanal von Korinth (in der Nähe sind Souvenirläden). <br /> Vom Busbahnhof mit dem Bus können Sie alle Städte in Griechenland zu erreichen. <br /> <br /> • Wenn Sie sich entscheiden, Auto zu mieten, ist es am besten, Auto im Flughafen Athen durch Internet von Hause zu buchen. <br /> • Kostenlose können Sie Ihre Auto in der Nähe des Hauses parken. <br /> <br /> <br /> Abholservice <br /> • Sie können vom Flughafen Athen nach Stadt Almiri mit Taxi fahren. <br /> Reisezeit ist ca. 1,5 Stunden. <br /> Je nach Tageszeit kostet Reise 120-150 €. <br /> Auf Wunsch können wir privater Abholservice organisiert werden (günstigere Variante). <br /> <br /> • Auch können Sie mit Schnellzug fahren. <br /> Zug fährt jede Stunde (erste Reise um 5:44 Uhr, letzte um 21:44 Uhr). <br /> Richtung: Kiato. <br /> Ihre Haltestelle: K&oacute;rinthos. <br /> Reisezeit: 1. Std. 22 Min. <br /> Ticket für Erwachsenen in beide Richtungen kostet 18 €. <br /> Für Kinder und Studenten gibt es Ermäßigung von 25% bis 50%. <br /> An Bahn-Haltestelle &laquo;K&oacute;rinthos&raquo; werden wir Sie abholen.",
+      "ru" : "Курорт Альмири <br /> – &gt; Даты &lt; – &gt; Прайс-лист &lt; – &gt; Цена &lt; – <br /> 01.05 - 31.05 &lt; – – – – – – &gt; 25 € в сутки <br /> 01.06 - 30.06 &lt; – – – – – – &gt; 30 € <br /> 01.07 - 18.09 &lt; – – – – – – &gt; 35 € <br /> 19.09 - 30.10 &lt; – – – – – – &gt; 25 € <br /> 31.10 - 28.12 &lt; – – – – – – &gt; 20 € <br /> <br /> 1. Цены действительны при аренде квартиры сроком более 7 дней. <br /> При меньшем сроке аренды взимается доплата в размере 5 € за день. <br /> 2. Цены действительны при проживании в квартире до двух человек. <br /> За каждого дополнительного гостя, включая детей, взимается оплата 5 € в день. <br /> 3. Расходы по электроэнергии включены в стоимость аренды из расчёта средней нормы потребления 10 kW в день. <br /> Оплата за каждый перерасходованный kW: 0,25 €. <br /> 4. Оплата за стирку и глажку комплекта постельного белья и полотенец: 5 €. <br /> 5. Оплата за генеральную уборку: 50 €. <br /> 6. Депозит за возможное нанесение ущерба: 200 €. <br /> 7. Оплата за нахождение в квартире с одним животным: 5 € в день. <br /> 8. В квартире разрешается курить. <br /> 9. Дом не оборудован для людей с ограниченными физическими возможностями. <br /> 10. Оплата за доставку раздвижного дивана, одноместной кровати или детской кроватки: 20 €. <br /> <br /> <br /> 3-х комнатная квартира, площадью 60 м<sup>2</sup> <br /> Квартира находится в курортном городе Альмири, на втором этаже двухэтажного дома. <br /> В квартире есть 4 спальных места + 2 спальных места для детей в возрасте до 12 лет. <br /> <br /> <br /> Планировка квартиры <br /> • Гостиная; <br /> • Кухня; <br /> • 2 спальни; <br /> • Ванная комната с WC; <br /> • Веранда с видом на море. <br /> <br /> <br /> Описание квартиры <br /> • В гостиной стоят два дивана (2 спальных места для детей), стол со стульями, телевизор. <br /> Из гостиной есть выход на большую веранду, с видом на море. <br /> На веранде можно завтракать, обедать и ужинать. <br /> • В кухне есть холодильник, электроплита с духовкой, СВЧ-печь, посудомоечная машина и электрочайник. <br /> • В одной спальне стоит двуспальная кровать. <br /> • Во второй спальне есть две раскладушки и шкаф. <br /> При необходимости, возможна доставка раскладного дивана. <br /> • Из обеих спален есть выход на небольшой балкон. <br /> <br /> <br /> Оснащение квартиры <br /> • Утюг, гладильная доска; <br /> • В спальнях установлены кондиционеры; <br /> • Стиральная машина; <br /> • Водонагревательный бойлер; <br /> • На балконных дверях установлены звукозащитные стёкла, жалюзи и антимоскитные сетки. <br /> <br /> <br /> Помощь гостям <br /> Представитель нашей фирмы сможет помочь в решении многих вопросов, включая консультацию у врача, поиск дежурной аптеки, а также он сможет: <br /> • заказать автомобиль с русскоязычным водителем для посещения достопримечательностей и исторических памятников античной Греции. <br /> • прислать на дом русскоязычного помощника по ведению домашнего хозяйства, парикмахера и дизайнера ногтей. <br /> <br /> <br /> Месторасположение <br /> • Расстояние до пляжа Альмири 30 м. <br /> Рядом с домом есть минимаркет. <br /> На набережной до поздней ночи работают бары, кафетерии и таверны. <br /> • Расстояние до центра города: 500 м. <br /> В центре города есть супермаркет, мясной, рыбный и овощной магазины, кондитерская и булочная. <br /> • Расстояние до уличного базара, который открыт в Альмири 2 раза в неделю, 650 м. <br /> • Расстояние до остановки автобуса: 550 м. <br /> <br /> <br /> Достопримечательности и исторические памятники Древней Греции вблизи Альмири <br /> • Мост через Кори́нфский кана́л (5 км) <br /> Канал соединяет Эгейское и Ионическое моря и разделяет Аттику от полуострова Пелопоннес <br /> • древний город Коринф (10 км) <br /> • древний театр Эпидавра (60 км) <br /> • раскопки храма Геры, находящегося неподалёку от &laquo;Голубого озера Иреон&raquo; (50 км) <br /> • древний город Патры (130 км) <br /> • город Нафплио - первую столицу Греции в 1828-1833 годах (80 км) <br /> • древний город Немея (40 км) <br /> • древний город Микены (50 км) <br /> • город Спарта, с расположенными в её окрестностях руинами Древней Спарты (130 км) <br /> • средневековый город Мистра (140 км) <br /> • византийский город-крепость Монемвасия (220 км) <br /> • Олимпию - одно из крупнейших святилищ Древней Греции (200 км) <br /> • древний город Дельфы (270 км) <br /> • мыс Сунион, на котором сохранились руины храма Посейдона, (140 км) <br /> • город Афины (85 км) <br /> <br /> <br /> Транспорт <br /> • В центре Альмири есть остановка автобуса, на котором можно доехать до городов Истмия (Isthmia), Коринф (K&oacute;rinthos), Лутра Элэни (Loutra Elenis), Галатаки (Galataki), а также до центрального автовокзала (6 км), который находится около моста через Кори́нфский кана́л (рядом - сувенирные магазины). <br /> С автовокзала можно добраться во все города Греции. <br /> • Если Вы решите арендовать автомобиль, то лучше зарезервировать его в аэропорту Афины из дома по Интернету. <br /> • Бесплатно можно припарковать автомобиль недалеко от дома. <br /> <br /> <br /> Трансфер из аэропорта <br /> • Доехать из аэропорта в Альмири можно на такси. <br /> Продолжительность поездки: 1 час 30 мин. <br /> В зависимости от времени суток цена проезда: 120-150 €. <br /> Мы можем прислать автомобиль с водителем (это будет немного дешевле). <br /> <br /> • Доехать из аэропорта в Альмири можно на скоростном поезде. <br /> Направление движения: Кьято (Kiato). <br /> Пункт назначения: K&oacute;rinthos. <br /> Продолжительность поездки: 1 час 22 мин. <br /> Интервал движения поездов: 1 час (первый в 5:44; последний в 21:44). <br /> Цена билета в обе стороны для одного взрослого 18 €. <br /> Для детей и студентов существует скидка от 25% до 50%. <br /> На остановке &laquo;Кόринтос&raquo; Вас встретит представитель нашей фирмы.",
+      "en" : "Almiri <br /> – &gt; Dates &lt; – &gt; Price list &lt; – &gt; Price &lt; – <br /> 01.05 - 31.05 &lt; – – – – – &gt; 25 € per day <br /> 01.06 - 30.06 &lt; – – – – – &gt; 30 € <br /> 01.07 - 18.09 &lt; – – – – – &gt; 35 € <br /> 19.09 - 30.10 &lt; – – – – – &gt; 25 € <br /> 31.10 - 28.12 &lt; – – – – – &gt; 20 € <br /> <br /> 1. The prices are valid when renting an apartment for more than 7 days. <br /> At the shorter term lease will be charged the surcharge 5 € per day of stay. <br /> 2. The prices are valid for stays in an apartment up to two people. <br /> For each additional person, including children, will be charged 5 € per day. <br /> 3. An electricity costs are included in the rental price at the rate of an average consumption rate of 10 кW per day. <br /> Each overdrawn кW to be paid at the price of 0,25 €. <br /> 4. The payment for the washing and ironing the one set of bed linen and towels is 5 €. <br /> 5. The payment for the general cleaning is 50 €. <br /> 6. The deposit for a possible damage is 200 €. <br /> 7. The payment for a finding in an apartment with one pet is 5 € per day. <br /> 8. The smoking in the apartment is allowed. <br /> 9. The house is not equipped for a people with disabilities. <br /> 10. The shipping cost of one extra single bed, camp-cot or baby cot is 20 €. <br /> <br /> <br /> 3-room apartment, area of 60 sq.m. <br /> Apartment is on 2nd floor of 2-story house. <br /> In the apartment there are 4 sleeping places + 2 sleeping places for children under the age of 12 years. <br /> <br /> <br /> Apartment layout <br /> • Living room; <br /> • Kitchen; <br /> • 2 bedrooms; <br /> • Bathroom with WC; <br /> • Veranda. <br /> <br /> <br /> Description <br /> • In the living room are two sofas (2 sleeping places for children), a table with chairs, TV. <br /> From the lounge there is access to a large veranda with sea view. <br /> On veranda it is possible to have breakfast, lunch and dinner <br /> • The kitchen there is a refrigerator, electric stove with oven, microwave, dishwasher and electric kettle. <br /> • One bedroom there is a double bed. <br /> • The second bedroom there is two folding beds and wardrobe. <br /> If necessary it is possible delivery a folding sofa. <br /> • From both bedrooms there is access to a small balcony. <br /> <br /> <br /> Equipment <br /> • Iron and ironing board; <br /> • The bedrooms there are air-conditioner; <br /> • Washing machine; <br /> • Hot-water boiler; <br /> • On the balcony doors installed blinds and mosquito nets. <br /> <br /> <br /> Interaction with Guests <br /> The representative of our company will be able to assist in resolving many issues, including consultation with a doctor, search for on duty pharmacies, as well as he will be able to help: <br /> • to order a car with driver to visit the attractions and historical monuments of ancient Greece; <br /> • send to apartment, a maid, a hairdresser or designer of nail. <br /> <br /> <br /> Location <br /> • Distance to the promenade and the beach of Almiri 30 m. <br /> Near the house there is a minimarket. <br /> On the beach promenade there are bars, cafes and taverns. <br /> • Distance to the city center: 500 m. <br /> In the city center there is a supermarket, meat, fish and vegetable shops, confectionery and bakeries. <br /> • Distance to the street market, which is open in Almiri 2 times per week, 650 m. <br /> • Distance to bus stop: 550 m. <br /> <br /> <br /> Attractions and historical monuments of ancient Greece near Almiri <br /> • Bridge over the Corinth Canal (5 km); <br /> The channel connects the Aegean and Ionian Sea and separates Attica from the peninsula Peloponnese. <br /> • The ancient city of Corinth (10 km); <br /> • The ancient theater of Epidaurus (60 km); <br /> • Excavation of the temple of Hera, located near the &laquo;Blue Lake Ireon&raquo; (50 km); <br /> • The ancient city of Patras (130 км); <br /> • City Nafplion - the first capital of Greece in 1828-1833 years (80 km); <br /> • The ancient city of Nemea (40 km); <br /> • The ancient city of Mycenae (50 km); <br /> • City of Sparta, with located in her surroundings Ruins of ancient Sparta (130 km); <br /> • The medieval town of Mystras (140 km); <br /> • Byzantine fortress town of Monemvasia (220 km); <br /> • Olympia - one of the largest shrine Ancient Greece (200 km); <br /> • The ancient city of Delphi (270 km); <br /> • Cape Sounion where the ruins of the temple of Poseidon (140 km); <br /> • City of Athens (85 km). <br /> <br /> <br /> Transport <br /> • In the center of Almiri there is a bus stop. <br /> From there you can drive to the cities Isthmia, K&oacute;rinthos, Loutra Elenis, Almiri и Galataki, as well as to the central bus station (6 km), which is located near the bridge over the Corinth Canal (nearby - souvenir shops). <br /> From the bus station you can reach all the cities of Greece. <br /> <br /> • If you decide to rent a car, it is best book him at airport of Athens from home via Internet. <br /> • Free to park it is possible near from the house. <br /> <br /> <br /> Transfer from airport <br /> • From airport to the Almiri is possible ride by Taxi. <br /> Travel time: to 1.5 hours. <br /> Depending on the time of a day the price is 120-150 €. <br /> Upon request, a transfer we can be arranged (cheaper option). <br /> <br /> • Also can be reached by express train. <br /> Interval of trains: 1 hour (the first at 5:44, the last at 21:44) <br /> Direction: Kiato. <br /> Destination: station Korinthos. <br /> Travel time: 1 hour 22 minutes. <br /> Ticket price for an adult in both directions: 18 €. <br /> Discounts for children and students: 25% - 50%. <br /> At train station &laquo;K&oacute;rinthos&raquo; we meet with you."
+    }
+  }, {
+    "type" : "list",
+    "name" : "images",
+    "elements" : [ {
+      "type" : "list-object",
+      "referenceId" : "93f09b6ac56f6984f3ca541b9d585511200341c3",
+      "source" : "//images.bestgreekestate.com/93/f09b6ac56f6984f3ca541b9d585511200341c3/77529204_900x675.jpeg",
+      "alternateText" : "Photo 77529204",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "875546410a9ff5ca42b2398bdc23d877cbd74eec",
+      "source" : "//images.bestgreekestate.com/87/5546410a9ff5ca42b2398bdc23d877cbd74eec/77529158_900x675.jpeg",
+      "alternateText" : "Photo 77529158",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "d340db332cf7eda900c4dfb79240063051f10490",
+      "source" : "//images.bestgreekestate.com/d3/40db332cf7eda900c4dfb79240063051f10490/77529160_900x675.jpeg",
+      "alternateText" : "Photo 77529160",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "ba17d90a569147bdf0ad1e38bcfd048a3d636053",
+      "source" : "//images.bestgreekestate.com/ba/17d90a569147bdf0ad1e38bcfd048a3d636053/77529162_900x675.jpeg",
+      "alternateText" : "Photo 77529162",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "6843bfae20894ef7feded499662609b99255929c",
+      "source" : "//images.bestgreekestate.com/68/43bfae20894ef7feded499662609b99255929c/77529163_900x675.jpeg",
+      "alternateText" : "Photo 77529163",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "272dfd60ce3328987c675eef4784fe4d42f34b93",
+      "source" : "//images.bestgreekestate.com/27/2dfd60ce3328987c675eef4784fe4d42f34b93/77529165_900x675.jpeg",
+      "alternateText" : "Photo 77529165",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "46653907cf460e55b2dbbd188d42d69fb00f526e",
+      "source" : "//images.bestgreekestate.com/46/653907cf460e55b2dbbd188d42d69fb00f526e/77529167_900x675.jpeg",
+      "alternateText" : "Photo 77529167",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "b26384fe23e7aa2b09a5b44e2e9b5ca62b2734f2",
+      "source" : "//images.bestgreekestate.com/b2/6384fe23e7aa2b09a5b44e2e9b5ca62b2734f2/77529169_900x675.jpeg",
+      "alternateText" : "Photo 77529169",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "77571c00847ea7dc1f58a4f018faadd687c0f796",
+      "source" : "//images.bestgreekestate.com/77/571c00847ea7dc1f58a4f018faadd687c0f796/77529171_900x675.jpeg",
+      "alternateText" : "Photo 77529171",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "36ec607314378ab5bc29e14101f04088db3467ca",
+      "source" : "//images.bestgreekestate.com/36/ec607314378ab5bc29e14101f04088db3467ca/77529176_900x675.jpeg",
+      "alternateText" : "Photo 77529176",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "a707a1432e793a0ffb5925dc079b6694ba212548",
+      "source" : "//images.bestgreekestate.com/a7/07a1432e793a0ffb5925dc079b6694ba212548/77529179_900x675.jpeg",
+      "alternateText" : "Photo 77529179",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "1997cfc9386f97320cfb7971301904c2ec001be1",
+      "source" : "//images.bestgreekestate.com/19/97cfc9386f97320cfb7971301904c2ec001be1/77529181_900x675.jpeg",
+      "alternateText" : "Photo 77529181",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "0069210776f258c2834ed8ec041d4772ee5cc43d",
+      "source" : "//images.bestgreekestate.com/00/69210776f258c2834ed8ec041d4772ee5cc43d/77529184_900x675.jpeg",
+      "alternateText" : "Photo 77529184",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "08552bc8a253a327b4cc0753ec8f1f8a7928cc8e",
+      "source" : "//images.bestgreekestate.com/08/552bc8a253a327b4cc0753ec8f1f8a7928cc8e/77529186_900x675.jpeg",
+      "alternateText" : "Photo 77529186",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "65b13a7635679b9231bbcfcec4ff0d40b6889ced",
+      "source" : "//images.bestgreekestate.com/65/b13a7635679b9231bbcfcec4ff0d40b6889ced/77529189_900x675.jpeg",
+      "alternateText" : "Photo 77529189",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "06a78ccab18c7e0db5d56c6001b379a25b5b0114",
+      "source" : "//images.bestgreekestate.com/06/a78ccab18c7e0db5d56c6001b379a25b5b0114/77529192_900x675.jpeg",
+      "alternateText" : "Photo 77529192",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "34279deda87c65b8bb5bbd413d682c4d32ba267c",
+      "source" : "//images.bestgreekestate.com/34/279deda87c65b8bb5bbd413d682c4d32ba267c/77529194_900x675.jpeg",
+      "alternateText" : "Photo 77529194",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "5bbd02376a633460ddbbcb43177952ebe28c302d",
+      "source" : "//images.bestgreekestate.com/5b/bd02376a633460ddbbcb43177952ebe28c302d/77529196_900x675.jpeg",
+      "alternateText" : "Photo 77529196",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "053e3f266ed454ace016113949b347d48f42f278",
+      "source" : "//images.bestgreekestate.com/05/3e3f266ed454ace016113949b347d48f42f278/77529199_900x675.jpeg",
+      "alternateText" : "Photo 77529199",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "c36e0fe4de208e82a952c55f7ab1ac6c8df114fd",
+      "source" : "//images.bestgreekestate.com/c3/6e0fe4de208e82a952c55f7ab1ac6c8df114fd/77529201_900x675.jpeg",
+      "alternateText" : "Photo 77529201",
+      "mimeType" : "image/jpeg"
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "geo-position",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "latitude",
+      "content" : "37.846546",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "longitude",
+      "content" : "23.007168",
+      "dataType" : "FLOAT"
+    } ]
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "4672A7D8136E304FFDB3FAF534B19A6A"
+    },
+    "content" : [ {
+      "type" : "data",
+      "name" : "processedOn",
+      "content" : "2019.07.14 17:43:56 +0000",
+      "dataType" : "DATE"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/about" : "1",
+        "/search" : "1",
+        "/home" : "1",
+        "/impressum" : "1",
+        "/common" : "1",
+        "/contact" : "1"
+      },
+      "query" : {
+        "NON_RECURSIVE" : true,
+        "INFO_PATH" : "/",
+        "VERBOSE" : true
+      },
+      "checksum" : "F218B260A7A592AD538523245E323FC6"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "home",
+          "info.state.compileState.message" : "./workspaces/greekestate/templates/greekestate/base.html (Datei oder Verzeichnis nicht gefunden)",
+          "info.state.revision" : "1",
+          "info.localizedName." : "home",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "" : "Home",
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "search",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Suche",
+          "ru" : "Поиск",
+          "en" : "Search"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции",
+          "en" : "Regions of Greece"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Objekte",
+          "ru" : "Объекты",
+          "en" : "Objects"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "contact",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт",
+          "en" : "Contact"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "about",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Über uns",
+          "ru" : "О нас",
+          "en" : "About us"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "common content",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name",
+        "content" : { }
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "impressum",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум",
+          "en" : "Impressum"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/general-headlines, /links-and-ctas, /properties"
+      },
+      "checksum" : "1E615A3F642213882518011D5748689F"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : { }
+      }, {
+        "type" : "group",
+        "name" : "general-headlines",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "description",
+          "content" : {
+            "de" : "Beschreibung",
+            "ru" : "Описание",
+            "en" : "Description"
+          }
+        }, {
+          "type" : "text",
+          "name" : "map",
+          "content" : {
+            "de" : "Karte",
+            "ru" : "Карта",
+            "en" : "Map"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Поиск",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search-in-region",
+          "content" : {
+            "de" : "Suche in der Region",
+            "ru" : "Поиск в регионе",
+            "en" : "Search in the region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "matching-objects-found",
+          "content" : {
+            "de" : "{0} Immobilien gefunden.",
+            "ru" : "Объектов найдено: {0}",
+            "en" : "{0} properties found."
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type",
+          "content" : {
+            "de" : "Typ des Objektes",
+            "ru" : "Тип объекта",
+            "en" : "Object type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:apartment",
+          "content" : {
+            "de" : "Wohnung",
+            "ru" : "Квартира",
+            "en" : "Apartment"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:land-plot",
+          "content" : {
+            "de" : "Grundstück",
+            "ru" : "Земельный участок",
+            "en" : "Land plot"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:building",
+          "content" : {
+            "de" : "Gebäude",
+            "ru" : "Здание",
+            "en" : "Building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:hotel",
+          "content" : {
+            "de" : "Hotel",
+            "ru" : "Гостиница",
+            "en" : "Hotel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:villa",
+          "content" : {
+            "de" : "Villa",
+            "ru" : "Вилла",
+            "en" : "Villa"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:detached-house",
+          "content" : {
+            "de" : "Freistehendes Haus",
+            "ru" : "Дом",
+            "en" : "Detached house"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:office",
+          "content" : {
+            "de" : "Büro",
+            "ru" : "Офис",
+            "en" : "Office"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:farm-parcel",
+          "content" : {
+            "de" : "Landparzelle",
+            "ru" : "Сельскохозяйственный участок",
+            "en" : "Farm parcel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:store",
+          "content" : {
+            "de" : "Geschäft",
+            "ru" : "Магазин",
+            "en" : "Store"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:business-building",
+          "content" : {
+            "de" : "Industriegebäude",
+            "ru" : "Индустриальное здание",
+            "en" : "Business building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:various-other-property",
+          "content" : {
+            "de" : "Sonstige Immobilie",
+            "ru" : "Прочая недвижимость",
+            "en" : "Various other property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:parking",
+          "content" : {
+            "de" : "Parkplatz",
+            "ru" : "Парковка",
+            "en" : "Parking"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:other-land-property",
+          "content" : {
+            "de" : "Sonstige Grundstücke",
+            "ru" : "Прочие земельные участки",
+            "en" : "Other land property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:maisonette",
+          "content" : {
+            "de" : "Maisonette",
+            "ru" : "Двухуровневая квартира",
+            "en" : "Maisonette"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению",
+            "en" : "To the offer"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить",
+            "en" : "Request"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска",
+            "en" : "Back to search result"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Искать",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость",
+            "en" : "Bill a property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать",
+            "en" : "Rent a property"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : {
+            "de" : "Code",
+            "ru" : "Код",
+            "en" : "Code"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : {
+            "de" : "Fläche",
+            "ru" : "Площадь",
+            "en" : "Area"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : {
+            "de" : "Typ",
+            "ru" : "Тип",
+            "en" : "Type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : {
+            "de" : "Region",
+            "ru" : "Регион",
+            "en" : "Region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец",
+            "en" : "Owner"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт",
+            "en" : "Contact"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки",
+            "en" : "Pages"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : {
+            "de" : "Telefon",
+            "ru" : "Тел.",
+            "en" : "Phone"
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : {
+            "de" : "Mobil",
+            "ru" : "Моб.",
+            "en" : "Mobile"
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : {
+            "de" : "Fax",
+            "ru" : "Факс",
+            "en" : "Fax"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта",
+            "en" : "E-Mail"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

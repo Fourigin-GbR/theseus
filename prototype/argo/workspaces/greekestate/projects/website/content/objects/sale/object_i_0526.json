@@ -1,0 +1,292 @@
+{
+  "id": "object_i_0526",
+  "contentFormatVersion": "2.0",
+  "metaData": {
+    "title": "Sale object #I-0526 - BestGreekEstate",
+    "contextSpecificTitles": {
+      "de": "Verkaufsobjekt #I-0526 - BestGreekEstate",
+      "ru": "Объект #I-0526 на продажу - BestGreekEstate"
+    },
+    "attributes": {
+    }
+  },
+  "content": [
+    {
+      "type": "text",
+      "name": "headline",
+      "content": {
+        "de": "Einfamilienhaus in Loutraki (Loutraki-Perachora)",
+        "ru": "Частный дом в Loutraki (Loutraki-Perachora)",
+        "en": "Detached House in Loutraki (Loutraki-Perachora)"
+      }
+    },
+    {
+      "type": "text",
+      "name": "short-description",
+      "content": {
+        "de": "Entfernung zum Meer: <span class=\"text-red\">500</span>, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
+        "ru": "Расстояние до моря: <span class=\"text-red\">500</span>, Подъезд по: <span class=\"text-red\">Асфальт</span>",
+        "en": "Distance from sea: <span class=\"text-red\">500</span>, Road type: <span class=\"text-red\">Asphalt</span>"
+      }
+    },
+    {
+      "type": "group",
+      "name": "properties",
+      "elements": [
+        {
+          "type": "data",
+          "name": "code",
+          "content": "I-3927",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "area",
+          "content": "175",
+          "dataType": "INTEGER"
+        },
+        {
+          "type": "data",
+          "name": "price",
+          "content": "279990",
+          "dataType": "FLOAT"
+        },
+        {
+          "type": "data",
+          "name": "type",
+          "content": "detached-house",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "region",
+          "content": "loutraki",
+          "dataType": "STRING"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "long-description",
+      "content": {
+        "de": "Zu verkaufen: ein 3-stöckiges Haus. <br /> Die Wohnfläche: 175 m<sup>2</sup> (Tiefparterre: 74 m<sup>2</sup> + Erdgeschoss: 59 m<sup>2</sup> + 1. Stock: 42 m<sup>2</sup>). <br /> Die Grundstücksfläche: 230 m<sup>2</sup>. <br /> Die Deckehöhe auf jeder Etage: 2,85 m. <br /> Das Baujahr: 2007. <br /> <br /> <br /> Im Haus: <br /> 2 Wohnzimmern; <br /> 2 Küchen; <br /> 4 Schlafzimmern; <br /> 2 Duschzimmern/WC; <br /> 1 Badezimmer/WC; <br /> 2 große Veranden; <br /> 1 Kesselraum. <br /> <br /> <br /> Tiefparterre <br /> • Wohnzimmer mit einer möblierten Küche; <br /> • Schlafzimmer mit Einbauschrank; <br /> • Duschzimmer/WC; <br /> • Kesselraum mit Heizkessel und Warmwasserboiler; <br /> <br /> <br /> Erdgeschoss <br /> Erdgeschoss befindet sich in 1,5 m Höhe über der Erde. <br /> • Wohnzimmer hat eine große Veranda; <br /> • Küche mit Küchenmöbel; <br /> • Schlafzimmer mit Einbauschrank; <br /> • Duschzimmer/WC. <br /> <br /> <br /> 1. Stock <br /> • 2 Schlafzimmern mit Einbauschränken. <br /> &nbsp; Das erste Schlafzimmer hat einen Balkon; das zweite Schlafzimmer hat eine große Veranda. <br /> • Badezimmer/WC. <br /> <br /> <br /> Grundstück <br /> Auf dem Grundstück sind Landschaftsarbeiten gemacht, Blumen und Bäumen sind bepflanzt. <br /> • Stellplatz für Auto. <br /> • Platz zum Grillen und Barbecue. <br /> <br /> <br /> Ausstattung <br /> • Wasserversorgungssystem: zentralisiert (Wasser wird aus einer Mineralquelle &laquo;Loutraki&raquo; geliefert). <br /> • Abwassersystem: zentral. <br /> • Heizungssystem: autonome (im Haus gibt es Kesselraum mit Kraftstofftank von 1 Tonne). <br /> • Warmwasserboiler mit einem Wassertank von 120 Litern. <br /> • Im Haus ist Kabel für Sicherheitsalarmsystem gelegt. <br /> • Die Etagen werden durch eine Marmortreppe (1 Meter breit) verbunden. <br /> • Platz für ein Aufzug (Abmessung: 1,3 m x 1,3 m). <br /> • Aluminium Fenstern und Balkontüren mit Doppelverglasung, elektrische Rollläden und Anti-Moskitonetze. <br /> <br /> <br /> Lage <br /> Das Haus befindet sich in einem Elitegebiet der Kurstadt Loutraki. <br /> <br /> Entfernung bis/zu: <br /> • Strand und Strandpromenade: 900 m. <br /> &nbsp; An der schönen Strandpromenade gibt es verschiedene Bars und Caf&eacute;s (in der Stadt mehr als 40), <br /> &nbsp; Restaurants, Tavernen und Pizzerien (in der Stadt mehr als 30). <br /> &nbsp; Die meisten von ihnen stellen Sonnenliegen und Sonnenschirme ohne Gebühr am Strand auf. <br /> &nbsp; Die Kellner bieten heiße und kalte Getränken, Obst- und Gemüsesalate, Vorspeisen und Eiskrem an. <br /> • Stadtzentrum: 2 km. <br /> &nbsp; Im Stadtzentrum gibt es Supermärkte, Fleisch-, Fisch- und Gemüseläden, Konditoreien und Bäckereien, <br /> &nbsp; Boutiquen und Souvenirläden. <br /> • Straßenmärkte, die zwei Mal pro Woche in Loutraki stattfinden: 2 km. <br /> &nbsp; An die Straßenmärkte kann man frisches Obst und Gemüse, Fisch und Meeresfrüchte kaufen. <br /> • Unterhaltend Komplex &laquo;Casino Loutraki&raquo; mit dem größten Casino Europas, Bars, Restaurants, Boutiquen, <br /> &nbsp; SPA Zentrum, Business Zentrum, Schwimmbäder, Strand: 800 m. <br /> • Strand Bars mit Außenpools, Sonnenliegen, Sonnenschirmen und Duschen: 900 m. <br /> • Nachtclubs und Diskotheken: 1 km. <br /> • Medizinischen, thermischen, Hydrotherapie, Natur SPA Zentrum: 3 km. <br /> &nbsp; Im SPA Zentrum: Schwimmbad mit Hydromassage mit mineralischen Radonwasser oder im ein &laquo;Jacuzzi&raquo; <br /> &nbsp; Becken, &laquo;Sharko&raquo; Dusche, Sauna, Hammam, Fangotherapie, Aromatherapie, therapeutische und <br /> &nbsp; еntspannende Massage und Vielzahl von Programmen für Pflege des Gesichts und Körper. <br /> • Bushaltestelle: 150 m. <br /> <br /> <br /> Zustand und Verkaufsbedingungen <br /> • Der Zustand des Hauses: sehr gut. <br /> • Das Haus wird mit einem Grundstück verkauft. <br /> <br /> <br /> Hauptsehenswürdigkeiten und historische Denkmäler des antiken Griechenlands <br /> <br /> Wie kann man vom Flughafen Athen nach Loutraki gelangen <br /> Städtische öffentliche Verkehrsmittel <br /> <br /> Kaufen einer Wohnung oder eines Hauses in Loutraki <br /> <br /> Mieten einer Wohnung in Loutraki",
+        "ru": "Продаётся 3-х этажный дом. <br /> Жилая площадь: 175 м<sup>2</sup> (цокольный этаж: 74 м<sup>2</sup> + 1-й этаж: 59 м<sup>2</sup> + 2-й этаж: 42 м<sup>2</sup>). <br /> Площадь участка: 230 м<sup>2</sup> <br /> Высота потолков на каждом этаже: 2,85 м. <br /> Год постройки дома: 2007. <br /> <br /> <br /> В доме <br /> 2 гостиные; <br /> 2 кухни; <br /> 4 спальни; <br /> 2 душевые комнаты/WC; <br /> 1 ванная комната/WC; <br /> 2 большие веранды; <br /> 1 котельная. <br /> <br /> <br /> Цокольный этаж <br /> • Гостиная с меблированной кухней; <br /> • Спальня со встроенным шкафом; <br /> • Душевая комната/WC; <br /> • Котельная с отопительным котлом и водонагревательным бойлером. <br /> <br /> <br /> 1-й этаж <br /> Пол находится на уровне 1,5 м от земли. <br /> • Гостиная с большой верандой; <br /> • Кухня с кухонной мебелью; <br /> • Спальня со встроенным шкафом; <br /> • Душевая комната/WC. <br /> <br /> <br /> 2-й этаж <br /> • 2 спальни со встроенными шкафами и с большой верандой; <br /> • Ванная комната/WC. <br /> <br /> <br /> Земельный участок <br /> На участке: <br /> • посажены цветы и деревья; <br /> • есть место для парковки автомобиля; <br /> • можно установить печь барбекю. <br /> <br /> <br /> Оснащение <br /> • Система водоснабжения: централизованная (вода подаётся из минерального источника &laquo;Лутраки&raquo;); <br /> • Система канализации: централизованная; <br /> • Система отопления: автономная (котельная в доме с топливным баком на 1 тонну); <br /> • Бойлер для подогрева воды с баком на 120 литров; <br /> • В доме проложены провода для установки системы сигнализации; <br /> • Итальянская плитка на полах; <br /> • Все этажи соединены между собой мраморной лестницей шириной 1 метр; <br /> • Место для установки лифта (размер: 1,3 м x 1,3 м); стоимость установки лифта: 15.000 €. <br /> • Алюминиевые окна и балконные двери с двойным остеклением, электрическими металлическими <br /> &nbsp; жалюзи и антимоскитными сетками. <br /> <br /> <br /> Месторасположение <br /> Дом расположен в частном секторе курортного города Лутраки. <br /> <br /> <br /> Расстояние <br /> • до набережной и пляжа (протяжённостью – 3 км): 900 м. <br /> &nbsp; Лежаки и солнцезащитные зонтики на всех пляжах – бесплатные! <br /> &nbsp; На прекрасной набережной до поздней ночи работают бары и кафе (которых в городе более 40); <br /> &nbsp; рестораны, таверны и пиццерии (которых в городе более 30); <br /> &nbsp; пляжные бары с бассейнами, лежаками, солнцезащитными зонтиками, душевыми; <br /> &nbsp; ночные клубы и дискотеки. <br /> • до центра города: 2 км. <br /> &nbsp; В центре: супермаркеты, мясные, рыбные и овощные магазины, кондитерские и булочные, бутики <br /> &nbsp; и сувенирные магазины. <br /> • до уличных рынков, которые проводятся в Лутраки по средам: 2 км, по субботам: 2,5 км. <br /> • до развлекательного комплекса &laquo;Казино Лутраки&raquo;, в который входит: крупнейшее казино в Европе, <br /> &nbsp; бары, рестораны, бутики, СПА центр, бизнес центр, бассейны, пляж: 800 м. <br /> • до лечебного, термального, гидротерапевтического, натур СПА центра: 3 км. <br /> &nbsp; В СПА центре предлагается широкий спектр процедур: гидромассаж минеральной радоновой водой в <br /> &nbsp; бассейне или ванне &laquo;Джакузи&raquo;, душ &laquo;Шарко&raquo;, сауна, грязелечение, ароматерапия, лечебный и <br /> &nbsp; расслабляющий массаж, а также разнообразные программы по уходу лица и тела. <br /> • до автобусной остановки: 150 м. <br /> <br /> <br /> Состояние дома и условия продажи <br /> • Состояние дома: очень хорошее. <br /> • Дом продаётся без мебели и без бытовых электроприборов. <br /> <br /> <br /> При покупке дома поможем в получении временного ВНЖ сроком на 2 года <br /> <br /> <br /> Информационные страницы <br /> Как добраться из аэропорта Афины в Лутраки <br /> Погода в Лутраки <br /> Расстояние до главных достопримечательностей и основных исторических памятников античной Греции <br /> Купить квартиру или дом в Лутраки <br /> Арендовать квартиру в Лутраки",
+        "en": "For sale: a 3-storey house. <br /> The living area: 175 m<sup>2</sup> (semi-basement: 74 m<sup>2</sup> + ground floor: 59 m<sup>2</sup> + 1st floor: 42 m<sup>2</sup>). <br /> The land area: 230 m<sup>2</sup>. <br /> The height of the ceiling on each floor: 2.85 m. <br /> The year of construction: 2007. <br /> <br /> <br /> In a home: <br /> 2 living rooms; <br /> 2 furnished kitchen; <br /> 4 bedrooms with fitted wardrobes; <br /> 2 shower rooms/WC; <br /> 1 bathroom/WC; <br /> 2 large verandas; <br /> 1 boiler room. <br /> <br /> <br /> Semi-basement <br /> • Living room with a furnished kitchen; <br /> • Bedroom with a fitted wardrobe; <br /> • Shower room/WC; <br /> • Boiler room with a heating boiler and a hot-water boiler. <br /> <br /> <br /> Ground floor <br /> Ground floor is located at 1,5 m above the ground level. <br /> • Living room with a large veranda; <br /> • Kitchen with the kitchen furniture; <br /> • Bedroom with fitted wardrobe; <br /> • Shower room/WC. <br /> <br /> <br /> 1st floor <br /> • 2 bedrooms with a fitted wardrobes and a large veranda; <br /> • Bathroom/WC. <br /> <br /> <br /> Courtyard <br /> On the courtyard were implemented landscaping works, planted flowers and trees. <br /> • Automatic irrigation system; <br /> • Place for car parking; <br /> • Place for BBQ. <br /> <br /> <br /> Equipment <br /> • Water supply system: centralized (water is supplied from mineral source &laquo;Loutraki&raquo;); <br /> • System sewerage: centralized; <br /> • Heating system: autonomous (in the house there is a boiler room with a fuel tank of 1 ton); <br /> • Electrical hot-water boiler with a water tank of 120 liters; <br /> • In the house is laid cable for the security alarm system; <br /> • The floors are laid with Italian tiles; <br /> • All floors are connected by a marble staircase (1 meter wide); <br /> • Place for an elevator (dimensions: 1.3 m x 1.3 m); <br /> • Aluminum windows and balcony doors with double glazing, electrical metallic jalousie and anti-mosquito nets. <br /> <br /> <br /> Location <br /> The house is located in an elite area of the resort town of Loutraki. <br /> <br /> Distance to the: <br /> • Beach and beach promenade: 900 m. <br /> &nbsp; On the beautiful beach promenade there are many bars and cafes (in the city of more than 40), <br /> &nbsp; restaurants, taverns and pizzerias (in the city of more than 30). <br /> &nbsp; Most of them provide sun beds and sun umbrellas at no charge on the beach. <br /> &nbsp; The waiters offer the vacationers a hot and cold drinks, fruit and vegetable salads, snacks and ice cream. <br /> • City center: 2 km. <br /> &nbsp; In the city center: supermarkets, meat, fish and vegetable shops, pastry shops, bakeries, boutiques and <br /> &nbsp; souvenir shops. <br /> • Street markets that are open in Loutraki on Wednesdays and Saturdays: 2 km. <br /> &nbsp; On the street markets is possible to buy fresh fruits and vegetables, fish and seafood. <br /> • Entertainment complex &laquo;Casino Loutraki&raquo; with a largest casino in Europe, bars, restaurants, boutiques, <br /> &nbsp; SPA center, business center, swimming pools, beach: 800 m. <br /> • Beach bars with outdoor swimming pools, sun loungers, sun umbrellas, showers: 900 m. <br /> • Nightclubs and discotheques: 1 km. <br /> • Medical, thermal, hydrotherapy, natural SPA center: 3 km. <br /> &nbsp; In SPA center: hydromassage with the mineral radon water in a pool or tub &laquo;Jacuzzi&raquo;, &laquo;Sharko&raquo; shower, <br /> &nbsp; sauna, hammam, mud therapy, aromatherapy, therapeutic and relaxing massage and a variety of programs <br /> &nbsp; for the care of face and body. <br /> • Bus station: 150 m. <br /> <br /> <br /> House conditions and terms of sale <br /> • The condition of the house is very good. <br /> • The house is sold with a plot on which it is built, without furniture and without household electric appliances. <br /> <br /> <br /> How to get from Athens airport to Loutraki <br /> Urban public transport <br /> <br /> Surrounding attractions and the main historical monuments of ancient Greece. <br /> <br /> Sale of apartments or houses in Loutraki <br /> <br /> Rent an apartment in Loutraki"
+      }
+    },
+    {
+      "type": "list",
+      "name": "images",
+      "elements": [
+        {
+          "type": "list-object",
+          "referenceId": "d18e8dd2ded54731bdfcf7d287dc09f0a09776d7",
+          "source": "//images.bestgreekestate.com/d1/8e8dd2ded54731bdfcf7d287dc09f0a09776d7/77528182_900x675.jpeg",
+          "alternateText": "Photo 77528182",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "63229a5ad9235b0cd268b121a36b54847f887f83",
+          "source": "//images.bestgreekestate.com/63/229a5ad9235b0cd268b121a36b54847f887f83/77528183_900x675.jpeg",
+          "alternateText": "Photo 77528183",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "c3990b3a3f9a4a4026aa5d38be580b50a329c9ec",
+          "source": "//images.bestgreekestate.com/c3/990b3a3f9a4a4026aa5d38be580b50a329c9ec/77528185_900x675.jpeg",
+          "alternateText": "Photo 77528185",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "5edbad262d24c7502853ddd127e067682048ac5a",
+          "source": "//images.bestgreekestate.com/5e/dbad262d24c7502853ddd127e067682048ac5a/77528186_900x675.jpeg",
+          "alternateText": "Photo 77528186",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "7760ce94990cf1c5b5dff36addf31553d7dee501",
+          "source": "//images.bestgreekestate.com/77/60ce94990cf1c5b5dff36addf31553d7dee501/77528187_900x675.jpeg",
+          "alternateText": "Photo 77528187",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "3c9dcf678cf5f80e3bfc853c2aee860a74711640",
+          "source": "//images.bestgreekestate.com/3c/9dcf678cf5f80e3bfc853c2aee860a74711640/77528188_900x675.jpeg",
+          "alternateText": "Photo 77528188",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "3a805cdc76731283c57bc2975479f8c081daf9a7",
+          "source": "//images.bestgreekestate.com/3a/805cdc76731283c57bc2975479f8c081daf9a7/77528191_900x675.jpeg",
+          "alternateText": "Photo 77528191",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "2e7188ab4c278ac442ef5f5eebaea5652d349bec",
+          "source": "//images.bestgreekestate.com/2e/7188ab4c278ac442ef5f5eebaea5652d349bec/77528192_900x675.jpeg",
+          "alternateText": "Photo 77528192",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "8738b56922fba05b2274daae7bed43ec7bb2012b",
+          "source": "//images.bestgreekestate.com/87/38b56922fba05b2274daae7bed43ec7bb2012b/77528194_900x675.jpeg",
+          "alternateText": "Photo 77528194",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "3d8b27ebf4e22c49fa9a4e9afb7c7c118f428e2c",
+          "source": "//images.bestgreekestate.com/3d/8b27ebf4e22c49fa9a4e9afb7c7c118f428e2c/77528196_900x675.jpeg",
+          "alternateText": "Photo 77528196",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "ce14eaba6dfa02e24f064268b34692cbc8e29905",
+          "source": "//images.bestgreekestate.com/ce/14eaba6dfa02e24f064268b34692cbc8e29905/77528198_900x675.jpeg",
+          "alternateText": "Photo 77528198",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "d9711b69824489f0ddebd49215097b167addf5e6",
+          "source": "//images.bestgreekestate.com/d9/711b69824489f0ddebd49215097b167addf5e6/77528200_900x675.jpeg",
+          "alternateText": "Photo 77528200",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "df5a59be81cc9118bf12d9bdeeadfde41836c5e4",
+          "source": "//images.bestgreekestate.com/df/5a59be81cc9118bf12d9bdeeadfde41836c5e4/77528201_900x675.jpeg",
+          "alternateText": "Photo 77528201",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "f2366dd131e490968377f45df8bb6e52ba8d3fc6",
+          "source": "//images.bestgreekestate.com/f2/366dd131e490968377f45df8bb6e52ba8d3fc6/77528204_900x675.jpeg",
+          "alternateText": "Photo 77528204",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "b524eba985fa208ea99be74312c3b20d2fdcdd60",
+          "source": "//images.bestgreekestate.com/b5/24eba985fa208ea99be74312c3b20d2fdcdd60/77528207_900x675.jpeg",
+          "alternateText": "Photo 77528207",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "6f872046234e1f1588b183143c40054780fc8353",
+          "source": "//images.bestgreekestate.com/6f/872046234e1f1588b183143c40054780fc8353/77528209_900x675.jpeg",
+          "alternateText": "Photo 77528209",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "bd1594b58dd6bf491f19dd4341e6599f4eb1eb31",
+          "source": "//images.bestgreekestate.com/bd/1594b58dd6bf491f19dd4341e6599f4eb1eb31/77528212_900x675.jpeg",
+          "alternateText": "Photo 77528212",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "7be366c8c1da0439bdff0b088891cf4ffeb054a8",
+          "source": "//images.bestgreekestate.com/7b/e366c8c1da0439bdff0b088891cf4ffeb054a8/77528214_900x675.jpeg",
+          "alternateText": "Photo 77528214",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "30680bc55d352790c253e63a57085ffba79c1da5",
+          "source": "//images.bestgreekestate.com/30/680bc55d352790c253e63a57085ffba79c1da5/77528216_900x675.jpeg",
+          "alternateText": "Photo 77528216",
+          "mimeType": "image/jpeg"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "334b28cb2c925546b92e30d6ce704f6d9b658375",
+          "source": "//images.bestgreekestate.com/33/4b28cb2c925546b92e30d6ce704f6d9b658375/77528219_900x675.jpeg",
+          "alternateText": "Photo 77528219",
+          "mimeType": "image/jpeg"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "geo-position",
+      "elements": [
+        {
+          "type": "data",
+          "name": "latitude",
+          "content": "0.0",
+          "dataType": "FLOAT"
+        },
+        {
+          "type": "data",
+          "name": "longitude",
+          "content": "0.0",
+          "dataType": "FLOAT"
+        }
+      ]
+    }
+  ],
+  "dataSourceContents": [
+    {
+      "name": "timestamp",
+      "transientContent": false,
+      "identifier": {
+        "type": "TIMESTAMP",
+        "checksum": "6A332CD21729B95C742CE6D9F980CC4F"
+      },
+      "content": [
+        {
+          "type": "data",
+          "name": "processedOn",
+          "content": "2019.07.14 17:43:48 +0000",
+          "dataType": "DATE"
+        }
+      ]
+    },
+    {
+      "name": "top-level-navigation",
+      "transientContent": false,
+      "identifier": {
+        "type": "SITE",
+        "revisions": {
+        },
+        "query": {
+          "NON_RECURSIVE": true,
+          "INFO_PATH": "/",
+          "VERBOSE": true
+        },
+        "checksum": "F218B260A7A592AD538523245E323FC6"
+      },
+      "content": [
+      ]
+    },
+    {
+      "name": "common-content",
+      "transientContent": false,
+      "identifier": {
+        "type": "COMMON-CONTENT",
+        "revisions": {
+        },
+        "query": {
+          "INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties"
+        },
+        "checksum": "1E615A3F642213882518011D5748689F"
+      },
+      "content": [
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name" : "objects-to-sale",
+  "references" : [ "overview", "about_casino_loutraki", "about_corinth_canal", "about_thermal_spa_loutraki", "distances_loutraki_historical_monuments", "way_airport_loutraki", "__deprecated__salamina", "__deprecated__athen", "__deprecated__loutraki", "about_loutraki" ],
+  "targets" : [ "/regions/loutraki/overview", "/regions/loutraki/about_casino_loutraki", "/regions/loutraki/about_corinth_canal", "/regions/loutraki/about_thermal_spa_loutraki", "/regions/loutraki/distances_loutraki_historical_monuments", "/regions/loutraki/way_airport_loutraki", "/regions/__deprecated__salamina", "/regions/__deprecated__athen", "/regions/__deprecated__loutraki", "/regions/about_loutraki" ],
+  "categories" : { },
+  "fields" : [ {
+    "name" : "distance",
+    "path" : "/properties/distance-to-sea",
+    "type" : "NUMBER",
+    "value" : [ ]
+  }, {
+    "name" : "number-of-rooms",
+    "path" : "/properties/number-of-rooms",
+    "type" : "NUMBER",
+    "value" : [ ]
+  }, {
+    "name" : "code",
+    "path" : "/properties/code",
+    "type" : "TEXT",
+    "value" : [ ]
+  }, {
+    "name" : "price",
+    "path" : "/properties/price",
+    "type" : "PRICE",
+    "value" : [ ]
+  } ],
+  "searchValues" : {
+    "athen" : [ 3, 4, 5, 7, 9 ],
+    "promenade" : [ 9 ],
+    "spa" : [ 3, 4, 9 ],
+    "loutraki" : [ 1, 3, 4, 5, 9 ],
+    "villa" : [ 5 ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name" : "objects-to-sale",
+  "references" : [ "about_casino_loutraki", "about_corinth_canal", "about_thermal_spa_loutraki", "distances_loutraki_historical_monuments", "way_airport_loutraki" ],
+  "targets" : [ "/regions/loutraki/about_casino_loutraki", "/regions/loutraki/about_corinth_canal", "/regions/loutraki/about_thermal_spa_loutraki", "/regions/loutraki/distances_loutraki_historical_monuments", "/regions/loutraki/way_airport_loutraki" ],
+  "categories" : { },
+  "fields" : [ {
+    "name" : "code",
+    "path" : "/properties/code",
+    "type" : "TEXT",
+    "value" : [ ]
+  }, {
+    "name" : "distance",
+    "path" : "/properties/distance-to-sea",
+    "type" : "NUMBER",
+    "value" : [ ]
+  }, {
+    "name" : "number-of-rooms",
+    "path" : "/properties/number-of-rooms",
+    "type" : "NUMBER",
+    "value" : [ ]
+  }, {
+    "name" : "price",
+    "path" : "/properties/price",
+    "type" : "PRICE",
+    "value" : [ ]
+  } ],
+  "searchValues" : {
+    "spa" : [ 2 ],
+    "loutraki" : [ 0, 2, 3, 4 ]
+  }
+}

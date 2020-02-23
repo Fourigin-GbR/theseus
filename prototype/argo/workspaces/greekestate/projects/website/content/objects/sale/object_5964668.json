@@ -1,0 +1,699 @@
+{
+  "id" : "object_5964668",
+  "contentFormatVersion" : "2.0",
+  "metaData" : {
+    "title" : "Sale object #St-2811 - BestGreekEstate",
+    "contextSpecificTitles" : {
+      "de" : "Verkaufsobjekt #St-2811 - BestGreekEstate",
+      "ru" : "Объект #St-2811 на продажу - BestGreekEstate"
+    },
+    "attributes" : {
+      "converted on" : "2019-04-17 16:08:48"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : {
+      "de" : "Apartment in Loutraki (Loutraki-Perachora)",
+      "ru" : "Квартира в Loutraki (Loutraki-Perachora)",
+      "en" : "Apartment in Loutraki (Loutraki-Perachora)"
+    }
+  }, {
+    "type" : "text",
+    "name" : "short-description",
+    "content" : {
+      "de" : "Entfernung zum Meer: <span class=\"text-red\">200</span>, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
+      "ru" : "Расстояние до моря: <span class=\"text-red\">200</span>, Подъезд по: <span class=\"text-red\">Асфальт</span>",
+      "en" : "Distance from sea: <span class=\"text-red\">200</span>, Road type: <span class=\"text-red\">Asphalt</span>"
+    }
+  }, {
+    "type" : "group",
+    "name" : "properties",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "code",
+      "content" : "St-2811",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "area",
+      "content" : "28",
+      "dataType" : "INTEGER"
+    }, {
+      "type" : "data",
+      "name" : "price",
+      "content" : "29960",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "type",
+      "content" : "apartment",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "region",
+      "content" : "loutraki",
+      "dataType" : "STRING"
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "long-description",
+    "content" : {
+      "de" : "Zu verkaufen: möbliert 1-Zimmer-Wohnung mit Fläche von 28 m<sup>2</sup>. <br /> Die Wohnung befindet sich im 3. Stock eines 5-stöckigen Hauses mit einem Aufzug. <br /> Die Deckenhöhe in der Wohnung: 2,9 m. <br /> Das Baujahr: 1975. <br /> <br /> <br /> Wohnungsplan <br /> • Vorzimmer; <br /> • Küche; <br /> • Wohnzimmer mit Balkon; <br /> • Badezimmer/WC. <br /> <br /> Vom Vorzimmer aus geradeaus: Wohnzimmer; nach rechts: Küche und Badezimmer. <br /> <br /> <br /> Beschreibung <br /> • Im Vorzimmer: ein ausziehbares Sofa. <br /> • Im Wohnzimmer: Doppelbett, Kommode mit Spiegel, Kleiderschrank, Tisch, 2 Stühle, TV, Klimaanlage. <br /> &nbsp; Vom Wohnzimmer aus gibt es ein Zugang zum breiten Balkon mit Blick auf die Straße, die zum Meer führt. <br /> • In der Küche: Küchenmöbel aus Naturholz, Elektroherd mit Backofen, Kühlschrank mit Gefrierschrank, <br /> &nbsp; elektrische Dunstabzugshaube, Tisch, Stühle, Waschmaschine; die Wände sind mit italienischen <br /> &nbsp; Keramikfliesen ausgekleidet. <br /> • Im Badezimmer: die Wände und Böden sind mit italienischen Keramikfliesen ausgekleidet. <br /> • Auf dem Balkon: Tisch, Stühle. <br /> &nbsp; Auf dem Balkon kann man frühstücken, zum Mittag und Abend essen. <br /> <br /> <br /> Ausstattung <br /> • Warmwasserboiler; <br /> • Aluminium Balkontüren mit mechanischen Rollländen und Antimoskitonetzen. <br /> • Sonnenschutzmarkise auf dem Balkon. <br /> <br /> <br /> Lage <br /> Das Haus befindet sich im Zentrum der Kurstadt Loutraki. <br /> <br /> <br /> Entfernung <br /> • zur Strandpromenade und zum Strand: 200 m. <br /> &nbsp; Sonnenliegen und Sonnenschirme an allen Stränden sind kostenlos! <br /> &nbsp; An der schönen Strandpromenade gibt es: <br /> &nbsp; – Bars und Caf&eacute;s (in der Stadt mehr als 40), <br /> &nbsp; – Restaurants, Tavernen und Pizzerien (in der Stadt mehr als 30), <br /> &nbsp; – Strand Bars mit Außenpools, Sonnenliegen, Sonnenschirmen und Duschen, <br /> &nbsp; – Nachtclubs und Diskotheken. <br /> • zur Hauptstraße: 70 m. <br /> &nbsp; Auf der Hauptstraße gibt es Supermärkte, Fleisch-, Fisch- und Gemüseläden, Konditoreien und Bäckereien, <br /> &nbsp; Boutiquen und Souvenirläden. <br /> • zu den Straßenmärkte, die in Loutraki am Mittwochs stattfinden sind: 500 m; am Samstags: 300 m. <br /> • zum unterhaltend Komplex &laquo;Casino Loutraki&raquo; mit dem größten Casino Europas, mit Bars, Restaurants, <br /> &nbsp; Boutiquen, SPA Zentrum, Business Zentrum, Schwimmbäder, Strand: 1,9 km. <br /> • zum medizinischen, thermischen, Hydrotherapie, Natur SPA Zentrum: 900 m. <br /> &nbsp; Im SPA Zentrum: Hydromassage mit mineralischen Radonwasser im Pool oder im Wanne &laquo;Jacuzzi&raquo;, <br /> &nbsp; &laquo;Sharko&raquo; Dusche, Sauna, Fangotherapie, Aromatherapie, therapeutische und entspannende Massage <br /> &nbsp; und Vielzahl von Programmen für Pflege das Gesicht und Körper. <br /> • zum Busbahnhof: 150 m. <br /> • zu den kostenlosen Parkplätzen in der Innenstadt: 500 m, im &laquo;Casino Loutraki&raquo;: 1,9 km. <br /> &nbsp; Man kann auch sein Auto auf den Stadtstrassen kostenlos parken. <br /> <br /> <br /> Zustand und Verkaufsbedingungen <br /> • Der Wohnungszustand: ausgezeichnet. <br /> • Die Wohnung wird mit Möbeln und elektrische Haushaltsgeräten verkauft. <br /> • Die Kosten beim Wohnungskauf (Einkaufssteuer, Anmeldegebühr, notarielle Dienstleistungen): bis zu 2.000 €. <br /> • Das Grundsteuer: ca. 250 € pro Jahr. <br /> • Die Nebenkosten: ca. 15 € pro Monat. <br /> <br /> <br /> Informationsseiten <br /> Wie kann man von Flughafen Athen nach Loutraki gelangen <br /> Entfernungen zu den Hauptsehenswürdigkeiten und wichtigsten historischen Denkmäler des antiken Griechenlands <br /> Kaufen einer Wohnung oder eines Hauses in Loutraki <br /> Mieten einer Wohnung in Loutraki",
+      "ru" : "Продаётся однокомнатная квартира площадью 28 м<sup>2</sup> <br /> Квартира находится на 3-м этаже 5-ти этажного дома с лифтом. <br /> Высота потолков в квартире: 2,9 м. <br /> Год постройки дома: 1975. <br /> <br /> <br /> Планировка квартиры <br /> • Прихожая; <br /> • Кухня; <br /> • Комната с балконом; <br /> • Ванная комната/WC. <br /> <br /> <br /> Описание квартиры <br /> • В прихожей: раздвижной диван. <br /> • В комнате: двуспальная кровать, комод с зеркалом, шкаф, стол, 2 стула, TV, кондиционер. <br /> &nbsp; Из комнаты есть выход на широкий балкон с видом на улицу, которая ведёт к морю. <br /> • В кухне: кухонная мебель из натурального дерева, электроплита с духовкой, холодильник <br /> &nbsp; с морозильной камерой, электрическая вытяжка, стол, стулья, стиральная машина. <br /> &nbsp; Стены облицованы итальянской керамической плиткой. <br /> • В ванной комнате стены и полы облицованы итальянской керамической плиткой. <br /> • На балконе: стол, стулья. <br /> &nbsp; На балконе можно завтракать, обедать и ужинать. <br /> <br /> <br /> Оснащение квартиры <br /> • Водонагревательный бойлер; <br /> • Алюминиевая балконная дверь с механическими жалюзи и антимоскитной сеткой; <br /> • Солнцезащитный тент на балконе. <br /> <br /> <br /> Месторасположение <br /> Дом расположен в центре курортного города Лутраки. <br /> <br /> <br /> Расстояние <br /> • до набережной и пляжа (протяжённостью – 3 км): 200 м. <br /> &nbsp; Лежаки и солнцезащитные зонтики на всех пляжах – бесплатные! <br /> &nbsp; На прекрасной набережной до поздней ночи работают: <br /> &nbsp; – бары и кафе (которых в городе более 40); <br /> &nbsp; – рестораны, таверны и пиццерии (которых в городе более 30); <br /> &nbsp; – пляжные бары с бассейнами, лежаками, солнцезащитными зонтиками, душевыми; <br /> &nbsp; – ночные клубы и дискотеки. <br /> • до центральной улицы: 70 м. <br /> &nbsp; На центральной улице: супермаркеты, мясные, рыбные и овощные магазины, кондитерские и булочные, <br /> &nbsp; бутики и сувенирные магазины. <br /> • до уличных рынков, которые проводятся в Лутраки по средам: 500 м, по субботам: 300 м. <br /> • до развлекательного комплекса &laquo;Казино Лутраки&raquo;, в который входит: крупнейшее казино в Европе, <br /> &nbsp; бары, рестораны, бутики, СПА центр, бизнес центр, бассейны, пляж: 1,9 км. <br /> • до лечебного, термального, гидротерапевтического, натур СПА центра: 900 м. <br /> &nbsp; В СПА центре предлагается широкий спектр процедур: гидромассаж минеральной радоновой водой <br /> &nbsp; в бассейне или ванне &laquo;Джакузи&raquo;, душ &laquo;Шарко&raquo;, сауна, грязелечение, ароматерапия, лечебный и <br /> &nbsp; расслабляющий массаж, разнообразные программы по уходу лица и тела. <br /> • до автобусной станции: 150 м. <br /> • до бесплатной парковки, которая находится в городе: 500 м, в &laquo;Казино Лутраки&raquo;: 1,9 км. <br /> &nbsp; Также бесплатно можно припарковать автомобиль на улицах города. <br /> <br /> <br /> Состояние квартиры и условия продажи <br /> • Состояние квартиры: отличное. <br /> • Квартира продаётся с мебелью и бытовыми электроприборами. <br /> • Переоформление квартиры (налог на покупку, регистрационная пошлина, услуги нотариуса): <br /> &nbsp; до 2.000 €. <br /> • Налог на недвижимость: примерно 250 € в год. <br /> • Расходы по содержанию дома (освещение и уборка подъезда, обслуживание лифта и пр.): <br /> &nbsp; до 15 € в месяц. <br /> <br /> <br /> При покупке квартиры поможем в получении временного ВНЖ сроком на 2 года <br /> <br /> <br /> Информационные страницы <br /> Как добраться из аэропорта Афины в Лутраки <br /> Погода в Лутраки <br /> Расстояние до главных достопримечательностей и основных исторических памятников античной Греции <br /> Купить квартиру или дом в Лутраки <br /> Арендовать квартиру в Лутраки",
+      "en" : "For sale: a furnished 1-room apartment with an area of 28 m<sup>2</sup>. <br /> The apartment is located on the 3rd floor of a 5-story house with an elevator. <br /> The height of the ceiling in the apartment: 2,9 m. <br /> The year of construction of the house: 1975. <br /> <br /> <br /> Plan of the apartment <br /> • Hallway; <br /> • Kitchen; <br /> • Living room with balcony; <br /> • Bathroom/WC. <br /> <br /> <br /> Description <br /> • In the hallway: a pull-out sofa. <br /> • In the living room: double bed, chest of drawers with mirror, wardrobe, table, 2 chairs, TV, air conditioning. <br /> &nbsp; From the living room there is an access to a wide balcony with a view of the street, which leads to the sea. <br /> • In the kitchen: kitchen furniture from natural wood, electric stove with oven, refrigerator with freezer, <br /> &nbsp; electric extractor hood, table, chairs, washing machine. <br /> &nbsp; The walls are lined with Italian ceramic tiles. <br /> • In the bathroom: walls and floors are lined with Italian ceramic tiles. <br /> • On the balcony: table, chairs. <br /> &nbsp; On the balcony it is possible to have a breakfast, lunch and dinner. <br /> <br /> <br /> Equipment <br /> • Hot-water boiler; <br /> • Aluminum balcony doors with mechanical blinds and anti-mosquito nets. <br /> • Sun protection awning on the balcony; <br /> <br /> <br /> Location <br /> The house is located in the center of the resort town of Loutraki. <br /> <br /> <br /> Distance <br /> • to the beach promenade and the beach: 200 m. <br /> &nbsp; Sun loungers and sun umbrellas on all beaches are free! <br /> &nbsp; On the beautiful beach promenade there are: <br /> &nbsp; – bars and cafes (in the city of more than 40), <br /> &nbsp; – restaurants, taverns and pizzerias (in the city of more than 30), <br /> &nbsp; – beach bars with outdoor swimming pools, sun loungers, sun umbrellas and showers, <br /> &nbsp; – nightclubs and discotheques. <br /> • to the central street: 70 m. <br /> &nbsp; On the central street there are supermarkets, meat, fish and vegetable shops, pastry shops and bakeries, <br /> &nbsp; boutiques and souvenir shops. <br /> • to street markets that are held in Loutraki on Wednesdays: 500 m, on Saturdays: 300 m. <br /> • to the entertainment complex &laquo;Casino Loutraki&raquo; with a largest casino in Europe, bars, restaurants, boutiques, <br /> &nbsp; SPA center, business center, swimming pools, beach: 1,9 km. <br /> • to the medical, thermal, hydrotherapy, natural SPA center: 900 m. <br /> &nbsp; In SPA center: hydro massage with mineral radon water in a pool or tub &laquo;Jacuzzi&raquo;, &laquo;Sharko&raquo; shower, <br /> &nbsp; sauna, mud therapy, aromatherapy, therapeutic and relaxing massage and a variety of programs for <br /> &nbsp; the care of face and body. <br /> • to the bus station: 150 m. <br /> • to free parking that are located in a downtown: 500 m, in the &laquo;Casino Loutraki&raquo;: 1,9 km. <br /> &nbsp; Also it is possible free to park your car on the streets of the city. <br /> <br /> <br /> Condition of the apartment and terms of sale <br /> • The condition of the apartment: very good. <br /> • The apartment is sold with furniture und electrical household appliances. <br /> • The cost of buying of the apartment (purchase tax, registration fee, notary services ...): up to 2.000 €. <br /> • The property tax: about 250 € per year. <br /> • The home maintenance costs: up to 15 € per month. <br /> <br /> <br /> Information pages <br /> How to get from Athens airport to Loutraki <br /> Distances to the surrounding attractions and the main historical monuments of ancient Greece <br /> Apartments and houses in Loutraki for sale <br /> Apartments and houses in Loutraki for rent"
+    }
+  }, {
+    "type" : "list",
+    "name" : "images",
+    "elements" : [ {
+      "type" : "list-object",
+      "referenceId" : "0103670bbfca7fb6e1ff51d86a6446ed0b04d6b9",
+      "source" : "//images.bestgreekestate.com/01/03670bbfca7fb6e1ff51d86a6446ed0b04d6b9/119234850_900x675.jpeg",
+      "alternateText" : "Photo 119234850",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "0427dce442ce19b34c2276ca3e60f267106f4a10",
+      "source" : "//images.bestgreekestate.com/04/27dce442ce19b34c2276ca3e60f267106f4a10/119234852_900x675.jpeg",
+      "alternateText" : "Photo 119234852",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "243c18c763ea6abd785885507320930a4498e4a5",
+      "source" : "//images.bestgreekestate.com/24/3c18c763ea6abd785885507320930a4498e4a5/119234853_900x675.jpeg",
+      "alternateText" : "Photo 119234853",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "5608dda4ed02952e6f1e6a1e7a93488545cdfc20",
+      "source" : "//images.bestgreekestate.com/56/08dda4ed02952e6f1e6a1e7a93488545cdfc20/119234855_900x675.jpeg",
+      "alternateText" : "Photo 119234855",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "7b7e98c698a9e534713c8ac2131399e35075692c",
+      "source" : "//images.bestgreekestate.com/7b/7e98c698a9e534713c8ac2131399e35075692c/119234856_900x675.jpeg",
+      "alternateText" : "Photo 119234856",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "c85d69fe1756263bdd252cda5c8e3acfc170f2be",
+      "source" : "//images.bestgreekestate.com/c8/5d69fe1756263bdd252cda5c8e3acfc170f2be/119234857_900x675.jpeg",
+      "alternateText" : "Photo 119234857",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "61ead063c42751c3935f7c125b76663c99ce62b6",
+      "source" : "//images.bestgreekestate.com/61/ead063c42751c3935f7c125b76663c99ce62b6/119234860_900x675.jpeg",
+      "alternateText" : "Photo 119234860",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "82eb3723197be5b1c190b43717c28259cdae5dae",
+      "source" : "//images.bestgreekestate.com/82/eb3723197be5b1c190b43717c28259cdae5dae/119234861_900x675.jpeg",
+      "alternateText" : "Photo 119234861",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "cbe39687ee1a7cc69dc78c645e5d2db15720f475",
+      "source" : "//images.bestgreekestate.com/cb/e39687ee1a7cc69dc78c645e5d2db15720f475/119234863_900x675.jpeg",
+      "alternateText" : "Photo 119234863",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "7edef334ed9fc65cbee7bf3c75a58be01c355513",
+      "source" : "//images.bestgreekestate.com/7e/def334ed9fc65cbee7bf3c75a58be01c355513/119234864_900x675.jpeg",
+      "alternateText" : "Photo 119234864",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "d6a6cd85b1b79dd1233ff89d1bcbb19bae471fa5",
+      "source" : "//images.bestgreekestate.com/d6/a6cd85b1b79dd1233ff89d1bcbb19bae471fa5/119234865_900x675.jpeg",
+      "alternateText" : "Photo 119234865",
+      "mimeType" : "image/jpeg"
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "geo-position",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "latitude",
+      "content" : "37.974823",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "longitude",
+      "content" : "22.978926",
+      "dataType" : "FLOAT"
+    } ]
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "6A332CD21729B95C742CE6D9F980CC4F"
+    },
+    "content" : [ {
+      "type" : "data",
+      "name" : "processedOn",
+      "content" : "2019.07.14 17:43:48 +0000",
+      "dataType" : "DATE"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/about" : "1",
+        "/search" : "1",
+        "/home" : "1",
+        "/impressum" : "1",
+        "/common" : "1",
+        "/contact" : "1"
+      },
+      "query" : {
+        "NON_RECURSIVE" : true,
+        "INFO_PATH" : "/",
+        "VERBOSE" : true
+      },
+      "checksum" : "F218B260A7A592AD538523245E323FC6"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "home",
+          "info.state.compileState.message" : "./workspaces/greekestate/templates/greekestate/base.html (Datei oder Verzeichnis nicht gefunden)",
+          "info.state.revision" : "1",
+          "info.localizedName." : "home",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "" : "Home",
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "search",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Suche",
+          "ru" : "Поиск",
+          "en" : "Search"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции",
+          "en" : "Regions of Greece"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Objekte",
+          "ru" : "Объекты",
+          "en" : "Objects"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "contact",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт",
+          "en" : "Contact"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "about",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Über uns",
+          "ru" : "О нас",
+          "en" : "About us"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "common content",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name",
+        "content" : { }
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "impressum",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум",
+          "en" : "Impressum"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/general-headlines, /links-and-ctas, /properties"
+      },
+      "checksum" : "1E615A3F642213882518011D5748689F"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : { }
+      }, {
+        "type" : "group",
+        "name" : "general-headlines",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "description",
+          "content" : {
+            "de" : "Beschreibung",
+            "ru" : "Описание",
+            "en" : "Description"
+          }
+        }, {
+          "type" : "text",
+          "name" : "map",
+          "content" : {
+            "de" : "Karte",
+            "ru" : "Карта",
+            "en" : "Map"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Поиск",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search-in-region",
+          "content" : {
+            "de" : "Suche in der Region",
+            "ru" : "Поиск в регионе",
+            "en" : "Search in the region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "matching-objects-found",
+          "content" : {
+            "de" : "{0} Immobilien gefunden.",
+            "ru" : "Объектов найдено: {0}",
+            "en" : "{0} properties found."
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type",
+          "content" : {
+            "de" : "Typ des Objektes",
+            "ru" : "Тип объекта",
+            "en" : "Object type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:apartment",
+          "content" : {
+            "de" : "Wohnung",
+            "ru" : "Квартира",
+            "en" : "Apartment"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:land-plot",
+          "content" : {
+            "de" : "Grundstück",
+            "ru" : "Земельный участок",
+            "en" : "Land plot"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:building",
+          "content" : {
+            "de" : "Gebäude",
+            "ru" : "Здание",
+            "en" : "Building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:hotel",
+          "content" : {
+            "de" : "Hotel",
+            "ru" : "Гостиница",
+            "en" : "Hotel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:villa",
+          "content" : {
+            "de" : "Villa",
+            "ru" : "Вилла",
+            "en" : "Villa"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:detached-house",
+          "content" : {
+            "de" : "Freistehendes Haus",
+            "ru" : "Дом",
+            "en" : "Detached house"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:office",
+          "content" : {
+            "de" : "Büro",
+            "ru" : "Офис",
+            "en" : "Office"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:farm-parcel",
+          "content" : {
+            "de" : "Landparzelle",
+            "ru" : "Сельскохозяйственный участок",
+            "en" : "Farm parcel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:store",
+          "content" : {
+            "de" : "Geschäft",
+            "ru" : "Магазин",
+            "en" : "Store"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:business-building",
+          "content" : {
+            "de" : "Industriegebäude",
+            "ru" : "Индустриальное здание",
+            "en" : "Business building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:various-other-property",
+          "content" : {
+            "de" : "Sonstige Immobilie",
+            "ru" : "Прочая недвижимость",
+            "en" : "Various other property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:parking",
+          "content" : {
+            "de" : "Parkplatz",
+            "ru" : "Парковка",
+            "en" : "Parking"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:other-land-property",
+          "content" : {
+            "de" : "Sonstige Grundstücke",
+            "ru" : "Прочие земельные участки",
+            "en" : "Other land property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:maisonette",
+          "content" : {
+            "de" : "Maisonette",
+            "ru" : "Двухуровневая квартира",
+            "en" : "Maisonette"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению",
+            "en" : "To the offer"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить",
+            "en" : "Request"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска",
+            "en" : "Back to search result"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Искать",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость",
+            "en" : "Bill a property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать",
+            "en" : "Rent a property"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : {
+            "de" : "Code",
+            "ru" : "Код",
+            "en" : "Code"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : {
+            "de" : "Fläche",
+            "ru" : "Площадь",
+            "en" : "Area"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : {
+            "de" : "Typ",
+            "ru" : "Тип",
+            "en" : "Type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : {
+            "de" : "Region",
+            "ru" : "Регион",
+            "en" : "Region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец",
+            "en" : "Owner"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт",
+            "en" : "Contact"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки",
+            "en" : "Pages"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : {
+            "de" : "Telefon",
+            "ru" : "Тел.",
+            "en" : "Phone"
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : {
+            "de" : "Mobil",
+            "ru" : "Моб.",
+            "en" : "Mobile"
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : {
+            "de" : "Fax",
+            "ru" : "Факс",
+            "en" : "Fax"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта",
+            "en" : "E-Mail"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}

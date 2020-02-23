@@ -1,0 +1,711 @@
+{
+  "path" : "/objects/rent",
+  "children" : [ {
+    "type" : "file",
+    "name" : "search",
+    "localizedName" : {
+      "en" : "search",
+      "de" : "suche",
+      "ru" : "poisk"
+    },
+    "displayName" : {
+      "en" : "Search",
+      "de" : "Suche",
+      "ru" : "Поиск"
+    },
+    "templateReference" : {
+      "templateId" : "object-search",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5821557",
+    "localizedName" : {
+      "" : "object_5821557",
+      "de" : "objekt_5821557",
+      "ru" : "objekt_5821557"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268864",
+    "localizedName" : {
+      "" : "object_4268864",
+      "de" : "objekt_4268864",
+      "ru" : "objekt_4268864"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268351",
+    "localizedName" : {
+      "" : "object_4268351",
+      "de" : "objekt_4268351",
+      "ru" : "objekt_4268351"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268704",
+    "localizedName" : {
+      "" : "object_4268704",
+      "de" : "objekt_4268704",
+      "ru" : "objekt_4268704"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268908",
+    "localizedName" : {
+      "" : "object_4268908",
+      "de" : "objekt_4268908",
+      "ru" : "objekt_4268908"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268651",
+    "localizedName" : {
+      "" : "object_4268651",
+      "de" : "objekt_4268651",
+      "ru" : "objekt_4268651"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268712",
+    "localizedName" : {
+      "" : "object_4268712",
+      "de" : "objekt_4268712",
+      "ru" : "objekt_4268712"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4268479",
+    "localizedName" : {
+      "" : "object_4268479",
+      "de" : "objekt_4268479",
+      "ru" : "objekt_4268479"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264170",
+    "localizedName" : {
+      "" : "object_4264170",
+      "de" : "objekt_4264170",
+      "ru" : "objekt_4264170"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5377461",
+    "localizedName" : {
+      "" : "object_5377461",
+      "de" : "objekt_5377461",
+      "ru" : "objekt_5377461"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5258351",
+    "localizedName" : {
+      "" : "object_5258351",
+      "de" : "objekt_5258351",
+      "ru" : "objekt_5258351"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4818128",
+    "localizedName" : {
+      "" : "object_4818128",
+      "de" : "objekt_4818128",
+      "ru" : "objekt_4818128"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264195",
+    "localizedName" : {
+      "" : "object_4264195",
+      "de" : "objekt_4264195",
+      "ru" : "objekt_4264195"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_6071136",
+    "localizedName" : {
+      "" : "object_6071136",
+      "de" : "objekt_6071136",
+      "ru" : "objekt_6071136"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4810959",
+    "localizedName" : {
+      "" : "object_4810959",
+      "de" : "objekt_4810959",
+      "ru" : "objekt_4810959"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813068",
+    "localizedName" : {
+      "" : "object_3813068",
+      "de" : "objekt_3813068",
+      "ru" : "objekt_3813068"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5241303",
+    "localizedName" : {
+      "" : "object_5241303",
+      "de" : "objekt_5241303",
+      "ru" : "objekt_5241303"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5570426",
+    "localizedName" : {
+      "" : "object_5570426",
+      "de" : "objekt_5570426",
+      "ru" : "objekt_5570426"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813326",
+    "localizedName" : {
+      "" : "object_3813326",
+      "de" : "objekt_3813326",
+      "ru" : "objekt_3813326"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5498563",
+    "localizedName" : {
+      "" : "object_5498563",
+      "de" : "objekt_5498563",
+      "ru" : "objekt_5498563"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264101",
+    "localizedName" : {
+      "" : "object_4264101",
+      "de" : "objekt_4264101",
+      "ru" : "objekt_4264101"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4509458",
+    "localizedName" : {
+      "" : "object_4509458",
+      "de" : "objekt_4509458",
+      "ru" : "objekt_4509458"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4507076",
+    "localizedName" : {
+      "" : "object_4507076",
+      "de" : "objekt_4507076",
+      "ru" : "objekt_4507076"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4508203",
+    "localizedName" : {
+      "" : "object_4508203",
+      "de" : "objekt_4508203",
+      "ru" : "objekt_4508203"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264240",
+    "localizedName" : {
+      "" : "object_4264240",
+      "de" : "objekt_4264240",
+      "ru" : "objekt_4264240"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264230",
+    "localizedName" : {
+      "" : "object_4264230",
+      "de" : "objekt_4264230",
+      "ru" : "objekt_4264230"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5182805",
+    "localizedName" : {
+      "" : "object_5182805",
+      "de" : "objekt_5182805",
+      "ru" : "objekt_5182805"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4156691",
+    "localizedName" : {
+      "" : "object_4156691",
+      "de" : "objekt_4156691",
+      "ru" : "objekt_4156691"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4654786",
+    "localizedName" : {
+      "" : "object_4654786",
+      "de" : "objekt_4654786",
+      "ru" : "objekt_4654786"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4258025",
+    "localizedName" : {
+      "" : "object_4258025",
+      "de" : "objekt_4258025",
+      "ru" : "objekt_4258025"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813389",
+    "localizedName" : {
+      "" : "object_3813389",
+      "de" : "objekt_3813389",
+      "ru" : "objekt_3813389"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5255415",
+    "localizedName" : {
+      "" : "object_5255415",
+      "de" : "objekt_5255415",
+      "ru" : "objekt_5255415"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5245597",
+    "localizedName" : {
+      "" : "object_5245597",
+      "de" : "objekt_5245597",
+      "ru" : "objekt_5245597"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813164",
+    "localizedName" : {
+      "" : "object_3813164",
+      "de" : "objekt_3813164",
+      "ru" : "objekt_3813164"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813156",
+    "localizedName" : {
+      "" : "object_3813156",
+      "de" : "objekt_3813156",
+      "ru" : "objekt_3813156"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813291",
+    "localizedName" : {
+      "" : "object_3813291",
+      "de" : "objekt_3813291",
+      "ru" : "objekt_3813291"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813312",
+    "localizedName" : {
+      "" : "object_3813312",
+      "de" : "objekt_3813312",
+      "ru" : "objekt_3813312"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813170",
+    "localizedName" : {
+      "" : "object_3813170",
+      "de" : "objekt_3813170",
+      "ru" : "objekt_3813170"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4365141",
+    "localizedName" : {
+      "" : "object_4365141",
+      "de" : "objekt_4365141",
+      "ru" : "objekt_4365141"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4365056",
+    "localizedName" : {
+      "" : "object_4365056",
+      "de" : "objekt_4365056",
+      "ru" : "objekt_4365056"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4378402",
+    "localizedName" : {
+      "" : "object_4378402",
+      "de" : "objekt_4378402",
+      "ru" : "objekt_4378402"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4365100",
+    "localizedName" : {
+      "" : "object_4365100",
+      "de" : "objekt_4365100",
+      "ru" : "objekt_4365100"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264249",
+    "localizedName" : {
+      "" : "object_4264249",
+      "de" : "objekt_4264249",
+      "ru" : "objekt_4264249"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4975710",
+    "localizedName" : {
+      "" : "object_4975710",
+      "de" : "objekt_4975710",
+      "ru" : "objekt_4975710"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4263923",
+    "localizedName" : {
+      "" : "object_4263923",
+      "de" : "objekt_4263923",
+      "ru" : "objekt_4263923"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_3813331",
+    "localizedName" : {
+      "" : "object_3813331",
+      "de" : "objekt_3813331",
+      "ru" : "objekt_3813331"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4906387",
+    "localizedName" : {
+      "" : "object_4906387",
+      "de" : "objekt_4906387",
+      "ru" : "objekt_4906387"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5016263",
+    "localizedName" : {
+      "" : "object_5016263",
+      "de" : "objekt_5016263",
+      "ru" : "objekt_5016263"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4997503",
+    "localizedName" : {
+      "" : "object_4997503",
+      "de" : "objekt_4997503",
+      "ru" : "objekt_4997503"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4264077",
+    "localizedName" : {
+      "" : "object_4264077",
+      "de" : "objekt_4264077",
+      "ru" : "objekt_4264077"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5126418",
+    "localizedName" : {
+      "" : "object_5126418",
+      "de" : "objekt_5126418",
+      "ru" : "objekt_5126418"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_4351773",
+    "localizedName" : {
+      "" : "object_4351773",
+      "de" : "objekt_4351773",
+      "ru" : "objekt_4351773"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  }, {
+    "type" : "file",
+    "name" : "object_5210967",
+    "localizedName" : {
+      "" : "object_5210967",
+      "de" : "objekt_5210967",
+      "ru" : "objekt_5210967"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  } ]
+}

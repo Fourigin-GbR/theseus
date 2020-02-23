@@ -1,0 +1,723 @@
+{
+  "id" : "object_5182805",
+  "contentFormatVersion" : "2.0",
+  "metaData" : {
+    "title" : "Rent object #J-1011 - BestGreekEstate",
+    "contextSpecificTitles" : {
+      "de" : "Mietobjekt #J-1011 - BestGreekEstate",
+      "ru" : "Объект #J-1011 для аренды - BestGreekEstate"
+    },
+    "attributes" : {
+      "converted on" : "2019-04-17 16:08:48"
+    }
+  },
+  "content" : [ {
+    "type" : "text",
+    "name" : "headline",
+    "content" : {
+      "de" : "Apartment in Center (Korinthos)",
+      "ru" : "Квартира в Center (Korinthos)",
+      "en" : "Apartment in Center (Korinthos)"
+    }
+  }, {
+    "type" : "text",
+    "name" : "short-description",
+    "content" : {
+      "de" : "Entfernung zum Meer: <span class=\"text-red\">800</span>, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
+      "ru" : "Расстояние до моря: <span class=\"text-red\">800</span>, Подъезд по: <span class=\"text-red\">Асфальт</span>",
+      "en" : "Distance from sea: <span class=\"text-red\">800</span>, Road type: <span class=\"text-red\">Asphalt</span>"
+    }
+  }, {
+    "type" : "group",
+    "name" : "properties",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "code",
+      "content" : "J-1011",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "area",
+      "content" : "75",
+      "dataType" : "INTEGER"
+    }, {
+      "type" : "data",
+      "name" : "price",
+      "content" : "20",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "type",
+      "content" : "apartment",
+      "dataType" : "STRING"
+    }, {
+      "type" : "data",
+      "name" : "region",
+      "content" : "center",
+      "dataType" : "STRING"
+    } ]
+  }, {
+    "type" : "text",
+    "name" : "long-description",
+    "content" : {
+      "de" : "Zu vermietet 3-Zimmer-Wohnung mit eine Fläche von 75 m<sup>2</sup>. <br /> Die Wohnung befindet sich im 1. Stock eines 4-stöckigen Hauses mit einem Aufzug. <br /> Die Wohnungskapazität: 4 Personen + Platz für Klappbett. <br /> <br /> <br /> Preisliste <br /> – &gt; Datum – – – – – – – – – Preis &lt; – <br /> 01.01 - 31.03 – – – – – – 20 € pro Tag <br /> 01.04 - 02.06 – – – – – – 25 € <br /> 03.06 - 17.09 – – – – – – 30 € <br /> 18.09 - 29.10 – – – – – – 25 € <br /> 30.10 - 31.12 – – – – – – 20 € <br /> <br /> 1. Preise gültig für Mietdauer ab 7 Tagen. Bei Mietdauer weniger als 7 Tage - Aufpreis 10 € pro Tag. <br /> 2. Preise sind bis zu 2 Personen gültig. Jede weitere Person (auch Kind): 5 € pro Tag. <br /> 3. Waschen und Bügeln ein Satz Bettwäsche und Handtücher: 5 €. <br /> 4. Generalsputz: 40 €. <br /> 5. Lieferung von zusätzlichen Klappbett: 20 €. <br /> 6. Stromkosten: 0,30 €/kW. <br /> <br /> <br /> Wohnungsplan <br /> • Eingangshalle; <br /> • Wohnzimmer mit Balkon; <br /> • 2 Schlafzimmer (eine mit Balkon, zweite mit große Loggia); <br /> • Küche; <br /> • Badezimmer/WC. <br /> <br /> <br /> Beschreibung <br /> • Im Wohnzimmer: Sofa, Tisch, 6 Stühle, TV, Klimaanlage. <br /> • Im Schlafzimmer: Doppelbett, 2 Nachttische, Kommode, Klimaanlage. <br /> &nbsp; Vom Wohnzimmer und Schlafzimmer gibt es jeweils ein Zugang zum Balkon mit Stadtausblick. <br /> • Im zweite Schlafzimmer: Schlafsofa, Kleiderschrank. <br /> • In der Küche: Kühlschrank, Elektroherd, el. Dunstabzugshaube, Mikrowelle, Wasserkessel. <br /> &nbsp; Vom Schlafzimmer und die Küche gibt es jeweils ein Zugang zur großen Loggia. <br /> <br /> <br /> Ausstattung <br /> • Bügeleisen; <br /> • Wi-Fi (Router); <br /> • Warmwasserboiler; <br /> • Waschmaschine; <br /> • Alle Balkontüren mit hölzernen Fensterläden; <br /> • Balkon mit Sonnenschutzmarkise. <br /> <br /> <br /> Interaktion mit Gästen <br /> Die Wohnung befindet sich im Haus, in dem unser Büro sich befindet. Deshalb ist das Büropersonal jederzeit zur Verfügung, um mit die Gäste zu kommunizieren und helfen, viele Probleme lösen (Arzt zu besuchen, Dienstapotheke zu finden) und auch: <br /> • Auto mit Fahrer zu bestellen, damit Sehenswürdigkeiten und historischen Denkmäler der antiken Griechenland <br /> &nbsp; zu besuchen; <br /> • Putzfrau, Friseur, Nageldesigner und Masseur zu Wohnung zu senden; <br /> • Heiße und kalte Getränke, Sandwich, griechische Pita zur Wohnung zu liefern; <br /> <br /> <br /> Lage <br /> Das Haus befindet sich in der Stadt Korinth (griechisch K&oacute;rinthos). <br /> In der Nähe des Hauses gibt es Bäckerei, Geschäft &laquo;Obst und Gemüse&raquo;, Supermarkt. <br /> <br /> <br /> Entfernung <br /> • zum Strand und zur Strandpromenade: 800 м. <br /> &nbsp; An der schönen Strandpromenade gibt es verschiedene Bars und Caf&eacute;s, Restaurants und Tavernen. <br /> &nbsp; Die meisten von ihnen stellen Sonnenliegen und Sonnenschirme ohne Gebühr am Strand auf. <br /> &nbsp; Die Kellner bieten heiße und kalte Getränken, Obst- und Gemüsesalate, Vorspeisen und Eiskrem an. <br /> • zum Stadtzentrum: 200 m. <br /> &nbsp; Im Stadtzentrum gibt es Fußgängerzone mit Boutiquen und Souvenirläden, Bars, Caf&eacute;s und Tavernen, <br /> &nbsp; Supermärkte, Fleisch-, Fisch- und Gemüseläden, Konditoreien und Bäckereien. <br /> • zum Lebensmittel- und Bekleidungsmarkt, der je Samstag stattfindet ist: 200 m. <br /> &nbsp; Am Bekleidungsmarkt (Flohmark) kann man Souvenirs und Schmuck, Schuhe und Kleidungsstücke, <br /> &nbsp; Vorhänge, Gardinen, Tischdecken und viele andere Waren kaufen. <br /> &nbsp; Am Straßenmarkt kann man frisches Obst und Gemüse, Fisch und Meeresfrüchte kaufen. <br /> • bis zu Bushaltestelle: 70 m. <br /> <br /> <br /> Verkehrsverbindung <br /> Die Stadt Korinth verfügt über drei Busbahnhofе. <br /> • Der zentrale Busbahnhof ist in der Nähe der Kanal von Korinth. <br /> &nbsp; Von hier aus kann man alle Städte Griechenlands erreichen. <br /> • Die zweite Busbahnhof befindet sich gegenüber dem ehemaligen Bahnhof. <br /> &nbsp; Von hier aus kann man alten Korinth, Athens, Lechaio, Vrachati, Kiato, Xylokastro und andere Städte <br /> &nbsp; erreichen. <br /> • Die dritte Busbahnhof befindet sich auf der Hauptstraße. <br /> &nbsp; Von hier aus kann man die Städte Loutraki, Isthmia, Loutra Elenis, Almiri und Galataki erreichen. <br /> • An der Ecke die Straßen von Kulyatsu und Kolokotroni gibt es eine Bushaltestelle. <br /> &nbsp; Von hier aus kann man den alten Korinth (Fahrzeit 15-20 Min.), Lechaio, Vrachati, Kiato, Xylokastro erreichen. <br /> <br /> <br /> Es ist am besten ein Auto online im Flughafen Athen zu mieten Das Auto kann sehr nützlich für die Besichtigungen der Sehenswürdigkeiten und historische Denkmäler des antiken Griechenlands sein. <br /> <br /> <br /> Vom Flughafen Athen nach der Stadt Korinth kann man erreichen <br /> mit dem Schnellzug <br /> Der Zug fährt jede Stunde (der erste um 5:44 Uhr, der letzte um 21:44 Uhr). <br /> Die Richtung: Kiato. <br /> Ihre Bahnhaltestelle: &laquo;K&oacute;rinthos&raquo;. <br /> Reisezeit: 1. Std. 22 Min. <br /> Der Ticketkosten für einen Erwachsenen in beide Richtungen: 18 €. <br /> Für Kinder und Studenten gibt es eine Ermäßigung von 25% bis 50%. <br /> Vom Bahnhaltestelle &laquo;K&oacute;rinthos&raquo; nach Stadt Korinth kann es mit dem Bus oder mit dem Taxi erreichen. <br /> Der Ticketpreis für einen Erwachsenen: 0,80 €. <br /> Der Preis für ein Taxi: 5 €. <br /> <br /> mit Taxi <br /> Reisezeit: ca. 1,5 Stunden. <br /> Je nach Tageszeit kostet Reise 120-150 €. <br /> Auf Wunsch können wir privater Abholservice organisiert werden (günstigere Variante).",
+      "ru" : "Сдаётся 3-х комнатная квартира, площадью 75 м<sup>2</sup> <br /> Квартира находится на 2-ом этаже 4-х этажного дома с лифтом. <br /> Вместимость: 4 человека + место для раскладушки. <br /> <br /> <br /> Прайс-лист <br /> – &gt; Даты – – – – – – – – – Цена &lt; – <br /> 01.01 - 31.03 – – – – – – 20 € в сутки <br /> 01.04 - 02.06 – – – – – – 25 € <br /> 03.06 - 17.09 – – – – – – 30 € <br /> 18.09 - 29.10 – – – – – – 25 € <br /> 30.10 - 31.12 – – – – – – 20 € <br /> <br /> 1. Цены действительны при аренде сроком более 7 дней. При меньшем сроке: доплата 10 € в день. <br /> 2. Цены действительны для 2-х человек. За дополнительного гостя, включая детей, оплата: 5 € в день. <br /> 3. Стирка и глажка комплекта постельного белья и полотенец: 5 €. <br /> 4. Генеральная уборка: 40 €. <br /> 5. Доставка раскладушки: 20 €. <br /> 6. Расходы по электроэнергии: 0,30 €/kW. <br /> <br /> <br /> Планировка квартиры <br /> • Прихожая; <br /> • Гостиная; <br /> • 2 спальни (одна с балконом, вторая с большой лоджией); <br /> • Кухня; <br /> • Ванная комната/WC. <br /> <br /> <br /> Описание квартиры <br /> • В гостиной: диван, стол, 6 стульев, TV, кондиционер. <br /> • В спальне: двуспальная кровать, 2 прикроватные тумбочки, комод, кондиционер. <br /> &nbsp; Из гостиной и спальни есть выход на балкон с видом на город. <br /> • Во второй спальне: раздвижной диван, шкаф. <br /> • В кухне: холодильник, электроплита, электрическая вытяжка, СВЧ печь, электрочайник. <br /> &nbsp; Из спальни и кухни есть выход на большую лоджию. <br /> <br /> <br /> Оснащение квартиры <br /> • Wi-Fi; <br /> • Водонагревательный бойлер; <br /> • Стиральная машина; <br /> • Все балконные двери с деревянными ставнями; <br /> • Солнцезащитные тенты на балконе. <br /> <br /> <br /> Общение с гостями <br /> Квартира находится в доме, в котором расположен наш офис. Сотрудники офиса всегда доступны для общения с гостями и помогут в решении многих вопросов (консультация у врача, поиск дежурной аптеки), а также: <br /> • По мере возможностей смогут отвозить гостей на пляж (800 м). <br /> • Помогут заказать автомобиль с русскоговорящим водителем для посещения достопримечательностей <br /> &nbsp; и исторических памятников античной Греции. <br /> • Могут прислать на дом русскоговорящего помощника по ведению домашнего хозяйства, парикмахера, <br /> &nbsp; дизайнера ногтей, массажиста. <br /> • Помогут организовать доставку на дом кофе с бутербродами, греческую питу, греческий салат и пр. <br /> <br /> <br /> Месторасположение <br /> Дом расположен недалеко от центра города Коринф (K&oacute;rinthos). <br /> Рядом с домом есть супермаркет, магазин &laquo;Фрукты-овощи&raquo;, хлебопекарня. <br /> <br /> <br /> Расстояние <br /> • до набережной и пляжа: 800 м. <br /> &nbsp; На набережной до поздней ночи работают бары и кафе, рестораны и таверны. <br /> &nbsp; Многие из них в летнее время бесплатно выставляют на пляже лежаки и солнцезащитные зонтики. <br /> &nbsp; Официанты предлагают отдыхающим горячие и прохладительные напитки, овощные и фруктовые <br /> &nbsp; салаты, лёгкие закуски и мороженое. <br /> • до центра города: 200 м. <br /> &nbsp; В центре есть пешеходная зона с бутиками и магазинами, тавернами и ресторанами, барами и <br /> &nbsp; дискотеками, супермаркетами, мясными, рыбными и овощными магазинами, кондитерскими и <br /> &nbsp; булочными. <br /> • до вещевого и продуктового рынка, который открыт по субботам: 200 м. <br /> &nbsp; На вещевом рынке (вещевые стоки) можно купить бижутерию и сувениры, обувь и верхнюю одежду, <br /> &nbsp; гардины, шторы, скатерти и другие товары. <br /> &nbsp; На продуктовом рынке можно купить свежие овощи и фрукты, рыбу и морепродукты. <br /> • до остановки автобуса: 70 м. <br /> <br /> <br /> Общественный транспорт <br /> В Коринфе есть 3 автобусные станции. <br /> • Центральная станция находится недалеко от Кори́нфского кана́ла. <br /> &nbsp; От неё можно добраться во все города Греции. <br /> • Вторая станция находится напротив бывшей железнодорожной станции. <br /> &nbsp; От неё можно доехать в Афины, древний Коринф, Лехио, Врахати, Киато, Ксиликастро. <br /> • Третья станция находится на центральной улице. <br /> &nbsp; От неё можно доехать в города Лутраки, Истмиа, Лутра Эленис, Альмири, Галатаки. <br /> • На углу улиц Kulyatsu и Kolokotroni есть автобусная остановка, от которой можно доехать в древний <br /> &nbsp; Коринф, (время в пути 18 мин.), в города Лехио, Врахати, Киато, Ксилокастро. <br /> <br /> <br /> Арендовать автомобиль лучше в аэропорту Афины из дома по Интернету. <br /> В дальнейшем автомобиль очень пригодится для посещения окрестных достопримечательностей и основных исторических памятников античной Греции. <br /> <br /> <br /> Из аэропорта Афины в город Коринф можно добраться <br /> на скоростном поезде <br /> Направление движения: Kiato. <br /> Пункт назначения: ж/д станция &laquo;K&oacute;rinthos&raquo;. <br /> Продолжительность поездки: 1 час 22 мин. <br /> Интервал движения поездов: 1 час (первый в 5:44; последний в 21:44). <br /> Цена билета в обе стороны для одного взрослого 18 €. <br /> Для детей и студентов существует скидка от 25% до 50%. <br /> От ж/д станции &laquo;K&oacute;rinthos&raquo; в Коринф можно доехать на автобусе либо на такси. <br /> Цена билета для одного взрослого 0,80 €. <br /> Стоимость проезда на такси: 5 €. <br /> <br /> на такси <br /> Продолжительность поездки: 1 час 15 мин. <br /> В зависимости от времени суток цена проезда: 120-150 €. <br /> Мы можем прислать автомобиль с русскоговорящим водителем (это будет немного дешевле).",
+      "en" : "For rent: 3-room apartment with an area of 75 m<sup>2</sup>. <br /> The apartment is located on the 1st floor of 4-story house with an elevator. <br /> The capacity of apartment: 4 people + place for а camp-cot. <br /> <br /> <br /> Price list <br /> – &gt; Dates – – – – – – – – – – Price &lt; – <br /> 01.01 - 31.03 – – – – – – 20 € per day <br /> 01.04 - 02.06 – – – – – – 25 € <br /> 03.06 - 17.09 – – – – – – 30 € <br /> 18.09 - 29.10 – – – – – – 25 € <br /> 30.10 - 31.12 – – – – – – 20 € <br /> <br /> 1. The prices apply when renting more 7 days. At the shorter term lease: a surcharge of 10 € per day. <br /> 2. The prices apply for 2 persons. For each additional person (also child): payment of 5 € per day. <br /> 3. Washing and ironing per set linen and towels: 5 €. <br /> 4. General cleaning: 40 €. <br /> 5. Delivery of an extra camp-cot: 20 €. <br /> 6. Electricity costs: 0,30 €/kW. <br /> <br /> <br /> Apartment layout <br /> • Hallway; <br /> • Living room with balcony; <br /> • 2 bedrooms (one with balcony, the second with a large loggia); <br /> • Kitchen; <br /> • Bathroom/WC. <br /> <br /> <br /> Description <br /> • In the living room: sofa, table, 6 chairs, TV, air conditioner. <br /> • In the bedroom: double bed, 2 bedside tables, chest of drawers, air conditioner. <br /> &nbsp; From the living room and the bedroom there are accesses to the balcony with a view of the city. <br /> • In the 2nd bedroom: sofa bed, wardrobe. <br /> • In the kitchen: refrigerator, electric stove, electric extractor hood, microwave oven, electric kettle. <br /> &nbsp; From the bedroom and the kitchen there are accesses to a large loggia. <br /> <br /> <br /> Equipment <br /> • Wi-Fi (Router); <br /> • Hot-water boiler; <br /> • Washing machine; <br /> • All balcony doors with wooden shutters; <br /> • Balcony with a sun awning. <br /> <br /> <br /> Interaction with Guests <br /> The apartment is located in the house where is located our office. Therefore, the office staff is always available to interact with the guests and help solve many problems (visit to doctor, find the duty pharmacy) and also: <br /> • order a car with driver to visit surrounding attractions and the main historical monuments of ancient Greece; <br /> • send to apartment a maid, a hairdresser, a nail designer, a masseur; <br /> • deliver to the apartment drinks, sandwiches, Italian pizza, Greek pita. <br /> <br /> <br /> Location <br /> The house is located in the city of Corinth (K&oacute;rinthos). <br /> Near the house there is a supermarket, a shop &laquo;Fruits-Veggies&raquo;, bakery. <br /> <br /> <br /> Distance <br /> • to the beach and to the beach promenade: 800 m. <br /> &nbsp; On the beautiful beach promenade there are many bars and cafes, restaurants and taverns. <br /> &nbsp; Most of them provide sun beds and sun umbrellas at no charge on beach. <br /> &nbsp; The waiters offer a hot and cold drinks, fruit and vegetable salads, snacks and ice cream. <br /> • to the city center: 200 m. <br /> &nbsp; In the city center there is a pedestrian zone with boutiques and shops, taverns and restaurants, bars and <br /> &nbsp; discos, supermarkets, meat-, fish- and vegetable shops, patisseries and bakeries. <br /> • to the grocery and clothing market that is held on Saturdays: 200 m. <br /> &nbsp; At the clothing market (flea market) it is possible to buy souvenirs and bijouterie, shoes and clothing, <br /> &nbsp; curtains, blinds, tablecloths and many other items. <br /> &nbsp; At the grocery market you can buy fresh fruits and vegetables, fish and seafood. <br /> • to the bus station: 70 m. <br /> <br /> <br /> Transport connection <br /> The city of Corinth there is 3 bus stations. <br /> • The central bus station is located near the Corinth Canal. <br /> &nbsp; From there you can drive all the cities of Greece. <br /> • The second station is located opposite the former railway station. <br /> &nbsp; From there you can drive the ancient Corinth and the cities: Athens, Lechaio, Vrachati, Kiato, Xylokastro. <br /> • The third station is located on the central street. <br /> &nbsp; From there you can drive to the cities Loutraki, Isthmia, Loutra Elenis, Almiri, Galataki. <br /> • On the corner streets Kulyatsu and Kolokotroni there is a bus station, from which you can drive to the <br /> &nbsp; ancient Corinth (journey time 15-20 minutes) and to the cities Lechaio, Vrachati, Kiato, Xylokastro. <br /> <br /> <br /> Take on rent a car better in Athens airport from home via the Internet. <br /> The car is very handy for visit to the surrounding attractions and the main historical monuments of ancient Greece. <br /> <br /> <br /> From Athens Airport to the city of Corinth can be arrive <br /> by express train <br /> Direction: Kiato. <br /> Destination: train station &laquo;K&oacute;rinthos&raquo;. <br /> Travel time: 1 hour 22 minutes. <br /> Interval of trains: 1 hour (the first at 5:44, the last at 21:44) <br /> Ticket price for an adult in both directions: 18 €. <br /> Discount for children and students: 25% - 50%. <br /> From the train station &laquo;K&oacute;rinthos&raquo; to the city of Corinth is possible reached by bus or by taxi. <br /> The ticket price for an adult: 0,80 €. <br /> Fare by Taxi: 5 €. <br /> <br /> by Taxi <br /> Travel time: to 1 hour 15 minutes. <br /> Depending on the time of a day the price is 120-150 €. <br /> Upon request, we can be arranged a transfer (travel) (cheaper option)."
+    }
+  }, {
+    "type" : "list",
+    "name" : "images",
+    "elements" : [ {
+      "type" : "list-object",
+      "referenceId" : "d1f15a3fb1d28cc9b872e3a2cddc1733978f54ad",
+      "source" : "//images.bestgreekestate.com/d1/f15a3fb1d28cc9b872e3a2cddc1733978f54ad/104988327_900x675.jpeg",
+      "alternateText" : "Photo 104988327",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "c163776d1c341a286c32043c9561286aba4811e5",
+      "source" : "//images.bestgreekestate.com/c1/63776d1c341a286c32043c9561286aba4811e5/104988328_900x675.jpeg",
+      "alternateText" : "Photo 104988328",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "60820432fbd9527d17e5022124596801ede1614b",
+      "source" : "//images.bestgreekestate.com/60/820432fbd9527d17e5022124596801ede1614b/104988330_900x675.jpeg",
+      "alternateText" : "Photo 104988330",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "3f5298835ae0131b5ecf491816192d59dab9c91d",
+      "source" : "//images.bestgreekestate.com/3f/5298835ae0131b5ecf491816192d59dab9c91d/104988332_900x675.jpeg",
+      "alternateText" : "Photo 104988332",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "0c755b0304b2d21dcd3ed731d2f6bf2fdfa17ed8",
+      "source" : "//images.bestgreekestate.com/0c/755b0304b2d21dcd3ed731d2f6bf2fdfa17ed8/104988334_900x675.jpeg",
+      "alternateText" : "Photo 104988334",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "bb1f329903e9d870f3dda7cf3969d3319bac2fd5",
+      "source" : "//images.bestgreekestate.com/bb/1f329903e9d870f3dda7cf3969d3319bac2fd5/104988337_900x675.jpeg",
+      "alternateText" : "Photo 104988337",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "452a122dae6599b7cef4d044debb772956975797",
+      "source" : "//images.bestgreekestate.com/45/2a122dae6599b7cef4d044debb772956975797/104988343_900x675.jpeg",
+      "alternateText" : "Photo 104988343",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "47df23c108a125101436aa29e8c22f7adff7e50e",
+      "source" : "//images.bestgreekestate.com/47/df23c108a125101436aa29e8c22f7adff7e50e/104988346_900x675.jpeg",
+      "alternateText" : "Photo 104988346",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "317f0c328c1e75577dfd4ec88cb96e939cd5130d",
+      "source" : "//images.bestgreekestate.com/31/7f0c328c1e75577dfd4ec88cb96e939cd5130d/104988350_900x675.jpeg",
+      "alternateText" : "Photo 104988350",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "003540314d69c9ea530b8e6170eb33c9649f2423",
+      "source" : "//images.bestgreekestate.com/00/3540314d69c9ea530b8e6170eb33c9649f2423/104988354_900x675.jpeg",
+      "alternateText" : "Photo 104988354",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "8b08165d6adf2f51ce56551105a7bec346d67caa",
+      "source" : "//images.bestgreekestate.com/8b/08165d6adf2f51ce56551105a7bec346d67caa/104988359_900x675.jpeg",
+      "alternateText" : "Photo 104988359",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "61c74f8117c1878eaa09cae848822a229cadc269",
+      "source" : "//images.bestgreekestate.com/61/c74f8117c1878eaa09cae848822a229cadc269/104988366_900x675.jpeg",
+      "alternateText" : "Photo 104988366",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "1d05a147cd10d7d7662f1e4b94e367e6a39cdd05",
+      "source" : "//images.bestgreekestate.com/1d/05a147cd10d7d7662f1e4b94e367e6a39cdd05/104988367_900x675.jpeg",
+      "alternateText" : "Photo 104988367",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "07e8b370463921c93b6a4a7628f6e0e4cfe1d64f",
+      "source" : "//images.bestgreekestate.com/07/e8b370463921c93b6a4a7628f6e0e4cfe1d64f/104988370_900x675.jpeg",
+      "alternateText" : "Photo 104988370",
+      "mimeType" : "image/jpeg"
+    }, {
+      "type" : "list-object",
+      "referenceId" : "1dd1917c04ca7610b9bc4ebbae0d9a475487b4d8",
+      "source" : "//images.bestgreekestate.com/1d/d1917c04ca7610b9bc4ebbae0d9a475487b4d8/104988373_900x675.jpeg",
+      "alternateText" : "Photo 104988373",
+      "mimeType" : "image/jpeg"
+    } ]
+  }, {
+    "type" : "group",
+    "name" : "geo-position",
+    "elements" : [ {
+      "type" : "data",
+      "name" : "latitude",
+      "content" : "0.0",
+      "dataType" : "FLOAT"
+    }, {
+      "type" : "data",
+      "name" : "longitude",
+      "content" : "0.0",
+      "dataType" : "FLOAT"
+    } ]
+  } ],
+  "dataSourceContents" : [ {
+    "name" : "timestamp",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "TIMESTAMP",
+      "checksum" : "4672A7D8136E304FFDB3FAF534B19A6A"
+    },
+    "content" : [ {
+      "type" : "data",
+      "name" : "processedOn",
+      "content" : "2019.07.14 17:43:56 +0000",
+      "dataType" : "DATE"
+    } ]
+  }, {
+    "name" : "top-level-navigation",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "SITE",
+      "revisions" : {
+        "/about" : "1",
+        "/search" : "1",
+        "/home" : "1",
+        "/impressum" : "1",
+        "/common" : "1",
+        "/contact" : "1"
+      },
+      "query" : {
+        "NON_RECURSIVE" : true,
+        "INFO_PATH" : "/",
+        "VERBOSE" : true
+      },
+      "checksum" : "F218B260A7A592AD538523245E323FC6"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "home",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.template.templateId" : "index",
+          "info.content.id" : "home",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "home",
+          "info.state.compileState.message" : "./workspaces/greekestate/templates/greekestate/base.html (Datei oder Verzeichnis nicht gefunden)",
+          "info.state.revision" : "1",
+          "info.localizedName." : "home",
+          "info.localizedName.de" : "home",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "" : "Home",
+          "de" : "Home",
+          "ru" : "Главная"
+        }
+      } ],
+      "target" : "/home"
+    }, {
+      "type" : "link",
+      "name" : "search",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "search",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "search",
+          "info.localizedName.ru" : "poisk",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "suche"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Suche",
+          "ru" : "Поиск",
+          "en" : "Search"
+        }
+      } ],
+      "target" : "/search"
+    }, {
+      "type" : "link",
+      "name" : "regions",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "regions",
+          "info.localizedName.ru" : "regioni",
+          "info.localizedName.de" : "regionen"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Griechische Regionen",
+          "ru" : "Регионы Греции",
+          "en" : "Regions of Greece"
+        }
+      } ],
+      "target" : "/regions"
+    }, {
+      "type" : "link",
+      "name" : "objects",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.localizedName.en" : "objects",
+          "info.localizedName.ru" : "objekti",
+          "info.localizedName.de" : "objekte"
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Objekte",
+          "ru" : "Объекты",
+          "en" : "Objects"
+        }
+      } ],
+      "target" : "/objects"
+    }, {
+      "type" : "link",
+      "name" : "contact",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "contact",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "contact",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "kontakti",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "kontake",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Kontakt",
+          "ru" : "Контакт",
+          "en" : "Contact"
+        }
+      } ],
+      "target" : "/contact"
+    }, {
+      "type" : "link",
+      "name" : "about",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "about",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "about",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "o_nas",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "ueber_uns",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Über uns",
+          "ru" : "О нас",
+          "en" : "About us"
+        }
+      } ],
+      "target" : "/about"
+    }, {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "false",
+          "info.content.id" : "common",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "common content",
+          "info.localizedName.ru" : "common content",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "common content"
+        },
+        "name" : "display-name",
+        "content" : { }
+      } ],
+      "target" : "/common"
+    }, {
+      "type" : "link",
+      "name" : "impressum",
+      "elements" : [ {
+        "type" : "text",
+        "attributes" : {
+          "info.state.staged" : "true",
+          "info.template.templateId" : "article-text",
+          "info.content.id" : "impressum",
+          "info.template.variationId" : "default",
+          "info.content.parent" : "/",
+          "info.localizedName.en" : "impressum",
+          "info.state.compileState.compiled" : "true",
+          "info.localizedName.ru" : "impressum",
+          "info.state.revision" : "1",
+          "info.localizedName.de" : "impressum",
+          "info.template.revision" : ""
+        },
+        "name" : "display-name",
+        "content" : {
+          "de" : "Impressum",
+          "ru" : "Импрессум",
+          "en" : "Impressum"
+        }
+      } ],
+      "target" : "/impressum"
+    } ]
+  }, {
+    "name" : "common-content",
+    "transientContent" : false,
+    "identifier" : {
+      "type" : "COMMON-CONTENT",
+      "revisions" : {
+        "/common" : "1"
+      },
+      "query" : {
+        "INCLUDE_CONTENT" : "/general-headlines, /links-and-ctas, /properties"
+      },
+      "checksum" : "1E615A3F642213882518011D5748689F"
+    },
+    "content" : [ {
+      "type" : "link",
+      "name" : "common",
+      "elements" : [ {
+        "type" : "text",
+        "name" : "display-name",
+        "content" : { }
+      }, {
+        "type" : "group",
+        "name" : "general-headlines",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "description",
+          "content" : {
+            "de" : "Beschreibung",
+            "ru" : "Описание",
+            "en" : "Description"
+          }
+        }, {
+          "type" : "text",
+          "name" : "map",
+          "content" : {
+            "de" : "Karte",
+            "ru" : "Карта",
+            "en" : "Map"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Поиск",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search-in-region",
+          "content" : {
+            "de" : "Suche in der Region",
+            "ru" : "Поиск в регионе",
+            "en" : "Search in the region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "matching-objects-found",
+          "content" : {
+            "de" : "{0} Immobilien gefunden.",
+            "ru" : "Объектов найдено: {0}",
+            "en" : "{0} properties found."
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type",
+          "content" : {
+            "de" : "Typ des Objektes",
+            "ru" : "Тип объекта",
+            "en" : "Object type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:apartment",
+          "content" : {
+            "de" : "Wohnung",
+            "ru" : "Квартира",
+            "en" : "Apartment"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:land-plot",
+          "content" : {
+            "de" : "Grundstück",
+            "ru" : "Земельный участок",
+            "en" : "Land plot"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:building",
+          "content" : {
+            "de" : "Gebäude",
+            "ru" : "Здание",
+            "en" : "Building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:hotel",
+          "content" : {
+            "de" : "Hotel",
+            "ru" : "Гостиница",
+            "en" : "Hotel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:villa",
+          "content" : {
+            "de" : "Villa",
+            "ru" : "Вилла",
+            "en" : "Villa"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:detached-house",
+          "content" : {
+            "de" : "Freistehendes Haus",
+            "ru" : "Дом",
+            "en" : "Detached house"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:office",
+          "content" : {
+            "de" : "Büro",
+            "ru" : "Офис",
+            "en" : "Office"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:farm-parcel",
+          "content" : {
+            "de" : "Landparzelle",
+            "ru" : "Сельскохозяйственный участок",
+            "en" : "Farm parcel"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:store",
+          "content" : {
+            "de" : "Geschäft",
+            "ru" : "Магазин",
+            "en" : "Store"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:business-building",
+          "content" : {
+            "de" : "Industriegebäude",
+            "ru" : "Индустриальное здание",
+            "en" : "Business building"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:various-other-property",
+          "content" : {
+            "de" : "Sonstige Immobilie",
+            "ru" : "Прочая недвижимость",
+            "en" : "Various other property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:parking",
+          "content" : {
+            "de" : "Parkplatz",
+            "ru" : "Парковка",
+            "en" : "Parking"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:other-land-property",
+          "content" : {
+            "de" : "Sonstige Grundstücke",
+            "ru" : "Прочие земельные участки",
+            "en" : "Other land property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "object-type:maisonette",
+          "content" : {
+            "de" : "Maisonette",
+            "ru" : "Двухуровневая квартира",
+            "en" : "Maisonette"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "links-and-ctas",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "go-to-offer",
+          "content" : {
+            "de" : "Zum Angebot",
+            "ru" : "К предложению",
+            "en" : "To the offer"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact-request",
+          "content" : {
+            "de" : "Anfragen",
+            "ru" : "Запросить",
+            "en" : "Request"
+          }
+        }, {
+          "type" : "text",
+          "name" : "back-to-search-result",
+          "content" : {
+            "de" : "Zurück zu Suchergebnissen",
+            "ru" : "Обратно к результатам поиска",
+            "en" : "Back to search result"
+          }
+        }, {
+          "type" : "text",
+          "name" : "search",
+          "content" : {
+            "de" : "Suchen",
+            "ru" : "Искать",
+            "en" : "Search"
+          }
+        }, {
+          "type" : "text",
+          "name" : "bill-property",
+          "content" : {
+            "de" : "Immobilie kaufen",
+            "ru" : "Купить недвижимость",
+            "en" : "Bill a property"
+          }
+        }, {
+          "type" : "text",
+          "name" : "rent-property",
+          "content" : {
+            "de" : "Feriendomizil mieten",
+            "ru" : "Арендовать",
+            "en" : "Rent a property"
+          }
+        } ]
+      }, {
+        "type" : "group",
+        "name" : "properties",
+        "elements" : [ {
+          "type" : "text",
+          "name" : "code",
+          "content" : {
+            "de" : "Code",
+            "ru" : "Код",
+            "en" : "Code"
+          }
+        }, {
+          "type" : "text",
+          "name" : "area",
+          "content" : {
+            "de" : "Fläche",
+            "ru" : "Площадь",
+            "en" : "Area"
+          }
+        }, {
+          "type" : "text",
+          "name" : "type",
+          "content" : {
+            "de" : "Typ",
+            "ru" : "Тип",
+            "en" : "Type"
+          }
+        }, {
+          "type" : "text",
+          "name" : "region",
+          "content" : {
+            "de" : "Region",
+            "ru" : "Регион",
+            "en" : "Region"
+          }
+        }, {
+          "type" : "text",
+          "name" : "owner",
+          "content" : {
+            "de" : "Inhaber",
+            "ru" : "Владелец",
+            "en" : "Owner"
+          }
+        }, {
+          "type" : "text",
+          "name" : "contact",
+          "content" : {
+            "de" : "Kontakt",
+            "ru" : "Контакт",
+            "en" : "Contact"
+          }
+        }, {
+          "type" : "text",
+          "name" : "pages",
+          "content" : {
+            "de" : "Seiten",
+            "ru" : "Ссылки",
+            "en" : "Pages"
+          }
+        }, {
+          "type" : "text",
+          "name" : "phone",
+          "content" : {
+            "de" : "Telefon",
+            "ru" : "Тел.",
+            "en" : "Phone"
+          }
+        }, {
+          "type" : "text",
+          "name" : "mobile",
+          "content" : {
+            "de" : "Mobil",
+            "ru" : "Моб.",
+            "en" : "Mobile"
+          }
+        }, {
+          "type" : "text",
+          "name" : "fax",
+          "content" : {
+            "de" : "Fax",
+            "ru" : "Факс",
+            "en" : "Fax"
+          }
+        }, {
+          "type" : "text",
+          "name" : "email",
+          "content" : {
+            "de" : "E-Mail",
+            "ru" : "Эл. почта",
+            "en" : "E-Mail"
+          }
+        } ]
+      } ],
+      "target" : "/common"
+    } ]
+  } ]
+}
