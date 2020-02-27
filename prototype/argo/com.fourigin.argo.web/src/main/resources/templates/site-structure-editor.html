@@ -232,6 +232,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="itemDetailsEditor__loading">
+                                <div class="loader loader--active">
+                                    <div class="loader__content">
+                                        <div class="loader__title">
+                                            Loading...
+                                        </div>
+                                        <div class="loader__processBar processBar processBar--stateless">
+                                            <span class="processBar__handle"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="panel__footer">
@@ -279,6 +291,11 @@
                                     <!-- Directory -->
                                     <fieldset class="editableDirectoryList__entry" data-type="directory"
                                               data-prototype="siteStructureItemDirectory">
+                                        <div class="editableDirectoryList__entryFlags">
+                                            <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--removed"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--moved"><i class="fas fa-plane-arrival"></i></div>
+                                            <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--added"><i class="fas fa-plus"></i></div>
+                                        </div>
                                         <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox"
                                                name="selected"/>
                                         <div class="editableDirectoryList__entryLabel">
@@ -339,6 +356,11 @@
                                     <!-- Item / file -->
                                     <fieldset class="editableDirectoryList__entry" data-type="file"
                                               data-prototype="siteStructureItemFile">
+                                        <div class="editableDirectoryList__entryFlags">
+                                            <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--removed"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--moved"><i class="fas fa-plane-arrival"></i></div>
+                                            <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--added"><i class="fas fa-plus"></i></div>
+                                        </div>
                                         <input class="editableDirectoryList__entrySelectedCheckbox" type="checkbox"
                                                name="selected"/>
                                         <div class="editableDirectoryList__entryLabel">
@@ -433,17 +455,21 @@
                             <div class="tabbedContent">
 
                                 <div class="buttonsTabsBar">
-                                    <div class="buttonsTabsBar__buttons">
-                                        <button form="siteStructure" class="button button--cta">
-                                            Save
-                                        </button>
-                                    </div>
                                     <div class="buttonsTabsBar__tabs">
                                         <div class="buttonsTabsBar__tabsWrapper">
                                             <div class="tabbedContent__tab tab">
                                                 <label class="tabbedContent__tabLabel" for="tabContent1">
-                                                    <span class="tab__copy">Unsaved changes...</span>
-                                                    <span class="tab__badge"><span class="badge badge--shortHint" data-argo-element="siteStructureChangesAmount">0</span></span>
+                                                    <span class="tab__copy">Action queue</span>
+                                                    <span class="tab__badge"><span class="badge badge--hidden badge--shortHint" data-argo-element="actionQueueAmount">0</span></span>
+                                                    <span class="tab__icon">
+                                                    <i class="fas fa-angle-down"></i>
+                                                </span>
+                                                </label>
+                                            </div>
+                                            <div class="tabbedContent__tab tab">
+                                                <label class="tabbedContent__tabLabel" for="tabContent2">
+                                                    <span class="tab__copy">Action history</span>
+                                                    <span class="tab__badge"><span class="badge badge--hidden badge--shortHint" data-argo-element="actionHistoryAmount">0</span></span>
                                                     <span class="tab__icon">
                                                     <i class="fas fa-angle-down"></i>
                                                 </span>
@@ -454,43 +480,49 @@
                                 </div>
 
 
-                                <div class="tabContents">
-                                    <div class="tabContents__item">
+                                <div class="tabContents overflowScrollBox">
+                                    <div class="tabContents__item overflowScrollBox__content">
                                         <input autocomplete="off" class="tabContents__checkbox" id="tabContent1"
                                                type="checkbox" name="tabContent"/>
                                         <div class="tabContents__card"
                                              data-argo-element="siteStructureChangesDetails">
                                             <div class="tabCard">
-                                                <div class="tabCard__title">Unsaved changes</div>
+                                                <div class="tabCard__title">Action queue</div>
                                                 <div class="tabCard__actions">
-                                                <span class="button button--small" data-argo-action="revertAllChanges">
+                                                <span class="button button--small" data-argo-action="stopAllActions">
                                                     <span class="button__icon">
                                                         <i class="fas fa-redo"></i>
                                                     </span>
-                                                    Revert all changes
+                                                    Stop all actions
                                                 </span>
                                                 </div>
                                                 <div class="tabCard__body">
                                                     <table class="table"
-                                                           data-element="siteStructureChangesCacheTable">
+                                                           data-element="actionQueueTable">
                                                         <thead class="table__header">
                                                         <tr>
+                                                            <th class="table__headerCell">Id</th>
                                                             <th class="table__headerCell">Type</th>
                                                             <th class="table__headerCell">Item</th>
                                                             <th class="table__headerCell">Path</th>
                                                             <th class="table__headerCell">Time</th>
+                                                            <th class="table__headerCell">State</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table__body"
-                                                               data-element="siteStructureChangesCacheList">
-                                                        <tr data-argo-prototype="siteStructureChangesDetailTableRow">
-                                                            <td data-argo-element="siteStructureChangesDetailType"
+                                                               data-element="actionQueueList">
+                                                        <tr data-argo-prototype="actionQueueTableRow">
+                                                            <td data-argo-element="actionId"
                                                                 class="table__cell"></td>
-                                                            <td data-argo-element="siteStructureChangesDetailItem"
+                                                            <td data-argo-element="actionType"
                                                                 class="table__cell"></td>
-                                                            <td data-argo-element="siteStructureChangesDetailPath"
+                                                            <td data-argo-element="actionItem"
                                                                 class="table__cell"></td>
-                                                            <td data-argo-element="siteStructureChangesDetailTime"
+                                                            <td data-argo-element="actionPath"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="actionTime"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="actionState"
                                                                 class="table__cell"></td>
                                                         </tr>
                                                         </tbody>
@@ -506,7 +538,57 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="tabContents__item overflowScrollBox__content">
+                                        <input autocomplete="off" class="tabContents__checkbox" id="tabContent2"
+                                               type="checkbox" name="tabContent"/>
+                                        <div class="tabContents__card"
+                                             data-argo-element="siteStructureChangesDetails">
+                                            <div class="tabCard">
+                                                <div class="tabCard__title">Action history</div>
+                                                <div class="tabCard__actions">
+                                                <span class="button button--small" data-argo-action="cleanTabContent">
+                                                    <span class="button__icon">
+                                                        <i class="fas fa-redo"></i>
+                                                    </span>
+                                                    Clean
+                                                </span>
+                                                </div>
+                                                <div class="tabCard__body">
+                                                    <table class="table"
+                                                           data-element="actionHistoryTable">
+                                                        <thead class="table__header">
+                                                        <tr>
+                                                            <th class="table__headerCell">Type</th>
+                                                            <th class="table__headerCell">Item</th>
+                                                            <th class="table__headerCell">Path</th>
+                                                            <th class="table__headerCell">Time</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table__body"
+                                                               data-element="actionHistoryList">
+                                                        <tr data-argo-prototype="actionHistoryTableRow">
+                                                            <td data-argo-element="actionType"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="actionItem"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="actionPath"
+                                                                class="table__cell"></td>
+                                                            <td data-argo-element="actionTime"
+                                                                class="table__cell"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tbody class="table__bodyEmpty">
+                                                        <tr>
+                                                            <td colspan="3" class="table__cell table__cell--empty">
+                                                                No content.
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -891,7 +973,7 @@
     <!-- Alert are blocking the app -->
 
     <!-- Saving changes, generating new revision-id -->
-    <div data-argo-element="alertSaveChanges" class="alert">
+    <div data-argo-alert="saveChanges" data-argo-element="alertSaveChanges" class="alert">
         <div class="alert__blockingLayer"></div>
         <div class="alert__box">
             <div class="alert__icon">
@@ -905,6 +987,50 @@
                 <br />
                 <br />
                 Your changes are going to be saved. Please wait...
+            </div>
+        </div>
+    </div>
+
+    <!-- Error while saving changes -->
+    <div data-argo-alert="errorOnSave" class="alert">
+        <div class="alert__blockingLayer"></div>
+        <div class="alert__box">
+            <div class="alert__icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="alert__title">
+                Ups... something went wrong
+            </div>
+            <div class="alert__details">
+                We are sorry, that we could not save your changes.
+                <br />
+                <br />
+                Please try again later, or contact your local argo-admin.
+            </div>
+            <div class="alert__buttons">
+                <div data-argo-alert-action="close" class="button button--cta">OK</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saving changes, generating new revision-id -->
+    <div data-argo-alert="updatedStructureVersionOnServer" class="alert">
+        <div class="alert__blockingLayer"></div>
+        <div class="alert__box">
+            <div class="alert__icon">
+                <i class="fas fa-sync"></i>
+            </div>
+            <div class="alert__title">
+                Newer version on server available
+            </div>
+            <div class="alert__details">
+                The version of this structure was updated already by someone else.
+                <br />
+                <br />
+                You need to reload the structure to be able to save your changes.
+            </div>
+            <div class="alert__buttons">
+                <div data-argo-action="alertReloadStructure" class="button button--cta">Reload structure</div>
             </div>
         </div>
     </div>
