@@ -36,6 +36,7 @@ var objectSearch = function() {
             contentType: "application/json; charset=utf-8",
             method: "post",
             processData: false,
+            cache: false,
             url: formAction,
             data: JSON.stringify(requestData), //self.jForm.serialize(),
             success: function(data){
