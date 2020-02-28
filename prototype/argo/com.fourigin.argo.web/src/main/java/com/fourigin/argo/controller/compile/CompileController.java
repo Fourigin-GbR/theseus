@@ -8,7 +8,10 @@ import com.fourigin.argo.models.content.ContentPage;
 import com.fourigin.argo.models.structure.CompileState;
 import com.fourigin.argo.models.structure.PageState;
 import com.fourigin.argo.models.structure.nodes.PageInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
+import com.fourigin.argo.models.structure.nodes.SiteNodeInfo;
 import com.fourigin.argo.repository.ContentRepository;
+import com.fourigin.argo.repository.ContentRepositoryFactory;
 import com.fourigin.argo.repository.aggregators.CmsRequestAggregation;
 import com.fourigin.argo.repository.strategies.DefaultPageInfoTraversingStrategy;
 import com.fourigin.argo.requests.CmsRequestAggregationResolver;
@@ -162,9 +165,15 @@ public class CompileController {
 
             String normalizedLanguage = language.toLowerCase(Locale.US);
 
+            ContentRepositoryFactory contentRepositoryFactory = cmsRequestAggregationResolver.getContentRepositoryFactory();
+            ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+
+            SiteNodeInfo nodeInfo = contentRepository.resolveInfo(SiteNodeInfo.class, path);
+
             long startTimestamp = System.currentTimeMillis();
-            if (!recursive) {
+            if (!recursive || !SiteNodeContainerInfo.class.isAssignableFrom(nodeInfo.getClass())) {
                 if (logger.isDebugEnabled()) logger.debug("Writing output of a single node, language '{}' and path '{}'", language, path);
+
                 try {
                     writePageOutput(project, normalizedLanguage, path, mode);
                 } catch (Throwable ex) {
@@ -175,11 +184,9 @@ public class CompileController {
                 }
             } else {
                 if (logger.isDebugEnabled()) logger.debug("Writing output of a multiple nodes (recursive), language '{}' and path '{}'", language, path);
-                CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
-                PageInfo info = aggregation.getPageInfo();
-
+                
                 DefaultPageInfoTraversingStrategy traversingStrategy = new DefaultPageInfoTraversingStrategy();
-                Collection<PageInfo> nodes = traversingStrategy.collect(info.getParent());
+                Collection<PageInfo> nodes = traversingStrategy.collect((SiteNodeContainerInfo) nodeInfo);
                 for (PageInfo node : nodes) {
                     String nodePath = buildNodeFullPath(node);
                     try {

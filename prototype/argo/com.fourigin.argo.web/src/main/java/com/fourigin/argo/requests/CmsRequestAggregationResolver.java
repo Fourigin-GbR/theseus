@@ -96,4 +96,8 @@ public  class CmsRequestAggregationResolver {
     public void flush(){
         // Nothing to do here!
     }
+
+    public ContentRepositoryFactory getContentRepositoryFactory() {
+        return contentRepositoryFactory;
+    }
 }

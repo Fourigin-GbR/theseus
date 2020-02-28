@@ -120,7 +120,7 @@ public class DirectoryInfo implements SiteNodeInfo, SiteNodeContainerInfo {
             ", localizedName='" + localizedName + '\'' +
             ", displayName='" + displayName + '\'' +
             ", description='" + description + '\'' +
-            ", nodes=\n\t" + nodes +
+//            ", nodes=\n\t" + nodes +
             '}';
     }
 

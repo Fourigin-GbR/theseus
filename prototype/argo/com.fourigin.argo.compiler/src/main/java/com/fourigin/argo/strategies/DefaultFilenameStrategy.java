@@ -91,7 +91,7 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
         if (logger.isDebugEnabled()) logger.debug("Returning localized name of page '{}'.", page);
         String fileName = SiteNodes.resolveContent(language, page.getLocalizedName());
         if(fileName == null){
-            String id = page.getPath() + ">" + page.getName();
+            String id = "page-path: '" + page.getPath() + "', name: '" + page.getName() + "'";
             if (logger.isWarnEnabled()) logger.warn("Unable to resolve localized node path of '{}', using node name as fallback!", id);
             fileName = page.getName();
         }
@@ -119,12 +119,12 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
     }
 
     private String getInternalFolderPath(String language, SiteNodeContainerInfo container) {
-        if (container == null) {
+        if (isRoot(container)) {
             // root
             return "/";
         }
 
-        String id = container.getPath() + ">" + container.getName();
+        String id = "folder-path: '" + container.getPath() + "', name: '" + container.getName() + "'";
 
         if (!(container instanceof DirectoryInfo)) {
             return null;
@@ -185,11 +185,21 @@ public class DefaultFilenameStrategy implements FilenameStrategy {
     private String resolvePageFolder(String language, PageInfo page) {
         SiteNodeContainerInfo parent = page.getParent();
 
-        if (parent == null) {
+        if (isRoot(parent)) {
             return "/";
         }
 
         return cleanup(getInternalFolderPath(language, parent));
+    }
+
+    private boolean isRoot(SiteNodeContainerInfo container) {
+        if (container == null) {
+            return true;
+        }
+
+        String name = container.getName();
+        String path = container.getPath();
+        return name == null && path.isEmpty();
     }
 
 //    private String resolveSitePath(SiteNodeInfo node) {
