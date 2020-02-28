@@ -164,6 +164,7 @@ public class CompileController {
 
             long startTimestamp = System.currentTimeMillis();
             if (!recursive) {
+                if (logger.isDebugEnabled()) logger.debug("Writing output of a single node, language '{}' and path '{}'", language, path);
                 try {
                     writePageOutput(project, normalizedLanguage, path, mode);
                 } catch (Throwable ex) {
@@ -173,13 +174,14 @@ public class CompileController {
                     );
                 }
             } else {
+                if (logger.isDebugEnabled()) logger.debug("Writing output of a multiple nodes (recursive), language '{}' and path '{}'", language, path);
                 CmsRequestAggregation aggregation = cmsRequestAggregationResolver.resolveAggregation(project, language, path);
                 PageInfo info = aggregation.getPageInfo();
 
                 DefaultPageInfoTraversingStrategy traversingStrategy = new DefaultPageInfoTraversingStrategy();
                 Collection<PageInfo> nodes = traversingStrategy.collect(info.getParent());
                 for (PageInfo node : nodes) {
-                    String nodePath = node.getPath() + '/' + node.getName();
+                    String nodePath = buildNodeFullPath(node);
                     try {
                         writePageOutput(project, normalizedLanguage, nodePath, mode);
                     } catch (Throwable ex) {
@@ -246,6 +248,17 @@ public class CompileController {
         }
     }
 
+    private String buildNodeFullPath(PageInfo node) {
+        String parentPath = node.getPath();
+        StringBuilder result = new StringBuilder(parentPath);
+        if (!parentPath.endsWith("/")) {
+            result.append('/');
+        }
+        result.append(node.getName());
+
+        return result.toString();
+    }
+
     private void writePageOutput(String project, String language, String path, ProcessingMode mode) {
         if (logger.isDebugEnabled())
             logger.debug("Processing write-output request for language '{}' & path '{}' with processing-mode {}.", language, path, mode);
@@ -276,10 +289,6 @@ public class CompileController {
             storageCompilerOutputStrategy.finish();
         } catch (Throwable ex) {
             storageCompilerOutputStrategy.reset();
-//            return new ResponseEntity<>(
-//                new CompileResult(mode, false).withAttribute("cause", ex),
-//                HttpStatus.BAD_REQUEST
-//            );
         }
 
     }

@@ -77,13 +77,11 @@ public class ContentPageRepositoryConfiguration {
 
     @Bean
     public FileBasedRuntimeConfigurationResolverFactory runtimeConfigurationResolverFactory(
-        @Value("${content-page-repository.root-path}") String basePath,
-        @Value("${content-page-repository.key-name}") String keyName
+        @Value("${content-page-repository.root-path}") String basePath
     ){
-        FileBasedRuntimeConfigurationResolverFactory factory = new FileBasedRuntimeConfigurationResolverFactory();
+        FileBasedRuntimeConfigurationResolverFactory factory = new FileBasedRuntimeConfigurationResolverFactory(pathResolver);
 
         factory.setBasePath(basePath);
-        factory.setKeyName(keyName);
 
         return factory;
     }
