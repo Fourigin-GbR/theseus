@@ -54,6 +54,7 @@ var searchResult = function() {
         jQuery.ajax({
             dataType: "json",
             url: "immobilien.json",
+            cache: false,
             data: this.jForm.serialize(),
             success: function(data){self.showResults(data)}
         });
