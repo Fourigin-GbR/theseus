@@ -1,125 +1,123 @@
 {
-  "path" : "/",
-  "children" : [ {
-    "type" : "file",
-    "name" : "home",
-    "localizedName" : {
-      "" : "home",
-      "de" : "home",
-      "ru" : "home"
-    },
-    "displayName" : {
-      "" : "Home",
-      "de" : "Home",
-      "ru" : "Главная"
-    },
-    "templateReference" : {
-      "templateId" : "index",
-      "variationId" : "default",
-      "revision" : ""
-    }
-  }, {
-    "type" : "file",
-    "name" : "search",
-    "localizedName" : {
-      "en" : "search",
-      "de" : "suche",
-      "ru" : "poisk"
-    },
-    "displayName" : {
-      "en" : "Search",
-      "de" : "Suche",
-      "ru" : "Поиск"
-    },
-    "templateReference" : { }
-  }, {
-    "type" : "dir",
-    "name" : "regions",
-    "localizedName" : {
-      "en" : "regions",
-      "de" : "regionen",
-      "ru" : "regioni"
-    },
-    "displayName" : {
-      "en" : "Regions of Greece",
-      "de" : "Griechische Regionen",
-      "ru" : "Регионы Греции"
-    }
-  }, {
-    "type" : "dir",
-    "name" : "objects",
-    "localizedName" : {
-      "en" : "objects",
-      "de" : "objekte",
-      "ru" : "objekti"
-    },
-    "displayName" : {
-      "en" : "Objects",
-      "de" : "Objekte",
-      "ru" : "Объекты"
-    }
-  }, {
-    "type" : "file",
-    "name" : "contact",
-    "localizedName" : {
-      "en" : "contact",
-      "de" : "kontake",
-      "ru" : "kontakti"
-    },
-    "displayName" : {
-      "en" : "Contact",
-      "de" : "Kontakt",
-      "ru" : "Контакт"
-    },
-    "templateReference" : {
-      "templateId" : "article-text",
-      "variationId" : "default",
-      "revision" : ""
-    }
-  }, {
-    "type" : "file",
-    "name" : "about",
-    "localizedName" : {
-      "en" : "about",
-      "de" : "ueber_uns",
-      "ru" : "o_nas"
-    },
-    "displayName" : {
-      "en" : "About us",
-      "de" : "Über uns",
-      "ru" : "О нас"
-    },
-    "templateReference" : {
-      "templateId" : "article-text",
-      "variationId" : "default",
-      "revision" : ""
-    }
-  }, {
-    "type" : "file",
-    "name" : "common",
-    "localizedName" : {
-      "en" : "common content",
-      "de" : "common content",
-      "ru" : "common content"
-    },
-    "templateReference" : { }
-  }, {
-    "type" : "file",
-    "name" : "impressum",
-    "localizedName" : {
-      "en" : "impressum",
-      "de" : "impressum",
-      "ru" : "impressum"
-    },
-    "displayName" : {
-      "en" : "Impressum",
-      "de" : "Impressum",
-      "ru" : "Импрессум"
-    },
-    "templateReference" : {
-      "templateId" : "article-text",
-      "variationId" : "default",
-      "revision" : ""
-    }
-  } ]
+	"path": "/",
+	"children": [
+		{
+			"type": "file",
+			"name": "home",
+			"localizedName": {
+				"": "home",
+				"de": "home",
+				"ru": "home"
+			},
+			"displayName": {
+				"": "Home",
+				"de": "Home",
+				"ru": "Главная"
+			},
+			"templateReference": {
+				"templateId": "index",
+				"variationId": "default",
+				"revision": ""
+			}
+		},
+		{
+			"type": "dir",
+			"name": "regions",
+			"localizedName": {
+				"en": "regions",
+				"de": "regionen",
+				"ru": "regioni"
+			},
+			"displayName": {
+				"en": "Regions of Greece",
+				"de": "Griechische Regionen",
+				"ru": "Регионы Греции"
+			}
+		},
+		{
+			"type": "dir",
+			"name": "objects",
+			"localizedName": {
+				"en": "objects",
+				"de": "objekte",
+				"ru": "objekti"
+			},
+			"displayName": {
+				"en": "Objects",
+				"de": "Objekte",
+				"ru": "Объекты"
+			}
+		},
+		{
+			"type": "file",
+			"name": "contact",
+			"localizedName": {
+				"en": "contact",
+				"de": "kontake",
+				"ru": "kontakti"
+			},
+			"displayName": {
+				"en": "Contact",
+				"de": "Kontakt",
+				"ru": "Контакт"
+			},
+			"templateReference": {
+				"templateId": "article-text",
+				"variationId": "default",
+				"revision": ""
+			}
+		},
+		{
+			"type": "file",
+			"name": "about",
+			"localizedName": {
+				"en": "about",
+				"de": "ueber_uns",
+				"ru": "o_nas"
+			},
+			"displayName": {
+				"en": "About us",
+				"de": "Über uns",
+				"ru": "О нас"
+			},
+			"templateReference": {
+				"templateId": "article-text",
+				"variationId": "default",
+				"revision": ""
+			}
+		},
+		{
+			"type": "file",
+			"name": "common",
+			"localizedName": {
+				"en": "common content",
+				"de": "common content",
+				"ru": "common content"
+			},
+			"templateReference": {
+				"templateId": "empty",
+				"variationId": "default",
+				"revision": ""
+			}
+		},
+		{
+			"type": "file",
+			"name": "impressum",
+			"localizedName": {
+				"en": "impressum",
+				"de": "impressum",
+				"ru": "impressum"
+			},
+			"displayName": {
+				"en": "Impressum",
+				"de": "Impressum",
+				"ru": "Импрессум"
+			},
+			"templateReference": {
+				"templateId": "article-text",
+				"variationId": "default",
+				"revision": ""
+			}
+		}
+	]
 }
