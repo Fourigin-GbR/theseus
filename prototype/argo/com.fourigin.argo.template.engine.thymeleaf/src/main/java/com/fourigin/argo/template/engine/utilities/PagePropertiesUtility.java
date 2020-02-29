@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -152,7 +153,7 @@ public class PagePropertiesUtility implements
 
     private String getNodePathAttributeValue(String language, String mode) {
         {
-            String attrName = BASE_URL_PREFIX + language + '.' + mode;
+            String attrName = BASE_URL_PREFIX + language.toUpperCase(Locale.US) + '.' + mode;
             if (siteAttributes.containsKey(attrName)) {
                 if (logger.isDebugEnabled())
                     logger.debug("Returning language & mode specific attribute value for '{}'.", attrName);

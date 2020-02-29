@@ -115,36 +115,37 @@ public class ThymeleafArgoTemplateEngine implements ArgoTemplateEngine, PageInfo
 
                 // initialize
                 ThymeleafTemplateUtility utility = factory.getInstance();
-                if (ContentPageAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
+                Class<? extends ThymeleafTemplateUtility> utilityClass = utility.getClass();
+                if (ContentPageAwareThymeleafTemplateUtility.class.isAssignableFrom(utilityClass)) {
                     ContentPage contentPage = (ContentPage) context.getVariable(CONTENT_PAGE);
-                    ContentPageAwareThymeleafTemplateUtility contentPageUtility = ContentPageAwareThymeleafTemplateUtility.class.cast(utility);
+                    ContentPageAwareThymeleafTemplateUtility contentPageUtility = (ContentPageAwareThymeleafTemplateUtility) utility;
                     contentPageUtility.setContentPage(contentPage);
                     contentPageUtility.setLanguage(language);
                 }
-                if (PageInfoAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
-                    PageInfoAwareThymeleafTemplateUtility pageInfoUtility = PageInfoAwareThymeleafTemplateUtility.class.cast(utility);
+                if (PageInfoAwareThymeleafTemplateUtility.class.isAssignableFrom(utilityClass)) {
+                    PageInfoAwareThymeleafTemplateUtility pageInfoUtility = (PageInfoAwareThymeleafTemplateUtility) utility;
                     pageInfoUtility.setPageInfo(pageInfo);
                 }
-                if (ProjectAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
-                    ProjectAwareThymeleafTemplateUtility projectAwareUtility = ProjectAwareThymeleafTemplateUtility.class.cast(utility);
+                if (ProjectAwareThymeleafTemplateUtility.class.isAssignableFrom(utilityClass)) {
+                    ProjectAwareThymeleafTemplateUtility projectAwareUtility = (ProjectAwareThymeleafTemplateUtility) utility;
                     projectAwareUtility.setProject(project);
                 }
-                if (SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
-                    SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = SiteAttributesAwareThymeleafTemplateUtility.class.cast(utility);
+                if (SiteAttributesAwareThymeleafTemplateUtility.class.isAssignableFrom(utilityClass)) {
+                    SiteAttributesAwareThymeleafTemplateUtility siteAttributesUtility = (SiteAttributesAwareThymeleafTemplateUtility) utility;
                     siteAttributesUtility.setLanguage(language);
                     siteAttributesUtility.setSiteAttributes(siteAttributes);
                 }
-                if (ProcessingModeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
+                if (ProcessingModeAwareThymeleafTemplateUtility.class.isAssignableFrom(utilityClass)) {
                     ProcessingModeAwareThymeleafTemplateUtility processingModeUtility = (ProcessingModeAwareThymeleafTemplateUtility) utility;
                     processingModeUtility.setProcessingMode(processingMode);
                 }
-                if (RootSiteNodeAwareThymeleafTemplateUtility.class.isAssignableFrom(utility.getClass())) {
+                if (RootSiteNodeAwareThymeleafTemplateUtility.class.isAssignableFrom(utilityClass)) {
                     RootSiteNodeAwareThymeleafTemplateUtility rootNodeUtility = (RootSiteNodeAwareThymeleafTemplateUtility) utility;
                     rootNodeUtility.setRootSiteNode(resolveRoot());
                 }
 
                 if (logger.isDebugEnabled())
-                    logger.debug(" - {}, class {}", utilityName, utility.getClass().getName());
+                    logger.debug(" - {}, class {}", utilityName, utilityClass.getName());
 
                 Argo argo = (Argo) context.getVariable("argo");
                 argo.addCustomUtility(utilityName, utility);

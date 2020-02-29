@@ -44,7 +44,10 @@
                     [ link (DE, LIVE): ${p.getPath(argo.path, 'DE', 'LIVE')} ],
                     [ link (RU, LIVE): ${p.getPath(argo.path, 'RU', 'LIVE')} ],
                     [ link (EN, LIVE): ${p.getPath(argo.path, 'EN', 'LIVE')} ],
-
+                    [ currentPath: ${p.getAbsolutePath(argo.path)} ],
+                    [ dePath: ${p.getAbsolutePath(argo.path, 'DE')} ],
+                    [ enPath: ${p.getAbsolutePath(argo.path, 'EN')} ],
+                    [ ruPath: ${p.getAbsolutePath(argo.path, 'RU')} ]
                 --&gt;|"></span>
 
                 <select name="siteLanguageSwitch" id="siteLanguageSwitch" th:with="
