@@ -307,38 +307,10 @@
                                                        class="editableDirectoryList__entryName" type="text"
                                                        name="name" value=""/>
                                             </div>
-                                            <div class="editableDirectoryList__entryActions subMenu">
-                                                <div class="subMenu__button">
+                                            <div class="editableDirectoryList__entryActions">
+                                                <div class="button button--small" data-argo-action="showSubMenu">
                                                     <span class="button__icon"><i
                                                             class="fas fa-ellipsis-v"></i></span>
-                                                </div>
-                                                <div class="subMenu__overlay">
-                                                    <div class="subMenu__entry" data-action="addInside">
-                                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
-                                                        <span class="subMenu__entryLabel">New...</span>
-                                                    </div>
-                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
-                                                    <div class="subMenu__entry" data-action="delete">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="far fa-trash-alt"></i></span>
-                                                        <span class="subMenu__entryLabel">Remove</span>
-                                                    </div>
-                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
-                                                    <div class="subMenu__entry" data-action="moveTo">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="fas fa-plane-departure"></i></span>
-                                                        <span class="subMenu__entryLabel">Move to...</span>
-                                                    </div>
-                                                    <div class="subMenu__entry" data-action="moveToHereAfter">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="fas fa-plane-arrival"></i></span>
-                                                        <span class="subMenu__entryLabel">...move after here</span>
-                                                    </div>
-                                                    <div class="subMenu__entry" data-action="moveToHereInside">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="fas fa-plane-arrival"></i></span>
-                                                        <span class="subMenu__entryLabel">...move inside here</span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -370,46 +342,10 @@
                                                        class="editableDirectoryList__entryName" type="text"
                                                        name="name" value=""/>
                                             </div>
-                                            <div class="editableDirectoryList__entryActions subMenu">
-                                                <div class="subMenu__button">
+                                            <div class="editableDirectoryList__entryActions">
+                                                <div class="button button--small" data-argo-action="showSubMenu">
                                                     <span class="button__icon"><i
                                                             class="fas fa-ellipsis-v"></i></span>
-                                                </div>
-                                                <div class="subMenu__overlay">
-                                                    <div class="subMenu__entry" data-action="addBefore">
-                                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
-                                                        <span class="subMenu__entryLabel">New before...</span>
-                                                    </div>
-                                                    <div class="subMenu__entry" data-action="addAfter">
-                                                        <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
-                                                        <span class="subMenu__entryLabel">New after...</span>
-                                                    </div>
-                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
-                                                    <div class="subMenu__entry" data-action="delete">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="far fa-trash-alt"></i></span>
-                                                        <span class="subMenu__entryLabel">Remove</span>
-                                                    </div>
-                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
-                                                    <div class="subMenu__entry" data-action="moveTo">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="fas fa-plane-departure"></i></span>
-                                                        <span class="subMenu__entryLabel">Move to...</span>
-                                                    </div>
-                                                    <div class="subMenu__entry" data-action="moveToHereAfter">
-                                                        <span class="subMenu__entryIcon"><i
-                                                                class="fas fa-plane-arrival"></i></span>
-                                                        <span class="subMenu__entryLabel">...move after here</span>
-                                                    </div>
-                                                    <div class="subMenu__entry subMenu__entry--separator"></div>
-                                                    <div class="subMenu__entry subMenu__entry--link">
-                                                        <a class="subMenu__entryLink"
-                                                           href="cms-page-editor-prototype-import-all.html">
-                                                            <span class="subMenu__entryIcon"><i
-                                                                    class="fas fa-pencil-alt"></i></span>
-                                                            <span class="subMenu__entryLabel">Edit page content</span>
-                                                        </a>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -890,6 +826,56 @@
     </div>
 </div>
 
+<div id="subMenus">
+    <div class="subMenu" data-argo-submenu-id="ssiContext">
+        <div class="subMenu__entry" data-action="addInside">
+            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+            <span class="subMenu__entryLabel">New...</span>
+        </div>
+
+        <div class="subMenu__entry" data-action="addBefore">
+            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+            <span class="subMenu__entryLabel">New before...</span>
+        </div>
+        <div class="subMenu__entry" data-action="addAfter">
+            <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
+            <span class="subMenu__entryLabel">New after...</span>
+        </div>
+        <div class="subMenu__entry subMenu__entry--separator"></div>
+        <div class="subMenu__entry" data-action="delete">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="far fa-trash-alt"></i></span>
+            <span class="subMenu__entryLabel">Remove</span>
+        </div>
+        <div class="subMenu__entry subMenu__entry--separator"></div>
+        <div class="subMenu__entry" data-action="moveTo">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-departure"></i></span>
+            <span class="subMenu__entryLabel">Move to...</span>
+        </div>
+        <div class="subMenu__entry" data-action="moveToHereAfter">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-arrival"></i></span>
+            <span class="subMenu__entryLabel">...move after here</span>
+        </div>
+        <div class="subMenu__entry" data-action="moveToHereInside">
+                                                        <span class="subMenu__entryIcon"><i
+                                                                class="fas fa-plane-arrival"></i></span>
+            <span class="subMenu__entryLabel">...move inside here</span>
+        </div>
+
+        <div class="subMenu__entry subMenu__entry--separator"></div>
+        <div class="subMenu__entry subMenu__entry--link">
+            <a class="subMenu__entryLink"
+               href="cms-page-editor-prototype-import-all.html">
+                                                            <span class="subMenu__entryIcon"><i
+                                                                    class="fas fa-pencil-alt"></i></span>
+                <span class="subMenu__entryLabel">Edit page content</span>
+            </a>
+        </div>
+    </div>
+</div>
+
 <div class="tooltips">
     <div class="tooltipOverlay" data-tooltip-id="unusedContent">
         <div class="tooltipOverlay__header">
@@ -1155,7 +1141,7 @@
             "dk": "dänisch"
         },
         "urlLoadSiteStructure": "/cms/site-structure/ssm?l=DE",
-        "urlSaveSiteStructure": "/site-structure/apply",
+        "urlSaveSiteStructure": "/cms/site-structure/apply",
         "urlLoadItemDetails": "/cms/site-structure/ssi",
         "urlSaveItemDetails": "/cms/site-structure/ssi",
         "urlUpToDateCheckSiteStructure": "examples/up-to-date-site-structure.json"
