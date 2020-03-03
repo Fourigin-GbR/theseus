@@ -31,7 +31,7 @@ public final class SiteStructurePath {
 
         SiteNodeInfo nodeInfo;
 
-        if("/".equals(path)) {
+        if("/".equals(path) || "".equals(path)) {
             nodeInfo = parent;
         }
         else {

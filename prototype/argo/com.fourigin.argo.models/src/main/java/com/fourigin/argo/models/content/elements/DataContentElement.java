@@ -2,6 +2,7 @@ package com.fourigin.argo.models.content.elements;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DataContentElement extends AbstractContentElement implements DataAwareContentElement, ContentElement {
     private static final long serialVersionUID = 5066464546311137699L;
@@ -34,6 +35,31 @@ public class DataContentElement extends AbstractContentElement implements DataAw
 
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        DataContentElement that = (DataContentElement) o;
+        return Objects.equals(title, that.title) &&
+                Objects.equals(content, that.content) &&
+                dataType == that.dataType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, content, dataType);
+    }
+
+    @Override
+    public String toString() {
+        return "DataContentElement{" +
+                "title=" + title +
+                ", content='" + content + '\'' +
+                ", dataType=" + dataType +
+                '}';
     }
 
     public static class Builder {
