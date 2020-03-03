@@ -3,6 +3,7 @@ package com.fourigin.argo.config;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.models.action.mapping.ActionModule;
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule;
 import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.DirectoryContentBasedTemplateResolver;
@@ -52,6 +53,7 @@ public class ContentPageRepositoryConfiguration {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.registerModule(new ContentPageModule());
         objectMapper.registerModule(new JsonInfoModule());
+        objectMapper.registerModule(new ActionModule());
 
         objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
 
