@@ -15,18 +15,18 @@
       "type": "text",
       "name": "headline",
       "content": {
-        "de": "Einzimmer-Wohnung in Loutraki (Loutraki-Perachora)",
-        "ru": "Однокомнатная квартира в Loutraki (Loutraki-Perachora)",
-        "en": "One room appartment in Loutraki (Loutraki-Perachora)"
+        "de": "Einzimmer-Wohnung in Loutraki",
+        "ru": "Однокомнатная квартира в Loutraki",
+        "en": "One room appartment in Loutraki"
       }
     },
     {
       "type": "text",
       "name": "short-description",
       "content": {
-        "de": "Entfernung zum Meer: <span class=\"text-red\">200</span>, Art der Zufahrt: <span class=\"text-red\">Asphalt</span>",
-        "ru": "Расстояние до моря: <span class=\"text-red\">200</span>, Подъезд по: <span class=\"text-red\">Асфальт</span>",
-        "en": "Distance from sea: <span class=\"text-red\">200</span>, Road type: <span class=\"text-red\">Asphalt</span>"
+        "de": "Entfernung zum Meer: <span class=\"text-red\">200</span>",
+        "ru": "Расстояние до моря: <span class=\"text-red\">200</span>",
+        "en": "Distance from sea: <span class=\"text-red\">200</span>"
       }
     },
     {
@@ -62,6 +62,12 @@
           "name": "region",
           "content": "loutraki",
           "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "distance",
+          "content": "200",
+          "dataType": "INTEGER"
         }
       ]
     },
@@ -86,7 +92,7 @@
         <b>Die Wohnung ist sehr ruhig und komfortabel zum Entspannen!</b>
         <br/>
 		<br/>
-		Beschreibung<br/>
+		<b>Beschreibung</b><br/>
         Im Herbst 2019 wurden in der Wohnung größere Reparaturen durchgeführt:
 		<ul>
 			<li>Wasser- und Kanalisationsrohre wurden ersetzt;</li>
@@ -101,7 +107,7 @@
 		</ul>
 		<br/>
  	    <br/>
-		Zustand und Verkaufsbedingungen
+		<b>Zustand und Verkaufsbedingungen</b>
 		<ul>
 			<li>Der Wohnungszustand: luxuriös! Nach den größeren Reparaturen sieht die Wohnung aus wie neu!</li>
 			<li>Die Wohnung wird mit neuen Möbeln und neuen elektrische Haushaltsgeräten verkauft, die in der Beschreibung sind.</li>
@@ -111,7 +117,7 @@
 		</ul>
 		",
         "ru": "
-        <b>Покупка квартиры в курортном городе Лутраки – это:</b>,
+        <b>Покупка квартиры в курортном городе Лутраки – это:</b>
         <ol>
           <li>Возможность получения временного вида на жительство для покупателя и членов его семьи.</li>
           <li>Выгодная инвестиция.</li>
@@ -128,7 +134,7 @@
         <b>Квартира является очень тихой и комфортной для отдыха!</b></br>
         <br/>
 		<br/>
-		Описание квартиры <br/>
+		<b>Описание квартиры</b><br/>
         Осенью 2019 года в квартире был сделан капитальный ремонт:
         <ul>
 		  <li>заменены водопроводные и канализационные трубы;</li>
@@ -144,7 +150,7 @@
  	   	</ul>
 		<br/>
 		<br/>
-		Состояние квартиры и условия продажи
+		<b>Состояние квартиры и условия продажи</b>
 		<ul>
 		  <li>Состояние квартиры: прекрасное! После капитального ремонта квартира выглядит как новая!</li>
 		  <li>Квартира продаётся с новой мебелью и новыми бытовыми электроприборами, указанными в описании.</li>
@@ -174,7 +180,7 @@
         <b>Тhe apartment is very quiet and comfortable for relaxing!</b></br>
         <br/>
  	    <br/>
-		Description<br/>
+		<b>Description</b><br/>
         In the fall of 2019, the apartment was making major repairs:
         <ul>
           <li>Replaced water and sewer pipes.</li>
@@ -189,8 +195,8 @@
 		</ul>
  	    <br/>
  	    <br/>
-		Condition of the apartment and terms of sale
-		<ul>		
+		<b>Condition of the apartment and terms of sale</b>
+		<ul>
 		  <li>The condition of the apartment is luxurious! After the major repairs (that was make in the autumn of 2019) the apartment looks like new!</li>
 		  <li>The apartment is sold with the furniture and household electrical appliances that are in the apartment.</li>
 		  <li>The cost of re-registering the apartment (purchase tax, registration fee, notary services): up to 1.300 €.</li>

@@ -210,6 +210,15 @@
 				},
 				{
 					"type": "text",
+					"name": "distance",
+					"content": {
+						"en": "Distance from sea",
+						"de": "Entfernung zum Meer",
+						"ru": "Расстояние до моря"
+					}
+				},
+				{
+					"type": "text",
 					"name": "area",
 					"content": {
 						"en": "Area",
@@ -296,6 +305,15 @@
 						"en": "E-Mail",
 						"de": "E-Mail",
 						"ru": "Эл. почта"
+					}
+				},
+				{
+					"type": "text",
+					"name": "price",
+					"content": {
+						"en": "Price",
+						"de": "Preis",
+						"ru": "Цена"
 					}
 				}
 			]

@@ -458,12 +458,13 @@ nav a {
     margin-bottom: 10px;
 }
 .highlights__type {
-    width: 150px;
+    width: 120px;
     font-size: 22px;
     line-height: 1.2;
     color: #33669B;
 }
 .highlights__value {
+	padding-left: 20px;
     font-size: 22px;
     line-height: 1.2;
 }
