@@ -455,14 +455,17 @@ nav a {
 }
 .highlights__item {
     display: flex;
+    margin-bottom: 10px;
 }
 .highlights__type {
     width: 150px;
-    font-size: 18px;
+    font-size: 22px;
+    line-height: 1.2;
     color: #33669B;
 }
 .highlights__value {
-    font-size: 18px;
+    font-size: 22px;
+    line-height: 1.2;
 }
 .body article.productDetails .transfer {
     text-align: right;
