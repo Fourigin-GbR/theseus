@@ -1,14 +1,11 @@
-package com.fourigin.argo.controller.editors.models;
+package com.fourigin.argo.models.action;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class SiteNode implements Serializable {
-    private static final long serialVersionUID = -1073811604906400190L;
-
+public class ContentReference {
     private String language;
     private String path;
-    private SiteNodeContent content;
+    private String contentPath;
 
     public String getLanguage() {
         return language;
@@ -26,35 +23,35 @@ public class SiteNode implements Serializable {
         this.path = path;
     }
 
-    public SiteNodeContent getContent() {
-        return content;
+    public String getContentPath() {
+        return contentPath;
     }
 
-    public void setContent(SiteNodeContent content) {
-        this.content = content;
+    public void setContentPath(String contentPath) {
+        this.contentPath = contentPath;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SiteNode siteNode = (SiteNode) o;
-        return Objects.equals(language, siteNode.language) &&
-                Objects.equals(path, siteNode.path) &&
-                Objects.equals(content, siteNode.content);
+        ContentReference that = (ContentReference) o;
+        return Objects.equals(language, that.language) &&
+                Objects.equals(path, that.path) &&
+                Objects.equals(contentPath, that.contentPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(language, path, content);
+        return Objects.hash(language, path, contentPath);
     }
 
     @Override
     public String toString() {
-        return "SiteNode{" +
+        return "ContentReference{" +
                 "language='" + language + '\'' +
                 ", path='" + path + '\'' +
-                ", content=" + content +
+                ", contentPath='" + contentPath + '\'' +
                 '}';
     }
 }

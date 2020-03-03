@@ -1,4 +1,4 @@
-package com.fourigin.argo.controller.editors.models;
+package com.fourigin.argo.models.action;
 
 import com.fourigin.argo.models.content.elements.ContentElement;
 

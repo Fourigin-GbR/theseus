@@ -4,16 +4,17 @@ import com.fourigin.argo.InvalidParameterException;
 import com.fourigin.argo.ServiceErrorResponse;
 import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.argo.controller.ServiceBeanResponse;
-import com.fourigin.argo.controller.editors.models.ActionCreate;
-import com.fourigin.argo.controller.editors.models.ActionDelete;
-import com.fourigin.argo.controller.editors.models.ActionMove;
-import com.fourigin.argo.controller.editors.models.ActionUpdate;
-import com.fourigin.argo.controller.editors.models.ApplyActionStatus;
-import com.fourigin.argo.controller.editors.models.SiteNode;
-import com.fourigin.argo.controller.editors.models.SiteNodeContent;
-import com.fourigin.argo.controller.editors.models.SiteStructure;
-import com.fourigin.argo.controller.editors.models.SiteStructureElement;
-import com.fourigin.argo.controller.editors.models.SiteStructureElementType;
+import com.fourigin.argo.controller.ServiceResponseStatus;
+import com.fourigin.argo.models.action.ActionCreate;
+import com.fourigin.argo.models.action.ActionDelete;
+import com.fourigin.argo.models.action.ActionMove;
+import com.fourigin.argo.models.action.ActionUpdate;
+import com.fourigin.argo.models.action.ApplyActionStatus;
+import com.fourigin.argo.models.action.SiteNode;
+import com.fourigin.argo.models.action.SiteNodeContent;
+import com.fourigin.argo.models.action.SiteStructure;
+import com.fourigin.argo.models.action.SiteStructureElement;
+import com.fourigin.argo.models.action.SiteStructureElementType;
 import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.InvalidSiteStructurePathException;
 import com.fourigin.argo.models.action.Action;
@@ -42,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -50,6 +52,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fourigin.argo.controller.ServiceResponseStatus.FAILED_UNEXPECTED_ERROR;
+import static com.fourigin.argo.controller.ServiceResponseStatus.ROLLED_BACK;
 import static com.fourigin.argo.controller.ServiceResponseStatus.SUCCESS;
 
 @Controller
@@ -114,11 +118,44 @@ public class SiteStructureEditorController {
      * @return actual Site Structure Model with its current revision (checksum)
      */
     @RequestMapping(value = "/ssm", method = RequestMethod.GET)
+    @ResponseBody
     public ServiceBeanResponse<SiteStructure> retrieveSSM(
             @PathVariable String project,
             @RequestParam(RequestParameters.LANGUAGE) String language
     ) {
         if (logger.isDebugEnabled()) logger.debug("Retrieve SSM ('{}', '{}')", project, language);
+
+        SiteStructure siteStructure = retrieveSiteStructure(project, language);
+        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(siteStructure.getStructure()), SUCCESS);
+    }
+
+    private SiteStructure retrieveSiteStructure(String project, String language) {
+        List<SiteStructureElement> structure = new ArrayList<>();
+
+        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+        DirectoryInfo root = contentRepository.resolveInfo(DirectoryInfo.class, "/");
+        List<SiteNodeInfo> nodes = root.getNodes();
+        processNodes(nodes, structure);
+
+        SiteStructure siteStructure = new SiteStructure();
+        siteStructure.setStructure(structure);
+        return siteStructure;
+    }
+
+    /**
+     * Retrieves revision of the Site Structure Model (SSM).
+     *
+     * @param project  current project
+     * @param language current language
+     * @return revision of the Site Structure Model (checksum)
+     */
+    @RequestMapping(value = "/ssm-revision", method = RequestMethod.GET)
+    @ResponseBody
+    public String retrieveSSMRevision(
+            @PathVariable String project,
+            @RequestParam(RequestParameters.LANGUAGE) String language
+    ) {
+        if (logger.isDebugEnabled()) logger.debug("Retrieve SSM revision ('{}', '{}')", project, language);
 
         List<SiteStructureElement> structure = new ArrayList<>();
 
@@ -129,40 +166,8 @@ public class SiteStructureEditorController {
 
         SiteStructure siteStructure = new SiteStructure();
         siteStructure.setStructure(structure);
-        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(structure), SUCCESS);
+        return ChecksumGenerator.getChecksum(structure);
     }
-
-//    @RequestMapping(value = "/siteStructure", method = RequestMethod.POST)
-//    public ServiceBeanResponse<SiteStructure> updateSiteStructure(
-//            @PathVariable String project,
-//            @RequestParam(RequestParameters.LANGUAGE) String language,
-//            @RequestBody ServiceBeanResponse<SiteStructure> request
-//    ) {
-//        List<SiteStructureElement> currentStructure = new ArrayList<>();
-//
-//        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
-//        DirectoryInfo root = contentRepository.resolveInfo(DirectoryInfo.class, "/");
-//        List<SiteNodeInfo> nodes = root.getNodes();
-//        processNodes(nodes, currentStructure);
-//
-//        String currentChecksum = ChecksumGenerator.getChecksum(currentStructure);
-//
-//        SiteStructure siteStructure;
-//        ServiceResponseStatus status;
-//        if (request.getRevision().equals(currentChecksum)) {
-//            status = SUCCESSFUL_UPDATE;
-//
-//            siteStructure = request.getPayload();
-//            // TODO: update site structure!
-//            if (logger.isWarnEnabled()) logger.warn("Update site structure not implemented yet!");
-//        } else {
-//            status = FAILED_CONCURRENT_UPDATE;
-//            siteStructure = new SiteStructure();
-//            siteStructure.setStructure(currentStructure);
-//        }
-//
-//        return new ServiceBeanResponse<>(siteStructure, currentChecksum, status);
-//    }
 
     /**
      * Retrieves Site Structure Item (SSI).
@@ -173,6 +178,7 @@ public class SiteStructureEditorController {
      * @return referenced Site Structure Item with its revision (checksum)
      */
     @RequestMapping(value = "/ssi", method = RequestMethod.GET)
+    @ResponseBody
     public ServiceBeanResponse<SiteNode> retrieveSSI(
             @PathVariable String project,
             @RequestParam(RequestParameters.LANGUAGE) String language,
@@ -201,6 +207,7 @@ public class SiteStructureEditorController {
      * @return status of applied actions
      */
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
+    @ResponseBody
     public ServiceBeanResponse<Map<String, ApplyActionStatus>> applyActions(
             @PathVariable String project,
             @RequestParam(RequestParameters.LANGUAGE) String language,
@@ -213,6 +220,7 @@ public class SiteStructureEditorController {
 
         String newSsmRevision = null;
         Map<String, ApplyActionStatus> status = new HashMap<>();
+        ServiceResponseStatus responseStatus = FAILED_UNEXPECTED_ERROR;
         if (actions != null && !actions.isEmpty()) {
             ContentRepository txRepository = contentRepositoryFactory.getInstanceForTransaction(project, language);
             try {
@@ -249,20 +257,23 @@ public class SiteStructureEditorController {
                             throw new IllegalArgumentException("Unsupported action type '" + actionType + "'!");
                     }
 
-                    newSsmRevision = ""; // TODO: calculate current revision after applying the action
+                    SiteStructure siteStructure = retrieveSiteStructure(project, language);
+                    newSsmRevision = ChecksumGenerator.getChecksum(siteStructure.getStructure());
                     actionRepository.addAction(newSsmRevision, action);
                     status.put(action.getId(), ApplyActionStatus.success());
                 }
 
-                if (logger.isInfoEnabled()) logger.info("Committing changes");
+                if (logger.isInfoEnabled()) logger.info("Committing changes (current ssm-revision: {})", newSsmRevision);
                 contentRepositoryFactory.commitChanges(project, language, txRepository);
+                responseStatus = SUCCESS;
             } catch (Exception ex) {
                 if (logger.isErrorEnabled()) logger.error("Error occurred while applying actions!", ex);
                 contentRepositoryFactory.rollbackChanges(project, language, txRepository);
+                responseStatus = ROLLED_BACK;
             }
         }
 
-        return new ServiceBeanResponse<>(status, newSsmRevision, SUCCESS);
+        return new ServiceBeanResponse<>(status, newSsmRevision, responseStatus);
     }
 
     private void applyCreateAction(ActionCreate actionCreate, ContentRepository contentRepository, String project) {
@@ -380,7 +391,8 @@ public class SiteStructureEditorController {
                     }
 
                     if (changed) {
-                        contentRepository.updateInfo(path, dirInfo);
+                        SiteNodeContainerInfo parent = dirInfo.getParent();
+                        contentRepository.updateInfo(parent.getPath(), dirInfo);
                     }
                     break;
                 case PAGE:
@@ -407,7 +419,8 @@ public class SiteStructureEditorController {
                     }
 
                     if (changed) {
-                        contentRepository.updateInfo(path, pageInfo);
+                        SiteNodeContainerInfo parent = pageInfo.getParent();
+                        contentRepository.updateInfo(parent.getPath(), pageInfo);
                     }
                     break;
                 default:

@@ -11,6 +11,4 @@ public interface Action extends Serializable {
     ActionType getActionType();
 
     Map<String, Object> getAttributes();
-
-    void addAttribute(String key, Object value);
 }
