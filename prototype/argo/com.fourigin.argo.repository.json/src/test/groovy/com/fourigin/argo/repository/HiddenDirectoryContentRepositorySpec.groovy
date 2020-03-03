@@ -2,6 +2,7 @@ package com.fourigin.argo.repository
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fourigin.argo.models.action.mapping.ActionModule
 import com.fourigin.argo.models.content.elements.mapping.ContentPageModule
 import com.fourigin.argo.models.datasource.index.DataSourceIndex
 import com.fourigin.argo.models.structure.CompileState
@@ -260,22 +261,6 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         then:
         beforeReInit.before(repository.initTimestamp)
     }
-
-    // create the tree & initialize it on-the-fly!
-//    def 'ensureInit() works as expected'() {
-//        setup:
-//        HiddenDirectoryContentRepository repository = initRepository()
-//
-//        when:
-//        repository.ensureInit()
-//
-//        and:
-//        def expected = stubRoot(false)
-//
-//        then:
-//        repository.initTimestamp != null
-//        repository.root == expected
-//    }
 
     def 'createInfo() works as expected'() {
         setup:
@@ -685,6 +670,7 @@ class HiddenDirectoryContentRepositorySpec extends Specification {
         )
         objectMapper.registerModule(new ContentPageModule())
         objectMapper.registerModule(new JsonInfoModule())
+        objectMapper.registerModule(new ActionModule())
         return objectMapper
     }
 
