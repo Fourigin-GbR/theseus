@@ -1,8 +1,6 @@
 package com.fourigin.argo.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fourigin.argo.models.ChecksumGenerator;
-import com.fourigin.argo.models.structure.nodes.SiteNodeContainerInfo;
 import com.fourigin.argo.projects.ProjectSpecificPathResolver;
 import com.fourigin.argo.repository.strategies.PageInfoTraversingStrategy;
 import org.apache.commons.io.FileUtils;
@@ -54,9 +52,7 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
         String masterKey = buildRepoKey(projectId, language);
         HiddenDirectoryContentRepository masterRepository = resolveRepository(masterKey, path);
 
-        SiteNodeContainerInfo root = masterRepository.getRoot();
-        String masterChecksum = ChecksumGenerator.getChecksum(root);
-        masterRepository.setId(masterChecksum);
+        String masterId = masterRepository.getId();
 
         for (String key : transactions.keySet()) {
             if (key.startsWith(masterKey)) {
@@ -78,10 +74,9 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
 
         // init the new transactional repository
         HiddenDirectoryContentRepository repo = resolveRepository(masterKey, currentBaseDirectory.getAbsolutePath(), true);
-        repo.setId(masterChecksum);
 
         // store it to all transactions
-        String transactionKey = buildRepoKey(projectId, language, masterChecksum);
+        String transactionKey = buildRepoKey(projectId, language, masterId);
         transactions.put(transactionKey, repo);
         if (logger.isDebugEnabled()) logger.debug("Opening transaction for key '{}' (root: '{}')", transactionKey, repo.getContentRoot());
 
@@ -117,6 +112,8 @@ public class HiddenDirectoryContentRepositoryFactory implements ContentRepositor
         // remove transactional files
         transactionRootDirectory.deleteOnExit();
         transactions.remove(transactionalKey);
+
+        masterRepository.flush();
     }
 
     @Override

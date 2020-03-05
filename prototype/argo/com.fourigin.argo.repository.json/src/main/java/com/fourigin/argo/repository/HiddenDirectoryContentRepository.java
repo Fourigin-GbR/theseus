@@ -1,6 +1,7 @@
 package com.fourigin.argo.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fourigin.argo.models.ChecksumGenerator;
 import com.fourigin.argo.models.InvalidSiteStructureNodeException;
 import com.fourigin.argo.models.InvalidSiteStructurePathException;
 import com.fourigin.argo.models.UnsupportedNodeTypeException;
@@ -1083,6 +1084,7 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
         if (logger.isDebugEnabled()) logger.debug("Initialized info:\n{}", root.toTreeString(0));
 
         initTimestamp = new Date();
+        id = ChecksumGenerator.getChecksum(root);
     }
 
     private void processContentDirectory(File dir, String parentPath, SiteNodeContainerInfo containerInfo) {
@@ -1218,10 +1220,6 @@ public class HiddenDirectoryContentRepository extends FileBasedRepository implem
     }
 
     //******* setters *******//
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;

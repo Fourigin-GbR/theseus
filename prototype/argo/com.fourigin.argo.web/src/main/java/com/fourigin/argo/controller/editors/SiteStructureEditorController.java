@@ -125,21 +125,16 @@ public class SiteStructureEditorController {
     ) {
         if (logger.isDebugEnabled()) logger.debug("Retrieve SSM ('{}', '{}')", project, language);
 
-        SiteStructure siteStructure = retrieveSiteStructure(project, language);
-        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(siteStructure.getStructure()), SUCCESS);
-    }
-
-    private SiteStructure retrieveSiteStructure(String project, String language) {
-        List<SiteStructureElement> structure = new ArrayList<>();
-
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
+
+        List<SiteStructureElement> structure = new ArrayList<>();
         DirectoryInfo root = contentRepository.resolveInfo(DirectoryInfo.class, "/");
         List<SiteNodeInfo> nodes = root.getNodes();
         processNodes(nodes, structure);
 
         SiteStructure siteStructure = new SiteStructure();
         siteStructure.setStructure(structure);
-        return siteStructure;
+        return new ServiceBeanResponse<>(siteStructure, contentRepository.getId(), SUCCESS);
     }
 
     /**
@@ -157,16 +152,8 @@ public class SiteStructureEditorController {
     ) {
         if (logger.isDebugEnabled()) logger.debug("Retrieve SSM revision ('{}', '{}')", project, language);
 
-        List<SiteStructureElement> structure = new ArrayList<>();
-
         ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
-        DirectoryInfo root = contentRepository.resolveInfo(DirectoryInfo.class, "/");
-        List<SiteNodeInfo> nodes = root.getNodes();
-        processNodes(nodes, structure);
-
-        SiteStructure siteStructure = new SiteStructure();
-        siteStructure.setStructure(structure);
-        return ChecksumGenerator.getChecksum(structure);
+        return contentRepository.getId();
     }
 
     /**
@@ -218,7 +205,6 @@ public class SiteStructureEditorController {
 
         ActionRepository actionRepository = actionRepositoryFactory.getInstance(project);
 
-        String newSsmRevision = null;
         Map<String, ApplyActionStatus> status = new HashMap<>();
         ServiceResponseStatus responseStatus = FAILED_UNEXPECTED_ERROR;
         if (actions != null && !actions.isEmpty()) {
@@ -257,13 +243,11 @@ public class SiteStructureEditorController {
                             throw new IllegalArgumentException("Unsupported action type '" + actionType + "'!");
                     }
 
-                    SiteStructure siteStructure = retrieveSiteStructure(project, language);
-                    newSsmRevision = ChecksumGenerator.getChecksum(siteStructure.getStructure());
-                    actionRepository.addAction(newSsmRevision, action);
+                    actionRepository.addAction(txRepository.getId(), action);
                     status.put(action.getId(), ApplyActionStatus.success());
                 }
 
-                if (logger.isInfoEnabled()) logger.info("Committing changes (current ssm-revision: {})", newSsmRevision);
+                if (logger.isInfoEnabled()) logger.info("Committing changes (current ssm-revision: {})", txRepository.getId());
                 contentRepositoryFactory.commitChanges(project, language, txRepository);
                 responseStatus = SUCCESS;
             } catch (Exception ex) {
@@ -273,7 +257,9 @@ public class SiteStructureEditorController {
             }
         }
 
-        return new ServiceBeanResponse<>(status, newSsmRevision, responseStatus);
+        ContentRepository masterRepository = contentRepositoryFactory.getInstance(project, language);
+
+        return new ServiceBeanResponse<>(status, masterRepository.getId(), responseStatus);
     }
 
     private void applyCreateAction(ActionCreate actionCreate, ContentRepository contentRepository, String project) {
@@ -534,70 +520,6 @@ public class SiteStructureEditorController {
 
         return diff;
     }
-
-//    @RequestMapping(value = "/siteNode", method = RequestMethod.POST)
-//    public ServiceBeanResponse<SiteNode> updateSiteNode(
-//            @PathVariable String project,
-//            @RequestParam(RequestParameters.LANGUAGE) String language,
-//            @RequestBody ServiceBeanRequest<SiteNode> request
-//    ) {
-//        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
-//
-//        SiteNode siteNode = request.getPayload();
-//        String path = siteNode.getPath();
-//        SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, path);
-//        SiteNodeContent nodeContent = siteNode.getContent();
-//
-//        String currentChecksum = ChecksumGenerator.getChecksum(nodeContent);
-//
-//        ServiceResponseStatus status;
-//        if (request.getRevision().equals(currentChecksum)) {
-//            status = SUCCESSFUL_UPDATE;
-//
-//            applyChanges(nodeContent, info);
-//            contentRepository.updateInfo(path, info);
-//
-//            if (logger.isDebugEnabled())
-//                logger.debug("Modified site node has been updated.");
-//        } else {
-//            status = FAILED_CONCURRENT_UPDATE;
-//
-//            SiteNodeContent currentContent = convert(info);
-//            siteNode.setContent(currentContent);
-//
-//            if (logger.isDebugEnabled())
-//                logger.debug("Modified site node is not updated. Current checksum is '{}'.", currentChecksum);
-//        }
-//
-//        return new ServiceBeanResponse<>(siteNode, currentChecksum, status);
-//    }
-//
-//    @RequestMapping(value = "/siteNode", method = RequestMethod.PUT)
-//    public ServiceResponse addSiteNode(
-//            @PathVariable String project,
-//            @RequestParam(RequestParameters.LANGUAGE) String language,
-//            @RequestBody SiteNode siteNode
-//    ) {
-//        // TODO: implement me!
-//        return new ServiceResponse(SUCCESSFUL_CREATE);
-//    }
-//
-//    @RequestMapping(value = "/siteNodes", method = RequestMethod.PUT)
-//    public ServiceBeanResponse<SiteStructure> addSiteNodes(
-//            @PathVariable String project,
-//            @RequestParam(RequestParameters.LANGUAGE) String language,
-//            @RequestBody SiteNodes request
-//    ) {
-//        SiteStructure siteStructure = new SiteStructure();
-//        siteStructure.setStructure(request.getStructure());
-//
-////        ContentRepository contentRepository = contentRepositoryFactory.getInstance(project, language);
-////
-////        contentRepository.
-//
-//        // TODO: implement me!
-//        return new ServiceBeanResponse<>(siteStructure, ChecksumGenerator.getChecksum(siteStructure), SUCCESSFUL_CREATE);
-//    }
 
     private void processNodes(List<SiteNodeInfo> nodes, List<SiteStructureElement> structure) {
         if (nodes == null || nodes.isEmpty()) {
