@@ -101,25 +101,64 @@
             </script>
             <div class="description">
 <!--                <p class="shortTeaserCopy" th:utext="${c.getContent('/short-description')}">Direkte Lage, super Dinge, alles sauber, alles da! Wunderbar und herrlich schön, nichts ist unmöglich alles ist machtbart.</p>-->
-                <ul class="highlights" th:with="
+<!--                <ul class="highlights" th:with="-->
+<!--                    distance = ${c.getContent(properties, 'distance')},-->
+<!--                    code = ${c.getContent(properties, 'code')},-->
+<!--                    type = ${c.getContent(properties, 'type')},-->
+<!--                    area = ${c.getContent(properties, 'area')},-->
+<!--                    price = ${c.getContent(properties, 'price')},-->
+<!--                    region = ${c.getContent(properties, 'region')},-->
+<!--                    distanceLabel = ${c.getContent('@common-content:common/properties/distance')},-->
+<!--                    areaLabel = ${c.getContent('@common-content:common/properties/area')},-->
+<!--                    codeLabel = ${c.getContent('@common-content:common/properties/code')},-->
+<!--                    priceLabel = ${c.getContent('@common-content:common/properties/price')},-->
+<!--                    unitMeter = ${c.getContent('@common-content:common/units/meter')},-->
+<!--                    unitSquareMeter = ${c.getContent('@common-content:common/units/square-meter')}-->
+<!--                ">-->
+<!--                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${distanceLabel}">Distance:</span><span class="highlights__value" th:utext="${f.formatNumber(distance, unitMeter)}">200</span></li>-->
+<!--                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${areaLabel}">Area:</span><span class="highlights__value" th:utext="${f.formatNumber(area, unitSquareMeter)}">3546</span></li>-->
+<!--                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${codeLabel}">Code:</span><span class="highlights__value" th:text="${code}">3546</span></li>-->
+<!--                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${priceLabel}">Price:</span><span class="highlights__value" th:utext="${f.formatPrice(price)}">19.000 €</span></li>-->
+<!--                </ul>-->
+                <table class="highlights_table" th:with="
                     distance = ${c.getContent(properties, 'distance')},
                     code = ${c.getContent(properties, 'code')},
                     type = ${c.getContent(properties, 'type')},
                     area = ${c.getContent(properties, 'area')},
                     price = ${c.getContent(properties, 'price')},
-                    region = ${c.getContent(properties, 'region')}
+                    region = ${c.getContent(properties, 'region')},
+                    distanceLabel = ${c.getContent('@common-content:common/properties/distance')},
+                    areaLabel = ${c.getContent('@common-content:common/properties/area')},
+                    codeLabel = ${c.getContent('@common-content:common/properties/code')},
+                    priceLabel = ${c.getContent('@common-content:common/properties/price')},
+                    unitMeter = ${c.getContent('@common-content:common/units/meter')},
+                    unitSquareMeter = ${c.getContent('@common-content:common/units/square-meter')}
                 ">
-                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/distance')}">Distance:</span><span class="highlights__value" th:utext="${f.formatNumber(distance, ' m')}">200</span></li>
-                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/area')}">Area:</span><span class="highlights__value" th:utext="${f.formatNumber(area, ' m<sup>2</sup>')}">3546</span></li>
-                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/code')}">Code:</span><span class="highlights__value" th:text="${code}">3546</span></li>
-                    <li class="highlights__item"><i class="highlights__icon fa" aria-hidden="true"></i><span class="highlights__type" th:text="${c.getContent('@common-content:common/properties/price')}">Price:</span><span class="highlights__value" th:utext="${f.formatPrice(price)}">19.000 €</span></li>
-                </ul>
-<!--                <div class="priceBox" th:text="${f.formatPrice(c.getContent(properties, 'price'))}">-->
-<!--                    255.000,00 €-->
-<!--                </div>-->
-<!--                <div class="transfer">-->
-<!--                    <a class="cta" href="text.html" th:text="${c.getContent('@common-content:common/links-and-ctas/contact-request')}">Anfragen</a>-->
-<!--                </div>-->
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablekey" th:text="${distanceLabel}">Distance</td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablevalue" th:utext="${f.formatNumber(distance, unitMeter)}">200 m</td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablekey" th:text="${areaLabel}">Area</td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablevalue" th:utext="${f.formatNumber(area, unitSquareMeter)}">50 m<sup>2</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablekey" th:text="${codeLabel}">Code</td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablevalue" th:text="${code}">1234567</td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablekey" th:text="${priceLabel}">Price</td>
+                    </tr>
+                    <tr>
+                        <td class="highlights__tableitem highlights__tablevalue" th:utext="${f.formatPrice(price)}">100.000 €</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </article>
