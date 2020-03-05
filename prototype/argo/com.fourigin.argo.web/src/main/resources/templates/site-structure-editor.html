@@ -459,7 +459,40 @@
                                                             <td data-argo-element="actionTime"
                                                                 class="table__cell"></td>
                                                             <td data-argo-element="actionState"
-                                                                class="table__cell"></td>
+                                                                class="table__cell">
+                                                                <div class="stateIcon stateIcon--pending stateIcon--hidden">
+                                                                    <div class="stateIcon__icon">
+                                                                        <i class="fas fa-business-time"></i>
+                                                                    </div>
+                                                                    <div class="stateIcon__label">
+                                                                        Pending
+                                                                    </div>
+                                                                </div>
+                                                                <div class="stateIcon stateIcon--processing stateIcon--hidden">
+                                                                    <div class="stateIcon__icon">
+                                                                        <i class="fas fa-cogs"></i>
+                                                                    </div>
+                                                                    <div class="stateIcon__label">
+                                                                        Processing
+                                                                    </div>
+                                                                </div>
+                                                                <div class="stateIcon stateIcon--error stateIcon--hidden">
+                                                                    <div class="stateIcon__icon">
+                                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                                    </div>
+                                                                    <div class="stateIcon__label">
+                                                                        Error
+                                                                    </div>
+                                                                </div>
+                                                                <div class="stateIcon stateIcon--done stateIcon--hidden">
+                                                                    <div class="stateIcon__icon">
+                                                                        <i class="fas fa-check-square"></i>
+                                                                    </div>
+                                                                    <div class="stateIcon__label">
+                                                                        Done
+                                                                    </div>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                         <tbody class="table__bodyEmpty">
@@ -1145,7 +1178,7 @@
         "urlSaveSiteStructure": "/cms/site-structure/apply",
         "urlLoadItemDetails": "/cms/site-structure/ssi",
         "urlSaveItemDetails": "/cms/site-structure/ssi",
-        "urlUpToDateCheckSiteStructure": "examples/up-to-date-site-structure.json"
+        "urlUpToDateCheckSiteStructure": "/cms/site-structure/ssm-revision?l=DE"
         /*"urlLoadSiteStructure": "http://www.argo.bestgreekestate.fourigin.com/cms/editors/siteStructure?l=DE"*/
     };
 
