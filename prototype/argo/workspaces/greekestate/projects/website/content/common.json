@@ -377,6 +377,192 @@
 					}
 				}
 			]
+		},
+		{
+			"type": "group",
+			"name": "units",
+			"elements": [
+				{
+					"type": "text",
+					"name": "meter",
+					"content": {
+						"en": "m",
+						"de": "m",
+						"ru": "м"
+					}
+				},
+				{
+					"type": "text",
+					"name": "square-meter",
+					"content": {
+						"en": "m<sup>2</sup>",
+						"de": "m<sup>2</sup>",
+						"ru": "м<sup>2</sup>"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search",
+					"content": {
+						"en": "Search",
+						"de": "Suchen",
+						"ru": "Поиск"
+					}
+				},
+				{
+					"type": "text",
+					"name": "search-in-region",
+					"content": {
+						"en": "Search in the region",
+						"de": "Suche in der Region",
+						"ru": "Поиск в регионе"
+					}
+				},
+				{
+					"type": "text",
+					"name": "matching-objects-found",
+					"content": {
+						"en": "{0} properties found.",
+						"de": "{0} Immobilien gefunden.",
+						"ru": "Объектов найдено: {0}"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type",
+					"content": {
+						"en": "Object type",
+						"de": "Typ des Objektes",
+						"ru": "Тип объекта"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:apartment",
+					"content": {
+						"en": "Apartment",
+						"de": "Wohnung",
+						"ru": "Квартира"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:land-plot",
+					"content": {
+						"en": "Land plot",
+						"de": "Grundstück",
+						"ru": "Земельный участок"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:building",
+					"content": {
+						"en": "Building",
+						"de": "Gebäude",
+						"ru": "Здание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:hotel",
+					"content": {
+						"en": "Hotel",
+						"de": "Hotel",
+						"ru": "Гостиница"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:villa",
+					"content": {
+						"en": "Villa",
+						"de": "Villa",
+						"ru": "Вилла"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:detached-house",
+					"content": {
+						"en": "Detached house",
+						"de": "Freistehendes Haus",
+						"ru": "Дом"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:office",
+					"content": {
+						"en": "Office",
+						"de": "Büro",
+						"ru": "Офис"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:farm-parcel",
+					"content": {
+						"en": "Farm parcel",
+						"de": "Landparzelle",
+						"ru": "Сельскохозяйственный участок"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:store",
+					"content": {
+						"en": "Store",
+						"de": "Geschäft",
+						"ru": "Магазин"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:business-building",
+					"content": {
+						"en": "Business building",
+						"de": "Industriegebäude",
+						"ru": "Индустриальное здание"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:various-other-property",
+					"content": {
+						"en": "Various other property",
+						"de": "Sonstige Immobilie",
+						"ru": "Прочая недвижимость"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:parking",
+					"content": {
+						"en": "Parking",
+						"de": "Parkplatz",
+						"ru": "Парковка"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:other-land-property",
+					"content": {
+						"en": "Other land property",
+						"de": "Sonstige Grundstücke",
+						"ru": "Прочие земельные участки"
+					}
+				},
+				{
+					"type": "text",
+					"name": "object-type:maisonette",
+					"content": {
+						"en": "Maisonette",
+						"de": "Maisonette",
+						"ru": "Двухуровневая квартира"
+					}
+				}
+			]
 		}
 	],
 	"dataSourceContents": [

@@ -373,7 +373,7 @@
         "revisions": {
         },
         "query": {
-          "INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties"
+          "INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties, /units"
         },
         "checksum": ""
       },
