@@ -325,9 +325,9 @@
                                         <fieldset data-type="directoryChildren">
                                         </fieldset>
                                     </fieldset>
-                                    <!-- Item / file -->
-                                    <fieldset class="editableDirectoryList__entry" data-type="file"
-                                              data-prototype="siteStructureItemFile">
+                                    <!-- Item / page -->
+                                    <fieldset class="editableDirectoryList__entry" data-type="page"
+                                              data-prototype="siteStructureItemPage">
                                         <div class="editableDirectoryList__entryFlags">
                                             <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--removed"><i class="fas fa-trash-alt"></i></div>
                                             <div class="editableDirectoryList__entryFlag editableDirectoryList__entryFlag--moved"><i class="fas fa-plane-arrival"></i></div>
@@ -860,6 +860,19 @@
 </div>
 
 <div id="subMenus">
+
+    <div class="subMenu subMenu--userMenu" data-argo-submenu-id="user">
+        <div class="subMenu__entry subMenu__entry--image">
+            <img class="subMenu__entryImage" src="/global-assets/images/karsten-konzert-2012-dbg.jpg" alt="User K" />
+            <div class="subMenu__entryDescription">Karsten Schäfer</div>
+        </div>
+        <div class="subMenu__entry subMenu__entry--separator"></div>
+        <div class="subMenu__entry">
+            <span class="subMenu__entryIcon"><i class="fas fa-door-open"></i></span>
+            <span class="subMenu__entryLabel">Logout</span>
+        </div>
+    </div>
+
     <div class="subMenu" data-argo-submenu-id="ssiContext">
         <div class="subMenu__entry" data-action="addInside">
             <span class="subMenu__entryIcon"><i class="fas fa-plus"></i></span>
