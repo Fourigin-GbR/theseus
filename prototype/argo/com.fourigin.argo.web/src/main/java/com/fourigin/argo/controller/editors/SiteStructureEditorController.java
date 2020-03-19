@@ -428,6 +428,9 @@ public class SiteStructureEditorController {
         String targetFolderPath = actionMove.getTargetFolderPath();
         String insertionPath = actionMove.getInsertionPath();
 
+        if (logger.isDebugEnabled()) logger.debug("Applying MOVE action:\n\toriginPath: {}\n\ttargetFolderPath: {}\n\tinsertionPath: {}",
+                originPath, targetFolderPath, insertionPath);
+
         DirectoryInfo targetFolder = contentRepository.resolveInfo(DirectoryInfo.class, targetFolderPath);
 
         SiteNodeInfo info = contentRepository.resolveInfo(SiteNodeInfo.class, originPath);
@@ -442,14 +445,17 @@ public class SiteStructureEditorController {
 //        }
 
         // remove original info from parent
+        if (logger.isDebugEnabled()) logger.debug("Removing original SSI '{}'", info.getName());
         List<SiteNodeInfo> nodes = parentFolder.getNodes();
 
         int index = -1;
         for (int i = 0; i < nodes.size(); i++) {
             SiteNodeInfo node = nodes.get(i);
 
+            if (logger.isDebugEnabled()) logger.debug("node-name: '{}'", node.getName());
             if (node.getName().equals(info.getName())) {
                 index = i;
+                if (logger.isDebugEnabled()) logger.debug("Found original SSI index {}", index);
                 break;
             }
         }
@@ -462,26 +468,31 @@ public class SiteStructureEditorController {
         contentRepository.updateInfo(parentFolder.getPath(), parentFolder);
 
         // insert original info into target folder at the specified location
+        if (logger.isDebugEnabled()) logger.debug("Inserting the SSI to the target position");
         contentRepository.createInfo(targetFolder, info);
 
         int insertPos = -1;
         int foundPos = -1;
 
+        if (logger.isDebugEnabled()) logger.debug("Searching for path {} inside {}", insertionPath, targetFolderPath);
         nodes = targetFolder.getNodes();
         for (int i = 0; i < nodes.size(); i++) {
             if (insertPos >= 0 && foundPos >= 0) {
                 // both positions found
+                if (logger.isDebugEnabled()) logger.debug("Found both insertPos {} and foundPos {}", insertPos, foundPos);
                 break;
             }
 
             SiteNodeInfo node = nodes.get(i);
             if (node.getName().equals(insertionPath)) {
                 insertPos = i;
+                if (logger.isDebugEnabled()) logger.debug("insertPos = {}", insertPos);
                 continue;
             }
 
             if (info.getName().equals(node.getName())) {
                 foundPos = i;
+                if (logger.isDebugEnabled()) logger.debug("foundPos = {}", foundPos);
             }
         }
 
