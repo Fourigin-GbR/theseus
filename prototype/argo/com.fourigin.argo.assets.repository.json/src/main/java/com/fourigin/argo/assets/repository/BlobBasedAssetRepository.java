@@ -425,7 +425,9 @@ public class BlobBasedAssetRepository extends JsonFileBasedRepository implements
         if (logger.isDebugEnabled()) logger.debug("Updating asset {} for language {} ", asset, language);
 
         AssetProperties props = AssetFactory.convertToProperties(asset);
-        write(props, asset.getId(), language);
+        if (props != null) {
+            write(props, asset.getId(), language);
+        }
     }
 
     @Override

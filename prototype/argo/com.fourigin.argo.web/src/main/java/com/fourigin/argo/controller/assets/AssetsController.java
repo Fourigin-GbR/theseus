@@ -475,6 +475,9 @@ public class AssetsController {
                 bufferedImage.flush();
             }
         }
+        catch(Exception ex) {
+            throw new IllegalArgumentException("Error reading asset data!", ex);
+        }
 
         if (!ALLOWED_MIME_TYPES.contains(mimeType)) {
             throw new IllegalArgumentException("Unsupported mimeType " + mimeType + " detected");

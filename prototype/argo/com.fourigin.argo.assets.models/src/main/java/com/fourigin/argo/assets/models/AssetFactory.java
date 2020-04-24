@@ -1,5 +1,6 @@
 package com.fourigin.argo.assets.models;
 
+import java.awt.Dimension;
 import java.util.Map;
 import java.util.Set;
 
@@ -91,6 +92,10 @@ public final class AssetFactory {
 
         if (ImageAsset.class.isAssignableFrom(asset.getClass())) {
             ImageAsset imageAsset = (ImageAsset) asset;
+            Dimension assetSize = imageAsset.getSize();
+            if (assetSize == null) {
+                return null;
+            }
             assetProperties.put(PROP_ASSET_SIZE, imageAsset.getSize().width + "x" + imageAsset.getSize().height);
         }
 
