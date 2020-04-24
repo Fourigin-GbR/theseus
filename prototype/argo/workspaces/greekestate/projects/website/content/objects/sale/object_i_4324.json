@@ -1,0 +1,378 @@
+{
+  "id": "object_i_4324",
+  "contentFormatVersion": "2.0",
+  "metaData": {
+    "title": "Sale object #I-4324 - BestGreekEstate",
+    "contextSpecificTitles": {
+      "de": "Verkaufsobjekt #I-4324 - BestGreekEstate",
+      "ru": "Объект #I-4324 на продажу - BestGreekEstate"
+    },
+    "attributes": {
+    }
+  },
+  "content": [
+    {
+      "type": "text",
+      "name": "headline",
+      "content": {
+        "de": "Einzimmer-Wohnung in Loutraki",
+        "ru": "Однокомнатная квартира в Loutraki",
+        "en": "One room appartment in Loutraki"
+      }
+    },
+    {
+      "type": "text",
+      "name": "short-description",
+      "content": {
+        "de": "Entfernung zum Meer: <span class=\"text-red\">200</span>",
+        "ru": "Расстояние до моря: <span class=\"text-red\">200</span>",
+        "en": "Distance from sea: <span class=\"text-red\">200</span>"
+      }
+    },
+    {
+      "type": "group",
+      "name": "properties",
+      "elements": [
+        {
+          "type": "data",
+          "name": "code",
+          "content": "I-4324",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "area",
+          "content": "27",
+          "dataType": "INTEGER"
+        },
+        {
+          "type": "data",
+          "name": "price",
+          "content": "54990",
+          "dataType": "FLOAT"
+        },
+        {
+          "type": "data",
+          "name": "type",
+          "content": "apartment",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "region",
+          "content": "loutraki",
+          "dataType": "STRING"
+        },
+        {
+          "type": "data",
+          "name": "distance",
+          "content": "200",
+          "dataType": "INTEGER"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "long-description",
+      "content": {
+        "de": "
+        <b>Der Kauf einer Wohnung in der Kurstadt Loutraki ist:</b>
+        <ol>
+          <li>Rentable Investition. Die Preise für Wohnungen in Loutraki steigen stetig.</li>
+          <li>Stabile Mieteinnahmen.</li>
+        </ol>
+        Zu verkaufen eine prächtige, möblierte 1-Zimmer-Wohnung mit einer Fläche von 27 m<sup>2</sup>.<br/>
+        Die Wohnung befindet sich im 3. Stock eines 5-stöckigen Hauses mit einem Aufzug.<br/>
+        Das Haus befindet sich in einer ruhigen M. Botsari (Μάρκου Μπότσαρη) Straße, im Schlafgebiet der Kurstadt Loutraki (PLZ: 20300).<br/>
+        Die Wohnung verfügt über einen Flur, ein Duschzimmer und ein Wohnzimmer mit einem Ausgang zum Balkon mit Blick auf einen ruhigen Innenhof und einen seitlichen Meerblick.<br/>
+        Die Deckenhöhe in der Wohnung: 2,9 m.<br/>
+        Die Entfernung zur Strandpromenade und zum Strand: 200 m.<br/>
+        <b>Die Wohnung ist sehr ruhig und komfortabel zum Wohnen und Entspannen!</b>
+        <br/>
+		<br/>
+		<b>Beschreibung</b><br/>
+        Am Anfang 2020 wurde in der Wohnung eine größere Reparature abgeschlossen.
+		<ul>
+			<li>Wasser- und Kanalisationsrohre wurden ersetzt;</li>
+			<li>Verkabelung wurde ersetzt;</li>
+            <li>Eine neue verstärkte Eingangstür mit einem geheimen Schloss wurde installiert.</li>
+            <li>Zwei neue Aluminium-Balkontür mit Antimoskitonetzen wurde eingebaut.</li>
+            <li>Im Flur ist ein neuer Wandschrank mit Spiegelschiebetüren installiert.</li>
+            <li>Die Böden in der Wohnung sind mit neuen, sehr schönen Keramikfliesen mit Parkettmuster ausgekleidet.</li>
+            <li>in das Zimmer: eine neue, sehr schöne Küchenmöbel mit polierten Türen und LED-Hintergrundbeleuchtung, Esstisch mit weißer polierter Oberfläche (90 x 180), Klimaanlage, zwei neue LED-Kronleuchtern und ein Fernseher (42 Zoll) sind installiert. Darüber den Balkontüren hinter dem Gesims ist eine band LED-Hintergrundbeleuchtung angebracht.</li>
+            <li>In der Küche sind eine neue elektrische Haushaltsgeräte installiert (großer Kühlschrank mit Gefrierfach, 4-Flammen-Kochfeld mit Glaskeramik Arbeitsplatte, Dunstabzugshaube, Backofen, Geschirrspüler und Waschmaschine).</li>
+            <li>In das Duschzimmer: die Wände sind mit neuen, sehr schönen schwarz-weißen Keramikfliesen ausgekleidet, eine neue Duschkabine mit einer Glasschiebetür ist montiert, ein Warmwasserboiler und eine Waschmaschine sind installiert, eine neue LED-Lampe ist über dem Spiegel installiert.</li>
+		</ul>
+		<br/>
+ 	    <br/>
+		<b>Zustand und Verkaufsbedingungen</b>
+		<ul>
+			<li>Der Wohnungszustand: luxuriös! Nach den größeren Reparaturen sieht die Wohnung aus wie neu!</li>
+			<li>Die Wohnung wird mit neuen Möbeln und neuen elektrische Haushaltsgeräten verkauft, die in der Beschreibung sind.</li>
+			<li>Die Kosten für die erneute Registrierung die Wohnung (Einkaufssteuer, Anmeldegebühr, notarielle Dienstleistungen): bis zu 1.300 €.</li>
+			<li>Die jährliche Grundsteuer: bis zu 100 €.</li>
+			<li>Die Nebenkosten (Beleuchtung und Reinigung des Eingangs, Wartung des Aufzugs usw.): 10-15 € pro Monat.</li>
+		</ul>
+		",
+        "ru": "
+        <b>Покупка квартиры в курортном городе Лутраки – это:</b>
+        <ol>
+          <li>Возможность получения временного вида на жительство для покупателя и членов его семьи.</li>
+          <li>Выгодная инвестиция. Цены на квартиры в Лутраки стабильно растут.</li>
+          <li>Доход от аренды квартиры.</li>
+        </ol>
+		Продаётся прекрасная, меблированная однокомнатная квартира площадью 27 м<sup>2</sup>.<br/>
+        Квартира находится на 3-м этаже 5-ти этажного дома с лифтом.<br/>
+        Дом расположен на тихой улице M. Botsari (Μάρκου Μπότσαρη), в спальном районе курортного города Лутраки (почтовый индекс города: 20300).<br/>
+        В квартире есть коридор, душевая комната и жилая комната с выходом на балкон, с видом на тихий двор и с боковым видом на море.<br/>
+        Высота потолков в квартире: 2,9 м.<br/>
+        Расстояние до набережной и пляжа: 200 м.<br/>
+        <b>Квартира является очень тихой и комфортной для проживания и отдыха!</b></br>
+        <br/>
+		<br/>
+		<b>Описание квартиры</b><br/>
+        В начале 2020 года в квартире был закончен капитальный ремонт:
+        <ul>,
+		  <li>заменены водопроводные и канализационные трубы;</li>
+		  <li>заменена электропроводка;</li>
+		  <li>установлена новая входная усиленная дверь с секретным замком;</li>
+		  <li>установлены две новые алюминиевые балконные двери с антимоскитными сетками;</li>
+		  <li>в коридоре установлен новый шкаф-купе с раздвижными зеркальными дверями;</li>
+		  <li>полы в квартире выложены новой, очень красивой керамической плиткой с паркетным рисунком;</li>
+          <li>в комнате установлена новая, очень красивая кухонная мебель с полированными дверцами и светодиодной подсветкой, обеденный стол с белой полированной поверхностью (90 x 180), кондиционер, две новые светодиодные люстры и телевизор (42 дюйма). Над балконными дверями за карнизом установлена ленточная светодиодная подсветка;</li>
+          <li>в кухне установлены новые электрические бытовые приборы (большой холодильник с морозильной камерой, 4-х конфорочная варочная панель со стеклокерамической рабочей поверхностью, вытяжка, духовой шкаф, посудомоечная и стиральная машины);</li>
+          <li>в ванной комнате стены облицованы новой, очень красивой чёрно-белой керамической плиткой, смонтирована новая душевая кабина с раздвижной стеклянной дверью, над зеркалом установлен новый светодиодный светильник;</li>
+          <li>на балконе установлена спутниковая антенна для приёма российских телеканалов.</li>
+ 	   	</ul>
+		<br/>
+		<br/>
+		<b>Состояние квартиры и условия продажи</b>
+		<ul>
+		  <li>Состояние квартиры: прекрасное! После капитального ремонта квартира выглядит как новая!</li>
+		  <li>Квартира продаётся с новой мебелью и новыми бытовыми электроприборами, указанными в описании.</li>
+		  <li>Расходы на перерегистрацию квартиры (налог на покупку, регистрационная пошлина, услуги нотариуса): до 1.300 €.</li>
+		  <li>Ежегодный налог на недвижимость: до 100 €.</li>
+		  <li>Расходы по содержанию дома (освещение и уборка подъезда, обслуживание лифта и пр.): 10-15 € в месяц.</li>
+ 		</ul>
+ 	    <br/>
+		<br/>
+		<b>Покупателю квартиры и членам его семьи поможем в получении ВНЖ</b>
+		",
+        "en": "
+        <b>Buying an apartment in the resort town of Loutraki is:</b>
+        <ol>
+          <li>Profitable investment. Prices for apartments in Loutraki are growing steadily.</li>
+          <li>Income from renting an apartment.</li>
+        </ol>
+
+        For sale a magnificent, furnished 1-room apartment with an area of 27 sq m.<br/>
+        The apartment is located on the 3rd floor of the 5-storey house with an elevator.<br/>
+        The house is located on a quiet street M. Botsari (Μάρκου Μπότσαρη), in a sleeping area of the resort town of Loutraki (postcode: 20300).<br/>,
+        The apartment there is a corridor, a shower room and a living room with an access to the balcony, overlooking a quiet courtyard and with side sea view.<br/>
+        The height of the ceilings in the apartment: 2,9 m.<br/>
+        The distance to the beach promenade and the beach: 200 m.<br/>
+        <b>Тhe apartment is very quiet and comfortable for living and relaxing!</b></br>
+        <br/>
+ 	    <br/>
+		<b>Description</b><br/>
+        At the beginning of 2020 in the apartment were completed a major repairs.
+        <ul>
+          <li>Replaced water and sewer pipes.</li>
+          <li>Replaced electrical wiring.</li>
+          <li>Installed a new reinforced entrance door with a secret lock.</li>
+          <li>Installed two new aluminum balcony doors with anti mosquito nets.</li>
+          <li>In the corridor is installed a new built-in wardrobe with sliding mirrored doors.</li>
+          <li>The floors in the apartment are lined with new, very beautiful ceramic tiles with parquet pattern.</li>
+          <li>In the room are installed a new, very beautiful kitchen furniture with a polished doors and LED backlighting, dining table with a white polished surface (90 x 180), air conditioning, two new LED chandeliers and a TV (42 inches). Above the balcony doors behind the cornices are installed the band LED backlighting.</li>
+          <li>In the kitchen are installed new electrical household appliances (a large fridge with а freezer, a 4-burner hob with a glass-ceramic worktop, extractor hood, oven, dishwasher and washing machine).</li>
+          <li>In the shower room the walls are lined with new, very beautiful black and white ceramic tiles, is mounted a new shower cabin with a sliding glass door, are installed a hot-water boiler, above the mirror is installed a new LED lamp.</li>
+		</ul>
+ 	    <br/>
+ 	    <br/>
+		<b>Condition of the apartment and terms of sale</b>
+		<ul>
+		  <li>The condition of the apartment is luxurious! After the major repairs (that was make in the autumn of 2019) the apartment looks like new!</li>
+		  <li>The apartment is sold with the furniture and household electrical appliances that are in the apartment.</li>
+		  <li>The cost of re-registering the apartment (purchase tax, registration fee, notary services): up to 1.300 €.</li>
+		  <li>The property tax: up to 100 € per year.</li>
+		  <li>The home maintenance costs: 10-15 € per month.</li>
+		</ul>
+		"
+      }
+    },
+    {
+      "type": "list",
+      "name": "images",
+      "elements": [
+        {
+          "type": "list-object",
+          "referenceId": "6c7cba0746d2e9f495e2ed1f532222d4fa324b7c"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "2e09ef7ce04e86ae738de05090bb9861d201d4fe"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "23c258c4077edac820c763346d555b1e93bd7102"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "3790a96af29eca9da76d4cf4a3425d880b286673"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "cd169038f50eab3b645491a3d3e4d444315a2a87"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "d36c993ccb1fab22ed47ad9b6646778cccdb330a"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "20472599718bc0c05c7efea5c654e243bc3b6678"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "1ac708ccadfeee344e9c5222568c8e69a0b7cde7"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "bb34ba1f141a7d33ab1b4ad44a1dd3de9d46b0fa"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "c836a2750d7cff8c352771e6ee3c772c21282568"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "0e6846c287b990c9bbc547e6320114a1ba27e250"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "63a5abb0d99fb01f33d311a62117b90ccd7e993e"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "9a60a119a19f430c90bc1ac1f7ecb70aeeaa89b9"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "827dba3b0c9a7c3299abeeec8ac24b4e4b54ed8d"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "62a7f1a30c46be6a9654fe92891719163e0120c7"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "9d6d19c599a26c7b5428e015a005cb42c6576171"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "0790d742baec3f572b6523145e37ad7270906c85"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "101c29e584f7bea6216bd19bb7ad940c741a06cd"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "09403ca3beba08b458efd15a8128def8cf06b6ff"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "6b23ef676eb4e4c795db8e629fc7051202666c40"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "43a9087fa026ae4bd3cd2e6221f2bb620739e9ba"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "1b07301e0da5612114f68e3c7b76f2fa91423d00"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "6bbf321e0d9c780aaf774217241f4df1c04743f6"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "ca1c326fc3a68c16620453cdd89ea60c0808f042"
+        },
+        {
+          "type": "list-object",
+          "referenceId": "7b8f1bee75e8ebc0b171ca7e4181f25794b76d96"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "geo-position",
+      "elements": [
+		  {
+		            "type": "data",
+		            "name": "latitude",
+		            "content": "0.0",
+		            "dataType": "FLOAT"
+		          },
+		          {
+		            "type": "data",
+		            "name": "longitude",
+		            "content": "0.0",
+		            "dataType": "FLOAT"
+		          }
+      ]
+    }
+  ],
+  "dataSourceContents": [
+    {
+      "name": "timestamp",
+      "transientContent": false,
+      "identifier": {
+        "type": "TIMESTAMP",
+        "checksum": ""
+      },
+      "content": [
+        {
+          "type": "data",
+          "name": "processedOn",
+          "content": "2019.07.14 17:43:48 +0000",
+          "dataType": "DATE"
+        }
+      ]
+    },
+    {
+      "name": "top-level-navigation",
+      "transientContent": false,
+      "identifier": {
+        "type": "SITE",
+        "revisions": {
+        },
+        "query": {
+          "NON_RECURSIVE": true,
+          "INFO_PATH": "/",
+          "VERBOSE": true
+        },
+        "checksum": ""
+      },
+      "content": [
+      ]
+    },
+    {
+      "name": "common-content",
+      "transientContent": false,
+      "identifier": {
+        "type": "COMMON-CONTENT",
+        "revisions": {
+        },
+        "query": {
+          "INCLUDE_CONTENT": "/general-headlines, /links-and-ctas, /properties, /units"
+        },
+        "checksum": ""
+      },
+      "content": [
+      ]
+    }
+  ]
+}

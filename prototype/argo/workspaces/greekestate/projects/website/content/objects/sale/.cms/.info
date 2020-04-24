@@ -15,11 +15,11 @@
     }
   }, {
     "type" : "file",
-    "name" : "object_6671859",
+    "name" : "object_i_5118",
     "localizedName" : {
-      "" : "object_6671859",
-      "de" : "objekt_6671859",
-      "ru" : "objekt_6671859"
+      "" : "object_i_5118",
+      "de" : "objekt_i_5118",
+      "ru" : "objekt_i_5118"
     },
     "templateReference" : {
       "templateId" : "object-details",
@@ -28,11 +28,24 @@
     }
   }, {
     "type" : "file",
-    "name" : "object_6049179",
+    "name" : "object_i_4324",
     "localizedName" : {
-      "" : "object_6049179",
-      "de" : "objekt_6049179",
-      "ru" : "objekt_6049179"
+      "" : "object_i_4324",
+      "de" : "objekt_i_4324",
+      "ru" : "objekt_i_4324"
+    },
+    "templateReference" : {
+      "templateId" : "object-details",
+      "variationId" : "default",
+      "revision" : ""
+    }
+  },{
+    "type" : "file",
+    "name" : "object_6671859",
+    "localizedName" : {
+      "" : "object_6671859",
+      "de" : "objekt_6671859",
+      "ru" : "objekt_6671859"
     },
     "templateReference" : {
       "templateId" : "object-details",
