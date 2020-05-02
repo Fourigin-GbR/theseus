@@ -271,6 +271,9 @@ registerVersion('org.apache.pdfbox:pdfbox', '2.0.11')
 registerVersion('io.netty:netty-all', versionMap.netty)
 registerVersion('com.google.guava:guava', '26.0-jre')
 
+registerVersion('com.drewnoakes:metadata-extractor', '2.13.0')
+registerVersion('org.apache.commons:commons-imaging', '1.0-alpha1')
+
 //registerVersion('org.activiti:activiti-engine', versionMap.activiti)
 //registerVersion('org.activiti:activiti-spring', versionMap.activiti)
 //registerVersion('org.activiti:spring-boot-starter-basic', '5.17.0') // WTF?

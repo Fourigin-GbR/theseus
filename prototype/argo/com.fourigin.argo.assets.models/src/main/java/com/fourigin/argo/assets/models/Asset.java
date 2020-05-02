@@ -18,6 +18,7 @@ public interface Asset {
     String CHANGED_BY_ATTRIBUTE_NAME = "changed-by-user";
     String CHANGE_DATE_ATTRIBUTE_NAME = "changed-date";
     String CHANGE_TIMESTAMP_ATTRIBUTE_NAME = "changed-timestamp";
+    String BASE_ASSET_REFERENCE_ATTRIBUTE_NAME = "base-asset";
 
     String getId();
     void setId(String id);

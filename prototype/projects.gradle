@@ -25,6 +25,7 @@ def heraCore                                = project(':hera:com.fourigin.hera.c
 //def heraSpringBootStarter                 = project(':hera:com.fourigin.hera.spring-boot-starter')
 
 def utilitiesCore                           = project(':utilities:com.fourigin.utilities.core')
+def utilitiesImage                          = project(':utilities:com.fourigin.utilities.image')
 def utilitiesPdfBox                         = project(':utilities:com.fourigin.utilities.pdfbox')
 def utilitiesSpringScheduling               = project(':utilities:com.fourigin.utilities.spring.scheduling')
 
@@ -272,6 +273,8 @@ project(':argo') {
             runtime argoAssetsRepositoryJson
             compile argoAssetsProcessor
             compile argoCompiler
+
+            compile utilitiesImage
 
             compile thymeleaf
             compile thymeleafSpring
@@ -552,6 +555,15 @@ project(':utilities') {
         dependencies {
             compile managedDependency('com.fasterxml.jackson.core:jackson-core')
             compile managedDependency('com.fasterxml.jackson.core:jackson-databind')
+        }
+    }
+
+    project('com.fourigin.utilities.image') {
+        version = utilitiesVersion
+
+        dependencies {
+            compile managedDependency('com.drewnoakes:metadata-extractor')
+            compile managedDependency('org.apache.commons:commons-imaging')
         }
     }
 

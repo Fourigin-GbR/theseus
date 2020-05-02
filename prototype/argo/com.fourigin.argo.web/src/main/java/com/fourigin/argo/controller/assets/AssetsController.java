@@ -1,5 +1,7 @@
 package com.fourigin.argo.controller.assets;
 
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.MetadataException;
 import com.fourigin.argo.assets.models.Asset;
 import com.fourigin.argo.assets.models.AssetSearchFilter;
 import com.fourigin.argo.assets.models.Assets;
@@ -7,6 +9,7 @@ import com.fourigin.argo.assets.models.ImageAsset;
 import com.fourigin.argo.assets.repository.AssetRepository;
 import com.fourigin.argo.controller.RequestParameters;
 import com.fourigin.utilities.core.MimeTypes;
+import com.fourigin.utilities.image.ImageUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,7 @@ import javax.imageio.stream.ImageInputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.Dimension;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -66,6 +70,24 @@ public class AssetsController {
         ALLOWED_MIME_TYPES.add("image/gif");
         ALLOWED_MIME_TYPES.add("image/jpeg");
         ALLOWED_MIME_TYPES.add("image/png");
+    }
+
+    public interface AssetCreatingOption {
+    }
+
+    public static class FixAssetOrientationOption implements AssetCreatingOption {
+    }
+
+    public static class ResizeAssetOption implements AssetCreatingOption {
+        private int maxDimension;
+
+        public ResizeAssetOption(int maxDimension) {
+            this.maxDimension = maxDimension;
+        }
+
+        public int getMaxDimension() {
+            return maxDimension;
+        }
     }
 
     public AssetsController(
@@ -219,6 +241,9 @@ public class AssetsController {
         MDC.put("project", project);
         MDC.put("language", language);
 
+        if (logger.isDebugEnabled())
+            logger.debug("Uploading asset from URL '{}' for filename '{}' and language '{}'", sourceUrl, filename, language);
+
         try {
             UploadAssetsResponse result = new UploadAssetsResponse();
 
@@ -248,8 +273,9 @@ public class AssetsController {
             }
 
             if (tmp != null) {
+                if (logger.isDebugEnabled()) logger.debug("Source image loaded from URL to temp file ‘{}‘", tmp.getAbsolutePath());
                 try (InputStream is = new BufferedInputStream(new FileInputStream(tmp))) {
-                    Asset asset = readAsset(language, filename, tmp.length(), is);
+                    Asset asset = readAsset(language, filename, tmp.length(), is, new FixAssetOrientationOption());
 
                     result.registerSuccess(asset);
                 } catch (IOException | IllegalArgumentException ex) {
@@ -300,7 +326,7 @@ public class AssetsController {
                         baos = new ByteArrayOutputStream();
                         IOUtils.copyLarge(zis, baos);
                         bais = new ByteArrayInputStream(baos.toByteArray());
-                        Asset asset = readAsset(language, filename, zipEntry.getSize(), bais);
+                        Asset asset = readAsset(language, filename, zipEntry.getSize(), bais, new FixAssetOrientationOption());
                         bais.close();
                         baos.close();
 
@@ -309,8 +335,7 @@ public class AssetsController {
                         if (logger.isErrorEnabled())
                             logger.error("Unable to read bulk asset {}!", filename, ex);
                         result.registerFail(filename, ex);
-                    }
-                    finally {
+                    } finally {
                         IOUtils.closeQuietly(baos);
                         IOUtils.closeQuietly(bais);
                     }
@@ -385,7 +410,8 @@ public class AssetsController {
             String language,
             String originalFileName,
             long fileSize,
-            InputStream inputStream
+            InputStream inputStream,
+            AssetCreatingOption... options
     ) {
         String fileName = Assets.resolveSanitizedBasename(originalFileName);
         String mimeType = MimeTypes.resolveMimeType(originalFileName);
@@ -421,12 +447,91 @@ public class AssetsController {
         }
 
         try {
-            Asset asset = createAsset(language, originalFileName, mimeType, inputStream);
+            byte[] bytes;
+            if (options == null) {
+                Asset asset = createAsset(language, originalFileName, mimeType, inputStream);
+                assetRepository.updateAsset(language, asset);
+                return asset;
+            }
 
-            assetRepository.updateAsset(language, asset);
+            bytes = org.apache.commons.io.IOUtils.toByteArray(inputStream);
+            InputStream assetInputStream = new ByteArrayInputStream(bytes);
+            Asset originalAsset = createAsset(language, originalFileName, mimeType, assetInputStream);
 
-            return asset;
-        } catch (IOException ex) {
+            BufferedImage destinationImage = null;
+            for (AssetCreatingOption option : options) {
+                if (option instanceof FixAssetOrientationOption) {
+                    if (logger.isDebugEnabled()) logger.debug("Fixing asset orientation");
+                    ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+                    ImageUtils.ImageInformation imageInfo = ImageUtils.readImageInformation(bais);
+                    if (imageInfo.orientation == 1) {
+                        if (logger.isDebugEnabled())
+                            logger.debug("Skipping rotating asset, because it's orientation is '1'");
+                        continue;
+                    }
+
+                    AffineTransform transform = ImageUtils.getExifTransformation(imageInfo);
+
+                    bais = new ByteArrayInputStream(bytes);
+                    BufferedImage image = ImageIO.read(bais);
+                    BufferedImage fixedImage = ImageUtils.transformImage(image, transform);
+
+                    destinationImage = ImageUtils.copyImage(fixedImage);
+                    continue;
+                }
+
+                if (option instanceof ResizeAssetOption) {
+                    int maxDimension = ((ResizeAssetOption) option).getMaxDimension();
+
+                    if (!ImageAsset.class.isAssignableFrom(originalAsset.getClass())) {
+                        if (logger.isDebugEnabled())
+                            logger.debug("Skipping resizing asset, because it is not an ImageAsset and don't have any dimensions");
+                        continue;
+                    }
+
+                    ImageAsset imageAsset = (ImageAsset) originalAsset;
+                    Dimension size = imageAsset.getSize();
+                    if (size.getHeight() <= maxDimension && size.getWidth() <= maxDimension) {
+                        if (logger.isDebugEnabled())
+                            logger.debug("Skipping resizing asset, because both it's dimensions are less than maxDimension {}", maxDimension);
+                        continue;
+                    }
+
+                    if (logger.isDebugEnabled())
+                        logger.debug("Resizing asset to fit to maxDimension {}", maxDimension);
+                    // TODO: implement me
+                }
+            }
+
+            if (destinationImage == null) {
+                if (logger.isDebugEnabled()) logger.debug("Original asset is unchanged");
+                assetRepository.updateAsset(language, originalAsset);
+                return originalAsset;
+            }
+
+            if (logger.isDebugEnabled()) logger.debug("Modified image: {}", destinationImage);
+
+            if (logger.isDebugEnabled())
+                logger.debug("Store both original & modified assets, linked together through the attribute '{}'",
+                        Asset.BASE_ASSET_REFERENCE_ATTRIBUTE_NAME);
+
+            ByteArrayInputStream bais;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                String format = MimeTypes.resolveFileExtension(mimeType);
+                ImageIO.write(destinationImage, format, baos);
+                baos.flush();
+                byte[] modifiedAssetBytes = baos.toByteArray();
+                if (logger.isDebugEnabled()) logger.debug("Modified asset size: {} bytes", modifiedAssetBytes.length);
+                bais = new ByteArrayInputStream(modifiedAssetBytes);
+            }
+            Asset modifiedAsset = createAsset(language, originalFileName, mimeType, bais);
+
+            modifiedAsset.setAttribute(Asset.BASE_ASSET_REFERENCE_ATTRIBUTE_NAME, originalAsset.getId());
+
+            assetRepository.updateAsset(language, originalAsset);
+            assetRepository.updateAsset(language, modifiedAsset);
+            return modifiedAsset;
+        } catch (IOException | MetadataException | ImageProcessingException ex) {
             throw new IllegalArgumentException("Unable to create asset!", ex);
         }
     }
@@ -474,8 +579,7 @@ public class AssetsController {
                 asset.setSize(bufferedImage.getWidth(), bufferedImage.getHeight());
                 bufferedImage.flush();
             }
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             throw new IllegalArgumentException("Error reading asset data!", ex);
         }
 

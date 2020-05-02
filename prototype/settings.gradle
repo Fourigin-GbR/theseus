@@ -34,6 +34,7 @@ include ':argo:com.fourigin.argo.services'
 
 include ':utilities'
 include ':utilities:com.fourigin.utilities.core'
+include ':utilities:com.fourigin.utilities.image'
 include ':utilities:com.fourigin.utilities.pdfbox'
 include ':utilities:com.fourigin.utilities.playground'
 include ':utilities:com.fourigin.utilities.spring.scheduling'
