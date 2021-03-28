@@ -62,11 +62,13 @@
                 </div>
                 <div id="request-controls">
                     <form action="form-kfz-anmeldung.html" target="_self">
-                        einen neuen Auftrag erstellen:
-                        <select name="request-type">
-                            <option selected="selected">... bitte wählen ...</option>
-                            <option name="register-vehicle">KFZ-Anmeldung</option>
-                        </select>
+                        Neuen Auftrag anlegen:
+                        <div style="padding: 20px;">
+                            <label>
+                                <input checked="checked" type="radio" name="request-type" value="register-vehicle">
+                                KFZ-Anmeldung
+                            </label>
+                        </div>
                         <input type="hidden" name="customer.id" id="selectedClient"/>
                         <input type="submit" class="buttonCta" name="start-request" value="Starten"/>
                     </form>
