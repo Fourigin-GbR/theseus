@@ -19,14 +19,23 @@
 </div>
 
 <div class="tabbed">
-    <input checked="checked" id="tab1" type="radio" name="tabs" />
-    <input id="tab2" type="radio" name="tabs" />
-    <input id="tab3" type="radio" name="tabs" />
+    <input checked="checked" id="tab1" type="radio" name="tab" value="kunden" />
+    <input id="tab2" type="radio" name="tab" value="auftraege" />
 
     <nav>
         <label for="tab1">Kunden</label>
         <label for="tab2">Aufträge</label>
     </nav>
+
+    <script type="text/javascript">
+        let url = window.location.search,
+            urlObject = new URLSearchParams(url),
+            tabValue = urlObject.get("tab");
+
+        if(tabValue) {
+            document.querySelector("input[name='tab'][value='" + tabValue + "']").checked = true;
+        }
+    </script>
 
     <figure>
         <div class="tab1">
