@@ -91,8 +91,17 @@ function init() {
 
     jAllFilters.on('change',
         function () {
-            var sSearch = jFilterByType[0].value + ' ' + jFilterByStatus[0].value;
-            requestsDataTable.search(sSearch ).draw();
+        let sSearch = "",
+            radios = jFilterByType[0].querySelectorAll("input[type='radio']");
+        for(let i=0, il= radios.length; i<il; i++) {
+            if(radios[i].checked) {
+                sSearch = radios[i].value + " " + jFilterByStatus[0].value;
+                break;
+            }
+        }
+        console.info("SEARCH STRING: ", sSearch);
+
+        requestsDataTable.search(sSearch).draw();
         });
 }
 
@@ -710,6 +719,16 @@ function initRequestsTable() {
                 attachments
                     .append(div);
             }
+
+            // Got all Requests, filter by filter-settings:
+            let typeRadios = document.querySelector("#dataTableFilter").querySelectorAll("input"),
+                sSearch = "";
+            for(let i=0, il=typeRadios.length; i<il; i++) {
+                if(typeRadios[i].checked) {
+                    sSearch = typeRadios[i].value;
+                }
+            }
+            requestsDataTable.search(sSearch).draw();
         });
 
     var requestDetails = $('#request-details');
@@ -854,7 +873,12 @@ var refreshRequestsTable = function() {
     requestsDataTable.destroy();
     initRequestsTable();
     jFilterByStatus.val("");
-    jFilterByType.val("");
+
+    let typeRadios = jFilterByType[0].querySelectorAll("input");
+    for(let i=0, il=typeRadios.length; i<il; i++) {
+        typeRadios[i].checked = false;
+    }
+    jFilterByType[0].querySelector("input[value='']").checked = true;
 };
 
 var refreshUserTable = function() {

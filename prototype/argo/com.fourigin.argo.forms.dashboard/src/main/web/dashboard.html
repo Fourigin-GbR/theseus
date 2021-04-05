@@ -86,15 +86,21 @@
 
                 <div class="dataTableFilter dataTableFilterList">
                     <div class="dataTableFilterList__item">
-                        Filter:
-                        <select autocomplete="off" id="dataTableFilter">
-                            <option name="" value="" selected="selected">-- Alle --</option>
-                            <option name="KFZ-Anmeldung" value="KFZ-Anmeldung">KFZ-Anmeldung</option>
-                            <option name="Registrierung" value="Registrierung">Kundenregistrierung</option>
-                        </select>
+                        <strong>Filter: </strong>
+                        <span id="dataTableFilter">
+                            <label>
+                                <input autocomplete="off" type="radio" name="filterType" value="" > Alle
+                            </label>
+                            <label>
+                                <input autocomplete="off" checked="checked" type="radio" name="filterType" value="KFZ-Anmeldung" > KFZ-Anmeldung
+                            </label>
+                            <label>
+                                <input autocomplete="off" type="radio" name="filterType" value="Registrierung" > Kundenregistrierung
+                            </label>
+                        </span>
                     </div>
                     <div class="dataTableFilterList__item">
-                        Status:
+                        <strong>Status: </strong>
                         <select autocomplete="off" id="dataTableStatusFilter">
                             <option name="" value="" selected="selected">-- Alle --</option>
                             <option name="WAITING_FOR_INPUT" value=""></option>
