@@ -409,7 +409,7 @@ function initUsersTable() {
 
     requestControls.hide();
 
-    table.off().on("submit", "form.action-remove-user", function(e) {
+    table.on("submit", "form.action-remove-user", function(e) {
         e.preventDefault();
         e.stopPropagation();
         //
@@ -426,6 +426,8 @@ function initUsersTable() {
         }
         if (confirm("Sind Sie sicher, dass der Kunde " + customerId + " gelöscht werden soll?")) {
             deleteUser(entryId);
+            usersDataTable.destroy();
+            initUsersTable();
         }
     });
 
@@ -483,7 +485,7 @@ function initRequestsTable() {
             var requestDetails = $('#request-details');
             var jRequestStages = requestDetails.find(".request-stages");
 
-            requestDetails.off().on('click', '.close', function(e) {
+            requestDetails.on('click', '.close', function(e) {
                 e.stopPropagation();
                 requestDetails.hide();
             });
@@ -593,7 +595,7 @@ function initRequestsTable() {
                 requestDetails.show();
             });
 
-            table.find('tbody').off().on('click', 'tr.group', function () {
+            table.find('tbody').on('click', 'tr.group', function () {
                 var jThis = $(this);
                 if(jThis.hasClass('closed')) {
                     jThis.removeClass('closed');
